@@ -315,4 +315,72 @@ class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
 
 
 class OgdchShowcasePlugin(ShowcasePlugin):
-    pass
+    plugins.implements(plugins.IConfigurable, inherit=True)
+    plugins.implements(plugins.IDatasetForm, inherit=True)
+    plugins.implements(plugins.ITemplateHelpers, inherit=True)
+    plugins.implements(plugins.IFacets, inherit=True)
+
+    # IConfigurable
+
+    def configure(self, config):
+        super(OgdchShowcasePlugin, self).configure(config)
+        # create vocabulary if necessary
+        sh.create_showcase_types()
+
+    # IDatasetForm
+
+    def _modify_package_schema(self, schema):
+        schema.update(
+            {
+                "showcase_type": [
+                    toolkit.get_validator("ignore_missing"),
+                    toolkit.get_converter("convert_to_extras"),
+                ]
+            }
+        )
+        return schema
+
+    def create_package_schema(self):
+        schema = super(OgdchShowcasePlugin, self).create_package_schema()
+        schema = self._modify_package_schema(schema)
+        return schema
+
+    def update_package_schema(self):
+        schema = super(OgdchShowcasePlugin, self).update_package_schema()
+        schema = self._modify_package_schema(schema)
+        return schema
+
+    def show_package_schema(self):
+        schema = super(OgdchShowcasePlugin, self).show_package_schema()
+        schema.update(
+            {
+                "showcase_type": [
+                    toolkit.get_converter("convert_from_extras"),
+                    toolkit.get_validator("ignore_missing"),
+                ]
+            }
+        )
+        return schema
+
+    # ITemplateHelpers
+
+    def get_helpers(self):
+        helpers = super(OgdchShowcasePlugin, self).get_helpers()
+        helpers["showcase_types"] = sh.showcase_types
+        helpers["get_showcase_type_name"] = sh.get_showcase_type_name
+
+        return helpers
+
+    # IFacets
+
+    def dataset_facets(self, facets_dict, package_type):
+        if package_type != "showcase":
+            return facets_dict
+
+        facets_dict = super(OgdchShowcasePlugin, self).dataset_facets(
+            facets_dict,
+            package_type
+        )
+        facets_dict["showcase_type"] = toolkit._("Type of content")
+
+        return facets_dict
