@@ -7,6 +7,7 @@ from ckan.logic import ActionError, NotFound, ValidationError
 import ckan.plugins.toolkit as tk
 from ckan.lib.search.common import make_connection
 from ckanext.switzerland.helpers.request_utils import get_content_headers
+from ckanext.switzerland.helpers.frontend import get_dataset_count
 
 import logging
 log = logging.getLogger(__name__)
@@ -30,14 +31,9 @@ def ogdch_dataset_count(context, data_dict):
     for group in groups:
         group_count[group['name']] = group['package_count']
 
-    # get the total number of dataset from package_search
-    search_result = tk.get_action('package_search')(
-        req_context,
-        {'rows': 0, 'fq': '+dataset_type:dataset'}
-    )
-
     return {
-        'total_count': search_result['count'],
+        'total_count': get_dataset_count('dataset'), # noqa
+        'showcase_count': get_dataset_count('showcase'), # noqa
         'groups': group_count,
     }
 

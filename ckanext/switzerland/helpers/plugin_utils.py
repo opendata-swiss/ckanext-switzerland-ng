@@ -86,7 +86,7 @@ def ogdch_prepare_search_data_for_index(search_data, format_mapping):
     search_data['groups_de'] = [loc.get_localized_value_from_dict(g['display_name'], 'de') for g in validated_dict[u'groups']]  # noqa
     search_data['groups_fr'] = [loc.get_localized_value_from_dict(g['display_name'], 'fr') for g in validated_dict[u'groups']]  # noqa
     search_data['groups_it'] = [loc.get_localized_value_from_dict(g['display_name'], 'it') for g in validated_dict[u'groups']]  # noqa
-    search_data['res_description'] = [loc.lang_to_string('description', r) for r in validated_dict[u'resources']]  # noqa
+    search_data['res_description'] = [loc.lang_to_string(r, 'description') for r in validated_dict[u'resources']]  # noqa
     search_data['res_format'] = fmtu.prepare_formats_for_index(
         resources=validated_dict[u'resources'],
         format_mapping=format_mapping
