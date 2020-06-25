@@ -325,16 +325,5 @@ class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
 
 
 class OgdchShowcasePlugin(ShowcasePlugin):
-
-    def search_template(self):
-        return ogdch_backend_helpers.ogdch_template_choice(
-            template_frontend=os.path.join('showcase', 'search_ogdch.html'),
-            template_backend=os.path.join('showcase', 'search.html')
-        )
-
-    def read_template(self):
-        return ogdch_backend_helpers.ogdch_template_choice(
-            template_frontend=os.path.join('showcase', 'read_ogdch.html'),
-            template_backend=os.path.join('showcase', 'read.html')
-        )
+    pass
 
