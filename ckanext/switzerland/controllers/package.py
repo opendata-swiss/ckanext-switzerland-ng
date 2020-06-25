@@ -10,8 +10,4 @@ log = logging.getLogger(__name__)
 
 class OgdchPackageController(package.PackageController):
 
-    def _search_template(self, package_type):
-        return ogdch_backend_helpers.ogdch_template_choice(
-            template_frontend=os.path.join('package', 'search_ogdch.html'),
-            template_backend=os.path.join('package', 'search.html')
-        )
+    pass

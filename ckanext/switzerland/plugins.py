@@ -324,58 +324,9 @@ class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
         )
 
 
+# this is left in because the plugin is used in production
+# in the current ogdch which will later be merged in to
+# ogdch-ng
 class OgdchShowcasePlugin(ShowcasePlugin):
 
-    def search_template(self):
-        return ogdch_backend_helpers.ogdch_template_choice(
-            template_frontend=os.path.join('showcase', 'search_ogdch.html'),
-            template_backend=os.path.join('showcase', 'search.html')
-        )
-
-    def read_template(self):
-        return ogdch_backend_helpers.ogdch_template_choice(
-            template_frontend=os.path.join('showcase', 'read_ogdch.html'),
-            template_backend=os.path.join('showcase', 'read.html')
-        )
-
-
-# Monkeypatch to style CKAN pagination
-class OGDPage(paginate.Page):
-    # Curry the pager method of the webhelpers.paginate.Page class, so we have
-    # our custom layout set as default.
-
-    def pager(self, *args, **kwargs):
-        kwargs.update(
-            format=u"<ul class='pagination'>$link_previous ~2~ $link_next</ul>",  # noqa
-            symbol_previous=u'«', symbol_next=u'»',
-            curpage_attr={'class': 'active'}, link_attr={}
-        )
-        return super(OGDPage, self).pager(*args, **kwargs)
-
-    # Put each page link into a <li> (for Bootstrap to style it)
-
-    def _pagerlink(self, page, text, extra_attributes=None):
-        anchor = super(OGDPage, self)._pagerlink(page, text)
-        extra_attributes = extra_attributes or {}
-        return HTML.li(anchor, **extra_attributes)
-
-    # Change 'current page' link from <span> to <li><a>
-    # and '..' into '<li><a>..'
-    # (for Bootstrap to style them properly)
-
-    def _range(self, regexp_match):
-        html = super(OGDPage, self)._range(regexp_match)
-        # Convert ..
-        dotdot = '<span class="pager_dotdot">..</span>'
-        dotdot_link = HTML.li(HTML.a('...', href='#'), class_='disabled')
-        html = re.sub(dotdot, dotdot_link, html)
-
-        # Convert current page
-        text = '%s' % self.page
-        current_page_span = str(HTML.span(c=text, **self.curpage_attr))
-        current_page_link = self._pagerlink(self.page, text,
-                                            extra_attributes=self.curpage_attr)
-        return re.sub(current_page_span, current_page_link, html)
-
-
-h.Page = OGDPage
+    pass
