@@ -6,8 +6,8 @@ import re
 from ckan import logic
 import ckan.plugins.toolkit as toolkit
 from ckan.lib.munge import munge_title_to_name
-import ckanext.switzerland.helpers.localize as loc
-import ckanext.switzerland.helpers.terms_of_use as terms
+import ckanext.switzerland.helpers.localize_utils as loc
+import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 import ckanext.switzerland.helpers.format_utils as fmtu
 
 
@@ -91,7 +91,7 @@ def ogdch_prepare_search_data_for_index(search_data, format_mapping):
         resources=validated_dict[u'resources'],
         format_mapping=format_mapping
     )  # noqa
-    search_data['res_rights'] = [terms.simplify_terms_of_use(r['rights']) for r in validated_dict[u'resources'] if 'rights' in r.keys()]  # noqa
+    search_data['res_rights'] = [ogdch_term_utils.simplify_terms_of_use(r['rights']) for r in validated_dict[u'resources'] if 'rights' in r.keys()]  # noqa
     search_data['title_string'] = loc.lang_to_string(validated_dict, 'title')
     search_data['description'] = loc.lang_to_string(validated_dict, 'description')  # noqa
     if 'political_level' in validated_dict[u'organization']:

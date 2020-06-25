@@ -2,9 +2,8 @@
 """Tests for helpers.py."""
 from nose.tools import *  # noqa
 import mock
-import ckanext.switzerland.helpers.terms_of_use as term
-import ckanext.switzerland.helpers.localize as loc
-import ckanext.switzerland.helpers.frontend as fh
+import ckanext.switzerland.helpers.localize_utils as loc
+import ckanext.switzerland.helpers.frontend_helpers as fh
 from copy import deepcopy
 import unittest
 

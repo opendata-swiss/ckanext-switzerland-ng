@@ -7,7 +7,7 @@ from ckan.logic import ActionError, NotFound, ValidationError
 import ckan.plugins.toolkit as tk
 from ckan.lib.search.common import make_connection
 from ckanext.switzerland.helpers.request_utils import get_content_headers
-from ckanext.switzerland.helpers.frontend import get_dataset_count
+from ckanext.switzerland.helpers.frontend_helpers import get_dataset_count
 
 import logging
 log = logging.getLogger(__name__)

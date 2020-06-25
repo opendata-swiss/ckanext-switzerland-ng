@@ -13,8 +13,8 @@ from babel import numbers
 from ckan.lib.helpers import lang, url_for, localised_number
 import ckan.lib.i18n as i18n
 import unicodedata
-import ckanext.switzerland.helpers.localize as loc
-import ckanext.switzerland.helpers.terms_of_use as terms
+import ckanext.switzerland.helpers.localize_utils as loc
+import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 
 import logging
 log = logging.getLogger(__name__)
@@ -22,10 +22,10 @@ log = logging.getLogger(__name__)
 # these bookmarks can be used in the wordpress page
 # for the terms of use
 mapping_terms_of_use_to_pagemark = {
-    terms.TERMS_OF_USE_OPEN: '#terms_open',
-    terms.TERMS_OF_USE_BY: '#terms_by',
-    terms.TERMS_OF_USE_ASK: '#terms_ask',
-    terms.TERMS_OF_USE_BY_ASK: '#terms_by_ask',
+    ogdch_term_utils.TERMS_OF_USE_OPEN: '#terms_open',
+    ogdch_term_utils.TERMS_OF_USE_BY: '#terms_by',
+    ogdch_term_utils.TERMS_OF_USE_ASK: '#terms_ask',
+    ogdch_term_utils.TERMS_OF_USE_BY_ASK: '#terms_by_ask',
 }
 
 
@@ -148,28 +148,28 @@ def get_political_level(political_level):
 
 def get_terms_of_use_icon(terms_of_use):
     term_to_image_mapping = {
-        terms.TERMS_OF_USE_OPEN: {  # noqa
+        ogdch_term_utils.TERMS_OF_USE_OPEN: {  # noqa
             'title': _('Open use'),
             'icon': 'terms_open',
         },
-        terms.TERMS_OF_USE_BY: {  # noqa
+        ogdch_term_utils.TERMS_OF_USE_BY: {  # noqa
             'title': _('Open use. Must provide the source.'),
             'icon': 'terms_by',
         },
-        terms.TERMS_OF_USE_ASK: {  # noqa
+        ogdch_term_utils.TERMS_OF_USE_ASK: {  # noqa
             'title': _('Open use. Use for commercial purposes requires permission of the data owner.'),  # noqa
             'icon': 'terms_ask',
         },
-        terms.TERMS_OF_USE_BY_ASK: {  # noqa
+        ogdch_term_utils.TERMS_OF_USE_BY_ASK: {  # noqa
             'title': _('Open use. Must provide the source. Use for commercial purposes requires permission of the data owner.'),  # noqa
             'icon': 'terms_by-ask',
         },
-        terms.TERMS_OF_USE_CLOSED: {
+        ogdch_term_utils.TERMS_OF_USE_CLOSED: {
             'title': _('Closed data'),
             'icon': 'terms_closed',
         },
     }
-    term_id = terms.simplify_terms_of_use(terms_of_use)
+    term_id = ogdch_term_utils.simplify_terms_of_use(terms_of_use)
     return term_to_image_mapping.get(term_id, None)
 
 

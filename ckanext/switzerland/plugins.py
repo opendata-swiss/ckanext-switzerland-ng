@@ -3,11 +3,11 @@
 from ckanext.showcase.plugin import ShowcasePlugin
 import ckanext.switzerland.helpers.validators as v
 from ckanext.switzerland import logic as l
-import ckanext.switzerland.helpers.frontend as fh
-import ckanext.switzerland.helpers.backend as bh
+import ckanext.switzerland.helpers.frontend_helpers as fh
+import ckanext.switzerland.helpers.backend_helpers as bh
 import ckanext.switzerland.helpers.plugin_utils as pu
 import ckanext.switzerland.helpers.request_utils as ru
-import ckanext.switzerland.helpers.localize as loc
+import ckanext.switzerland.helpers.localize_utils as loc
 import ckanext.switzerland.helpers.format_utils as fmtu
 import re
 from webhelpers.html import HTML
