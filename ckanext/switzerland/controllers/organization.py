@@ -15,7 +15,7 @@ from ckan.lib.base import render
 from ckanext.hierarchy.controller import _children_name_list
 import ckan.controllers.organization as organization
 import ckanext.hierarchy.helpers as hierarchy_helpers
-import ckanext.switzerland.helpers.backend_helpers as bh
+import ckanext.switzerland.helpers.backend_helpers as ogdch_backend_helpers
 
 log = logging.getLogger(__name__)
 
@@ -23,13 +23,13 @@ log = logging.getLogger(__name__)
 class OgdchOrganizationController(organization.OrganizationController):
 
     def _index_template(self, group_type):
-        return bh.ogdch_template_choice(
+        return ogdch_backend_helpers.ogdch_template_choice(
             template_frontend=os.path.join('organization', 'index_ogdch.html'),
             template_backend=os.path.join('organization', 'index.html')
         )
 
     def _read_template(self, group_type):
-        return bh.ogdch_template_choice(
+        return ogdch_backend_helpers.ogdch_template_choice(
             template_frontend=os.path.join('organization', 'read_ogdch.html'),
             template_backend=os.path.join('organization', 'read.html')
         )

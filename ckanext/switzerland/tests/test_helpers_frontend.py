@@ -2,8 +2,7 @@
 """Tests for helpers.py."""
 from nose.tools import *  # noqa
 import mock
-import ckanext.switzerland.helpers.localize_utils as loc
-import ckanext.switzerland.helpers.frontend_helpers as fh
+import ckanext.switzerland.helpers.frontend_helpers as ogdch_frontend_helpers
 from copy import deepcopy
 import unittest
 
@@ -39,7 +38,7 @@ class TestHelpers(unittest.TestCase):
     @mock.patch('ckan.lib.i18n.get_lang', return_value='fr')
     def test_get_sorted_orgs_by_translated_title_fr(self, mock_get_lang):
         french_organizations = deepcopy(organizations)
-        result_orgs = fh.get_sorted_orgs_by_translated_title(french_organizations)  # noqa
+        result_orgs = ogdch_frontend_helpers.get_sorted_orgs_by_translated_title(french_organizations)  # noqa
 
         for org in result_orgs:
             if org['children']:
@@ -52,7 +51,7 @@ class TestHelpers(unittest.TestCase):
     @mock.patch('ckan.lib.i18n.get_lang', return_value='it')
     def test_get_sorted_orgs_by_translated_title_it(self, mock_get_lang):
         italian_organizations = deepcopy(organizations)
-        result_orgs = fh.get_sorted_orgs_by_translated_title(italian_organizations)  # noqa
+        result_orgs = ogdch_frontend_helpers.get_sorted_orgs_by_translated_title(italian_organizations)  # noqa
 
         for org in result_orgs:
             if org['children']:
@@ -65,7 +64,7 @@ class TestHelpers(unittest.TestCase):
     @mock.patch('ckan.lib.i18n.get_lang', return_value='de')
     def test_get_sorted_orgs_by_translated_title_de(self, mock_get_lang):
         german_organizations = deepcopy(organizations)
-        result_orgs = fh.get_sorted_orgs_by_translated_title(german_organizations)  # noqa
+        result_orgs = ogdch_frontend_helpers.get_sorted_orgs_by_translated_title(german_organizations)  # noqa
 
         for org in result_orgs:
             if org['children']:
@@ -78,7 +77,7 @@ class TestHelpers(unittest.TestCase):
     @mock.patch('ckan.lib.i18n.get_lang', return_value='en')
     def test_get_sorted_orgs_by_translated_title_en(self, mock_get_lang):
         english_organizations = deepcopy(organizations)
-        result_orgs = fh.get_sorted_orgs_by_translated_title(english_organizations)  # noqa
+        result_orgs = ogdch_frontend_helpers.get_sorted_orgs_by_translated_title(english_organizations)  # noqa
 
         for org in result_orgs:
             if org['children']:

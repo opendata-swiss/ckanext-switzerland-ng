@@ -2,7 +2,7 @@
 """Tests for helpers.py."""
 from nose.tools import *  # noqa
 
-import ckanext.switzerland.helpers.localize_utils as loc
+import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 import unittest
 
 organizations = [{'children': [],
@@ -40,7 +40,7 @@ class TestHelpers(unittest.TestCase):
             'it': 'IT value',
             'en': 'EN value',
         }
-        result = loc.get_localized_value_from_dict(lang_dict, 'de')
+        result = ogdch_localize_utils.get_localized_value_from_dict(lang_dict, 'de')
         self.assertEquals(lang_dict['de'], result)
 
     def test_get_localized_value_from_dict_fallback(self):
@@ -50,7 +50,7 @@ class TestHelpers(unittest.TestCase):
             'it': 'IT value',
             'en': '',
         }
-        result = loc.get_localized_value_from_dict(lang_dict, 'en')
+        result = ogdch_localize_utils.get_localized_value_from_dict(lang_dict, 'en')
         # if en does not exist, fallback to de
         self.assertEquals(lang_dict['de'], result)
 
@@ -58,15 +58,15 @@ class TestHelpers(unittest.TestCase):
         """if an error occurs the value should be returned as is"""
         value = u"{Hallo"
         default_value = "Hello world"
-        self.assertEqual(loc.parse_json(value, default_value=default_value), default_value)
+        self.assertEqual(ogdch_localize_utils.parse_json(value, default_value=default_value), default_value)
 
     def test_parse_json_with_error(self):
         """if an error occurs the default value should be returned"""
         value = u"{Hallo"
-        self.assertEqual(loc.parse_json(value), value)
+        self.assertEqual(ogdch_localize_utils.parse_json(value), value)
 
     def test_parse_json_without_error(self):
         """if an error occurs the default value should be returned"""
         value = '{"de": "Hallo", "it": "okay"}'
         value_as_dict = {"de": "Hallo", "it":"okay"}
-        self.assertEqual(loc.parse_json(value), value_as_dict)
+        self.assertEqual(ogdch_localize_utils.parse_json(value), value_as_dict)

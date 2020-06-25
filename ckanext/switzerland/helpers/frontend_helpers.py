@@ -13,7 +13,7 @@ from babel import numbers
 from ckan.lib.helpers import lang, url_for, localised_number
 import ckan.lib.i18n as i18n
 import unicodedata
-import ckanext.switzerland.helpers.localize_utils as loc
+import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
 import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 
 import logging
@@ -101,7 +101,7 @@ def localize_json_title(facet_item):
         pass
     try:
         lang_dict = json.loads(facet_item['display_name'])
-        return loc.get_localized_value_from_dict(
+        return ogdch_loc_utils.get_localized_value_from_dict(
             lang_dict,
             lang_code=lang(),
             default=facet_item['display_name']
@@ -268,7 +268,7 @@ def ogdch_group_tree(type_='organization'):
 
 def get_sorted_orgs_by_translated_title(organizations):
     for organization in organizations:
-        organization['title'] = loc.get_localized_value_from_json(organization['title'], i18n.get_lang())  # noqa
+        organization['title'] = ogdch_loc_utils.get_localized_value_from_json(organization['title'], i18n.get_lang())  # noqa
         if organization['children']:
             organization['children'] = get_sorted_orgs_by_translated_title(organization['children'])  # noqa
 

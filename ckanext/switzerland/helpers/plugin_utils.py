@@ -6,9 +6,9 @@ import re
 from ckan import logic
 import ckan.plugins.toolkit as toolkit
 from ckan.lib.munge import munge_title_to_name
-import ckanext.switzerland.helpers.localize_utils as loc
+import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
 import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
-import ckanext.switzerland.helpers.format_utils as fmtu
+import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
 
 
 def _prepare_suggest_context(search_data, pkg_dict):
@@ -73,27 +73,27 @@ def ogdch_prepare_search_data_for_index(search_data, format_mapping):
 
     validated_dict = json.loads(search_data['validated_data_dict'])
 
-    search_data['res_name'] = [loc.lang_to_string(r, 'title') for r in validated_dict[u'resources']]  # noqa
-    search_data['res_name_en'] = [loc.get_localized_value_from_dict(r['title'], 'en') for r in validated_dict[u'resources']]  # noqa
-    search_data['res_name_de'] = [loc.get_localized_value_from_dict(r['title'], 'de') for r in validated_dict[u'resources']]  # noqa
-    search_data['res_name_fr'] = [loc.get_localized_value_from_dict(r['title'], 'fr') for r in validated_dict[u'resources']]  # noqa
-    search_data['res_name_it'] = [loc.get_localized_value_from_dict(r['title'], 'it') for r in validated_dict[u'resources']]  # noqa
-    search_data['res_description_en'] = [loc.get_localized_value_from_dict(r['description'], 'en') for r in validated_dict[u'resources']]  # noqa
-    search_data['res_description_de'] = [loc.get_localized_value_from_dict(r['description'], 'de') for r in validated_dict[u'resources']]  # noqa
-    search_data['res_description_fr'] = [loc.get_localized_value_from_dict(r['description'], 'fr') for r in validated_dict[u'resources']]  # noqa
-    search_data['res_description_it'] = [loc.get_localized_value_from_dict(r['description'], 'it') for r in validated_dict[u'resources']]  # noqa
-    search_data['groups_en'] = [loc.get_localized_value_from_dict(g['display_name'], 'en') for g in validated_dict[u'groups']]  # noqa
-    search_data['groups_de'] = [loc.get_localized_value_from_dict(g['display_name'], 'de') for g in validated_dict[u'groups']]  # noqa
-    search_data['groups_fr'] = [loc.get_localized_value_from_dict(g['display_name'], 'fr') for g in validated_dict[u'groups']]  # noqa
-    search_data['groups_it'] = [loc.get_localized_value_from_dict(g['display_name'], 'it') for g in validated_dict[u'groups']]  # noqa
-    search_data['res_description'] = [loc.lang_to_string(r, 'description') for r in validated_dict[u'resources']]  # noqa
-    search_data['res_format'] = fmtu.prepare_formats_for_index(
+    search_data['res_name'] = [ogdch_loc_utils.lang_to_string(r, 'title') for r in validated_dict[u'resources']]  # noqa
+    search_data['res_name_en'] = [ogdch_loc_utils.get_localized_value_from_dict(r['title'], 'en') for r in validated_dict[u'resources']]  # noqa
+    search_data['res_name_de'] = [ogdch_loc_utils.get_localized_value_from_dict(r['title'], 'de') for r in validated_dict[u'resources']]  # noqa
+    search_data['res_name_fr'] = [ogdch_loc_utils.get_localized_value_from_dict(r['title'], 'fr') for r in validated_dict[u'resources']]  # noqa
+    search_data['res_name_it'] = [ogdch_loc_utils.get_localized_value_from_dict(r['title'], 'it') for r in validated_dict[u'resources']]  # noqa
+    search_data['res_description_en'] = [ogdch_loc_utils.get_localized_value_from_dict(r['description'], 'en') for r in validated_dict[u'resources']]  # noqa
+    search_data['res_description_de'] = [ogdch_loc_utils.get_localized_value_from_dict(r['description'], 'de') for r in validated_dict[u'resources']]  # noqa
+    search_data['res_description_fr'] = [ogdch_loc_utils.get_localized_value_from_dict(r['description'], 'fr') for r in validated_dict[u'resources']]  # noqa
+    search_data['res_description_it'] = [ogdch_loc_utils.get_localized_value_from_dict(r['description'], 'it') for r in validated_dict[u'resources']]  # noqa
+    search_data['groups_en'] = [ogdch_loc_utils.get_localized_value_from_dict(g['display_name'], 'en') for g in validated_dict[u'groups']]  # noqa
+    search_data['groups_de'] = [ogdch_loc_utils.get_localized_value_from_dict(g['display_name'], 'de') for g in validated_dict[u'groups']]  # noqa
+    search_data['groups_fr'] = [ogdch_loc_utils.get_localized_value_from_dict(g['display_name'], 'fr') for g in validated_dict[u'groups']]  # noqa
+    search_data['groups_it'] = [ogdch_loc_utils.get_localized_value_from_dict(g['display_name'], 'it') for g in validated_dict[u'groups']]  # noqa
+    search_data['res_description'] = [ogdch_loc_utils.lang_to_string(r, 'description') for r in validated_dict[u'resources']]  # noqa
+    search_data['res_format'] = ogdch_format_utils.prepare_formats_for_index(
         resources=validated_dict[u'resources'],
         format_mapping=format_mapping
     )  # noqa
     search_data['res_rights'] = [ogdch_term_utils.simplify_terms_of_use(r['rights']) for r in validated_dict[u'resources'] if 'rights' in r.keys()]  # noqa
-    search_data['title_string'] = loc.lang_to_string(validated_dict, 'title')
-    search_data['description'] = loc.lang_to_string(validated_dict, 'description')  # noqa
+    search_data['title_string'] = ogdch_loc_utils.lang_to_string(validated_dict, 'title')
+    search_data['description'] = ogdch_loc_utils.lang_to_string(validated_dict, 'description')  # noqa
     if 'political_level' in validated_dict[u'organization']:
         search_data['political_level'] = validated_dict[u'organization'][u'political_level']  # noqa
 
@@ -120,21 +120,21 @@ def ogdch_prepare_search_data_for_index(search_data, format_mapping):
 
     try:
         # index language-specific values (or it's fallback)
-        for lang_code in loc.get_language_priorities():
+        for lang_code in ogdch_loc_utils.get_language_priorities():
             search_data['title_' + lang_code] = \
-                loc.get_localized_value_from_dict(
+                ogdch_loc_utils.get_localized_value_from_dict(
                     validated_dict['title'], lang_code)
             search_data['title_string_' + lang_code] = munge_title_to_name(
-                loc.get_localized_value_from_dict(
+                ogdch_loc_utils.get_localized_value_from_dict(
                     validated_dict['title'], lang_code))
             search_data['description_' + lang_code] = \
-                loc.get_localized_value_from_dict(
+                ogdch_loc_utils.get_localized_value_from_dict(
                     validated_dict['description'], lang_code)
             search_data['keywords_' + lang_code] = \
-                loc.get_localized_value_from_dict(
+                ogdch_loc_utils.get_localized_value_from_dict(
                    validated_dict['keywords'], lang_code)
             search_data['organization_' + lang_code] = \
-                loc.get_localized_value_from_dict(  # noqa
+                ogdch_loc_utils.get_localized_value_from_dict(  # noqa
                     validated_dict['organization']['title'], lang_code)
 
     except KeyError:
@@ -192,7 +192,7 @@ def ogdch_prepare_pkg_dict_for_api(pkg_dict):
             """
             group['title'] = group['display_name']
             for field in group:
-                group[field] = loc.parse_json(group[field])
+                group[field] = ogdch_loc_utils.parse_json(group[field])
 
     # load organization from API to get all fields defined in schema
     # by default, CKAN loads organizations only from the database
@@ -213,7 +213,7 @@ def ogdch_adjust_search_params(search_params):
     """search in correct language-specific field and boost
     results in current language
     borrowed from ckanext-multilingual (core extension)"""
-    lang_set = loc.get_language_priorities()
+    lang_set = ogdch_loc_utils.get_language_priorities()
     try:
         current_lang = toolkit.request.environ['CKAN_LANG']
     except TypeError as err:
