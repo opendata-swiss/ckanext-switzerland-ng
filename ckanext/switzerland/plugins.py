@@ -173,10 +173,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         map.connect('organization_edit', '/organization/edit/{id}',
                     controller='organization', action='edit')
 
-        map.connect('search', '/dataset',
-                    controller='ckanext.switzerland.controllers.package:OgdchPackageController', # noqa
-                    action='search')
-
         return map
 
 
