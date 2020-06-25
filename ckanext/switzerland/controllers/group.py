@@ -12,7 +12,7 @@ import ckan.lib.helpers as h
 import ckan.authz as authz
 import ckan.lib.search as search
 import ckan.controllers.group as group
-import ckanext.switzerland.backend_helpers as bh
+import ckanext.switzerland.helpers.backend_helpers as ogdch_backend_helpers
 
 log = logging.getLogger(__name__)
 
@@ -20,13 +20,13 @@ log = logging.getLogger(__name__)
 class OgdchGroupController(group.GroupController):
 
     def _index_template(self, group_type):
-        return bh.ogdch_template_choice(
+        return ogdch_backend_helpers.ogdch_template_choice(
             template_frontend=os.path.join('group', 'index_ogdch.html'),
             template_backend=os.path.join('group', 'index.html')
         )
 
     def _read_template(self, group_type):
-        return bh.ogdch_template_choice(
+        return ogdch_backend_helpers.ogdch_template_choice(
             template_frontend=os.path.join('group', 'read_ogdch.html'),
             template_backend=os.path.join('group', 'read.html')
         )

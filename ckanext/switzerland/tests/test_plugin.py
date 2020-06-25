@@ -1,6 +1,6 @@
 """Tests for plugin.py."""
 import ckanext.switzerland.plugins as plugins
-import ckanext.switzerland.plugin_utils as pu
+import ckanext.switzerland.helpers.plugin_utils as ogdch_plugin_utils
 from nose.tools import *  # noqa
 import sys
 import os
@@ -38,7 +38,7 @@ class TestPlugin(unittest.TestCase):
             'media_type': None,
             'format': None
         }
-        resource_with_no_format_and_no_download_url_cleaned = pu._prepare_resource_format(
+        resource_with_no_format_and_no_download_url_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resource_with_no_format_and_no_download_url.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('SERVICE', resource_with_no_format_and_no_download_url_cleaned['format'])
 
@@ -47,7 +47,7 @@ class TestPlugin(unittest.TestCase):
             'media_type': None,
             'format': 'dogvideo'
         }
-        resource_with_invalid_format_and_with_download_url_cleaned = pu._prepare_resource_format(
+        resource_with_invalid_format_and_with_download_url_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resource_with_invalid_format_and_with_download_url.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('', resource_with_invalid_format_and_with_download_url_cleaned['format'])
 
@@ -56,7 +56,7 @@ class TestPlugin(unittest.TestCase):
             'media_type': None,
             'format': None
         }
-        resource_without_any_formats_with_download_url_cleaned = pu._prepare_resource_format(
+        resource_without_any_formats_with_download_url_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resource_without_any_formats_with_download_url.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('', resource_without_any_formats_with_download_url_cleaned['format'])
 
@@ -65,7 +65,7 @@ class TestPlugin(unittest.TestCase):
             'media_type': None,
             'format': 'catgif'
         }
-        resource_with_invalid_format_and_no_download_url_cleaned = pu._prepare_resource_format(
+        resource_with_invalid_format_and_no_download_url_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resource_with_invalid_format_and_no_download_url.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('SERVICE', resource_with_invalid_format_and_no_download_url_cleaned['format'])
 
@@ -74,7 +74,7 @@ class TestPlugin(unittest.TestCase):
             'media_type': None,
             'format': 'xml'
         }
-        resource_with_valid_format_cleaned = pu._prepare_resource_format(
+        resource_with_valid_format_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resource_with_valid_format.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('XML', resource_with_valid_format_cleaned['format'])
 
@@ -83,7 +83,7 @@ class TestPlugin(unittest.TestCase):
             'media_type': 'cat/gif',
             'format': 'gif'
         }
-        resource_with_invalid_media_type_cleaned = pu._prepare_resource_format(
+        resource_with_invalid_media_type_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resource_with_invalid_media_type.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('', resource_with_invalid_media_type_cleaned['format'])
 
@@ -92,7 +92,7 @@ class TestPlugin(unittest.TestCase):
             'media_type': 'html',
             'format': 'xml'
         }
-        resource_with_valid_media_type_without_slash_cleaned = pu._prepare_resource_format(
+        resource_with_valid_media_type_without_slash_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resource_with_valid_media_type_without_slash.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('HTML', resource_with_valid_media_type_without_slash_cleaned['format'])
 
@@ -101,7 +101,7 @@ class TestPlugin(unittest.TestCase):
             'media_type': 'text/html',
             'format': 'xml'
         }
-        resource_with_valid_media_type_with_slash_cleaned = pu._prepare_resource_format(
+        resource_with_valid_media_type_with_slash_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resource_with_valid_media_type_with_slash.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('HTML', resource_with_valid_media_type_with_slash_cleaned['format'])
 
@@ -110,7 +110,7 @@ class TestPlugin(unittest.TestCase):
             'media_type': 'text/xml',
             'format': 'html'
         }
-        resourse_with_download_url_without_extension_cleaned = pu._prepare_resource_format(
+        resourse_with_download_url_without_extension_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resourse_with_download_url_without_extension.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('XML', resourse_with_download_url_without_extension_cleaned['format'])
 
@@ -119,7 +119,7 @@ class TestPlugin(unittest.TestCase):
             'media_type': '',
             'format': ''
         }
-        resourse_with_download_url_with_invalid_extension_cleaned = pu._prepare_resource_format(
+        resourse_with_download_url_with_invalid_extension_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resourse_with_download_url_with_invalid_extension.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('', resourse_with_download_url_with_invalid_extension_cleaned['format'])
 
@@ -128,7 +128,7 @@ class TestPlugin(unittest.TestCase):
             'media_type': 'text/xml',
             'format': 'xml'
         }
-        resourse_with_download_url_with_invalid_extension_but_format_cleaned = pu._prepare_resource_format(
+        resourse_with_download_url_with_invalid_extension_but_format_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resourse_with_download_url_with_invalid_extension_but_format.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('XML', resourse_with_download_url_with_invalid_extension_but_format_cleaned['format'])
 
@@ -137,7 +137,7 @@ class TestPlugin(unittest.TestCase):
             'media_type': '',
             'format': ''
         }
-        resourse_with_download_url_with_valid_extension_cleaned = pu._prepare_resource_format(
+        resourse_with_download_url_with_valid_extension_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resourse_with_download_url_with_valid_extension.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('ZIP', resourse_with_download_url_with_valid_extension_cleaned['format'])
 
@@ -146,7 +146,7 @@ class TestPlugin(unittest.TestCase):
             'media_type': 'text/xml',
             'format': 'xml'
         }
-        resourse_with_download_url_with_valid_extension_but_format_cleaned = pu._prepare_resource_format(
+        resourse_with_download_url_with_valid_extension_but_format_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resourse_with_download_url_with_valid_extension_but_format.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('XML', resourse_with_download_url_with_valid_extension_but_format_cleaned['format'])
 
@@ -155,7 +155,7 @@ class TestPlugin(unittest.TestCase):
             'media_type': None,
             'format': 'application/vnd.oas...'
         }
-        resource_with_ods_vndoas_format_cleaned = pu._prepare_resource_format(
+        resource_with_ods_vndoas_format_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resource_with_ods_vndoas_format.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('ODS', resource_with_ods_vndoas_format_cleaned['format'])
 
@@ -164,7 +164,7 @@ class TestPlugin(unittest.TestCase):
             'media_type': None,
             'format': 'vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         }
-        resource_with_vndoxml_format_cleaned = pu._prepare_resource_format(
+        resource_with_vndoxml_format_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resource_with_vndoxml_format.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('XLS', resource_with_vndoxml_format_cleaned['format'])
 
@@ -173,7 +173,7 @@ class TestPlugin(unittest.TestCase):
             'media_type': None,
             'format': 'pc-axis file'
         }
-        resource_with_pcaxis_format_cleaned = pu._prepare_resource_format(
+        resource_with_pcaxis_format_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resource_with_pcaxis_format.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('PC-AXIS', resource_with_pcaxis_format_cleaned['format'])
 
@@ -182,7 +182,7 @@ class TestPlugin(unittest.TestCase):
             'media_type': 'pc-axis file',
             'format': 'CSV'
         }
-        resource_with_pcaxis_format_cleaned = pu._prepare_resource_format(
+        resource_with_pcaxis_format_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resource_with_pcaxis_format.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('PC-AXIS', resource_with_pcaxis_format_cleaned['format'])
 
@@ -191,7 +191,7 @@ class TestPlugin(unittest.TestCase):
             'media_type': None,
             'format': 'Application/Sparql-...'
         }
-        resource_with_rdf_sparql_format_cleaned = pu._prepare_resource_format(
+        resource_with_rdf_sparql_format_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resource_with_rdf_sparql_format.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('RDF', resource_with_rdf_sparql_format_cleaned['format'])
 
@@ -200,7 +200,7 @@ class TestPlugin(unittest.TestCase):
             'media_type': None,
             'format': 'ESRI Shapefile'
         }
-        resource_with_shapefile_esri_format_cleaned = pu._prepare_resource_format(
+        resource_with_shapefile_esri_format_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resource_with_shapefile_esri_format.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('SHAPEFILE', resource_with_shapefile_esri_format_cleaned['format'])
 
@@ -209,7 +209,7 @@ class TestPlugin(unittest.TestCase):
             'media_type': None,
             'format': 'text (.txt)'
         }
-        resource_with_text_format_cleaned = pu._prepare_resource_format(
+        resource_with_text_format_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resource_with_text_format.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('TXT', resource_with_text_format_cleaned['format'])
 
@@ -218,6 +218,6 @@ class TestPlugin(unittest.TestCase):
             'media_type': None,
             'format': 'comma ...'
         }
-        resource_with_comma_format_cleaned = pu._prepare_resource_format(
+        resource_with_comma_format_cleaned = ogdch_plugin_utils._prepare_resource_format(
             resource_with_comma_format.copy(), format_mapping=ogdch_language_plugin.format_mapping)
         self.assertEquals('CSV', resource_with_comma_format_cleaned['format'])
