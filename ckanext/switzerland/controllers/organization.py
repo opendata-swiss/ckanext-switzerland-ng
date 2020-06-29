@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 import logging
-import os
 from urllib import urlencode
 from ckan.plugins.toolkit import abort
 import ckan.model as model
@@ -15,7 +14,6 @@ from ckan.lib.base import render
 from ckanext.hierarchy.controller import _children_name_list
 import ckan.controllers.organization as organization
 import ckanext.hierarchy.helpers as hierarchy_helpers
-import ckanext.switzerland.helpers.backend_helpers as ogdch_backend_helpers
 
 log = logging.getLogger(__name__)
 

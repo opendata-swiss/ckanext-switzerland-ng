@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 import logging
-import os
 from urllib import urlencode
 from six import string_types
 import ckan.model as model
@@ -12,7 +11,6 @@ import ckan.lib.helpers as h
 import ckan.authz as authz
 import ckan.lib.search as search
 import ckan.controllers.group as group
-import ckanext.switzerland.helpers.backend_helpers as ogdch_backend_helpers
 
 log = logging.getLogger(__name__)
 
