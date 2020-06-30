@@ -9,14 +9,10 @@ import ckanext.switzerland.helpers.plugin_utils as ogdch_plugin_utils
 import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
-import re
-from webhelpers.html import HTML
-from webhelpers import paginate
 import ckan.plugins as plugins
 from ckan.lib.plugins import DefaultTranslation
 import ckanext.xloader.interfaces as ix
 import ckan.plugins.toolkit as toolkit
-import ckan.lib.helpers as h
 import collections
 import os
 import logging
@@ -54,12 +50,12 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         return {
             'multiple_text': ogdch_validators.multiple_text,
             'multiple_text_output': ogdch_validators.multiple_text_output,
-            'multilingual_text_output': ogdch_validators.multilingual_text_output,
+            'multilingual_text_output': ogdch_validators.multilingual_text_output, # noqa
             'list_of_dicts': ogdch_validators.list_of_dicts,
             'timestamp_to_datetime': ogdch_validators.timestamp_to_datetime,
             'ogdch_language': ogdch_validators.ogdch_language,
-            'ogdch_unique_identifier': ogdch_validators.ogdch_unique_identifier,
-            'temporals_to_datetime_output': ogdch_validators.temporals_to_datetime_output,
+            'ogdch_unique_identifier': ogdch_validators.ogdch_unique_identifier, # noqa
+            'temporals_to_datetime_output': ogdch_validators.temporals_to_datetime_output, # noqa
         }
 
     # IFacets
@@ -105,8 +101,8 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         """
         return {
             'ogdch_dataset_count': ogdch_logic.ogdch_dataset_count,
-            'ogdch_dataset_terms_of_use': ogdch_logic.ogdch_dataset_terms_of_use,
-            'ogdch_dataset_by_identifier': ogdch_logic.ogdch_dataset_by_identifier,
+            'ogdch_dataset_terms_of_use': ogdch_logic.ogdch_dataset_terms_of_use, # noqa
+            'ogdch_dataset_by_identifier': ogdch_logic.ogdch_dataset_by_identifier, # noqa
             'ogdch_content_headers': ogdch_logic.ogdch_content_headers,
             'ogdch_autosuggest': ogdch_logic.ogdch_autosuggest,
         }
@@ -126,17 +122,17 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'localize_json_title': ogdch_frontend_helpers.localize_json_title,
             'get_frequency_name': ogdch_frontend_helpers.get_frequency_name,
             'get_political_level': ogdch_frontend_helpers.get_political_level,
-            'get_terms_of_use_icon': ogdch_frontend_helpers.get_terms_of_use_icon,
-            'get_dataset_terms_of_use': ogdch_frontend_helpers.get_dataset_terms_of_use,
-            'get_dataset_by_identifier': ogdch_frontend_helpers.get_dataset_by_identifier,
-            'get_readable_file_size': ogdch_frontend_helpers.get_readable_file_size,
+            'get_terms_of_use_icon': ogdch_frontend_helpers.get_terms_of_use_icon, # noqa
+            'get_dataset_terms_of_use': ogdch_frontend_helpers.get_dataset_terms_of_use, # noqa
+            'get_dataset_by_identifier': ogdch_frontend_helpers.get_dataset_by_identifier, # noqa
+            'get_readable_file_size': ogdch_frontend_helpers.get_readable_file_size, # noqa
             'get_piwik_config': ogdch_frontend_helpers.get_piwik_config,
-            'ogdch_localised_number': ogdch_frontend_helpers.ogdch_localised_number,
+            'ogdch_localised_number': ogdch_frontend_helpers.ogdch_localised_number, # noqa
             'ogdch_render_tree': ogdch_frontend_helpers.ogdch_render_tree,
             'ogdch_group_tree': ogdch_frontend_helpers.ogdch_group_tree,
-            'get_showcases_for_dataset': ogdch_frontend_helpers.get_showcases_for_dataset,
-            'get_terms_of_use_url': ogdch_frontend_helpers.get_terms_of_use_url,
-            'get_localized_newsletter_url': ogdch_frontend_helpers.get_localized_newsletter_url,
+            'get_showcases_for_dataset': ogdch_frontend_helpers.get_showcases_for_dataset, # noqa
+            'get_terms_of_use_url': ogdch_frontend_helpers.get_terms_of_use_url, # noqa
+            'get_localized_newsletter_url': ogdch_frontend_helpers.get_localized_newsletter_url, # noqa
             'ogdch_template_helper_get_active_class': ogdch_backend_helpers.ogdch_template_helper_get_active_class, # noqa
         }
 
@@ -192,7 +188,7 @@ class OgdchGroupPlugin(plugins.SingletonPlugin, OgdchMixin):
     def before_view(self, grp_dict):
         """localizes the grp_dict for web requests
         that are not api requests"""
-        grp_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=grp_dict)
+        grp_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=grp_dict) # noqa
         grp_dict['display_name'] = grp_dict['title']
         if ogdch_request_utils.request_is_api_request():
             return grp_dict
@@ -208,7 +204,7 @@ class OgdchOrganizationPlugin(plugins.SingletonPlugin, OgdchMixin):
     plugins.implements(plugins.IOrganizationController, inherit=True)
 
     def before_view(self, org_dict):
-        org_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=org_dict)
+        org_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=org_dict) # noqa
         org_dict['display_name'] = org_dict['title']
         if ogdch_request_utils.request_is_api_request():
             return org_dict
@@ -225,7 +221,7 @@ class OgdchResourcePlugin(plugins.SingletonPlugin, OgdchMixin):
 
     # IResourceController
     def before_show(self, res_dict):
-        res_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=res_dict)
+        res_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=res_dict) # noqa
         res_dict['display_name'] = res_dict['title']
         if ogdch_request_utils.request_is_api_request():
             return res_dict
@@ -248,8 +244,8 @@ class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
 
     def before_view(self, pkg_dict):
         """transform pkg dict before view"""
-        pkg_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=pkg_dict)
-        pkg_dict = ogdch_plugin_utils.package_map_ckan_default_fields(pkg_dict)
+        pkg_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=pkg_dict) # noqa
+        pkg_dict = ogdch_plugin_utils.package_map_ckan_default_fields(pkg_dict) # noqa
         pkg_dict['resources'] = [
             ogdch_format_utils.prepare_resource_format(
                 resource=resource,
@@ -261,7 +257,7 @@ class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
 
         request_lang = ogdch_request_utils.get_request_language()
 
-        pkg_dict = ogdch_localize_utils.localize_ckan_sub_dict(pkg_dict, request_lang)
+        pkg_dict = ogdch_localize_utils.localize_ckan_sub_dict(pkg_dict, request_lang) # noqa
         pkg_dict['resources'] = [
             ogdch_localize_utils.localize_ckan_sub_dict(
                 ckan_dict=resource,
@@ -275,7 +271,7 @@ class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
             for grp in pkg_dict.get('groups')
         ]
         if pkg_dict.get("organization"):
-            pkg_dict['organization'] = ogdch_localize_utils.localize_ckan_sub_dict(
+            pkg_dict['organization'] = ogdch_localize_utils.localize_ckan_sub_dict( # noqa
                 ckan_dict=pkg_dict['organization'],
                 lang_code=request_lang)
         return pkg_dict
@@ -287,14 +283,14 @@ class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
         and there we need all languages.
         -> find a solution to _prepare_package_json() in an API call.
         """
-        pkg_dict = ogdch_plugin_utils.ogdch_prepare_pkg_dict_for_api(pkg_dict)
+        pkg_dict = ogdch_plugin_utils.ogdch_prepare_pkg_dict_for_api(pkg_dict) # noqa
         return pkg_dict
 
     def before_index(self, search_data):
         """
         Search data before index
         """
-        search_data = ogdch_plugin_utils.ogdch_prepare_search_data_for_index(
+        search_data = ogdch_plugin_utils.ogdch_prepare_search_data_for_index( # noqa
             search_data=search_data,
             format_mapping=self.format_mapping
         )
@@ -304,7 +300,7 @@ class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
         """
         Adjust search parameters
         """
-        search_params = ogdch_plugin_utils.ogdch_adjust_search_params(search_params)
+        search_params = ogdch_plugin_utils.ogdch_adjust_search_params(search_params) # noqa
         return search_params
 
     # IXloader
@@ -322,4 +318,3 @@ class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
 
 class OgdchShowcasePlugin(ShowcasePlugin):
     pass
-
