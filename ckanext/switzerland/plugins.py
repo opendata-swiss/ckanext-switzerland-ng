@@ -100,7 +100,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         Expose new API methods
         """
         return {
-            'ogdch_dataset_count': ogdch_logic.ogdch_dataset_count,
+            'ogdch_counts': ogdch_logic.ogdch_counts,
             'ogdch_dataset_terms_of_use': ogdch_logic.ogdch_dataset_terms_of_use, # noqa
             'ogdch_dataset_by_identifier': ogdch_logic.ogdch_dataset_by_identifier, # noqa
             'ogdch_content_headers': ogdch_logic.ogdch_content_headers,
