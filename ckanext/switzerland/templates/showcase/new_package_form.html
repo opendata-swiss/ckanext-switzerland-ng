@@ -1,6 +1,7 @@
 {% ckan_extends %}
 
 {% block basic_fields %}
+    {% set lang = h.lang() %}
 
     {% block package_basic_fields_title %}
       {{ form.input('title', id='field-title', label=_('Title'), placeholder=_('eg. A descriptive title'), value=data.title, error=errors.title, classes=['control-full', 'control-large'], attrs={'data-module': 'slug-preview-target'}) }}
@@ -25,7 +26,7 @@
     {% endblock %}
 
     {% block dataset_fields %}
-      {% set groups = h.get_localized_group_list() %}
+      {% set groups = h.get_localized_group_list(lang) %}
       {% if groups %}
         <div class="form-group control-medium">
           <label class="control-label">{{ _('Categories') }}</label>
@@ -47,7 +48,7 @@
       <div class="controls">
         <select id="field-showcase_type" name="showcase_type" data-module="autocomplete">
           {% for type in h.showcase_types() %}
-            <option value="{{ type }}" {% if type == data.get('showcase_type') %}selected="selected"{% endif %}>{{ h.get_showcase_type_name(type) }}</option>
+            <option value="{{ type }}" {% if type == data.get('showcase_type') %}selected="selected"{% endif %}>{{ h.get_showcase_type_name(type, lang) }}</option>
           {% endfor %}
         </select>
       </div>

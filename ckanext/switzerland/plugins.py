@@ -116,7 +116,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         """
         return {
             'get_group_count': ogdch_frontend_helpers.get_group_count,
-            'get_app_count': ogdch_frontend_helpers.get_app_count,
             'get_localized_org': ogdch_frontend_helpers.get_localized_org,
             'localize_json_title': ogdch_frontend_helpers.localize_json_title,
             'get_frequency_name': ogdch_frontend_helpers.get_frequency_name,
@@ -326,7 +325,7 @@ class OgdchShowcasePlugin(ShowcasePlugin):
     def configure(self, config):
         super(OgdchShowcasePlugin, self).configure(config)
         # create vocabulary if necessary
-        sh.create_showcase_types()
+        ogdch_backend_helpers.create_showcase_types()
 
     # IDatasetForm
 
@@ -403,10 +402,13 @@ class OgdchShowcasePlugin(ShowcasePlugin):
 
     def get_helpers(self):
         helpers = super(OgdchShowcasePlugin, self).get_helpers()
-        helpers["showcase_types"] = sh.showcase_types
-        helpers["get_showcase_type_name"] = sh.get_showcase_type_name
-        helpers["get_localized_group_list"] = sh.get_localized_group_list
-        helpers["group_name_in_groups"] = sh.group_name_in_groups
+        helpers["showcase_types"] = ogdch_backend_helpers.showcase_types
+        helpers["get_showcase_type_name"] = \
+            ogdch_backend_helpers.get_showcase_type_name
+        helpers["get_localized_group_list"] = \
+            ogdch_backend_helpers.get_localized_group_list
+        helpers["group_name_in_groups"] = \
+            ogdch_backend_helpers.group_name_in_groups
 
         return helpers
 
