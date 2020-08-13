@@ -114,10 +114,8 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         Provide template helper functions
         """
         return {
-            'get_dataset_count': ogdch_frontend_helpers.get_dataset_count,
             'get_group_count': ogdch_frontend_helpers.get_group_count,
             'get_app_count': ogdch_frontend_helpers.get_app_count,
-            'get_org_count': ogdch_frontend_helpers.get_org_count,
             'get_localized_org': ogdch_frontend_helpers.get_localized_org,
             'localize_json_title': ogdch_frontend_helpers.localize_json_title,
             'get_frequency_name': ogdch_frontend_helpers.get_frequency_name,
