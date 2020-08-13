@@ -50,27 +50,6 @@ def get_group_count():
     return len(groups)
 
 
-def get_app_count():
-    result = _call_wp_api('app_statistics')
-    if result is not None:
-        return result['data']['app_count']
-    return 0
-
-
-def _call_wp_api(action):
-    api_url = tk.config.get('ckanext.switzerland.wp_ajax_url', None)
-    try:
-        """
-        this call does not verify the SSL cert, because it is missing on
-        the deployed server.
-        TODO: re-enable verification
-        """
-        r = requests.post(api_url, data={'action': action}, verify=False)
-        return r.json()
-    except:
-        return None
-
-
 def get_localized_org(org_id=None, include_datasets=False):
     if not org_id or org_id is None:
         return {}
@@ -310,18 +289,6 @@ def create_showcase_types():
     user = tk.get_action("get_site_user")({"ignore_auth": True}, ())
     context = {"user": user["name"]}
     try:
-        # TODO: this is a workaround copied from
-        # https://github.com/ckan/ckanext-dcat/commit/bd490115da8087a14b9a2ef603328e69535144bb
-        # It is necessary "until the core translation function defaults to the
-        # Flask one." When we upgrade CKAN to v2.9, we should try removing it.
-        from paste.registry import Registry
-        from ckan.lib.cli import MockTranslator
-        registry = Registry()
-        registry.prepare()
-        from pylons import translator
-        registry.register(translator, MockTranslator())
-        # End of workaround
-
         data = {"id": "showcase_types"}
         tk.get_action("vocabulary_show")(context, data)
         log.info("'showcase_types' vocabulary already exists, skipping")
@@ -352,3 +319,30 @@ def showcase_types():
 def get_showcase_type_name(showcase_type):
     type_string = showcase_types_mapping.get(showcase_type, showcase_type)
     return ogdch_loc_utils.get_localized_value(parse_json(type_string))
+
+
+def group_name_in_groups(group_name, groups):
+    for group in groups:
+        if group_name == group['name']:
+            return True
+    return False
+
+
+def get_localized_group_list():
+    """
+    Returns a list of dicts containing the id, name and localized title
+    for each group.
+    """
+    user = tk.get_action('get_site_user')({'ignore_auth': True}, {})
+    req_context = {'user': user['name']}
+    groups = tk.get_action('group_list')(req_context, {'all_fields': True})
+    group_list = []
+    for group in groups:
+        group_list.append({
+            'id': group['id'],
+            'name': group['name'],
+            'title': get_localized_value(group['title'], i18n.get_lang()),
+        })
+
+    group_list.sort(key=lambda group: strip_accents(group['title'].lower()), reverse=False)  # noqa
+    return group_list

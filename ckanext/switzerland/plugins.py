@@ -1,5 +1,6 @@
 # coding=UTF-8
 
+from ckan.common import OrderedDict
 from ckanext.showcase.plugin import ShowcasePlugin
 import ckanext.switzerland.helpers.validators as ogdch_validators
 from ckanext.switzerland import logic as ogdch_logic
@@ -335,7 +336,25 @@ class OgdchShowcasePlugin(ShowcasePlugin):
                 "showcase_type": [
                     toolkit.get_validator("ignore_missing"),
                     toolkit.get_converter("convert_to_extras"),
-                ]
+                ],
+                "groups": {
+                    "id": [
+                        toolkit.get_validator("ignore_missing"),
+                        toolkit.get_validator("unicode_safe"),
+                    ],
+                    "name": [
+                        toolkit.get_validator("ignore_missing"),
+                        toolkit.get_validator("unicode_safe"),
+                    ],
+                    "title": [
+                        toolkit.get_validator("ignore_missing"),
+                        toolkit.get_validator("unicode_safe"),
+                    ],
+                    "display_name": [
+                        toolkit.get_validator("ignore_missing"),
+                        toolkit.get_validator("unicode_safe"),
+                    ],
+                }
             }
         )
         return schema
@@ -357,7 +376,25 @@ class OgdchShowcasePlugin(ShowcasePlugin):
                 "showcase_type": [
                     toolkit.get_converter("convert_from_extras"),
                     toolkit.get_validator("ignore_missing"),
-                ]
+                ],
+                "groups": {
+                    "id": [
+                        toolkit.get_validator("ignore_missing"),
+                        toolkit.get_validator("unicode_safe"),
+                    ],
+                    "name": [
+                        toolkit.get_validator("ignore_missing"),
+                        toolkit.get_validator("unicode_safe"),
+                    ],
+                    "title": [
+                        toolkit.get_validator("ignore_missing"),
+                        toolkit.get_validator("unicode_safe"),
+                    ],
+                    "display_name": [
+                        toolkit.get_validator("ignore_missing"),
+                        toolkit.get_validator("unicode_safe"),
+                    ],
+                }
             }
         )
         return schema
@@ -368,6 +405,8 @@ class OgdchShowcasePlugin(ShowcasePlugin):
         helpers = super(OgdchShowcasePlugin, self).get_helpers()
         helpers["showcase_types"] = sh.showcase_types
         helpers["get_showcase_type_name"] = sh.get_showcase_type_name
+        helpers["get_localized_group_list"] = sh.get_localized_group_list
+        helpers["group_name_in_groups"] = sh.group_name_in_groups
 
         return helpers
 
@@ -377,10 +416,7 @@ class OgdchShowcasePlugin(ShowcasePlugin):
         if package_type != "showcase":
             return facets_dict
 
-        facets_dict = super(OgdchShowcasePlugin, self).dataset_facets(
-            facets_dict,
-            package_type
-        )
-        facets_dict["showcase_type"] = toolkit._("Type of content")
-
-        return facets_dict
+        return OrderedDict({
+            "groups": toolkit._("Categories"),
+            "showcase_type": toolkit._("Type of content")
+        })
