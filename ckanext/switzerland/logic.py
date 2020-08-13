@@ -7,7 +7,8 @@ from ckan.logic import ActionError, NotFound, ValidationError
 import ckan.plugins.toolkit as tk
 from ckan.lib.search.common import make_connection
 from ckanext.switzerland.helpers.request_utils import get_content_headers
-from ckanext.switzerland.helpers.frontend_helpers import get_dataset_count
+from ckanext.switzerland.helpers.logic_helpers import get_dataset_count,\
+    get_org_count
 
 import logging
 log = logging.getLogger(__name__)
@@ -18,9 +19,13 @@ RESULT_IDENTIFIER = 'result'
 
 
 @side_effect_free
-def ogdch_dataset_count(context, data_dict):
+def ogdch_counts(context, data_dict):
     '''
-    Return the total number of datasets and the number of dataset per group.
+    Return the following data about our ckan instance:
+    - total number of datasets
+    - number of datasets per group
+    - total number of showcases
+    - total number of organisations (including all levels of the hierarchy)
     '''
     user = tk.get_action('get_site_user')({'ignore_auth': True}, {})
     req_context = {'user': user['name']}
@@ -32,9 +37,10 @@ def ogdch_dataset_count(context, data_dict):
         group_count[group['name']] = group['package_count']
 
     return {
-        'total_count': get_dataset_count('dataset'), # noqa
+        'total_dataset_count': get_dataset_count('dataset'), # noqa
         'showcase_count': get_dataset_count('showcase'), # noqa
         'groups': group_count,
+        'organization_count': get_org_count(),
     }
 
 
