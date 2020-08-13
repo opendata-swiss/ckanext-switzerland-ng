@@ -257,6 +257,6 @@ def ogdch_adjust_search_params(search_params):
 
     # remove colon followed by a space from q to avoid false negatives
     q = search_params.get('q', '')
-    search_params['q'] = re.sub(":\s", " ", q)
+    search_params['q'] = re.sub(r":\s", " ", q)
 
     return search_params

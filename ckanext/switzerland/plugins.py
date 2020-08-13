@@ -1,5 +1,6 @@
 # coding=UTF-8
 
+from ckan.common import OrderedDict
 from ckanext.showcase.plugin import ShowcasePlugin
 import ckanext.switzerland.helpers.validators as ogdch_validators
 from ckanext.switzerland import logic as ogdch_logic
@@ -115,7 +116,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         """
         return {
             'get_group_count': ogdch_frontend_helpers.get_group_count,
-            'get_app_count': ogdch_frontend_helpers.get_app_count,
             'get_localized_org': ogdch_frontend_helpers.get_localized_org,
             'localize_json_title': ogdch_frontend_helpers.localize_json_title,
             'get_frequency_name': ogdch_frontend_helpers.get_frequency_name,
@@ -315,4 +315,110 @@ class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
 
 
 class OgdchShowcasePlugin(ShowcasePlugin):
-    pass
+    plugins.implements(plugins.IConfigurable, inherit=True)
+    plugins.implements(plugins.IDatasetForm, inherit=True)
+    plugins.implements(plugins.ITemplateHelpers, inherit=True)
+    plugins.implements(plugins.IFacets, inherit=True)
+
+    # IConfigurable
+
+    def configure(self, config):
+        super(OgdchShowcasePlugin, self).configure(config)
+        # create vocabulary if necessary
+        ogdch_backend_helpers.create_showcase_types()
+
+    # IDatasetForm
+
+    def _modify_package_schema(self, schema):
+        schema.update(
+            {
+                "showcase_type": [
+                    toolkit.get_validator("ignore_missing"),
+                    toolkit.get_converter("convert_to_extras"),
+                ],
+                "groups": {
+                    "id": [
+                        toolkit.get_validator("ignore_missing"),
+                        toolkit.get_validator("unicode_safe"),
+                    ],
+                    "name": [
+                        toolkit.get_validator("ignore_missing"),
+                        toolkit.get_validator("unicode_safe"),
+                    ],
+                    "title": [
+                        toolkit.get_validator("ignore_missing"),
+                        toolkit.get_validator("unicode_safe"),
+                    ],
+                    "display_name": [
+                        toolkit.get_validator("ignore_missing"),
+                        toolkit.get_validator("unicode_safe"),
+                    ],
+                }
+            }
+        )
+        return schema
+
+    def create_package_schema(self):
+        schema = super(OgdchShowcasePlugin, self).create_package_schema()
+        schema = self._modify_package_schema(schema)
+        return schema
+
+    def update_package_schema(self):
+        schema = super(OgdchShowcasePlugin, self).update_package_schema()
+        schema = self._modify_package_schema(schema)
+        return schema
+
+    def show_package_schema(self):
+        schema = super(OgdchShowcasePlugin, self).show_package_schema()
+        schema.update(
+            {
+                "showcase_type": [
+                    toolkit.get_converter("convert_from_extras"),
+                    toolkit.get_validator("ignore_missing"),
+                ],
+                "groups": {
+                    "id": [
+                        toolkit.get_validator("ignore_missing"),
+                        toolkit.get_validator("unicode_safe"),
+                    ],
+                    "name": [
+                        toolkit.get_validator("ignore_missing"),
+                        toolkit.get_validator("unicode_safe"),
+                    ],
+                    "title": [
+                        toolkit.get_validator("ignore_missing"),
+                        toolkit.get_validator("unicode_safe"),
+                    ],
+                    "display_name": [
+                        toolkit.get_validator("ignore_missing"),
+                        toolkit.get_validator("unicode_safe"),
+                    ],
+                }
+            }
+        )
+        return schema
+
+    # ITemplateHelpers
+
+    def get_helpers(self):
+        helpers = super(OgdchShowcasePlugin, self).get_helpers()
+        helpers["showcase_types"] = ogdch_backend_helpers.showcase_types
+        helpers["get_showcase_type_name"] = \
+            ogdch_backend_helpers.get_showcase_type_name
+        helpers["get_localized_group_list"] = \
+            ogdch_backend_helpers.get_localized_group_list
+        helpers["group_name_in_groups"] = \
+            ogdch_backend_helpers.group_name_in_groups
+
+        return helpers
+
+    # IFacets
+
+    def dataset_facets(self, facets_dict, package_type):
+        if package_type != "showcase":
+            return facets_dict
+
+        return OrderedDict({
+            "groups": toolkit._("Categories"),
+            "showcase_type": toolkit._("Type of content")
+        })

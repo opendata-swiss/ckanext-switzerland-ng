@@ -5,7 +5,6 @@ are used in frontend templates
 import ckan.plugins.toolkit as tk
 import ckan.logic as logic
 from ckan import model as model
-import requests
 import json
 from ckan.common import _
 from babel import numbers
@@ -39,27 +38,6 @@ def get_group_count():
     return len(groups)
 
 
-def get_app_count():
-    result = _call_wp_api('app_statistics')
-    if result is not None:
-        return result['data']['app_count']
-    return 0
-
-
-def _call_wp_api(action):
-    api_url = tk.config.get('ckanext.switzerland.wp_ajax_url', None)
-    try:
-        """
-        this call does not verify the SSL cert, because it is missing on
-        the deployed server.
-        TODO: re-enable verification
-        """
-        r = requests.post(api_url, data={'action': action}, verify=False)
-        return r.json()
-    except:
-        return None
-
-
 def get_localized_org(org_id=None, include_datasets=False):
     if not org_id or org_id is None:
         return {}
@@ -88,7 +66,7 @@ def localize_json_title(facet_item):
             lang_code=lang(),
             default=facet_item['display_name']
         )
-    except:
+    except BaseException:
         return facet_item['display_name']
 
 

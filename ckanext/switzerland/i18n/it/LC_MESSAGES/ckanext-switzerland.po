@@ -255,8 +255,8 @@ msgid "Learn to publish data"
 msgstr "Pubblica dei dati"
 
 #: ckanext/switzerland/templates/footer.html:11
-msgid "Share your application"
-msgstr "Condividi un’applicazione"
+msgid "Share your showcase"
+msgstr "Condividi il tuo showcase"
 
 #: ckanext/switzerland/templates/footer_ogdch.html:16
 msgid "NewsMail Open Government Data"
@@ -283,10 +283,10 @@ msgstr[0] "Categoria"
 msgstr[1] "Categorie"
 
 #: ckanext/switzerland/templates/footer.html:57
-msgid "Application"
-msgid_plural "Applications"
-msgstr[0] "Applicazione"
-msgstr[1] "Applicazioni"
+msgid "Showcase"
+msgid_plural "Showcases"
+msgstr[0] "Showcase"
+msgstr[1] "Showcases"
 
 #: ckanext/switzerland/templates/footer.html:63
 msgid "A joint project of the Confederation and the cantons"
@@ -335,8 +335,15 @@ msgstr "Dati"
 
 #: ckanext/switzerland/templates/footer.html:86
 #: ckanext/switzerland/templates/header.html:37
-msgid "Applications"
-msgstr "Applicazioni"
+#: ckanext/switzerland/templates/package/dataset_showcase_list.html:3
+#: ckanext/switzerland/templates/package/snippets/showcases_list.html:15
+#: ckanext/switzerland/templates/showcase/read.html:6
+#: ckanext/switzerland/templates/showcase/read.html:28
+#: ckanext/switzerland/templates/showcase/search.html:4
+#: ckanext/switzerland/templates/showcase/search.html:7
+#: ckanext/switzerland/templates/showcase/search.html:11
+msgid "Showcases"
+msgstr "Showcases"
 
 #: ckanext/switzerland/templates/footer.html:88
 msgid "Legal framework"
@@ -647,3 +654,70 @@ msgstr "Nessuna organizzazione trovata"
 #~ msgid "unexpected choice \"%s\""
 #~ msgstr "selezione inattesa \"%s\""
 
+#: ckanext/switzerland/plugin.py:822
+msgid "Type of content"
+msgstr "Tipo di contenuto"
+
+#: ckanext/switzerland/helpers.py:36
+msgid "Showcase"
+msgstr "Showcase"
+
+#: ckanext/switzerland/helpers.py:37
+msgid "Data visualization"
+msgstr "Visualizzazione di dati"
+
+#: ckanext/switzerland/helpers.py:38
+msgid "Event"
+msgstr "Manifestazione"
+
+#: ckanext/switzerland/helpers.py:39
+msgid "Blog and media article"
+msgstr "Blog/articolo"
+
+#: ckanext/switzerland/helpers.py:40
+msgid "Paper"
+msgstr "Articolo scientifico"
+
+#: ckanext/switzerland/helpers.py:41
+msgid "Best practice"
+msgstr "Best practice"
+
+#: ckanext/switzerland/templates/showcase/snippets/search_box.html:25
+msgid "Search showcases..."
+msgstr "Cerca showcases..."
+
+#: ckanext/switzerland/templates/showcase/snippets/showcase_info.html:55
+msgid "Datasets in Showcase"
+msgstr "Dataset in Showcase"
+
+#: ckanext/switzerland/templates/showcase/snippets/showcase_info.html:65
+msgid "There are no Datasets in this Showcase"
+msgstr "Non ci sono Dataset in questo Showcase"
+
+#: ckanext/switzerland/templates/showcase/snippets/showcase_item_small.html:30
+msgid "This showcase has no description"
+msgstr "Questo showcase non ha descrizione"
+
+#: ckanext/switzerland/templates/showcase/snippets/showcase_item_small.html:46
+msgid "Remove dataset from this showcase"
+msgstr "Elimina il dataset da questo showcase"
+
+#: ckanext/switzerland/templates/showcase/snippets/showcase_search_result_text.html:7
+msgid "{number} showcase found for '{query}'"
+msgid_plural "{number} showcases found for '{query}'"
+msgstr[0] "{number} showcase trovato per '{query}'"
+msgstr[1] "{number} showcases trovato per '{query}'"
+
+#: ckanext/switzerland/templates/showcase/snippets/showcase_search_result_text.html:8
+msgid "No showcase found for '{query}'"
+msgstr "Nessuno showcase trovato per '{query}'"
+
+#: ckanext/switzerland/templates/showcase/snippets/showcase_search_result_text.html:9
+msgid "{number} showcase found"
+msgid_plural "{number} showcases found"
+msgstr[0] "{number} showcase trovato"
+msgstr[1] "{number} showcases trovato"
+
+#: ckanext/switzerland/templates/showcase/snippets/showcase_search_result_text.html:10
+msgid "No showcase found"
+msgstr "Nessuno showcase trovato"

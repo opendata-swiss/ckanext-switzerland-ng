@@ -1,3 +1,5 @@
+# coding=UTF-8
+
 """
 helpers belong in this file if they are only
 used in backend templates
@@ -6,12 +8,23 @@ import logging
 from urlparse import urlparse
 from ckan.common import session
 from ckan.authz import auth_is_loggedin_user
+import ckan.plugins.toolkit as tk
+import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 
 log = logging.getLogger(__name__)
 
 OGDCH_USER_VIEW_CHOICE = 'user_view_choice'
 OGDCH_USER_VIEW_CHOICE_FRONTEND = 'frontend'
 OGDCH_USER_VIEW_CHOICE_BACKEND = 'backend'
+
+showcase_types_mapping = {
+    "application": u'{"fr": "Application", "de": "Applikation", "en": "Application", "it": "Applicazione"}', # noqa
+    "data_visualization": u'{"fr": "Visualisation de donées", "de": "Daten-Visualisierung", "en": "Data visualization", "it": "Visualizzazione di dati"}', # noqa
+    "event": u'{"fr": "Evènement", "de": "Veranstaltung", "en": "Event", "it": "Manifestazione"}', # noqa
+    "blog_and_media_articles": u'{"fr": "Article blogs et médias", "de": "Blog und Medienartikel", "en": "Blog and media article", "it": "Blog/articolo"}', # noqa
+    "paper": u'{"fr": "Article scientifique", "de": "Wissenschaftliche Arbeit", "en": "Paper", "it": "Articolo scientifico"}', # noqa
+    "best_practice": u'{"fr": "Best practice", "de": "Best practice", "en": "Best practice", "it": "Best practice"}', # noqa
+}
 
 
 def ogdch_template_helper_get_active_class(active_url, section):
@@ -39,3 +52,75 @@ def ogdch_template_choice(template_frontend, template_backend):
         return template_frontend
     else:
         return template_backend
+
+
+def create_showcase_types():
+    """
+    Create tags and vocabulary for showcase types, if they don't exist already.
+    """
+    user = tk.get_action("get_site_user")({"ignore_auth": True}, ())
+    context = {"user": user["name"]}
+    try:
+        data = {"id": "showcase_types"}
+        tk.get_action("vocabulary_show")(context, data)
+        log.info("'showcase_types' vocabulary already exists, skipping")
+    except tk.ObjectNotFound:
+        log.info("Creating vocab 'showcase_types'")
+        data = {"name": "showcase_types"}
+        vocab = tk.get_action("vocabulary_create")(context, data)
+        for tag in showcase_types_mapping.keys():
+            log.info("Adding tag {0} to vocab 'showcase_types'".format(tag))
+            data = {"name": tag, "vocabulary_id": vocab["id"]}
+            tk.get_action("tag_create")(context, data)
+
+
+def showcase_types():
+    """
+    Return the list of showcase types from the showcase_types vocabulary.
+    """
+    create_showcase_types()
+    try:
+        showcase_types = tk.get_action("tag_list")(
+            data_dict={"vocabulary_id": "showcase_types"}
+        )
+        return showcase_types
+    except tk.ObjectNotFound:
+        return None
+
+
+def get_showcase_type_name(showcase_type, lang_code):
+    type_string = showcase_types_mapping.get(showcase_type, showcase_type)
+    return ogdch_localize_utils.get_localized_value_from_json(
+        type_string,
+        lang_code
+    )
+
+
+def group_name_in_groups(group_name, groups):
+    for group in groups:
+        if group_name == group['name']:
+            return True
+    return False
+
+
+def get_localized_group_list(lang_code):
+    """
+    Returns a list of dicts containing the id, name and localized title
+    for each group.
+    """
+    user = tk.get_action('get_site_user')({'ignore_auth': True}, {})
+    req_context = {'user': user['name']}
+    groups = tk.get_action('group_list')(req_context, {'all_fields': True})
+    group_list = []
+    for group in groups:
+        group_list.append({
+            'id': group['id'],
+            'name': group['name'],
+            'title': ogdch_localize_utils.get_localized_value(
+                group['title'],
+                lang_code
+            ),
+        })
+
+    group_list.sort(key=lambda group: strip_accents(group['title'].lower()), reverse=False)  # noqa
+    return group_list
