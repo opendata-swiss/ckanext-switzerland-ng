@@ -106,6 +106,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_dataset_by_identifier': ogdch_logic.ogdch_dataset_by_identifier, # noqa
             'ogdch_content_headers': ogdch_logic.ogdch_content_headers,
             'ogdch_autosuggest': ogdch_logic.ogdch_autosuggest,
+            'ogdch_package_show': ogdch_logic.ogdch_package_show,
         }
 
     # ITemplateHelpers
@@ -128,7 +129,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_localised_number': ogdch_frontend_helpers.ogdch_localised_number, # noqa
             'ogdch_render_tree': ogdch_frontend_helpers.ogdch_render_tree,
             'ogdch_group_tree': ogdch_frontend_helpers.ogdch_group_tree,
-            'get_showcases_for_dataset': ogdch_frontend_helpers.get_showcases_for_dataset, # noqa
             'get_terms_of_use_url': ogdch_frontend_helpers.get_terms_of_use_url, # noqa
             'get_localized_newsletter_url': ogdch_frontend_helpers.get_localized_newsletter_url, # noqa
             'ogdch_template_helper_get_active_class': ogdch_backend_helpers.ogdch_template_helper_get_active_class, # noqa
