@@ -4,7 +4,6 @@ are used in frontend templates
 """
 import ckan.plugins.toolkit as tk
 import ckan.logic as logic
-from ckan import model as model
 import json
 from ckan.common import _
 from babel import numbers
@@ -241,22 +240,6 @@ def get_sorted_orgs_by_translated_title(organizations):
 # See: http://stackoverflow.com/a/518232
 def strip_accents(s):
    return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')  # noqa
-
-
-def get_showcases_for_dataset(id):
-    '''
-    Return a list of showcases a dataset is associated with
-    '''
-    context = {'model': model, 'session': model.Session,
-               'user': tk.c.user or tk.c.author, 'for_view': True,
-               'auth_user_obj': tk.c.userobj}
-    data_dict = {'package_id': id}
-
-    try:
-        return tk.get_action('ckanext_package_showcase_list')(
-            context, data_dict)
-    except logic.NotFound:
-        return None
 
 
 def get_localized_newsletter_url():
