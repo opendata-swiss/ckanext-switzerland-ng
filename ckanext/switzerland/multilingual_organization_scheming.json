@@ -6,16 +6,6 @@
   "form_languages": ["de", "fr", "it", "en"],
   "fields": [
     {
-      "field_name": "title",
-      "label": {
-        "en": "Title",
-        "de": "Titel",
-        "fr": "Titre",
-        "it": "Titolo"
-      },
-      "preset": "multilingual_text"
-    },
-    {
       "field_name": "display_name",
       "label": {
         "en": "Display name",
@@ -26,14 +16,14 @@
       "preset": "multilingual_output"
     },
     {
-      "field_name": "name",
+      "field_name": "title",
       "label": {
-        "en": "Slug",
-        "de": "Slug",
-        "fr": "Slug",
-        "it": "Slug"
+        "en": "Title",
+        "de": "Titel",
+        "fr": "Titre",
+        "it": "Titolo"
       },
-      "preset": "group_slug"
+      "preset": "multilingual_text"
     },
     {
       "field_name": "description",
@@ -43,7 +33,39 @@
         "fr": "Description",
         "it": "Descrizione"
       },
-      "preset": "multilingual_text"
+      "preset": "multilingual_markdown"
+    },
+    {
+      "field_name": "parent",
+      "label": {
+        "en": "Parent",
+        "de": "Übergeordnete Organisation",
+        "fr": "Organisation de Parent",
+        "it": "Organizzazione Parent"
+      },
+      "preset": "select",
+      "choices": [
+        {
+          "value": "bactrian",
+          "label": "Bactrian Camel"
+        }
+      ]
+    },
+    {
+      "field_name": "political_level",
+      "label": {
+        "en": "Political level",
+        "de": "Politische Ebene",
+        "fr": "Entité politique",
+        "it": "Livello politico"
+      },
+      "preset": "select",
+      "choices": [
+        {
+          "value": "bactrian",
+          "label": "Bactrian Camel"
+        }
+      ]
     },
     {
       "field_name": "url",
@@ -66,22 +88,14 @@
       "form_placeholder": "http://example.com/my-image.jpg"
     },
     {
-      "field_name": "political_level",
+      "field_name": "name",
       "label": {
-        "en": "Political level",
-        "de": "Politische Ebene",
-        "fr": "Entité politique",
-        "it": "Livello politico"
-      }
-    },
-    {
-      "field_name": "parent",
-      "label": {
-        "en": "Parent",
-        "de": "Übergeordnete Organisation",
-        "fr": "Organisation de Parent",
-        "it": "Organizzazione Parent"
-      }
+        "en": "Slug",
+        "de": "Slug",
+        "fr": "Slug",
+        "it": "Slug"
+      },
+      "preset": "group_slug"
     }
   ]
 }
