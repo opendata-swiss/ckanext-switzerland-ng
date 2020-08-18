@@ -44,12 +44,7 @@
         "it": "Organizzazione Parent"
       },
       "preset": "select",
-      "choices": [
-        {
-          "value": "bactrian",
-          "label": "Bactrian Camel"
-        }
-      ]
+      "choices_helper": "ogdch_get_organization_field_list"
     },
     {
       "field_name": "political_level",
@@ -60,12 +55,7 @@
         "it": "Livello politico"
       },
       "preset": "select",
-      "choices": [
-        {
-          "value": "bactrian",
-          "label": "Bactrian Camel"
-        }
-      ]
+      "choices_helper": "ogdch_get_political_level_field_list"
     },
     {
       "field_name": "url",
