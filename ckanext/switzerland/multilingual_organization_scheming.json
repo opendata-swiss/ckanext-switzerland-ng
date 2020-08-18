@@ -43,8 +43,7 @@
         "fr": "Organisation de Parent",
         "it": "Organizzazione Parent"
       },
-      "preset": "select",
-      "choices_helper": "ogdch_get_organization_field_list"
+      "form_snippet": "org_hierarchy.html"
     },
     {
       "field_name": "political_level",
