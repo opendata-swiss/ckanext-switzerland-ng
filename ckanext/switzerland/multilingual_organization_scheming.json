@@ -13,7 +13,8 @@
         "fr": "Nom d'affichage",
         "it": "Nome visualizzato"
       },
-      "preset": "multilingual_output"
+      "preset": "multilingual_output",
+      "form_snippet": "display_name.html"
     },
     {
       "field_name": "title",
