@@ -23,7 +23,7 @@
         "fr": "Nom d'affichage",
         "it": "Nome visualizzato"
       },
-      "preset": "multilingual_output"
+      "preset": "multilingual_text"
     },
     {
       "field_name": "notes",
@@ -249,10 +249,10 @@
     {
       "field_name": "identifier",
       "label": {
-        "en": "Identifier",
-        "de": "Identifier",
-        "fr": "Identifier",
-        "it": "Identifier"
+        "en": "Identifier (Permalink)",
+        "de": "Identifier (Permalink)",
+        "fr": "Identifier (Permalink)",
+        "it": "Identifier (Permalink)"
       }
     },
     {
@@ -273,7 +273,7 @@
         "fr": "Nom d'affichage",
         "it": "Nome visualizzato"
       },
-      "preset": "multilingual_output"
+      "preset": "multilingual_text"
     },
     {
       "field_name": "description",
