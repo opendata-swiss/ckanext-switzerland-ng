@@ -20,6 +20,43 @@ log = logging.getLogger(__name__)
 
 class OgdchOrganizationController(organization.OrganizationController):
 
+    def new(self, data=None, errors=None, error_summary=None):
+        if data and 'type' in data:
+            group_type = data['type']
+        else:
+            group_type = self._guess_group_type(True)
+        if data:
+            data['type'] = group_type
+
+        context = {'model': model, 'session': model.Session,
+                   'user': c.user,
+                   'save': 'save' in request.params,
+                   'parent': request.params.get('parent', None)}
+        try:
+            self._check_access('group_create', context)
+        except NotAuthorized:
+            abort(403, _('Unauthorized to create a group'))
+
+        if context['save'] and not data and request.method == 'POST':
+            return self._save_new(context, group_type)
+
+        data = data or {}
+        if not data.get('image_url', '').startswith('http'):
+            data.pop('image_url', None)
+
+        errors = errors or {}
+        error_summary = error_summary or {}
+        vars = {'data': data, 'errors': errors,
+                'error_summary': error_summary, 'action': 'new',
+                'group_type': group_type}
+
+        self._setup_template_variables(context, data, group_type=group_type)
+        c.form = render(self._group_form(group_type=group_type),
+                        extra_vars=vars)
+        return render(self._new_template(group_type),
+                      extra_vars={'group_type': group_type})
+
+
     def _read(self, id, limit, group_type):  # noqa
         """
         This controller replaces the HierarchyOrganizationController controller
