@@ -22,6 +22,10 @@ log = logging.getLogger(__name__)
 class OgdchOrganizationController(organization.OrganizationController):
 
     def new(self, data=None, errors=None, error_summary=None):
+        """
+        Overwritten from ckan's GroupController so that we can upload images
+        as well as just including an image url.
+        """
         if data and 'type' in data:
             group_type = data['type']
         else:

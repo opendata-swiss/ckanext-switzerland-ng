@@ -3,7 +3,7 @@
   "organization_type": "organization",
   "about": "Multilingual organization schema",
   "about_url": "https://github.com/ogdch/ckanext-switzerland",
-  "form_languages": ["de", "fr", "it", "en"],
+  "form_languages": ["en", "de", "fr", "it"],
   "fields": [
     {
       "field_name": "display_name",
@@ -14,7 +14,7 @@
         "it": "Nome visualizzato"
       },
       "preset": "multilingual_output",
-      "form_snippet": "display_name.html"
+      "form_snippet": null
     },
     {
       "field_name": "title",
@@ -25,6 +25,16 @@
         "it": "Titolo"
       },
       "preset": "multilingual_text"
+    },
+    {
+      "field_name": "name",
+      "label": {
+        "en": "Slug",
+        "de": "Slug",
+        "fr": "Slug",
+        "it": "Slug"
+      },
+      "preset": "group_slug"
     },
     {
       "field_name": "description",
@@ -77,16 +87,6 @@
       },
       "form_snippet": "image_upload.html",
       "form_placeholder": "http://example.com/my-image.jpg"
-    },
-    {
-      "field_name": "name",
-      "label": {
-        "en": "Slug",
-        "de": "Slug",
-        "fr": "Slug",
-        "it": "Slug"
-      },
-      "preset": "group_slug"
     }
   ]
 }
