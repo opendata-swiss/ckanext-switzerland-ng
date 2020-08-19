@@ -75,6 +75,7 @@
         "fr": "URL d'image",
         "it": "URL d'immagine"
       },
+      "form_snippet": "image_upload.html",
       "form_placeholder": "http://example.com/my-image.jpg"
     },
     {

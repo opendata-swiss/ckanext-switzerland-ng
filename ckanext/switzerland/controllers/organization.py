@@ -8,6 +8,7 @@ from ckan.logic import get_action, NotAuthorized, ValidationError
 from ckan.lib.plugins import lookup_group_controller
 from ckan.common import c, config, _, request, OrderedDict
 import ckan.lib.helpers as h
+import ckan.lib.uploader as uploader
 import ckan.authz as authz
 import ckan.lib.search as search
 from ckan.lib.base import render
@@ -39,6 +40,11 @@ class OgdchOrganizationController(organization.OrganizationController):
 
         if context['save'] and not data and request.method == 'POST':
             return self._save_new(context, group_type)
+
+        upload = uploader.get_uploader('showcase')
+        upload.update_data_dict(data, 'image_url',
+                                'image_upload', 'clear_upload')
+        upload.upload(uploader.get_max_image_size())
 
         data = data or {}
         if not data.get('image_url', '').startswith('http'):
