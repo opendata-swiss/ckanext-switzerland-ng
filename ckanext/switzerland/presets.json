@@ -50,6 +50,14 @@
       }
     },
     {
+      "preset_name": "multilingual_text_full",
+      "values": {
+        "form_snippet": "fluent_text_full.html",
+        "validators": "fluent_text",
+        "output_validators": "multilingual_text_output"
+      }
+    },
+    {
       "preset_name": "multilingual_markdown",
       "values": {
         "form_snippet": "fluent_markdown.html",

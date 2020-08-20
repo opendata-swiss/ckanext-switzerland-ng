@@ -24,7 +24,7 @@
         "fr": "Titre",
         "it": "Titolo"
       },
-      "preset": "multilingual_text"
+      "preset": "multilingual_text_full"
     },
     {
       "field_name": "name",
