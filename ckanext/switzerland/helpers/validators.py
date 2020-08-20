@@ -173,8 +173,33 @@ def ogdch_language(field, schema):
 @scheming_validator
 def ogdch_unique_identifier(field, schema):
     def validator(key, data, errors, context):
-        id = data.get(key[:-1] + ('id',))
         identifier = data.get(key[:-1] + ('identifier',))
+        id = data.get(key[:-1] + ('id',))
+        owner_org = data.get(key[:-1] + ('owner_org',))
+        if not identifier:
+            raise df.Invalid(
+                _('Identifier of the dataset is missing.')
+            )
+        identifier_parts = identifier.split('@')
+        if len(identifier_parts) == 1:
+            raise df.Invalid(
+                _('Identifier must be of the form <id>@<slug> where slug is the url of the organization.')  # noqa
+            )
+        owner_slug = identifier_parts[1]
+        try:
+            result = get_action('organization_show')(
+                {},
+                {'id': owner_slug}
+            )
+            if result['id'] != owner_org:
+                raise df.Invalid(
+                    _('Organisation slug of the identifier "{}" does not match the organisation of the dataset.'.format(owner_slug))  # noqa
+                )
+        except NotFound:
+            raise df.Invalid(
+                _('No organizations was found with the slug "{}".'.format(owner_slug))  # noqa
+            )
+
         try:
             result = get_action('ogdch_dataset_by_identifier')(
                 {},
