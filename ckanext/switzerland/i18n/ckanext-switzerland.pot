@@ -705,3 +705,18 @@ msgstr[1] ""
 msgid "No organizations found"
 msgstr ""
 
+#: ckanext/switzerland/validators:180
+msgid "Identifier of the dataset is missing."
+msgstr ""
+
+#: ckanext/switzerland/validators:185
+msgid "Identifier must be of the form <id>@<slug> where slug is the url of the organization."
+msgstr ""
+
+#: ckanext/switzerland/validators:195
+msgid "No organizations was found with the slug {owner_slug}"
+msgstr ""
+
+#: ckanext/switzerland/validators:199
+msgid "No validator yet implemented. Implement validation before the dataset can be saved!"
+msgstr ""
