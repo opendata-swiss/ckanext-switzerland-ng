@@ -13,7 +13,8 @@
         "fr": "Identifier",
         "it": "Identifier"
       },
-      "validators": "scheming_required ogdch_unique_identifier"
+      "validators": "scheming_required ogdch_unique_identifier",
+      "help_text": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden."
     },
     {
       "field_name": "display_name",
