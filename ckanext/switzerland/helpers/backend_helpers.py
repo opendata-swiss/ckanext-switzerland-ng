@@ -152,9 +152,12 @@ def get_localized_group_list(lang_code):
 def ogdch_get_organization_field_list(field):
     user = tk.get_action('get_site_user')({'ignore_auth': True}, {})
     req_context = {'user': user['name']}
-    orgs = tk.get_action('organization_list')(req_context, {'all_fields': True})
+    orgs = tk.get_action('organization_list')(
+        req_context,
+        {'all_fields': True}
+    )
 
-    return [{'value': org['name'], 'label': ogdch_localize_utils.get_localized_value_from_json(
+    return [{'value': org['name'], 'label': ogdch_localize_utils.get_localized_value_from_json( # noqa
         org['title'],
         i18n.get_lang()
     )} for org in orgs]
