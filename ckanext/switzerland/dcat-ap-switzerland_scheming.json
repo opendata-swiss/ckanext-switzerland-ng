@@ -17,6 +17,16 @@
       "help_text": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden."
     },
     {
+      "field_name": "owner_org",
+      "label": {
+        "en": "Organization",
+        "de": "Organisation",
+        "fr": "Organisation",
+        "it": "Organizzazione"
+      },
+      "preset": "dataset_organization"
+    },
+    {
       "field_name": "display_name",
       "label": {
         "en": "Display name",
@@ -85,16 +95,6 @@
         "it": "Data di modifica"
       },
       "preset": "ogdch_date"
-    },
-    {
-      "field_name": "owner_org",
-      "label": {
-        "en": "Organization",
-        "de": "Organisation",
-        "fr": "Organisation",
-        "it": "Organizzazione"
-      },
-      "preset": "dataset_organization"
     },
     {
       "field_name": "publishers",
