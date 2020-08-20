@@ -105,6 +105,28 @@
       "validators": "ogdch_not_yet_implemented"
     },
     {
+      "field_name": "accrual_periodicity",
+      "label": {
+        "en": "Update interval",
+        "de": "Aktualisierungsintervall",
+        "fr": "Intervalle d'actualisation",
+        "it": "Intervallo di aggiornamento"
+      },
+      "display_snippet": "periodicity.html",
+      "validators": "ogdch_not_yet_implemented"
+    },
+    {
+      "field_name": "temporals",
+      "label": {
+        "en": "Temporal coverage",
+        "de": "Zeitliche Abdeckung",
+        "fr": "Couverture temporelle",
+        "it": "Copertura temporale"
+      },
+      "preset": "temporals",
+      "validators": "ogdch_not_yet_implemented"
+    },
+    {
       "field_name": "publishers",
       "label": {
         "en": "Publishers",
@@ -228,28 +250,6 @@
         "fr": "Couverture",
         "it": "Copertura"
       },
-      "validators": "ogdch_not_yet_implemented"
-    },
-    {
-      "field_name": "temporals",
-      "label": {
-        "en": "Temporal coverage",
-        "de": "Zeitliche Abdeckung",
-        "fr": "Couverture temporelle",
-        "it": "Copertura temporale"
-      },
-      "preset": "temporals",
-      "validators": "ogdch_not_yet_implemented"
-    },
-    {
-      "field_name": "accrual_periodicity",
-      "label": {
-        "en": "Update interval",
-        "de": "Aktualisierungsintervall",
-        "fr": "Intervalle d'actualisation",
-        "it": "Intervallo di aggiornamento"
-      },
-      "display_snippet": "periodicity.html",
       "validators": "ogdch_not_yet_implemented"
     },
     {
