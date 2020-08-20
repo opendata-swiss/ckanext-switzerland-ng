@@ -724,3 +724,15 @@ msgstr ""
 #: ckanext/switzerland/helpers/validators.py:214
 msgid "A value is required in at least one language"
 msgstr ""
+
+#: ckanext/switzerland/validators:180
+msgid "Identifier of the dataset is missing."
+msgstr ""
+
+#: ckanext/switzerland/validators:185
+msgid "Identifier must be of the form <id>@<slug> where slug is the url of the organization."
+msgstr ""
+
+#: ckanext/switzerland/validators:195
+msgid "No organizations was found with the slug {owner_slug}"
+msgstr ""
