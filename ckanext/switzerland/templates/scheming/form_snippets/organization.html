@@ -6,7 +6,7 @@
   {% block organization_option scoped %}
     <option value="{{ organization.id }}"{%
       if selected_org %} selected="selected"{% endif
-      %}>{{h.localize_json_title(organization)}}</option>
+      %}>{{h.localize_json_title(organization)}} - (@{{ organization.name }})</option>
   {% endblock %}
 {% endmacro %}
 

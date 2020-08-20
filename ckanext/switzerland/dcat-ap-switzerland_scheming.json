@@ -57,8 +57,7 @@
         "fr": "Titre",
         "it": "Titolo"
       },
-      "preset": "multilingual_text",
-      "validators": "ogdch_not_yet_implemented"
+      "preset": "multilingual_text"
     },
     {
       "field_name": "name",
