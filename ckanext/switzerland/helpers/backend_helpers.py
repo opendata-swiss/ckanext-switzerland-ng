@@ -137,11 +137,11 @@ def get_localized_group_list(lang_code):
         group_list.append({
             'id': group['id'],
             'name': group['name'],
-            'title': ogdch_localize_utils.get_localized_value(
+            'title': ogdch_localize_utils.get_localized_value_from_json(
                 group['title'],
                 lang_code
             ),
         })
 
-    group_list.sort(key=lambda group: strip_accents(group['title'].lower()), reverse=False)  # noqa
+    group_list.sort(key=lambda group: ogdch_localize_utils.strip_accents(group['title'].lower()), reverse=False)  # noqa
     return group_list
