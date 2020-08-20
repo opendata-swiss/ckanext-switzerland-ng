@@ -174,6 +174,16 @@ def ogdch_unique_identifier(field, schema):
     def validator(key, data, errors, context):
         id = data.get(key[:-1] + ('id',))
         identifier = data.get(key[:-1] + ('identifier',))
+        owner_org = data.get(key[:-1] + ('owner_org',))
+        log.error("----- in identifier validator ---------------data:----------")
+        import pprint
+        pprint.pprint(data)
+        identifier_parts = identifier.split('@')
+        if len(identifier_parts) == 1:
+            raise df.Invalid(
+                _('Identifier must be of the form <id>@<slug> where slug is the url of the organization')
+            )
+        owner_slug = identifier_parts[1]
         try:
             result = get_action('ogdch_dataset_by_identifier')(
                 {},
@@ -185,5 +195,18 @@ def ogdch_unique_identifier(field, schema):
                 )
         except NotFound:
             pass
+
+    return validator
+
+
+@scheming_validator
+def ogdch_not_yet_implemented(field, schema):
+    def validator(key, data, errors, context):
+        log.error("----- in identifier validator ---------------data:----------")
+        import pprint
+        pprint.pprint(data)
+        raise df.Invalid(
+            _('No validator yet implemented. Implent before the dataset can be saved!')
+        )
 
     return validator

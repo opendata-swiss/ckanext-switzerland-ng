@@ -13,77 +13,8 @@
         "fr": "Identifier",
         "it": "Identifier"
       },
-      "validators": "scheming_required ogdch_unique_identifier"
-    },
-    {
-      "field_name": "display_name",
-      "label": {
-        "en": "Display name",
-        "de": "Anzeigename",
-        "fr": "Nom d'affichage",
-        "it": "Nome visualizzato"
-      },
-      "preset": "multilingual_text"
-    },
-    {
-      "field_name": "notes",
-      "label": {
-        "en": "Description",
-        "de": "Beschreibung",
-        "fr": "Description",
-        "it": "Descrizione"
-      },
-      "preset": "multilingual_output"
-    },
-    {
-      "field_name": "title",
-      "label": {
-        "en": "Title",
-        "de": "Titel",
-        "fr": "Titre",
-        "it": "Titolo"
-      },
-      "preset": "multilingual_text"
-    },
-    {
-      "field_name": "name",
-      "label": {
-        "en": "Slug",
-        "de": "Slug",
-        "fr": "Slug",
-        "it": "Slug"
-      },
-      "preset": "dataset_slug"
-    },
-    {
-      "field_name": "description",
-      "label": {
-        "en": "Description",
-        "de": "Beschreibung",
-        "fr": "Description",
-        "it": "Descrizione"
-      },
-      "preset": "multilingual_text"
-    },
-    {
-      "field_name": "issued",
-      "label": {
-        "en": "Issued date",
-        "de": "Publikationsdatum",
-        "fr": "Date de publication",
-        "it": "Data di rilascio"
-      },
-      "preset": "ogdch_date"
-    },
-    {
-      "field_name": "modified",
-      "label": {
-        "en": "Modified date",
-        "de": "Änderungsdatum",
-        "fr": "Date de modification",
-        "it": "Data di modifica"
-      },
-      "preset": "ogdch_date"
+      "validators": "scheming_required ogdch_unique_identifier",
+      "help_text": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden."
     },
     {
       "field_name": "owner_org",
@@ -94,6 +25,99 @@
         "it": "Organizzazione"
       },
       "preset": "dataset_organization"
+    },
+    {
+      "field_name": "display_name",
+      "label": {
+        "en": "Display name",
+        "de": "Anzeigename",
+        "fr": "Nom d'affichage",
+        "it": "Nome visualizzato"
+      },
+      "preset": "multilingual_text",
+      "form_snippet": null,
+      "display_snippet": null
+    },
+    {
+      "field_name": "notes",
+      "label": {
+        "en": "Description",
+        "de": "Beschreibung",
+        "fr": "Description",
+        "it": "Descrizione"
+      },
+      "preset": "multilingual_output",
+      "form_snippet": null,
+      "display_snippet": null
+    },
+    {
+      "field_name": "title",
+      "label": {
+        "en": "Title",
+        "de": "Titel",
+        "fr": "Titre",
+        "it": "Titolo"
+      },
+      "preset": "multilingual_text",
+      "validators": "ogdch_not_yet_implemented"
+    },
+    {
+      "field_name": "name",
+      "label": {
+        "en": "Slug",
+        "de": "Slug",
+        "fr": "Slug",
+        "it": "Slug"
+      },
+      "preset": "dataset_slug",
+    },
+    {
+      "field_name": "description",
+      "label": {
+        "en": "Description",
+        "de": "Beschreibung",
+        "fr": "Description",
+        "it": "Descrizione"
+      },
+      "preset": "multilingual_markdown",
+      "help_text": "Bitte geben Sie in mindestens einer Sprache eine Beschreibung Ihrer Metadaten ein."
+
+    },
+    {
+      "field_name": "issued",
+      "label": {
+        "en": "Issued date",
+        "de": "Publikationsdatum",
+        "fr": "Date de publication",
+        "it": "Data di rilascio"
+      },
+      "form_snippet": "date.html",
+      "display_snippet": "date.html",
+      "output_validators": "timestamp_to_datetime"
+    },
+    {
+      "field_name": "modified",
+      "label": {
+        "en": "Modified date",
+        "de": "Änderungsdatum",
+        "fr": "Date de modification",
+        "it": "Data di modifica"
+      },
+      "form_snippet": "date.html",
+      "display_snippet": "date.html",
+      "output_validators": "timestamp_to_datetime"
+    },
+    {
+      "field_name": "accrual_periodicity",
+      "label": {
+        "en": "Update interval",
+        "de": "Aktualisierungsintervall",
+        "fr": "Intervalle d'actualisation",
+        "it": "Intervallo di aggiornamento"
+      },
+      "preset": "select",
+      "choices_helper": "ogdch_get_update_intervall",
+      "display_snippet": "periodicity.html"
     },
     {
       "field_name": "publishers",
@@ -194,7 +218,8 @@
         "fr": "Landing page",
         "it": "Landing page"
       },
-      "preset": "url"
+      "preset": "url",
+      "help_text": "Webseite, mit weiteren Informationen zum Datensatz."
     },
     {
       "field_name": "spatial",
@@ -232,6 +257,8 @@
         "fr": "Intervalle d'actualisation",
         "it": "Intervallo di aggiornamento"
       },
+      "preset": "select",
+      "choices_helper": "ogdch_get_update_intervall",
       "display_snippet": "periodicity.html"
     },
     {

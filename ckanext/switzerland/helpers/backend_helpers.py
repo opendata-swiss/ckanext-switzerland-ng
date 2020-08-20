@@ -10,6 +10,7 @@ from ckan.common import session
 from ckan.authz import auth_is_loggedin_user
 import ckan.plugins.toolkit as tk
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
+from ckan.common import _
 
 log = logging.getLogger(__name__)
 
@@ -145,3 +146,9 @@ def get_localized_group_list(lang_code):
 
     group_list.sort(key=lambda group: strip_accents(group['title'].lower()), reverse=False)  # noqa
     return group_list
+
+def ogdch_get_update_intervall(field):
+    return [
+        {'label': _('Weekly'), 'value': 'weekly'},
+        {'label': _('Daily'), 'value': 'daily'},
+    ]

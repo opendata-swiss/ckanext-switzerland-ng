@@ -57,6 +57,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_language': ogdch_validators.ogdch_language,
             'ogdch_unique_identifier': ogdch_validators.ogdch_unique_identifier, # noqa
             'temporals_to_datetime_output': ogdch_validators.temporals_to_datetime_output, # noqa
+            'ogdch_not_yet_implemented': ogdch_validators.ogdch_not_yet_implemented,
         }
 
     # IFacets
@@ -132,6 +133,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'get_terms_of_use_url': ogdch_frontend_helpers.get_terms_of_use_url, # noqa
             'get_localized_newsletter_url': ogdch_frontend_helpers.get_localized_newsletter_url, # noqa
             'ogdch_template_helper_get_active_class': ogdch_backend_helpers.ogdch_template_helper_get_active_class, # noqa
+            'ogdch_get_update_intervall': ogdch_backend_helpers.ogdch_get_update_intervall,
         }
 
     # IRouter
@@ -242,6 +244,7 @@ class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
 
     def before_view(self, pkg_dict):
         """transform pkg dict before view"""
+        log.error("before_view {}".format(pkg_dict))
         pkg_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=pkg_dict) # noqa
         pkg_dict = ogdch_plugin_utils.package_map_ckan_default_fields(pkg_dict) # noqa
         pkg_dict['resources'] = [
@@ -281,6 +284,7 @@ class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
         and there we need all languages.
         -> find a solution to _prepare_package_json() in an API call.
         """
+        log.error("after_show {}".format(pkg_dict))
         pkg_dict = ogdch_plugin_utils.ogdch_prepare_pkg_dict_for_api(pkg_dict) # noqa
         return pkg_dict
 
@@ -288,6 +292,7 @@ class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
         """
         Search data before index
         """
+        log.error("before_index {}".format(search_data))
         search_data = ogdch_plugin_utils.ogdch_prepare_search_data_for_index( # noqa
             search_data=search_data,
             format_mapping=self.format_mapping
