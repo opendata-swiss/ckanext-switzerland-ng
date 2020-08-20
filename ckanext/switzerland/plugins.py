@@ -57,6 +57,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_language': ogdch_validators.ogdch_language,
             'ogdch_unique_identifier': ogdch_validators.ogdch_unique_identifier, # noqa
             'temporals_to_datetime_output': ogdch_validators.temporals_to_datetime_output, # noqa
+            'ogdch_not_yet_implemented': ogdch_validators.ogdch_not_yet_implemented,  # noqa
         }
 
     # IFacets

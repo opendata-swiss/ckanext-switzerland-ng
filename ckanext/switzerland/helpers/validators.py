@@ -187,3 +187,13 @@ def ogdch_unique_identifier(field, schema):
             pass
 
     return validator
+
+
+@scheming_validator
+def ogdch_not_yet_implemented(field, schema):
+    def validator(key, data, errors, context):
+        raise df.Invalid(
+            _('No validator yet implemented. Implement validation before the dataset can be saved!')
+        )
+
+    return validator
