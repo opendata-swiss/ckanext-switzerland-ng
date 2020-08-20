@@ -24,7 +24,8 @@
         "fr": "Titre",
         "it": "Titolo"
       },
-      "preset": "multilingual_text_full"
+      "preset": "multilingual_text_full",
+      "validators": "ogdch_required_in_one_language"
     },
     {
       "field_name": "name",

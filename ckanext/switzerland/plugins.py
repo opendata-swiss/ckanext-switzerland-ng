@@ -56,6 +56,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'timestamp_to_datetime': ogdch_validators.timestamp_to_datetime,
             'ogdch_language': ogdch_validators.ogdch_language,
             'ogdch_unique_identifier': ogdch_validators.ogdch_unique_identifier, # noqa
+            'ogdch_required_in_one_language': ogdch_validators.ogdch_required_in_one_language, # noqa
             'temporals_to_datetime_output': ogdch_validators.temporals_to_datetime_output, # noqa
         }
 
