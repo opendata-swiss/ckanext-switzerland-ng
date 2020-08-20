@@ -10,7 +10,6 @@ from babel import numbers
 
 from ckan.lib.helpers import lang, url_for, localised_number
 import ckan.lib.i18n as i18n
-import unicodedata
 import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
 import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 
@@ -231,15 +230,8 @@ def get_sorted_orgs_by_translated_title(organizations):
         if organization['children']:
             organization['children'] = get_sorted_orgs_by_translated_title(organization['children'])  # noqa
 
-    organizations.sort(key=lambda org: strip_accents(org['title'].lower()), reverse=False)  # noqa
+    organizations.sort(key=lambda org: ogdch_loc_utils.strip_accents(org['title'].lower()), reverse=False)  # noqa
     return organizations
-
-
-# this function strips characters with accents, cedilla and umlauts to their
-# single character-representation to make the resulting words sortable
-# See: http://stackoverflow.com/a/518232
-def strip_accents(s):
-   return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')  # noqa
 
 
 def get_localized_newsletter_url():

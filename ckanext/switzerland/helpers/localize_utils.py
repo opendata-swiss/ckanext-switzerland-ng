@@ -2,6 +2,7 @@
 localization functions that don't need the request object
 """
 import json
+import unicodedata
 
 LANGUAGES = {'de', 'fr', 'it', 'en'}
 
@@ -79,3 +80,10 @@ def _localize_by_language_order(multi_language_field, default=''):
         return multi_language_field['it']
     else:
         return default
+
+
+# this function strips characters with accents, cedilla and umlauts to their
+# single character-representation to make the resulting words sortable
+# See: http://stackoverflow.com/a/518232
+def strip_accents(s):
+    return ''.join(c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn')  # noqa
