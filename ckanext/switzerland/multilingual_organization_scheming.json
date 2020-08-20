@@ -35,7 +35,8 @@
         "fr": "Slug",
         "it": "Slug"
       },
-      "preset": "group_slug"
+      "preset": "group_slug",
+      "help_text": "Must be purely lowercase alphanumeric (ascii) characters and these symbols: -_"
     },
     {
       "field_name": "description",
