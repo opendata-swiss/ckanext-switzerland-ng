@@ -65,7 +65,8 @@
         "it": "Livello politico"
       },
       "preset": "select",
-      "choices_helper": "ogdch_get_political_level_field_list"
+      "choices_helper": "ogdch_get_political_level_field_list",
+      "validators": "not_empty"
     },
     {
       "field_name": "url",
