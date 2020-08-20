@@ -190,9 +190,11 @@ def ogdch_unique_identifier(field, schema):
                 {},
                 {'id': owner_slug}
             )
-            if result['id'] != owner_org:
+            if result['name'] != owner_org:
                 raise df.Invalid(
-                    _('Organisation slug of the identifier "{}" does not match the organisation of the dataset.'.format(owner_slug))  # noqa
+                    _(
+                        'Organisation slug of the identifier "{}" does not match the organisation of the dataset "{}".'  # noqa
+                        .format(owner_slug, result['name']))  # noqa
                 )
         except NotFound:
             raise df.Invalid(

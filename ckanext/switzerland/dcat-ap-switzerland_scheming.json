@@ -24,8 +24,7 @@
         "fr": "Organisation",
         "it": "Organizzazione"
       },
-      "preset": "dataset_organization",
-      "validators": "ogdch_not_yet_implemented"
+      "preset": "dataset_organization"
     },
     {
       "field_name": "display_name",
@@ -57,8 +56,7 @@
         "fr": "Titre",
         "it": "Titolo"
       },
-      "preset": "multilingual_text",
-      "validators": "ogdch_not_yet_implemented"
+      "preset": "multilingual_text"
     },
     {
       "field_name": "name",
@@ -68,8 +66,7 @@
         "fr": "Slug",
         "it": "Slug"
       },
-      "preset": "dataset_slug",
-      "validators": "ogdch_not_yet_implemented"
+      "preset": "dataset_slug"
     },
     {
       "field_name": "description",
@@ -79,8 +76,7 @@
         "fr": "Description",
         "it": "Descrizione"
       },
-      "preset": "multilingual_text",
-      "validators": "ogdch_not_yet_implemented"
+      "preset": "multilingual_text"
     },
     {
       "field_name": "issued",
@@ -90,8 +86,7 @@
         "fr": "Date de publication",
         "it": "Data di rilascio"
       },
-      "preset": "ogdch_date",
-      "validators": "ogdch_not_yet_implemented"
+      "preset": "ogdch_date"
     },
     {
       "field_name": "modified",
@@ -101,8 +96,7 @@
         "fr": "Date de modification",
         "it": "Data di modifica"
       },
-      "preset": "ogdch_date",
-      "validators": "ogdch_not_yet_implemented"
+      "preset": "ogdch_date"
     },
     {
       "field_name": "accrual_periodicity",
@@ -112,8 +106,7 @@
         "fr": "Intervalle d'actualisation",
         "it": "Intervallo di aggiornamento"
       },
-      "display_snippet": "periodicity.html",
-      "validators": "ogdch_not_yet_implemented"
+      "display_snippet": "periodicity.html"
     },
     {
       "field_name": "temporals",
@@ -123,8 +116,7 @@
         "fr": "Couverture temporelle",
         "it": "Copertura temporale"
       },
-      "preset": "temporals",
-      "validators": "ogdch_not_yet_implemented"
+      "preset": "temporals"
     },
     {
       "field_name": "publishers",
@@ -135,8 +127,7 @@
         "it": "Editori"
       },
       "preset": "dicts",
-      "display_snippet": "publishers.html",
-      "validators": "ogdch_not_yet_implemented"
+      "display_snippet": "publishers.html"
     },
     {
       "field_name": "contact_points",
@@ -147,8 +138,7 @@
         "it": "Punti di contatto"
       },
       "preset": "dicts",
-      "display_snippet": "contact_points.html",
-      "validators": "ogdch_not_yet_implemented"
+      "display_snippet": "contact_points.html"
     },
     {
       "field_name": "language",
@@ -207,8 +197,7 @@
         "it": "Addizionali informazioni"
       },
       "preset": "dicts",
-      "display_snippet": "relations.html",
-      "validators": "ogdch_not_yet_implemented"
+      "display_snippet": "relations.html"
     },
     {
       "field_name": "keywords",
@@ -218,8 +207,7 @@
         "fr": "Mots clés",
         "it": "Parole chiave"
       },
-      "preset": "fluent_tags",
-      "validators": "ogdch_not_yet_implemented"
+      "preset": "fluent_tags"
     },
     {
       "field_name": "url",
@@ -229,8 +217,7 @@
         "fr": "Landing page",
         "it": "Landing page"
       },
-      "preset": "url",
-      "validators": "ogdch_not_yet_implemented"
+      "preset": "url"
     },
     {
       "field_name": "spatial",
@@ -239,8 +226,7 @@
         "de": "Räumlich",
         "fr": "Spatial",
         "it": "Spaziale"
-      },
-      "validators": "ogdch_not_yet_implemented"
+      }
     },
     {
       "field_name": "coverage",
@@ -249,8 +235,7 @@
         "de": "Abdeckung",
         "fr": "Couverture",
         "it": "Copertura"
-      },
-      "validators": "ogdch_not_yet_implemented"
+      }
     },
     {
       "field_name": "see_alsos",
@@ -260,8 +245,7 @@
         "fr": "Jeux de données relationnels",
         "it": "Set di dati relativi"
       },
-      "preset": "dicts",
-      "validators": "ogdch_not_yet_implemented"
+      "preset": "dicts"
     }
   ],
   "resource_fields": [
