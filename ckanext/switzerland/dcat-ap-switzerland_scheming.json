@@ -36,7 +36,7 @@
         "it": "Nome visualizzato"
       },
       "preset": "multilingual_text",
-      "validators": "ogdch_not_yet_implemented"
+      "form_snippet": null
     },
     {
       "field_name": "notes",
@@ -47,7 +47,7 @@
         "it": "Descrizione"
       },
       "preset": "multilingual_output",
-      "validators": "ogdch_not_yet_implemented"
+      "form_snippet": null
     },
     {
       "field_name": "title",
