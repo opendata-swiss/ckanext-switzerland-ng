@@ -125,7 +125,7 @@ def _check_key_in_harvest_junk(key, data):
                     cleaned_value = [value_from_junk]
                 elif not isinstance(value_from_junk, list):
                     errors.append(
-                        _('Expecting list of strings, got "%s"') % str(value_from_junk)
+                        _('Expecting list of strings, got "%s"') % str(value_from_junk)  # noqa
                     )
                     return
             else:
