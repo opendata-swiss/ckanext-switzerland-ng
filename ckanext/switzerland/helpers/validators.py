@@ -83,7 +83,15 @@ def temporals_to_datetime_output(value):
 
 @scheming_validator
 def list_of_dicts(field, schema):
+    """this is used when dictionaries that come in from harvested data:
+    - they need to be transformed for storage
+    - this transformation is not used for form-data
+    """
     def validator(key, data, errors, context):
+        # this validator is only used for harvesting
+        if context['user'] != 'harvest':
+            return
+
         # if there was an error before calling our validator
         # don't bother with our validation
         if errors[key]:
@@ -247,3 +255,41 @@ def ogdch_required_in_one_language(field, schema):
         data[key] = json.dumps(output)
 
     return validator
+
+
+@scheming_validator
+def ogdch_validate_formfield_publisher(field, schema):
+    """This validator is only used for form validation
+    The data is extracted form the publisher form fields and transformed
+    into a form that is expected for database storage:
+    This is a json string of the form
+    '[{'label': 'Publisher1'}, {'label': 'Publisher 2}]'
+    with list of publishers
+    """
+    def validator(key, data, errors, context):
+
+        # don't use for harvesting
+        if context.get('user') == 'harvest':
+            return
+
+        if errors[key]:
+            return
+
+        publishers = _get_publisher_data_from_form(data)
+        if len(publishers) == 0:
+            raise df.Invalid(
+                _('At least one publisher must be provided.')  # noqa
+            )
+        output = [{'label': publisher} for publisher in publishers]
+        data[('publishers',)] = json.dumps(output)
+
+    return validator
+
+
+def _get_publisher_data_from_form(data):
+    extras = data.get(('__extras',))
+    publishers = [value
+                  for key, value in extras.items()
+                  if key.startswith('publisher-')
+                  if value != '']
+    return publishers
