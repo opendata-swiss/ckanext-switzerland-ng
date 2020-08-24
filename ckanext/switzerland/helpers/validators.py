@@ -84,6 +84,10 @@ def temporals_to_datetime_output(value):
 @scheming_validator
 def list_of_dicts(field, schema):
     def validator(key, data, errors, context):
+        log.error("-----------------------NOW LOOK at the DATA")
+        log.error(data)
+        import pprint
+        pprint.pprint(data)
         if errors[key]:
             return
 
