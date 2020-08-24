@@ -10,6 +10,10 @@ import datetime
 import logging
 log = logging.getLogger(__name__)
 
+HARVEST_JUNK = ('__junk',)
+FORM_EXTRAS = ('__extras',)
+HARVEST_USER = 'harvest'
+
 
 @scheming_validator
 def multiple_text(field, schema):
@@ -82,23 +86,15 @@ def temporals_to_datetime_output(value):
 
 
 @scheming_validator
-def list_of_dicts(field, schema):
-    """this is used when dictionaries that come in from harvested data:
-    - they need to be transformed for storage
-    - this transformation is not used for form-data
-    """
+def harvest_list_of_dicts(field, schema):
     def validator(key, data, errors, context):
-        # this validator is only used for harvesting
-        if context['user'] != 'harvest':
-            return
-
         # if there was an error before calling our validator
         # don't bother with our validation
         if errors[key]:
             return
 
         try:
-            data_dict = df.unflatten(data[('__junk',)])
+            data_dict = df.unflatten(data[HARVEST_JUNK])
             value = data_dict[key[0]]
             if value is not missing:
                 if isinstance(value, basestring):
@@ -116,7 +112,7 @@ def list_of_dicts(field, schema):
 
             # remove from junk
             del data_dict[key[0]]
-            data[('__junk',)] = df.flatten_dict(data_dict)
+            data[HARVEST_JUNK] = df.flatten_dict(data_dict)
         except KeyError:
             pass
 
@@ -269,27 +265,31 @@ def ogdch_validate_formfield_publisher(field, schema):
     def validator(key, data, errors, context):
 
         # don't use for harvesting
-        if context.get('user') == 'harvest':
+        if context.get('user') == HARVEST_USER:
             return
 
         if errors[key]:
             return
 
+        # test if data is coming from a form
         publishers = _get_publisher_data_from_form(data)
-        if len(publishers) == 0:
-            raise df.Invalid(
-                _('At least one publisher must be provided.')  # noqa
-            )
-        output = [{'label': publisher} for publisher in publishers]
-        data[('publishers',)] = json.dumps(output)
+        if publishers:
+            if len(publishers) == 0:
+                raise df.Invalid(
+                    _('At least one publisher must be provided.')  # noqa
+                )
+            output = [{'label': publisher} for publisher in publishers]
+            data[('publishers',)] = json.dumps(output)
 
     return validator
 
 
 def _get_publisher_data_from_form(data):
-    extras = data.get(('__extras',))
-    publishers = [value
-                  for key, value in extras.items()
-                  if key.startswith('publisher-')
-                  if value != '']
-    return publishers
+    extras = data.get(FORM_EXTRAS)
+    if extras:
+        publishers = [value
+                      for key, value in extras.items()
+                      if key.startswith('publisher-')
+                      if value != '']
+        return publishers
+    return None
