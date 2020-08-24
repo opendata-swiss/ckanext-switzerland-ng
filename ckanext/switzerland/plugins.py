@@ -119,7 +119,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         return {
             'get_group_count': ogdch_frontend_helpers.get_group_count,
             'get_localized_org': ogdch_frontend_helpers.get_localized_org,
-            'localize_json_facet_title': ogdch_frontend_helpers.localize_json_facet_title,
+            'localize_json_facet_title': ogdch_frontend_helpers.localize_json_facet_title, # noqa
             'get_frequency_name': ogdch_frontend_helpers.get_frequency_name,
             'get_political_level': ogdch_frontend_helpers.get_political_level,
             'get_terms_of_use_icon': ogdch_frontend_helpers.get_terms_of_use_icon, # noqa
