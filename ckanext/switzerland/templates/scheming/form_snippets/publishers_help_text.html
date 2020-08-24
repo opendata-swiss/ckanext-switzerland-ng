@@ -1,0 +1,9 @@
+{% import 'macros/form.html' as form %}
+
+<h2 id="ogdch_publishers_pagemark">{{ _('Publisher Information') }}</h2>
+
+{{- form.info(
+    text=h.scheming_language_text(field.help_text),
+    inline=field.get('help_inline', false)
+    ) -}}
+

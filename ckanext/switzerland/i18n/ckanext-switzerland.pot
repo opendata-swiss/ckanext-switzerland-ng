@@ -740,3 +740,23 @@ msgstr ""
 #: ckanext/switzerland/validators:196
 msgid "Organisation slug of the identifier {owner_slug} does not match the organisation of the dataset {organization_name}."
 msgstr ""
+
+#: ckanext/switzerland/validators:199
+msgid "No validator yet implemented. Implement validation before the dataset can be saved!"
+msgstr ""
+
+#: ckanext/switzerland/helpers/backend_helpers.py:186
+msgid "Publisher"
+msgstr "Publisher"
+
+#: ckanext/switzerland/helpers/backend_helpers.py:186
+msgid "Another Publisher"
+msgstr "Another Publisher"
+
+#: ckanext/switzerland/helpers/form_snippets/publishers.html:14
+msgid "Name of the Publisher"
+msgstr "Name of the Publisher"
+
+#: ckanext/switzerland/templates/scheming/form_snippets/publishers_help_text.html:5
+msgid "Publisher Information"
+msgstr "Publisher Information"

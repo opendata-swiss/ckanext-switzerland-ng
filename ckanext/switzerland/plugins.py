@@ -44,6 +44,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
     def update_config(self, config_):
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
+        toolkit.add_resource('fanstatic', 'switzerland')
 
     # IValidators
 
@@ -138,7 +139,8 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_get_political_level_field_list': ogdch_backend_helpers.ogdch_get_political_level_field_list, # noqa
             'get_localized_value_from_json': ogdch_localize_utils.get_localized_value_from_json, # noqa
             'get_localized_value_for_display': ogdch_frontend_helpers.get_localized_value_for_display,  # noqa
-            'ogdch_get_accrual_periodicity_choices': ogdch_backend_helpers.ogdch_get_accrual_periodicity_choices  # noqa
+            'ogdch_get_accrual_periodicity_choices': ogdch_backend_helpers.ogdch_get_accrual_periodicity_choices,  # noqa
+            'ogdch_publisher_form_helper': ogdch_backend_helpers.ogdch_publisher_form_helper,  # noqa
         }
 
     # IRouter
