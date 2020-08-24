@@ -207,6 +207,9 @@ def ogdch_required_in_one_language(field, schema):
             text = extras.get(prefix + lang)
             if text:
                 output[lang] = text
+                del extras[prefix + lang]
+            elif data.get(key) and data.get(key).get(lang):
+                output[lang] = data.get(key).get(lang)
 
         if len(output) == 0:
             for lang in languages:
@@ -214,8 +217,6 @@ def ogdch_required_in_one_language(field, schema):
                     [_('A value is required in at least one language')]
             return
 
-        for lang in output:
-            del extras[prefix + lang]
         data[key] = json.dumps(output)
 
     return validator
