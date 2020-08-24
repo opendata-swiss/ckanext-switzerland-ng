@@ -84,35 +84,40 @@ def temporals_to_datetime_output(value):
 @scheming_validator
 def list_of_dicts(field, schema):
     def validator(key, data, errors, context):
-        # if there was an error before calling our validator
-        # don't bother with our validation
         if errors[key]:
             return
 
-        try:
-            data_dict = df.unflatten(data[('__junk',)])
-            value = data_dict[key[0]]
-            if value is not missing:
-                if isinstance(value, basestring):
-                    value = [value]
-                elif not isinstance(value, list):
-                    errors[key].append(
-                        _('Expecting list of strings, got "%s"') % str(value)
-                    )
-                    return
-            else:
-                value = []
-
-            if not errors[key]:
-                data[key] = json.dumps(value)
-
-            # remove from junk
-            del data_dict[key[0]]
-            data[('__junk',)] = df.flatten_dict(data_dict)
-        except KeyError:
-            pass
+        if data.get('__junk'):
+            data[key], errors[key] = _get_dict_from_data_junk_field(key, data)  # noqa
 
     return validator
+
+
+def _get_dict_from_data_junk_field(key, data):
+    errors = []
+    result = None
+    try:
+        data_dict = df.unflatten(data[('__junk',)])
+        value = data_dict[key[0]]
+        if value is not missing:
+            if isinstance(value, basestring):
+                value = [value]
+            elif not isinstance(value, list):
+                errors.append(
+                    _('Expecting list of strings, got "%s"') % str(value)
+                )
+                return
+        else:
+            value = []
+
+        if not errors:
+            result = json.dumps(value)
+
+    except KeyError:
+        pass
+
+    finally:
+        return result, errors
 
 
 def multiple_text_output(value):
