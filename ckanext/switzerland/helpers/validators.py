@@ -87,6 +87,16 @@ def temporals_to_datetime_output(value):
 @scheming_validator
 def list_of_dicts(field, schema):
     def validator(key, data, errors, context):
+        import pprint
+        log.error("=================================")
+        log.error("LIST OF DICTS VALIDATOR")
+        log.error("key------------------------------")
+        log.error(key)
+        log.error("junk-----------------------------")
+        pprint.pprint(data.get(('__junk',), ''))
+        log.error("publishers------------------------")
+        pprint.pprint(data.get(('publishers',), ''))
+        log.error("=================================")
         if errors[key]:
             return
 
@@ -94,36 +104,43 @@ def list_of_dicts(field, schema):
             return
 
         if data.get(HARVEST_JUNK):
-            data[key], errors[key] = _get_dict_from_data_junk_field(key, data)  # noqa
+            data[key], errors[key], data[HARVEST_JUNK] \
+                = _check_key_in_harvest_junk(key, data)
 
     return validator
 
 
-def _get_dict_from_data_junk_field(key, data):
-    errors = []
-    value = None
-    try:
-        data_dict = df.unflatten(data[('__junk',)])
-        value = data_dict[key[0]]
-        if value is not missing:
-            if isinstance(value, basestring):
-                value = [value]
-            elif not isinstance(value, list):
-                errors.append(
-                    _('Expecting list of strings, got "%s"') % str(value)
-                )
-                return
-        else:
-            value = []
+def _check_key_in_harvest_junk(key, data):
+    if data.get(HARVEST_JUNK):
+        data_dict = df.unflatten(data[HARVEST_JUNK])
+        value_from_junk = data_dict[key[0]]
+        if not value_from_junk:
+            return None, [], data[HARVEST_JUNK]
 
-        if not errors:
-            value = json.dumps(value)
+        errors = []
+        cleaned_value = None
+        try:
+            if value_from_junk is not missing:
+                if isinstance(value_from_junk, basestring):
+                    cleaned_value = [value_from_junk]
+                elif not isinstance(value_from_junk, list):
+                    errors.append(
+                        _('Expecting list of strings, got "%s"') % str(value_from_junk)
+                    )
+                    return
+            else:
+                cleaned_value = []
 
-    except KeyError:
-        pass
+            if not errors:
+                cleaned_value = json.dumps(cleaned_value)
 
-    finally:
-        return value, errors
+        except KeyError:
+            pass
+
+        finally:
+            del data_dict[key[0]]
+            data[HARVEST_JUNK] = df.flatten_dict(data_dict)
+            return cleaned_value, errors, data[HARVEST_JUNK]
 
 
 def multiple_text_output(value):
