@@ -129,8 +129,11 @@
         "fr": "Editeurs",
         "it": "Editori"
       },
-      "preset": "dicts",
-      "display_snippet": "publishers.html"
+      "validators": "list_of_dicts ogdch_validate_formfield_publisher",
+      "output_validators": "multiple_text_output",
+      "display_snippet": "publishers.html",
+      "form_snippet": "publishers.html",
+      "help_text": "Ein oder mehrere Publisher dieses Datensatzes. Dieser kann der Organisation entsprechen, welche den Datensatz veröffentlicht. Mindestens ein Publisher ist erforderlich."
     },
     {
       "field_name": "contact_points",
