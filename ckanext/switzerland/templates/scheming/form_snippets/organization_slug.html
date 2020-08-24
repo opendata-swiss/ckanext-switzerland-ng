@@ -1,0 +1,24 @@
+{% import 'macros/form.html' as form %}
+
+{% set read_endpoint = '.read' if h.ckan_version() > '2.9' else '_read' %}
+{%- set prefix = h.url_for(object_type + read_endpoint, id='') -%}
+{%- set domain = h.url_for(object_type + read_endpoint, id='', qualified=true) -%}
+{%- set domain = domain|replace("http://", "")|replace("https://", "") -%}
+{%- set attrs = {
+    'data-module-prefix': domain,
+    'data-module-placeholder': module_placeholder } -%}
+
+{% call form.prepend(
+    'name',
+    label=_('Name (Slug)'),
+    prepend=prefix,
+    id='field-url',
+    placeholder=_('my-organization'),
+    value=data.name,
+    error=errors.name,
+    attrs=attrs,
+    is_required=true
+    )
+%}
+    {%- snippet 'scheming/form_snippets/help_text.html', field=field -%}
+{% endcall %}

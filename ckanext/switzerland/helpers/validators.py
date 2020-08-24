@@ -1,5 +1,6 @@
 from ckan.plugins.toolkit import missing, _
 import ckan.lib.navl.dictization_functions as df
+from ckanext.fluent.helpers import fluent_form_languages
 from ckanext.scheming.validation import scheming_validator
 from ckanext.switzerland.helpers.localize_utils import parse_json
 from ckan.logic import NotFound, get_action
@@ -185,5 +186,37 @@ def ogdch_unique_identifier(field, schema):
                 )
         except NotFound:
             pass
+
+    return validator
+
+
+@scheming_validator
+def ogdch_required_in_one_language(field, schema):
+    def validator(key, data, errors, context):
+        # if there was an error before calling our validator
+        # don't bother with our validation
+        if errors[key]:
+            return
+
+        output = {}
+        prefix = key[-1] + '-'
+        extras = data.get(key[:-1] + ('__extras',), {})
+        languages = fluent_form_languages(field, schema=schema)
+
+        for lang in languages:
+            text = extras.get(prefix + lang)
+            if text:
+                output[lang] = text
+                del extras[prefix + lang]
+            elif data.get(key) and data.get(key).get(lang):
+                output[lang] = data.get(key).get(lang)
+
+        if len(output) == 0:
+            for lang in languages:
+                errors[key[:-1] + (key[-1] + '-' + lang,)] = \
+                    [_('A value is required in at least one language')]
+            return
+
+        data[key] = json.dumps(output)
 
     return validator

@@ -705,3 +705,22 @@ msgstr[1] ""
 msgid "No organizations found"
 msgstr ""
 
+#: ckanext/switzerland/templates/scheming/form_snippets/org_hierarchy.html:2
+msgid "Parent"
+msgstr ""
+
+#: ckanext/switzerland/templates/scheming/form_snippets/org_hierarchy.html:6
+msgid "None - top level"
+msgstr ""
+
+#: ckanext/switzerland/templates/scheming/form_snippets/organization_slug.html:13
+msgid "Name (Slug)"
+msgstr ""
+
+#: ckanext/switzerland/templates/scheming/form_snippets/organization_slug.html:16
+msgid "my-organization"
+msgstr ""
+
+#: ckanext/switzerland/helpers/validators.py:214
+msgid "A value is required in at least one language"
+msgstr ""

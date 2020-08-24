@@ -50,6 +50,14 @@
       }
     },
     {
+      "preset_name": "multilingual_text_full",
+      "values": {
+        "form_snippet": "fluent_text_full.html",
+        "validators": "fluent_text",
+        "output_validators": "multilingual_text_output"
+      }
+    },
+    {
       "preset_name": "multilingual_markdown",
       "values": {
         "form_snippet": "fluent_markdown.html",
@@ -68,7 +76,7 @@
       "preset_name": "group_slug",
       "values": {
         "validators": "not_empty unicode name_validator group_name_validator",
-        "form_snipper": "slug.html"
+        "form_snippet": "organization_slug.html"
       }
     },
     {

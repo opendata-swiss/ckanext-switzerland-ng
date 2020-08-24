@@ -56,6 +56,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'timestamp_to_datetime': ogdch_validators.timestamp_to_datetime,
             'ogdch_language': ogdch_validators.ogdch_language,
             'ogdch_unique_identifier': ogdch_validators.ogdch_unique_identifier, # noqa
+            'ogdch_required_in_one_language': ogdch_validators.ogdch_required_in_one_language, # noqa
             'temporals_to_datetime_output': ogdch_validators.temporals_to_datetime_output, # noqa
         }
 
@@ -132,6 +133,9 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'get_terms_of_use_url': ogdch_frontend_helpers.get_terms_of_use_url, # noqa
             'get_localized_newsletter_url': ogdch_frontend_helpers.get_localized_newsletter_url, # noqa
             'ogdch_template_helper_get_active_class': ogdch_backend_helpers.ogdch_template_helper_get_active_class, # noqa
+            'ogdch_get_organization_field_list': ogdch_backend_helpers.ogdch_get_organization_field_list, # noqa
+            'ogdch_get_political_level_field_list': ogdch_backend_helpers.ogdch_get_political_level_field_list, # noqa
+            'get_localized_value_from_json': ogdch_localize_utils.get_localized_value_from_json, # noqa
         }
 
     # IRouter

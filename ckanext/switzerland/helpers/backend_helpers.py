@@ -1,13 +1,15 @@
 # coding=UTF-8
 
 """
-helpers belong in this file if they are only
+Helpers belong in this file if they are only
 used in backend templates
 """
 import logging
 from urlparse import urlparse
 from ckan.common import session
 from ckan.authz import auth_is_loggedin_user
+from ckan.common import _
+import ckan.lib.i18n as i18n
 import ckan.plugins.toolkit as tk
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 
@@ -145,3 +147,26 @@ def get_localized_group_list(lang_code):
 
     group_list.sort(key=lambda group: ogdch_localize_utils.strip_accents(group['title'].lower()), reverse=False)  # noqa
     return group_list
+
+
+def ogdch_get_organization_field_list(field):
+    user = tk.get_action('get_site_user')({'ignore_auth': True}, {})
+    req_context = {'user': user['name']}
+    orgs = tk.get_action('organization_list')(
+        req_context,
+        {'all_fields': True}
+    )
+
+    return [{'value': org['name'], 'label': ogdch_localize_utils.get_localized_value_from_json( # noqa
+        org['title'],
+        i18n.get_lang()
+    )} for org in orgs]
+
+
+def ogdch_get_political_level_field_list(field):
+    return [
+        {'label': _('Confederation'), 'value': 'confederation'},
+        {'label': _('Canton'), 'value': 'canton'},
+        {'label': _('Commune'), 'value': 'commune'},
+        {'label': _('Other'), 'value': 'other'},
+    ]
