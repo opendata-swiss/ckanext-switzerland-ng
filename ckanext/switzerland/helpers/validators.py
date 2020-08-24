@@ -90,7 +90,7 @@ def list_of_dicts(field, schema):
         if errors[key]:
             return
 
-        if data[key]:
+        if data.get(key):
             return
 
         if data.get(HARVEST_JUNK):
