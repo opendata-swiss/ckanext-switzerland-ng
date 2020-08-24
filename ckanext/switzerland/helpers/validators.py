@@ -11,6 +11,9 @@ import logging
 log = logging.getLogger(__name__)
 
 
+HARVEST_JUNK = ('__junk',)
+
+
 @scheming_validator
 def multiple_text(field, schema):
     """
@@ -84,14 +87,13 @@ def temporals_to_datetime_output(value):
 @scheming_validator
 def list_of_dicts(field, schema):
     def validator(key, data, errors, context):
-        log.error("-----------------------NOW LOOK at the DATA")
-        log.error(data)
-        import pprint
-        pprint.pprint(data)
         if errors[key]:
             return
 
-        if data.get('__junk'):
+        if not data[key]:
+            return
+
+        if data.get(HARVEST_JUNK):
             data[key], errors[key] = _get_dict_from_data_junk_field(key, data)  # noqa
 
     return validator
@@ -99,7 +101,7 @@ def list_of_dicts(field, schema):
 
 def _get_dict_from_data_junk_field(key, data):
     errors = []
-    result = None
+    value = None
     try:
         data_dict = df.unflatten(data[('__junk',)])
         value = data_dict[key[0]]
@@ -115,13 +117,13 @@ def _get_dict_from_data_junk_field(key, data):
             value = []
 
         if not errors:
-            result = json.dumps(value)
+            value = json.dumps(value)
 
     except KeyError:
         pass
 
     finally:
-        return result, errors
+        return value, errors
 
 
 def multiple_text_output(value):
