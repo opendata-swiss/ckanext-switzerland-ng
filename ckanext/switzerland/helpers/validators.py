@@ -86,13 +86,15 @@ def list_of_dicts(field, schema):
     def validator(key, data, errors, context):
         # if there was an error before calling our validator
         # don't bother with our validation
+        import pprint
         log.error("=================================")
         log.error("LIST OF DICTS VALIDATOR")
         log.error("key------------------------------")
         log.error(key)
-        log.error("---------------------------------")
-        import pprint
-        pprint.pprint(data)
+        log.error("junk-----------------------------")
+        pprint.pprint(data.get(('__junk',), ''))
+        log.error("publishers------------------------")
+        pprint.pprint(data.get(('publishers',), ''))
         log.error("=================================")
         if errors[key]:
             return
