@@ -87,20 +87,10 @@ def temporals_to_datetime_output(value):
 @scheming_validator
 def list_of_dicts(field, schema):
     def validator(key, data, errors, context):
-        import pprint
-        log.error("=================================")
-        log.error("LIST OF DICTS VALIDATOR")
-        log.error("key------------------------------")
-        log.error(key)
-        log.error("junk-----------------------------")
-        pprint.pprint(data.get(('__junk',), ''))
-        log.error("publishers------------------------")
-        pprint.pprint(data.get(('publishers',), ''))
-        log.error("=================================")
         if errors[key]:
             return
 
-        if not data[key]:
+        if data[key]:
             return
 
         if data.get(HARVEST_JUNK):
