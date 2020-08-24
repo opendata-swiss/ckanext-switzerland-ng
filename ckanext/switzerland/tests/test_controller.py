@@ -9,6 +9,7 @@ from ckan.tests import helpers, factories
 assert_equal = nose.tools.assert_equal
 assert_true = nose.tools.assert_true
 
+
 class TestController(helpers.FunctionalTestBase):
 
     @classmethod
@@ -29,54 +30,53 @@ class TestController(helpers.FunctionalTestBase):
                 'fr': 'Test Org FR',
                 'it': 'Test Org IT',
                 'en': 'Test Org EN',
-            }
+            },
+            'political_level': 'confederation'
         }
         tk.get_action('organization_create')(context, self.org)
 
         # create a valid DCAT-AP Switzerland compliant dataset
-	self.dataset = {
-	   'coverage':'',
-	   'issued':'2015-09-08T00:00:00',
-	   'contact_points':[{'email':'pierre@bar.ch', 'name':'Pierre'}],
-	   'keywords':{
-	      'fr':[],
-	      'de':[],
-	      'en':[],
-	      'it':[] 
-	   },
-	   'spatial':'',
-	   'publishers':[{'label':'Bundesarchiv'}],
-	   'description':{
-	      'fr': 'Description FR',
-	      'de': 'Beschreibung DE',
-	      'en': 'Description EN',
-	      'it': 'Description IT'
-	   },
-	   'title':{
-	      'fr': 'FR Test',
-	      'de': 'DE Test',
-	      'en': 'EN Test',
-	      'it': 'IT Test'
-	   },
-	   'language':[
-	      'en',
-	      'de'
-	   ],
-	   'name':'test-dataset',
-	   'relations': [],
-	   'see_alsos': [],
-	   'temporals': [],
-	   'accrual_periodicity':'http://purl.org/cld/freq/completelyIrregular',
-	   'modified':'2015-09-09T00:00:00',
-	   'url':'',
-           'owner_org': 'test-org',
-	   'identifier':'test@test-org'
-	}
+        self.dataset = {
+            'coverage': '',
+            'issued': '2015-09-08T00:00:00',
+            'contact_points': [{'email': 'pierre@bar.ch', 'name': 'Pierre'}],
+            'keywords': {
+                'fr': [],
+                'de': [],
+                'en': [],
+                'it': []
+            },
+            'spatial': '',
+            'publishers': [{'label': 'Bundesarchiv'}],
+            'description': {
+                'fr': 'Description FR',
+                'de': 'Beschreibung DE',
+                'en': 'Description EN',
+                'it': 'Description IT'
+            },
+            'title': {
+                'fr': 'FR Test',
+                'de': 'DE Test',
+                'en': 'EN Test',
+                'it': 'IT Test'
+            },
+            'language': [
+                'en',
+                'de'
+            ],
+            'name': 'test-dataset',
+            'relations': [],
+            'see_alsos': [],
+            'temporals': [],
+            'accrual_periodicity': 'http://purl.org/cld/freq/completelyIrregular',
+            'modified': '2015-09-09T00:00:00',
+            'url': '',
+            'owner_org': 'test-org',
+            'identifier': 'test@test-org'
+        }
         tk.get_action('package_create')(context, self.dataset)
 
-
     def test_valid_redirect(self):
-
         app = self._get_test_app()
 
         url = url_for('perma_redirect', id=self.dataset['identifier'])
@@ -87,7 +87,6 @@ class TestController(helpers.FunctionalTestBase):
         assert_equal(response.headers.get('Location'), 'http://test.ckan.net/dataset/test-dataset')
 
     def test_invalid_redirect(self):
-
         app = self._get_test_app()
 
         url = url_for('perma_redirect', id='non-existent-id@unknown')
@@ -127,4 +126,3 @@ class TestController(helpers.FunctionalTestBase):
         response = app.get(url, status=200)
 
         assert '/fr/organization/test-org' in response
-
