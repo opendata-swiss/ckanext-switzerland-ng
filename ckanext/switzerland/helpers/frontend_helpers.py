@@ -49,7 +49,7 @@ def get_localized_org(org_id=None, include_datasets=False):
         return {}
 
 
-def localize_json_title(facet_item):
+def localize_json_facet_title(facet_item):
     # json.loads tries to convert numbers in Strings to integers. At this point
     # we only need to deal with Strings, so we let them be Strings.
     try:
