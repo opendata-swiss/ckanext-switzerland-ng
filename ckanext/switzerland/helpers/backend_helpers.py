@@ -180,8 +180,6 @@ def ogdch_get_political_level_field_list(field):
 def ogdch_get_accrual_periodicity_choices(field):
     map = [{'label': label, 'value': value}
            for value, label in get_frequency_name(get_map=True).items()]
-    import pprint
-    pprint.pprint(map)
     return map
 
 
