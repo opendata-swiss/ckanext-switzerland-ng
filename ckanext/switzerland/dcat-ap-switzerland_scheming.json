@@ -106,7 +106,10 @@
         "fr": "Intervalle d'actualisation",
         "it": "Intervallo di aggiornamento"
       },
-      "display_snippet": "periodicity.html"
+      "display_snippet": "periodicity.html",
+      "preset": "select",
+      "choices_helper": "ogdch_get_accrual_periodicity_choices",
+      "validators": "not_empty"
     },
     {
       "field_name": "temporals",
