@@ -12,6 +12,7 @@ from ckan.common import _
 import ckan.lib.i18n as i18n
 import ckan.plugins.toolkit as tk
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
+from ckanext.switzerland.helpers.frontend_helpers import get_frequency_name
 
 log = logging.getLogger(__name__)
 
@@ -170,3 +171,11 @@ def ogdch_get_political_level_field_list(field):
         {'label': _('Commune'), 'value': 'commune'},
         {'label': _('Other'), 'value': 'other'},
     ]
+
+
+def ogdch_get_accrual_periodicity_choices(field):
+    map = [{'label': label, 'value': value}
+           for value, label in get_frequency_name(get_map=True).items()]
+    import pprint
+    pprint.pprint(map)
+    return map

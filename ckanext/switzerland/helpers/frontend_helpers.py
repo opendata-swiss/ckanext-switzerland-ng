@@ -2,6 +2,7 @@
 helpers belong in this file if they
 are used in frontend templates
 """
+from collections import OrderedDict
 import ckan.plugins.toolkit as tk
 import ckan.logic as logic
 import json
@@ -68,26 +69,28 @@ def localize_json_facet_title(facet_item):
         return facet_item['display_name']
 
 
-def get_frequency_name(identifier):
-    frequencies = {
-      'http://purl.org/cld/freq/completelyIrregular': _('Irregular'),  # noqa
-      'http://purl.org/cld/freq/continuous': _('Continuous'),  # noqa
-      'http://purl.org/cld/freq/daily': _('Daily'),  # noqa
-      'http://purl.org/cld/freq/threeTimesAWeek': _('Three times a week'),  # noqa
-      'http://purl.org/cld/freq/semiweekly': _('Semi weekly'),  # noqa
-      'http://purl.org/cld/freq/weekly': _('Weekly'),  # noqa
-      'http://purl.org/cld/freq/threeTimesAMonth': _('Three times a month'),  # noqa
-      'http://purl.org/cld/freq/biweekly': _('Biweekly'),  # noqa
-      'http://purl.org/cld/freq/semimonthly': _('Semimonthly'),  # noqa
-      'http://purl.org/cld/freq/monthly': _('Monthly'),  # noqa
-      'http://purl.org/cld/freq/bimonthly': _('Bimonthly'),  # noqa
-      'http://purl.org/cld/freq/quarterly': _('Quarterly'),  # noqa
-      'http://purl.org/cld/freq/threeTimesAYear': _('Three times a year'),  # noqa
-      'http://purl.org/cld/freq/semiannual': _('Semi Annual'),  # noqa
-      'http://purl.org/cld/freq/annual': _('Annual'),  # noqa
-      'http://purl.org/cld/freq/biennial': _('Biennial'),  # noqa
-      'http://purl.org/cld/freq/triennial': _('Triennial'),  # noqa
-    }
+def get_frequency_name(identifier=None, get_map=False):
+    frequencies = OrderedDict([
+        ('http://purl.org/cld/freq/completelyIrregular', _('Irregular')),  # noqa
+        ('http://purl.org/cld/freq/continuous', _('Continuous')),  # noqa
+        ('http://purl.org/cld/freq/daily', _('Daily')),  # noqa
+        ('http://purl.org/cld/freq/threeTimesAWeek', _('Three times a week')),  # noqa
+        ('http://purl.org/cld/freq/semiweekly', _('Semi weekly')),  # noqa
+        ('http://purl.org/cld/freq/weekly', _('Weekly')),  # noqa
+        ('http://purl.org/cld/freq/threeTimesAMonth', _('Three times a month')),  # noqa
+        ('http://purl.org/cld/freq/biweekly', _('Biweekly')),  # noqa
+        ('http://purl.org/cld/freq/semimonthly', _('Semimonthly')),  # noqa
+        ('http://purl.org/cld/freq/monthly', _('Monthly')),  # noqa
+        ('http://purl.org/cld/freq/bimonthly', _('Bimonthly')),  # noqa
+        ('http://purl.org/cld/freq/quarterly', _('Quarterly')),  # noqa
+        ('http://purl.org/cld/freq/threeTimesAYear', _('Three times a year')),  # noqa
+        ('http://purl.org/cld/freq/semiannual', _('Semi Annual')),  # noqa
+        ('http://purl.org/cld/freq/annual', _('Annual')),  # noqa
+        ('http://purl.org/cld/freq/biennial', _('Biennial')),  # noqa
+        ('http://purl.org/cld/freq/triennial', _('Triennial')),  # noqa
+    ])
+    if get_map:
+        return frequencies
     try:
         return frequencies[identifier]
     except KeyError:
