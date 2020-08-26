@@ -14,7 +14,7 @@
          {{ h.nav_link(_('Organizations'), named_route='organizations_index') }}
      </li>
      <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'showcase') }}">
-       {{ h.nav_link(_('Applications'), named_route='ckanext_showcase_index') }}
+       {{ h.nav_link(_('Showcases'), named_route='ckanext_showcase_index') }}
      </li>
      <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'group') }}">
          {{ h.nav_link(_('Categories'), named_route='group_index') }}
