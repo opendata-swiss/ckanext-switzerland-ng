@@ -1,12 +1,5 @@
 <div role="main" class="hero">
   <div class="container">
-    {% block search %}
-    {% snippet 'home/snippets/search.html' %}
-    {% endblock %}
-  </div>
-</div>
-<div role="main">
-  <div class="container">
     <div class="row row2">
       <div class="col-md-6 col2">
         {% block promoted %}
@@ -19,5 +12,12 @@
         {% endblock %}
       </div>
     </div>
+  </div>
+</div>
+<div role="main">
+  <div class="container">
+    {% block search %}
+    {% snippet 'home/snippets/search.html' %}
+    {% endblock %}
   </div>
 </div>
