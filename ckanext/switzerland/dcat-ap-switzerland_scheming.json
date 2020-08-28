@@ -129,11 +129,12 @@
         "fr": "Editeurs",
         "it": "Editori"
       },
-      "validators": "harvest_list_of_dicts ogdch_validate_formfield_publisher",
+      "validators": "harvest_list_of_dicts ogdch_validate_formfield_publishers",
       "output_validators": "multiple_text_output",
       "display_snippet": "publishers.html",
       "form_snippet": "publishers.html",
-      "help_text": "Ein oder mehrere Publisher dieses Datensatzes. Dieser kann der Organisation entsprechen, welche den Datensatz veröffentlicht. Mindestens ein Publisher ist erforderlich."
+      "ogdch_help_text": "Ein oder mehrere Publisher dieses Datensatzes. Dieser kann der Organisation entsprechen, welche den Datensatz veröffentlicht. Mindestens ein Publisher ist erforderlich.",
+      "section_title": "Publisher Information"
     },
     {
       "field_name": "contact_points",

@@ -3,6 +3,8 @@ import ckan.lib.navl.dictization_functions as df
 from ckanext.fluent.helpers import fluent_form_languages
 from ckanext.scheming.validation import scheming_validator
 from ckanext.switzerland.helpers.localize_utils import parse_json
+from ckanext.switzerland.helpers.dataset_form_helpers import (
+    get_publishers_from_form)
 from ckan.logic import NotFound, get_action
 import json
 import re
@@ -256,42 +258,23 @@ def ogdch_required_in_one_language(field, schema):
 
 
 @scheming_validator
-def ogdch_validate_formfield_publisher(field, schema):
+def ogdch_validate_formfield_publishers(field, schema):
     """This validator is only used for form validation
     The data is extracted form the publisher form fields and transformed
     into a form that is expected for database storage:
-    This is a json string of the form
-    '[{'label': 'Publisher1'}, {'label': 'Publisher 2}]'
-    with list of publishers
+    '[{'label': 'Publisher1'}, {'label': 'Publisher 2}]
     """
     def validator(key, data, errors, context):
 
-        # don't use for harvesting
-        if context.get('user') == HARVEST_USER:
-            return
+        extras = data.get(FORM_EXTRAS)
+        if extras:
+            publishers = get_publishers_from_form(extras)
 
-        if errors[key]:
-            return
-
-        # test if data is coming from a form
-        publishers = _get_publisher_data_from_form(data)
-        if publishers:
-            if len(publishers) == 0:
+            if not publishers:
                 raise df.Invalid(
                     _('At least one publisher must be provided.')  # noqa
                 )
             output = [{'label': publisher} for publisher in publishers]
-            data[('publishers',)] = json.dumps(output)
+            data[key] = json.dumps(output)
 
     return validator
-
-
-def _get_publisher_data_from_form(data):
-    extras = data.get(FORM_EXTRAS)
-    if extras:
-        publishers = [value
-                      for key, value in extras.items()
-                      if key.startswith('publisher-')
-                      if value != '']
-        return publishers
-    return None

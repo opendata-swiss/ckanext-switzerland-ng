@@ -6,6 +6,7 @@ import ckanext.switzerland.helpers.validators as ogdch_validators
 from ckanext.switzerland import logic as ogdch_logic
 import ckanext.switzerland.helpers.frontend_helpers as ogdch_frontend_helpers
 import ckanext.switzerland.helpers.backend_helpers as ogdch_backend_helpers
+import ckanext.switzerland.helpers.dataset_form_helpers as ogdch_dataset_form_helpers
 import ckanext.switzerland.helpers.plugin_utils as ogdch_plugin_utils
 import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
@@ -59,7 +60,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_unique_identifier': ogdch_validators.ogdch_unique_identifier, # noqa
             'ogdch_required_in_one_language': ogdch_validators.ogdch_required_in_one_language, # noqa
             'temporals_to_datetime_output': ogdch_validators.temporals_to_datetime_output, # noqa
-            'ogdch_validate_formfield_publisher': ogdch_validators.ogdch_validate_formfield_publisher,  # noqa
+            'ogdch_validate_formfield_publishers': ogdch_validators.ogdch_validate_formfield_publishers,  # noqa
         }
 
     # IFacets
@@ -139,8 +140,8 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_get_political_level_field_list': ogdch_backend_helpers.ogdch_get_political_level_field_list, # noqa
             'get_localized_value_from_json': ogdch_localize_utils.get_localized_value_from_json, # noqa
             'get_localized_value_for_display': ogdch_frontend_helpers.get_localized_value_for_display,  # noqa
-            'ogdch_get_accrual_periodicity_choices': ogdch_backend_helpers.ogdch_get_accrual_periodicity_choices,  # noqa
-            'ogdch_publisher_form_helper': ogdch_backend_helpers.ogdch_publisher_form_helper,  # noqa
+            'ogdch_get_accrual_periodicity_choices': ogdch_dataset_form_helpers.ogdch_get_accrual_periodicity_choices,  # noqa
+            'ogdch_publishers_form_helper': ogdch_dataset_form_helpers.ogdch_publishers_form_helper,  # noqa
         }
 
     # IRouter

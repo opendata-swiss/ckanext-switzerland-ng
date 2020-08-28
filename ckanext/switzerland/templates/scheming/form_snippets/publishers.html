@@ -1,12 +1,8 @@
 {% import 'macros/form.html' as form %}
 
-{% set publisher_rows = h.ogdch_publisher_form_helper(data) %}
+{% set publishers_rows = h.ogdch_publishers_form_helper(data) %}
 
-{%- for row in publisher_rows -%}
-  {% if loop.first %}
-    {%- snippet 'scheming/form_snippets/publishers_help_text.html',
-      field=field -%}
-  {%  endif %}
+{%- for row in publishers_rows -%}
   {% call form.input(
     'publisher-' + row.index,
     id='field-publishers-' + row.index,
@@ -19,9 +15,9 @@
   {% endcall %}
 {%- endfor -%}
 
-<a data-module="ogdch_form_helper_add_rows"
+<a data-module="ogdch_publishers_add_rows"
       id="ogdch_publishers_add_row"
-      class="btn btn-default"
+      class="btn btn-default ogdch-btn-add-row"
       href="#ogdch_publishers_pagemark">
 {{ _('Add another publisher') }}
 </a>
