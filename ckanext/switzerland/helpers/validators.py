@@ -5,6 +5,7 @@ from ckanext.scheming.validation import scheming_validator
 from ckanext.switzerland.helpers.localize_utils import parse_json
 from ckanext.switzerland.helpers.dataset_form_helpers import (
     get_publishers_from_form,
+    get_relations_from_form,
     get_contact_points_from_form,)
 from ckan.logic import NotFound, get_action
 import json
@@ -299,5 +300,30 @@ def ogdch_validate_formfield_contact_points(field, schema):
                 )
             output = contact_points
             data[key] = json.dumps(output)
+
+    return validator
+
+
+@scheming_validator
+def ogdch_validate_formfield_relations(field, schema):
+    """This validator is only used for form validation
+    The data is extracted form the publisher form fields and transformed
+    into a form that is expected for database storage:
+    "relations": [
+    {"label": "legal_basis", "url": "https://www.admin.ch/#a20"},
+    {"label": "legal_basis", "url": "https://www.admin.ch/#a21"}]
+    """
+    def validator(key, data, errors, context):
+
+        extras = data.get(FORM_EXTRAS)
+        if extras:
+            relations = get_relations_from_form(extras)
+
+            if relations:
+                output = [{'label': relation['title'], 'url': relation['url']}
+                          for relation in relations]
+                data[key] = json.dumps(output)
+            else:
+                data[key] = '{}'
 
     return validator
