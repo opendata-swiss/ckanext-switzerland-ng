@@ -6,7 +6,7 @@
   {% block organization_option scoped %}
     <option value="{{ organization.id }}"{%
       if selected_org %} selected="selected"{% endif
-      %}>{{h.localize_json_facet_title(organization)}}</option>
+      %}>{{h.localize_json_facet_title(organization)}} (@{{ organization.name }})</option>
   {% endblock %}
 {% endmacro %}
 
@@ -16,8 +16,7 @@
     data=data,
     errors=errors,
     organizations_available=h.organizations_available('create_dataset'),
-    org_required=not h.check_config_permission('create_unowned_dataset')
-      or h.scheming_field_required(field),
+    org_required=true,
     organization_option_tag=organization_option_tag %}
 
   {% block package_metadata_fields_visibility %}
