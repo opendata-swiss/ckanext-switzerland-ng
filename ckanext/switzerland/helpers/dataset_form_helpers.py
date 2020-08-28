@@ -73,3 +73,46 @@ def get_publishers_from_form(data):
                       if value.strip() != '']
         return publishers
     return None
+
+
+def ogdch_contact_points_form_helper(data):
+    """
+    sets the form field for contact_points
+    u'contact_points':
+    [{u'email': u'opendata@bs.ch',
+    u'name': u'Fachstelle f\\xfcr OGD Basel-Stadt'}],
+    """
+    contact_points = _get_contact_points_from_storage(data)
+    if not contact_points:
+        contact_points = get_contact_points_from_form(data)
+
+    label = {'name': _('Name'), 'email': _('Email')}
+    data_empty = {'name': '', 'email': ''}
+    rows = _build_rows_form_field(
+        first_label=label,
+        default_label=label,
+        data_empty=data_empty,
+        data_list=contact_points)
+    return rows
+
+
+def _get_contact_points_from_storage(data):
+    """data is expected to be stored as:
+    u'contact_points': [{u'email': u'tischhauser@ak-strategy.ch',
+    u'name': u'tischhauser@ak-strategy.ch'}]
+    """
+    return data.get('contact_points')
+
+
+def get_contact_points_from_form(data):
+    if isinstance(data, dict):
+        contact_points = []
+        for i in range(1, ADDITIONAL_FORM_ROW_LIMIT + 1):
+            name = data.get('contact-point-name-' + str(i), '').strip()
+            email = data.get('contact-point-email-' + str(i), '').strip()
+            if (name or email):
+                contact_points.append(
+                    {'name': name,
+                     'email': email})
+        return contact_points
+    return None

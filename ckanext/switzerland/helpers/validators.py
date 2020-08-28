@@ -4,7 +4,8 @@ from ckanext.fluent.helpers import fluent_form_languages
 from ckanext.scheming.validation import scheming_validator
 from ckanext.switzerland.helpers.localize_utils import parse_json
 from ckanext.switzerland.helpers.dataset_form_helpers import (
-    get_publishers_from_form)
+    get_publishers_from_form,
+    get_contact_points_from_form,)
 from ckan.logic import NotFound, get_action
 import json
 import re
@@ -273,6 +274,30 @@ def ogdch_validate_formfield_publishers(field, schema):
                     _('At least one publisher must be provided.')  # noqa
                 )
             output = [{'label': publisher} for publisher in publishers]
+            data[key] = json.dumps(output)
+
+    return validator
+
+
+@scheming_validator
+def ogdch_validate_formfield_contact_points(field, schema):
+    """This validator is only used for form validation
+    The data is extracted form the publisher form fields and transformed
+    into a form that is expected for database storage:
+    u'contact_points': [{u'email': u'tischhauser@ak-strategy.ch',
+    u'name': u'tischhauser@ak-strategy.ch'}]
+    """
+    def validator(key, data, errors, context):
+
+        extras = data.get(FORM_EXTRAS)
+        if extras:
+            contact_points = get_contact_points_from_form(extras)
+
+            if not contact_points:
+                raise df.Invalid(
+                    _('At least one contact must be provided.')  # noqa
+                )
+            output = contact_points
             data[key] = json.dumps(output)
 
     return validator
