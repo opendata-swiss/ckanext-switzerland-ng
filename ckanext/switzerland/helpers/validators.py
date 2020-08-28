@@ -7,6 +7,7 @@ from ckanext.switzerland.helpers.dataset_form_helpers import (
     get_publishers_from_form,
     get_relations_from_form,
     get_see_alsos_from_form,
+    get_temporals_from_form,
     get_contact_points_from_form,)
 from ckan.logic import NotFound, get_action
 import json
@@ -18,6 +19,8 @@ log = logging.getLogger(__name__)
 HARVEST_JUNK = ('__junk',)
 FORM_EXTRAS = ('__extras',)
 HARVEST_USER = 'harvest'
+ISODATE_POSTFIX = "T00:00:00"
+DATE_FORMAT_DISPLAY = '%Y-%m-%d'
 
 
 @scheming_validator
@@ -364,3 +367,40 @@ def ogdch_validate_formfield_see_alsos(field, schema):
                     data[key] = '{}'
 
     return validator
+
+
+@scheming_validator
+def ogdch_validate_formfield_temporals(field, schema):
+    """This validator is only used for form validation
+    The data is extracted form the temporals form fields and transformed
+    into a form that is expected for database storage:
+    "temporals": [{"start_date": "1981-06-14T00:00:00",
+     "end_date": "2020-09-27T00:00:00"}]
+    """
+    def validator(key, data, errors, context):
+        extras = data.get(FORM_EXTRAS)
+        if extras:
+            temporals = get_temporals_from_form(extras)
+            for temporal in temporals:
+                if not temporal['start_date'] and temporal['end_date']:
+                    raise df.Invalid(
+                        _('A valid temporal must have both start and end date')  # noqa
+                    )
+                temporal['start_date'] = _transform_to_isodate(temporal['start_date'])
+                temporal['end_date'] = _transform_to_isodate(temporal['end_date'])
+            if temporals:
+                data[key] = json.dumps(temporals)
+
+    return validator
+
+
+def _transform_to_isodate(date_from_form):
+    """expects date as MM-DD-YYYY and transforms it to an isodate format: MM-DD-YYYYT00:00:00"""
+    try:
+        datetime.datetime.strptime(date_from_form, DATE_FORMAT_DISPLAY)
+        date_as_isodate = date_from_form + ISODATE_POSTFIX
+        return date_as_isodate
+    except ValueError:
+        raise df.Invalid(
+            _('The dateformat of {} is not correct: it must be YYYY-MM-DD'.format(date_from_form))  # noqa
+        )
