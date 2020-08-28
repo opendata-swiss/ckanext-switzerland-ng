@@ -158,6 +158,18 @@
       "section_title": "Contact Information"
     },
     {
+      "field_name": "categories",
+      "label": {
+        "en": "Categories",
+        "de": "Kategorien",
+        "fr": "Catégories",
+        "it": "Categorie"
+      },
+      "form_snippet": "multiple_checkbox.html",
+      "section_title": "Further Informations",
+      "choices_helper": "ogdch_get_theme_choices"
+    },
+    {
       "field_name": "language",
       "label": {
         "en": "Languages",

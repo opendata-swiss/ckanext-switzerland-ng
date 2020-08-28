@@ -6,6 +6,7 @@ used for rendering the dataset form
 """
 from ckanext.switzerland.helpers.frontend_helpers import get_frequency_name  # noqa
 import logging
+from ckan.logic import NotFound, get_action
 from ckan.common import _
 from ckanext.switzerland.helpers.frontend_helpers import (
     get_frequency_name, get_dataset_by_identifier)
@@ -21,6 +22,17 @@ log = logging.getLogger(__name__)
 def ogdch_get_accrual_periodicity_choices(field):
     map = [{'label': label, 'value': value}
            for value, label in get_frequency_name(get_map=True).items()]
+    return map
+
+
+def ogdch_get_theme_choices(field):
+    context = {'for_view': True,}
+    data_dict = {'all_fields': True}
+    try:
+        themes = get_action('group_list')(context, data_dict)
+    except NotFound:
+        return None
+    map = [{'label': theme.get('title'), 'value': theme.get('name')} for theme in themes]
     return map
 
 
