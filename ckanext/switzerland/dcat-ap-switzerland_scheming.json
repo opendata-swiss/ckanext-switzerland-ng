@@ -34,7 +34,8 @@
         "fr": "Nom d'affichage",
         "it": "Nome visualizzato"
       },
-      "preset": "multilingual_text"
+      "preset": "multilingual_text",
+      "form_snippet": null
     },
     {
       "field_name": "notes",
@@ -44,7 +45,8 @@
         "fr": "Description",
         "it": "Descrizione"
       },
-      "preset": "multilingual_output"
+      "preset": "multilingual_output",
+      "form_snippet": null
     },
     {
       "field_name": "title",
@@ -95,6 +97,26 @@
         "it": "Data di modifica"
       },
       "preset": "ogdch_date"
+    },
+    {
+      "field_name": "accrual_periodicity",
+      "label": {
+        "en": "Update interval",
+        "de": "Aktualisierungsintervall",
+        "fr": "Intervalle d'actualisation",
+        "it": "Intervallo di aggiornamento"
+      },
+      "display_snippet": "periodicity.html"
+    },
+    {
+      "field_name": "temporals",
+      "label": {
+        "en": "Temporal coverage",
+        "de": "Zeitliche Abdeckung",
+        "fr": "Couverture temporelle",
+        "it": "Copertura temporale"
+      },
+      "preset": "temporals"
     },
     {
       "field_name": "publishers",
@@ -214,26 +236,6 @@
         "fr": "Couverture",
         "it": "Copertura"
       }
-    },
-    {
-      "field_name": "temporals",
-      "label": {
-        "en": "Temporal coverage",
-        "de": "Zeitliche Abdeckung",
-        "fr": "Couverture temporelle",
-        "it": "Copertura temporale"
-      },
-      "preset": "temporals"
-    },
-    {
-      "field_name": "accrual_periodicity",
-      "label": {
-        "en": "Update interval",
-        "de": "Aktualisierungsintervall",
-        "fr": "Intervalle d'actualisation",
-        "it": "Intervallo di aggiornamento"
-      },
-      "display_snippet": "periodicity.html"
     },
     {
       "field_name": "see_alsos",
