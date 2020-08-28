@@ -116,3 +116,51 @@ def get_contact_points_from_form(data):
                      'email': email})
         return contact_points
     return None
+
+
+def ogdch_relations_form_helper(data):
+    """
+    sets the form field for relations
+    "relations": [
+    {"label": "legal_basis", "url": "https://www.admin.ch/#a20"},
+    {"label": "legal_basis", "url": "https://www.admin.ch/#a21"}]
+    """
+    relations = _get_relations_from_storage(data)
+    if not relations:
+        relations = get_relations_from_form(data)
+
+    label = {'title': _('Title'), 'url': _('Url')}
+    data_empty = {'title': '', 'url': ''}
+    rows = _build_rows_form_field(
+        first_label=label,
+        default_label=label,
+        data_empty=data_empty,
+        data_list=relations)
+    return rows
+
+
+def _get_relations_from_storage(data):
+    """data is expected to be stored as:
+    "relations": [
+    {"label": "legal_basis", "url": "https://www.admin.ch/#a20"},
+    {"label": "legal_basis", "url": "https://www.admin.ch/#a21"}]
+    """
+    relations = data.get('relations')
+    if relations:
+        return [{"title": relation["label"], "url": relation["url"]}
+                for relation in relations]
+    return None
+
+
+def get_relations_from_form(data):
+    if isinstance(data, dict):
+        relations = []
+        for i in range(1, ADDITIONAL_FORM_ROW_LIMIT + 1):
+            title = data.get('relation-title-' + str(i), '')
+            url = data.get('relation-url-' + str(i), '')
+            if (title or url):
+                relations.append(
+                    {'title': title,
+                     'url': url})
+        return relations
+    return None
