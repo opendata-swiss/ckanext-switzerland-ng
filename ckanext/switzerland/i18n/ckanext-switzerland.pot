@@ -736,3 +736,7 @@ msgstr ""
 #: ckanext/switzerland/validators:195
 msgid "No organizations was found with the slug {owner_slug}"
 msgstr ""
+
+#: ckanext/switzerland/validators:196
+msgid "Organisation slug of the identifier {owner_slug} does not match the organisation of the dataset {organization_name}."
+msgstr ""
