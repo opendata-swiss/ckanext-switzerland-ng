@@ -86,7 +86,9 @@
         "fr": "Date de publication",
         "it": "Data di rilascio"
       },
-      "preset": "ogdch_date"
+      "preset": "ogdch_date",
+      "validators": "not_empty scheming_required isodate convert_to_json_if_date",
+      "section_title": "Data"
     },
     {
       "field_name": "modified",
@@ -96,7 +98,8 @@
         "fr": "Date de modification",
         "it": "Data di modifica"
       },
-      "preset": "ogdch_date"
+      "preset": "ogdch_date",
+      "validators": "isodate convert_to_json_if_date"
     },
     {
       "field_name": "accrual_periodicity",
