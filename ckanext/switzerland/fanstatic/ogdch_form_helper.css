@@ -10,3 +10,12 @@
 .ogdch-hide-row {
   display: none;
 }
+
+.ogdch-btn-add-row {
+  margin-bottom: 50px;
+  background: lightgray;
+}
+
+input[value]:not([value=""]) {
+  border:1px solid black;
+}
