@@ -61,6 +61,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_required_in_one_language': ogdch_validators.ogdch_required_in_one_language, # noqa
             'temporals_to_datetime_output': ogdch_validators.temporals_to_datetime_output, # noqa
             'ogdch_validate_formfield_publishers': ogdch_validators.ogdch_validate_formfield_publishers,  # noqa
+            'ogdch_validate_formfield_contact_points': ogdch_validators.ogdch_validate_formfield_contact_points,  # noqa
         }
 
     # IFacets
@@ -142,6 +143,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'get_localized_value_for_display': ogdch_frontend_helpers.get_localized_value_for_display,  # noqa
             'ogdch_get_accrual_periodicity_choices': ogdch_dataset_form_helpers.ogdch_get_accrual_periodicity_choices,  # noqa
             'ogdch_publishers_form_helper': ogdch_dataset_form_helpers.ogdch_publishers_form_helper,  # noqa
+            'ogdch_contact_points_form_helper': ogdch_dataset_form_helpers.ogdch_contact_points_form_helper,  # noqa
         }
 
     # IRouter
