@@ -208,3 +208,13 @@ def get_see_alsos_from_form(data):
                      if value.strip() != '']
         return see_alsos
     return None
+
+
+def ogdch_date_form_helper(date_value):
+    """transform isodate into display date
+    u'2012-12-31T00:00:00' to 2012-12-31,
+    """
+    if date_value:
+        return date_value.split('T')[0]
+    else:
+        return ""

@@ -145,6 +145,7 @@
       "preset_name": "ogdch_date",
       "values": {
         "display_snippet": "date.html",
+        "form_snippet": "date.html",
         "output_validators": "timestamp_to_datetime"
       }
     },
