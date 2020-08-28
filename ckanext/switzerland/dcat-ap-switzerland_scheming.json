@@ -6,6 +6,39 @@
   "form_languages": ["de", "fr", "it", "en"],
   "dataset_fields": [
     {
+      "field_name": "title_for_slug",
+      "label": "Title",
+      "preset": "title",
+      "form_snippet": "title.html",
+      "form_placeholder": "Title for naming the dataset"
+    },
+    {
+      "field_name": "name",
+      "label": {
+        "en": "Slug",
+        "de": "Slug",
+        "fr": "Slug",
+        "it": "Slug"
+      },
+      "preset": "dataset_slug"
+    },
+    {
+      "field_name": "title",
+      "label": {
+        "en": "Title",
+        "de": "Titel",
+        "fr": "Titre",
+        "it": "Titolo"
+      },
+      "preset": "multilingual_text_full",
+      "validators": "ogdch_required_in_one_language",
+      "section_title": "Dataset",
+      "subheader": "Dataset Title",
+      "mark_required": true,
+      "ogdch_help_text": "please provide in at least one language",
+      "form_placeholder": "Title of the dataset"
+    },
+    {
       "field_name": "identifier",
       "label": {
         "en": "Identifier",
@@ -13,8 +46,12 @@
         "fr": "Identifier",
         "it": "Identifier"
       },
-      "validators": "scheming_required ogdch_unique_identifier",
-      "help_text": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden."
+      "section_title": "Dataset Identifier",
+      "subheader": "Unique Identifier with a mark of the organization",
+      "mark_required": true,
+      "ogdch_help_text": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden.",
+      "validators": "ogdch_unique_identifier",
+      "form_placeholder": "123..@organization"
     },
     {
       "field_name": "owner_org",
@@ -49,33 +86,6 @@
       "form_snippet": null
     },
     {
-      "field_name": "title",
-      "label": {
-        "en": "Title",
-        "de": "Titel",
-        "fr": "Titre",
-        "it": "Titolo"
-      },
-      "preset": "multilingual_text"
-    },
-    {
-      "field_name": "title_for_slug",
-      "label": "Title",
-      "preset": "title",
-      "form_snippet": "title.html",
-      "form_placeholder": "Title for naming the dataset"
-    },
-    {
-      "field_name": "name",
-      "label": {
-        "en": "Slug",
-        "de": "Slug",
-        "fr": "Slug",
-        "it": "Slug"
-      },
-      "preset": "dataset_slug"
-    },
-    {
       "field_name": "description",
       "label": {
         "en": "Description",
@@ -83,7 +93,13 @@
         "fr": "Description",
         "it": "Descrizione"
       },
-      "preset": "multilingual_text"
+      "preset": "multilingual_markdown",
+      "validators": "ogdch_required_in_one_language",
+      "section_title": "Dataset Information",
+      "subheader": "Dataset Description",
+      "mark_required": true,
+      "ogdch_help_text": "please provide in at least one language",
+      "form_placeholder": "Description of the dataset"
     },
     {
       "field_name": "issued",
@@ -118,8 +134,7 @@
       },
       "display_snippet": "periodicity.html",
       "preset": "select",
-      "choices_helper": "ogdch_get_accrual_periodicity_choices",
-      "validators": "not_empty"
+      "choices_helper": "ogdch_get_accrual_periodicity_choices"
     },
     {
       "field_name": "temporals",
@@ -240,16 +255,6 @@
       "section_title": "Further Information"
     },
     {
-      "field_name": "keywords",
-      "label": {
-        "en": "Keywords",
-        "de": "Schlagwörter",
-        "fr": "Mots clés",
-        "it": "Parole chiave"
-      },
-      "preset": "fluent_tags"
-    },
-    {
       "field_name": "url",
       "label": {
         "en": "Landing page",
@@ -257,7 +262,8 @@
         "fr": "Landing page",
         "it": "Landing page"
       },
-      "preset": "url"
+      "preset": "url",
+      "validators": "not_empty scheming_required"
     },
     {
       "field_name": "spatial",
@@ -266,7 +272,8 @@
         "de": "Räumlich",
         "fr": "Spatial",
         "it": "Spaziale"
-      }
+      },
+      "form_snippet": null
     },
     {
       "field_name": "coverage",
@@ -275,7 +282,8 @@
         "de": "Abdeckung",
         "fr": "Couverture",
         "it": "Copertura"
-      }
+      },
+      "form_snippet": null
     },
     {
       "field_name": "see_alsos",
@@ -291,6 +299,17 @@
       "display_snippet": "see_alsos.html",
       "help_text": "Beziehungen zu anderen Datensätzen.",
       "section_title": "Related Datasets"
+    },
+    {
+      "field_name": "keywords",
+      "label": {
+        "en": "Keywords",
+        "de": "Schlagwörter",
+        "fr": "Mots clés",
+        "it": "Parole chiave"
+      },
+      "preset": "fluent_tags",
+      "section_title": "Keywords"
     }
   ],
   "resource_fields": [
