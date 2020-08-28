@@ -59,7 +59,7 @@ def get_localized_value_from_dict(value, lang_code, default=''):
     desired_lang_value = value.get(lang_code)
     if desired_lang_value:
         return desired_lang_value
-    return _localize_by_language_order(value, default)
+    return localize_by_language_order(value, default)
 
 
 def get_localized_value_from_json(value, lang_code):
@@ -68,7 +68,7 @@ def get_localized_value_from_json(value, lang_code):
     return get_localized_value_from_dict(parse_json(value), lang_code)
 
 
-def _localize_by_language_order(multi_language_field, default=''):
+def localize_by_language_order(multi_language_field, default=''):
     """localizes language dict if no language is specified"""
     if multi_language_field.get('de'):
         return multi_language_field['de']

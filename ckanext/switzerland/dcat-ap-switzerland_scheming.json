@@ -59,6 +59,13 @@
       "preset": "multilingual_text"
     },
     {
+      "field_name": "title_for_slug",
+      "label": "Title",
+      "preset": "title",
+      "form_snippet": "title.html",
+      "form_placeholder": "Title for naming the dataset"
+    },
+    {
       "field_name": "name",
       "label": {
         "en": "Slug",
