@@ -7,6 +7,8 @@ used for rendering the dataset form
 from ckanext.switzerland.helpers.frontend_helpers import get_frequency_name  # noqa
 import logging
 from ckan.common import _
+from ckanext.switzerland.helpers.frontend_helpers import (
+    get_frequency_name, get_dataset_by_identifier)
 
 
 ADDITIONAL_FORM_ROW_LIMIT = 10
@@ -163,4 +165,46 @@ def get_relations_from_form(data):
                     {'title': title,
                      'url': url})
         return relations
+    return None
+
+
+def ogdch_see_alsos_form_helper(data):
+    """
+    sets the form field for see_alsos
+    """
+    see_alsos = _get_see_alsos_from_storage(data)
+    if not see_alsos:
+        see_alsos = get_see_alsos_from_form(data)
+
+    rows = _build_rows_form_field(
+        first_label=_('Related dataset'),
+        default_label=_('Another related dataset'),
+        data_empty = '',
+        data_list=see_alsos)
+    return rows
+
+
+def _get_see_alsos_from_storage(data):
+    """data is expected to be stored as:
+    "see_alsos": [{"dataset_identifier": "443@statistisches-amt-kanton-zuerich"},
+    {"dataset_identifier": "444@statistisches-amt-kanton-zuerich"},
+    {"dataset_identifier": "10001@statistisches-amt-kanton-zuerich"}],
+    """
+    see_alsos = data.get('see_alsos')
+    if see_alsos:
+        for dataset in see_alsos:
+            dataset = get_dataset_by_identifier(identifier=dataset["dataset_identifier"])
+            if dataset:
+                see_alsos.append(dataset.name)
+        return see_alsos
+    return None
+
+
+def get_see_alsos_from_form(data):
+    if isinstance(data, dict):
+        see_alsos = [value.strip()
+                     for key, value in data.items()
+                     if key.startswith('see-also-')
+                     if value.strip() != '']
+        return see_alsos
     return None
