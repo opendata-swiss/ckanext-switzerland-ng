@@ -10,6 +10,7 @@ from ckan.logic import NotFound, get_action
 from ckan.common import _
 from ckanext.switzerland.helpers.frontend_helpers import (
     get_frequency_name, get_dataset_by_identifier)
+from ckanext.switzerland.helpers.localize_utils import localize_by_language_order
 
 
 ADDITIONAL_FORM_ROW_LIMIT = 10
@@ -280,3 +281,11 @@ def get_temporals_from_form(data):
                      'end_date': end_date})
         return temporals
     return None
+
+
+def ogdch_dataset_title_form_helper(data):
+    if isinstance(data, dict):
+        title = data.get('title')
+        if title:
+            return localize_by_language_order(title)
+        return ''
