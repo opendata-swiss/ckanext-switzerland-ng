@@ -2,6 +2,10 @@
 /* css for forms in the backend of opendata.switzerland */
 /*------------------------------------------------------*/
 
+/*------------------------------------------------------*/
+/* dataset form                                         */
+/*------------------------------------------------------*/
+
 /* hide empty rows for list form fields */
 .ogdch-hide-row {
   display: none;

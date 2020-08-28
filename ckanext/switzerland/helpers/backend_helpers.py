@@ -12,17 +12,12 @@ from ckan.common import _
 import ckan.lib.i18n as i18n
 import ckan.plugins.toolkit as tk
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
-from ckanext.switzerland.helpers.frontend_helpers import get_frequency_name
 
 log = logging.getLogger(__name__)
 
 OGDCH_USER_VIEW_CHOICE = 'user_view_choice'
 OGDCH_USER_VIEW_CHOICE_FRONTEND = 'frontend'
 OGDCH_USER_VIEW_CHOICE_BACKEND = 'backend'
-
-ADDITIONAL_FORM_ROW_LIMIT = 10
-HIDE_ROW_CSS_CLASS = 'ogdch-hide-row'
-SHOW_ROW_CSS_CLASS = 'ogdch-show-row'
 
 showcase_types_mapping = {
     "application": u'{"fr": "Application", "de": "Applikation", "en": "Application", "it": "Applicazione"}', # noqa
@@ -175,56 +170,3 @@ def ogdch_get_political_level_field_list(field):
         {'label': _('Commune'), 'value': 'commune'},
         {'label': _('Other'), 'value': 'other'},
     ]
-
-
-def ogdch_get_accrual_periodicity_choices(field):
-    map = [{'label': label, 'value': value}
-           for value, label in get_frequency_name(get_map=True).items()]
-    return map
-
-
-def ogdch_publisher_form_helper(data):
-    """
-    sets the form field for publishers depending on the data:
-    - first the data is received from storage or from the form
-    - then the form is build with that data
-    - rows that are empty are set to hidden
-    - except when the field has no data yet: then the first row
-      is displayed for entering data
-    """
-    publishers = _get_publishers_from_publisher_data_field(data)
-    if not publishers:
-        publishers = _get_publishers_from_publisher_form_field(data)
-    rows = _build_form_field_publishers(publishers)
-    return rows
-
-
-def _build_form_field_publishers(publishers=None):
-    publishers = publishers if publishers else []
-    number_of_rows_to_show = len(publishers) if publishers else 1
-    rows = []
-    for i in range(1, ADDITIONAL_FORM_ROW_LIMIT + 1):
-        row = {'index': str(i),
-               'data': publishers[i - 1] if i <= len(publishers) else ''}
-        row['css_class'] = SHOW_ROW_CSS_CLASS if (i <= number_of_rows_to_show) else HIDE_ROW_CSS_CLASS  # noqa
-        row['label'] = 'Publisher' if i == 1 else 'Another Publisher'
-        rows.append(row)
-    return rows
-
-
-def _get_publishers_from_publisher_data_field(data):
-    publishers_stored_data = data.get('publishers')
-    if publishers_stored_data:
-        publishers = [item['label'] for item in publishers_stored_data]
-        return publishers
-    return None
-
-
-def _get_publishers_from_publisher_form_field(data):
-    if isinstance(data, dict):
-        publishers = [value
-                      for key, value in data.items()
-                      if key.startswith('publisher-')
-                      if value.strip() != '']
-        return publishers
-    return None
