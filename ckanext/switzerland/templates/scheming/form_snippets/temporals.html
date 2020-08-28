@@ -1,0 +1,33 @@
+{% import 'macros/form.html' as form %}
+
+{% set temporals_rows = h.ogdch_temporals_form_helper(data) %}
+
+{%- for row in temporals_rows -%}
+    {% call form.input(
+        'temporal-start-date-' + row.index,
+        id='field-temporal-start-date-' + row.index,
+        label=row.label.start_date,
+        type='date',
+        value=row.data.start_date,
+        error=errors['temporals'],
+        classes=['control-medium', row.css_class]
+        ) %}
+    {% endcall %}
+    {% call form.input(
+        'temporal-end-date-' + row.index,
+        id='field-temporal-end-date-' + row.index,
+        label=row.label.end_date,
+        type='date',
+        value=row.data.end_date,
+        error=errors['temporals'],
+        classes=['control-medium', row.css_class]
+        ) %}
+    {% endcall %}
+{% endfor %}
+
+<a data-module="ogdch_temporals_add_rows"
+      id="ogdch_temporals_add_row"
+      class="btn btn-default ogdch-btn-add-row"
+      href="#ogdch_temporals_pagemark">
+{{ _('Add another temporal') }}
+</a>

@@ -122,7 +122,10 @@
         "fr": "Couverture temporelle",
         "it": "Copertura temporale"
       },
-      "preset": "temporals"
+      "preset": "temporals",
+      "section_title": "Temporal Coverage",
+      "ogdch_help_text": "Eine oder mehrere Zeitperioden, welche dieser Datensatz abdeckt.",
+      "form_snippet": "temporals.html"
     },
     {
       "field_name": "publishers",

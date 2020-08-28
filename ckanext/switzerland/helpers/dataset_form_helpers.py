@@ -218,3 +218,53 @@ def ogdch_date_form_helper(date_value):
         return date_value.split('T')[0]
     else:
         return ""
+
+
+def ogdch_temporals_form_helper(data):
+    """
+    sets the form field for temporals
+    """
+    temporals = _get_temporals_from_storage(key='temporals', data=data)
+    if not temporals:
+        temporals = _get_temporals_from_storage(key=('temporals',), data=data)
+    if not temporals:
+        temporals = get_temporals_from_form(data)
+
+    label = {'start_date': _('Start-Date'), 'end_date': _('End-Date')}
+    rows = _build_rows_form_field(
+        first_label=label,
+        default_label=label,
+        data_empty = {'start_date': '', 'end_date': ''},
+        data_list=temporals)
+    return rows
+
+
+def _get_temporals_from_storage(data, key):
+    """data is expected to be stored as:
+    "temporals": [{"start_date": "1981-06-14T00:00:00",
+     "end_date": "2020-09-27T00:00:00"}]
+    """
+    if data:
+        temporals = data.get(key)
+        if temporals:
+            temporals = [
+                {'start_date': ogdch_date_form_helper(temporal['start_date']),
+                 'end_date': ogdch_date_form_helper(temporal['end_date'])}
+                for temporal in temporals
+            ]
+            return temporals
+    return None
+
+
+def get_temporals_from_form(data):
+    if isinstance(data, dict):
+        temporals = []
+        for i in range(1, ADDITIONAL_FORM_ROW_LIMIT + 1):
+            start_date = data.get('temporal-start-date-' + str(i), '').strip()
+            end_date = data.get('temporal-end-date-' + str(i), '').strip()
+            if (start_date or end_date):
+                temporals.append(
+                    {'start_date': start_date,
+                     'end_date': end_date})
+        return temporals
+    return None
