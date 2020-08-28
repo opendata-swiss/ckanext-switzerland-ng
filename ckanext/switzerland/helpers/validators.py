@@ -6,6 +6,7 @@ from ckanext.switzerland.helpers.localize_utils import parse_json
 from ckanext.switzerland.helpers.dataset_form_helpers import (
     get_publishers_from_form,
     get_relations_from_form,
+    get_see_alsos_from_form,
     get_contact_points_from_form,)
 from ckan.logic import NotFound, get_action
 import json
@@ -325,5 +326,39 @@ def ogdch_validate_formfield_relations(field, schema):
                 data[key] = json.dumps(output)
             else:
                 data[key] = '{}'
+
+    return validator
+
+
+@scheming_validator
+def ogdch_validate_formfield_see_alsos(field, schema):
+    """This validator is only used for form validation
+    The data is extracted form the publisher form fields and transformed
+    into a form that is expected for database storage:
+    "see_alsos": [{"dataset_identifier": "443@statistisches-amt-kanton-zuerich"},
+    {"dataset_identifier": "444@statistisches-amt-kanton-zuerich"},
+    {"dataset_identifier": "10001@statistisches-amt-kanton-zuerich"}],
+    """
+    def validator(key, data, errors, context):
+
+        extras = data.get(FORM_EXTRAS)
+        if extras:
+            see_alsos_from_form = get_see_alsos_from_form(extras)
+            if see_alsos_from_form:
+                see_alsos_validated = []
+                context = {}
+                for package_name in see_alsos_from_form:
+                    try:
+                        package = get_action('package_show')(context, {'id': package_name})
+                        see_alsos_validated.append(package['identifier'])
+                    except NotFound:
+                        raise df.Invalid(
+                            _('Dataset {} could not be found .'
+                              .format(package_name))
+                        )
+                if see_alsos_validated:
+                    data[key] = json.dumps(see_alsos_validated)
+                else:
+                    data[key] = '{}'
 
     return validator
