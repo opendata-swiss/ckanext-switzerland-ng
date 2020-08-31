@@ -180,18 +180,6 @@
       "section_title": "Contact Information"
     },
     {
-      "field_name": "groups",
-      "label": {
-        "en": "Categories",
-        "de": "Kategorien",
-        "fr": "Catégories",
-        "it": "Categorie"
-      },
-      "form_snippet": "groups.html",
-      "section_title": "Further Informations",
-      "choices_helper": "ogdch_get_theme_choices"
-    },
-    {
       "field_name": "language",
       "label": {
         "en": "Languages",
