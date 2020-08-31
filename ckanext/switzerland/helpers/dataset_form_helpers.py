@@ -26,18 +26,34 @@ def ogdch_get_accrual_periodicity_choices(field):
     return map
 
 
-def ogdch_get_theme_choices(field):
+def ogdch_get_theme_choices(data):
+    stored_groups = _get_groups_from_storage(data)
     context = {'for_view': True,}
     data_dict = {'all_fields': True}
     try:
         themes = get_action('group_list')(context, data_dict)
     except NotFound:
         return None
-    map = [{'label': theme.get('title'), 'value': theme.get('name')} for theme in themes]
+    map = [{'label': theme.get('title'),
+            'name': theme.get('name'),
+            'checked': True if (stored_groups and theme.get('name') and theme.get('name') in stored_groups) else False}  # noqa
+           for theme in themes]
     return map
 
 
+def _get_groups_from_storage(data):
+    """data is expected to be stored as:
+    u'groups': [{'name': 'geography'}]
+    """
+    groups = data.get('groups')
+    if groups:
+        return [group.get('name') for group in groups]
+
+
 def ogdch_publishers_form_helper(data):
+    from pprint import pprint
+    pprint(data)
+
     publishers = _get_publishers_from_storage(data)
     if not publishers:
         publishers = get_publishers_from_form(data)

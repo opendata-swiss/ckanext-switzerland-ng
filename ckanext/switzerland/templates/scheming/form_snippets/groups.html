@@ -1,0 +1,36 @@
+{% import 'macros/form.html' as form %}
+
+<style>
+fieldset.checkboxes label {
+    font-weight: normal;
+    display: block;
+}
+fieldset.checkboxes label:after {
+    content: none;
+}
+fieldset.checkboxes label input {
+    width: auto;
+    top: 0;
+}
+</style>
+
+{%- set choices = h.ogdch_get_theme_choices(data) -%}
+
+{%- call form.input_block(
+    label=h.scheming_language_text(field.label),
+    classes=['control-medium'],
+    error=errors['groups'],
+    is_required=true) -%}
+    <fieldset class="checkboxes">
+        {%- for choice in choices -%}
+            <label for="field-groups-{{ choice.name }}">
+                <input id="field-groups-{{ choice.name }}"
+                    type="checkbox"
+                    name="groups"
+                    value="{{ choice.name }}"
+                    {{"checked " if choice.checked }} />
+                {{ choice.label }}
+            </label>
+        {%- endfor -%}
+    </fieldset>
+{%- endcall -%}

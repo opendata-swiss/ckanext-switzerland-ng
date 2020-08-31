@@ -180,14 +180,14 @@
       "section_title": "Contact Information"
     },
     {
-      "field_name": "categories",
+      "field_name": "groups",
       "label": {
         "en": "Categories",
         "de": "Kategorien",
         "fr": "Catégories",
         "it": "Categorie"
       },
-      "form_snippet": "multiple_checkbox.html",
+      "form_snippet": "groups.html",
       "section_title": "Further Informations",
       "choices_helper": "ogdch_get_theme_choices"
     },
