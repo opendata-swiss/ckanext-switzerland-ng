@@ -1,0 +1,18 @@
+{% ckan_extends %}
+
+{% block heading %}
+<h1 class="heading">
+  {{ display_name }}
+  {% if group.state == 'deleted' %}
+  [{{ _('Deleted') }}]
+  {% endif %}
+</h1>
+{% endblock %}
+{% block description %}
+  {% if group.description %}
+    <p>
+      {%- snippet 'scheming/snippets/display_field.html', field=h.scheming_field_by_name(schema.fields, 'description'), data=group, schema=schema -%}
+      {% link_for _('read more'), named_route='group_about', id=group.name %}
+    </p>
+  {% endif %}
+{% endblock %}
