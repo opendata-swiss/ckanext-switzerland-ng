@@ -186,8 +186,8 @@ def ogdch_language(field, schema):
 def ogdch_unique_identifier(field, schema):
     def validator(key, data, errors, context):
         identifier = data.get(key[:-1] + ('identifier',))
-        id = data.get(key[:-1] + ('id',))
-        owner_org = data.get(key[:-1] + ('owner_org',))
+        dataset_id = data.get(key[:-1] + ('id',))
+        dataset_owner_org = data.get(key[:-1] + ('owner_org',))
         if not identifier:
             raise df.Invalid(
                 _('Identifier of the dataset is missing.')
@@ -197,29 +197,29 @@ def ogdch_unique_identifier(field, schema):
             raise df.Invalid(
                 _('Identifier must be of the form <id>@<slug> where slug is the url of the organization.')  # noqa
             )
-        owner_slug = identifier_parts[1]
+        identifier_org_slug = identifier_parts[1]
         try:
-            result = get_action('organization_show')(
+            dataset_organization = get_action('organization_show')(
                 {},
-                {'id': owner_slug}
+                {'id': dataset_owner_org}
             )
-            if result['id'] != owner_org:
+            if dataset_organization['name'] != identifier_org_slug:
                 raise df.Invalid(
                     _(
                         'The identifier "{}" does not end with the organisation slug "{}" of the organization it belongs to.'  # noqa
-                        .format(identifier, result['name']))  # noqa
+                        .format(identifier, dataset_organization['name']))  # noqa
                 )
         except NotFound:
             raise df.Invalid(
-                _('No organizations was found with the slug "{}".'.format(owner_slug))  # noqa
+                _('The selected organization was not found.')  # noqa
             )
 
         try:
-            result = get_action('ogdch_dataset_by_identifier')(
+            dataset_for_identifier = get_action('ogdch_dataset_by_identifier')(
                 {},
                 {'identifier': identifier}
             )
-            if id != result['id']:
+            if dataset_id != dataset_for_identifier['id']:
                 raise df.Invalid(
                     _('Identifier is already in use, it must be unique.')
                 )
