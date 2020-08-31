@@ -6,7 +6,7 @@ import ckanext.switzerland.helpers.validators as ogdch_validators
 from ckanext.switzerland import logic as ogdch_logic
 import ckanext.switzerland.helpers.frontend_helpers as ogdch_frontend_helpers
 import ckanext.switzerland.helpers.backend_helpers as ogdch_backend_helpers
-import ckanext.switzerland.helpers.dataset_form_helpers as ogdch_dataset_form_helpers
+import ckanext.switzerland.helpers.dataset_form_helpers as ogdch_dataset_form_helpers  # noqa
 import ckanext.switzerland.helpers.plugin_utils as ogdch_plugin_utils
 import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils

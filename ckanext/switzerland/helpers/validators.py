@@ -340,7 +340,8 @@ def ogdch_validate_formfield_see_alsos(field, schema):
     """This validator is only used for form validation
     The data is extracted form the publisher form fields and transformed
     into a form that is expected for database storage:
-    "see_alsos": [{"dataset_identifier": "443@statistisches-amt-kanton-zuerich"},
+    "see_alsos":
+    [{"dataset_identifier": "443@statistisches-amt-kanton-zuerich"},
     {"dataset_identifier": "444@statistisches-amt-kanton-zuerich"},
     {"dataset_identifier": "10001@statistisches-amt-kanton-zuerich"}],
     """
@@ -354,7 +355,7 @@ def ogdch_validate_formfield_see_alsos(field, schema):
                 context = {}
                 for package_name in see_alsos_from_form:
                     try:
-                        package = get_action('package_show')(context, {'id': package_name})
+                        package = get_action('package_show')(context, {'id': package_name})  # noqa
                         see_alsos_validated.append(package['identifier'])
                     except NotFound:
                         raise df.Invalid(
@@ -386,8 +387,8 @@ def ogdch_validate_formfield_temporals(field, schema):
                     raise df.Invalid(
                         _('A valid temporal must have both start and end date')  # noqa
                     )
-                temporal['start_date'] = _transform_to_isodate(temporal['start_date'])
-                temporal['end_date'] = _transform_to_isodate(temporal['end_date'])
+                temporal['start_date'] = _transform_to_isodate(temporal['start_date'])  # noqa
+                temporal['end_date'] = _transform_to_isodate(temporal['end_date'])  # noqa
             if temporals:
                 data[key] = json.dumps(temporals)
 
@@ -395,7 +396,8 @@ def ogdch_validate_formfield_temporals(field, schema):
 
 
 def _transform_to_isodate(date_from_form):
-    """expects date as MM-DD-YYYY and transforms it to an isodate format: MM-DD-YYYYT00:00:00"""
+    """expects date as MM-DD-YYYY and transforms it to an isodate
+    format: MM-DD-YYYYT00:00:00"""
     try:
         datetime.datetime.strptime(date_from_form, DATE_FORMAT_DISPLAY)
         date_as_isodate = date_from_form + ISODATE_POSTFIX

@@ -4,13 +4,12 @@
 Helpers belong in this file if they are
 used for rendering the dataset form
 """
-from ckanext.switzerland.helpers.frontend_helpers import get_frequency_name  # noqa
 import logging
 from ckan.logic import NotFound, get_action
 from ckan.common import _
 from ckanext.switzerland.helpers.frontend_helpers import (
     get_frequency_name, get_dataset_by_identifier)
-from ckanext.switzerland.helpers.localize_utils import localize_by_language_order
+from ckanext.switzerland.helpers.localize_utils import localize_by_language_order  # noqa
 
 
 ADDITIONAL_FORM_ROW_LIMIT = 10
@@ -28,7 +27,7 @@ def ogdch_get_accrual_periodicity_choices(field):
 
 def ogdch_get_theme_choices(data):
     stored_groups = _get_groups_from_storage(data)
-    context = {'for_view': True,}
+    context = {'for_view': True}
     data_dict = {'all_fields': True}
     try:
         themes = get_action('group_list')(context, data_dict)
@@ -36,7 +35,7 @@ def ogdch_get_theme_choices(data):
         return None
     map = [{'label': theme.get('title'),
             'name': theme.get('name'),
-            'checked': True if (stored_groups and theme.get('name') and theme.get('name') in stored_groups) else False}  # noqa
+            'checked': True if (theme.get('name') and theme.get('name') in stored_groups) else False}  # noqa
            for theme in themes]
     return map
 
@@ -66,7 +65,7 @@ def ogdch_publishers_form_helper(data):
     return rows
 
 
-def _build_rows_form_field(first_label, default_label, data_empty, data_list=None):
+def _build_rows_form_field(first_label, default_label, data_empty, data_list=None):  # noqa
     """builds a rows form field
     - gets a list of data to fill in the form
     - the form is build with that data
@@ -77,8 +76,8 @@ def _build_rows_form_field(first_label, default_label, data_empty, data_list=Non
     number_of_rows_to_show = len(data_list) if data_list else 1
     rows = []
     for i in range(1, ADDITIONAL_FORM_ROW_LIMIT + 1):
-        row = {'index':str(i), 'data': data_list[i - 1] if i <= len(data_list) else data_empty }
-        row['css_class'] = SHOW_ROW_CSS_CLASS if (i <= number_of_rows_to_show) else HIDE_ROW_CSS_CLASS
+        row = {'index': str(i), 'data': data_list[i - 1] if i <= len(data_list) else data_empty}  # noqa
+        row['css_class'] = SHOW_ROW_CSS_CLASS if (i <= number_of_rows_to_show) else HIDE_ROW_CSS_CLASS  # noqa
         row['label'] = first_label if i == 1 else default_label
         rows.append(row)
     return rows
@@ -208,21 +207,22 @@ def ogdch_see_alsos_form_helper(data):
     rows = _build_rows_form_field(
         first_label=_('Related dataset'),
         default_label=_('Another related dataset'),
-        data_empty = '',
+        data_empty='',
         data_list=see_alsos)
     return rows
 
 
 def _get_see_alsos_from_storage(data):
     """data is expected to be stored as:
-    "see_alsos": [{"dataset_identifier": "443@statistisches-amt-kanton-zuerich"},
+    "see_alsos":
+    [{"dataset_identifier": "443@statistisches-amt-kanton-zuerich"},
     {"dataset_identifier": "444@statistisches-amt-kanton-zuerich"},
     {"dataset_identifier": "10001@statistisches-amt-kanton-zuerich"}],
     """
     see_alsos = data.get('see_alsos')
     if see_alsos:
         for dataset in see_alsos:
-            dataset = get_dataset_by_identifier(identifier=dataset["dataset_identifier"])
+            dataset = get_dataset_by_identifier(identifier=dataset["dataset_identifier"])  # noqa
             if dataset:
                 see_alsos.append(dataset.name)
         return see_alsos
@@ -263,7 +263,7 @@ def ogdch_temporals_form_helper(data):
     rows = _build_rows_form_field(
         first_label=label,
         default_label=label,
-        data_empty = {'start_date': '', 'end_date': ''},
+        data_empty={'start_date': '', 'end_date': ''},
         data_list=temporals)
     return rows
 
