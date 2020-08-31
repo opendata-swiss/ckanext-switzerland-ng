@@ -34,8 +34,8 @@ def ogdch_get_theme_choices(data):
     except NotFound:
         return None
     map = [{'label': theme.get('title'),
-            'name': theme.get('name'),
-            'checked': True if (theme.get('name') and theme.get('name') in stored_groups) else False}  # noqa
+            'value': theme.get('value'),
+            'checked': True if (stored_groups and theme.get('name') and theme.get('name') in stored_groups) else False}  # noqa
            for theme in themes]
     return map
 
@@ -47,12 +47,10 @@ def _get_groups_from_storage(data):
     groups = data.get('groups')
     if groups:
         return [group.get('name') for group in groups]
+    return None
 
 
 def ogdch_publishers_form_helper(data):
-    from pprint import pprint
-    pprint(data)
-
     publishers = _get_publishers_from_storage(data)
     if not publishers:
         publishers = get_publishers_from_form(data)
