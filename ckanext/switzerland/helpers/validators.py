@@ -350,10 +350,10 @@ def ogdch_validate_formfield_see_alsos(field, schema):
     def validator(key, data, errors, context):
 
         extras = data.get(FORM_EXTRAS)
+        see_alsos_validated = []
         if extras:
             see_alsos_from_form = get_see_alsos_from_form(extras)
             if see_alsos_from_form:
-                see_alsos_validated = []
                 context = {}
                 for package_name in see_alsos_from_form:
                     try:
@@ -364,10 +364,10 @@ def ogdch_validate_formfield_see_alsos(field, schema):
                             _('Dataset {} could not be found .'
                               .format(package_name))
                         )
-                if see_alsos_validated:
-                    data[key] = json.dumps(see_alsos_validated)
-                else:
-                    data[key] = '{}'
+        if see_alsos_validated:
+            data[key] = json.dumps(see_alsos_validated)
+        else:
+            data[key] = '{}'
 
     return validator
 
@@ -382,6 +382,7 @@ def ogdch_validate_formfield_temporals(field, schema):
     """
     def validator(key, data, errors, context):
         extras = data.get(FORM_EXTRAS)
+        temporals = []
         if extras:
             temporals = get_temporals_from_form(extras)
             for temporal in temporals:
@@ -391,8 +392,10 @@ def ogdch_validate_formfield_temporals(field, schema):
                     )
                 temporal['start_date'] = _transform_to_isodate(temporal['start_date'])  # noqa
                 temporal['end_date'] = _transform_to_isodate(temporal['end_date'])  # noqa
-            if temporals:
-                data[key] = json.dumps(temporals)
+        if temporals:
+            data[key] = json.dumps(temporals)
+        else:
+            data[key] = '{}'
 
     return validator
 
