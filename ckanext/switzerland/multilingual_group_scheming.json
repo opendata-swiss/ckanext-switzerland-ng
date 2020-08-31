@@ -3,18 +3,8 @@
   "group_type": "group",
   "about": "Multilingual group schema",
   "about_url": "https://github.com/ogdch/ckanext-switzerland",
-  "form_languages": ["de", "fr", "it", "en"],
+  "form_languages": ["en", "de", "fr", "it"],
   "fields": [
-    {
-      "field_name": "title",
-      "label": {
-        "en": "Title",
-        "de": "Titel",
-        "fr": "Titre",
-        "it": "Titolo"
-      },
-      "preset": "multilingual_text"
-    },
     {
       "field_name": "display_name",
       "label": {
@@ -23,7 +13,19 @@
         "fr": "Nom d'affichage",
         "it": "Nome visualizzato"
       },
-      "preset": "multilingual_output"
+      "preset": "multilingual_output",
+      "form_snippet": null
+    },
+    {
+      "field_name": "title",
+      "label": {
+        "en": "Title",
+        "de": "Titel",
+        "fr": "Titre",
+        "it": "Titolo"
+      },
+      "preset": "multilingual_text_full",
+      "validators": "ogdch_required_in_one_language"
     },
     {
       "field_name": "name",
@@ -33,7 +35,8 @@
         "fr": "Slug",
         "it": "Slug"
       },
-      "preset": "group_slug"
+      "preset": "group_slug",
+      "help_text": "Must be purely lowercase alphanumeric (ascii) characters and these symbols: -_"
     },
     {
       "field_name": "description",
@@ -43,7 +46,7 @@
         "fr": "Description",
         "it": "Descrizione"
       },
-      "preset": "multilingual_text"
+      "preset": "multilingual_markdown"
     },
     {
       "field_name": "image_url",
@@ -53,6 +56,7 @@
         "fr": "URL d'image",
         "it": "URL d'immagine"
       },
+      "form_snippet": "image_upload.html",
       "form_placeholder": "http://example.com/my-image.jpg"
     }
   ]
