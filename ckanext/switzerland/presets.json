@@ -61,6 +61,7 @@
       "preset_name": "multilingual_markdown",
       "values": {
         "form_snippet": "fluent_markdown.html",
+        "display_snippet": "fluent_markdown.html",
         "validators": "fluent_text",
         "output_validators": "multilingual_text_output"
       }

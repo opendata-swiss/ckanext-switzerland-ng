@@ -3,7 +3,7 @@
   "group_type": "group",
   "about": "Multilingual group schema",
   "about_url": "https://github.com/ogdch/ckanext-switzerland",
-  "form_languages": ["de", "fr", "it", "en"],
+  "form_languages": ["en", "de", "fr", "it"],
   "fields": [
     {
       "field_name": "display_name",
