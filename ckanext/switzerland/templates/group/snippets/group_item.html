@@ -11,20 +11,22 @@ Example:
       {% endfor %}
     </ul>
 #}
-{% set type = group.type or 'group' %}
-{% set url = h.url_for(type ~ '_read', action='read', id=group.name) %}
+
+{% set display_name = h.scheming_language_text(group[h.scheming_field_by_name(schema.fields, 'display_name').field_name]) %}
+{% set description = h.scheming_language_text(group[h.scheming_field_by_name(schema.fields, 'description').field_name]) %}
+
 {% block item %}
 <li>
   {% block item_inner %}
     {% block title %}
-      <h3><a href="{{ url }}" title="{{ _('View {name}').format(name=group.display_name) }}">{{ group.display_name }}</a></h3>
+      <h3><a href="{{ url }}" title="{{ _('View {name}').format(name=display_name) }}">{{ display_name }}</a></h3>
     {% endblock %}
     {% block datasets %}
       <p class="small">{{ ungettext('{num} Dataset', '{num} Datasets', group.package_count).format(num=group.package_count) }}</p>
     {% endblock %}
     {% block description %}
-      {% if group.description %}
-        <p>{{ group.description }}</p>
+      {% if description %}
+        <p>{{ description }}</p>
       {% endif %}
     {% endblock %}
   {% endblock %}
