@@ -276,12 +276,15 @@ def ogdch_validate_formfield_publishers(field, schema):
         if extras:
             publishers = get_publishers_from_form(extras)
 
-            if not publishers:
-                raise df.Invalid(
-                    _('At least one publisher must be provided.')  # noqa
-                )
-            output = [{'label': publisher} for publisher in publishers]
-            data[key] = json.dumps(output)
+#            if not publishers:
+#                raise df.Invalid(
+#                    _('At least one publisher must be provided.')  # noqa
+#                )
+            if publishers:
+                output = [{'label': publisher} for publisher in publishers]
+                data[key] = json.dumps(output)
+            else:
+                data[key] = '{}'
 
     return validator
 
@@ -300,12 +303,15 @@ def ogdch_validate_formfield_contact_points(field, schema):
         if extras:
             contact_points = get_contact_points_from_form(extras)
 
-            if not contact_points:
-                raise df.Invalid(
-                    _('At least one contact must be provided.')  # noqa
-                )
-            output = contact_points
-            data[key] = json.dumps(output)
+#            if not contact_points:
+#                raise df.Invalid(
+#                    _('At least one contact must be provided.')  # noqa
+#                )
+            if contact_points:
+                output = contact_points
+                data[key] = json.dumps(output)
+            else:
+                data[key] = '{}'
 
     return validator
 

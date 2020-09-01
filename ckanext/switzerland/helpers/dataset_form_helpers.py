@@ -5,11 +5,12 @@ Helpers belong in this file if they are
 used for rendering the dataset form
 """
 import logging
-from ckan.logic import NotFound, get_action
 from ckan.common import _
 from ckanext.switzerland.helpers.frontend_helpers import (
     get_frequency_name, get_dataset_by_identifier)
 from ckanext.switzerland.helpers.localize_utils import localize_by_language_order  # noqa
+from ckanext.switzerland.helpers.terms_of_use_utils import (
+    TERMS_OF_USE_BY_ASK, TERMS_OF_USE_OPEN, TERMS_OF_USE_BY, TERMS_OF_USE_ASK)
 
 
 ADDITIONAL_FORM_ROW_LIMIT = 10
@@ -23,6 +24,58 @@ def ogdch_get_accrual_periodicity_choices(field):
     map = [{'label': label, 'value': value}
            for value, label in get_frequency_name(get_map=True).items()]
     return map
+
+def ogdch_get_rights_choices(field):
+    return [
+             {
+                'label': _('* Non-commercial Allowed / Commercial Allowed / Reference Not Required'),
+                 'value': TERMS_OF_USE_OPEN
+             },
+             {
+                 'label': _('* Non-commercial Allowed / Commercial With Permission Allowed / Reference Not Required'),
+                 'value': TERMS_OF_USE_ASK
+             },
+             {
+                 'label': _('* Non-commercial Allowed / Commercial With Permission Allowed / Reference Required'),
+                  'value': TERMS_OF_USE_BY_ASK
+             },
+             {
+                 'label': _('* Non-commercial Allowed / Commercial Allowed / Reference Required'),
+                 'value': TERMS_OF_USE_BY
+             },
+             {
+                 'label':_('Non-commercial Allowed / Commercial Not Allowed / Reference Not Required'),
+                 'value': 'NonCommercialAllowed-CommercialNotAllowed-ReferenceNotRequired'
+             },
+             {
+                 'label':_('Non-commercial Allowed / Commercial Not Allowed / Reference Required'),
+                 'value': 'NonCommercialAllowed-CommercialNotAllowed-ReferenceRequired'
+             },
+             {
+                 'label': _('Non-commercial Not Allowed / Commercial Not Allowed / Reference Not Required'),
+                 'value': 'NonCommercialNotAllowed-CommercialNotAllowed-ReferenceNotRequired'
+             },
+             {
+                 'label': _('Non-commercial Not Allowed / Commercial Not Allowed / Reference Required'),
+                 'value': 'NonCommercialNotAllowed-CommercialNotAllowed-ReferenceRequired'
+             },
+            {
+                'label': _('Non-commercial Not Allowed / Commercial Allowed / Reference Not Required'),
+                'value': 'NonCommercialNotAllowed-CommercialAllowed-ReferenceNotRequired'
+            },
+            {
+                'label': _('Non-commercial Not Allowed / Commercial Allowed / Reference Required'),
+                'value': 'NonCommercialNotAllowed-CommercialAllowed-ReferenceRequired'
+            },
+            {
+                'label': _('Non-commercial Not Allowed / Commercial With Permission Allowed / Reference Not Required'),
+                'value': 'NonCommercialNotAllowed-CommercialWithPermission-ReferenceNotRequired'
+            },
+            {
+                'label': _('Non-commercial Not Allowed / Commercial With Permission Allowed / Reference Required'),
+                'value': 'NonCommercialNotAllowed-CommercialWithPermission-ReferenceRequired'
+            },
+          ]
 
 
 def ogdch_publishers_form_helper(data):
