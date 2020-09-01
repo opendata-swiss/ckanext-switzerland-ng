@@ -153,7 +153,8 @@
       "preset_name": "file_size",
       "values": {
         "validators": "default(0) natural_number_validator",
-        "display_snippet": "file_size.html"
+        "display_snippet": "file_size.html",
+        "form_snippet": "file_size.html"
       }
     }
   ]
