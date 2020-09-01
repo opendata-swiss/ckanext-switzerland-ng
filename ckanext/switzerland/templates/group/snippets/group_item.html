@@ -19,6 +19,7 @@ Example:
 <li>
   {% block item_inner %}
     {% block title %}
+      {% set url = h.url_for('group_read', action='read', id=group.name) %}
       <h3><a href="{{ url }}" title="{{ _('View {name}').format(name=display_name) }}">{{ display_name }}</a></h3>
     {% endblock %}
     {% block datasets %}
