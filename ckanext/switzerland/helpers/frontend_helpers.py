@@ -243,3 +243,14 @@ def get_localized_newsletter_url():
        'it': 'https://www.bfs.admin.ch/bfs/it/home/servizi/ogd/newsmail.html',
     }
     return newsletter_url[current_language]
+
+
+def get_localized_value_for_display(value):
+    lang_code = lang()
+    if isinstance(value, dict):
+        return ogdch_loc_utils.get_localized_value_from_dict(value, lang_code)
+    try:
+        value = json.loads(value)
+        return ogdch_loc_utils.get_localized_value_from_dict(value, lang_code)
+    except ValueError:
+        return value
