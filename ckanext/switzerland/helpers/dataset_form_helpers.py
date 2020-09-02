@@ -220,13 +220,14 @@ def _get_see_alsos_from_storage(data):
     {"dataset_identifier": "444@statistisches-amt-kanton-zuerich"},
     {"dataset_identifier": "10001@statistisches-amt-kanton-zuerich"}],
     """
-    see_alsos = data.get('see_alsos')
-    if see_alsos:
-        for dataset in see_alsos:
-            dataset = get_dataset_by_identifier(identifier=dataset["dataset_identifier"])  # noqa
-            if dataset:
-                see_alsos.append(dataset.name)
-        return see_alsos
+    see_alsos_storage = data.get('see_alsos')
+    see_alsos_display = []
+    if see_alsos_storage:
+        for dataset_identifier in see_alsos_storage:
+            dataset_from_storage = get_dataset_by_identifier(identifier=dataset_identifier)  # noqa
+            if dataset_from_storage:
+                see_alsos_display.append(dataset_from_storage.get('name'))
+        return see_alsos_display
     return None
 
 

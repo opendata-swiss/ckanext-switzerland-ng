@@ -364,7 +364,12 @@ def ogdch_validate_formfield_see_alsos(field, schema):
                 for package_name in see_alsos_from_form:
                     try:
                         package = get_action('package_show')(context, {'id': package_name})  # noqa
-                        see_alsos_validated.append(package['identifier'])
+                        if not package.get('type') == 'dataset':
+                            raise df.Invalid(
+                                _('{} can not be chosen since it is a {}.'
+                                  .format(package_name, package.get('type')))
+                            )
+                        see_alsos_validated.append(package.get('identifier'))
                     except NotFound:
                         raise df.Invalid(
                             _('Dataset {} could not be found .'
