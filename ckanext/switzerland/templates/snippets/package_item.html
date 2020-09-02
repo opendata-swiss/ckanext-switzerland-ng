@@ -15,8 +15,8 @@ Example:
 #}
 {% set truncate = truncate or 180 %}
 {% set truncate_title = truncate_title or 80 %}
-{% set title = package.title or package.name %}
-{% set description = h.truncate(package.description, truncate) %}
+{% set title = h.get_localized_value_for_display(package['title']) or package.name %}
+{% set description = h.truncate(h.get_localized_value_for_display(package['description']), truncate) %}
 
 {% block package_item %}
   <li class="{{ item_class or 'dataset-item' }}">
@@ -49,7 +49,7 @@ Example:
           {% if package.groups %}
             <p class="small">
             {% for group in package.groups %}
-              {{ group.display_name }}{% if not loop.last %}, {% endif %}
+              {{ h.get_localized_value_for_display(group['title']) }}{% if not loop.last %}, {% endif %}
             {% endfor %}
             </p>
           {% endif %}
