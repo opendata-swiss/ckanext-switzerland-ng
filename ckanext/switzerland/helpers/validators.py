@@ -206,12 +206,14 @@ def ogdch_required_in_one_language(field, schema):
         for lang in languages:
             text = extras.get(prefix + lang)
             if text:
-                output[lang] = text
+                output[lang] = text.strip()
                 del extras[prefix + lang]
             elif data.get(key) and data.get(key).get(lang):
                 output[lang] = data.get(key).get(lang)
+            else:
+                output[lang] = ''
 
-        if len(output) == 0:
+        if not [lang for lang in languages if output[lang] != '']:
             for lang in languages:
                 errors[key[:-1] + (key[-1] + '-' + lang,)] = \
                     [_('A value is required in at least one language')]
