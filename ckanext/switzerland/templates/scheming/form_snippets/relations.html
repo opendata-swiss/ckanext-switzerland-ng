@@ -1,0 +1,34 @@
+{% import 'macros/form.html' as form %}
+
+{% set relations_rows = h.ogdch_relations_form_helper(data) %}
+
+{%- for row in relations_rows -%}
+  {% call form.input(
+    'relation-title-' + row.index,
+    id='field-relation-title-' + row.index,
+    label=row.label.title,
+    placeholder=_('Title'),
+    value=row.data.title,
+    error=errors['relations'],
+    classes=['control-medium', row.css_class]
+    ) %}
+  {% endcall %}
+  {% call form.input(
+    'relation-url-' + row.index,
+    id='field-relation-url-' + row.index,
+    label=row.label.url,
+    type="url",
+    placeholder=_('Url'),
+    value=row.data.url,
+    error=errors['relations'],
+    classes=['control-medium', row.css_class]
+    ) %}
+  {% endcall %}
+{%- endfor -%}
+
+<a data-module="ogdch_relations_add_rows"
+      id="ogdch_relations_add_row"
+      class="btn btn-default ogdch-btn-add-row"
+      href="#ogdch_relations_pagemark">
+{{ _('Add another relation') }}
+</a>

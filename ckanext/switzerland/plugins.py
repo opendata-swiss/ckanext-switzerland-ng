@@ -6,6 +6,7 @@ import ckanext.switzerland.helpers.validators as ogdch_validators
 from ckanext.switzerland import logic as ogdch_logic
 import ckanext.switzerland.helpers.frontend_helpers as ogdch_frontend_helpers
 import ckanext.switzerland.helpers.backend_helpers as ogdch_backend_helpers
+import ckanext.switzerland.helpers.dataset_form_helpers as ogdch_dataset_form_helpers  # noqa
 import ckanext.switzerland.helpers.plugin_utils as ogdch_plugin_utils
 import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
@@ -44,6 +45,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
     def update_config(self, config_):
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
+        toolkit.add_resource('fanstatic', 'switzerland')
 
     # IValidators
 
@@ -52,12 +54,17 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'multiple_text': ogdch_validators.multiple_text,
             'multiple_text_output': ogdch_validators.multiple_text_output,
             'multilingual_text_output': ogdch_validators.multilingual_text_output, # noqa
-            'list_of_dicts': ogdch_validators.list_of_dicts,
+            'harvest_list_of_dicts': ogdch_validators.harvest_list_of_dicts,
             'timestamp_to_datetime': ogdch_validators.timestamp_to_datetime,
             'ogdch_language': ogdch_validators.ogdch_language,
             'ogdch_unique_identifier': ogdch_validators.ogdch_unique_identifier, # noqa
             'ogdch_required_in_one_language': ogdch_validators.ogdch_required_in_one_language, # noqa
             'temporals_to_datetime_output': ogdch_validators.temporals_to_datetime_output, # noqa
+            'ogdch_validate_formfield_publishers': ogdch_validators.ogdch_validate_formfield_publishers,  # noqa
+            'ogdch_validate_formfield_contact_points': ogdch_validators.ogdch_validate_formfield_contact_points,  # noqa
+            'ogdch_validate_formfield_relations': ogdch_validators.ogdch_validate_formfield_relations,  # noqa
+            'ogdch_validate_formfield_see_alsos': ogdch_validators.ogdch_validate_formfield_see_alsos,  # noqa
+            'ogdch_validate_formfield_temporals': ogdch_validators.ogdch_validate_formfield_temporals,  # noqa
         }
 
     # IFacets
@@ -137,6 +144,15 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_get_political_level_field_list': ogdch_backend_helpers.ogdch_get_political_level_field_list, # noqa
             'get_localized_value_from_json': ogdch_localize_utils.get_localized_value_from_json, # noqa
             'get_localized_value_for_display': ogdch_frontend_helpers.get_localized_value_for_display,  # noqa
+            'ogdch_get_accrual_periodicity_choices': ogdch_dataset_form_helpers.ogdch_get_accrual_periodicity_choices,  # noqa
+            'ogdch_get_rights_choices': ogdch_dataset_form_helpers.ogdch_get_rights_choices,  # noqa
+            'ogdch_publishers_form_helper': ogdch_dataset_form_helpers.ogdch_publishers_form_helper,  # noqa
+            'ogdch_contact_points_form_helper': ogdch_dataset_form_helpers.ogdch_contact_points_form_helper,  # noqa
+            'ogdch_relations_form_helper': ogdch_dataset_form_helpers.ogdch_relations_form_helper,  # noqa
+            'ogdch_see_alsos_form_helper': ogdch_dataset_form_helpers.ogdch_see_alsos_form_helper,  # noqa
+            'ogdch_date_form_helper': ogdch_dataset_form_helpers.ogdch_date_form_helper,  # noqa
+            'ogdch_temporals_form_helper': ogdch_dataset_form_helpers.ogdch_temporals_form_helper,  # noqa
+            'ogdch_dataset_title_form_helper': ogdch_dataset_form_helpers.ogdch_dataset_title_form_helper,  # noqa
         }
 
     # IRouter

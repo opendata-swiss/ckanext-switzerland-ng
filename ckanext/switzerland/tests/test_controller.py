@@ -70,7 +70,7 @@ class TestController(helpers.FunctionalTestBase):
             'temporals': [],
             'accrual_periodicity': 'http://purl.org/cld/freq/completelyIrregular',
             'modified': '2015-09-09T00:00:00',
-            'url': '',
+            'url': 'http://some_url',
             'owner_org': 'test-org',
             'identifier': 'test@test-org'
         }

@@ -1,0 +1,28 @@
+{% import 'macros/form.html' as form %}
+
+{% set see_alsos_rows = h.ogdch_see_alsos_form_helper(data) %}
+{%- set attrs = {
+    'data-module': 'autocomplete',
+    'data-module-source': '/api/2/util/dataset/autocomplete?incomplete=?'} -%}
+
+{%- for row in see_alsos_rows -%}
+  {% call form.input(
+    'see-also-' + row.index,
+    id='field-see-also-' + row.index,
+    label=row.get('label'),
+    placeholder=_('Title of the dataset'),
+    value=row.data,
+    attrs=attrs,
+    error=errors['seel_alsos'],
+    classes=['control-full', row.css_class]
+    ) %}
+  {% endcall %}
+  <h1 class="hidden-dataset-name">{{ row.data.name }}</h1>
+{%- endfor -%}
+
+<a data-module="ogdch_see_alsos_add_rows"
+      id="ogdch_see_alsos_add_row"
+      class="btn btn-default ogdch-btn-add-row"
+      href="#ogdch_see_alsos_pagemark">
+{{ _('Add another related dataset') }}
+</a>

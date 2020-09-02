@@ -6,44 +6,11 @@
   "form_languages": ["de", "fr", "it", "en"],
   "dataset_fields": [
     {
-      "field_name": "identifier",
-      "label": {
-        "en": "Identifier",
-        "de": "Identifier",
-        "fr": "Identifier",
-        "it": "Identifier"
-      },
-      "validators": "scheming_required ogdch_unique_identifier"
-    },
-    {
-      "field_name": "display_name",
-      "label": {
-        "en": "Display name",
-        "de": "Anzeigename",
-        "fr": "Nom d'affichage",
-        "it": "Nome visualizzato"
-      },
-      "preset": "multilingual_output"
-    },
-    {
-      "field_name": "notes",
-      "label": {
-        "en": "Description",
-        "de": "Beschreibung",
-        "fr": "Description",
-        "it": "Descrizione"
-      },
-      "preset": "multilingual_output"
-    },
-    {
-      "field_name": "title",
-      "label": {
-        "en": "Title",
-        "de": "Titel",
-        "fr": "Titre",
-        "it": "Titolo"
-      },
-      "preset": "multilingual_text"
+      "field_name": "title_for_slug",
+      "label": "Title",
+      "preset": "title",
+      "form_snippet": "title.html",
+      "form_placeholder": "Title for naming the dataset"
     },
     {
       "field_name": "name",
@@ -56,34 +23,35 @@
       "preset": "dataset_slug"
     },
     {
-      "field_name": "description",
+      "field_name": "title",
       "label": {
-        "en": "Description",
-        "de": "Beschreibung",
-        "fr": "Description",
-        "it": "Descrizione"
+        "en": "Title",
+        "de": "Titel",
+        "fr": "Titre",
+        "it": "Titolo"
       },
-      "preset": "multilingual_text"
+      "preset": "multilingual_text_full",
+      "validators": "ogdch_required_in_one_language",
+      "section_title": "Dataset",
+      "subheader": "Dataset Title",
+      "mark_required": true,
+      "ogdch_help_text": "please provide in at least one language",
+      "form_placeholder": "Title of the dataset"
     },
     {
-      "field_name": "issued",
+      "field_name": "identifier",
       "label": {
-        "en": "Issued date",
-        "de": "Publikationsdatum",
-        "fr": "Date de publication",
-        "it": "Data di rilascio"
+        "en": "Identifier",
+        "de": "Identifier",
+        "fr": "Identifier",
+        "it": "Identifier"
       },
-      "preset": "ogdch_date"
-    },
-    {
-      "field_name": "modified",
-      "label": {
-        "en": "Modified date",
-        "de": "Änderungsdatum",
-        "fr": "Date de modification",
-        "it": "Data di modifica"
-      },
-      "preset": "ogdch_date"
+      "section_title": "Dataset Identifier",
+      "subheader": "Unique Identifier with a mark of the organization",
+      "mark_required": true,
+      "ogdch_help_text": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden.",
+      "validators": "ogdch_unique_identifier",
+      "form_placeholder": "123..@organization"
     },
     {
       "field_name": "owner_org",
@@ -96,6 +64,90 @@
       "preset": "dataset_organization"
     },
     {
+      "field_name": "display_name",
+      "label": {
+        "en": "Display name",
+        "de": "Anzeigename",
+        "fr": "Nom d'affichage",
+        "it": "Nome visualizzato"
+      },
+      "preset": "multilingual_text",
+      "form_snippet": null
+    },
+    {
+      "field_name": "notes",
+      "label": {
+        "en": "Description",
+        "de": "Beschreibung",
+        "fr": "Description",
+        "it": "Descrizione"
+      },
+      "preset": "multilingual_output",
+      "form_snippet": null
+    },
+    {
+      "field_name": "description",
+      "label": {
+        "en": "Description",
+        "de": "Beschreibung",
+        "fr": "Description",
+        "it": "Descrizione"
+      },
+      "preset": "multilingual_markdown",
+      "validators": "ogdch_required_in_one_language",
+      "section_title": "Dataset Information",
+      "subheader": "Dataset Description",
+      "mark_required": true,
+      "ogdch_help_text": "please provide in at least one language",
+      "form_placeholder": "Description of the dataset"
+    },
+    {
+      "field_name": "issued",
+      "label": {
+        "en": "Issued date",
+        "de": "Publikationsdatum",
+        "fr": "Date de publication",
+        "it": "Data di rilascio"
+      },
+      "preset": "date",
+      "section_title": "Data"
+    },
+    {
+      "field_name": "modified",
+      "label": {
+        "en": "Modified date",
+        "de": "Änderungsdatum",
+        "fr": "Date de modification",
+        "it": "Data di modifica"
+      },
+      "preset": "date"
+    },
+    {
+      "field_name": "accrual_periodicity",
+      "label": {
+        "en": "Update interval",
+        "de": "Aktualisierungsintervall",
+        "fr": "Intervalle d'actualisation",
+        "it": "Intervallo di aggiornamento"
+      },
+      "display_snippet": "periodicity.html",
+      "preset": "select",
+      "choices_helper": "ogdch_get_accrual_periodicity_choices"
+    },
+    {
+      "field_name": "temporals",
+      "label": {
+        "en": "Temporal coverage",
+        "de": "Zeitliche Abdeckung",
+        "fr": "Couverture temporelle",
+        "it": "Copertura temporale"
+      },
+      "preset": "temporals",
+      "section_title": "Temporal Coverage",
+      "ogdch_help_text": "Eine oder mehrere Zeitperioden, welche dieser Datensatz abdeckt.",
+      "form_snippet": "temporals.html"
+    },
+    {
       "field_name": "publishers",
       "label": {
         "en": "Publishers",
@@ -103,8 +155,12 @@
         "fr": "Editeurs",
         "it": "Editori"
       },
-      "preset": "dicts",
-      "display_snippet": "publishers.html"
+      "validators": "harvest_list_of_dicts ogdch_validate_formfield_publishers",
+      "output_validators": "multiple_text_output",
+      "display_snippet": "publishers.html",
+      "form_snippet": "publishers.html",
+      "ogdch_help_text": "Ein oder mehrere Publisher dieses Datensatzes. Dieser kann der Organisation entsprechen, welche den Datensatz veröffentlicht. Mindestens ein Publisher ist erforderlich.",
+      "section_title": "Publisher Information"
     },
     {
       "field_name": "contact_points",
@@ -114,8 +170,12 @@
         "fr": "Points de contact",
         "it": "Punti di contatto"
       },
-      "preset": "dicts",
-      "display_snippet": "contact_points.html"
+      "validators": "harvest_list_of_dicts ogdch_validate_formfield_contact_points",
+      "output_validators": "multiple_text_output",
+      "form_snippet": "contact_points.html",
+      "display_snippet": "contact_points.html",
+      "help_text": "Die Stelle, welche kontaktiert wird, falls eine Frage zum Datensatz besteht. Mindestens eine Kontaktstelle ist erforderlich.",
+      "section_title": "Contact Information"
     },
     {
       "field_name": "language",
@@ -173,18 +233,12 @@
         "fr": "Informations complémentaires",
         "it": "Addizionali informazioni"
       },
-      "preset": "dicts",
-      "display_snippet": "relations.html"
-    },
-    {
-      "field_name": "keywords",
-      "label": {
-        "en": "Keywords",
-        "de": "Schlagwörter",
-        "fr": "Mots clés",
-        "it": "Parole chiave"
-      },
-      "preset": "fluent_tags"
+      "validators": "harvest_list_of_dicts ogdch_validate_formfield_relations",
+      "output_validators": "multiple_text_output",
+      "form_snippet": "relations.html",
+      "display_snippet": "relations.html",
+      "help_text": "Weitere Informationen mit Bezug zu diesem Datensatz.",
+      "section_title": "Further Information"
     },
     {
       "field_name": "url",
@@ -194,7 +248,8 @@
         "fr": "Landing page",
         "it": "Landing page"
       },
-      "preset": "url"
+      "preset": "url",
+      "validators": "not_empty scheming_required"
     },
     {
       "field_name": "spatial",
@@ -203,7 +258,8 @@
         "de": "Räumlich",
         "fr": "Spatial",
         "it": "Spaziale"
-      }
+      },
+      "form_snippet": null
     },
     {
       "field_name": "coverage",
@@ -212,27 +268,8 @@
         "de": "Abdeckung",
         "fr": "Couverture",
         "it": "Copertura"
-      }
-    },
-    {
-      "field_name": "temporals",
-      "label": {
-        "en": "Temporal coverage",
-        "de": "Zeitliche Abdeckung",
-        "fr": "Couverture temporelle",
-        "it": "Copertura temporale"
       },
-      "preset": "temporals"
-    },
-    {
-      "field_name": "accrual_periodicity",
-      "label": {
-        "en": "Update interval",
-        "de": "Aktualisierungsintervall",
-        "fr": "Intervalle d'actualisation",
-        "it": "Intervallo di aggiornamento"
-      },
-      "display_snippet": "periodicity.html"
+      "form_snippet": null
     },
     {
       "field_name": "see_alsos",
@@ -242,18 +279,35 @@
         "fr": "Jeux de données relationnels",
         "it": "Set di dati relativi"
       },
-      "preset": "dicts"
+      "validators": "harvest_list_of_dicts ogdch_validate_formfield_see_alsos",
+      "output_validators": "multiple_text_output",
+      "form_snippet": "see_alsos.html",
+      "display_snippet": "see_alsos.html",
+      "help_text": "Beziehungen zu anderen Datensätzen.",
+      "section_title": "Related Datasets"
+    },
+    {
+      "field_name": "keywords",
+      "label": {
+        "en": "Keywords",
+        "de": "Schlagwörter",
+        "fr": "Mots clés",
+        "it": "Parole chiave"
+      },
+      "preset": "fluent_tags",
+      "section_title": "Keywords"
     }
   ],
   "resource_fields": [
     {
       "field_name": "identifier",
       "label": {
-        "en": "Identifier",
-        "de": "Identifier",
-        "fr": "Identifier",
-        "it": "Identifier"
-      }
+        "en": "Identifier (Permalink)",
+        "de": "Identifier (Permalink)",
+        "fr": "Identifier (Permalink)",
+        "it": "Identifier (Permalink)"
+      },
+      "help_text": "Identifier der Ressource im Quellsystem des Publishers."
     },
     {
       "field_name": "title",
@@ -263,7 +317,10 @@
         "fr": "Titre",
         "it": "Titolo"
       },
-      "preset": "multilingual_text"
+      "preset": "multilingual_text_full",
+      "help_text": "Wenn der Titel leer gelassen wird, wird der Titel des Datensatzes verwendet.",
+      "mark_required": true,
+      "form_placeholder": "Title of the resource"
     },
     {
       "field_name": "display_name",
@@ -273,7 +330,8 @@
         "fr": "Nom d'affichage",
         "it": "Nome visualizzato"
       },
-      "preset": "multilingual_output"
+      "preset": "multilingual_text",
+      "form_snippet": null
     },
     {
       "field_name": "description",
@@ -283,7 +341,8 @@
         "fr": "Description",
         "it": "Descrizione"
       },
-      "preset": "multilingual_text"
+      "preset": "multilingual_markdown",
+      "help_text": "Wenn die Beschreibung leer gelassen wird, wird die Beschreibung des Datensatzes verwendet."
     },
     {
       "field_name": "issued",
@@ -293,8 +352,8 @@
         "fr": "Date de publication",
         "it": "Data di rilascio"
       },
-      "required": true,
-      "preset": "ogdch_date"
+      "preset": "date",
+      "help_text": "Datum der Veröffentlichung dieser Ressource."
     },
     {
       "field_name": "modified",
@@ -304,7 +363,8 @@
         "fr": "Date de modification",
         "it": "Data di modifica"
       },
-      "preset": "ogdch_date"
+      "preset": "date",
+      "help_text": "Datum der letzten Änderung dieser Ressource."
     },
     {
       "field_name": "language",
@@ -315,6 +375,7 @@
         "it": "Lingue"
       },
       "preset": "languages",
+      "help_text": "Sprachen, in denen diese Ressource vorliegt. Falls die Ressource sprachunabhängig ist, soll nichts angekreuzt werden.",
       "choices": [
         {
           "value": "en",
@@ -363,7 +424,9 @@
         "it": "URL d'accesso"
       },
       "preset": "url",
-      "validators": "scheming_required"
+      "validators": "scheming_required",
+      "help_text": "Die URL, über welche auf die Ressource zugegriffen werden kann. Dies kann entweder eine Download-URL, eine API-URL oder eine Landing-Page-URL sein. Falls die Ressource nur über eine Landing Page verfügbar ist, muss dieses Feld die URL der Landing Page beinhalten. Falls eine Download-URL für diese Ressource angegeben wurde, muss diese ebenfalls in diesem Feld eingetragen werden."
+
     },
     {
       "field_name": "download_url",
@@ -373,7 +436,8 @@
         "fr": "URL de téléchargement",
         "it": "URL di download"
       },
-      "preset": "url"
+      "preset": "url",
+      "help_text": "URL der Datei, falls die Ressource heruntergeladen werden kann."
     },
     {
       "field_name": "rights",
@@ -382,7 +446,12 @@
         "de": "Nutzungsbedingungen",
         "fr": "Conditions d'utilisation",
         "it": "Condizioni d'uso"
-      }
+      },
+      "help_text": "Alle Nutzungsbedingungen, welche nicht mit einem Stern (*) markiert sind, gelten als 'Closed Data'.",
+      "preset": "select",
+      "choices_helper": "ogdch_get_rights_choices",
+      "validators": "scheming_required",
+      "required": true
     },
     {
       "field_name": "license",
@@ -391,7 +460,8 @@
         "de": "Lizenz",
         "fr": "Licence",
         "it": "Licenza"
-      }
+      },
+      "form_snippet": null
     },
     {
       "field_name": "byte_size",
@@ -410,7 +480,8 @@
         "de": "Format",
         "fr": "Format",
         "it": "Formato"
-      }
+      },
+      "form_snippet": null
     },
     {
       "field_name": "format",
@@ -429,7 +500,8 @@
         "de": "Abdeckung",
         "fr": "Couverture",
         "it": "Copertura"
-      }
+      },
+      "form_snippet": null
     }
   ]
 }
