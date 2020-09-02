@@ -143,6 +143,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_get_organization_field_list': ogdch_backend_helpers.ogdch_get_organization_field_list, # noqa
             'ogdch_get_political_level_field_list': ogdch_backend_helpers.ogdch_get_political_level_field_list, # noqa
             'get_localized_value_from_json': ogdch_localize_utils.get_localized_value_from_json, # noqa
+            'get_localized_value_for_display': ogdch_frontend_helpers.get_localized_value_for_display,  # noqa
             'ogdch_get_accrual_periodicity_choices': ogdch_dataset_form_helpers.ogdch_get_accrual_periodicity_choices,  # noqa
             'ogdch_get_rights_choices': ogdch_dataset_form_helpers.ogdch_get_rights_choices,
             'ogdch_publishers_form_helper': ogdch_dataset_form_helpers.ogdch_publishers_form_helper,  # noqa

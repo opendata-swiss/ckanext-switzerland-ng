@@ -69,6 +69,18 @@ def localize_json_facet_title(facet_item):
         return facet_item['display_name']
 
 
+def get_localized_value_for_display(value):
+    lang_code = lang()
+    try:
+        value = json.loads(value)
+        return ogdch_loc_utils.get_localized_value_from_dict(value, lang_code)
+    except ValueError:
+        if isinstance(value, dict):
+            return ogdch_loc_utils.get_localized_value_from_dict(value, lang_code)
+        else:
+            return value
+
+
 def get_frequency_name(identifier=None, get_map=False):
     frequencies = OrderedDict([
         ('http://purl.org/cld/freq/completelyIrregular', _('Irregular')),  # noqa
