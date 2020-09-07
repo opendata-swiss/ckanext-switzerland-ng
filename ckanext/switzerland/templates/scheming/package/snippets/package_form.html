@@ -17,15 +17,15 @@
        </h2>
     {% endif %}
     {% if field.subheader %}
-        <h3>
-        {% if field.mark_required %}
-            <span title="Dieses Feld ist erforderlich" class="control-required">*</span>
-        {% endif %}
-            {{ field.subheader }}
-        </h3>
-        {% if field.ogdch_help_text %}
-            <p>{{ field.ogdch_help_text }}</p>
-        {% endif %}
+      <h3>
+      {% if field.mark_required %}
+          <span title="{{ _('This field is required') }}" class="control-required">*</span>
+      {% endif %}
+          {{ field.subheader }}
+      </h3>
+      {% if field.ogdch_help_text %}
+          <p>{{ field.ogdch_help_text }}</p>
+      {% endif %}
     {% endif %}
     {%- if field.form_snippet is not none -%}
       {%- snippet 'scheming/snippets/form_field.html',
