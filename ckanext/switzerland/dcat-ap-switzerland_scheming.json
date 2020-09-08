@@ -110,6 +110,7 @@
         "it": "Data di rilascio"
       },
       "preset": "date",
+      "validators": "scheming_required not_empty",
       "section_title": "Data"
     },
     {
