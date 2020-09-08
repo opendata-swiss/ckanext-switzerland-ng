@@ -86,9 +86,7 @@ def temporals_to_datetime_output(value):
 
     for temporal in value:
         for key in temporal:
-            if temporal[key]:
-                temporal[key] = timestamp_to_datetime(temporal[key])
-            else:
+            if not temporal[key]:
                 temporal[key] = None
     return value
 
