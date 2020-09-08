@@ -492,7 +492,7 @@
         "fr": "Format",
         "it": "Formato"
       },
-      "preset": "resource_format_autocomplete"
+      "preset": "ogdch_resource_format_autocomplete"
     },
     {
       "field_name": "coverage",
