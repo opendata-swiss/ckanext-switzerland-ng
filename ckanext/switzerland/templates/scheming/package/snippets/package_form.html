@@ -33,6 +33,24 @@
         entity_type='dataset', object_type=dataset_type -%}
     {%- endif -%}
   {%- endfor -%}
+
+  {% set groups = h.get_localized_group_list(lang) %}
+  {% if groups %}
+    <h2 id="{{ "ogdch_groups" + "_pagemark" }}">
+           {{ _("Categories") }}
+       </h2>
+    <div class="form-group control-medium">
+      <div class="controls">
+        {% for group in groups %}
+          <label class="checkbox" for="field-group-{{ loop.index0 }}">
+            <input id="field-group-{{ loop.index0 }}" type="checkbox" name="groups__{{ loop.index0 }}__id" value="{{ group.id }}" {% if h.group_name_in_groups(group.name, data.get('groups', [])) %}checked{% endif %} />
+            {{ group.title }}
+          </label>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
   {%- if 'resource_fields' not in schema -%}
     <!-- force controller to skip resource-editing step for this type -->
     <input type="hidden" name="_ckan_phase" value="" />
