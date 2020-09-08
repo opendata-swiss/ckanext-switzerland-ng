@@ -105,10 +105,10 @@
       }
     },
     {
-      "preset_name": "resource_format_autocomplete",
+      "preset_name": "ogdch_resource_format_autocomplete",
       "values": {
         "validators": "ignore_missing clean_format unicode",
-        "form_placeholder": "eg. CSV, XML or JSON",
+        "form_placeholder": "Kein Format",
         "form_attrs": {
           "data-module": "autocomplete",
           "data-module-source": "/api/2/util/resource/format_autocomplete?incomplete=?"

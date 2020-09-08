@@ -110,6 +110,7 @@
         "it": "Data di rilascio"
       },
       "preset": "date",
+      "validators": "scheming_required not_empty",
       "section_title": "Data"
     },
     {
@@ -491,7 +492,7 @@
         "fr": "Format",
         "it": "Formato"
       },
-      "preset": "resource_format_autocomplete"
+      "preset": "ogdch_resource_format_autocomplete"
     },
     {
       "field_name": "coverage",
