@@ -1,0 +1,8 @@
+{% ckan_extends %}
+
+{% block breadcrumb_content %}
+  <li>
+      {% link_for _('Organizations'), controller='organization', action='index' %}
+  </li>
+  <li class="active"><a href="#">{{ _('Create an Organization') }}</a></li>
+{% endblock %}
