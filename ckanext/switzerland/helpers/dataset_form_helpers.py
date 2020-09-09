@@ -68,7 +68,8 @@ def ogdch_publishers_form_helper(data):
 
 
 def _build_rows_form_field(first_label, default_label, data_empty, data_list=None):  # noqa
-    """builds a rows form field
+    """
+    builds a rows form field
     - gets a list of data to fill in the form
     - the form is build with that data
     - rows that are empty are set to hidden
@@ -129,7 +130,8 @@ def ogdch_contact_points_form_helper(data):
 
 
 def _get_contact_points_from_storage(data):
-    """data is expected to be stored as:
+    """
+    data is expected to be stored as:
     u'contact_points': [{u'email': u'tischhauser@ak-strategy.ch',
     u'name': u'tischhauser@ak-strategy.ch'}]
     """
@@ -172,7 +174,8 @@ def ogdch_relations_form_helper(data):
 
 
 def _get_relations_from_storage(data):
-    """data is expected to be stored as:
+    """
+    data is expected to be stored as:
     "relations": [
     {"label": "legal_basis", "url": "https://www.admin.ch/#a20"},
     {"label": "legal_basis", "url": "https://www.admin.ch/#a21"}]
@@ -215,7 +218,8 @@ def ogdch_see_alsos_form_helper(data):
 
 
 def _get_see_alsos_from_storage(data):
-    """data is expected to be stored as:
+    """
+    data is expected to be stored as:
     "see_alsos":
     [{"dataset_identifier": "443@statistisches-amt-kanton-zuerich"},
     {"dataset_identifier": "444@statistisches-amt-kanton-zuerich"},
@@ -277,7 +281,8 @@ def ogdch_temporals_form_helper(data):
 
 
 def _get_temporals_from_storage(data, key):
-    """data is expected to be stored as:
+    """
+    data is expected to be stored as:
     "temporals": [{"start_date": "1981-06-14T00:00:00",
      "end_date": "2020-09-27T00:00:00"}]
     """
