@@ -3,7 +3,7 @@
   "dataset_type": "dataset",
   "about": "An implementation of the DCAT-AP Switzerland Schema",
   "about_url": "https://github.com/ogdch/ckanext-switzerland",
-  "form_languages": ["de", "fr", "it", "en"],
+  "form_languages": ["en","de", "fr", "it"],
   "dataset_fields": [
     {
       "field_name": "title_for_slug",
