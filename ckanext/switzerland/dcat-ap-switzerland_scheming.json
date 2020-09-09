@@ -109,8 +109,8 @@
         "fr": "Date de publication",
         "it": "Data di rilascio"
       },
-      "preset": "date",
-      "validators": "scheming_required not_empty",
+      "preset": "ogdch_date",
+      "validators": "not_empty scheming_required isodate",
       "section_title": "Data"
     },
     {
@@ -121,7 +121,7 @@
         "fr": "Date de modification",
         "it": "Data di modifica"
       },
-      "preset": "date"
+      "preset": "ogdch_date"
     },
     {
       "field_name": "accrual_periodicity",
@@ -353,7 +353,7 @@
         "fr": "Date de publication",
         "it": "Data di rilascio"
       },
-      "preset": "date",
+      "preset": "ogdch_date",
       "help_text": "Datum der Veröffentlichung dieser Ressource."
     },
     {
@@ -364,7 +364,7 @@
         "fr": "Date de modification",
         "it": "Data di modifica"
       },
-      "preset": "date",
+      "preset": "ogdch_date",
       "help_text": "Datum der letzten Änderung dieser Ressource."
     },
     {

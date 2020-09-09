@@ -4,6 +4,7 @@
 Helpers belong in this file if they are
 used for rendering the dataset form
 """
+import datetime
 import logging
 from ckan.common import _
 from ckanext.switzerland.helpers.frontend_helpers import (
@@ -242,11 +243,16 @@ def get_see_alsos_from_form(data):
 
 
 def ogdch_date_form_helper(date_value):
-    """transform isodate into display date
+    """
+    transform isodate or posix date into display date
     u'2012-12-31T00:00:00' to 2012-12-31,
     """
     if date_value:
-        return date_value.split('T')[0]
+        try:
+            return datetime.datetime.fromtimestamp(int(date_value))\
+                .isoformat().split('T')[0]
+        except ValueError:
+            return date_value.split('T')[0]
     else:
         return ""
 

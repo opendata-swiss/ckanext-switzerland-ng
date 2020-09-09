@@ -69,12 +69,15 @@ def multilingual_text_output(value):
 
 def timestamp_to_datetime(value):
     """
-    Returns a datetime for a given timestamp
+    Returns an isoformat date (YYYY-MM-DD HH:MM:SS) for a given POSIX
+    timestamp (1234567890).
+    If we get a ValueError, the value is probably already isoformat,
+    so just return it.
     """
     try:
         return datetime.datetime.fromtimestamp(int(value)).isoformat()
     except ValueError:
-        return False
+        return value
 
 
 def temporals_to_datetime_output(value):
@@ -86,7 +89,9 @@ def temporals_to_datetime_output(value):
 
     for temporal in value:
         for key in temporal:
-            if not temporal[key]:
+            if temporal[key]:
+                temporal[key] = timestamp_to_datetime(temporal[key])
+            else:
                 temporal[key] = None
     return value
 
