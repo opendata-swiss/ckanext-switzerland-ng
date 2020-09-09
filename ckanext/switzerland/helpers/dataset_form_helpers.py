@@ -4,6 +4,7 @@
 Helpers belong in this file if they are
 used for rendering the dataset form
 """
+import datetime
 import logging
 from ckan.common import _
 from ckanext.switzerland.helpers.frontend_helpers import (
@@ -67,7 +68,8 @@ def ogdch_publishers_form_helper(data):
 
 
 def _build_rows_form_field(first_label, default_label, data_empty, data_list=None):  # noqa
-    """builds a rows form field
+    """
+    builds a rows form field
     - gets a list of data to fill in the form
     - the form is build with that data
     - rows that are empty are set to hidden
@@ -128,7 +130,8 @@ def ogdch_contact_points_form_helper(data):
 
 
 def _get_contact_points_from_storage(data):
-    """data is expected to be stored as:
+    """
+    data is expected to be stored as:
     u'contact_points': [{u'email': u'tischhauser@ak-strategy.ch',
     u'name': u'tischhauser@ak-strategy.ch'}]
     """
@@ -171,7 +174,8 @@ def ogdch_relations_form_helper(data):
 
 
 def _get_relations_from_storage(data):
-    """data is expected to be stored as:
+    """
+    data is expected to be stored as:
     "relations": [
     {"label": "legal_basis", "url": "https://www.admin.ch/#a20"},
     {"label": "legal_basis", "url": "https://www.admin.ch/#a21"}]
@@ -214,7 +218,8 @@ def ogdch_see_alsos_form_helper(data):
 
 
 def _get_see_alsos_from_storage(data):
-    """data is expected to be stored as:
+    """
+    data is expected to be stored as:
     "see_alsos":
     [{"dataset_identifier": "443@statistisches-amt-kanton-zuerich"},
     {"dataset_identifier": "444@statistisches-amt-kanton-zuerich"},
@@ -242,11 +247,16 @@ def get_see_alsos_from_form(data):
 
 
 def ogdch_date_form_helper(date_value):
-    """transform isodate into display date
+    """
+    transform isodate or posix date into display date
     u'2012-12-31T00:00:00' to 2012-12-31,
     """
     if date_value:
-        return date_value.split('T')[0]
+        try:
+            return datetime.datetime.fromtimestamp(int(date_value))\
+                .isoformat().split('T')[0]
+        except ValueError:
+            return date_value.split('T')[0]
     else:
         return ""
 
@@ -271,7 +281,8 @@ def ogdch_temporals_form_helper(data):
 
 
 def _get_temporals_from_storage(data, key):
-    """data is expected to be stored as:
+    """
+    data is expected to be stored as:
     "temporals": [{"start_date": "1981-06-14T00:00:00",
      "end_date": "2020-09-27T00:00:00"}]
     """

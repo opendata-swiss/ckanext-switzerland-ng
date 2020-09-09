@@ -119,9 +119,9 @@ def get_showcase_type_name(showcase_type, lang_code):
     )
 
 
-def group_name_in_groups(group_name, groups):
+def group_id_in_groups(group_id, groups):
     for group in groups:
-        if group_name == group['name']:
+        if group_id == group['id']:
             return True
     return False
 

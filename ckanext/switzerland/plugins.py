@@ -428,8 +428,8 @@ class OgdchShowcasePlugin(ShowcasePlugin):
             ogdch_backend_helpers.get_showcase_type_name
         helpers["get_localized_group_list"] = \
             ogdch_backend_helpers.get_localized_group_list
-        helpers["group_name_in_groups"] = \
-            ogdch_backend_helpers.group_name_in_groups
+        helpers["group_id_in_groups"] = \
+            ogdch_backend_helpers.group_id_in_groups
 
         return helpers
 

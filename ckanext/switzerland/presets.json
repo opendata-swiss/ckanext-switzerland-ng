@@ -146,6 +146,7 @@
       "values": {
         "display_snippet": "date.html",
         "form_snippet": "date.html",
+        "validators": "scheming_required isodate",
         "output_validators": "timestamp_to_datetime"
       }
     },
