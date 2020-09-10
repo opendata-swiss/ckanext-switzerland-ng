@@ -228,8 +228,8 @@ def _get_see_alsos_from_storage(data):
     see_alsos_storage = data.get('see_alsos')
     see_alsos_display = []
     if see_alsos_storage:
-        for dataset_identifier in see_alsos_storage:
-            dataset_from_storage = get_dataset_by_identifier(identifier=dataset_identifier)  # noqa
+        for see_also in see_alsos_storage:
+            dataset_from_storage = get_dataset_by_identifier(identifier=see_also['dataset_identifier'])  # noqa
             if dataset_from_storage:
                 see_alsos_display.append(dataset_from_storage.get('name'))
         return see_alsos_display
