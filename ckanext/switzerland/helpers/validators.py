@@ -349,7 +349,7 @@ def ogdch_validate_formfield_relations(field, schema):
 @scheming_validator
 def ogdch_validate_formfield_see_alsos(field, schema):
     """This validator is only used for form validation
-    The data is extracted form the publisher form fields and transformed
+    The data is extracted from the publisher form fields and transformed
     into a form that is expected for database storage:
     "see_alsos":
     [{"dataset_identifier": "443@statistisches-amt-kanton-zuerich"},
@@ -357,7 +357,6 @@ def ogdch_validate_formfield_see_alsos(field, schema):
     {"dataset_identifier": "10001@statistisches-amt-kanton-zuerich"}],
     """
     def validator(key, data, errors, context):
-
         extras = data.get(FORM_EXTRAS)
         see_alsos_validated = []
         if extras:
@@ -372,7 +371,9 @@ def ogdch_validate_formfield_see_alsos(field, schema):
                                 _('{} can not be chosen since it is a {}.'
                                   .format(package_name, package.get('type')))
                             )
-                        see_alsos_validated.append(package.get('identifier'))
+                        see_alsos_validated.append(
+                            {'dataset_identifier': package.get('identifier')}
+                        )
                     except NotFound:
                         raise df.Invalid(
                             _('Dataset {} could not be found .'
