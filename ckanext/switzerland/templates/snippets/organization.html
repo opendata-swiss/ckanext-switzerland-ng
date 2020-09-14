@@ -1,25 +1,26 @@
 {% ckan_extends %}
+
 {% block heading %}
-{# localize organization description #}
-{% set lang = h.lang() %}
-{% set org_title_loc = organization.get('title') %}
-<h1 class="heading">{{ organization_title_loc }}
-  {% if organization.state == 'deleted' %}
-    [{{ _('Deleted') }}]
-  {% endif %}
-</h1>
+  {% set org_title_loc = h.scheming_language_text(organization['display_name']) or h.scheming_language_text(organization['title']) %}
+  <h1 class="heading">{{ org_title_loc }}
+    {% if organization.state == 'deleted' %}
+      [{{ _('Deleted') }}]
+    {% endif %}
+  </h1>
 {% endblock %}
+
 {% block description %}
-{% if organization.description %}
-  <p>
-    {# localize organization description #}
-    {{ organization.description  }}
-    {% link_for _('read more'), controller='organization', action='about', id=organization.name %}
-  </p>
-{% else %}
-  <p class="empty">{{ _('There is no description for this organization') }}</p>
-{% endif %}
+  {% if organization.description %}
+    <p>
+      {# localize organization description #}
+      {{ h.scheming_language_text(organization['description'])  }}
+      {% link_for _('read more'), controller='organization', action='about', id=organization.name %}
+    </p>
+  {% else %}
+    <p class="empty">{{ _('There is no description for this organization') }}</p>
+  {% endif %}
 {% endblock %}
+
 {# remove number of followers #}
 {% block nums %}
 <div class="nums">
