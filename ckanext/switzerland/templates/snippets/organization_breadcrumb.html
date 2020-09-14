@@ -5,14 +5,14 @@
 {% endif %}
 
 {% set schema = h.scheming_get_organization_schema(group_type) %}
-{% set display_name = h.scheming_language_text(organization[h.scheming_field_by_name(schema.fields, 'display_name').field_name]) %}
+{% set display_name = h.scheming_language_text(organization['display_name']) or h.scheming_language_text(organization['title']) %}
 
 <li>
-    {% link_for _('Organizations'), controller='organization', action='index' %}
+  {% link_for _('Organizations'), controller='organization', action='index' %}
 </li>
 {% set parent_list =  h.group_tree_parents(organization.name)  %}
 {% for parent_node in parent_list %}
-  {% set parent_name = h.scheming_language_text(parent_node[h.scheming_field_by_name(schema.fields, 'display_name').field_name]) %}
+  {% set parent_name = h.scheming_language_text(parent_node['display_name']) or h.scheming_language_text(parent_node['title']) %}
   <li>
       {% link_for parent_name|truncate(35),
       controller='organization', action='read', id=parent_node.name, suppress_active_class=true %}
