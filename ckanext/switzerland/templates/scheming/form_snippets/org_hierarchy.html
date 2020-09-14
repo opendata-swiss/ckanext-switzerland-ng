@@ -9,18 +9,16 @@
           selected="selected"
         {% endif %}>{{ _('None - top level') }}
       </option>
-      {% if selected_parent or not data.id %}
-        {% for group in c.allowable_parent_groups or h.get_allowable_parent_groups(data.id) %}
-          {% if not h.group_tree_parents(group.id) %}
-          <option value="{{ group.name }}"
-            {% if group.name == selected_parent %}
-              selected="selected"
-            {% endif %}>
-            {{ h.get_localized_value_for_display(group.title) }}
-          </option>
-          {% endif %}}
-        {% endfor %}
-      {% endif %}}
+      {% for group in c.allowable_parent_groups or h.get_allowable_parent_groups(data.id) %}
+        {% if not h.group_tree_parents(group.id) %}
+        <option value="{{ group.name }}"
+          {% if group.name == selected_parent %}
+            selected="selected"
+          {% endif %}>
+          {{ h.get_localized_value_for_display(group.title) }}
+        </option>
+        {% endif %}}
+      {% endfor %}
     </select>
   </div>
 </div>
