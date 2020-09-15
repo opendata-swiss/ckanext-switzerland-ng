@@ -1,0 +1,17 @@
+{% ckan_extends %}
+
+{% import 'macros/form.html' as form %}
+
+{% block page_primary_action %}
+  {% if h.check_access('package_create', {'owner_org': c.group_dict.id}) %}
+    {% snippet 'snippets/add_dataset.html', group=c.group_dict.id %}
+
+    {% set action = h.url_for('organization_xml_upload', name=c.group_dict.name) %}
+    <form id="dataset-import" class="form-horizontal" method="post" action="{{ action }}" enctype="multipart/form-data">
+      {{ form.file_upload({'file_url': ''}, {'file_url': ''}, is_upload_enabled=h.uploads_enabled(), is_url=False, is_upload=False) }}
+      <button class="btn btn-primary" type="submit">
+        {{ _('Add Datasets from XML') }}
+      </button>
+    </form>
+    {% endif %}
+{% endblock %}

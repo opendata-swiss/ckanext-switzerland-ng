@@ -1,21 +1,36 @@
+import os.path
 import pysolr
 import re
 from unidecode import unidecode
+import uuid
+
+import rdflib
+import rdflib.parser
+from rdflib.namespace import Namespace, RDF
+
 from collections import OrderedDict
 from ckan.plugins.toolkit import get_or_bust, side_effect_free
 from ckan.logic import ActionError, NotFound, ValidationError
 import ckan.plugins.toolkit as tk
 from ckan.lib.search.common import make_connection
+import ckan.lib.plugins as lib_plugins
+import ckan.lib.uploader as uploader
+from ckanext.dcat.processors import RDFParserException
+from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
+from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester
 from ckanext.switzerland.helpers.request_utils import get_content_headers
 from ckanext.switzerland.helpers.logic_helpers import (
-     get_dataset_count, get_org_count, get_showcases_for_dataset)
+    get_dataset_count, get_org_count, get_showcases_for_dataset)
 
 import logging
+
 log = logging.getLogger(__name__)
 
 FORMAT_TURTLE = 'ttl'
 DATA_IDENTIFIER = 'data'
 RESULT_IDENTIFIER = 'result'
+
+DCAT = Namespace("http://www.w3.org/ns/dcat#")
 
 
 @side_effect_free
@@ -204,3 +219,108 @@ def ogdch_autosuggest(context, data_dict):
     except pysolr.SolrError as e:
         log.exception('Could not load suggestions from solr: %s' % e)
     raise ActionError('Error retrieving suggestions from solr')
+
+
+def ogdch_xml_upload(context, data_dict):
+    data = data_dict.get('data')
+    org_id = data_dict.get('organization')
+
+    upload = uploader.get_uploader('dataset_xml')
+    upload.update_data_dict(data, 'dataset_xml',
+                            'file_upload', 'clear_upload')
+    upload.upload()
+
+    dataset_filename = data.get('dataset_xml')
+    data_rdfgraph = rdflib.ConjunctiveGraph()
+    profile = SwissDCATAPProfile(data_rdfgraph)
+
+    try:
+        data_rdfgraph.parse(os.path.join(
+            upload.storage_path,
+            dataset_filename
+        ), "xml")
+    except RDFParserException, e:
+        raise RDFParserException(
+            'Error parsing the RDF file during dataset import: {0}'
+            .format(e))
+
+    for dataset_ref in data_rdfgraph.subjects(RDF.type, DCAT.Dataset):
+        dataset_dict = {}
+        profile.parse_dataset(dataset_dict, dataset_ref)
+        dataset_dict['owner_org'] = org_id
+
+        _create_or_update_dataset(context, dataset_dict)
+
+
+def _create_or_update_dataset(context, dataset):
+    user = tk.get_action('get_site_user')({'ignore_auth': True}, {})
+    context.update({'user': user['name']})
+
+    tk.check_access('package_show', {})
+
+    harvester = SwissDCATRDFHarvester()
+    name = harvester._gen_new_name(dataset['title'])
+
+    package_plugin = lib_plugins.lookup_package_plugin('dataset')
+
+    try:
+        # Check for existing dataset
+        existing_dataset = tk.get_action('ogdch_dataset_by_identifier')(
+            context,
+            {'identifier': dataset['identifier']}
+        )
+        context['schema'] = package_plugin.update_package_schema()
+
+        # Don't change the dataset name even if the title has changed
+        dataset['name'] = existing_dataset['name']
+        dataset['id'] = existing_dataset['id']
+
+        # check if resources already exist based on their URI
+        existing_resources = existing_dataset.get('resources')
+        resource_mapping = {r.get('uri'): r.get('id') for
+                            r in existing_resources if r.get('uri')}
+        for resource in dataset.get('resources'):
+            res_uri = resource.get('uri')
+            if res_uri and res_uri in resource_mapping:
+                resource['id'] = resource_mapping[res_uri]
+
+        try:
+            if dataset:
+                tk.get_action('package_update')(context, dataset)
+            else:
+                log.info('Ignoring dataset %s' % existing_dataset['name'])
+                return 'unchanged'
+        except ValidationError as e:
+            raise ValidationError('Update validation error: %s'
+                                  % str(e.error_summary))
+
+        log.info('Updated dataset %s' % dataset['name'])
+
+    except NotFound:
+        package_schema = package_plugin.create_package_schema()
+        context['schema'] = package_schema
+
+        # We need to explicitly provide a package ID
+        dataset['id'] = str(uuid.uuid4())
+        package_schema['id'] = [str]
+        dataset['name'] = name
+
+        log.warning(dataset)
+        log.warning(package_schema)
+
+        try:
+            if dataset:
+                tk.get_action('package_create')(context, dataset)
+            else:
+                log.info('Ignoring dataset %s' % name)
+                return 'unchanged'
+        except ValidationError as e:
+            raise ValidationError('Create validation Error: %s' %
+                                  str(e.error_summary), e)
+
+        log.info('Created dataset %s' % dataset['name'])
+
+    except Exception as e:
+        raise ValidationError(
+            'Error importing dataset %s: %r' %
+            (dataset.get('name', ''), e))

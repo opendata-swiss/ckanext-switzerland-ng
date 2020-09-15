@@ -116,6 +116,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_content_headers': ogdch_logic.ogdch_content_headers,
             'ogdch_autosuggest': ogdch_logic.ogdch_autosuggest,
             'ogdch_package_show': ogdch_logic.ogdch_package_show,
+            'ogdch_xml_upload': ogdch_logic.ogdch_xml_upload,
         }
 
     # ITemplateHelpers
@@ -188,6 +189,9 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
                     action='read')
         map.connect('organization_edit', '/organization/edit/{id}',
                     controller='organization', action='edit')
+        map.connect('organization_xml_upload', '/organization/xml_upload/{name}',
+                    controller='ckanext.switzerland.controllers.organization:OgdchOrganizationController', # noqa
+                    action='xml_upload')
 
         return map
 
