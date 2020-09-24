@@ -283,13 +283,15 @@ class OgdchOrganizationController(organization.OrganizationController):
             tk.abort(409, _('Only Posting is availiable'))
 
         org = tk.get_action('organization_show')({}, {'id': name})
-        log.warning(org)
 
-        data_dict = {
-            'data': dict(tk.request.POST),
-            'organization': org['id'],
-        }
-        tk.get_action('ogdch_xml_upload')({}, data_dict)
+        if tk.request.POST.get('file_upload') is not u'':
+            data_dict = {
+                'data': dict(tk.request.POST),
+                'organization': org['id'],
+            }
+            tk.get_action('ogdch_xml_upload')({}, data_dict)
+        else:
+            h.flash_error('Error uploading file: no data received.')
 
         tk.redirect_to(
                 'organization_read',

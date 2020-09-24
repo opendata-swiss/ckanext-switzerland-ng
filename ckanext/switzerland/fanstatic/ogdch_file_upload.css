@@ -41,3 +41,10 @@
     margin-left: 2px;
     font-weight: bold;
 }
+#dataset-import {
+    float: right;
+    display: flex;
+}
+#dataset-import label {
+    display: none;
+}

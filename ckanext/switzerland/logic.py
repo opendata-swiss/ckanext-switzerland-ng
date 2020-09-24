@@ -1,17 +1,19 @@
+from collections import OrderedDict
 import os.path
 import pysolr
 import re
 from unidecode import unidecode
 import uuid
+from xml.sax import SAXParseException
 
 import rdflib
 import rdflib.parser
 from rdflib.namespace import Namespace, RDF
 
-from collections import OrderedDict
 from ckan.plugins.toolkit import get_or_bust, side_effect_free
 from ckan.logic import ActionError, NotFound, ValidationError
 import ckan.plugins.toolkit as tk
+import ckan.lib.helpers as h
 from ckan.lib.search.common import make_connection
 import ckan.lib.plugins as lib_plugins
 import ckan.lib.uploader as uploader
@@ -231,6 +233,11 @@ def ogdch_xml_upload(context, data_dict):
     upload.upload()
 
     dataset_filename = data.get('dataset_xml')
+
+    if not dataset_filename:
+        h.flash_error('Error uploading file.')
+        return
+
     data_rdfgraph = rdflib.ConjunctiveGraph()
     profile = SwissDCATAPProfile(data_rdfgraph)
 
@@ -239,8 +246,8 @@ def ogdch_xml_upload(context, data_dict):
             upload.storage_path,
             dataset_filename
         ), "xml")
-    except RDFParserException, e:
-        raise RDFParserException(
+    except (RDFParserException, SAXParseException) as e:
+        h.flash_error(
             'Error parsing the RDF file during dataset import: {0}'
             .format(e))
 
@@ -285,16 +292,13 @@ def _create_or_update_dataset(context, dataset):
                 resource['id'] = resource_mapping[res_uri]
 
         try:
-            if dataset:
-                tk.get_action('package_update')(context, dataset)
-            else:
-                log.info('Ignoring dataset %s' % existing_dataset['name'])
-                return 'unchanged'
+            tk.get_action('package_update')(context, dataset)
         except ValidationError as e:
-            raise ValidationError('Update validation error: %s'
-                                  % str(e.error_summary))
+            h.flash_error('Error updating dataset %s: %s'
+                          % (dataset['name'], str(e.error_summary)))
+            return
 
-        log.info('Updated dataset %s' % dataset['name'])
+        h.flash_success('Updated dataset %s' % dataset['name'])
 
     except NotFound:
         package_schema = package_plugin.create_package_schema()
@@ -305,22 +309,19 @@ def _create_or_update_dataset(context, dataset):
         package_schema['id'] = [str]
         dataset['name'] = name
 
-        log.warning(dataset)
-        log.warning(package_schema)
-
         try:
-            if dataset:
-                tk.get_action('package_create')(context, dataset)
-            else:
-                log.info('Ignoring dataset %s' % name)
-                return 'unchanged'
+            tk.get_action('package_create')(context, dataset)
         except ValidationError as e:
-            raise ValidationError('Create validation Error: %s' %
-                                  str(e.error_summary), e)
+            summary = ''
+            for value in e.error_summary.values():
+                summary += ' ' + value
+            h.flash_error('Error creating dataset %s: %s'
+                          % (dataset['name'], summary))
+            return
 
-        log.info('Created dataset %s' % dataset['name'])
+        h.flash_success('Created dataset %s' % dataset['name'])
 
     except Exception as e:
-        raise ValidationError(
+        h.flash_error(
             'Error importing dataset %s: %r' %
             (dataset.get('name', ''), e))
