@@ -17,6 +17,8 @@ import ckan.lib.helpers as h
 from ckan.lib.search.common import make_connection
 import ckan.lib.plugins as lib_plugins
 import ckan.lib.uploader as uploader
+from ckan import model
+from ckan.model import Session
 from ckanext.dcat.processors import RDFParserException
 from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
 from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester
@@ -160,10 +162,10 @@ def ogdch_dataset_terms_of_use(context, data_dict):
 def ogdch_dataset_by_identifier(context, data_dict):
     user = tk.get_action('get_site_user')({'ignore_auth': True}, {})
     context.update({'user': user['name']})
-    identifier = get_or_bust(data_dict, 'identifier')
+    identifier = data_dict.pop('identifier', None)
 
-    param = 'identifier:%s' % identifier
-    result = tk.get_action('package_search')(context, {'fq': param})
+    data_dict['fq'] = 'identifier:%s' % identifier
+    result = tk.get_action('package_search')(context, data_dict)
     try:
         return result['results'][0]
     except (KeyError, IndexError, TypeError):
@@ -256,10 +258,11 @@ def ogdch_xml_upload(context, data_dict):
         profile.parse_dataset(dataset_dict, dataset_ref)
         dataset_dict['owner_org'] = org_id
 
-        _create_or_update_dataset(context, dataset_dict)
+        _create_or_update_dataset(dataset_dict)
 
 
-def _create_or_update_dataset(context, dataset):
+def _create_or_update_dataset(dataset):
+    context = {}
     user = tk.get_action('get_site_user')({'ignore_auth': True}, {})
     context.update({'user': user['name']})
 
@@ -272,15 +275,23 @@ def _create_or_update_dataset(context, dataset):
 
     try:
         # Check for existing dataset
+        data_dict = {
+            'identifier': dataset['identifier'],
+            'include_private': True,
+            'include_drafts': True,
+        }
         existing_dataset = tk.get_action('ogdch_dataset_by_identifier')(
             context,
-            {'identifier': dataset['identifier']}
+            data_dict
         )
         context['schema'] = package_plugin.update_package_schema()
 
         # Don't change the dataset name even if the title has changed
         dataset['name'] = existing_dataset['name']
         dataset['id'] = existing_dataset['id']
+        # Don't make a dataset public if it wasn't already
+        is_private = existing_dataset['private']
+        dataset['private'] = is_private
 
         # check if resources already exist based on their URI
         existing_resources = existing_dataset.get('resources')
@@ -294,13 +305,20 @@ def _create_or_update_dataset(context, dataset):
         try:
             tk.get_action('package_update')(context, dataset)
         except ValidationError as e:
+            summary = ''
+            for value in e.error_summary.values():
+                summary += ' ' + value
             h.flash_error('Error updating dataset %s: %s'
-                          % (dataset['name'], str(e.error_summary)))
+                          % (dataset['name'], summary))
             return
 
-        h.flash_success('Updated dataset %s' % dataset['name'])
+        success_message = 'Updated dataset %s.' % dataset['name']
+        if is_private:
+            success_message += ' The dataset visibility is private.'
 
-    except NotFound:
+        h.flash_success(success_message)
+
+    except NotFound as e:
         package_schema = package_plugin.create_package_schema()
         context['schema'] = package_schema
 
@@ -308,6 +326,8 @@ def _create_or_update_dataset(context, dataset):
         dataset['id'] = str(uuid.uuid4())
         package_schema['id'] = [str]
         dataset['name'] = name
+        # Create datasets as private initially
+        dataset['private'] = True
 
         try:
             tk.get_action('package_create')(context, dataset)
@@ -319,7 +339,7 @@ def _create_or_update_dataset(context, dataset):
                           % (dataset['name'], summary))
             return
 
-        h.flash_success('Created dataset %s' % dataset['name'])
+        h.flash_success('Created dataset %s. The dataset visibility is private.' % dataset['name'])
 
     except Exception as e:
         h.flash_error(
