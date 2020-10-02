@@ -57,9 +57,10 @@ this.ckan.module('ogdch_file_upload', function($) {
         .appendTo(this.el);
 
       // Button to attach local file to the form
-      this.button_upload = $('<a href="javascript:;" class="btn btn-default">' +
+      var buttonText = options.upload_label || this._('file');
+      this.button_upload = $('<a href="javascript:;" class="btn btn-primary dataset-import-button">' +
                              '<i class="fa fa-cloud-upload"></i>' +
-                             this._('Upload') + '</a>')
+                             buttonText + '</a>')
         .insertAfter(this.input);
 
       if (this.previousUpload) {

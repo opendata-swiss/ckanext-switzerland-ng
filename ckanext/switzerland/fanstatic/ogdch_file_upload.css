@@ -48,3 +48,6 @@
 #dataset-import label {
     display: none;
 }
+#dataset-import .dataset-import-button:hover {
+    color: #ffffff;
+}
