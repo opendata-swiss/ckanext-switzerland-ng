@@ -162,7 +162,8 @@ class OgdchOrganizationController(organization.OrganizationController):
                 'rows': limit,
                 'sort': sort_by,
                 'start': (page - 1) * limit,
-                'extras': search_extras
+                'extras': search_extras,
+                'include_private': True,
             }
 
             context_ = dict((k, v) for (k, v) in context.items()
