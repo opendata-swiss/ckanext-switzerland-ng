@@ -189,7 +189,8 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
                     action='read')
         map.connect('organization_edit', '/organization/edit/{id}',
                     controller='organization', action='edit')
-        map.connect('organization_xml_upload', '/organization/xml_upload/{name}',
+        map.connect('organization_xml_upload',
+                    '/organization/xml_upload/{name}',
                     controller='ckanext.switzerland.controllers.organization:OgdchOrganizationController', # noqa
                     action='xml_upload')
 

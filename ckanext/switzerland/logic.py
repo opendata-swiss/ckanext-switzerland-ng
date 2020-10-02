@@ -17,8 +17,6 @@ import ckan.lib.helpers as h
 from ckan.lib.search.common import make_connection
 import ckan.lib.plugins as lib_plugins
 import ckan.lib.uploader as uploader
-from ckan import model
-from ckan.model import Session
 from ckanext.dcat.processors import RDFParserException
 from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
 from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester
@@ -302,15 +300,7 @@ def _create_or_update_dataset(dataset):
             if res_uri and res_uri in resource_mapping:
                 resource['id'] = resource_mapping[res_uri]
 
-        try:
-            tk.get_action('package_update')(context, dataset)
-        except ValidationError as e:
-            summary = ''
-            for value in e.error_summary.values():
-                summary += ' ' + value
-            h.flash_error('Error updating dataset %s: %s'
-                          % (dataset['name'], summary))
-            return
+        tk.get_action('package_update')(context, dataset)
 
         success_message = 'Updated dataset %s.' % dataset['name']
         if is_private:
@@ -329,17 +319,11 @@ def _create_or_update_dataset(dataset):
         # Create datasets as private initially
         dataset['private'] = True
 
-        try:
-            tk.get_action('package_create')(context, dataset)
-        except ValidationError as e:
-            summary = ''
-            for value in e.error_summary.values():
-                summary += ' ' + value
-            h.flash_error('Error creating dataset %s: %s'
-                          % (dataset['name'], summary))
-            return
+        tk.get_action('package_create')(context, dataset)
 
-        h.flash_success('Created dataset %s. The dataset visibility is private.' % dataset['name'])
+        h.flash_success(
+            'Created dataset %s. The dataset visibility is private.' %
+            dataset['name'])
 
     except Exception as e:
         h.flash_error(
