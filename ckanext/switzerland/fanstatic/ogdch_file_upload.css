@@ -18,7 +18,9 @@
     margin-right: 10px;
 }
 .js .file-upload .btn.hover {
-    color: #333333;
+    color: #ffffff;
+    background-color: #164959;
+    border-color: #0f323c;
     text-decoration: none;
     background-position: 0 -15px;
     -webkit-transition: background-position 0.1s linear;
