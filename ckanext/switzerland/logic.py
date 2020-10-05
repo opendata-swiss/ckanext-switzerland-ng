@@ -22,7 +22,8 @@ from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
 from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester
 from ckanext.switzerland.helpers.request_utils import get_content_headers
 from ckanext.switzerland.helpers.logic_helpers import (
-    get_dataset_count, get_org_count, get_showcases_for_dataset)
+    get_dataset_count, get_org_count, get_showcases_for_dataset,
+    map_existing_resources_to_new_dataset)
 
 import logging
 
@@ -270,14 +271,13 @@ def _create_or_update_dataset(dataset):
     name = harvester._gen_new_name(dataset['title'])
 
     package_plugin = lib_plugins.lookup_package_plugin('dataset')
+    data_dict = {
+        'identifier': dataset['identifier'],
+        'include_private': True,
+        'include_drafts': True,
+    }
 
     try:
-        # Check for existing dataset
-        data_dict = {
-            'identifier': dataset['identifier'],
-            'include_private': True,
-            'include_drafts': True,
-        }
         existing_dataset = tk.get_action('ogdch_dataset_by_identifier')(
             context,
             data_dict
@@ -291,14 +291,7 @@ def _create_or_update_dataset(dataset):
         is_private = existing_dataset['private']
         dataset['private'] = is_private
 
-        # check if resources already exist based on their URI
-        existing_resources = existing_dataset.get('resources')
-        resource_mapping = {r.get('uri'): r.get('id') for
-                            r in existing_resources if r.get('uri')}
-        for resource in dataset.get('resources'):
-            res_uri = resource.get('uri')
-            if res_uri and res_uri in resource_mapping:
-                resource['id'] = resource_mapping[res_uri]
+        map_existing_resources_to_new_dataset(dataset, existing_dataset)
 
         tk.get_action('package_update')(context, dataset)
 
