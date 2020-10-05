@@ -81,6 +81,14 @@ pip install -r requirements.txt
 pip install -r dev-requirements.txt
 cd -
 
+echo "Installing ckanext-dcatapchharvest and its requirements..."
+git clone https://github.com/opendata-swiss/ckanext-dcatapchharvest
+cd ckanext-dcatapchharvest
+python setup.py develop
+pip install -r requirements.txt
+pip install -r dev-requirements.txt
+cd -
+
 echo "Installing ckanext-xloader and its requirements..."
 git clone https://github.com/ckan/ckanext-xloader
 cd ckanext-xloader
