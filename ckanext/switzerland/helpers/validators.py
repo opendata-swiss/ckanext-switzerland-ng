@@ -67,6 +67,20 @@ def multilingual_text_output(value):
     return parse_json(value)
 
 
+def date_string_to_timestamp(value):
+    """"
+    Converts a date string (YYYY-MM-DD) into a POSIX timestamp to be stored.
+    Necessary as the date form submits dates in this format.
+    """
+    try:
+        d = datetime.datetime.strptime(str(value), "%Y-%m-%d")
+        epoch = datetime.datetime(1970, 1, 1)
+
+        return int((d - epoch).total_seconds())
+    except ValueError:
+        return value
+
+
 def timestamp_to_datetime(value):
     """
     Returns an isoformat date (YYYY-MM-DD HH:MM:SS) for a given POSIX

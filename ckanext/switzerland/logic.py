@@ -1,21 +1,39 @@
+from collections import OrderedDict
+import os.path
 import pysolr
 import re
 from unidecode import unidecode
-from collections import OrderedDict
+import uuid
+from xml.sax import SAXParseException
+
+import rdflib
+import rdflib.parser
+from rdflib.namespace import Namespace, RDF
+
 from ckan.plugins.toolkit import get_or_bust, side_effect_free
 from ckan.logic import ActionError, NotFound, ValidationError
 import ckan.plugins.toolkit as tk
+import ckan.lib.helpers as h
 from ckan.lib.search.common import make_connection
+import ckan.lib.plugins as lib_plugins
+import ckan.lib.uploader as uploader
+from ckanext.dcat.processors import RDFParserException
+from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
+from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester
 from ckanext.switzerland.helpers.request_utils import get_content_headers
 from ckanext.switzerland.helpers.logic_helpers import (
-     get_dataset_count, get_org_count, get_showcases_for_dataset)
+    get_dataset_count, get_org_count, get_showcases_for_dataset,
+    map_existing_resources_to_new_dataset)
 
 import logging
+
 log = logging.getLogger(__name__)
 
 FORMAT_TURTLE = 'ttl'
 DATA_IDENTIFIER = 'data'
 RESULT_IDENTIFIER = 'result'
+
+DCAT = Namespace("http://www.w3.org/ns/dcat#")
 
 
 @side_effect_free
@@ -143,10 +161,10 @@ def ogdch_dataset_terms_of_use(context, data_dict):
 def ogdch_dataset_by_identifier(context, data_dict):
     user = tk.get_action('get_site_user')({'ignore_auth': True}, {})
     context.update({'user': user['name']})
-    identifier = get_or_bust(data_dict, 'identifier')
+    identifier = data_dict.pop('identifier', None)
 
-    param = 'identifier:%s' % identifier
-    result = tk.get_action('package_search')(context, {'fq': param})
+    data_dict['fq'] = 'identifier:%s' % identifier
+    result = tk.get_action('package_search')(context, data_dict)
     try:
         return result['results'][0]
     except (KeyError, IndexError, TypeError):
@@ -204,3 +222,103 @@ def ogdch_autosuggest(context, data_dict):
     except pysolr.SolrError as e:
         log.exception('Could not load suggestions from solr: %s' % e)
     raise ActionError('Error retrieving suggestions from solr')
+
+
+def ogdch_xml_upload(context, data_dict):
+    data = data_dict.get('data')
+    org_id = data_dict.get('organization')
+
+    upload = uploader.get_uploader('dataset_xml')
+    upload.update_data_dict(data, 'dataset_xml',
+                            'file_upload', 'clear_upload')
+    upload.upload()
+
+    dataset_filename = data.get('dataset_xml')
+
+    if not dataset_filename:
+        h.flash_error('Error uploading file.')
+        return
+
+    data_rdfgraph = rdflib.ConjunctiveGraph()
+    profile = SwissDCATAPProfile(data_rdfgraph)
+
+    try:
+        data_rdfgraph.parse(os.path.join(
+            upload.storage_path,
+            dataset_filename
+        ), "xml")
+    except (RDFParserException, SAXParseException) as e:
+        h.flash_error(
+            'Error parsing the RDF file during dataset import: {0}'
+            .format(e))
+
+    for dataset_ref in data_rdfgraph.subjects(RDF.type, DCAT.Dataset):
+        dataset_dict = {}
+        profile.parse_dataset(dataset_dict, dataset_ref)
+        dataset_dict['owner_org'] = org_id
+
+        _create_or_update_dataset(dataset_dict)
+
+
+def _create_or_update_dataset(dataset):
+    context = {}
+    user = tk.get_action('get_site_user')({'ignore_auth': True}, {})
+    context.update({'user': user['name']})
+
+    tk.check_access('package_show', {})
+
+    harvester = SwissDCATRDFHarvester()
+    name = harvester._gen_new_name(dataset['title'])
+
+    package_plugin = lib_plugins.lookup_package_plugin('dataset')
+    data_dict = {
+        'identifier': dataset['identifier'],
+        'include_private': True,
+        'include_drafts': True,
+    }
+
+    try:
+        existing_dataset = tk.get_action('ogdch_dataset_by_identifier')(
+            context,
+            data_dict
+        )
+        context['schema'] = package_plugin.update_package_schema()
+
+        # Don't change the dataset name even if the title has changed
+        dataset['name'] = existing_dataset['name']
+        dataset['id'] = existing_dataset['id']
+        # Don't make a dataset public if it wasn't already
+        is_private = existing_dataset['private']
+        dataset['private'] = is_private
+
+        map_existing_resources_to_new_dataset(dataset, existing_dataset)
+
+        tk.get_action('package_update')(context, dataset)
+
+        success_message = 'Updated dataset %s.' % dataset['name']
+        if is_private:
+            success_message += ' The dataset visibility is private.'
+
+        h.flash_success(success_message)
+
+    except NotFound as e:
+        package_schema = package_plugin.create_package_schema()
+        context['schema'] = package_schema
+
+        # We need to explicitly provide a package ID
+        dataset['id'] = str(uuid.uuid4())
+        package_schema['id'] = [str]
+        dataset['name'] = name
+        # Create datasets as private initially
+        dataset['private'] = True
+
+        tk.get_action('package_create')(context, dataset)
+
+        h.flash_success(
+            'Created dataset %s. The dataset visibility is private.' %
+            dataset['name'])
+
+    except Exception as e:
+        h.flash_error(
+            'Error importing dataset %s: %r' %
+            (dataset.get('name', ''), e))

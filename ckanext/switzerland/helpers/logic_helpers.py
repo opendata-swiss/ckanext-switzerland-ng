@@ -37,3 +37,13 @@ def get_showcases_for_dataset(id):
             context, data_dict)
     except tk.NotFound:
         return None
+
+
+def map_existing_resources_to_new_dataset(new_dataset, existing_dataset):
+    existing_resources = existing_dataset.get('resources')
+    resource_mapping = {r.get('uri'): r.get('id') for
+                        r in existing_resources if r.get('uri')}
+    for resource in new_dataset.get('resources'):
+        res_uri = resource.get('uri')
+        if res_uri and res_uri in resource_mapping:
+            resource['id'] = resource_mapping[res_uri]

@@ -2,7 +2,7 @@
 
 import logging
 from urllib import urlencode
-from ckan.plugins.toolkit import abort
+import ckan.plugins.toolkit as tk
 import ckan.model as model
 from ckan.logic import get_action, NotAuthorized, ValidationError
 from ckan.lib.plugins import lookup_group_controller
@@ -162,7 +162,8 @@ class OgdchOrganizationController(organization.OrganizationController):
                 'rows': limit,
                 'sort': sort_by,
                 'start': (page - 1) * limit,
-                'extras': search_extras
+                'extras': search_extras,
+                'include_private': True,
             }
 
             context_ = dict((k, v) for (k, v) in context.items()
@@ -225,7 +226,7 @@ class OgdchOrganizationController(organization.OrganizationController):
             self._check_access('site_read', context)
             self._check_access('group_list', context)
         except NotAuthorized:
-            abort(403, _('Not authorized to see this page'))
+            tk.abort(403, _('Not authorized to see this page'))
 
         # pass user info to context as needed to view private datasets of
         # orgs correctly
@@ -277,3 +278,23 @@ class OgdchOrganizationController(organization.OrganizationController):
                           'group_type': group_type,
                           'q': request.params.get('q', '')
                       })
+
+    def xml_upload(self, name):
+        if not tk.request.method == 'POST':
+            tk.abort(409, _('Only Posting is availiable'))
+
+        org = tk.get_action('organization_show')({}, {'id': name})
+
+        if tk.request.POST.get('file_upload') is not u'':
+            data_dict = {
+                'data': dict(tk.request.POST),
+                'organization': org['id'],
+            }
+            tk.get_action('ogdch_xml_upload')({}, data_dict)
+        else:
+            h.flash_error('Error uploading file: no data received.')
+
+        tk.redirect_to(
+                'organization_read',
+                id=name
+            )

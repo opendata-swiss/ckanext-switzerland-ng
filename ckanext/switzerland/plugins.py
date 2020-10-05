@@ -56,6 +56,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'multilingual_text_output': ogdch_validators.multilingual_text_output, # noqa
             'harvest_list_of_dicts': ogdch_validators.harvest_list_of_dicts,
             'timestamp_to_datetime': ogdch_validators.timestamp_to_datetime,
+            'date_string_to_timestamp': ogdch_validators.date_string_to_timestamp, # noqa
             'ogdch_language': ogdch_validators.ogdch_language,
             'ogdch_unique_identifier': ogdch_validators.ogdch_unique_identifier, # noqa
             'ogdch_required_in_one_language': ogdch_validators.ogdch_required_in_one_language, # noqa
@@ -115,6 +116,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_content_headers': ogdch_logic.ogdch_content_headers,
             'ogdch_autosuggest': ogdch_logic.ogdch_autosuggest,
             'ogdch_package_show': ogdch_logic.ogdch_package_show,
+            'ogdch_xml_upload': ogdch_logic.ogdch_xml_upload,
         }
 
     # ITemplateHelpers
@@ -187,6 +189,10 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
                     action='read')
         map.connect('organization_edit', '/organization/edit/{id}',
                     controller='organization', action='edit')
+        map.connect('organization_xml_upload',
+                    '/organization/xml_upload/{name}',
+                    controller='ckanext.switzerland.controllers.organization:OgdchOrganizationController', # noqa
+                    action='xml_upload')
 
         return map
 

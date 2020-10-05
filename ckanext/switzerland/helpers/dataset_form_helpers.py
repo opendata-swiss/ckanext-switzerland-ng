@@ -249,7 +249,7 @@ def get_see_alsos_from_form(data):
 def ogdch_date_form_helper(date_value):
     """
     transform isodate or posix date into display date
-    u'2012-12-31T00:00:00' to 2012-12-31,
+    u'2012-12-31T00:00:00' to 2012-12-31
     """
     if date_value:
         try:
