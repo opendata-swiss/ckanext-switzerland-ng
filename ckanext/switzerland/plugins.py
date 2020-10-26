@@ -117,6 +117,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_autosuggest': ogdch_logic.ogdch_autosuggest,
             'ogdch_package_show': ogdch_logic.ogdch_package_show,
             'ogdch_xml_upload': ogdch_logic.ogdch_xml_upload,
+            'ogdch_showcase_search': ogdch_logic.ogdch_showcase_search,
         }
 
     # ITemplateHelpers

@@ -97,6 +97,11 @@ def ogdch_package_show(context, data_dict):  # noqa
         except:
             raise "Terms of Use could not be found for dataset {}".format(id)
 
+        for resource in result['resources']:
+            resource_views = tk.get_action('resource_view_list')(
+                context, {'id': resource['id']})
+            resource['has_views'] = len(resource_views) > 0
+
         return result
     else:
         raise tk.NotFound
@@ -258,6 +263,24 @@ def ogdch_xml_upload(context, data_dict):
         dataset_dict['owner_org'] = org_id
 
         _create_or_update_dataset(dataset_dict)
+
+
+@side_effect_free
+def ogdch_showcase_search(context, data_dict):
+    '''
+    Custom package_search logic restricted to showcases, with 'for_view'=True
+    so that the ckanext-showcase before_view method is called. This includes
+    the number of datasets in each showcase in the output.
+    '''
+    user = tk.get_action('get_site_user')({'ignore_auth': True}, {})
+    context.update({'user': user['name'], 'for_view': True})
+    data_dict.update({'fq': 'dataset_type:showcase'})
+
+    result = tk.get_action('package_search')(context, data_dict)
+    if result:
+        return result
+    else:
+        raise NotFound
 
 
 def _create_or_update_dataset(dataset):
