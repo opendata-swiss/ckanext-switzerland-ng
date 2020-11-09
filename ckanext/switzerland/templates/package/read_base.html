@@ -1,0 +1,9 @@
+{% ckan_extends %}
+
+{% block content_action %}
+  {% if not is_activity_archive %}
+    {% if h.ogdch_check_dataset_manage_access(pkg.id) %}
+        {% link_for _('Manage'), controller='package', action='edit', id=pkg.name, class_='btn btn-default', icon='wrench' %}
+    {% endif %}
+  {% endif %}
+{% endblock %}

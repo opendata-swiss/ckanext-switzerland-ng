@@ -9,6 +9,7 @@ from urlparse import urlparse
 from ckan.common import session
 from ckan.authz import auth_is_loggedin_user
 from ckan.common import _
+from ckan.model import Package
 import ckan.lib.i18n as i18n
 import ckan.plugins.toolkit as tk
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
@@ -170,3 +171,11 @@ def ogdch_get_political_level_field_list(field):
         {'label': _('Commune'), 'value': 'commune'},
         {'label': _('Other'), 'value': 'other'},
     ]
+
+
+def ogdch_check_dataset_manage_access(pkg_id):
+    dataset = Package.get(pkg_id)
+    dataset_was_harvested = bool(len(dataset.harvest_objects) > 0)
+    if dataset_was_harvested:
+        return False
+    return True
