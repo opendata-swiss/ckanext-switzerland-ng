@@ -53,6 +53,14 @@ def get_localized_org(org_id=None, include_datasets=False):
 def localize_json_facet_title(facet_item):
     # json.loads tries to convert numbers in Strings to integers. At this point
     # we only need to deal with Strings, so we let them be Strings.
+
+    # correct bool values of facet items
+    if facet_item['display_name'] == 'fals' and facet_item['name'] == 'fals':
+        facet_item['display_name'] = 'false'
+        facet_item['name'] = 'false'
+    if facet_item['display_name'] == 'tru' and facet_item['name'] == 'tru':
+        facet_item['display_name'] = 'true'
+        facet_item['name'] = 'true'
     try:
         int(facet_item['display_name'])
         return facet_item['display_name']

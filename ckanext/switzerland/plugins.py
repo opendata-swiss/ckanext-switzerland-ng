@@ -73,12 +73,14 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
     def dataset_facets(self, facets_dict, package_type):
         lang_code = toolkit.request.environ['CKAN_LANG']
         facets_dict = collections.OrderedDict()
+        facets_dict['private'] = plugins.toolkit._('Data status')
         facets_dict['groups'] = plugins.toolkit._('Categories')
         facets_dict['keywords_' + lang_code] = plugins.toolkit._('Keywords')
         facets_dict['organization'] = plugins.toolkit._('Organizations')
         facets_dict['political_level'] = plugins.toolkit._('Political levels')
         facets_dict['res_rights'] = plugins.toolkit._('Terms of use')
         facets_dict['res_format'] = plugins.toolkit._('Formats')
+        log.error(facets_dict)
         return facets_dict
 
     def group_facets(self, facets_dict, group_type, package_type):
@@ -155,7 +157,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_see_alsos_form_helper': ogdch_dataset_form_helpers.ogdch_see_alsos_form_helper,  # noqa
             'ogdch_date_form_helper': ogdch_dataset_form_helpers.ogdch_date_form_helper,  # noqa
             'ogdch_temporals_form_helper': ogdch_dataset_form_helpers.ogdch_temporals_form_helper,  # noqa
-            'ogdch_dataset_title_form_helper': ogdch_dataset_form_helpers.ogdch_dataset_title_form_helper,  # noqa
         }
 
     # IRouter

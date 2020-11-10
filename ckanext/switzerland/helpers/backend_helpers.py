@@ -6,7 +6,7 @@ used in backend templates
 """
 import logging
 from urlparse import urlparse
-from ckan.common import session
+from ckan.common import session, g
 from ckan.authz import auth_is_loggedin_user
 from ckan.common import _
 import ckan.lib.i18n as i18n
