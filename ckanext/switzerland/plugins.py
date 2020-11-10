@@ -73,6 +73,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
     def dataset_facets(self, facets_dict, package_type):
         lang_code = toolkit.request.environ['CKAN_LANG']
         facets_dict = collections.OrderedDict()
+        facets_dict['private'] = plugins.toolkit._('Drafts')
         facets_dict['groups'] = plugins.toolkit._('Categories')
         facets_dict['keywords_' + lang_code] = plugins.toolkit._('Keywords')
         facets_dict['organization'] = plugins.toolkit._('Organizations')
