@@ -1,0 +1,10 @@
+{% ckan_extends %}
+
+{% block resource_item_title %}
+  <a class="heading" href="{{ url }}" title="{{ res.name or res.description or pkg.title }}">
+    {{ h.ogdch_resource_display_name(pkg, res) | truncate(50) }}
+    <span class="format-label" property="dc:format" data-format="{{ res.format.lower() or 'data' }}">
+        {{ h.get_translated(res, 'format') }}
+    </span>
+  </a>
+{% endblock %}

@@ -170,3 +170,12 @@ def ogdch_get_political_level_field_list(field):
         {'label': _('Commune'), 'value': 'commune'},
         {'label': _('Other'), 'value': 'other'},
     ]
+
+
+def ogdch_resource_display_name(pkg, res):
+    resource_display_name = res.get('name')
+    if not resource_display_name:
+        resource_display_name = pkg.get('title')
+    if not resource_display_name:
+        resource_display_name = pkg.get('name')
+    return resource_display_name
