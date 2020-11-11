@@ -2,8 +2,9 @@
 
 {% block content_action %}
   {% if not is_activity_archive %}
-    {% if h.ogdch_check_dataset_manage_access(pkg.id) %}
-        {% link_for _('Manage'), controller='package', action='edit', id=pkg.name, class_='btn btn-default', icon='wrench' %}
+    {% if h.ogdch_check_dataset_manage_access(pkg.id) and h.check_access('package_update', {'id':pkg.id })  %}
+        {% link_for _('Manage'), controller='package', action='edit',
+           id=pkg.name, class_='btn btn-default', icon='wrench' %}
     {% endif %}
   {% endif %}
 {% endblock %}
