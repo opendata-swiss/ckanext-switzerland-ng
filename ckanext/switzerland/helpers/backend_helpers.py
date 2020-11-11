@@ -10,8 +10,10 @@ from ckan.common import session
 from ckan.authz import auth_is_loggedin_user
 from ckan.common import _
 import ckan.lib.i18n as i18n
+import ckan.logic as logic
 import ckan.plugins.toolkit as tk
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
+from ckanext.switzerland.helpers.frontend_helpers import get_localized_value_for_display  # noqa
 
 log = logging.getLogger(__name__)
 
@@ -172,10 +174,19 @@ def ogdch_get_political_level_field_list(field):
     ]
 
 
-def ogdch_resource_display_name(pkg, res):
+def ogdch_resource_display_name(res):
     resource_display_name = res.get('name')
     if not resource_display_name:
-        resource_display_name = pkg.get('title')
-    if not resource_display_name:
-        resource_display_name = pkg.get('name')
+        try:
+            pkg = logic.get_action('package_show')(
+                {}, {'id': res['package_id']}
+            )
+            resource_display_name = get_localized_value_for_display(
+                pkg.get('title')
+            )
+            if not resource_display_name:
+                return pkg['name']
+        except (logic.NotFound, logic.ValidationError,
+                logic.NotAuthorized, AttributeError):
+            return ""
     return resource_display_name
