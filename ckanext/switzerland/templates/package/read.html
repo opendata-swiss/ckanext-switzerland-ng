@@ -1,12 +1,10 @@
-{% extends "package/read_base.html" %}
+{% ckan_extends %}
 
-{% block primary_content_inner %}
-  {{ super() }}
   {% block package_description %}
     {% if pkg.private %}
       <span class="dataset-private label label-inverse pull-right">
         <i class="fa fa-lock"></i>
-        {{ _('Private') }}
+        {{ _('Draft') }}
       </span>
     {% endif %}
     {% block package_archive_notice %}
@@ -40,17 +38,3 @@
     {# FIXME why is this here? seems wrong #}
     <span class="insert-comment-thread"></span>
   {% endblock %}
-
-  {% block package_resources %}
-    {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=pkg.resources, is_activity_archive=is_activity_archive %}
-  {% endblock %}
-
-  {% block package_tags %}
-    {% snippet "package/snippets/tags.html", tags=pkg.tags %}
-  {% endblock %}
-
-  {% block package_additional_info %}
-    {% snippet "package/snippets/additional_info.html", pkg_dict=pkg %}
-  {% endblock %}
-
-{% endblock %}

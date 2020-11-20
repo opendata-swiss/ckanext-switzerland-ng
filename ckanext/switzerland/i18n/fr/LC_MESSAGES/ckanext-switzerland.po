@@ -446,10 +446,20 @@ msgstr "Plus d'information"
 msgid "Private"
 msgstr "Privé"
 
+#: ckan/templates/package/snippets/package_basic_fields.html:98
+msgid "Public"
+msgstr "Publié"
+
 #: ckanext/switzerland/templates/package/read.html:14
 #: ckanext/switzerland/templates/snippets/package_item.html:40
 msgid "Draft"
 msgstr "Brouillon"
+
+msgid "Make draft"
+msgstr "Faire brouillon"
+
+msgid "Publish"
+msgstr "Publier"
 
 #: ckanext/switzerland/templates/package/read.html:17
 #: ckanext/switzerland/templates/snippets/package_item.html:42

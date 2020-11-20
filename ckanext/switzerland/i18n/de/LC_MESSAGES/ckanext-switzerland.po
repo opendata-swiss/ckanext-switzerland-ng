@@ -445,10 +445,20 @@ msgstr "Weitere Informationen"
 msgid "Private"
 msgstr "Privat"
 
+#: ckan/templates/package/snippets/package_basic_fields.html:98
+msgid "Public"
+msgstr "Veröffentlicht"
+
 #: ckanext/switzerland/templates/package/read.html:14
 #: ckanext/switzerland/templates/snippets/package_item.html:40
 msgid "Draft"
 msgstr "Entwurf"
+
+msgid "Make draft"
+msgstr "Entwurf machen"
+
+msgid "Publish"
+msgstr "Veröffentlichen"
 
 #: ckanext/switzerland/templates/package/read.html:17
 #: ckanext/switzerland/templates/snippets/package_item.html:42
