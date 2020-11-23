@@ -720,3 +720,9 @@ msgstr[1] "{number} Showcases gefunden"
 #: ckanext/switzerland/templates/showcase/snippets/showcase_search_result_text.html:10
 msgid "No showcase found"
 msgstr "Kein Showcase gefunden"
+
+msgid "True"
+msgstr "Wahr"
+
+msgid "False"
+msgstr "Falsch"
