@@ -11,11 +11,12 @@ CKAN extension for DCAT-AP Switzerland, templates and different plugins for [ope
 
 ## Update translations
 
-To generate a new ckanext-switzerland.pot file use the following command:
+To generate a new ckanext-switzerland.pot file inside the Docker container,
+use the following command:
 
-    vagrant ssh
-    source /home/vagrant/pyenv/bin/activate
-    cd /var/www/ckanext/ckanext-switzerland/
+    docker-compose exec ckan bash
+    source /usr/lib/ckan/venv/bin/activate
+    cd /usr/lib/ckanext/ckanext-switzerland-ng/
     python setup.py extract_messages
 
 Or follow the official CKAN guide at https://docs.ckan.org/en/latest/extensions/translating-extensions.html
