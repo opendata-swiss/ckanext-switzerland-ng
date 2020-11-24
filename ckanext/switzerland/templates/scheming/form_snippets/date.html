@@ -2,11 +2,10 @@
 
 {% set display_date_value = h.ogdch_date_form_helper(data.get(field.field_name)) %}
 
-{% call form.input(
+{% call form.date_input(
     field.field_name,
     id='field-' + field.field_name,
     label=h.scheming_language_text(field.label),
-    type='date',
     value=display_date_value,
     error=errors[field.field_name],
     classes=['control-medium'],
