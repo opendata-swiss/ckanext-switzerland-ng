@@ -57,10 +57,18 @@ Examples:
 
 #}
 
-{% macro date_input(name, id='', label='', value='', placeholder='', error="", classes=[], attrs={'class': 'form-control'}, is_required=false) %}
+{% macro date_input(name, id='', label='', value='', placeholder='', error="", classes=[],
+                    attrs={'class': 'form-control'}, is_required=false) %}
 {%- set extra_html = caller() if caller -%}
 
 {% call input_block(id or name, label or name, error, classes, extra_html=extra_html, is_required=is_required) %}
-<input id="{{ id or name }}" type="date" name="{{ name }}" value="{{ value | empty_and_escape }}" placeholder="{{ placeholder }}" {{ attributes(attrs) }} />
+<input id="{{ id or name }}"
+       data-module="ogdch_datepicker"
+       class="datepicker"
+       type="text"
+       name="{{ name }}"
+       value="{{ value | empty_and_escape }}"
+       placeholder="{{ placeholder }}"
+       {{ attributes(attrs) }} />
 {% endcall %}
 {% endmacro %}
