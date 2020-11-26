@@ -2,7 +2,7 @@ this.ckan.module('ogdch_datepicker', function ($) {
     return {
         initialize: function () {
             /**
-             * Local functions for de, fr-CH and it-CH copied in from locales/
+             * Local functions for de, en-GB, fr-CH and it-CH copied in from locales/
              * folder, because CKAN wouldn't recognise them as resources otherwise.
              */
             ;(function($){
@@ -17,6 +17,20 @@ this.ckan.module('ogdch_datepicker', function ($) {
                     clear: "Löschen",
                     weekStart: 1,
                     format: "dd.mm.yyyy"
+                };
+            }(jQuery));
+            ;(function($){
+                $.fn.datepicker.dates['en-GB'] = {
+                    days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                    daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+                    daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+                    months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                    monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    today: "Today",
+                    monthsTitle: "Months",
+                    clear: "Clear",
+                    weekStart: 1,
+                    format: "dd/mm/yyyy"
                 };
             }(jQuery));
             ;(function($){
@@ -49,8 +63,17 @@ this.ckan.module('ogdch_datepicker', function ($) {
             /**
              * End copied code.
              */
-            $('.datepicker').datepicker({
+            $('.datepicker-de').datepicker({
+                language: 'de'
+            });
+            $('.datepicker-en').datepicker({
+                language: 'en-GB'
+            });
+            $('.datepicker-fr').datepicker({
                 language: 'fr'
+            });
+            $('.datepicker-it').datepicker({
+                language: 'it'
             });
         }
     };
