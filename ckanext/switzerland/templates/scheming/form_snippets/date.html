@@ -7,6 +7,7 @@
     id='field-' + field.field_name,
     label=h.scheming_language_text(field.label),
     value=display_date_value,
+    language=h.lang(),
     error=errors[field.field_name],
     classes=['control-medium'],
     attrs=dict({"class": "form-control"}, **(field.get('form_attrs', {}))),
