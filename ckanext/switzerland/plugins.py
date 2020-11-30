@@ -55,7 +55,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'multiple_text_output': ogdch_validators.multiple_text_output,
             'multilingual_text_output': ogdch_validators.multilingual_text_output, # noqa
             'harvest_list_of_dicts': ogdch_validators.harvest_list_of_dicts,
-            'timestamp_to_datetime': ogdch_validators.timestamp_to_datetime,
+            'timestamp_to_date_string': ogdch_validators.timestamp_to_date_string,
             'date_string_to_timestamp': ogdch_validators.date_string_to_timestamp, # noqa
             'ogdch_language': ogdch_validators.ogdch_language,
             'ogdch_unique_identifier': ogdch_validators.ogdch_unique_identifier, # noqa

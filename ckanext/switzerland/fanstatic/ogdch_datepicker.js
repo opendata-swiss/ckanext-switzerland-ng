@@ -30,7 +30,8 @@ this.ckan.module('ogdch_datepicker', function ($) {
                     monthsTitle: "Months",
                     clear: "Clear",
                     weekStart: 1,
-                    format: "dd/mm/yyyy"
+                    // Format changed to match other languages, for ease of data handling
+                    format: "dd.mm.yyyy"
                 };
             }(jQuery));
             ;(function($){

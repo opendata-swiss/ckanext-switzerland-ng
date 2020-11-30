@@ -248,15 +248,21 @@ def get_see_alsos_from_form(data):
 
 def ogdch_date_form_helper(date_value):
     """
-    transform isodate or posix date into display date
-    u'2012-12-31T00:00:00' to 2012-12-31
+    Transform isodate or posix date into display format, 'DD.MM.YYYY'.
+    Sometimes the package field `modified` has the string value 'False' or is
+    empty. In these cases, an empty string is returned.
     """
-    if date_value:
+    log.warning('ogdch_date_form_helper')
+    log.warning(date_value)
+    if date_value and date_value != 'False':
         try:
-            return datetime.datetime.fromtimestamp(int(date_value))\
-                .isoformat().split('T')[0]
+            # Posix timestamp
+            dt = datetime.datetime.fromtimestamp(int(date_value))
+            return dt.strftime('%d.%m.%Y')
         except ValueError:
-            return date_value.split('T')[0]
+            # ISO format date (YYYY-MM-DDTHH:MM:SS)
+            dt = datetime.datetime.strptime(date_value, '%Y-%m-%dT%H:%M:%S')
+            return dt.strftime('%d.%m.%Y')
     else:
         return ""
 
@@ -266,6 +272,8 @@ def ogdch_temporals_form_helper(data):
     sets the form field for temporals
     """
     temporals = _get_temporals_from_storage(key='temporals', data=data)
+    log.warning('ogdch_temporals_form_helper')
+    log.warning(temporals)
     if not temporals:
         temporals = _get_temporals_from_storage(key=('temporals',), data=data)
     if not temporals:

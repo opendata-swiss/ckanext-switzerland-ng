@@ -19,8 +19,8 @@ log = logging.getLogger(__name__)
 HARVEST_JUNK = ('__junk',)
 FORM_EXTRAS = ('__extras',)
 HARVEST_USER = 'harvest'
-ISODATE_POSTFIX = "T00:00:00"
-DATE_FORMAT_DISPLAY = '%Y-%m-%d'
+ISODATE_FORMAT = '%Y-%m-%dT%H:%M:%S'
+DATE_FORMAT_DISPLAY = '%d.%m.%Y'
 
 
 @scheming_validator
@@ -69,11 +69,13 @@ def multilingual_text_output(value):
 
 def date_string_to_timestamp(value):
     """"
-    Converts a date string (YYYY-MM-DD) into a POSIX timestamp to be stored.
+    Convert a date string (DD.MM.YYYY) into a POSIX timestamp to be stored.
     Necessary as the date form submits dates in this format.
     """
+    log.warning('date_string_to_timestamp')
+    log.warning(value)
     try:
-        d = datetime.datetime.strptime(str(value), "%Y-%m-%d")
+        d = datetime.datetime.strptime(str(value), DATE_FORMAT_DISPLAY)
         epoch = datetime.datetime(1970, 1, 1)
 
         return int((d - epoch).total_seconds())
@@ -81,15 +83,18 @@ def date_string_to_timestamp(value):
         return value
 
 
-def timestamp_to_datetime(value):
+def timestamp_to_date_string(value):
     """
-    Returns an isoformat date (YYYY-MM-DD HH:MM:SS) for a given POSIX
-    timestamp (1234567890).
-    If we get a ValueError, the value is probably already isoformat,
+    Return a display-format date (DD.MM.YYYY) for a given POSIX timestamp
+    (1234567890).
+    If we get a ValueError, the value is probably already display format,
     so just return it.
     """
+    log.warning('timestamp_to_date_string')
+    log.warning(value)
     try:
-        return datetime.datetime.fromtimestamp(int(value)).isoformat()
+        dt = datetime.datetime.fromtimestamp(int(value))
+        return dt.strftime(DATE_FORMAT_DISPLAY)
     except ValueError:
         return value
 
@@ -99,12 +104,14 @@ def temporals_to_datetime_output(value):
     Converts a temporal with start and end date
     as timestamps to temporal as datetimes
     """
+    log.warning('temporals_to_datetime_output')
+    log.warning(value)
     value = parse_json(value)
 
     for temporal in value:
         for key in temporal:
             if temporal[key]:
-                temporal[key] = timestamp_to_datetime(temporal[key])
+                temporal[key] = timestamp_to_date_string(temporal[key])
             else:
                 temporal[key] = None
     return value
@@ -403,7 +410,8 @@ def ogdch_validate_formfield_see_alsos(field, schema):
 
 @scheming_validator
 def ogdch_validate_formfield_temporals(field, schema):
-    """This validator is only used for form validation
+    """
+    This validator is only used for form validation
     The data is extracted form the temporals form fields and transformed
     into a form that is expected for database storage:
     "temporals": [{"start_date": "1981-06-14T00:00:00",
@@ -430,13 +438,14 @@ def ogdch_validate_formfield_temporals(field, schema):
 
 
 def _transform_to_isodate(date_from_form):
-    """expects date as MM-DD-YYYY and transforms it to an isodate
-    format: MM-DD-YYYYT00:00:00"""
+    """
+    Take a date as DD.MM.YYYY and transform it to isodate format:
+    YYYY-MM-DDT00:00:00
+    """
     try:
-        datetime.datetime.strptime(date_from_form, DATE_FORMAT_DISPLAY)
-        date_as_isodate = date_from_form + ISODATE_POSTFIX
-        return date_as_isodate
+        dt = datetime.datetime.strptime(date_from_form, DATE_FORMAT_DISPLAY)
+        return dt.strftime(ISODATE_FORMAT)
     except ValueError:
         raise df.Invalid(
-            _('The dateformat of {} is not correct: it must be YYYY-MM-DD'.format(date_from_form))  # noqa
+            _('The dateformat of {} is not correct: it must be DD.MM.YYYY'.format(date_from_form))  # noqa
         )
