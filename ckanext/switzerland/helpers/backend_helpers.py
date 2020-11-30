@@ -6,11 +6,14 @@ used in backend templates
 """
 import logging
 from urlparse import urlparse
+from six import text_type
 from ckan.common import session
 from ckan.authz import auth_is_loggedin_user
 from ckan.common import _
 import ckan.lib.i18n as i18n
 import ckan.logic as logic
+import ckan.model as model
+from ckan.lib.helpers import gravatar
 import ckan.plugins.toolkit as tk
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 from ckanext.switzerland.helpers.frontend_helpers import get_localized_value_for_display  # noqa
@@ -190,3 +193,31 @@ def ogdch_resource_display_name(res):
                 logic.NotAuthorized, AttributeError):
             return ""
     return resource_display_name
+
+
+def ogdch_linked_user(user, maxlength=0, avatar=20):
+    if not isinstance(user, model.User):
+        user_name = text_type(user)
+        user = model.User.get(user_name)
+        if not user:
+            return user_name
+        log.error(user)
+    if user:
+        try:
+            organizations = logic.get_action('organization_list_for_user')(
+                {}, {'id': user.name}
+            )
+            log.error(organizations)
+            organization_roles = [{'rolename': org.capacity} for org in organizations]
+        except (logic.NotFound, logic.ValidationError,
+                logic.NotAuthorized, AttributeError):
+            pass
+        display_user = {
+            "name": user.name,
+            "fullname":  user.fullname,
+            "sysadmin": "syadmin" if (user.sysadmin) else "",
+            "organization_roles": organization_roles
+        }
+        log.error(display_user)
+
+        return display_user

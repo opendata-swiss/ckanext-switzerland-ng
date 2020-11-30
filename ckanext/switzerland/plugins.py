@@ -157,6 +157,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_temporals_form_helper': ogdch_dataset_form_helpers.ogdch_temporals_form_helper,  # noqa
             'ogdch_dataset_title_form_helper': ogdch_dataset_form_helpers.ogdch_dataset_title_form_helper,  # noqa
             'resource_display_name': ogdch_backend_helpers.ogdch_resource_display_name,  # noqa
+            'ogdch_linked_user': ogdch_backend_helpers.ogdch_linked_user,
         }
 
     # IRouter

@@ -1,0 +1,49 @@
+{% ckan_extends %}
+
+{% block primary_content %}
+  <article class="module">
+    <div class="module-content">
+      <h1 class="page-heading">
+        {% block page_heading %}{{ _('Users') }}{% endblock %}
+        {% if h.check_access('user_create') %}
+        <div class="page_primary_action">
+          {{ h.nav_link(_('Add User'), named_route='user_register', class_='btn btn-primary', icon='plus-square') }}
+        </div>
+        {% endif %}
+      </h1>
+      {% block users_list %}
+        <ul class="user-list">
+          {% block users_list_inner %}
+            {% for user in page.items %}
+              {% set display_user = h.ogdch_linked_user(user['name'], maxlength=20) %}
+              <li class="dataset-item">
+                <div class="dataset-content">
+                <h3 class="dataset-heading">
+                  <a href="/de/dataset/verkehrszahldaten-velos-und-fussganger">
+                    {{ display_user.name }}: {{ display_user.fullname }}
+                  </a>
+                </h3>
+                <p class="small">
+                  {{ display_user.sysadmin }}
+                </p>
+                </div>
+                <ul class="dataset-resources list-inline">
+                {% for userrole in display_user.organization_roles %}
+                <li>
+                  <small><span class="label label-default" title="">
+                    {{ userrole.rolename }}
+                  </span></small>
+                </li>
+                {% endfor %}
+                </ul>
+              </li>
+            {% endfor %}
+          {% endblock %}
+        </ul>
+      {% endblock %}
+    </div>
+    {% block page_pagination %}
+      {{ page.pager(q=q, order_by=order_by) }}
+    {% endblock %}
+  </article>
+{% endblock %}
