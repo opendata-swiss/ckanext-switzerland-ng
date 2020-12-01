@@ -3,7 +3,6 @@
 {% set temporals_rows = h.ogdch_temporals_form_helper(data) %}
 
 {%- for row in temporals_rows -%}
-{{ row.data.start_date }}
     {% call form.date_input(
         'temporal-start-date-' + row.index,
         id='field-temporal-start-date-' + row.index,
@@ -14,7 +13,6 @@
         classes=['control-medium', row.css_class]
         ) %}
     {% endcall %}
-{{ row.data.end_date }}
 {% call form.date_input(
         'temporal-end-date-' + row.index,
         id='field-temporal-end-date-' + row.index,

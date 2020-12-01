@@ -1,7 +1,7 @@
 {% import 'macros/form.html' as form %}
 
 {% set display_date_value = data.get(field.field_name) %}
-{{ data.get(field.field_name) }}
+
 {% call form.date_input(
     field.field_name,
     id='field-' + field.field_name,

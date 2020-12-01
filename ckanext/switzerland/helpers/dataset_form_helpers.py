@@ -252,8 +252,6 @@ def ogdch_date_form_helper(date_value):
     Sometimes the package field `modified` has the string value 'False' or is
     empty. In these cases, an empty string is returned.
     """
-    log.warning('ogdch_date_form_helper')
-    log.warning(date_value)
     if date_value and date_value != 'False':
         try:
             # Posix timestamp
@@ -272,8 +270,6 @@ def ogdch_temporals_form_helper(data):
     sets the form field for temporals
     """
     temporals = _get_temporals_from_storage(key='temporals', data=data)
-    log.warning('ogdch_temporals_form_helper')
-    log.warning(temporals)
     if not temporals:
         temporals = _get_temporals_from_storage(key=('temporals',), data=data)
     if not temporals:

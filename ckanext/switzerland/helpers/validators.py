@@ -72,8 +72,6 @@ def date_string_to_timestamp(value):
     Convert a date string (DD.MM.YYYY) into a POSIX timestamp to be stored.
     Necessary as the date form submits dates in this format.
     """
-    log.warning('date_string_to_timestamp')
-    log.warning(value)
     try:
         d = datetime.datetime.strptime(str(value), DATE_FORMAT_DISPLAY)
         epoch = datetime.datetime(1970, 1, 1)
@@ -90,8 +88,6 @@ def timestamp_to_date_string(value):
     If we get a ValueError, the value is probably already display format,
     so just return it.
     """
-    log.warning('timestamp_to_date_string')
-    log.warning(value)
     try:
         dt = datetime.datetime.fromtimestamp(int(value))
         return dt.strftime(DATE_FORMAT_DISPLAY)
@@ -104,8 +100,6 @@ def temporals_to_datetime_output(value):
     Converts a temporal with start and end date
     as timestamps to temporal as datetimes
     """
-    log.warning('temporals_to_datetime_output')
-    log.warning(value)
     value = parse_json(value)
 
     for temporal in value:
