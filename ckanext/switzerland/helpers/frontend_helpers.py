@@ -28,7 +28,7 @@ mapping_terms_of_use_to_pagemark = {
     ogdch_term_utils.TERMS_OF_USE_BY_ASK: '#terms_by_ask',
 }
 
-DATE_FORMAT_DISPLAY = '%d.%m.%Y'
+DATE_PICKER_FORMAT = '%d.%m.%Y'
 
 
 def get_group_count():
@@ -274,7 +274,7 @@ def get_localized_date(date_string):
     e.g. '24. Juni 2020'.
     """
     try:
-        dt = datetime.datetime.strptime(date_string, DATE_FORMAT_DISPLAY)
+        dt = datetime.datetime.strptime(date_string, DATE_PICKER_FORMAT)
         return localised_nice_date(dt, show_date=True, with_hours=False)
     except ValueError:
         return ''

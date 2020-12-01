@@ -1,15 +1,15 @@
 {% import 'macros/form.html' as form %}
 
-{% set display_date_value = data.get(field.field_name) %}
-{% if display_date_value == 'False' %}
-    {% set display_date_value = '' %}
+{% set date_value = data.get(field.field_name) %}
+{% if date_value == 'False' %}
+    {% set date_value = '' %}
 {% endif %}
 
 {% call form.date_input(
     field.field_name,
     id='field-' + field.field_name,
     label=h.scheming_language_text(field.label),
-    value=display_date_value,
+    value=date_value,
     language=h.lang(),
     error=errors[field.field_name],
     classes=['control-medium'],

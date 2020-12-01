@@ -9,7 +9,7 @@ from ckanext.switzerland.helpers.dataset_form_helpers import (
     get_see_alsos_from_form,
     get_temporals_from_form,
     get_contact_points_from_form,
-    DATE_FORMAT_DISPLAY)
+    DATE_PICKER_FORMAT)
 from ckan.logic import NotFound, get_action
 import json
 import re
@@ -72,7 +72,7 @@ def date_string_to_timestamp(value):
     Necessary as the date form submits dates in this format.
     """
     try:
-        d = datetime.datetime.strptime(str(value), DATE_FORMAT_DISPLAY)
+        d = datetime.datetime.strptime(str(value), DATE_PICKER_FORMAT)
         epoch = datetime.datetime(1970, 1, 1)
 
         return int((d - epoch).total_seconds())
@@ -82,14 +82,14 @@ def date_string_to_timestamp(value):
 
 def timestamp_to_date_string(value):
     """
-    Return a display-format date (DD.MM.YYYY) for a given POSIX timestamp
-    (1234567890).
-    If we get a ValueError, the value is probably already display format,
-    so just return it.
+    Return a date string formatted for the datepicker (DD.MM.YYYY) for a given
+    POSIX timestamp (1234567890).
+    If we get a ValueError, the value is probably already formatted, so just
+    return it.
     """
     try:
         dt = datetime.datetime.fromtimestamp(int(value))
-        return dt.strftime(DATE_FORMAT_DISPLAY)
+        return dt.strftime(DATE_PICKER_FORMAT)
     except ValueError:
         return value
 

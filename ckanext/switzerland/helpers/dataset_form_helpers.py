@@ -18,7 +18,7 @@ ADDITIONAL_FORM_ROW_LIMIT = 10
 HIDE_ROW_CSS_CLASS = 'ogdch-hide-row'
 SHOW_ROW_CSS_CLASS = 'ogdch-show-row'
 ISODATE_FORMAT = '%Y-%m-%dT%H:%M:%S'
-DATE_FORMAT_DISPLAY = '%d.%m.%Y'
+DATE_PICKER_FORMAT = '%d.%m.%Y'
 
 log = logging.getLogger(__name__)
 
@@ -250,7 +250,7 @@ def get_see_alsos_from_form(data):
 
 def ogdch_date_form_helper(date_value):
     """
-    Transform isodate or posix date into display format, 'DD.MM.YYYY'.
+    Transform isodate or posix date into the format used by the datepicker.
     Sometimes the package field `modified` has the string value 'False' or is
     empty. In these cases, an empty string is returned.
     """
@@ -258,11 +258,11 @@ def ogdch_date_form_helper(date_value):
         try:
             # Posix timestamp
             dt = datetime.datetime.fromtimestamp(int(date_value))
-            return dt.strftime(DATE_FORMAT_DISPLAY)
+            return dt.strftime(DATE_PICKER_FORMAT)
         except ValueError:
             # ISO format date (YYYY-MM-DDTHH:MM:SS)
             dt = datetime.datetime.strptime(date_value, ISODATE_FORMAT)
-            return dt.strftime(DATE_FORMAT_DISPLAY)
+            return dt.strftime(DATE_PICKER_FORMAT)
     else:
         return ""
 
