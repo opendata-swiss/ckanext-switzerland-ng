@@ -8,7 +8,8 @@ from ckanext.switzerland.helpers.dataset_form_helpers import (
     get_relations_from_form,
     get_see_alsos_from_form,
     get_temporals_from_form,
-    get_contact_points_from_form,)
+    get_contact_points_from_form,
+    DATE_FORMAT_DISPLAY)
 from ckan.logic import NotFound, get_action
 import json
 import re
@@ -19,8 +20,6 @@ log = logging.getLogger(__name__)
 HARVEST_JUNK = ('__junk',)
 FORM_EXTRAS = ('__extras',)
 HARVEST_USER = 'harvest'
-ISODATE_FORMAT = '%Y-%m-%dT%H:%M:%S'
-DATE_FORMAT_DISPLAY = '%d.%m.%Y'
 
 
 @scheming_validator
