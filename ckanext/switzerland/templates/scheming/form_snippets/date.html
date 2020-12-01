@@ -1,6 +1,9 @@
 {% import 'macros/form.html' as form %}
 
 {% set display_date_value = data.get(field.field_name) %}
+{% if display_date_value == 'False' %}
+    {% set display_date_value = '' %}
+{% endif %}
 
 {% call form.date_input(
     field.field_name,

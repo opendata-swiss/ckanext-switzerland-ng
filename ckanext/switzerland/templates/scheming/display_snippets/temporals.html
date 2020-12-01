@@ -1,17 +1,17 @@
 {%- set temporals = data[field.field_name] -%}
 {% if temporals %}
   {% if temporals|length == 1 %}
-    {{ h.render_datetime(temporals[0].start_date, with_hours=False) }}
+    {{ h.get_localized_date(temporals[0].start_date) }}
     {% if temporals[0].end_date %}
-      - {{ h.render_datetime(temporals[0].end_date, with_hours=False) }}
+      - {{ h.get_localized_date(temporals[0].end_date) }}
     {% endif %}
   {% else %}
     <ul>
       {% for temporal in temporals %}
       <li>
-        {{ h.render_datetime(temporal.start_date, with_hours=False) }}
+        {{ h.get_localized_date(temporal.start_date) }}
         {% if temporal.end_date %}
-          - {{ h.render_datetime(temporal.end_date, with_hours=False) }}
+          - {{ h.get_localized_date(temporal.end_date) }}
         {% endif %}
       </li>
       {% endfor %}
