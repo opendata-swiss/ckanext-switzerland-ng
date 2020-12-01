@@ -405,11 +405,10 @@ def ogdch_validate_formfield_see_alsos(field, schema):
 @scheming_validator
 def ogdch_validate_formfield_temporals(field, schema):
     """
-    This validator is only used for form validation
+    This validator is only used for form validation.
     The data is extracted form the temporals form fields and transformed
     into a form that is expected for database storage:
-    "temporals": [{"start_date": "1981-06-14T00:00:00",
-     "end_date": "2020-09-27T00:00:00"}]
+    "temporals": [{"start_date": 0123456789, "end_date": 0123456789}]
     """
     def validator(key, data, errors, context):
         extras = data.get(FORM_EXTRAS)
@@ -421,25 +420,11 @@ def ogdch_validate_formfield_temporals(field, schema):
                     raise df.Invalid(
                         _('A valid temporal must have both start and end date')  # noqa
                     )
-                temporal['start_date'] = _transform_to_isodate(temporal['start_date'])  # noqa
-                temporal['end_date'] = _transform_to_isodate(temporal['end_date'])  # noqa
+                temporal['start_date'] = date_string_to_timestamp(temporal['start_date'])  # noqa
+                temporal['end_date'] = date_string_to_timestamp(temporal['end_date'])  # noqa
         if temporals:
             data[key] = json.dumps(temporals)
         else:
             data[key] = '{}'
 
     return validator
-
-
-def _transform_to_isodate(date_from_form):
-    """
-    Take a date as DD.MM.YYYY and transform it to isodate format:
-    YYYY-MM-DDT00:00:00
-    """
-    try:
-        dt = datetime.datetime.strptime(date_from_form, DATE_FORMAT_DISPLAY)
-        return dt.strftime(ISODATE_FORMAT)
-    except ValueError:
-        raise df.Invalid(
-            _('The dateformat of {} is not correct: it must be DD.MM.YYYY'.format(date_from_form))  # noqa
-        )
