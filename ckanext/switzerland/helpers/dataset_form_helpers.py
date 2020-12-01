@@ -6,6 +6,7 @@ used for rendering the dataset form
 """
 import datetime
 import logging
+import ckan.plugins.toolkit as tk
 from ckan.common import _
 from ckanext.switzerland.helpers.frontend_helpers import (
     get_frequency_name, get_dataset_by_identifier)
@@ -18,7 +19,6 @@ ADDITIONAL_FORM_ROW_LIMIT = 10
 HIDE_ROW_CSS_CLASS = 'ogdch-hide-row'
 SHOW_ROW_CSS_CLASS = 'ogdch-show-row'
 ISODATE_FORMAT = '%Y-%m-%dT%H:%M:%S'
-DATE_PICKER_FORMAT = '%d.%m.%Y'
 
 log = logging.getLogger(__name__)
 
@@ -255,14 +255,15 @@ def ogdch_date_form_helper(date_value):
     empty. In these cases, an empty string is returned.
     """
     if date_value and date_value != 'False':
+        date_format = tk.config.get('ckanext.switzerland.date_picker_format')
         try:
             # Posix timestamp
             dt = datetime.datetime.fromtimestamp(int(date_value))
-            return dt.strftime(DATE_PICKER_FORMAT)
+            return dt.strftime(date_format)
         except ValueError:
             # ISO format date (YYYY-MM-DDTHH:MM:SS)
             dt = datetime.datetime.strptime(date_value, ISODATE_FORMAT)
-            return dt.strftime(DATE_PICKER_FORMAT)
+            return dt.strftime(date_format)
     else:
         return ""
 

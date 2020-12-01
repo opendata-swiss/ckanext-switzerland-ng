@@ -1,5 +1,6 @@
 from ckan.plugins.toolkit import missing, _
 import ckan.lib.navl.dictization_functions as df
+import ckan.plugins.toolkit as tk
 from ckanext.fluent.helpers import fluent_form_languages
 from ckanext.scheming.validation import scheming_validator
 from ckanext.switzerland.helpers.localize_utils import parse_json
@@ -8,8 +9,7 @@ from ckanext.switzerland.helpers.dataset_form_helpers import (
     get_relations_from_form,
     get_see_alsos_from_form,
     get_temporals_from_form,
-    get_contact_points_from_form,
-    DATE_PICKER_FORMAT)
+    get_contact_points_from_form)
 from ckan.logic import NotFound, get_action
 import json
 import re
@@ -72,7 +72,8 @@ def date_string_to_timestamp(value):
     Necessary as the date form submits dates in this format.
     """
     try:
-        d = datetime.datetime.strptime(str(value), DATE_PICKER_FORMAT)
+        date_format = tk.config.get('ckanext.switzerland.date_picker_format')
+        d = datetime.datetime.strptime(str(value), date_format)
         epoch = datetime.datetime(1970, 1, 1)
 
         return int((d - epoch).total_seconds())
@@ -89,7 +90,8 @@ def timestamp_to_date_string(value):
     """
     try:
         dt = datetime.datetime.fromtimestamp(int(value))
-        return dt.strftime(DATE_PICKER_FORMAT)
+        date_format = tk.config.get('ckanext.switzerland.date_picker_format')
+        return dt.strftime(date_format)
     except ValueError:
         return value
 
