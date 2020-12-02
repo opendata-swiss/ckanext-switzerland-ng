@@ -110,7 +110,7 @@
         "it": "Data di rilascio"
       },
       "preset": "ogdch_date",
-      "validators": "not_empty scheming_required",
+      "validators": "not_empty scheming_required date_string_to_timestamp",
       "section_title": "Data"
     },
     {

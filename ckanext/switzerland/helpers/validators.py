@@ -1,5 +1,6 @@
 from ckan.plugins.toolkit import missing, _
 import ckan.lib.navl.dictization_functions as df
+import ckan.plugins.toolkit as tk
 from ckanext.fluent.helpers import fluent_form_languages
 from ckanext.scheming.validation import scheming_validator
 from ckanext.switzerland.helpers.localize_utils import parse_json
@@ -8,7 +9,7 @@ from ckanext.switzerland.helpers.dataset_form_helpers import (
     get_relations_from_form,
     get_see_alsos_from_form,
     get_temporals_from_form,
-    get_contact_points_from_form,)
+    get_contact_points_from_form)
 from ckan.logic import NotFound, get_action
 import json
 import re
@@ -19,8 +20,6 @@ log = logging.getLogger(__name__)
 HARVEST_JUNK = ('__junk',)
 FORM_EXTRAS = ('__extras',)
 HARVEST_USER = 'harvest'
-ISODATE_POSTFIX = "T00:00:00"
-DATE_FORMAT_DISPLAY = '%Y-%m-%d'
 
 
 @scheming_validator
@@ -69,11 +68,12 @@ def multilingual_text_output(value):
 
 def date_string_to_timestamp(value):
     """"
-    Converts a date string (YYYY-MM-DD) into a POSIX timestamp to be stored.
+    Convert a date string (DD.MM.YYYY) into a POSIX timestamp to be stored.
     Necessary as the date form submits dates in this format.
     """
     try:
-        d = datetime.datetime.strptime(str(value), "%Y-%m-%d")
+        date_format = tk.config.get('ckanext.switzerland.date_picker_format')
+        d = datetime.datetime.strptime(str(value), date_format)
         epoch = datetime.datetime(1970, 1, 1)
 
         return int((d - epoch).total_seconds())
@@ -81,15 +81,17 @@ def date_string_to_timestamp(value):
         return value
 
 
-def timestamp_to_datetime(value):
+def timestamp_to_date_string(value):
     """
-    Returns an isoformat date (YYYY-MM-DD HH:MM:SS) for a given POSIX
-    timestamp (1234567890).
-    If we get a ValueError, the value is probably already isoformat,
-    so just return it.
+    Return a date string formatted for the datepicker (DD.MM.YYYY) for a given
+    POSIX timestamp (1234567890).
+    If we get a ValueError, the value is probably already formatted, so just
+    return it.
     """
     try:
-        return datetime.datetime.fromtimestamp(int(value)).isoformat()
+        dt = datetime.datetime.fromtimestamp(int(value))
+        date_format = tk.config.get('ckanext.switzerland.date_picker_format')
+        return dt.strftime(date_format)
     except ValueError:
         return value
 
@@ -104,7 +106,7 @@ def temporals_to_datetime_output(value):
     for temporal in value:
         for key in temporal:
             if temporal[key]:
-                temporal[key] = timestamp_to_datetime(temporal[key])
+                temporal[key] = timestamp_to_date_string(temporal[key])
             else:
                 temporal[key] = None
     return value
@@ -403,11 +405,11 @@ def ogdch_validate_formfield_see_alsos(field, schema):
 
 @scheming_validator
 def ogdch_validate_formfield_temporals(field, schema):
-    """This validator is only used for form validation
+    """
+    This validator is only used for form validation.
     The data is extracted form the temporals form fields and transformed
     into a form that is expected for database storage:
-    "temporals": [{"start_date": "1981-06-14T00:00:00",
-     "end_date": "2020-09-27T00:00:00"}]
+    "temporals": [{"start_date": 0123456789, "end_date": 0123456789}]
     """
     def validator(key, data, errors, context):
         extras = data.get(FORM_EXTRAS)
@@ -419,24 +421,11 @@ def ogdch_validate_formfield_temporals(field, schema):
                     raise df.Invalid(
                         _('A valid temporal must have both start and end date')  # noqa
                     )
-                temporal['start_date'] = _transform_to_isodate(temporal['start_date'])  # noqa
-                temporal['end_date'] = _transform_to_isodate(temporal['end_date'])  # noqa
+                temporal['start_date'] = date_string_to_timestamp(temporal['start_date'])  # noqa
+                temporal['end_date'] = date_string_to_timestamp(temporal['end_date'])  # noqa
         if temporals:
             data[key] = json.dumps(temporals)
         else:
             data[key] = '{}'
 
     return validator
-
-
-def _transform_to_isodate(date_from_form):
-    """expects date as MM-DD-YYYY and transforms it to an isodate
-    format: MM-DD-YYYYT00:00:00"""
-    try:
-        datetime.datetime.strptime(date_from_form, DATE_FORMAT_DISPLAY)
-        date_as_isodate = date_from_form + ISODATE_POSTFIX
-        return date_as_isodate
-    except ValueError:
-        raise df.Invalid(
-            _('The dateformat of {} is not correct: it must be YYYY-MM-DD'.format(date_from_form))  # noqa
-        )

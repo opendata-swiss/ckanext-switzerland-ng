@@ -6,6 +6,7 @@ used for rendering the dataset form
 """
 import datetime
 import logging
+import ckan.plugins.toolkit as tk
 from ckan.common import _
 from ckanext.switzerland.helpers.frontend_helpers import (
     get_frequency_name, get_dataset_by_identifier)
@@ -17,6 +18,7 @@ from ckanext.switzerland.helpers.terms_of_use_utils import (
 ADDITIONAL_FORM_ROW_LIMIT = 10
 HIDE_ROW_CSS_CLASS = 'ogdch-hide-row'
 SHOW_ROW_CSS_CLASS = 'ogdch-show-row'
+ISODATE_FORMAT = '%Y-%m-%dT%H:%M:%S'
 
 log = logging.getLogger(__name__)
 
@@ -248,22 +250,27 @@ def get_see_alsos_from_form(data):
 
 def ogdch_date_form_helper(date_value):
     """
-    transform isodate or posix date into display date
-    u'2012-12-31T00:00:00' to 2012-12-31
+    Transform isodate or posix date into the format used by the datepicker.
+    Sometimes the package field `modified` has the string value 'False' or is
+    empty. In these cases, an empty string is returned.
     """
-    if date_value:
+    if date_value and date_value != 'False':
+        date_format = tk.config.get('ckanext.switzerland.date_picker_format')
         try:
-            return datetime.datetime.fromtimestamp(int(date_value))\
-                .isoformat().split('T')[0]
+            # Posix timestamp
+            dt = datetime.datetime.fromtimestamp(int(date_value))
+            return dt.strftime(date_format)
         except ValueError:
-            return date_value.split('T')[0]
+            # ISO format date (YYYY-MM-DDTHH:MM:SS)
+            dt = datetime.datetime.strptime(date_value, ISODATE_FORMAT)
+            return dt.strftime(date_format)
     else:
         return ""
 
 
 def ogdch_temporals_form_helper(data):
     """
-    sets the form field for temporals
+    Set the form field for temporals
     """
     temporals = _get_temporals_from_storage(key='temporals', data=data)
     if not temporals:
@@ -281,20 +288,8 @@ def ogdch_temporals_form_helper(data):
 
 
 def _get_temporals_from_storage(data, key):
-    """
-    data is expected to be stored as:
-    "temporals": [{"start_date": "1981-06-14T00:00:00",
-     "end_date": "2020-09-27T00:00:00"}]
-    """
     if data:
-        temporals = data.get(key)
-        if temporals:
-            temporals = [
-                {'start_date': ogdch_date_form_helper(temporal['start_date']),
-                 'end_date': ogdch_date_form_helper(temporal['end_date'])}
-                for temporal in temporals
-            ]
-            return temporals
+        return data.get(key, None)
     return None
 
 
@@ -304,7 +299,7 @@ def get_temporals_from_form(data):
         for i in range(1, ADDITIONAL_FORM_ROW_LIMIT + 1):
             start_date = data.get('temporal-start-date-' + str(i), '').strip()
             end_date = data.get('temporal-end-date-' + str(i), '').strip()
-            if (start_date or end_date):
+            if start_date or end_date:
                 temporals.append(
                     {'start_date': start_date,
                      'end_date': end_date})

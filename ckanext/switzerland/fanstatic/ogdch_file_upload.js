@@ -103,7 +103,6 @@ this.ckan.module('ogdch_file_upload', function($) {
         this._nameIsDirty = true;
       }
 
-      console.log(options);
       if (options.is_url) {
         this._showOnlyFieldUrl();
 

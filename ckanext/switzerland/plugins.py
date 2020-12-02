@@ -55,7 +55,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'multiple_text_output': ogdch_validators.multiple_text_output,
             'multilingual_text_output': ogdch_validators.multilingual_text_output, # noqa
             'harvest_list_of_dicts': ogdch_validators.harvest_list_of_dicts,
-            'timestamp_to_datetime': ogdch_validators.timestamp_to_datetime,
+            'timestamp_to_date_string': ogdch_validators.timestamp_to_date_string, # noqa
             'date_string_to_timestamp': ogdch_validators.date_string_to_timestamp, # noqa
             'ogdch_language': ogdch_validators.ogdch_language,
             'ogdch_unique_identifier': ogdch_validators.ogdch_unique_identifier, # noqa
@@ -143,6 +143,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_group_tree': ogdch_frontend_helpers.ogdch_group_tree,
             'get_terms_of_use_url': ogdch_frontend_helpers.get_terms_of_use_url, # noqa
             'get_localized_newsletter_url': ogdch_frontend_helpers.get_localized_newsletter_url, # noqa
+            'get_localized_date': ogdch_frontend_helpers.get_localized_date,
             'ogdch_template_helper_get_active_class': ogdch_backend_helpers.ogdch_template_helper_get_active_class, # noqa
             'ogdch_get_organization_field_list': ogdch_backend_helpers.ogdch_get_organization_field_list, # noqa
             'ogdch_get_political_level_field_list': ogdch_backend_helpers.ogdch_get_political_level_field_list, # noqa

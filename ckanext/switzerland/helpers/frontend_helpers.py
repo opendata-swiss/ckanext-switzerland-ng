@@ -6,9 +6,11 @@ from collections import OrderedDict
 import ckan.plugins.toolkit as tk
 import ckan.logic as logic
 import json
+import datetime
 from ckan.common import _
 from babel import numbers
 
+from ckan.lib.formatters import localised_nice_date
 from ckan.lib.helpers import lang, url_for, localised_number
 import ckan.lib.i18n as i18n
 import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
@@ -262,3 +264,16 @@ def get_localized_value_for_display(value):
         return ogdch_loc_utils.get_localized_value_from_dict(value, lang_code)
     except ValueError:
         return value
+
+
+def get_localized_date(date_string):
+    """
+    Take a date string formatted as DD.MM.YYYY and return a localized date,
+    e.g. '24. Juni 2020'.
+    """
+    try:
+        date_format = tk.config.get('ckanext.switzerland.date_picker_format')
+        dt = datetime.datetime.strptime(date_string, date_format)
+        return localised_nice_date(dt, show_date=True, with_hours=False)
+    except ValueError:
+        return ''
