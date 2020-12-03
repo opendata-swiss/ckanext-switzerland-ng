@@ -1,12 +1,4 @@
-{% extends 'showcase/edit_base.html' %}
-
-{% block subtitle %}{{ _('Showcases - Manage datasets') }}{% endblock %}
-
-{% block wrapper_class %} ckanext-showcase-edit-wrapper{% endblock %}
-
-{% block ckanext_showcase_edit_span %}span12{% endblock %}
-
-{% block ckanext_showcase_edit_module_content_class %}{% endblock %}
+{% ckan_extends %}
 
 {% block primary_content_inner %}
 
@@ -116,8 +108,8 @@
                   {% for package in c.showcase_pkgs %}
                     {% set truncate = truncate or 180 %}
                     {% set truncate_title = truncate_title or 80 %}
-                    {% set title = package.title or package.name %}
-                    {% set notes = h.markdown_extract(package.notes, extract_length=truncate) %}
+                    {% set title = h.get_localized_value_for_display(package.title or package.name) %}
+                    {% set notes = h.truncate(h.get_localized_value_for_display(package.notes or ''), truncate) %}
                     <tr>
                       <td>
                         <input type="checkbox" name="dataset_{{ package.id }}">
