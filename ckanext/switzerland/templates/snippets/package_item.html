@@ -16,7 +16,7 @@ Example:
 {% set truncate = truncate or 180 %}
 {% set truncate_title = truncate_title or 80 %}
 {% set title = h.get_localized_value_for_display(package['title']) or package.name %}
-{% set description = h.truncate(h.get_localized_value_for_display(package['description']), truncate) %}
+{% set description = h.truncate(h.get_localized_value_for_display(package.get('description', '')), truncate) %}
 
 {% block package_item %}
   <li class="{{ item_class or 'dataset-item' }}">
