@@ -92,6 +92,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         facets_dict['political_level'] = plugins.toolkit._('Political levels')
         facets_dict['res_rights'] = plugins.toolkit._('Terms of use')
         facets_dict['res_format'] = plugins.toolkit._('Formats')
+        return facets_dict
 
     def organization_facets(self, facets_dict, organization_type,
                             package_type):
@@ -103,6 +104,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         facets_dict['keywords_' + lang_code] = plugins.toolkit._('Keywords')
         facets_dict['res_rights'] = plugins.toolkit._('Terms of use')
         facets_dict['res_format'] = plugins.toolkit._('Formats')
+        return facets_dict
 
     # IActions
 
