@@ -12,8 +12,8 @@ Example:
     </ul>
 #}
 
-{% set display_name = h.scheming_language_text(group[h.scheming_field_by_name(schema.fields, 'display_name').field_name]) %}
-{% set description = h.scheming_language_text(group[h.scheming_field_by_name(schema.fields, 'description').field_name]) %}
+{% set display_name = h.get_localized_value_for_display(group['display_name']) %}
+{% set description = h.get_localized_value_for_display(group['description']) %}
 
 {% block item %}
 <li>
