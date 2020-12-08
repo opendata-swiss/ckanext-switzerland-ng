@@ -7,10 +7,8 @@ import ckan.plugins.toolkit as tk
 import ckan.logic as logic
 import json
 import datetime
-import re
 from ckan.common import _
 from babel import numbers
-from webhelpers.html import literal
 
 from ckan.lib.formatters import localised_nice_date
 from ckan.lib.helpers import lang, url_for, localised_number
@@ -279,44 +277,3 @@ def get_localized_date(date_string):
         return localised_nice_date(dt, show_date=True, with_hours=False)
     except ValueError:
         return ''
-
-
-def localize_activity_stream_data(data_dict):
-    """
-    Take a dict containing webhelpers.html.literal objects and localize any
-    titles in them, before returning the dict. Example literal that should be
-    localized:
-
-    literal(u'<span><a href="/de/dataset/bahnhofsliste-station-list">
-    {&#34;fr&#34;: &#34;Bahnhofsliste (station list)&#34;,
-    &#34;de&#34;: &#34;Bahnhofsliste (station list)&#34;,
-    &#34;en&#34;: &#34;Bahnhofsliste (station list)&#34;,
-    &#34;it&#34;: &#34;Bahnhofsliste (station list)&#34;}
-    </a></span>')}
-
-    There is no plugin that touches the activity stream data, so this is the
-    only way to localize titles in the items on activity stream pages.
-
-    NB in CKAN 2.9 webhelpers.html has been dropped, so we will have to change
-    this function.
-    """
-    log.warning(data_dict)
-    for key in data_dict:
-        log.warning(key)
-        try:
-            data_string = data_dict[key].unescape()
-            log.warning(data_string)
-            m = re.match(r'(.*)({.*})(.*)', data_string)
-
-            if m is not None:
-                log.warning(m.group(2))
-                localized_title = get_localized_value_for_display(
-                    json.loads(m.group(2))
-                )
-                log.warning(localized_title)
-                data_dict[key] = literal(m.group(1) + localized_title + m.group(3))
-        except AttributeError:
-            continue
-
-    log.warning(data_dict)
-    # return data_dict
