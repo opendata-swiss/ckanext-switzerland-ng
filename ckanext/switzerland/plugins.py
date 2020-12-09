@@ -11,6 +11,7 @@ import ckanext.switzerland.helpers.plugin_utils as ogdch_plugin_utils
 import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
+import ckan.lib.helpers as h
 import ckan.plugins as plugins
 from ckan.lib.plugins import DefaultTranslation
 import ckanext.xloader.interfaces as ix
@@ -202,6 +203,14 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
                     action='xml_upload')
 
         return map
+
+
+# monkey patch template helpers to return translated names/titles
+h.dataset_display_name = ogdch_backend_helpers.dataset_display_name
+h.resource_display_name = ogdch_backend_helpers.resource_display_name
+h.group_link = ogdch_backend_helpers.group_link
+h.resource_link = ogdch_backend_helpers.resource_link
+h.organization_link = ogdch_backend_helpers.organization_link
 
 
 class OgdchMixin(object):
