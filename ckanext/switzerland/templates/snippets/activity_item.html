@@ -4,7 +4,6 @@
   {% endif %}
   <i class="fa icon fa-{{ activity.icon }}"></i>
   <p>
-    {{ h.localize_activity_stream_data(activity.data) }}
     {{ h.literal(activity.msg.format(**activity.data)) }}
     <span class="date" title="{{ h.render_datetime(activity.timestamp, with_hours=True) }}">{{ h.time_ago_from_timestamp(activity.timestamp) }}</span>
   </p>
