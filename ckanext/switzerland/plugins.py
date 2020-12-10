@@ -227,6 +227,19 @@ class OgdchGroupPlugin(plugins.SingletonPlugin, OgdchMixin):
             lang_code=request_lang)
         return grp_dict
 
+    def create(self, grp_dict):
+        """
+        add all CKAN-users as members to the newly created group.
+        :param grp_dict:
+        :return:
+        """
+        # grp_dict is not a dict as implied but something like
+        # '<Group group-name>' so we have to get it the dirty way
+        grp_dict = grp_dict.replace("<Group ", "")
+        group_id = grp_dict.replace(">", "")
+
+        ogdch_backend_helpers.ogdch_add_users_to_groups(None, group_id)
+
 
 class OgdchOrganizationPlugin(plugins.SingletonPlugin, OgdchMixin):
     plugins.implements(plugins.IConfigurer, inherit=True)
