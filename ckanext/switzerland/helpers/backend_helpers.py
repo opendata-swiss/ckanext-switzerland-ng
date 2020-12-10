@@ -265,7 +265,14 @@ def ogdch_add_users_to_groups(user_id=None, group_id=None):
         _add_member_to_groups(user_id, context)
     elif group_id:
         _add_members_to_group(group_id, context)
-
+    else:
+        members = tk.get_action('user_list')(context, {})
+        groups = tk.get_action('group_list')(context, {})
+        for member in members:
+            # sysadmins will keep their admin role, every other user will be added as a member
+            if not member['sysadmin']:
+                for group in groups:
+                    _add_member_to_group(member, group, context)
 
 def _add_members_to_group(group, context):
     members = tk.get_action('user_list')(context, {})
