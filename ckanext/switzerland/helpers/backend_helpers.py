@@ -191,8 +191,7 @@ def dataset_display_name(package_or_package_dict):
     extracts the correct translation of the dataset name
     """
     name = dataset_display_name_orig(package_or_package_dict)
-    name = get_localized_value_for_display(name)
-    return name
+    return get_localized_value_for_display(name)
 
 
 def organization_link(organization):
@@ -214,7 +213,8 @@ def group_link(group):
     title = group['title']
     try:
         # the group creation message contains str(dict), so we must parse the
-        # string to fix it
+        # string to fix it. If the title is just a string, a ValueError is
+        # thrown.
         title = ast.literal_eval(title)
     except ValueError:
         pass
@@ -227,7 +227,6 @@ def resource_link(resource_dict, package_id):
     monkey patched version of ckan.lib.helpers.resource_link which extracts the
     correct translation of the resource name
     """
-    log.warning('resource_link')
     if 'name' in resource_dict and resource_dict['name']:
         resource_dict['name'] = get_localized_value_for_display(
             ast.literal_eval(resource_dict['name']))
