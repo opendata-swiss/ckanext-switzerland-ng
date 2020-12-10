@@ -227,18 +227,13 @@ class OgdchGroupPlugin(plugins.SingletonPlugin, OgdchMixin):
             lang_code=request_lang)
         return grp_dict
 
-    def create(self, grp_dict):
+    def edit(self, grp_dict):
         """
-        add all CKAN-users as members to the newly created group.
+        add all CKAN-users as members to the edited group.
         :param grp_dict:
         :return:
         """
-        # grp_dict is not a dict as implied but something like
-        # '<Group group-name>' so we have to get it the dirty way
-        grp_dict = grp_dict.replace("<Group ", "")
-        group_id = grp_dict.replace(">", "")
-
-        ogdch_backend_helpers.ogdch_add_users_to_groups(None, group_id)
+        ogdch_backend_helpers.ogdch_add_users_to_groups(None, None)
 
 
 class OgdchOrganizationPlugin(plugins.SingletonPlugin, OgdchMixin):
