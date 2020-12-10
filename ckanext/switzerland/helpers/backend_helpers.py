@@ -48,21 +48,6 @@ def ogdch_template_helper_get_active_class(active_url, section):
     return ''
 
 
-def ogdch_template_choice(template_frontend, template_backend):
-    """decides whether to return a frontend
-    or a backend template"""
-    logged_in = auth_is_loggedin_user()
-    if not logged_in:
-        return template_frontend
-    session_frontend = session \
-        and OGDCH_USER_VIEW_CHOICE in session.keys() \
-        and (session[OGDCH_USER_VIEW_CHOICE] == OGDCH_USER_VIEW_CHOICE_FRONTEND) # noqa
-    if session_frontend:
-        return template_frontend
-    else:
-        return template_backend
-
-
 def create_showcase_types():
     """
     Create tags and vocabulary for showcase types, if they don't exist already.
