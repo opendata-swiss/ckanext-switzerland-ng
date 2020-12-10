@@ -7,8 +7,6 @@ used in backend templates
 import ast
 import logging
 from urlparse import urlparse
-from ckan.common import session
-from ckan.authz import auth_is_loggedin_user
 from ckan.common import _
 from ckan.lib.helpers import _link_to, url_for
 from ckan.lib.helpers import dataset_display_name as dataset_display_name_orig
