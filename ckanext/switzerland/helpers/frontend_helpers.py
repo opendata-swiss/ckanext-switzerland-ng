@@ -7,10 +7,8 @@ import ckan.plugins.toolkit as tk
 import ckan.logic as logic
 import json
 import datetime
-import re
 from ckan.common import _
 from babel import numbers
-from webhelpers.html import literal
 
 from ckan.lib.formatters import localised_nice_date
 from ckan.lib.helpers import lang, url_for, localised_number

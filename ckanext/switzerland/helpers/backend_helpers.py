@@ -10,7 +10,7 @@ from urlparse import urlparse
 from ckan.common import session
 from ckan.authz import auth_is_loggedin_user
 from ckan.common import _
-from ckan.lib.helpers import _link_to, url_for, lang
+from ckan.lib.helpers import _link_to, url_for
 from ckan.lib.helpers import dataset_display_name as dataset_display_name_orig
 from ckan.lib.helpers import organization_link as organization_link_orig
 
@@ -180,6 +180,11 @@ def ogdch_get_political_level_field_list(field):
 
 
 def ogdch_resource_display_name(res):
+    """
+    monkey patched version of ckan.lib.helpers.resource_display_name which
+    extracts the correct translation of the dataset name, and substitutes the
+    package title if there is no resource name
+    """
     resource_display_name = res.get('name')
     if not resource_display_name:
         try:
@@ -197,59 +202,54 @@ def ogdch_resource_display_name(res):
     return resource_display_name
 
 
-# monkey patched version of ckan.lib.helpers.dataset_display_name which extracts the correct translation of the dataset
 def dataset_display_name(package_or_package_dict):
+    """
+    monkey patched version of ckan.lib.helpers.dataset_display_name which
+    extracts the correct translation of the dataset name
+    """
     name = dataset_display_name_orig(package_or_package_dict)
     name = get_localized_value_for_display(name)
     return name
 
 
-# monkey patched version of ckan.lib.helpers.resource_display_name which extracts the correct translation of the dataset
-def resource_display_name(resource_dict):
-    name = resource_dict.get('name', None)
-    description = resource_dict.get('description', None)
-    if name:
-        name = get_localized_value_for_display(name)
-        return name
-    elif description:
-        description = get_localized_value_for_display(description)
-        if isinstance(description, basestring):
-            description = description.split('.')[0]
-            max_len = 60
-            if len(description) > max_len:
-                description = description[:max_len] + '...'
-        return description
-    else:
-        return _("Unnamed resource")
-
-
-# monkey patched version of ckan.lib.helpers.organization_link which extracts the correct translation of the org
 def organization_link(organization):
-    organization['title'] = get_localized_value_for_display(organization['title'])
+    """
+    monkey patched version of ckan.lib.helpers.organization_link which extracts
+    the correct translation of the organization name
+    """
+    organization['title'] = get_localized_value_for_display(
+        organization['title'])
     return organization_link_orig(organization)
 
 
-# monkey patched version of ckan.lib.helpers.group_link which extracts the correct translation of the dataset
 def group_link(group):
+    """
+    monkey patched version of ckan.lib.helpers.group_link which extracts the
+    correct translation of the group title
+    """
     url = url_for(controller='group', action='read', id=group['name'])
     title = group['title']
+    try:
+        # the group creation message contains str(dict), so we must parse the
+        # string to fix it
+        title = ast.literal_eval(title)
+    except ValueError:
+        pass
     title = get_localized_value_for_display(title)
-    # the group creation message contains str(dict), so we must parse the string to fix it
-    title = ast.literal_eval(title)
     return _link_to(title, url)
 
 
-# patch activity
 def resource_link(resource_dict, package_id):
-    # ---
-    # issue: resource_dict['name'] is saved as str(dict), and therefore is invalid json
-    #   -> parse_json just returns the string
-    # resolutions: parse the invalid json string into a dict
-    # ---
+    """
+    monkey patched version of ckan.lib.helpers.resource_link which extracts the
+    correct translation of the resource name
+    """
+    log.warning('resource_link')
     if 'name' in resource_dict and resource_dict['name']:
-        resource_dict['name'] = get_localized_value_for_display(ast.literal_eval(resource_dict['name']))
+        resource_dict['name'] = get_localized_value_for_display(
+            ast.literal_eval(resource_dict['name']))
 
-    text = resource_display_name(resource_dict)
+    text = ogdch_resource_display_name(resource_dict)
     url = url_for(controller='package',
                   action='resource_read',
                   id=package_id,

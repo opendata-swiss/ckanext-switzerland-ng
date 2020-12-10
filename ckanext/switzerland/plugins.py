@@ -206,7 +206,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
 # monkey patch template helpers to return translated names/titles
 h.dataset_display_name = ogdch_backend_helpers.dataset_display_name
-h.resource_display_name = ogdch_backend_helpers.resource_display_name
 h.group_link = ogdch_backend_helpers.group_link
 h.resource_link = ogdch_backend_helpers.resource_link
 h.organization_link = ogdch_backend_helpers.organization_link
