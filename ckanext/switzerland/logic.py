@@ -345,3 +345,63 @@ def _create_or_update_dataset(dataset):
         h.flash_error(
             'Error importing dataset %s: %r' %
             (dataset.get('name', ''), e))
+
+
+@side_effect_free
+def ogdch_add_users_to_groups(context, data_dict={}):
+    """
+    If user_id and group_id is given, that user will be added to that group.
+    If only user_id is given, they will be added to each group.
+    If only group_id is given, all non-sysadmin users will be added as members to that group
+    :param user_id: (optional, default: ``None``)
+    :param group_id: (optional, default: ``None``)
+    :return:
+    """
+    user = tk.get_action('get_site_user')({'ignore_auth': True}, ())
+    context = {'user': user['name']}
+
+    group_id = data_dict.get('group_id')
+    user_id = data_dict.get('user_id')
+
+    if user_id and group_id:
+        _add_member_to_group(user_id, group_id, context)
+        return 'Added user "' + user_id + '" to ' + group_id + '.'
+    elif user_id:
+        _add_member_to_groups(user_id, context)
+        return 'Added user "' + user_id + '" to all available groups.'
+    elif group_id:
+        _add_members_to_group(group_id, context)
+        return 'Added all non-admin users as members to group "' + group_id + '".'
+    else:
+        members = tk.get_action('user_list')(context, {})
+        groups = tk.get_action('group_list')(context, {})
+        for member in members:
+            # sysadmins will keep their admin role, every other user will be added as a member
+            if not member['sysadmin']:
+                for group in groups:
+                    _add_member_to_group(member.get('id'), group, context)
+
+        return 'Added all non-admin users as members to all available groups.'
+
+
+def _add_members_to_group(group, context):
+    members = tk.get_action('user_list')(context, {})
+    for member in members:
+        # sysadmins will keep their admin role, every other user will be added as a member
+        if not member['sysadmin']:
+            _add_member_to_group(member.get('id'), group, context)
+
+
+def _add_member_to_groups(member, context):
+    groups = tk.get_action('group_list')(context, {})
+    for group in groups:
+        _add_member_to_group(member, group, context)
+
+
+def _add_member_to_group(member, group, context):
+    update_group_members_dict = {
+        'id': group,
+        'username': member,
+        'role': 'member',
+    }
+    tk.get_action('group_member_create')(context, update_group_members_dict)
