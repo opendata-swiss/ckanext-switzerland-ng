@@ -122,6 +122,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_package_show': ogdch_logic.ogdch_package_show,
             'ogdch_xml_upload': ogdch_logic.ogdch_xml_upload,
             'ogdch_showcase_search': ogdch_logic.ogdch_showcase_search,
+            'ogdch_add_users_to_groups': ogdch_logic.ogdch_add_users_to_groups,
         }
 
     # ITemplateHelpers
