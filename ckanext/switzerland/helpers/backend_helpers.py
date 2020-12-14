@@ -212,14 +212,22 @@ def group_link(group):
     url = url_for(controller='group', action='read', id=group['name'])
     title = group['title']
     try:
-        # the group creation message contains str(dict), so we must parse the
-        # string to fix it. If the title is just a string, a ValueError is
-        # thrown.
+        # The group creation message contains str(dict), so we must parse the
+        # string with literal_eval to fix it. If the title is really just a
+        # string, a ValueError is thrown.
         title = ast.literal_eval(title)
+        title = get_localized_value_for_display(title)
     except ValueError:
         pass
-    title = get_localized_value_for_display(title)
-    return _link_to(title, url)
+
+    link = _link_to(title, url)
+    try:
+        # Sometimes the title has special characters encoded as unicode_escape
+        # (e.g. '\u00e9'). Sometimes they are already decoded (e.g. 'é').
+        link = link.decode('unicode_escape')
+    except UnicodeEncodeError:
+        pass
+    return link
 
 
 def resource_link(resource_dict, package_id):
