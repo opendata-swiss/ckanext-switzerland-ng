@@ -4,11 +4,14 @@
 Helpers belong in this file if they are only
 used in backend templates
 """
+import ast
 import logging
 from urlparse import urlparse
-from ckan.common import session
-from ckan.authz import auth_is_loggedin_user
 from ckan.common import _
+from ckan.lib.helpers import _link_to, url_for
+from ckan.lib.helpers import dataset_display_name as dataset_display_name_orig
+from ckan.lib.helpers import organization_link as organization_link_orig
+
 import ckan.lib.i18n as i18n
 import ckan.logic as logic
 import ckan.plugins.toolkit as tk
@@ -41,21 +44,6 @@ def ogdch_template_helper_get_active_class(active_url, section):
     except Exception:
         pass
     return ''
-
-
-def ogdch_template_choice(template_frontend, template_backend):
-    """decides whether to return a frontend
-    or a backend template"""
-    logged_in = auth_is_loggedin_user()
-    if not logged_in:
-        return template_frontend
-    session_frontend = session \
-        and OGDCH_USER_VIEW_CHOICE in session.keys() \
-        and (session[OGDCH_USER_VIEW_CHOICE] == OGDCH_USER_VIEW_CHOICE_FRONTEND) # noqa
-    if session_frontend:
-        return template_frontend
-    else:
-        return template_backend
 
 
 def create_showcase_types():
@@ -175,6 +163,11 @@ def ogdch_get_political_level_field_list(field):
 
 
 def ogdch_resource_display_name(res):
+    """
+    monkey patched version of ckan.lib.helpers.resource_display_name which
+    extracts the correct translation of the dataset name, and substitutes the
+    package title if there is no resource name
+    """
     resource_display_name = res.get('name')
     if not resource_display_name:
         try:
@@ -190,3 +183,65 @@ def ogdch_resource_display_name(res):
                 logic.NotAuthorized, AttributeError):
             return ""
     return resource_display_name
+
+
+def dataset_display_name(package_or_package_dict):
+    """
+    monkey patched version of ckan.lib.helpers.dataset_display_name which
+    extracts the correct translation of the dataset name
+    """
+    name = dataset_display_name_orig(package_or_package_dict)
+    return get_localized_value_for_display(name)
+
+
+def organization_link(organization):
+    """
+    monkey patched version of ckan.lib.helpers.organization_link which extracts
+    the correct translation of the organization name
+    """
+    organization['title'] = get_localized_value_for_display(
+        organization['title'])
+    return organization_link_orig(organization)
+
+
+def group_link(group):
+    """
+    monkey patched version of ckan.lib.helpers.group_link which extracts the
+    correct translation of the group title
+    """
+    url = url_for(controller='group', action='read', id=group['name'])
+    title = group['title']
+    try:
+        # The group creation message contains str(dict), so we must parse the
+        # string with literal_eval to fix it. If the title is really just a
+        # string, a ValueError is thrown.
+        title = ast.literal_eval(title)
+        title = get_localized_value_for_display(title)
+    except ValueError:
+        pass
+
+    link = _link_to(title, url)
+    try:
+        # Sometimes the title has special characters encoded as unicode_escape
+        # (e.g. '\u00e9'). Sometimes they are already decoded (e.g. 'é').
+        link = link.decode('unicode_escape')
+    except UnicodeEncodeError:
+        pass
+    return link
+
+
+def resource_link(resource_dict, package_id):
+    """
+    monkey patched version of ckan.lib.helpers.resource_link which extracts the
+    correct translation of the resource name
+    """
+    if 'name' in resource_dict and resource_dict['name']:
+        resource_dict['name'] = get_localized_value_for_display(
+            ast.literal_eval(resource_dict['name']))
+
+    text = ogdch_resource_display_name(resource_dict)
+    url = url_for(controller='package',
+                  action='resource_read',
+                  id=package_id,
+                  resource_id=resource_dict['id'])
+    return _link_to(text, url)

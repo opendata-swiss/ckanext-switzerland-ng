@@ -1,10 +1,4 @@
 {# breadcrumb for an organization from its name #}
-
-{% if group_type is not defined %}
-  {% set group_type = c.group_type %}
-{% endif %}
-
-{% set schema = h.scheming_get_organization_schema(group_type) %}
 {% set display_name = h.get_localized_value_for_display(organization['title']) %}
 
 <li>
