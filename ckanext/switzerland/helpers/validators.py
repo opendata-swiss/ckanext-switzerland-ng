@@ -552,16 +552,19 @@ def ogdch_fluent_tags(field, schema):
                     errors[name].append(_('expected UTF-8 encoding'))
                     continue
 
-            if output is not None and text:
-                tags = []
-                errs = []
-                for tag in text.split(','):
-                    newtag, tagerrs = _validate_single_tag(tag, tag_validators)
-                    errs.extend(tagerrs)
-                    tags.append(newtag)
-                output[lang] = tags
-                if errs:
-                    errors[key[:-1] + (name,)] = errs
+            if output is not None:
+                if text:
+                    tags = []
+                    errs = []
+                    for tag in text.split(','):
+                        newtag, tagerrs = _validate_single_tag(tag, tag_validators)
+                        errs.extend(tagerrs)
+                        tags.append(newtag)
+                    output[lang] = tags
+                    if errs:
+                        errors[key[:-1] + (name,)] = errs
+                else:
+                    output[lang] = []
 
         for lang in required_langs:
             if extras.get(prefix + lang) or any(
