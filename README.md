@@ -82,10 +82,13 @@ For opendata.swiss we use groups in the sense of categories. Therefore we need a
 Users with the role `admin` are automatically added as `admin` to each group.
 
 ```bash
+# add a specific user who is not an admin as member to a specific group:
+$ curl {ckan_url}/api/3/action/ogdch_add_users_to_groups?user_id=greta.mayer&user_id=administration
+
 # add all users that are not admins as members to a specific group:
 $ curl {ckan_url}/api/3/action/ogdch_add_users_to_groups?group_id=administration
 
-# add a specific user who is not an admin to all available groups:
+# add a specific user who is not an admin as member to all available groups:
 $ curl {ckan_url}/api/3/action/ogdch_add_users_to_groups?user_id=greta.mayer
 
 # add all users that are not admins as members to all specific groups:
