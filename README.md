@@ -75,3 +75,19 @@ do:
 To update the Format-Mapping edit the [mapping.yaml](/ckanext/switzerland/mapping.yaml), following the [YAML-Syntax](http://docs.ansible.com/ansible/latest/YAMLSyntax.html). You can check if your changes are valid by pasting the contents of the required changes into a Syntax-Checker, e.g. [YAML Syntax-Checker](http://www.yamllint.com/).
 Submit a Pull-Request following our [Contribution-Guidelines](CONTRIBUTING.md).
 
+## Add users as members to groups
+
+For opendata.swiss we use groups in the sense of categories. Therefore we need any user to be able to add their datasets to any group. For that they need to be a member of the group.
+
+Users with the role `admin` are automatically added as `admin` to each group.
+
+```bash
+# add all users that are not admins as members to a specific group:
+$ curl {ckan_url}/api/3/action/ogdch_add_users_to_groups?group_id=administration
+
+# add a specific user who is not an admin to all available groups:
+$ curl {ckan_url}/api/3/action/ogdch_add_users_to_groups?user_id=greta.mayer
+
+# add all users that are not admins as members to all specific groups:
+$ curl {ckan_url}/api/3/action/ogdch_add_users_to_groups
+```
