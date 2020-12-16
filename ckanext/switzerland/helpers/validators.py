@@ -6,7 +6,6 @@ from ckanext.fluent.helpers import (
 from ckanext.fluent.validators import BCP_47_LANGUAGE, _validate_single_tag
 from ckanext.scheming.validation import (
     scheming_validator, validators_from_string)
-from ckanext.scheming.validation import scheming_validator
 from ckanext.switzerland.helpers.localize_utils import parse_json
 from ckanext.switzerland.helpers.dataset_form_helpers import (
     get_publishers_from_form,
@@ -451,18 +450,6 @@ def ogdch_fluent_tags(field, schema):
     What we need to do in this case is save the tag field thus:
     {"de": ["tag-de"], "fr": [], "en": [], "it": []}
     """
-
-    required_langs = []
-    alternate_langs = {}
-    if field and field.get('required'):
-        required_langs = fluent_form_languages(field, schema=schema)
-        alternate_langs = fluent_alternate_languages(field, schema=schema)
-
-    tag_validators = [tag_length_validator, tag_name_validator]
-    if field and 'tag_validators' in field:
-        tag_validators = validators_from_string(
-            field['tag_validators'], field, schema)
-
     def validator(key, data, errors, context):
         if errors[key]:
             return
@@ -470,114 +457,155 @@ def ogdch_fluent_tags(field, schema):
         value = data[key]
         # 1. dict of lists of tag strings
         if value is not missing:
-            if not isinstance(value, dict):
-                errors[key].append(_('expecting JSON object'))
-                return
+            return _validate_dict_of_tag_lists(
+                value, key, data, errors, field, schema)
 
-            for lang, keys in value.items():
+        # 2. separate fields
+        return _validate_separate_fields(
+            key, data, errors, field, schema)
+
+    return validator
+
+
+def _get_langs(field, schema):
+    required_langs = []
+    alternate_langs = {}
+    if field and field.get('required'):
+        required_langs = fluent_form_languages(field, schema=schema)
+        alternate_langs = fluent_alternate_languages(field, schema=schema)
+
+    return required_langs, alternate_langs
+
+
+def _get_tag_validators(field, schema):
+    tag_validators = [tag_length_validator, tag_name_validator]
+    if field and 'tag_validators' in field:
+        tag_validators = validators_from_string(
+            field['tag_validators'], field, schema)
+
+    return tag_validators
+
+
+def _validate_dict_of_tag_lists(value, key, data, errors, field, schema):
+    if not isinstance(value, dict):
+        errors[key].append(_('expecting JSON object'))
+        return
+
+    tag_validators = _get_tag_validators(field, schema)
+
+    for lang, keys in value.items():
+        try:
+            m = re.match(BCP_47_LANGUAGE, lang)
+        except TypeError:
+            errors[key].append(_('invalid type for language code: %r')
+                               % lang)
+            continue
+        if not m:
+            errors[key].append(_('invalid language code: "%s"') % lang)
+            continue
+        if not isinstance(keys, list):
+            errors[key].append(_('invalid type for "%s" value') % lang)
+            continue
+        out = []
+        for i, v in enumerate(keys):
+            if not isinstance(v, basestring):
+                errors[key].append(
+                    _('invalid type for "{lang}" value item {num}').format(
+                        lang=lang, num=i))
+                continue
+
+            if isinstance(v, str):
                 try:
-                    m = re.match(BCP_47_LANGUAGE, lang)
-                except TypeError:
-                    errors[key].append(_('invalid type for language code: %r')
-                                       % lang)
-                    continue
-                if not m:
-                    errors[key].append(_('invalid language code: "%s"') % lang)
-                    continue
-                if not isinstance(keys, list):
-                    errors[key].append(_('invalid type for "%s" value') % lang)
-                    continue
-                out = []
-                for i, v in enumerate(keys):
-                    if not isinstance(v, basestring):
-                        errors[key].append(
-                            _('invalid type for "{lang}" value item {num}').format(
-                                lang=lang, num=i))
-                        continue
+                    out.append(v.decode('utf-8'))
+                except UnicodeDecodeError:
+                    errors[key]. append(_(
+                        'expected UTF-8 encoding for '
+                        '"{lang}" value item {num}').format(
+                        lang=lang, num=i))
+            else:
+                out.append(v)
 
-                    if isinstance(v, str):
-                        try:
-                            out.append(v.decode('utf-8'))
-                        except UnicodeDecodeError:
-                            errors[key]. append(_(
-                                'expected UTF-8 encoding for '
-                                '"{lang}" value item {num}').format(
-                                lang=lang, num=i))
-                    else:
-                        out.append(v)
+        tags = []
+        errs = []
 
+        for tag in out:
+            newtag, tagerrs = _validate_single_tag(tag, tag_validators)
+            errs.extend(tagerrs)
+            tags.append(newtag)
+        if errs:
+            errors[key].extend(errs)
+        value[lang] = tags
+
+    required_langs, alternate_langs = _get_langs(field, schema)
+
+    for lang in required_langs:
+        if value.get(lang) or any(
+                value.get(l) for l in alternate_langs.get(lang, [])):
+            continue
+        errors[key].append(_('Required language "%s" missing') % lang)
+
+    if not errors[key]:
+        data[key] = json.dumps(value)
+    return
+
+
+def _validate_separate_fields(key, data, errors, field, schema):
+    output = {}
+    prefix = key[-1] + '-'
+    extras = data.get(key[:-1] + ('__extras',), {})
+
+    tag_validators = _get_tag_validators(field, schema)
+
+    for name, text in extras.iteritems():
+        if not name.startswith(prefix):
+            continue
+        lang = name.split('-', 1)[1]
+        m = re.match(BCP_47_LANGUAGE, lang)
+        if not m:
+            errors[name] = [_('invalid language code: "%s"') % lang]
+            output = None
+            continue
+
+        if not isinstance(text, basestring):
+            errors[name].append(_('invalid type'))
+            continue
+
+        if isinstance(text, str):
+            try:
+                text = text.decode('utf-8')
+            except UnicodeDecodeError:
+                errors[name].append(_('expected UTF-8 encoding'))
+                continue
+
+        # This is the part overwritten so that an empty list is saved for a
+        # language if no tags were entered.
+        if output is not None:
+            if text:
                 tags = []
                 errs = []
-                for tag in out:
+                for tag in text.split(','):
                     newtag, tagerrs = _validate_single_tag(tag, tag_validators)
                     errs.extend(tagerrs)
                     tags.append(newtag)
+                output[lang] = tags
                 if errs:
-                    errors[key].extend(errs)
-                value[lang] = tags
+                    errors[key[:-1] + (name,)] = errs
+            else:
+                output[lang] = []
+        # End of overwritten part.
 
-            for lang in required_langs:
-                if value.get(lang) or any(
-                        value.get(l) for l in alternate_langs.get(lang, [])):
-                    continue
-                errors[key].append(_('Required language "%s" missing') % lang)
+    required_langs, alternate_langs = _get_langs(field, schema)
 
-            if not errors[key]:
-                data[key] = json.dumps(value)
-            return
+    for lang in required_langs:
+        if extras.get(prefix + lang) or any(
+                extras.get(prefix + l) for l in alternate_langs.get(lang, [])):
+            continue
+        errors[key[:-1] + (key[-1] + '-' + lang,)] = [_('Missing value')]
+        output = None
 
-        # 2. separate fields
-        output = {}
-        prefix = key[-1] + '-'
-        extras = data.get(key[:-1] + ('__extras',), {})
+    if output is None:
+        return
 
-        for name, text in extras.iteritems():
-            if not name.startswith(prefix):
-                continue
-            lang = name.split('-', 1)[1]
-            m = re.match(BCP_47_LANGUAGE, lang)
-            if not m:
-                errors[name] = [_('invalid language code: "%s"') % lang]
-                output = None
-                continue
-
-            if not isinstance(text, basestring):
-                errors[name].append(_('invalid type'))
-                continue
-
-            if isinstance(text, str):
-                try:
-                    text = text.decode('utf-8')
-                except UnicodeDecodeError:
-                    errors[name].append(_('expected UTF-8 encoding'))
-                    continue
-
-            if output is not None:
-                if text:
-                    tags = []
-                    errs = []
-                    for tag in text.split(','):
-                        newtag, tagerrs = _validate_single_tag(tag, tag_validators)
-                        errs.extend(tagerrs)
-                        tags.append(newtag)
-                    output[lang] = tags
-                    if errs:
-                        errors[key[:-1] + (name,)] = errs
-                else:
-                    output[lang] = []
-
-        for lang in required_langs:
-            if extras.get(prefix + lang) or any(
-                    extras.get(prefix + l) for l in alternate_langs.get(lang, [])):
-                continue
-            errors[key[:-1] + (key[-1] + '-' + lang,)] = [_('Missing value')]
-            output = None
-
-        if output is None:
-            return
-
-        for lang in output:
-            del extras[prefix + lang]
-        data[key] = json.dumps(output)
-
-    return validator
+    for lang in output:
+        del extras[prefix + lang]
+    data[key] = json.dumps(output)
