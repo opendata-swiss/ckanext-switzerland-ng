@@ -1,0 +1,24 @@
+{% extends "user/read.html" %}
+
+{% block subtitle %}{{ _('Organizations') }} - {{ super() }}{% endblock %}
+
+{% block primary_content_inner %}
+  <h2 class="hide-heading">
+    {% block page_heading %}{{ _('Organizations') }}{% endblock %}
+  </h2>
+
+  {% block organization_list %}
+    <div class="organization-hierarchy empty-search">
+      <ul id="organizations-list">
+      {% for org in organizations_available %}
+        <li id="{{org.name}}" class="organization">
+          <div class="organization-row">
+            {% set org = h.get_localized_org(org.name) %}
+            {% link_for org.title, controller='organization', action='read', id=org.name %}
+          </div>
+        </li>
+      {% endfor %}
+      </ul>
+    </div>
+  {% endblock %}
+{% endblock %}

@@ -191,6 +191,9 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         map.connect('organization_index', '/organization',
                     controller='ckanext.switzerland.controllers.organization:OgdchOrganizationController', # noqa
                     action='index')
+        map.connect('organization_list', '/user/organizations/{id}',
+                    controller='ckanext.switzerland.controllers.organization:OgdchOrganizationController',  # noqa
+                    action='list_for_user')
         map.connect('organization_new', '/organization/new', controller='organization', action='new') # noqa
         map.connect('organization_read', '/organization/{id}',
                     controller='ckanext.switzerland.controllers.organization:OgdchOrganizationController', # noqa

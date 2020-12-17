@@ -279,6 +279,22 @@ class OgdchOrganizationController(organization.OrganizationController):
                           'q': request.params.get('q', '')
                       })
 
+    def list_for_user(self, id):
+        user_dict = tk.get_action('user_show')(
+            {},
+            {'id': id, 'include_num_followers': True}
+        )
+
+        organizations_available = tk.get_action('organization_list_for_user')(
+            {'user': user_dict.get('id')},
+            {'permission': 'read'}
+        )
+
+        extra_vars = {'user_dict': user_dict,
+                      'organizations_available': organizations_available}
+
+        return render('user/organizations.html', extra_vars=extra_vars)
+
     def xml_upload(self, name):
         if not tk.request.method == 'POST':
             tk.abort(409, _('Only Posting is availiable'))
