@@ -295,7 +295,7 @@
         "fr": "Mots clés",
         "it": "Parole chiave"
       },
-      "preset": "fluent_tags",
+      "preset": "ogdch_fluent_tags",
       "section_title": "Keywords"
     }
   ],

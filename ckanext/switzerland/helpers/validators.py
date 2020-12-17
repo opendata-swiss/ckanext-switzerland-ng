@@ -429,3 +429,30 @@ def ogdch_validate_formfield_temporals(field, schema):
             data[key] = '{}'
 
     return validator
+
+
+@scheming_validator
+def ogdch_fluent_tags(field, schema):
+    """
+    To be called after ckanext-fluent fluent_tags() because of an error that
+    does not save any tag data for a language that has no tags entered, e.g. it
+    would save {"de": ["tag-de"]} if German were the only language with a tag
+    entered in the form. Not saving tag data for all the languages causes the
+    tags to later be interpreted as a string, so here the dataset would display
+    the tag '{u"de": [u"tag-de"]}' in every language.
+
+    What we need to do in this case is save the tag field thus:
+    {"de": ["tag-de"], "fr": [], "en": [], "it": []}
+    """
+    def validator(key, data, errors, context):
+        if errors[key]:
+            return
+
+        value = json.loads(data[key])
+        for lang in schema['form_languages']:
+            if lang not in value.keys():
+                value[lang] = []
+
+        data[key] = json.dumps(value)
+
+    return validator
