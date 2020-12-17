@@ -72,7 +72,6 @@
         "it": "Data di pubblicazione sul portale (Imposta la visibilità su bozza per pubblicare automaticamente il set di dati)"
       },
       "preset": "ogdch_date",
-      "validators": "scheming_required date_string_to_timestamp",
       "ogdch_help_text": "Setting this date in the future will publish this dataset on the specified date."
     },
     {
