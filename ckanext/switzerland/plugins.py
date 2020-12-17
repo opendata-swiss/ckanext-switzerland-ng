@@ -122,6 +122,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_package_show': ogdch_logic.ogdch_package_show,
             'ogdch_xml_upload': ogdch_logic.ogdch_xml_upload,
             'ogdch_showcase_search': ogdch_logic.ogdch_showcase_search,
+            'ogdch_add_users_to_groups': ogdch_logic.ogdch_add_users_to_groups,
         }
 
     # ITemplateHelpers
@@ -236,6 +237,14 @@ class OgdchGroupPlugin(plugins.SingletonPlugin, OgdchMixin):
             ckan_dict=grp_dict,
             lang_code=request_lang)
         return grp_dict
+
+    def edit(self, grp_dict):
+        """
+        add all CKAN-users as members to the edited group.
+        :param grp_dict:
+        :return:
+        """
+        ogdch_backend_helpers.ogdch_add_users_to_groups(None, None)
 
 
 class OgdchOrganizationPlugin(plugins.SingletonPlugin, OgdchMixin):
