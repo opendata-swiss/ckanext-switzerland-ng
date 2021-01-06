@@ -102,7 +102,7 @@ cd ckanext-showcase
 python setup.py develop
 cd -
 
-echo "Installing ckanext-ckanext-switzerland and its requirements..."
+echo "Installing ckanext-switzerland and its requirements..."
 python setup.py develop
 pip install -r requirements.txt
 pip install -r dev-requirements.txt
