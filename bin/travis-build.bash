@@ -114,6 +114,13 @@ pip install -r dev-requirements.txt
 
 # use ckanext-switzerland custom schema.xml to run tests
 sudo cp solr/schema.xml /etc/solr/conf/schema.xml
+sudo cp solr/fr_elision.txt /etc/solr/conf/fr_elision.txt
+sudo cp solr/german_stop.txt /etc/solr/conf/german_stop.txt
+sudo cp solr/english_stop.txt /etc/solr/conf/english_stop.txt
+sudo cp solr/french_stop.txt /etc/solr/conf/french_stop.txt
+sudo cp solr/italian_stop.txt /etc/solr/conf/italian_stop.txt
+sudo cp solr/german_dictionary.txt /etc/solr/conf/german_dictionary.txt
+
 sudo service jetty restart
 
 echo "Moving test.ini into a subdir..."
