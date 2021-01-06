@@ -4,7 +4,7 @@
   <article class="module">
     <div class="module-content">
       <h1 class="page-heading">
-        {% if h.check_access('user_create') %}
+        {% if h.check_access('sysadmin') %}
             <div class="page_primary_action">
             {{ h.nav_link(_('Add User'), named_route='user_register', class_='btn btn-primary', icon='plus-square') }}
             </div>
