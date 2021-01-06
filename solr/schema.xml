@@ -54,7 +54,7 @@ schema. In this case the version should be set to the next CKAN version number.
        <filter class="solr.LowerCaseFilterFactory"/>
        <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
       </analyzer>
-    </fieldType> 
+    </fieldType>
 
     <fieldType name="text" class="solr.TextField" positionIncrementGap="100">
         <analyzer type="index">
@@ -305,6 +305,9 @@ schema. In this case the version should be set to the next CKAN version number.
 
     <!--  Extra field for showcases  -->
     <field name="showcase_type" type="string" indexed="true" stored="true" multiValued="false"/>
+
+    <!--  Extra field for harvesters  -->
+    <field name="source_type" type="string" indexed="true" stored="true" multiValued="false"/>
 
     <!-- Copy the title field into titleString, and treat as a string
          (rather than text type).  This allows us to sort on the titleString -->
