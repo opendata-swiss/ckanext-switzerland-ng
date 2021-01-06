@@ -61,7 +61,13 @@ within_tertiary
               <nav>
                 <ul class="{{ nav_class or 'list-unstyled nav nav-simple nav-facet' }}">
                   {# set custom label function to localize the facet items #}
-                  {% set label_function = h.localize_json_facet_title %}
+                  {% if name == "showcase_type" %}
+                    {% set label_function = h.localize_showcase_facet_title %}
+                  {% elif name == "source_type" %}
+                    {% set label_function = h.localize_harvester_facet_title %}
+                  {% else %}
+                    {% set label_function = h.localize_json_facet_title %}
+                  {% endif %}
                   {% for item in items %}
                     {% set href = h.remove_url_param(name, item.name, extras=extras, alternative_url=alternative_url) if item.active else h.add_url_param(new_params={name: item.name}, extras=extras, alternative_url=alternative_url) %}
                     {% set label = label_function(item) if label_function else item.display_name %}
