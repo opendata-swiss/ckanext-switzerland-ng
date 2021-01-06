@@ -3,10 +3,6 @@ set -e
 
 echo "This is travis-build.bash..."
 
-echo "PWD"
-echo $PWD
-echo "PWD"
-
 echo "Installing the packages that CKAN requires..."
 sudo apt-get update -qq
 sudo apt-get install solr-jetty libcommons-fileupload-java
@@ -36,10 +32,24 @@ pip install -r requirements.txt
 pip install -r dev-requirements.txt
 cd -
 
-# start up SOLR with default schema.xml first
 echo "Setting up Solr..."
-printf "NO_START=0\nJETTY_HOST=127.0.0.1\nJETTY_PORT=8983\nJAVA_HOME=$JAVA_HOME" | sudo tee /etc/default/jetty
-sudo cp ckan/ckan/config/solr/schema.xml /etc/solr/conf/schema.xml
+
+echo $JAVA_OPTS
+
+printf "NO_START=0\nJETTY_HOST=127.0.0.1\nJETTY_PORT=8983\nJAVA_HOME=$JAVA_HOME\nJAVA_OPTS=\"$JAVA_OPTS\"" | sudo tee /etc/default/jetty
+
+echo "here comes jetty"
+cat /etc/default/jetty
+echo "here comes jetty"
+
+# use ckanext-switzerland custom schema.xml to run tests
+sudo cp solr/schema.xml /etc/solr/conf/schema.xml
+sudo cp solr/fr_elision.txt /etc/solr/conf/fr_elision.txt
+sudo cp solr/german_stop.txt /etc/solr/conf/german_stop.txt
+sudo cp solr/english_stop.txt /etc/solr/conf/english_stop.txt
+sudo cp solr/french_stop.txt /etc/solr/conf/french_stop.txt
+sudo cp solr/italian_stop.txt /etc/solr/conf/italian_stop.txt
+sudo cp solr/german_dictionary.txt /etc/solr/conf/german_dictionary.txt
 sudo service jetty restart
 
 echo "Creating the PostgreSQL user and database..."
@@ -111,17 +121,6 @@ echo "Installing ckanext-switzerland and its requirements..."
 python setup.py develop
 pip install -r requirements.txt
 pip install -r dev-requirements.txt
-
-# use ckanext-switzerland custom schema.xml to run tests
-sudo cp solr/schema.xml /etc/solr/conf/schema.xml
-sudo cp solr/fr_elision.txt /etc/solr/conf/fr_elision.txt
-sudo cp solr/german_stop.txt /etc/solr/conf/german_stop.txt
-sudo cp solr/english_stop.txt /etc/solr/conf/english_stop.txt
-sudo cp solr/french_stop.txt /etc/solr/conf/french_stop.txt
-sudo cp solr/italian_stop.txt /etc/solr/conf/italian_stop.txt
-sudo cp solr/german_dictionary.txt /etc/solr/conf/german_dictionary.txt
-
-sudo service jetty restart
 
 echo "Moving test.ini into a subdir..."
 mkdir subdir

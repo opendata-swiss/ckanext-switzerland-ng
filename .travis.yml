@@ -7,7 +7,7 @@ python:
 - '2.7'
 
 env:
-    - CKANVERSION=2.8
+    - CKANVERSION=2.8 JAVA_OPTS="-Xms2g -Xmx2g -XX:MaxPermSize=1024m"
 
 services:
     - redis-server
