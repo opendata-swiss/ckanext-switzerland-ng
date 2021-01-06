@@ -8,7 +8,7 @@ import ast
 import logging
 from urlparse import urlparse
 from ckan.common import _
-from ckan.lib.helpers import _link_to, url_for
+from ckan.lib.helpers import _link_to, lang, url_for
 from ckan.lib.helpers import dataset_display_name as dataset_display_name_orig
 from ckan.lib.helpers import organization_link as organization_link_orig
 
@@ -17,6 +17,7 @@ import ckan.logic as logic
 import ckan.plugins.toolkit as tk
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 from ckanext.switzerland.helpers.frontend_helpers import get_localized_value_for_display  # noqa
+from ckanext.harvest.helpers import harvester_types
 
 log = logging.getLogger(__name__)
 
@@ -107,6 +108,21 @@ def get_showcase_type_name(showcase_type, lang_code):
         type_string,
         lang_code
     )
+
+
+def localize_showcase_facet_title(facet_item):
+    return get_showcase_type_name(
+        facet_item['display_name'],
+        lang_code=lang()
+    )
+
+
+def localize_harvester_facet_title(facet_item):
+    for type in harvester_types():
+        if type['value'] == facet_item['name']:
+            return type['text']
+
+    return facet_item['display_name']
 
 
 def group_id_in_groups(group_id, groups):
