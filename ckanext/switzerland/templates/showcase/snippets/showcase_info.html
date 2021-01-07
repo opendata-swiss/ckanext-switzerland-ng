@@ -34,7 +34,7 @@ Example:
     </section>
 
     <section class="module module-narrow">
-      <h3 class="module-heading"><i class="fa fa-sitemap icon-medium icon-sitemap"></i> {{ _('Datasets in Showcase') }}</h2>
+      <h3 class="module-heading"><i class="fa fa-sitemap icon-medium icon-sitemap"></i> {{ _('Datasets in Showcase') }}</h3>
       {% if showcase_pkgs %}
         <ul class="nav nav-simple">
         {% for package in showcase_pkgs %}
@@ -45,6 +45,29 @@ Example:
         </ul>
       {% else %}
         <p class="module-content empty">{{_('There are no Datasets in this Showcase')}}</p>
+      {% endif %}
+    </section>
+
+    <section class="module module-narrow">
+      <h3 class="module-heading"><i class="fa fa-sitemap icon-medium icon-sitemap"></i> {{ _('Categories') }}</h3>
+      {% if pkg.groups %}
+        <ul class="nav nav-simple">
+        {% for group in pkg.groups %}
+          {% set truncate_title = truncate_title or 80 %}
+          {% set title = group.title or group.display_name %}
+          <li class="nav-item">{{ h.link_to(h.truncate(title, truncate_title), h.url_for(controller='group', action='read', id=group.name)) }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    </section>
+
+    <section class="module module-narrow">
+      <h3 class="module-heading"><i class="fa fa-sitemap icon-medium icon-sitemap"></i> {{ _('Type of content') }}</h3>
+      {% if pkg.showcase_type %}
+        {% set label_truncated = h.get_showcase_type_name(pkg.showcase_type, h.lang()) %}
+        <ul class="nav nav-simple">
+          <li class="nav-item">{{ h.link_to(label_truncated, h.url_for('ckanext_showcase_index', showcase_type=pkg.showcase_type)) }}</li>
+        </ul>
       {% endif %}
     </section>
   {% endif %}
