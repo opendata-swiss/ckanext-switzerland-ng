@@ -49,7 +49,7 @@ Example:
     </section>
 
     <section class="module module-narrow">
-      <h3 class="module-heading"><i class="fa fa-sitemap icon-medium icon-sitemap"></i> {{ _('Categories') }}</h3>
+      <h3 class="module-heading"><i class="fa fa-folder-open icon-medium icon-sitemap"></i> {{ _('Categories') }}</h3>
       {% if pkg.groups %}
         <ul class="nav nav-simple">
         {% for group in pkg.groups %}
@@ -62,7 +62,7 @@ Example:
     </section>
 
     <section class="module module-narrow">
-      <h3 class="module-heading"><i class="fa fa-sitemap icon-medium icon-sitemap"></i> {{ _('Type of content') }}</h3>
+      <h3 class="module-heading"><i class="fa fa-files-o icon-medium icon-sitemap"></i> {{ _('Type of content') }}</h3>
       {% if pkg.showcase_type %}
         {% set label_truncated = h.get_showcase_type_name(pkg.showcase_type, h.lang()) %}
         <ul class="nav nav-simple">
