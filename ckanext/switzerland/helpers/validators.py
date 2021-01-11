@@ -292,19 +292,13 @@ def ogdch_validate_formfield_publishers(field, schema):
     '[{'label': 'Publisher1'}, {'label': 'Publisher 2}]
     """
     def validator(key, data, errors, context):
-
         extras = data.get(FORM_EXTRAS)
         if extras:
             publishers = get_publishers_from_form(extras)
-
-#            if not publishers:
-#                raise df.Invalid(
-#                    _('At least one publisher must be provided.')  # noqa
-#                )
             if publishers:
                 output = [{'label': publisher} for publisher in publishers]
                 data[key] = json.dumps(output)
-            else:
+            elif not _jsondata_for_key_is_set(data, key):
                 data[key] = '{}'
 
     return validator
@@ -323,15 +317,10 @@ def ogdch_validate_formfield_contact_points(field, schema):
         extras = data.get(FORM_EXTRAS)
         if extras:
             contact_points = get_contact_points_from_form(extras)
-
-#            if not contact_points:
-#                raise df.Invalid(
-#                    _('At least one contact must be provided.')  # noqa
-#                )
             if contact_points:
                 output = contact_points
                 data[key] = json.dumps(output)
-            else:
+            elif not _jsondata_for_key_is_set(data, key):
                 data[key] = '{}'
 
     return validator
@@ -351,12 +340,11 @@ def ogdch_validate_formfield_relations(field, schema):
         extras = data.get(FORM_EXTRAS)
         if extras:
             relations = get_relations_from_form(extras)
-
             if relations:
                 output = [{'label': relation['title'], 'url': relation['url']}
                           for relation in relations]
                 data[key] = json.dumps(output)
-            else:
+            elif not _jsondata_for_key_is_set(data, key):
                 data[key] = '{}'
 
     return validator
@@ -397,7 +385,7 @@ def ogdch_validate_formfield_see_alsos(field, schema):
                         )
         if see_alsos_validated:
             data[key] = json.dumps(see_alsos_validated)
-        else:
+        elif not _jsondata_for_key_is_set(data, key):
             data[key] = '{}'
 
     return validator
@@ -425,7 +413,7 @@ def ogdch_validate_formfield_temporals(field, schema):
                 temporal['end_date'] = date_string_to_timestamp(temporal['end_date'])  # noqa
         if temporals:
             data[key] = json.dumps(temporals)
-        else:
+        elif not _jsondata_for_key_is_set(data, key):
             data[key] = '{}'
 
     return validator
@@ -456,3 +444,12 @@ def ogdch_fluent_tags(field, schema):
         data[key] = json.dumps(value)
 
     return validator
+
+
+def _jsondata_for_key_is_set(data, key):
+    """checks whether a key has already been set in the data: in that case the
+    validator function has been replaced by a json string"""
+    if key in data:
+        return isinstance(data[key], basestring)
+    else:
+        return False
