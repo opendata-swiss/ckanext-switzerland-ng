@@ -5,7 +5,6 @@ echo "This is travis-build.bash..."
 
 echo "Installing the packages that CKAN requires..."
 sudo apt-get update -qq
-sudo apt-get install solr-jetty libcommons-fileupload-java
 
 echo "Installing CKAN and its Python dependencies..."
 git clone https://github.com/ckan/ckan
@@ -33,24 +32,9 @@ pip install -r dev-requirements.txt
 cd -
 
 echo "Setting up Solr..."
-
-echo $JAVA_OPTS
-
-printf "NO_START=0\nJETTY_HOST=127.0.0.1\nJETTY_PORT=8983\nJAVA_HOME=$JAVA_HOME\nJAVA_OPTS=\"$JAVA_OPTS\"" | sudo tee /etc/default/jetty
-
-echo "here comes jetty"
-cat /etc/default/jetty
-echo "here comes jetty"
-
-# use ckanext-switzerland custom schema.xml to run tests
-sudo cp solr/schema.xml /etc/solr/conf/schema.xml
-sudo cp solr/fr_elision.txt /etc/solr/conf/fr_elision.txt
-sudo cp solr/german_stop.txt /etc/solr/conf/german_stop.txt
-sudo cp solr/english_stop.txt /etc/solr/conf/english_stop.txt
-sudo cp solr/french_stop.txt /etc/solr/conf/french_stop.txt
-sudo cp solr/italian_stop.txt /etc/solr/conf/italian_stop.txt
-sudo cp solr/german_dictionary.txt /etc/solr/conf/german_dictionary.txt
-sudo service jetty restart
+docker run --name ckan_solr -p 8983:8983 -e SOLR_HEAP=1024m -v "$PWD/solr:/var/solr" -d solr:6 solr-precreate ckan
+docker exec ckan_solr bash -c "cp /var/solr/* /opt/solr/server/solr/mycores/ckan/conf/"
+docker restart ckan_solr
 
 echo "Creating the PostgreSQL user and database..."
 sudo -u postgres psql -c "CREATE USER ckan_default WITH PASSWORD 'pass';"
