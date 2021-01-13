@@ -5,7 +5,6 @@ echo "This is travis-build.bash..."
 
 echo "Installing the packages that CKAN requires..."
 sudo apt-get update -qq
-sudo apt-get install solr-jetty libcommons-fileupload-java
 
 echo "Installing CKAN and its Python dependencies..."
 git clone https://github.com/ckan/ckan
@@ -33,9 +32,9 @@ pip install -r dev-requirements.txt
 cd -
 
 echo "Setting up Solr..."
-printf "NO_START=0\nJETTY_HOST=127.0.0.1\nJETTY_PORT=8983\nJAVA_HOME=$JAVA_HOME" | sudo tee /etc/default/jetty
-sudo cp ckan/ckan/config/solr/schema.xml /etc/solr/conf/schema.xml
-sudo service jetty restart
+docker run --name ckan_solr -p 8983:8983 -e SOLR_HEAP=1024m -v "$PWD/solr:/var/solr" -d solr:6 solr-precreate ckan
+docker exec ckan_solr bash -c "cp /var/solr/* /opt/solr/server/solr/mycores/ckan/conf/"
+docker restart ckan_solr
 
 echo "Creating the PostgreSQL user and database..."
 sudo -u postgres psql -c "CREATE USER ckan_default WITH PASSWORD 'pass';"
@@ -102,7 +101,7 @@ cd ckanext-showcase
 python setup.py develop
 cd -
 
-echo "Installing ckanext-ckanext-switzerland and its requirements..."
+echo "Installing ckanext-switzerland and its requirements..."
 python setup.py develop
 pip install -r requirements.txt
 pip install -r dev-requirements.txt

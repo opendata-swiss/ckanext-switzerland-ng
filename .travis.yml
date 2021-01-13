@@ -10,6 +10,7 @@ env:
     - CKANVERSION=2.8
 
 services:
+    - docker
     - redis-server
     - postgresql
 
