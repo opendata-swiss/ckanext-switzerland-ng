@@ -49,7 +49,6 @@ echo "Installing ckanext-scheming and its requirements..."
 git clone https://github.com/ckan/ckanext-scheming
 cd ckanext-scheming
 python setup.py develop
-pip install -r requirements.txt
 cd -
 
 echo "Installing ckanext-fluent and its requirements..."

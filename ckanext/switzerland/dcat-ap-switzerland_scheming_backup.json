@@ -31,6 +31,7 @@
         "it": "Titolo"
       },
       "preset": "multilingual_text_full",
+      "validators": "ogdch_required_in_one_language",
       "section_title": "Dataset",
       "subheader": "Dataset Title",
       "mark_required": true,
@@ -71,7 +72,6 @@
         "it": "Data di pubblicazione sul portale (Imposta la visibilità su bozza per pubblicare automaticamente il set di dati)"
       },
       "preset": "ogdch_date",
-      "required": false,
       "ogdch_help_text": "Setting this date in the future will publish this dataset on the specified date."
     },
     {
@@ -105,6 +105,7 @@
         "it": "Descrizione"
       },
       "preset": "multilingual_markdown",
+      "validators": "ogdch_required_in_one_language",
       "section_title": "Dataset Information",
       "subheader": "Dataset Description",
       "mark_required": true,
@@ -120,7 +121,7 @@
         "it": "Data di rilascio"
       },
       "preset": "ogdch_date",
-      "required": false,
+      "validators": "not_empty scheming_required date_string_to_timestamp",
       "section_title": "Data"
     },
     {
@@ -143,7 +144,6 @@
       },
       "display_snippet": "periodicity.html",
       "preset": "select",
-      "validators": "scheming_required ogdch_temp_scheming_choices",
       "choices_helper": "ogdch_get_accrual_periodicity_choices"
     },
     {
@@ -260,7 +260,8 @@
         "fr": "Landing page",
         "it": "Landing page"
       },
-      "preset": "url"
+      "preset": "url",
+      "validators": "not_empty scheming_required"
     },
     {
       "field_name": "spatial",
@@ -364,7 +365,6 @@
         "it": "Data di rilascio"
       },
       "preset": "ogdch_date",
-      "required": false,
       "help_text": "Datum der Veröffentlichung dieser Ressource."
     },
     {

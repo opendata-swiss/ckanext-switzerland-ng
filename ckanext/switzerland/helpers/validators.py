@@ -2,6 +2,7 @@ from ckan.plugins.toolkit import missing, _
 import ckan.lib.navl.dictization_functions as df
 import ckan.plugins.toolkit as tk
 from ckanext.fluent.helpers import fluent_form_languages
+from ckanext.scheming.helpers import scheming_field_choices
 from ckanext.scheming.validation import scheming_validator
 from ckanext.switzerland.helpers.localize_utils import parse_json
 from ckanext.switzerland.helpers.dataset_form_helpers import (
@@ -20,6 +21,8 @@ log = logging.getLogger(__name__)
 HARVEST_JUNK = ('__junk',)
 FORM_EXTRAS = ('__extras',)
 HARVEST_USER = 'harvest'
+
+OneOf = tk.get_validator('OneOf')
 
 
 @scheming_validator
@@ -442,6 +445,30 @@ def ogdch_fluent_tags(field, schema):
                 value[lang] = []
 
         data[key] = json.dumps(value)
+
+    return validator
+
+
+@scheming_validator
+def ogdch_temp_scheming_choices(field, schema):
+    """
+    Version of scheming_choices validator that allows inputs not included in
+    the provided selection. Only used temporarily, while we transition to the
+    new ogdch version and want to import existing datasets that have invalid
+    data.
+    """
+    if 'choices' in field:
+        return OneOf([c['value'] for c in field['choices']])
+
+    def validator(value):
+        if value is missing or not value:
+            return value
+        choices = scheming_field_choices(field)
+        for c in choices:
+            if value == c['value']:
+                return value
+        log.info(_('unexpected choice "%s"') % value)
+        return value
 
     return validator
 
