@@ -339,7 +339,14 @@ def _create_or_update_dataset(dataset):
         # Create datasets as private initially
         dataset['private'] = True
 
-        tk.get_action('package_create')(context, dataset)
+        try:
+            tk.get_action('package_create')(context, dataset)
+        except ValidationError as e:
+            h.flash_error(
+                'Error importing dataset %s: %r' %
+                (dataset.get('name', ''), e.error_summary))
+
+            return
 
         h.flash_success(
             'Created dataset %s. The dataset visibility is private.' %
