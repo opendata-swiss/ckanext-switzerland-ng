@@ -54,7 +54,7 @@ def get_localized_value_from_dict(value, lang_code, default=''):
     returns value if it is not a language dict"""
     if not isinstance(value, dict):
         return value
-    elif set(value.keys()) != LANGUAGES:
+    elif not LANGUAGES.issubset(set(value.keys())):
         return value
     desired_lang_value = value.get(lang_code)
     if desired_lang_value:
@@ -78,6 +78,11 @@ def localize_by_language_order(multi_language_field, default=''):
         return multi_language_field['en']
     elif multi_language_field.get('it'):
         return multi_language_field['it']
+    elif multi_language_field.get('rm'):
+        # Sometimes we get resources with only Rumantsch titles.
+        # Any resources with info in other languages should also have at least
+        # one of de/fr/en/it, so there's no reason to handle those here.
+        return multi_language_field['rm']
     else:
         return default
 
