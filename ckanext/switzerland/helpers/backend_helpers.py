@@ -261,3 +261,17 @@ def resource_link(resource_dict, package_id):
                   id=package_id,
                   resource_id=resource_dict['id'])
     return _link_to(text, url)
+
+
+def ogdch_get_top_level_organisations():
+    """
+    get the top level organisations as parent choices for suborganisations
+    """
+    context = {'ignore_auth': True}
+    data_dict = {'all_fields': True, 'include_groups': True}
+    try:
+        all_organizations = tk.get_action('organization_list')(context, data_dict)  # noqa
+        parent_organizations = [organization for organization in all_organizations if not organization.get('groups') ]  # noqa
+        return parent_organizations
+    except tk.ObjectNotFound:
+        return []
