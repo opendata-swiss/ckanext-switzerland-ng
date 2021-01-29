@@ -270,10 +270,8 @@ def ogdch_get_top_level_organisations():
     context = {'ignore_auth': True}
     data_dict = {'all_fields': True, 'include_groups': True}
     try:
-        all_organizations = tk.get_action('organization_list')(
-            context, data_dict)
-        parent_organizations = [organization for organization in all_organizations  # noqa
-                if not organization.get('groups') ]
+        all_organizations = tk.get_action('organization_list')(context, data_dict)  # noqa
+        parent_organizations = [organization for organization in all_organizations if not organization.get('groups') ]  # noqa
         return parent_organizations
     except tk.ObjectNotFound:
         return []
