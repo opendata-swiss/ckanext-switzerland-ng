@@ -3,12 +3,14 @@ helpers of the plugins.py
 """
 import json
 import re
+import datetime
 from ckan import logic
 import ckan.plugins.toolkit as toolkit
 from ckan.lib.munge import munge_title_to_name
 import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
 import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
+import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
 
 
 def _prepare_suggest_context(search_data, pkg_dict):
@@ -206,6 +208,17 @@ def ogdch_prepare_pkg_dict_for_api(pkg_dict):
             }
         )
 
+    if ogdch_request_utils.request_is_api_request():
+        # transform date fields in isodates
+        pkg_dict['issued'] = _transform_datetime_to_isoformat(pkg_dict['issued'])  # noqa
+        pkg_dict['modified'] = _transform_datetime_to_isoformat(pkg_dict['modified'])   # noqa
+        for temporal in pkg_dict['temporals']:
+            if temporal.get('start_date'):
+                temporal['start_date'] = _transform_datetime_to_isoformat(temporal['start_date'])   # noqa
+                temporal['end_date'] = _transform_datetime_to_isoformat(temporal['end_date'])   # noqa
+        for resource in pkg_dict['resources']:
+            resource['issued'] = _transform_datetime_to_isoformat(resource['issued'])   # noqa
+            resource['modified'] = _transform_datetime_to_isoformat(resource['modified'])   # noqa
     return pkg_dict
 
 
@@ -260,3 +273,13 @@ def ogdch_adjust_search_params(search_params):
     search_params['q'] = re.sub(r":\s", " ", q)
 
     return search_params
+
+
+def _transform_datetime_to_isoformat(value):
+    """derive isoformat from datepicker date format"""
+    try:
+        date_format = toolkit.config.get('ckanext.switzerland.date_picker_format')   # noqa
+        d = datetime.datetime.strptime(value, date_format)
+        return d.isoformat()
+    except ValueError:
+        return ""
