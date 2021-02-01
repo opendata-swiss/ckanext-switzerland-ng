@@ -292,8 +292,6 @@ def _create_or_update_dataset(dataset):
     user = tk.get_action('get_site_user')({'ignore_auth': True}, {})
     context.update({'user': user['name']})
 
-    tk.check_access('package_show', {})
-
     harvester = SwissDCATRDFHarvester()
     name = harvester._gen_new_name(dataset['title'])
 
