@@ -13,6 +13,7 @@ from babel import numbers
 from ckan.lib.formatters import localised_nice_date
 from ckan.lib.helpers import lang, url_for, localised_number
 import ckan.lib.i18n as i18n
+from ckanext.hierarchy.helpers import group_tree
 import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
 import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 
@@ -196,16 +197,23 @@ def ogdch_localised_number(number):
         return localised_number(number)
 
 
-def ogdch_render_tree():
-    '''Returns HTML for a hierarchy of all publishers'''
-    top_nodes = ogdch_group_tree()
+def ogdch_render_tree(organizations=None):
+    """
+    Returns HTML for a hierarchy of given organizations
+    """
+    if organizations:
+        top_nodes = ogdch_group_tree_selective(organizations, group_tree(
+            type_='organization'))
+    else:
+        top_nodes = ogdch_group_tree()
     return _render_tree(top_nodes)
 
 
 def _render_tree(top_nodes):
-    '''Renders a tree of nodes. 10x faster than Jinja/organization_tree.html
+    """
+    Renders a tree of nodes. 10x faster than Jinja/organization_tree.html
     Note: avoids the slow url_for routine.
-    '''
+    """
     html = '<ul id="organizations-list">'
     for node in top_nodes:
         html += _render_tree_node(node)
@@ -232,6 +240,31 @@ def ogdch_group_tree(type_='organization'):
     )
     organizations = get_sorted_orgs_by_translated_title(organizations)
     return organizations
+
+
+def ogdch_group_tree_selective(organizations, group_tree_list):
+    """"
+    Return a group tree filtered to include the given organizations.
+    If a sub-organization should be included, its parent is included too.
+    """
+    def filter(group_tree_list, name_list):
+        new_group_tree_list = []
+        for tree in group_tree_list:
+            new_children = []
+            for child in tree.get('children', []):
+                if child.get('name', "") in name_list:
+                    new_children.append(child)
+            if tree.get('name', "") in name_list or\
+                    len(new_children) > 0:
+                tree['children'] = new_children
+                new_group_tree_list.append(tree)
+        return new_group_tree_list
+
+    selected_names = [o.get('name', None) for o in organizations]
+
+    group_tree_list = filter(group_tree_list, selected_names)
+    group_tree_list = get_sorted_orgs_by_translated_title(group_tree_list)
+    return group_tree_list
 
 
 def get_sorted_orgs_by_translated_title(organizations):
