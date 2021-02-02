@@ -239,6 +239,7 @@ class OgdchOrganizationController(organization.OrganizationController):
                 'sort': sort_by,
                 'type': group_type or 'group',
                 'include_extras': True,
+                'include_dataset_count': False,
             }
             global_results = self._action('group_list')(
                 context, data_dict_global_results)
