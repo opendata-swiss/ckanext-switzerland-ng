@@ -206,21 +206,19 @@ class OgdchOrganizationController(organization.OrganizationController):
         return
 
     """
-    Disable the standard search on the Organization index page.
-    It passes the q parameter to the template to render it in the searchbox
+    Disable pagination on the Organization index page, because it doesn't work
+    well with the ckanext-hierarchy display.
     """
     def index(self):
         group_type = self._guess_group_type()
 
         page = h.get_page_number(request.params) or 1
-        items_per_page = 21
 
         context = {'model': model, 'session': model.Session,
                    'user': c.user, 'for_view': True,
                    'with_private': False}
 
-        # disable search by setting this to an empty string
-        q = c.q = ''
+        q = c.q = request.params.get('q', '')
         sort_by = c.sort_by_selected = request.params.get('sort')
         try:
             self._check_access('site_read', context)
@@ -236,10 +234,12 @@ class OgdchOrganizationController(organization.OrganizationController):
 
         try:
             data_dict_global_results = {
-                'all_fields': False,
+                'all_fields': True,
                 'q': q,
                 'sort': sort_by,
                 'type': group_type or 'group',
+                'include_extras': True,
+                'include_dataset_count': False,
             }
             global_results = self._action('group_list')(
                 context, data_dict_global_results)
@@ -253,26 +253,14 @@ class OgdchOrganizationController(organization.OrganizationController):
             return render(self._index_template(group_type),
                           extra_vars={'group_type': group_type})
 
-        data_dict_page_results = {
-            'all_fields': True,
-            'q': q,
-            'sort': sort_by,
-            'type': group_type or 'group',
-            'limit': items_per_page,
-            'offset': items_per_page * (page - 1),
-            'include_extras': True
-        }
-        page_results = self._action('group_list')(context,
-                                                  data_dict_page_results)
-
         c.page = h.Page(
             collection=global_results,
             page=page,
             url=h.pager_url,
-            items_per_page=items_per_page,
+            items_per_page=len(global_results),
         )
 
-        c.page.items = page_results
+        c.page.items = global_results
         return render(self._index_template(group_type),
                       extra_vars={
                           'group_type': group_type,
