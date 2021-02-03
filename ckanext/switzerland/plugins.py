@@ -90,6 +90,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         # the IFacets implementation of CKAN 2.4 is broken,
         # clear the dict instead and change the passed in argument
         facets_dict.clear()
+        facets_dict['private'] = plugins.toolkit._('Draft')
         facets_dict['keywords_' + lang_code] = plugins.toolkit._('Keywords')
         facets_dict['organization'] = plugins.toolkit._('Organizations')
         facets_dict['political_level'] = plugins.toolkit._('Political levels')
@@ -103,6 +104,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         # the IFacets implementation of CKAN 2.4 is broken,
         # clear the dict instead and change the passed in argument
         facets_dict.clear()
+        facets_dict['private'] = plugins.toolkit._('Draft')
         facets_dict['groups'] = plugins.toolkit._('Categories')
         facets_dict['keywords_' + lang_code] = plugins.toolkit._('Keywords')
         facets_dict['res_rights'] = plugins.toolkit._('Terms of use')
