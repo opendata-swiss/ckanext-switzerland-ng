@@ -88,15 +88,23 @@ def timestamp_to_date_string(value):
     """
     Return a date string formatted for the datepicker (DD.MM.YYYY) for a given
     POSIX timestamp (1234567890).
-    If we get a ValueError, the value is probably already formatted, so just
-    return it.
     """
     try:
         dt = datetime.datetime.fromtimestamp(int(value))
-        date_format = tk.config.get('ckanext.switzerland.date_picker_format')
+    except ValueError:
+        # The value is probably already formatted, so just return it.
+        return value
+
+    date_format = tk.config.get('ckanext.switzerland.date_picker_format')
+    try:
         return dt.strftime(date_format)
     except ValueError:
-        return value
+        # The date is before 1900 so we have to format it ourselves.
+        # See the docs for the Python 2 time library:
+        # https://docs.python.org/2.7/library/time.html
+        return date_format.replace('%d', str(dt.day).zfill(2))\
+            .replace('%m', str(dt.month).zfill(2))\
+            .replace('%Y', str(dt.year))
 
 
 def temporals_to_datetime_output(value):
