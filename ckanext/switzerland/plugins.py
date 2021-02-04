@@ -168,8 +168,13 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_date_form_helper': ogdch_dataset_form_helpers.ogdch_date_form_helper,  # noqa
             'ogdch_temporals_form_helper': ogdch_dataset_form_helpers.ogdch_temporals_form_helper,  # noqa
             'ogdch_dataset_title_form_helper': ogdch_dataset_form_helpers.ogdch_dataset_title_form_helper,  # noqa
-            'resource_display_name': ogdch_backend_helpers.ogdch_resource_display_name,  # noqa
             'ogdch_get_top_level_organisations': ogdch_backend_helpers.ogdch_get_top_level_organisations,  # noqa
+            # monkey patch template helpers to return translated names/titles
+            'resource_display_name': ogdch_backend_helpers.ogdch_resource_display_name,  # noqa
+            'dataset_display_name': ogdch_backend_helpers.dataset_display_name,
+            'group_link': ogdch_backend_helpers.group_link,
+            'resource_link': ogdch_backend_helpers.resource_link,
+            'organization_link': ogdch_backend_helpers.organization_link,
         }
 
     # IRouter
@@ -213,13 +218,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
                     action='xml_upload')
 
         return map
-
-
-# monkey patch template helpers to return translated names/titles
-h.dataset_display_name = ogdch_backend_helpers.dataset_display_name
-h.group_link = ogdch_backend_helpers.group_link
-h.resource_link = ogdch_backend_helpers.resource_link
-h.organization_link = ogdch_backend_helpers.organization_link
 
 
 class OgdchMixin(object):
