@@ -184,7 +184,7 @@ def ogdch_resource_display_name(res):
     extracts the correct translation of the dataset name, and substitutes the
     package title if there is no resource name
     """
-    resource_display_name = res.get('name')
+    resource_display_name = get_localized_value_for_display(res.get('name'))
     if not resource_display_name:
         try:
             pkg = logic.get_action('package_show')(
