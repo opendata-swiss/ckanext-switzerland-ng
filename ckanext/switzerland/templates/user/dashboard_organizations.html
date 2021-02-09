@@ -14,7 +14,7 @@
      include_dataset_count=True) %}
   {% if organizations %}
     <div class="wide">
-      {% snippet "organization/snippets/organization_list.html", organizations=organizations, show_capacity=True %}
+      {% snippet "user/dashboard_organization_list.html", organizations=organizations, show_capacity=True %}
     </div>
   {% else %}
     <p class="empty">
