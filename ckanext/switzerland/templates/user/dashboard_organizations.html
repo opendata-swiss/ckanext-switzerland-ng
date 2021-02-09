@@ -13,8 +13,17 @@
   {% set organizations = h.organizations_available(permission='manage_group',
      include_dataset_count=True) %}
   {% if organizations %}
-    <div class="wide">
-      {% snippet "user/dashboard_organization_list.html", organizations=organizations, show_capacity=True %}
+    <div class="organization-hierarchy empty-search">
+      <ul id="organizations-list">
+      {% for org in organizations %}
+        <li id="{{org.name}}" class="organization">
+          <div class="organization-row">
+            {% set org = h.get_localized_org(org.name) %}
+            {% link_for org.title, controller='organization', action='read', id=org.name %}
+          </div>
+        </li>
+      {% endfor %}
+      </ul>
     </div>
   {% else %}
     <p class="empty">
