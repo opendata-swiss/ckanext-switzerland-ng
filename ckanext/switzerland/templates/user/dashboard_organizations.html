@@ -1,0 +1,32 @@
+{% extends "user/dashboard.html" %}
+
+{% block dashboard_activity_stream_context %}{% endblock %}
+
+{% block page_primary_action %}{% endblock %}
+
+{% block primary_content_inner %}
+  <h2 class="hide-heading">{{ _('My Organizations') }}</h2>
+  {% set organizations = h.organizations_available(permission='manage_group',
+     include_dataset_count=True) %}
+  {% if organizations %}
+    <div class="organization-hierarchy empty-search">
+      <ul id="organizations-list">
+      {% for org in organizations %}
+        <li id="{{org.name}}" class="organization">
+          <div class="organization-row">
+            {% set org = h.get_localized_org(org.name) %}
+            {% link_for org.title, controller='organization', action='read', id=org.name %}
+          </div>
+        </li>
+      {% endfor %}
+      </ul>
+    </div>
+  {% else %}
+    <p class="empty">
+      {{ _('You are not a member of any organizations.') }}
+      {% if h.check_access('organization_create') %}
+        {% link_for _('Create one now?'), controller='organization', action='new' %}
+      {% endif %}
+    </p>
+  {% endif %}
+{% endblock %}
