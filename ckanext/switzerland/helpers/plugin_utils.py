@@ -209,9 +209,13 @@ def ogdch_prepare_pkg_dict_for_api(pkg_dict):
         )
 
     if ogdch_request_utils.request_is_api_request():
-        # transform date fields in isodates
-        pkg_dict['issued'] = _transform_datetime_to_isoformat(pkg_dict['issued'])  # noqa
-        pkg_dict['modified'] = _transform_datetime_to_isoformat(pkg_dict['modified'])   # noqa
+        # transform date fields into isodates
+        if pkg_dict.get('issued'):
+            pkg_dict['issued'] = _transform_datetime_to_isoformat(
+                pkg_dict['issued'])
+        if pkg_dict.get('modified'):
+            pkg_dict['modified'] = _transform_datetime_to_isoformat(
+                pkg_dict['modified'])
         for temporal in pkg_dict['temporals']:
             if temporal.get('start_date'):
                 temporal['start_date'] = _transform_datetime_to_isoformat(temporal['start_date'])   # noqa
