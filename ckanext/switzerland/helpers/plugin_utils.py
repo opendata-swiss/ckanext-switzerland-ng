@@ -218,11 +218,15 @@ def ogdch_prepare_pkg_dict_for_api(pkg_dict):
                 pkg_dict['modified'])
         for temporal in pkg_dict['temporals']:
             if temporal.get('start_date'):
-                temporal['start_date'] = _transform_datetime_to_isoformat(temporal['start_date'])   # noqa
-                temporal['end_date'] = _transform_datetime_to_isoformat(temporal['end_date'])   # noqa
+                temporal['start_date'] = _transform_datetime_to_isoformat(
+                    temporal['start_date'])
+                temporal['end_date'] = _transform_datetime_to_isoformat(
+                    temporal['end_date'])
         for resource in pkg_dict['resources']:
-            resource['issued'] = _transform_datetime_to_isoformat(resource['issued'])   # noqa
-            resource['modified'] = _transform_datetime_to_isoformat(resource['modified'])   # noqa
+            resource['issued'] = _transform_datetime_to_isoformat(
+                resource['issued'])
+            resource['modified'] = _transform_datetime_to_isoformat(
+                resource['modified'])
     return pkg_dict
 
 
