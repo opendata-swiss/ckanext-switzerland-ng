@@ -25,6 +25,8 @@
   <div class="reset-search">
     {% if c.group_dict.name %}
       <a href="{{ h.url_for(controller=c.controller, action=c.action, id=c.group_dict.name) }}"><i class="fa fa-times-circle" aria-hidden="true"></i> {{ _('Reset search') }}</a>
+    {% elif c.dataset_type == 'harvest' %}
+      <a href="{{ h.url_for('harvest_search') }}"><i class="fa fa-times-circle" aria-hidden="true"></i> {{ _('Reset search') }}</a>
     {% else %}
       <a href="{{ h.url_for(controller=c.controller, action=c.action) }}"><i class="fa fa-times-circle" aria-hidden="true"></i> {{ _('Reset search') }}</a>
     {% endif %}
