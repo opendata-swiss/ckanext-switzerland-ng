@@ -30,6 +30,8 @@
       </dd>
     {%- endif -%}
   {%- endfor -%}
+  <dt class="dataset-label">{{ _('Terms of use') }}</dt>
+  <dd class="dataset-details">{{ h.get_dataset_terms_of_use(pkg_dict) }}</dd>
   <dt class="dataset-label">{{ _('Metadata Access') }}</dt>
   <dd class="dataset-details">
       <a href="/api/3/action/package_show?id={{ pkg_dict.name }}" class="btn btn-primary btn-xs" role="button" target="_blank" >
