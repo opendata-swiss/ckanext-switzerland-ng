@@ -9,7 +9,7 @@
        </a>
      </li>
      <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'harvest') }}">
-       {{ h.nav_link(_('Harvest Sources'), named_route='{0}_search'.format('harvest')) }}
+       {{ h.nav_link(_('Harvest Sources'), named_route='harvest_search') }}
      </li>
      <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'dataset') }}">
          {{ h.nav_link(_('Datasets'), named_route='search') }}
