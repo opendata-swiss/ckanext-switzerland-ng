@@ -278,13 +278,16 @@ def _transform_package_dates(pkg_dict):
         if temporal.get('start_date'):
             temporal['start_date'] = _transform_datetime_to_isoformat(
                 temporal['start_date'])
+        if temporal.get('end_date'):
             temporal['end_date'] = _transform_datetime_to_isoformat(
                 temporal['end_date'])
     for resource in pkg_dict['resources']:
-        resource['issued'] = _transform_datetime_to_isoformat(
-            resource['issued'])
-        resource['modified'] = _transform_datetime_to_isoformat(
-            resource['modified'])
+        if resource.get('issued'):
+            resource['issued'] = _transform_datetime_to_isoformat(
+                resource['issued'])
+        if resource.get('modified'):
+            resource['modified'] = _transform_datetime_to_isoformat(
+                resource['modified'])
 
 
 def _transform_datetime_to_isoformat(value):
