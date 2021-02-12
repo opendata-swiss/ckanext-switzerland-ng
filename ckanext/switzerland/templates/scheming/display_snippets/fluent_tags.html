@@ -2,9 +2,10 @@
 {% block tag_list %}
   <ul class="tag-list">
     {% for tag in data[field.field_name] %}
+      {% set tag_dict = {'keywords_' + h.lang(): tag} %}
       <li>
-        <a class="{% block tag_list_item_class %}tag{% endblock %}" href="{%
-          url_for controller='package', action='search', tags=tag %}">{{
+        <a class="{% block tag_list_item_class %}tag{% endblock %}" href="{{
+          h.url_for(controller='package', action='search', **tag_dict) }}">{{
             h.truncate(tag, 22) }}</a>
       </li>
     {% endfor %}
