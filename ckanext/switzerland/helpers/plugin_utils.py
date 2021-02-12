@@ -209,16 +209,8 @@ def ogdch_prepare_pkg_dict_for_api(pkg_dict):
         )
 
     if ogdch_request_utils.request_is_api_request():
-        # transform date fields in isodates
-        pkg_dict['issued'] = _transform_datetime_to_isoformat(pkg_dict['issued'])  # noqa
-        pkg_dict['modified'] = _transform_datetime_to_isoformat(pkg_dict['modified'])   # noqa
-        for temporal in pkg_dict['temporals']:
-            if temporal.get('start_date'):
-                temporal['start_date'] = _transform_datetime_to_isoformat(temporal['start_date'])   # noqa
-                temporal['end_date'] = _transform_datetime_to_isoformat(temporal['end_date'])   # noqa
-        for resource in pkg_dict['resources']:
-            resource['issued'] = _transform_datetime_to_isoformat(resource['issued'])   # noqa
-            resource['modified'] = _transform_datetime_to_isoformat(resource['modified'])   # noqa
+        _transform_package_dates(pkg_dict)
+
     return pkg_dict
 
 
@@ -273,6 +265,26 @@ def ogdch_adjust_search_params(search_params):
     search_params['q'] = re.sub(r":\s", " ", q)
 
     return search_params
+
+
+def _transform_package_dates(pkg_dict):
+    if pkg_dict.get('issued'):
+        pkg_dict['issued'] = _transform_datetime_to_isoformat(
+            pkg_dict['issued'])
+    if pkg_dict.get('modified'):
+        pkg_dict['modified'] = _transform_datetime_to_isoformat(
+            pkg_dict['modified'])
+    for temporal in pkg_dict['temporals']:
+        if temporal.get('start_date'):
+            temporal['start_date'] = _transform_datetime_to_isoformat(
+                temporal['start_date'])
+            temporal['end_date'] = _transform_datetime_to_isoformat(
+                temporal['end_date'])
+    for resource in pkg_dict['resources']:
+        resource['issued'] = _transform_datetime_to_isoformat(
+            resource['issued'])
+        resource['modified'] = _transform_datetime_to_isoformat(
+            resource['modified'])
 
 
 def _transform_datetime_to_isoformat(value):
