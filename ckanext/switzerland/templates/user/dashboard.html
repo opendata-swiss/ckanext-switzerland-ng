@@ -8,8 +8,7 @@
           {% link_for _('Edit settings'), named_route='user.edit', id=user.name, class_='btn btn-default', icon='cog' %}
         </div>
         <ul class="nav nav-tabs">
-          {{ h.build_nav_icon('dashboard.index', _('News feed')) }}
-          {{ h.build_nav_icon('dashboard.datasets', _('My Datasets')) }}
+          {{ h.build_nav_icon('dashboard.index', _('My Datasets')) }}
           {{ h.build_nav_icon('dashboard.organizations', _('My Organizations')) }}
         </ul>
       </header>
@@ -17,22 +16,25 @@
     <div class="module-content">
       {% if self.page_primary_action() | trim %}
         <div class="page_primary_action">
-          {% block page_primary_action %}{% endblock %}
+          {% block page_primary_action %}
+            {% if h.check_access('package_create') %}
+              {% snippet 'snippets/add_dataset.html' %}
+            {% endif %}
+          {% endblock %}
         </div>
       {% endif %}
       {% block primary_content_inner %}
-        <div data-module="dashboard">
-          {% snippet 'user/snippets/followee_dropdown.html', context=dashboard_activity_stream_context, followees=followee_list %}
-          <h2 class="page-heading">
-            {% block page_heading %}
-              {{ _('News feed') }}
-            {% endblock %}
-            <small>{{ _("Activity from items that I'm following") }}</small>
-          </h2>
-          {% block activity_stream %}
-            {{ dashboard_activity_stream|safe }}
-          {% endblock %}
-        </div>
+        <h2 class="hide-heading">{{ _('My Datasets') }}</h2>
+        {% if user_dict.datasets %}
+          {% snippet 'snippets/package_list.html', packages=user_dict.datasets %}
+        {% else %}
+          <p class="empty">
+            {{ _('You haven\'t created any datasets.') }}
+            {% if h.check_access('package_create') %}
+              {% link_for _('Create one now?'), controller='package', action='new' %}
+            {% endif %}
+          </p>
+        {% endif %}
       {% endblock %}
     </div>
   </article>

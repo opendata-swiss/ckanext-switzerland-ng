@@ -17,6 +17,11 @@
   {% endblock %}
 {% endblock %}
 
+{% block content_primary_nav %}
+  {{ h.build_nav_icon(group_type + '_read', _('Datasets'), id=c.group_dict.name) }}
+  {{ h.build_nav_icon(group_type + '_about', _('About'), id=c.group_dict.name) }}
+{% endblock %}
+
 {% block secondary_content %}
   {% snippet "group/snippets/info.html", group=group, show_nums=false, schema=schema, display_name=display_name %}
 {% endblock %}

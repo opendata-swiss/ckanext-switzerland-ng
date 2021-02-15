@@ -151,7 +151,8 @@ def get_terms_of_use_url(terms_of_use):
 
 
 def get_dataset_terms_of_use(pkg):
-    rights = logic.get_action('ogdch_dataset_terms_of_use')({}, {'id': pkg})
+    rights = logic.get_action('ogdch_dataset_terms_of_use')(
+        {}, {'id': pkg['id']})
     return rights['dataset_rights']
 
 
