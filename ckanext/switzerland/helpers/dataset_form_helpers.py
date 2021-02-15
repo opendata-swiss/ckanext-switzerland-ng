@@ -255,7 +255,8 @@ def ogdch_date_form_helper(date_value):
     empty. In these cases, an empty string is returned.
     """
     if date_value and date_value != 'False':
-        date_format = tk.config.get('ckanext.switzerland.date_picker_format')
+        date_format = tk.config.get(
+            'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
         try:
             # Posix timestamp
             dt = datetime.datetime.fromtimestamp(int(date_value))
