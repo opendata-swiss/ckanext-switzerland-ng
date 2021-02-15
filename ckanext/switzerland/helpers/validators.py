@@ -75,7 +75,8 @@ def date_string_to_timestamp(value):
     Necessary as the date form submits dates in this format.
     """
     try:
-        date_format = tk.config.get('ckanext.switzerland.date_picker_format')
+        date_format = tk.config.get(
+            'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
         d = datetime.datetime.strptime(str(value), date_format)
         epoch = datetime.datetime(1970, 1, 1)
 
@@ -95,7 +96,8 @@ def timestamp_to_date_string(value):
         # The value is probably already formatted, so just return it.
         return value
 
-    date_format = tk.config.get('ckanext.switzerland.date_picker_format')
+    date_format = tk.config.get(
+        'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
     try:
         return dt.strftime(date_format)
     except ValueError:

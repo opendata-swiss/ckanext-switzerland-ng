@@ -293,7 +293,8 @@ def _transform_package_dates(pkg_dict):
 def _transform_datetime_to_isoformat(value):
     """derive isoformat from datepicker date format"""
     try:
-        date_format = toolkit.config.get('ckanext.switzerland.date_picker_format')   # noqa
+        date_format = toolkit.config.get(
+            'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
         d = datetime.datetime.strptime(value, date_format)
         return d.isoformat()
     except ValueError:

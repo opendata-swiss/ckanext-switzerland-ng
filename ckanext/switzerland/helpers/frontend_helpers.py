@@ -306,7 +306,8 @@ def get_localized_date(date_string):
     e.g. '24. Juni 2020'.
     """
     try:
-        date_format = tk.config.get('ckanext.switzerland.date_picker_format')
+        date_format = tk.config.get(
+            'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
         dt = datetime.datetime.strptime(date_string, date_format)
         return localised_nice_date(dt, show_date=True, with_hours=False)
     except ValueError:
