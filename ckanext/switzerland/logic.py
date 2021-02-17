@@ -24,6 +24,7 @@ from ckanext.switzerland.helpers.request_utils import get_content_headers
 from ckanext.switzerland.helpers.logic_helpers import (
     get_dataset_count, get_org_count, get_showcases_for_dataset,
     map_existing_resources_to_new_dataset)
+import ckanext.s3filestore.uploader as s3_uploader
 
 import logging
 
@@ -233,7 +234,13 @@ def ogdch_xml_upload(context, data_dict):
     data = data_dict.get('data')
     org_id = data_dict.get('organization')
 
-    upload = uploader.get_uploader('dataset_xml')
+    if tk.config.get('ckanext.s3filestore.aws_bucket_name'):
+        upload = s3_uploader.S3Uploader('dataset_xml')
+    else:
+        upload = uploader.Upload('dataset_xml')
+    log.warning(upload)
+    log.warning(upload.storage_path)
+
     upload.update_data_dict(data, 'dataset_xml',
                             'file_upload', 'clear_upload')
     upload.upload()
