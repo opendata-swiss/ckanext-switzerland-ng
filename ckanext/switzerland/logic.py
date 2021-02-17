@@ -24,7 +24,6 @@ from ckanext.switzerland.helpers.request_utils import get_content_headers
 from ckanext.switzerland.helpers.logic_helpers import (
     get_dataset_count, get_org_count, get_showcases_for_dataset,
     map_existing_resources_to_new_dataset)
-import ckanext.s3filestore.uploader as s3_uploader
 
 import logging
 
@@ -234,31 +233,24 @@ def ogdch_xml_upload(context, data_dict):
     data = data_dict.get('data')
     org_id = data_dict.get('organization')
 
-    if tk.config.get('ckanext.s3filestore.aws_bucket_name'):
-        upload = s3_uploader.S3Uploader('dataset_xml')
-    else:
-        upload = uploader.Upload('dataset_xml')
-    log.warning(upload)
-    log.warning(upload.storage_path)
-
+    # Don't use uploader.get_uploader(), as this will return the S3Uploader.
+    # We want to process the file locally and then delete it.
+    upload = uploader.Upload('dataset_xml')
     upload.update_data_dict(data, 'dataset_xml',
                             'file_upload', 'clear_upload')
     upload.upload()
-
     dataset_filename = data.get('dataset_xml')
 
     if not dataset_filename:
         h.flash_error('Error uploading file.')
         return
 
+    full_file_path = os.path.join(upload.storage_path, dataset_filename)
     data_rdfgraph = rdflib.ConjunctiveGraph()
     profile = SwissDCATAPProfile(data_rdfgraph)
 
     try:
-        data_rdfgraph.parse(os.path.join(
-            upload.storage_path,
-            dataset_filename
-        ), "xml")
+        data_rdfgraph.parse(full_file_path, "xml")
     except (RDFParserException, SAXParseException) as e:
         h.flash_error(
             'Error parsing the RDF file during dataset import: {0}'
@@ -270,6 +262,9 @@ def ogdch_xml_upload(context, data_dict):
         dataset_dict['owner_org'] = org_id
 
         _create_or_update_dataset(dataset_dict)
+
+    # Clean up the file as we have no further use for it.
+    os.remove(full_file_path)
 
 
 @side_effect_free
