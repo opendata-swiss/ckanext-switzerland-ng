@@ -233,25 +233,24 @@ def ogdch_xml_upload(context, data_dict):
     data = data_dict.get('data')
     org_id = data_dict.get('organization')
 
-    upload = uploader.get_uploader('dataset_xml')
+    # Don't use uploader.get_uploader(), as this will return the S3Uploader.
+    # We want to process the file locally and then delete it.
+    upload = uploader.Upload('dataset_xml')
     upload.update_data_dict(data, 'dataset_xml',
                             'file_upload', 'clear_upload')
     upload.upload()
-
     dataset_filename = data.get('dataset_xml')
 
     if not dataset_filename:
         h.flash_error('Error uploading file.')
         return
 
+    full_file_path = os.path.join(upload.storage_path, dataset_filename)
     data_rdfgraph = rdflib.ConjunctiveGraph()
     profile = SwissDCATAPProfile(data_rdfgraph)
 
     try:
-        data_rdfgraph.parse(os.path.join(
-            upload.storage_path,
-            dataset_filename
-        ), "xml")
+        data_rdfgraph.parse(full_file_path, "xml")
     except (RDFParserException, SAXParseException) as e:
         h.flash_error(
             'Error parsing the RDF file during dataset import: {0}'
@@ -263,6 +262,9 @@ def ogdch_xml_upload(context, data_dict):
         dataset_dict['owner_org'] = org_id
 
         _create_or_update_dataset(dataset_dict)
+
+    # Clean up the file as we have no further use for it.
+    os.remove(full_file_path)
 
 
 @side_effect_free
