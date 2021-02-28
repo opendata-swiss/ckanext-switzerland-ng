@@ -174,6 +174,8 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'group_link': ogdch_backend_helpers.group_link,
             'resource_link': ogdch_backend_helpers.resource_link,
             'organization_link': ogdch_backend_helpers.organization_link,
+            'ogdch_linked_user': ogdch_backend_helpers.ogdch_linked_user,
+            'ogdch_activity_item': ogdch_backend_helpers.ogdch_activity_item,
         }
 
     # IRouter
@@ -215,6 +217,13 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
                     '/organization/xml_upload/{name}',
                     controller='ckanext.switzerland.controllers.organization:OgdchOrganizationController', # noqa
                     action='xml_upload')
+
+        map.connect('/user',
+                    controller='ckanext.switzerland.controllers.user:OgdchUserController',
+                    action='index')
+        map.connect('/user/register',
+                    controller='ckanext.switzerland.controllers.user:OgdchUserController',
+                    action='register')
 
         return map
 

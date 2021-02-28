@@ -4,6 +4,8 @@
 <nav class="section navigation">
 <ul class="nav nav-pills">
   {% block header_site_navigation_backend %}
+     {% set is_sysadmin = h.check_access('sysadmin') %}
+     {% if is_sysadmin %}
      <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'user') }}">
        <a href="{{ h.url_for(controller='user', action='index') }}">{{ _('Users') }}
        </a>
@@ -11,6 +13,13 @@
      <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'harvest') }}">
        {{ h.nav_link(_('Harvest Sources'), named_route='harvest_search') }}
      </li>
+    {% elif c.user %}
+       <li>
+          <a href="{{ h.url_for('user.read', id=c.userobj.name) }}" class="image" title="{{ _('View profile') }}">
+                  {{ _('Users') }}
+                </a>
+        </li>
+    {% endif %}
      <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'dataset') }}">
          {{ h.nav_link(_('Datasets'), named_route='search') }}
      </li>

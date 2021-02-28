@@ -12,17 +12,23 @@
         {% block page_heading %}{{ _('Users') }}{% endblock %}
       </h1>
       {% block users_list %}
+        {% if h.check_access('sysadmin') %}
         <ul class="user-list">
           {% block users_list_inner %}
             {% for user in page.items %}
-              <li>{{ h.linked_user(user['name'], maxlength=20) }}</li>
+              <li>{{ h.ogdch_linked_user(user['name'], maxlength=20) }}</li>
             {% endfor %}
           {% endblock %}
         </ul>
+        {% else %}
+           Users are only visible to sysadmins
+        {% endif %}
       {% endblock %}
     </div>
     {% block page_pagination %}
+       {% if h.check_access('sysadmin') %}
       {{ page.pager(q=q, order_by=order_by) }}
+       {% endif %}
     {% endblock %}
   </article>
 {% endblock %}
