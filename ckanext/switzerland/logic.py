@@ -24,6 +24,7 @@ from ckanext.switzerland.helpers.request_utils import get_content_headers
 from ckanext.switzerland.helpers.logic_helpers import (
     get_dataset_count, get_org_count, get_showcases_for_dataset,
     map_existing_resources_to_new_dataset)
+from ckan.logic.action.create import user_create as core_user_create
 
 import logging
 
@@ -415,3 +416,8 @@ def _add_member_to_group(member, group, context):
         'role': 'member',
     }
     tk.get_action('group_member_create')(context, update_group_members_dict)
+
+def ogdch_user_create(context, data_dict):
+    user_dict = core_user_create(context, data_dict)
+    h.flash_success("An email to the user will be sent soon instead of flashing this message here.")
+    return user_dict

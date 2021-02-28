@@ -126,6 +126,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_xml_upload': ogdch_logic.ogdch_xml_upload,
             'ogdch_showcase_search': ogdch_logic.ogdch_showcase_search,
             'ogdch_add_users_to_groups': ogdch_logic.ogdch_add_users_to_groups,
+            'user_create': ogdch_logic.ogdch_user_create,
         }
 
     # ITemplateHelpers
@@ -217,13 +218,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
                     '/organization/xml_upload/{name}',
                     controller='ckanext.switzerland.controllers.organization:OgdchOrganizationController', # noqa
                     action='xml_upload')
-
-        map.connect('/user',
-                    controller='ckanext.switzerland.controllers.user:OgdchUserController',
-                    action='index')
-        map.connect('/user/register',
-                    controller='ckanext.switzerland.controllers.user:OgdchUserController',
-                    action='register')
 
         return map
 
