@@ -12,8 +12,3 @@
 {% block breadcrumb_content %}
   {% snippet "snippets/organization_breadcrumb.html", organization=c.group_dict %}
 {% endblock %}
-
-{% block content_primary_nav %}
-  {{ h.build_nav_icon(group_type + '_read', _('Datasets'), id=c.group_dict.name) }}
-  {{ h.build_nav_icon(group_type + '_about', _('About'), id=c.group_dict.name) }}
-{% endblock %}
