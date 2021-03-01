@@ -4,6 +4,7 @@ import pysolr
 import re
 from unidecode import unidecode
 import uuid
+import json
 from xml.sax import SAXParseException
 
 import rdflib
@@ -286,6 +287,48 @@ def ogdch_showcase_search(context, data_dict):
     result = tk.get_action('package_search')(context, data_dict)
     if result:
         return result
+    else:
+        raise NotFound
+
+
+@side_effect_free
+def ogdch_user_list(context, data_dict):
+    '''
+    Custom user list
+    '''
+    user = tk.get_action('get_site_user')({'ignore_auth': True}, {})
+    context.update({'user': user['name']})
+
+    user_list = tk.get_action('user_list')(context, data_dict)
+    users_ids = [user.get('id') for user in user_list if not user.get('sysadmin')]
+    users_with_roles = []
+    users_dict = {user['id']: user['name'] for user in user_list}
+    organization_tree = tk.get_action('group_tree')(context, {'type': 'organization'})
+    outline = []
+    for organization in organization_tree:
+        org_line = {'type': 'org', 'content': "{}".format(organization.get('name'))}
+        outline.append(org_line)
+        members = tk.get_action('member_list')(context,
+                                              {'id': organization.get('name'), 'object_type' :'user'})
+        for member in members:
+            memberline = {'type': 'member', 'user': users_dict.get(member[0]), "role": member[2].upper()}
+            outline.append(memberline)
+            users_with_roles.append(member[0])
+        for suborganization in organization.get('children'):
+            org_line = {'type': 'sub_org', 'content': "{}".format(suborganization.get('name'))}
+            outline.append(org_line)
+            members = tk.get_action('member_list')(context,
+                                                   {'id': suborganization.get('name'), 'object_type': 'user'})
+            for member in members:
+                memberline =  {'type': 'member', 'user': users_dict.get(member[0]), "role": member[2].upper()}
+                outline.append(memberline)
+                users_with_roles.append(member[0])
+    users_without_roles = [user for user in users_ids if not user in users_with_roles]
+    outline.append({'type': 'no_org', 'content': 'no organization'})
+    for user in users_without_roles:
+        outline.append({'type': 'notmember', 'user': users_dict.get(user)})
+    if user_list:
+        return outline
     else:
         raise NotFound
 

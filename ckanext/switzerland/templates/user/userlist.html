@@ -1,0 +1,17 @@
+{% extends "user/list.html" %}
+
+{% block primary_content %}
+<h1>Benutzerliste nach Organisationen</h1>
+    {% for item in c.myresult.result %}
+      {% if item.type == 'org' %}
+      <h2>{{ item.content }}</h2>
+      {% elif item.type == 'sub_org' %}
+      <h3>{{ item.content }}</h3>
+      {% elif item.type == 'no_org' %}
+      <h2>{{ item.content }}</h2>
+      {% else %}
+      {% set name = item.get('name', 'test') %}
+      <a href="{{ h.url_for('user.read', id=name) }}" >{{ item.user }} {{item.role}}</a>
+      {% endif %}
+    {% endfor %}
+{% endblock %}

@@ -9,5 +9,8 @@
   </form>
   <ul class="nav nav-simple">
     <li class="nav-item">{{ h.nav_link(_('All Users'), named_route='user.index') }}</li>
+    <li><a href="{{ h.url_for(controller='ckanext.switzerland.controllers.user:OgdchUserController', action='ogdchindex') }}">
+      Users by organization</a>
+    </li>
   </ul>
 </section>
