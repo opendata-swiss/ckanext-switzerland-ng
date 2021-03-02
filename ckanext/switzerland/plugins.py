@@ -174,6 +174,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'group_link': ogdch_backend_helpers.group_link,
             'resource_link': ogdch_backend_helpers.resource_link,
             'organization_link': ogdch_backend_helpers.organization_link,
+            'ogdch_localize_activity_item': ogdch_backend_helpers.ogdch_localize_activity_item,  # noqa
         }
 
     # IRouter

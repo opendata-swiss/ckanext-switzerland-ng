@@ -6,7 +6,9 @@ used in backend templates
 """
 import ast
 import logging
+import re
 from urlparse import urlparse
+from html.parser import HTMLParser
 from ckan.common import _
 from ckan.lib.helpers import _link_to, lang, url_for
 from ckan.lib.helpers import dataset_display_name as dataset_display_name_orig
@@ -24,6 +26,7 @@ log = logging.getLogger(__name__)
 OGDCH_USER_VIEW_CHOICE = 'user_view_choice'
 OGDCH_USER_VIEW_CHOICE_FRONTEND = 'frontend'
 OGDCH_USER_VIEW_CHOICE_BACKEND = 'backend'
+REGEX_LANGUAGE_DICT = '\{[\w\\\d\-\(\)\'\"\:\,\s]*\}'
 
 showcase_types_mapping = {
     "application": u'{"fr": "Application", "de": "Applikation", "en": "Application", "it": "Applicazione"}', # noqa
@@ -275,3 +278,19 @@ def ogdch_get_top_level_organisations():
         return parent_organizations
     except tk.ObjectNotFound:
         return []
+
+
+def ogdch_localize_activity_item(msg):
+    """localizing activity messages: this function gets an html message and
+    replaces the language dict in there with the localized value
+    """
+    try:
+        parser = HTMLParser()
+        unescaped_msg = parser.unescape(msg)
+        language_dict = re.search(REGEX_LANGUAGE_DICT, unescaped_msg).group(0)
+        localized_language_dict = get_localized_value_for_display(language_dict)  # noqa
+        localized_msg = unescaped_msg.replace(language_dict, localized_language_dict)  # noqa
+        return tk.literal(localized_msg)
+    except Exception as e:
+        log.error("Error {} occured while localizing an activity message {}".format(e, msg))  # noqa
+    return tk.literal(msg)
