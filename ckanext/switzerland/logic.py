@@ -4,6 +4,7 @@ import pysolr
 import re
 from unidecode import unidecode
 import uuid
+from xml.sax import SAXParseException
 
 import rdflib
 import rdflib.parser
@@ -16,6 +17,8 @@ import ckan.lib.helpers as h
 from ckan.lib.search.common import make_connection
 import ckan.lib.plugins as lib_plugins
 import ckan.lib.uploader as uploader
+from ckan.logic.action.get import user_list as core_user_list
+from ckanext.dcat.processors import RDFParserException
 from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
 from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester
 from ckanext.switzerland.helpers.request_utils import get_content_headers
@@ -431,3 +434,18 @@ def ogdch_get_admin_organizations_for_user(context, data_dict):
         if organization.get('capacity') == CAPACITY_ADMIN
     ]
     return organizations_where_user_is_admin
+
+
+@side_effect_free
+def ogdch_get_users_with_organizations(context, data_dict):
+    organization_list = tk.get_action('organization_list')(context, data_dict)
+    users_with_organizations = {}
+    for organization in organization_list:
+        members = tk.get_action('member_list')({'ignore_auth': True}, {'id': organization, 'object_type': 'user'})
+        for member in members:
+            user = member[0]
+            if user in users_with_organizations:
+                users_with_organizations[user].append(organization)
+            else:
+                users_with_organizations[user] = [organization]
+    return users_with_organizations
