@@ -126,6 +126,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_xml_upload': ogdch_logic.ogdch_xml_upload,
             'ogdch_showcase_search': ogdch_logic.ogdch_showcase_search,
             'ogdch_add_users_to_groups': ogdch_logic.ogdch_add_users_to_groups,
+            'ogdch_get_admin_organizations_for_user': ogdch_logic.ogdch_get_admin_organizations_for_user,  # noqa
         }
 
     # ITemplateHelpers

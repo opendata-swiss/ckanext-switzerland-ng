@@ -33,6 +33,8 @@ RESULT_IDENTIFIER = 'result'
 
 DCAT = Namespace("http://www.w3.org/ns/dcat#")
 
+CAPACITY_ADMIN = 'admin'
+
 
 @side_effect_free
 def ogdch_counts(context, data_dict):
@@ -415,3 +417,17 @@ def _add_member_to_group(member, group, context):
         'role': 'member',
     }
     tk.get_action('group_member_create')(context, update_group_members_dict)
+
+
+@side_effect_free
+def ogdch_get_admin_organizations_for_user(context, data_dict):
+    '''
+    Get list of organization where a user is admin of
+    '''
+    organizations_for_user = tk.get_action('organization_list_for_user')(context, data_dict)
+    organizations_where_user_is_admin = [
+        organization.get('name')
+        for organization in organizations_for_user
+        if organization.get('capacity') == CAPACITY_ADMIN
+    ]
+    return organizations_where_user_is_admin
