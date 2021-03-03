@@ -447,7 +447,9 @@ def ogdch_get_roles_for_user(context, data_dict):
     organizations_for_user = tk.get_action('organization_list_for_user')(context, data_dict)  # noqa
     organizations = [organization.get('name')
                      for organization in organizations_for_user]
-    userroles = [{'organization': organization.get('name'), 'role': organization.get('capacity')}  # noqa
+    userroles = [{'organization': organization.get('name'),
+                  'role': organization.get('capacity'),
+                  'organization_title': organization.get('title')}  # noqa
                  for organization in organizations_for_user]
 
     organization_trees = []
