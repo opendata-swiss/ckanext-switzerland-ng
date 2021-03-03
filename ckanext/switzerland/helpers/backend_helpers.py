@@ -9,14 +9,17 @@ import logging
 import re
 from urlparse import urlparse
 from html.parser import HTMLParser
+from six import text_type
+from webhelpers.html import tags
 from ckan.common import _
 from ckan.lib.helpers import _link_to, lang, url_for
 from ckan.lib.helpers import dataset_display_name as dataset_display_name_orig
-from ckan.lib.helpers import organization_link as organization_link_orig
+from ckan.lib.helpers import organization_link as organization_link_orig, linked_gravatar  # noqa
 
 import ckan.lib.i18n as i18n
 import ckan.logic as logic
 import ckan.plugins.toolkit as tk
+import ckan.model as model
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 from ckanext.switzerland.helpers.frontend_helpers import get_localized_value_for_display  # noqa
 from ckanext.harvest.helpers import harvester_types
@@ -294,3 +297,57 @@ def ogdch_localize_activity_item(msg):
     except Exception as e:
         log.error("Error {} occured while localizing an activity message {}".format(e, msg))  # noqa
     return tk.literal(msg)
+
+
+def ogdch_linked_user(user, maxlength=0, avatar=20):
+    if not isinstance(user, model.User):
+        user_name = text_type(user)
+        user = model.User.get(user_name)
+        if not user:
+            return user_name
+    if user:
+        name = user.name if model.User.VALID_NAME.match(user.name) else user.id
+        full_user = logic.get_action(u'user_show')(
+            {}, {u'id': name})
+        roles = []
+        if not full_user.get('sysadmin'):
+            try:
+                organization_list = logic.get_action(u'organization_list_for_user')(
+                    {}, {u'id': name})
+                for item in organization_list:
+                    role = {'role': item.get('capacity').upper(),
+                            'organization_title': get_localized_value_for_display(item.get('title')),
+                            'organization_name': item.get('name')
+                           }
+                    roles.append(role)
+            except Exception as e:
+                log.error(e)
+            userroles = ", ".join(
+                [tags.link_to(
+                    role.get('role') + ": " + role.get('organization_title'),
+                    url_for('organization_read', action='read', id=role.get('organization_name'))
+                ) for role in roles])
+        else:
+            userroles = "sysadmin".upper()
+        displayname = user.display_name
+        if full_user.get('email'):
+            email_display = "( {} )".format(full_user.get('email'))
+        else:
+            email_display = ""
+        if maxlength and len(user.display_name) > maxlength:
+            displayname = displayname[:maxlength] + '...'
+        try:
+            return tags.literal(u'{icon} {link} {email} - {userroles}'.format(
+                icon=linked_gravatar(
+                    email_hash=user.email_hash,
+                    size=avatar
+                ),
+                link=tags.link_to(
+                    displayname,
+                    url_for('user.read', id=name)
+                ),
+                email=email_display,
+                userroles=userroles
+            ))
+        except Exception as e:
+            return user['name']

@@ -9,7 +9,7 @@
       {% block users_list %}
         <ul class="user-list">
           {% for user in c.page.users %}
-            <li>{{ h.linked_user(user['name'], maxlength=20) }}</li>
+            <li>{{ h.ogdch_linked_user(user['name'], maxlength=20) }}</li>
           {% endfor %}
         </ul>
       {% endblock %}

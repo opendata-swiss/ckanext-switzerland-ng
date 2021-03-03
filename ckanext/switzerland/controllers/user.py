@@ -4,7 +4,7 @@ import logging
 
 from ckan.controllers.user import UserController
 from ckan.common import c
-from ckan.lib.base import render, abort
+from ckan.lib.base import render
 import ckan.plugins.toolkit as tk
 
 log = logging.getLogger(__name__)
