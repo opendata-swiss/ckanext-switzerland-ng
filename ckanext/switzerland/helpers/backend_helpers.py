@@ -309,26 +309,16 @@ def ogdch_linked_user(user, maxlength=0, avatar=20):
         name = user.name if model.User.VALID_NAME.match(user.name) else user.id
         full_user = logic.get_action(u'user_show')(
             {}, {u'id': name})
-        roles = []
         if not full_user.get('sysadmin'):
-            try:
-                organization_list = logic.get_action(u'organization_list_for_user')(
+            userroles = logic.get_action('ogdch_get_roles_for_user')(
                     {}, {u'id': name})
-                for item in organization_list:
-                    role = {'role': item.get('capacity').upper(),
-                            'organization_title': get_localized_value_for_display(item.get('title')),
-                            'organization_name': item.get('name')
-                           }
-                    roles.append(role)
-            except Exception as e:
-                log.error(e)
-            userroles = ", ".join(
+            userroles_display = ", ".join(
                 [tags.link_to(
-                    role.get('role') + ": " + role.get('organization_title'),
-                    url_for('organization_read', action='read', id=role.get('organization_name'))
-                ) for role in roles])
+                    role.get('role') + ": " + get_localized_value_for_display(role.get('organization_title')),  # noqa
+                    url_for('organization_read', action='read', id=role.get('organization'))  # noqa
+                ) for role in userroles])
         else:
-            userroles = "sysadmin".upper()
+            userroles_display = "sysadmin"
         displayname = user.display_name
         if full_user.get('email'):
             email_display = "( {} )".format(full_user.get('email'))
@@ -347,7 +337,7 @@ def ogdch_linked_user(user, maxlength=0, avatar=20):
                     url_for('user.read', id=name)
                 ),
                 email=email_display,
-                userroles=userroles
+                userroles=userroles_display
             ))
-        except Exception as e:
+        except Exception:
             return user['name']
