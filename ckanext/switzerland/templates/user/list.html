@@ -1,28 +1,15 @@
 {% ckan_extends %}
 
 {% block primary_content %}
-  <article class="module">
-    <div class="module-content">
-      <h1 class="page-heading">
-        {% if h.check_access('sysadmin') %}
-            <div class="page_primary_action">
-            {{ h.nav_link(_('Add User'), named_route='user_register', class_='btn btn-primary', icon='plus-square') }}
-            </div>
-        {% endif %}
-        {% block page_heading %}{{ _('Users') }}{% endblock %}
-      </h1>
-      {% block users_list %}
-        <ul class="user-list">
-          {% block users_list_inner %}
-            {% for user in page.items %}
-              <li>{{ h.linked_user(user['name'], maxlength=20) }}</li>
-            {% endfor %}
-          {% endblock %}
-        </ul>
-      {% endblock %}
-    </div>
-    {% block page_pagination %}
-      {{ page.pager(q=q, order_by=order_by) }}
-    {% endblock %}
-  </article>
+<h1>Benutzer</h1>
+  <ul>
+    {% for user in c.page.users %}
+    <li>{{ user.name }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
+
+{% block secondary_content %}
+  {% snippet 'user/snippets/user_search.html', q=q %}
+  {% snippet 'user/snippets/helper.html', q=q %}
 {% endblock %}

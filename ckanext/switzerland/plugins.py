@@ -220,6 +220,10 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
                     controller='ckanext.switzerland.controllers.organization:OgdchOrganizationController', # noqa
                     action='xml_upload')
 
+        map.connect('/user/',
+                    controller='ckanext.switzerland.controllers.user:OgdchUserController',  # noqa
+                    action='index')
+
         return map
 
 
