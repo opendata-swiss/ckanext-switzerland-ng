@@ -14,6 +14,7 @@ from ckan.plugins.toolkit import get_or_bust, side_effect_free
 from ckan.logic import ActionError, NotFound, ValidationError
 import ckan.plugins.toolkit as tk
 import ckan.lib.helpers as h
+from ckan import authz
 from ckan.lib.search.common import make_connection
 import ckan.lib.plugins as lib_plugins
 import ckan.lib.uploader as uploader
@@ -427,7 +428,7 @@ def ogdch_get_admin_organizations_for_user(context, data_dict):
     '''
     Get list of organization where a user is admin of
     '''
-    organizations_for_user = tk.get_action('organization_list_for_user')(context, data_dict)
+    organizations_for_user = tk.get_action('organization_list_for_user')(context, data_dict)  # noqa
     organizations_where_user_is_admin = [
         organization.get('name')
         for organization in organizations_for_user
@@ -441,7 +442,8 @@ def ogdch_get_users_with_organizations(context, data_dict):
     organization_list = tk.get_action('organization_list')(context, data_dict)
     users_with_organizations = {}
     for organization in organization_list:
-        members = tk.get_action('member_list')({'ignore_auth': True}, {'id': organization, 'object_type': 'user'})
+        members = tk.get_action('member_list')(
+            {'ignore_auth': True}, {'id': organization, 'object_type': 'user'})
         for member in members:
             user = member[0]
             if user in users_with_organizations:
@@ -449,3 +451,32 @@ def ogdch_get_users_with_organizations(context, data_dict):
             else:
                 users_with_organizations[user] = [organization]
     return users_with_organizations
+
+
+@side_effect_free
+def ogdch_user_list(context, data_dict):
+    current_user = context.get('user')
+    sysadmin = authz.is_sysadmin(current_user)
+    user_list = core_user_list(context, data_dict)
+
+    if sysadmin:
+        return user_list
+
+    user_list_with_organizations = tk.get_action('ogdch_get_users_with_organizations')(context, data_dict)  # noqa
+    user_organization_dict = {id: user_list_with_organizations[id]
+                              for id in user_list_with_organizations}
+    admin_organizations_for_user = tk.get_action('ogdch_get_admin_organizations_for_user')(context, data_dict)  # noqa
+
+    if admin_organizations_for_user:
+        user_list_for_organization_admin = []
+        for user in user_list:
+            if not user.get('sysadmin'):
+                user_organization_in_administered_organisations = \
+                    [org for org in user_organization_dict.get(user['id'], [])
+                     if org in admin_organizations_for_user]
+                if user_organization_in_administered_organisations:
+                    user_list_for_organization_admin.append(user)
+        return user_list_for_organization_admin
+
+    current_user_only = [user for user in user_list if user['name'] == current_user]  # noqa
+    return current_user_only
