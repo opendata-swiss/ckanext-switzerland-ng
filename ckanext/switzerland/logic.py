@@ -4,7 +4,6 @@ import pysolr
 import re
 from unidecode import unidecode
 import uuid
-from xml.sax import SAXParseException
 
 import rdflib
 import rdflib.parser
@@ -17,7 +16,6 @@ import ckan.lib.helpers as h
 from ckan.lib.search.common import make_connection
 import ckan.lib.plugins as lib_plugins
 import ckan.lib.uploader as uploader
-from ckanext.dcat.processors import RDFParserException
 from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
 from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester
 from ckanext.switzerland.helpers.request_utils import get_content_headers
@@ -251,10 +249,12 @@ def ogdch_xml_upload(context, data_dict):
 
     try:
         data_rdfgraph.parse(full_file_path, "xml")
-    except (RDFParserException, SAXParseException) as e:
+    except Exception as e:
         h.flash_error(
             'Error parsing the RDF file during dataset import: {0}'
             .format(e))
+        os.remove(full_file_path)
+        return
 
     for dataset_ref in data_rdfgraph.subjects(RDF.type, DCAT.Dataset):
         dataset_dict = {}
