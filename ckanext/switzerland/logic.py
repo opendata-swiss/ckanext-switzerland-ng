@@ -1,6 +1,7 @@
 from collections import OrderedDict
 import os.path
 import pysolr
+import logging
 import re
 from unidecode import unidecode
 import uuid
@@ -26,8 +27,9 @@ from ckanext.switzerland.helpers.request_utils import get_content_headers
 from ckanext.switzerland.helpers.logic_helpers import (
     get_dataset_count, get_org_count, get_showcases_for_dataset,
     map_existing_resources_to_new_dataset)
-
-import logging
+from collections import namedtuple
+Member = namedtuple('member', 'role organization')
+Admin = namedtuple('admin', 'role organizations')
 
 log = logging.getLogger(__name__)
 
@@ -38,6 +40,8 @@ RESULT_IDENTIFIER = 'result'
 DCAT = Namespace("http://www.w3.org/ns/dcat#")
 
 CAPACITY_ADMIN = 'admin'
+CAPACITY_SYSADMIN = 'sysadmin'
+CAPACITY_REGULAR = 'regular'
 
 
 @side_effect_free
@@ -441,8 +445,8 @@ def ogdch_get_admin_organizations_for_user(context, data_dict):
 def ogdch_get_roles_for_user(context, data_dict):
     '''
     Get list of roles that a user has in organizations
-    Roles in suborganizations are only included if they differ from the role in the
-    top level organization
+    Roles in suborganizations are only included if they differ from the
+    role in the top level organization
     '''
     organizations_for_user = tk.get_action('organization_list_for_user')(context, data_dict)  # noqa
     organizations = [organization.get('name')
@@ -463,7 +467,7 @@ def ogdch_get_roles_for_user(context, data_dict):
     return userroles
 
 
-def _check_organization_in_organization_trees(organization, organization_trees):
+def _check_organization_in_organization_trees(organization, organization_trees):  # noqa
     """checks if a organization is in an organization tree"""
     for organization_tree in organization_trees:
         if organization == organization_tree.get('name'):
@@ -510,44 +514,87 @@ def _remove_role_from_userroles(userroles, organization):
 
 @side_effect_free
 def ogdch_get_users_with_organizations(context, data_dict):
-    organization_list = tk.get_action('organization_list')(context, data_dict)
+    organization_list = tk.get_action('organization_list')(context, {})
     users_with_organizations = {}
     for organization in organization_list:
-        members = tk.get_action('member_list')(
+        member_list = tk.get_action('member_list')(
             {'ignore_auth': True}, {'id': organization, 'object_type': 'user'})
-        for member in members:
-            user = member[0]
+        for item in member_list:
+            user = item[0]
+            role = item[2]
+            organization_member = Member(role, organization)
             if user in users_with_organizations:
-                users_with_organizations[user].append(organization)
+                users_with_organizations[user].append(organization_member)
             else:
-                users_with_organizations[user] = [organization]
+                users_with_organizations[user] = [organization_member]
     return users_with_organizations
 
 
 @side_effect_free
 def ogdch_user_list(context, data_dict):
     current_user = context.get('user')
-    sysadmin = authz.is_sysadmin(current_user)
-    user_list = core_user_list(context, data_dict)
+    q = data_dict.get('q')
+    q_organization = data_dict.get('organization')
+    q_role = data_dict.get('role')
 
-    if sysadmin:
-        return user_list
+    user_list = core_user_list(context, {'q': q})
+
+    admin_organizations_for_user = tk.get_action('ogdch_get_admin_organizations_for_user')(context, data_dict)  # noqa
+    current_user_admin_capacity = _check_admin_capcity_for_user(current_user, admin_organizations_for_user, q_organization)  # noqa
+
+    if not current_user_admin_capacity:
+        return _get_current_user_details(current_user, user_list)
+
+    if q_role == CAPACITY_SYSADMIN and current_user_admin_capacity.role == CAPACITY_SYSADMIN:  # noqa
+        return [user for user in user_list if user.get('sysadmin')]
+    if current_user_admin_capacity != CAPACITY_SYSADMIN or q_organization:
+        user_list = [user for user in user_list if not user.get('sysadmin')]
 
     user_list_with_organizations = tk.get_action('ogdch_get_users_with_organizations')(context, data_dict)  # noqa
-    user_organization_dict = {id: user_list_with_organizations[id]
-                              for id in user_list_with_organizations}
-    admin_organizations_for_user = tk.get_action('ogdch_get_admin_organizations_for_user')(context, data_dict)  # noqa
+    user_organization_dict = {user['id']: user_list_with_organizations.get(user['id'], [])  # noqa
+                              for user in user_list}
+    user_list_filtered = _get_filter_user_list(user_list, user_organization_dict, current_user_admin_capacity, q_organization, q_role)  # noqa
+    return user_list_filtered
 
-    if admin_organizations_for_user:
-        user_list_for_organization_admin = []
-        for user in user_list:
-            if not user.get('sysadmin'):
-                user_organization_in_administered_organisations = \
-                    [org for org in user_organization_dict.get(user['id'], [])
-                     if org in admin_organizations_for_user]
-                if user_organization_in_administered_organisations:
-                    user_list_for_organization_admin.append(user)
-        return user_list_for_organization_admin
 
-    current_user_only = [user for user in user_list if user['name'] == current_user]  # noqa
-    return current_user_only
+def _check_admin_capcity_for_user(user, admin_organizations_for_user, organization=None):  # noqa
+    if authz.is_sysadmin(user):
+        return Admin(CAPACITY_SYSADMIN, [])
+    if not organization:
+        return Admin(CAPACITY_ADMIN, admin_organizations_for_user)
+    if organization and organization in admin_organizations_for_user:
+        return Admin(CAPACITY_ADMIN, organization)
+    return None
+
+
+def _get_current_user_details(current_user, user_list):
+    return [user for user in user_list if user['name'] == current_user]  # noqa
+
+
+def _get_filter_user_list(user_list, user_organization_dict, current_user_admin_capacity, q_organization=None, q_role=None):  # noqa
+    if not q_organization and not q_role and current_user_admin_capacity.role == CAPACITY_SYSADMIN:  # noqa
+        return user_list
+    filtered_user_list = []
+    for user in user_list:
+        members_filtered = [member for member in user_organization_dict.get(user['id'], [])  # noqa
+                            if _check_member_filter(member, current_user_admin_capacity, q_organization, q_role)]  # noqa
+        if members_filtered:
+            filtered_user_list.append(user)
+    return filtered_user_list
+
+
+def _check_member_filter(member, current_user_admin_capacity, q_organization=None, q_role=None):  # noqa
+    organization_restriction = None
+    if current_user_admin_capacity.role != CAPACITY_SYSADMIN:
+        organization_restriction = current_user_admin_capacity.organizations
+    if organization_restriction and member.organization not in organization_restriction:  # noqa
+        return False
+    if q_organization and q_organization != member.organization:
+        return False
+    if q_role and not _check_member_role(q_role, member.role):
+        return False
+    return True
+
+
+def _check_member_role(member_role, q_role):
+    return q_role.lower() == member_role.lower()
