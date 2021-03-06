@@ -425,7 +425,6 @@ def _add_member_to_group(member, group, context):
     tk.get_action('group_member_create')(context, update_group_members_dict)
 
 
-@side_effect_free
 def ogdch_get_admin_organizations_for_user(context, data_dict):
     '''
     Get list of organization where a user is admin of
@@ -439,7 +438,6 @@ def ogdch_get_admin_organizations_for_user(context, data_dict):
     return organizations_where_user_is_admin
 
 
-@side_effect_free
 def ogdch_get_roles_for_user(context, data_dict):
     '''
     Get list of roles that a user has in organizations
@@ -510,7 +508,6 @@ def _remove_role_from_userroles(userroles, organization):
     return [role for role in userroles if role['organization'] != organization]
 
 
-@side_effect_free
 def ogdch_get_users_with_organizations(context, data_dict):
     organization_list = tk.get_action('organization_list')(context, {})
     users_with_organizations = {}
@@ -528,7 +525,6 @@ def ogdch_get_users_with_organizations(context, data_dict):
     return users_with_organizations
 
 
-@side_effect_free
 def ogdch_user_list(context, data_dict):
     current_user = context.get('user')
     q = data_dict.get('q')
