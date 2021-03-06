@@ -22,10 +22,11 @@
         {% endif %}
       {% endblock %}
     </div>
+    {% snippet 'user/snippets/pagination.html', q=q %}
   </article>
 {% endblock %}
 
 {% block secondary_content %}
   {% snippet 'user/snippets/user_search.html', q=q %}
-  {% snippet 'user/snippets/helper.html', q=q %}
+  {% snippet 'user/snippets/helper.html' %}
 {% endblock %}

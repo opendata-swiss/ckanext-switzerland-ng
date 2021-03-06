@@ -5,7 +5,6 @@ import logging
 import re
 from unidecode import unidecode
 import uuid
-from xml.sax import SAXParseException
 
 import rdflib
 import rdflib.parser
@@ -20,7 +19,6 @@ from ckan.lib.search.common import make_connection
 import ckan.lib.plugins as lib_plugins
 import ckan.lib.uploader as uploader
 from ckan.logic.action.get import user_list as core_user_list
-from ckanext.dcat.processors import RDFParserException
 from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
 from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester
 from ckanext.switzerland.helpers.request_utils import get_content_headers
@@ -540,8 +538,7 @@ def ogdch_user_list(context, data_dict):
     user_list = core_user_list(context, {'q': q})
 
     admin_organizations_for_user = tk.get_action('ogdch_get_admin_organizations_for_user')(context, data_dict)  # noqa
-    current_user_admin_capacity = _check_admin_capcity_for_user(current_user, admin_organizations_for_user, q_organization)  # noqa
-
+    current_user_admin_capacity = _check_admin_capacity_for_user(current_user, admin_organizations_for_user, q_organization)  # noqa
     if not current_user_admin_capacity:
         return _get_current_user_details(current_user, user_list)
 
@@ -557,10 +554,10 @@ def ogdch_user_list(context, data_dict):
     return user_list_filtered
 
 
-def _check_admin_capcity_for_user(user, admin_organizations_for_user, organization=None):  # noqa
+def _check_admin_capacity_for_user(user, admin_organizations_for_user, organization=None):  # noqa
     if authz.is_sysadmin(user):
         return Admin(CAPACITY_SYSADMIN, [])
-    if not organization:
+    if not organization and admin_organizations_for_user:
         return Admin(CAPACITY_ADMIN, admin_organizations_for_user)
     if organization and organization in admin_organizations_for_user:
         return Admin(CAPACITY_ADMIN, organization)
@@ -587,6 +584,8 @@ def _check_member_filter(member, current_user_admin_capacity, q_organization=Non
     organization_restriction = None
     if current_user_admin_capacity.role != CAPACITY_SYSADMIN:
         organization_restriction = current_user_admin_capacity.organizations
+        if not organization_restriction:
+            return False
     if organization_restriction and member.organization not in organization_restriction:  # noqa
         return False
     if q_organization and q_organization != member.organization:
