@@ -44,6 +44,7 @@ ROLE_ADMIN = 'admin'
 ROLE_MEMBER = 'member'
 ROLE_EDITOR = 'editor'
 
+
 @side_effect_free
 def ogdch_counts(context, data_dict):
     '''
@@ -569,8 +570,8 @@ def _get_current_user_details(current_user, user_list):
 
 
 def _get_filter_user_list(user_list, user_organization_dict, current_user_admin_capacity, q_organization=None, q_role=None):  # noqa
-    """filter the user list: for each user in the list a check is preformed whether the user
-    is visible to the current user
+    """filter the user list: for each user in the list a check is
+    preformed whether the user is visible to the current user
     """
     filtered_user_list = []
     for user in user_list:
@@ -607,7 +608,7 @@ def _user_admin_match(user, user_organizations, current_user_admin_capacity):
     if current_user_admin_capacity.role == CAPACITY_SYSADMIN:
         return True
     if not user.get('sysadmin'):
-        organizations_matches = [organization for organization in user_organizations
+        organizations_matches = [organization for organization in user_organizations  # noqa
                                  if organization in current_user_admin_capacity.organizations]  # noqa
         if organizations_matches:
             return True
@@ -640,5 +641,7 @@ def _user_role_match(user, user_memberships, q_role):
 
 
 def _user_role_organization_match(user_memberships, q_role, q_organization):
-    """checks whether the user is a match for a given membership of a role in an organization"""
-    return [member for member in user_memberships if member.role.lower() == q_role.lower() and q_organization == member.organization]  # noqa
+    """checks whether the user is a match for a given membership of a
+    role in an organization"""
+    return [member for member in user_memberships
+            if member.role.lower() == q_role.lower() and q_organization == member.organization]  # noqa
