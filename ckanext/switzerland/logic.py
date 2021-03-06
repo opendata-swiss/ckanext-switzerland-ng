@@ -18,7 +18,6 @@ from ckan import authz
 from ckan.lib.search.common import make_connection
 import ckan.lib.plugins as lib_plugins
 import ckan.lib.uploader as uploader
-from ckan.logic.action.get import user_list as core_user_list
 from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
 from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester
 from ckanext.switzerland.helpers.request_utils import get_content_headers
@@ -531,7 +530,7 @@ def ogdch_user_list(context, data_dict):
     q_organization = data_dict.get('organization')
     q_role = data_dict.get('role')
 
-    user_list = core_user_list(context, {'q': q})
+    user_list = tk.get_action('user_list')(context, {'q': q})  # noqa
 
     admin_organizations_for_user = tk.get_action('ogdch_get_admin_organizations_for_user')(context, data_dict)  # noqa
     current_user_admin_capacity = _check_admin_capacity_for_user(current_user, admin_organizations_for_user, q_organization)  # noqa

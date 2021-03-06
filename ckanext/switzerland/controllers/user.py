@@ -36,7 +36,7 @@ class OgdchUserController(UserController):
         except tk.NotAuthorized:
             tk.abort(403, _('Not authorized to see this page'))
 
-        users = tk.get_action('user_list')(context, data_dict)
+        users = tk.get_action('ogdch_user_list')(context, data_dict)
         userroles = tk.get_action('member_roles_list')(context, {'group_type': 'organization'})  # noqa
         user_admin_organizations = tk.get_action('ogdch_get_admin_organizations_for_user')(context, {})
 
