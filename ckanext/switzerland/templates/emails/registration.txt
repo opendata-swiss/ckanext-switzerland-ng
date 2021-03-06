@@ -1,0 +1,12 @@
+Dear {{ user_name }},
+
+A user account has been created for you on {{ site_title }}.
+
+Please click the following link to reset your password:
+{{ site_url }}/user/reset and enter you {{ user_name }}
+
+
+Have a nice day.
+
+--
+Message sent by {{ site_title }} ({{ site_url }})

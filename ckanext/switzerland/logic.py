@@ -4,6 +4,7 @@ import pysolr
 import logging
 import re
 from unidecode import unidecode
+from socket import error as socket_error
 import uuid
 
 import rdflib
@@ -19,9 +20,11 @@ from ckan.lib.search.common import make_connection
 from ckan.logic.action.create import user_create as core_user_create
 import ckan.lib.plugins as lib_plugins
 import ckan.lib.uploader as uploader
+import ckan.lib.mailer as mailer
 from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
 from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester
 from ckanext.switzerland.helpers.request_utils import get_content_headers
+from ckanext.switzerland.helpers.mail_helper import send_registration_email
 from ckanext.switzerland.helpers.logic_helpers import (
     get_dataset_count, get_org_count, get_showcases_for_dataset,
     map_existing_resources_to_new_dataset)
@@ -649,7 +652,14 @@ def _user_role_organization_match(user_memberships, q_role, q_organization):
 
 
 def ogdch_user_create(context, data_dict):
+    """overwrites the core user creation to send an email
+    to new users"""
     user = core_user_create(context, data_dict)
     h.flash_success("An email to the user {} will be sent at {}."  # noqa
                     .format(user['name'], user['email']))
+    try:
+        send_registration_email(user)
+    except (socket_error, mailer.MailerException) as error:
+        h.flash_warning("The email could not be send to {} for user {}. An error {} occured"  # noqa
+                        .format(user['name'], user['email'], error))  # noqa
     return user
