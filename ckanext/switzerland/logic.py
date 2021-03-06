@@ -560,7 +560,7 @@ def _check_admin_capacity_for_user(user, admin_organizations_for_user):  # noqa
     - None if he does not adminster any organizations"""
     if authz.is_sysadmin(user):
         return Admin(CAPACITY_SYSADMIN, [])
-    if not admin_organizations_for_user:
+    if admin_organizations_for_user:
         return Admin(CAPACITY_ADMIN, admin_organizations_for_user)
     return None
 
