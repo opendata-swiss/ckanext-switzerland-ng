@@ -130,6 +130,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_get_users_with_organizations': ogdch_logic.ogdch_get_users_with_organizations,  # noqa
             'ogdch_user_list': ogdch_logic.ogdch_user_list,
             'ogdch_get_roles_for_user': ogdch_logic.ogdch_get_roles_for_user,
+            'user_create': ogdch_logic.ogdch_user_create,
         }
 
     # ITemplateHelpers

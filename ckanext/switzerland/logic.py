@@ -16,6 +16,7 @@ import ckan.plugins.toolkit as tk
 import ckan.lib.helpers as h
 from ckan import authz
 from ckan.lib.search.common import make_connection
+from ckan.logic.action.create import user_create as core_user_create
 import ckan.lib.plugins as lib_plugins
 import ckan.lib.uploader as uploader
 from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
@@ -645,3 +646,10 @@ def _user_role_organization_match(user_memberships, q_role, q_organization):
     role in an organization"""
     return [member for member in user_memberships
             if member.role.lower() == q_role.lower() and q_organization == member.organization]  # noqa
+
+
+def ogdch_user_create(context, data_dict):
+    user = core_user_create(context, data_dict)
+    h.flash_success("An email to the user {} will be sent at {}."  # noqa
+                    .format(user['name'], user['email']))
+    return user
