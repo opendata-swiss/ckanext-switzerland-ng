@@ -38,14 +38,14 @@ class OgdchUserController(UserController):
 
         users = tk.get_action('ogdch_user_list')(context, data_dict)
         userroles = tk.get_action('member_roles_list')(context, {'group_type': 'organization'})  # noqa
-        user_admin_organizations = tk.get_action('ogdch_get_admin_organizations_for_user')(context, {})
+        user_admin_organizations = tk.get_action('ogdch_get_admin_organizations_for_user')(context, {})  # noqa
 
         c.pagination = _get_pagination(request, len(users), page_size)
         c.roles = _get_role_selection(c.user, userroles)
         c.organizations = _get_organization_selection(user_admin_organizations)
 
         c.page = {
-            'users': users[c.pagination.get('offset', 0):c.pagination.get('offset', 0) + page_size],
+            'users': users[c.pagination.get('offset', 0):c.pagination.get('offset', 0) + page_size],  # noqa
         }
         return render('user/list.html')
 
