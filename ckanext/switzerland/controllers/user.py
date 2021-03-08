@@ -31,7 +31,6 @@ class OgdchUserController(UserController):
                      'order_by': c.order_by,
                      'role': c.role,
                      'organization': c.organization}
-
         try:
             tk.check_access('user_list', context, data_dict)
         except tk.NotAuthorized:

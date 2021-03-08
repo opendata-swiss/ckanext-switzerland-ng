@@ -299,46 +299,23 @@ def ogdch_localize_activity_item(msg):
     return tk.literal(msg)
 
 
-def ogdch_linked_user(user, maxlength=0, avatar=20):
+def ogdch_linked_user(user, maxlength=0):
     """display user in user list"""
-    if not isinstance(user, model.User):
-        user_name = text_type(user)
-        user = model.User.get(user_name)
-        if not user:
-            return user_name
-    if user:
-        name = user.name if model.User.VALID_NAME.match(user.name) else user.id
-        full_user = logic.get_action(u'user_show')(
-            {}, {u'id': name})
-        if not full_user.get('sysadmin'):
-            userroles = logic.get_action('ogdch_get_roles_for_user')(
-                    {}, {u'id': name})
-            userroles_display = ", ".join(
-                [tags.link_to(
-                    role.get('role').capitalize() + ": " + get_localized_value_for_display(role.get('organization_title')),  # noqa
-                    url_for('organization_read', action='read', id=role.get('organization'))  # noqa
-                ) for role in userroles])
-        else:
-            userroles_display = "Sysadmin"
-        displayname = user.display_name
-        if full_user.get('email'):
-            email_display = "( {} )".format(full_user.get('email'))
-        else:
-            email_display = ""
-        if maxlength and len(user.display_name) > maxlength:
-            displayname = displayname[:maxlength] + '...'
-        try:
-            return tags.literal(u'{icon} {link} {email} - {userroles}'.format(
-                icon=linked_gravatar(
-                    email_hash=user.email_hash,
-                    size=avatar
-                ),
-                link=tags.link_to(
-                    displayname,
-                    url_for('user.read', id=name)
-                ),
-                email=email_display,
-                userroles=userroles_display
-            ))
-        except Exception:
-            return user['name']
+    full_user = logic.get_action(u'user_show')(
+        {}, {u'id': user})
+    user_organization_roles = []
+    if not full_user.get('sysadmin'):
+        userroles = logic.get_action('ogdch_get_roles_for_user')(
+                {}, {u'id': user})
+        for role in userroles:
+            user_organization_roles.append(tags.link_to(
+                role.get('role').capitalize() + ": " + get_localized_value_for_display(role.get('organization_title')),  # noqa
+                url_for('organization_read', action='read', id=role.get('organization'))))
+    return {
+        'link': tags.link_to(
+            full_user.get('name'),
+            url_for('user.read', id=full_user.get('name'))),
+        'email': full_user.get('email'),
+        'userroles': user_organization_roles,
+        'is_sysadmin': full_user.get('sysadmin')
+    }

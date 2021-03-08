@@ -12,14 +12,45 @@
         {% block page_heading %}{{ _('Users') }}{% endblock %}
       </h1>
       {% block users_list %}
-        <ul class="user-list">
+      {% set is_sysadmin = h.check_access('sysadmin') %}
+      <table class="table table-header table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>{{ _('Username') }}</th>
+            {% if is_sysadmin %}
+            <th>{{ _('Email') }}</th>
+            {% endif %}
+            <th>{{ _('Role') }}</th>
+          </tr>
+        </thead>
+        <tbody>
           {% for user in c.page.users %}
-            <li>{{ h.ogdch_linked_user(user['name'], maxlength=20) }}</li>
+            {% set user_display =  h.ogdch_linked_user(user['name']) %}
+            <tr>
+              <td class="media">
+                {{ user_display.get('link') }}
+              </td>
+              {% if is_sysadmin %}
+              <td>
+                {{ user_display.get('email') }}
+              </td>
+              {% endif %}
+              <td>
+                {% if user.is_sysadmin %}
+                  {{ _('Sysadmin') }}
+                {% else %}
+                  {% for item in user_display.get('userroles') %}
+                    <p>{{ item }}</p>
+                  {% endfor %}
+                {% endif %}
+              </td>
+            </tr>
           {% endfor %}
-        </ul>
-        {% if not c.page.users %}
-           {{ _('No users match your search') }}
-        {% endif %}
+        </tbody>
+      </table>
+      {% if not c.page.users %}
+        {{ _('No users match your search') }}
+      {% endif %}
       {% endblock %}
     </div>
     {% snippet 'user/snippets/pagination.html', q=q %}
