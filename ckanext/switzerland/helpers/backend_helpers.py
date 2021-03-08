@@ -300,6 +300,7 @@ def ogdch_localize_activity_item(msg):
 
 
 def ogdch_linked_user(user, maxlength=0, avatar=20):
+    """display user in user list"""
     if not isinstance(user, model.User):
         user_name = text_type(user)
         user = model.User.get(user_name)
@@ -314,11 +315,11 @@ def ogdch_linked_user(user, maxlength=0, avatar=20):
                     {}, {u'id': name})
             userroles_display = ", ".join(
                 [tags.link_to(
-                    role.get('role') + ": " + get_localized_value_for_display(role.get('organization_title')),  # noqa
+                    role.get('role').capitalize() + ": " + get_localized_value_for_display(role.get('organization_title')),  # noqa
                     url_for('organization_read', action='read', id=role.get('organization'))  # noqa
                 ) for role in userroles])
         else:
-            userroles_display = "sysadmin"
+            userroles_display = "Sysadmin"
         displayname = user.display_name
         if full_user.get('email'):
             email_display = "( {} )".format(full_user.get('email'))
