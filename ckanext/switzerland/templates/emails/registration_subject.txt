@@ -1,1 +1,1 @@
-Welcome to {{ site_title }}
+{{ site_title }}: Neuer Benutzer-Account
