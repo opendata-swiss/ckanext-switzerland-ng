@@ -16,6 +16,7 @@ from ckan.logic import ActionError, NotFound, ValidationError
 import ckan.plugins.toolkit as tk
 import ckan.lib.helpers as h
 from ckan import authz
+from ckan.common import config
 from ckan.lib.search.common import make_connection
 from ckan.logic.action.create import user_create as core_user_create
 import ckan.lib.plugins as lib_plugins
@@ -466,7 +467,6 @@ def ogdch_get_roles_for_user(context, data_dict):
                 context, {'type': 'organization', 'id': organization})  # noqa
             userroles = _check_userrole_in_organization_tree(userroles, organization_tree)  # noqa
             organization_trees.append(organization_tree)
-
     return userroles
 
 
@@ -655,11 +655,14 @@ def ogdch_user_create(context, data_dict):
     """overwrites the core user creation to send an email
     to new users"""
     user = core_user_create(context, data_dict)
-    h.flash_success("An email to the user {} will be sent at {}."  # noqa
-                    .format(user['name'], user['email']))
-    try:
-        send_registration_email(user)
-    except (socket_error, mailer.MailerException) as error:
-        h.flash_warning("The email could not be send to {} for user {}. An error {} occured"  # noqa
-                        .format(user['name'], user['email'], error))  # noqa
+    send_email_on_registration = config.get('ckanext.switzerland.send_email_on_user_registration', True)
+    if send_email_on_registration and user.get('email'):
+        try:
+            send_registration_email(user)
+        except (socket_error, mailer.MailerException) as error:
+            h.flash_warning("The email could not be send to {} for user {}. An error {} occured"  # noqa
+                            .format(user['name'], user['email'], error))  # noqa
+        else:
+            h.flash_success("An email has been send to the user {} at {}."  # noqa
+                            .format(user['name'], user['email']))
     return user
