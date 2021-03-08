@@ -655,6 +655,7 @@ def ogdch_user_create(context, data_dict):
     """overwrites the core user creation to send an email
     to new users"""
     user = core_user_create(context, data_dict)
+    tk.get_action('ogdch_add_users_to_groups')(context, {'user_id': user['id']})  #noqa
     send_email_on_registration = config.get('ckanext.switzerland.send_email_on_user_registration', True)  # noqa
     if send_email_on_registration and user.get('email'):
         try:
