@@ -655,7 +655,7 @@ def ogdch_user_create(context, data_dict):
     """overwrites the core user creation to send an email
     to new users"""
     user = core_user_create(context, data_dict)
-    send_email_on_registration = config.get('ckanext.switzerland.send_email_on_user_registration', True)
+    send_email_on_registration = config.get('ckanext.switzerland.send_email_on_user_registration', True)  # noqa
     if send_email_on_registration and user.get('email'):
         try:
             send_registration_email(user)

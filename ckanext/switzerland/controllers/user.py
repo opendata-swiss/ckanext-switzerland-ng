@@ -8,7 +8,7 @@ from ckan.controllers.user import UserController
 from ckan.common import c, request, config, _
 from ckan.lib.base import render
 import ckan.plugins.toolkit as tk
-from ckanext.switzerland.helpers.frontend_helpers import get_localized_value_for_display
+from ckanext.switzerland.helpers.frontend_helpers import get_localized_value_for_display  # noqa
 
 log = logging.getLogger(__name__)
 
@@ -38,13 +38,13 @@ class OgdchUserController(UserController):
             tk.abort(403, _('Not authorized to see this page'))
 
         users = tk.get_action('ogdch_user_list')(context, data_dict)
-        organization_tree = tk.get_action('group_tree')(context, {'type': 'organization'})
+        organization_tree = tk.get_action('group_tree')(context, {'type': 'organization'})  # noqa
         userroles = tk.get_action('member_roles_list')(context, {'group_type': 'organization'})  # noqa
         user_admin_organizations = tk.get_action('ogdch_get_admin_organizations_for_user')(context, {})  # noqa
 
         c.pagination = _get_pagination(request, len(users), page_size)
         c.roles = _get_role_selection(c.user, userroles)
-        c.organizations = _get_organization_selection(organization_tree, user_admin_organizations)
+        c.organizations = _get_organization_selection(organization_tree, user_admin_organizations)  # noqa
 
         c.page = {
             'users': users[c.pagination.get('offset', 0):c.pagination.get('offset', 0) + page_size],  # noqa
@@ -68,16 +68,16 @@ def _get_organization_selection(organization_tree, allowed_organizations):
     organizations_display = [{'text': 'Organization: all', 'value': ''}]  # noqa
     for organization in organization_tree:
         if organization['name'] in allowed_organizations:
-            organizations_display.append(_prepare_organization_select_item(organization))
+            organizations_display.append(_prepare_organization_select_item(organization))  # noqa
         for suborganization in organization.get('children'):
             if suborganization['name'] in allowed_organizations:
-                organizations_display.append(_prepare_organization_select_item(suborganization, is_suborganization=True))
+                organizations_display.append(_prepare_organization_select_item(suborganization, is_suborganization=True))  # noqa
     return organizations_display
 
 
 def _prepare_organization_select_item(organization, is_suborganization=False):
     """format select item for one organization"""
-    organization_text = get_localized_value_for_display(organization.get('title'))
+    organization_text = get_localized_value_for_display(organization.get('title'))  # noqa
     if is_suborganization:
         organization_text = "-" + organization_text
     return {'text': organization_text,
