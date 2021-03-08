@@ -10,10 +10,10 @@
          <a href="{{ h.url_for(controller='user', action='index') }}">{{ _('Users') }}
          </a>
        </li>
-    {% endif %}
-     <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'harvest') }}">
-       {{ h.nav_link(_('Harvest Sources'), named_route='harvest_search') }}
-     </li>
+       <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'harvest') }}">
+         {{ h.nav_link(_('Harvest Sources'), named_route='harvest_search') }}
+       </li>
+     {% endif %}
      <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'dataset') }}">
          {{ h.nav_link(_('Datasets'), named_route='search') }}
      </li>
