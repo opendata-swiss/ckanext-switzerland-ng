@@ -315,5 +315,4 @@ def ogdch_linked_user(user, maxlength=0):
             url_for('user.read', id=full_user.get('name'))),
         'email': full_user.get('email'),
         'userroles': user_organization_roles,
-        'is_sysadmin': full_user.get('sysadmin')
     }

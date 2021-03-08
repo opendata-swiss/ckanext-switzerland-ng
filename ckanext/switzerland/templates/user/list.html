@@ -32,11 +32,11 @@
               </td>
               {% if is_sysadmin %}
               <td>
-                {{ user_display.get('email') }}
+                {{ user_display.get('email', '') }}
               </td>
               {% endif %}
               <td>
-                {% if user.is_sysadmin %}
+                {% if user.get('sysadmin') %}
                   {{ _('Sysadmin') }}
                 {% else %}
                   {% for item in user_display.get('userroles') %}
