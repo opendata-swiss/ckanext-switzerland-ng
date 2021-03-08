@@ -14,7 +14,7 @@ def get_registration_body(user):
         'site_title': config.get('ckan.site_title'),
         'site_url': config.get('ckan.site_url'),
         'user_name': user.get('name'),
-        'display_name': user.get('dispay_name')
+        'display_name': user.get('display_name', user['name'])
         }
     # NOTE: This template is translated
     return render_jinja2('emails/registration.txt', extra_vars)
