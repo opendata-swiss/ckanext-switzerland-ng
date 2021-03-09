@@ -20,7 +20,6 @@ def request_is_api_request():
         # Do not change the resulting dict for API requests
         path = tk.request.path
         if any([
-            path.startswith('/api'),
             path.endswith('.xml'),
             path.endswith('.rdf'),
             path.endswith('.n3'),
@@ -28,6 +27,11 @@ def request_is_api_request():
             path.endswith('.jsonld'),
 
         ]):
+            return True
+        if path.startswith('/api') and not path.startswith('/api/action'):
+            # The API client for CKAN's JS modules uses a path starting
+            # /api/action, i.e. without a version number. All other API calls
+            # should include a version number.
             return True
     except TypeError:
         # we get here if there is no request (i.e. on the command line)
