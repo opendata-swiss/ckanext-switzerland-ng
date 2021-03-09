@@ -299,20 +299,22 @@ def ogdch_localize_activity_item(msg):
 
 def ogdch_linked_user(user, maxlength=0):
     """display user in user list"""
-    full_user = logic.get_action(u'user_show')(
+    user_obj = logic.get_action(u'user_show')(
         {}, {u'id': user})
     user_organization_roles = []
-    if not full_user.get('sysadmin'):
-        userroles = logic.get_action('ogdch_get_roles_for_user')(
-                {}, {u'id': user})
+    if not user_obj.get('sysadmin'):
+        userroles = logic.get_action('ogdch_get_roles_for_user')({}, {u'id': user_obj['id']})  # noqa
         for role in userroles:
             user_organization_roles.append(tags.link_to(
                 role.get('role').capitalize() + ": " + get_localized_value_for_display(role.get('organization_title')),  # noqa
                 url_for('organization_read', action='read', id=role.get('organization'))))  # noqa
+    display_email = user_obj.get('email', '-')
+    if not display_email:
+        display_email = ''
     return {
         'link': tags.link_to(
-            full_user.get('name'),
-            url_for('user.read', id=full_user.get('name'))),
-        'email': full_user.get('email'),
+            user_obj['name'],
+            url_for('user.read', id=user_obj['id'])),
+        'email': display_email,
         'userroles': user_organization_roles,
     }
