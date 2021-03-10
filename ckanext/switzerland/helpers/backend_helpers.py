@@ -300,5 +300,5 @@ def ogdch_localize_activity_item(msg):
         localized_msg = unescaped_msg.replace(language_dict, localized_language_dict)  # noqa
         return tk.literal(localized_msg)
     except Exception as e:
-        log.error("Error {} occured while localizing an activity message {}".format(e, msg))  # noqa
+        log.error("Error {} occured while localizing an activity message".format(e, msg))  # noqa
     return tk.literal(msg)
