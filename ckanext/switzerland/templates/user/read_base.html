@@ -3,5 +3,7 @@
 {% block content_primary_nav %}
   {{ h.build_nav_icon('user.read', _('Datasets'), id=user.name) }}
   {{ h.build_nav_icon('organization_list', _('Organizations'), id=user.name) }}
-  {{ h.build_nav_icon('user.activity', _('Activity Stream'), id=user.name) }}
+  {% if c.user %}
+    {{ h.build_nav_icon('user.activity', _('Activity Stream'), id=user.name) }}
+  {% endif %}
 {% endblock %}
