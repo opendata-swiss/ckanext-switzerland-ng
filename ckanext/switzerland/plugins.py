@@ -278,14 +278,15 @@ class OgdchResourcePlugin(plugins.SingletonPlugin, OgdchMixin):
     def before_show(self, res_dict):
         res_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=res_dict) # noqa
         res_dict['display_name'] = res_dict['title']
+        res_dict = ogdch_format_utils.prepare_resource_format(
+            resource=res_dict, format_mapping=self.format_mapping)
         if ogdch_request_utils.request_is_api_request():
+            # todo: convert markdown description
             return res_dict
         request_lang = ogdch_request_utils.get_request_language()
         res_dict = ogdch_localize_utils.localize_ckan_sub_dict(
             ckan_dict=res_dict,
             lang_code=request_lang)
-        res_dict = ogdch_format_utils.prepare_resource_format(
-            resource=res_dict, format_mapping=self.format_mapping)
         return res_dict
 
 
