@@ -1,0 +1,35 @@
+Liebe/Lieber {{ display_name }},
+
+Willkommen auf {{ site_title }}
+Wir haben für Sie einen Benutzer-Account eingerichtet.
+
+Ihr Benutzer wurde unter folgendem Benutzernamen eingerichtet:
+'{{ user_name }}'.
+
+Um die Einladung anzunehmen, verwenden Sie bitte den untenstehenden Link und setzen Sie Ihr Passwort zurück:
+
+{{ site_url }}/user/reset
+
+
+Wir wünschen Ihnen einen guten Start!
+
+Das Portalteam von opendata.swiss
+
+----
+
+Cher/ Chère {{ display_name }},
+
+Bienvenue sur {{ site_title }}
+Nous avons créé un compte utilisateur pour vous.
+
+Votre compte utilisateur a été créé sous le nom d'utilisateur suivant :
+'{{ user_name }}'.
+
+Pour accepter l'invitation, veuillez utiliser le lien ci-dessous et réinitialiser votre mot de passe:
+
+{{ site_url }}/user/reset
+
+
+Nous vous souhaitons un bon début !
+
+L'équipe du portail opendata.swiss
