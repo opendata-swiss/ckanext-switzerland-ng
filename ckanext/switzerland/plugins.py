@@ -1,6 +1,7 @@
 # coding=UTF-8
 
 from ckan.common import OrderedDict
+from ckan.lib.helpers import render_markdown
 from ckanext.showcase.plugin import ShowcasePlugin
 import ckanext.switzerland.helpers.validators as ogdch_validators
 from ckanext.switzerland import logic as ogdch_logic
@@ -281,7 +282,9 @@ class OgdchResourcePlugin(plugins.SingletonPlugin, OgdchMixin):
         res_dict = ogdch_format_utils.prepare_resource_format(
             resource=res_dict, format_mapping=self.format_mapping)
         if ogdch_request_utils.request_is_api_request():
-            # todo: convert markdown description
+            res_dict['description'] = {
+                k: render_markdown(res_dict['description'][k])
+                for k in res_dict['description']}
             return res_dict
         request_lang = ogdch_request_utils.get_request_language()
         res_dict = ogdch_localize_utils.localize_ckan_sub_dict(
