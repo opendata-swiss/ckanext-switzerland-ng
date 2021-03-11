@@ -1,6 +1,7 @@
 # coding=UTF-8
 
 from ckan.common import OrderedDict
+from ckan.lib.helpers import render_markdown
 from ckanext.showcase.plugin import ShowcasePlugin
 import ckanext.switzerland.helpers.validators as ogdch_validators
 from ckanext.switzerland import logic as ogdch_logic
@@ -233,12 +234,19 @@ class OgdchGroupPlugin(plugins.SingletonPlugin, OgdchMixin):
     plugins.implements(plugins.IGroupController, inherit=True)
 
     def before_view(self, grp_dict):
-        """localizes the grp_dict for web requests
-        that are not api requests"""
+        """
+        Transform grp_dict before view.
+
+        This method is not called before requests to CKAN's default API (e.g.
+        group_show). It is called in the course of our ogdch_package_show API,
+        and in that case, the data is not localized.
+        """
         grp_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=grp_dict) # noqa
         grp_dict['display_name'] = grp_dict['title']
+
         if ogdch_request_utils.request_is_api_request():
             return grp_dict
+
         request_lang = ogdch_request_utils.get_request_language()
         grp_dict = ogdch_localize_utils.localize_ckan_sub_dict(
             ckan_dict=grp_dict,
@@ -259,10 +267,20 @@ class OgdchOrganizationPlugin(plugins.SingletonPlugin, OgdchMixin):
     plugins.implements(plugins.IOrganizationController, inherit=True)
 
     def before_view(self, org_dict):
-        org_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=org_dict) # noqa
+        """
+        Transform org_dict before view.
+
+        This method is not called before requests to CKAN's default API (e.g.
+        organization_show). It is called in the course of our
+        ogdch_package_show API, and in that case, the data is not localized.
+        """
+        org_dict = ogdch_localize_utils.parse_json_attributes(
+            ckan_dict=org_dict)
         org_dict['display_name'] = org_dict['title']
+
         if ogdch_request_utils.request_is_api_request():
             return org_dict
+
         request_lang = ogdch_request_utils.get_request_language()
         org_dict = ogdch_localize_utils.localize_ckan_sub_dict(
             ckan_dict=org_dict,
@@ -276,16 +294,28 @@ class OgdchResourcePlugin(plugins.SingletonPlugin, OgdchMixin):
 
     # IResourceController
     def before_show(self, res_dict):
+        """
+        Transform res_dict before view.
+
+        This method is not called before requests to CKAN's default API (e.g.
+        resource_show). It is called in the course of our ogdch_package_show
+        API, and in that case, the data is not localized.
+        """
         res_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=res_dict) # noqa
         res_dict['display_name'] = res_dict['title']
+        res_dict = ogdch_format_utils.prepare_resource_format(
+            resource=res_dict, format_mapping=self.format_mapping)
+
         if ogdch_request_utils.request_is_api_request():
+            res_dict['description'] = {
+                k: render_markdown(res_dict['description'][k])
+                for k in res_dict['description']}
             return res_dict
+
         request_lang = ogdch_request_utils.get_request_language()
         res_dict = ogdch_localize_utils.localize_ckan_sub_dict(
             ckan_dict=res_dict,
             lang_code=request_lang)
-        res_dict = ogdch_format_utils.prepare_resource_format(
-            resource=res_dict, format_mapping=self.format_mapping)
         return res_dict
 
 
@@ -298,9 +328,16 @@ class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
     # IPackageController
 
     def before_view(self, pkg_dict):
-        """transform pkg dict before view"""
-        pkg_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=pkg_dict) # noqa
-        pkg_dict = ogdch_plugin_utils.package_map_ckan_default_fields(pkg_dict) # noqa
+        """
+        Transform pkg_dict before view.
+
+        This method is not called before requests to CKAN's default API (e.g.
+        package_show). It is called in the course of our ogdch_package_show
+        API, and in that case, the data is not localized.
+        """
+        pkg_dict = ogdch_localize_utils.parse_json_attributes(
+            ckan_dict=pkg_dict)
+        pkg_dict = ogdch_plugin_utils.package_map_ckan_default_fields(pkg_dict)
         pkg_dict['resources'] = [
             ogdch_format_utils.prepare_resource_format(
                 resource=resource,
