@@ -16,6 +16,7 @@ import ckan.lib.helpers as h
 from ckan.lib.search.common import make_connection
 import ckan.lib.plugins as lib_plugins
 import ckan.lib.uploader as uploader
+from ckan.logic.action.create import user_create as core_user_create
 from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
 from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester
 from ckanext.switzerland.helpers.request_utils import get_content_headers
@@ -415,3 +416,12 @@ def _add_member_to_group(member, group, context):
         'role': 'member',
     }
     tk.get_action('group_member_create')(context, update_group_members_dict)
+
+
+def ogdch_user_create(context, data_dict):
+    """overwrites the core user creation to send an email
+    to new users"""
+    user = core_user_create(context, data_dict)
+    h.flash_success("Custom user create worked for user {}."  # noqa
+                    .format(user['name']))
+    return user
