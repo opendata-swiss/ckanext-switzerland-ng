@@ -6,7 +6,6 @@ import re
 import datetime
 from ckan import logic
 import ckan.plugins.toolkit as toolkit
-from ckan.lib.helpers import render_markdown
 from ckan.lib.munge import munge_title_to_name
 import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
 import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
@@ -211,10 +210,6 @@ def ogdch_prepare_pkg_dict_for_api(pkg_dict):
 
     if ogdch_request_utils.request_is_api_request():
         _transform_package_dates(pkg_dict)
-
-        pkg_dict['description'] = {
-            k: render_markdown(pkg_dict['description'][k])
-            for k in pkg_dict['description']}
 
     return pkg_dict
 
