@@ -25,8 +25,9 @@
       {% endif %}
       {% block primary_content_inner %}
         <h2 class="hide-heading">{{ _('My Datasets') }}</h2>
-        {% if user_dict.datasets %}
-          {% snippet 'snippets/package_list.html', packages=user_dict.datasets %}
+        {% set datasets = h.ogdch_user_datasets() %}
+        {% if datasets %}
+          {% snippet 'snippets/package_list.html', packages=datasets %}
         {% else %}
           <p class="empty">
             {{ _('You haven\'t created any datasets.') }}
