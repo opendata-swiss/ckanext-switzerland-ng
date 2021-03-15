@@ -7,7 +7,7 @@ used in backend templates
 import ast
 import logging
 from urlparse import urlparse
-from ckan.common import _
+from ckan.common import _, g
 from ckan.lib.helpers import _link_to, lang, url_for
 from ckan.lib.helpers import dataset_display_name as dataset_display_name_orig
 from ckan.lib.helpers import organization_link as organization_link_orig
@@ -275,3 +275,11 @@ def ogdch_get_top_level_organisations():
         return parent_organizations
     except tk.ObjectNotFound:
         return []
+
+
+def ogdch_user_datasets():
+    context = {u'for_view': True, u'user': g.user, u'auth_user_obj': g.userobj}
+    data_dict = {u'user_obj': g.userobj, u'include_datasets': True}
+    user_dict = logic.get_action(u'user_show')(context, data_dict)
+
+    return user_dict['datasets']

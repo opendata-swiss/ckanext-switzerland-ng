@@ -168,6 +168,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_temporals_form_helper': ogdch_dataset_form_helpers.ogdch_temporals_form_helper,  # noqa
             'ogdch_dataset_title_form_helper': ogdch_dataset_form_helpers.ogdch_dataset_title_form_helper,  # noqa
             'ogdch_get_top_level_organisations': ogdch_backend_helpers.ogdch_get_top_level_organisations,  # noqa
+            'ogdch_user_datasets': ogdch_backend_helpers.ogdch_user_datasets,
             # monkey patch template helpers to return translated names/titles
             'resource_display_name': ogdch_backend_helpers.ogdch_resource_display_name,  # noqa
             'dataset_display_name': ogdch_backend_helpers.dataset_display_name,
