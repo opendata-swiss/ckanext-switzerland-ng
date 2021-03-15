@@ -701,8 +701,8 @@ msgid "Datasets in Showcase"
 msgstr "Dataset in Showcase"
 
 #: ckanext/switzerland/templates/showcase/snippets/showcase_info.html:65
-msgid "There are no Datasets in this Showcase"
-msgstr "Non ci sono Dataset in questo Showcase"
+msgid "These datasets are not (yet) available on opendata.swiss."
+msgstr "Questi Datasets non sono (ancora) disponibile su opendata.swiss."
 
 #: ckanext/switzerland/templates/showcase/snippets/showcase_item_small.html:30
 msgid "This showcase has no description"
