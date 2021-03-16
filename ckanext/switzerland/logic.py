@@ -432,5 +432,5 @@ def ogdch_user_create(context, data_dict):
                             .format(user['name'], user['email']))
         except Exception as e:
             h.flash_error("The email could not be send to {} for user {}. An error {} occured"  # noqa
-                            .format(user['name'], user['email'], e))  # noqa
+                            .format(user['email'], user['name'], e))  # noqa
     return user
