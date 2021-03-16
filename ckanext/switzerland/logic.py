@@ -9,6 +9,7 @@ import rdflib
 import rdflib.parser
 from rdflib.namespace import Namespace, RDF
 
+from ckan.common import config
 from ckan.plugins.toolkit import get_or_bust, side_effect_free
 from ckan.logic import ActionError, NotFound, ValidationError
 import ckan.plugins.toolkit as tk
@@ -432,5 +433,5 @@ def ogdch_user_create(context, data_dict):
                             .format(user['name'], user['email']))
         except Exception as e:
             h.flash_error("The email could not be send to {} for user {}. An error {} occured"  # noqa
-                            .format(user['email'], user['name'], e))  # noqa
+                          .format(user['email'], user['name'], e))  # noqa
     return user
