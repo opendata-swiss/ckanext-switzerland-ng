@@ -3,7 +3,6 @@ import os.path
 import pysolr
 import re
 from unidecode import unidecode
-from socket import error as socket_error
 import uuid
 
 import rdflib
@@ -17,7 +16,6 @@ import ckan.lib.helpers as h
 from ckan.lib.search.common import make_connection
 import ckan.lib.plugins as lib_plugins
 import ckan.lib.uploader as uploader
-import ckan.lib.mailer as mailer
 from ckan.logic.action.create import user_create as core_user_create
 from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
 from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester
@@ -430,10 +428,9 @@ def ogdch_user_create(context, data_dict):
     if send_email_on_registration and user.get('email'):
         try:
             send_registration_email(user)
-        except (socket_error, mailer.MailerException) as error:
-            h.flash_warning("The email could not be send to {} for user {}. An error {} occured"  # noqa
-                            .format(user['name'], user['email'], error))  # noqa
-        else:
             h.flash_success("An email has been send to the user {} at {}."  # noqa
                             .format(user['name'], user['email']))
+        except Exception as e:
+            h.flash_error("The email could not be send to {} for user {}. An error {} occured"  # noqa
+                            .format(user['email'], user['name'], e))  # noqa
     return user
