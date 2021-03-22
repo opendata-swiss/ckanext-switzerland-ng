@@ -1,7 +1,7 @@
 /**
  * Organization filter
  * This is the same filter that we use on the frontend,
- * just converted to work as a CKAN JS module.
+ * just converted to work as a CKAN JS module and simplified a bit.
  *
  * Source: https://github.com/datagovuk/ckanext-dgu
  *
@@ -145,51 +145,27 @@ this.ckan.module('ogdch_organization_filter', function ($) {
                     return out;
                 }
 
-                var container = $('.organization-hierarchy');
-                var searchBox = $('input#organization-search');
-                var resultCountBox = $('.result-count');
-                var resultCountFooterBox = $('.result-count-footer');
+                var container = $('#publisher-tree');
+                var searchBox = $('input#ogdch_search');
                 var index = buildIndex(container);
                 assert(container.length);
                 assert(searchBox.length);
 
-                /* This is effectively a global variable. I am not proud */
-                /* TODO replace with multiple returns from the recursive function
-                 * AS LONG AS it doesn't damage performance.  */
-                var hacky_count = -1;
                 /* Recursive. Runs through a row of the index */
                 function updateSearch(searchString) {
-                    var resultCountFooterBoxText = '';
                     searchString = removeDiacritics(searchString);
                     searchString = searchString.toLowerCase();
-                    if (searchString.length == 0) {
+                    if (searchString.length === 0) {
                         var p = $('.organization');
-                        hacky_count = p.length;
                         p.removeClass('match');
                         p.removeClass('childMatch');
                         container.addClass('empty-search');
-                        resultCountBox.text(hacky_count);
-                        if(hacky_count === 1) {
-                            resultCountFooterBoxText = filterConfig.labels.organization_singular;
-                        } else {
-                            resultCountFooterBoxText = filterConfig.labels.organization_plural;
-                        }
-                        resultCountFooterBox.text(resultCountFooterBoxText);
                         return;
                     }
                     container.removeClass('empty-search');
-                    hacky_count = 0;
                     for (var i = 0; i < index.length; i++) {
                         updateSearch_recur(searchString, index[i]);
                     }
-                    resultCountBox.text(hacky_count);
-
-                    if(hacky_count === 1) {
-                        resultCountFooterBoxText = filterConfig.labels.organization_singular;
-                    } else {
-                        resultCountFooterBoxText = filterConfig.labels.organization_plural;
-                    }
-                    resultCountFooterBox.text(resultCountFooterBoxText);
                 }
 
                 function updateSearch_recur(searchString, entry) {
@@ -198,8 +174,7 @@ this.ckan.module('ogdch_organization_filter', function ($) {
                         childMatch |= updateSearch_recur(searchString, entry['children'][i]);
                     }
                     var offset = entry['searchtext'].indexOf(searchString);
-                    if (offset != -1) {
-                        hacky_count += 1;
+                    if (offset !== -1) {
                         /* light them up */
                         var a = entry['rawtext'].substring(0, offset);
                         var b = entry['rawtext'].substring(offset, offset + searchString.length);
@@ -226,7 +201,7 @@ this.ckan.module('ogdch_organization_filter', function ($) {
 
                 function onChange(e) {
                     var val = searchBox.val();
-                    if (val == cacheVal) {
+                    if (val === cacheVal) {
                         return;
                     }
                     cacheVal = val;
