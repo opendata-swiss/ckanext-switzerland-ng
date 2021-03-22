@@ -1,0 +1,25 @@
+{#
+  Custom search form for organizations, so we can use the ogdch_organization_filter data module.
+#}
+
+{% import 'macros/form.html' as form %}
+
+<form {% if form_id %}id="{{ form_id }}" {% endif %}class="search-form{% if no_bottom_border %} no-bottom-border{% endif %}" method="get" data-module="ogdch_organization_filter">
+
+{% block search_input %}
+  <div class="form-group has-feedback">
+    <input id="ogdch_search" type="search" class="form-control input-lg" name="q" value="{{ query }}" autocomplete="off" placeholder="{{ placeholder }}"/>
+    <i class="fa fa-search form-control-feedback" aria-hidden="true"></i>
+  </div>
+  <div class="reset-search">
+    <a href="{{ h.url_for(controller=c.controller, action=c.action) }}"><i class="fa fa-times-circle" aria-hidden="true"></i> {{ _('Reset search') }}</a>
+  </div>
+{% endblock %}
+
+{% block search_search_fields %}
+  {% if fields -%}
+    <span>{{ form.hidden_from_list(fields=fields) }}</span>
+  {%- endif %}
+{% endblock %}
+
+</form>
