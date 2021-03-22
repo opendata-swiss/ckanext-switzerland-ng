@@ -1,12 +1,12 @@
-.organization-hierarchy li.organization {
+#publisher-tree li.organization {
     display: none; }
-.organization-hierarchy li.organization.childmatch {
+#publisher-tree li.organization.childmatch {
     display: list-item; }
-.organization-hierarchy li.organization.match {
+#publisher-tree li.organization.match {
     display: list-item; }
-.organization-hierarchy li.organization.match .organization-row .highlight {
+#publisher-tree li.organization.match .organization-row .highlight {
     background-color: #e4eeed; }
-.organization-hierarchy.empty-search li.organization {
+#publisher-tree.empty-search li.organization {
     display: list-item; }
-.organization-hierarchy.empty-search li.organization .organization-row a .highlight {
+#publisher-tree.empty-search li.organization .organization-row a .highlight {
     background-color: transparent; }
