@@ -9,7 +9,8 @@ import re
 import logging
 from urlparse import urlparse
 from html.parser import HTMLParser
-from ckan.common import _, g
+from ckan import authz
+from ckan.common import _, g, c
 from ckan.lib.helpers import _link_to, lang, url_for
 from ckan.lib.helpers import dataset_display_name as dataset_display_name_orig
 from ckan.lib.helpers import organization_link as organization_link_orig
@@ -27,6 +28,7 @@ OGDCH_USER_VIEW_CHOICE = 'user_view_choice'
 OGDCH_USER_VIEW_CHOICE_FRONTEND = 'frontend'
 OGDCH_USER_VIEW_CHOICE_BACKEND = 'backend'
 REGEX_LANGUAGE_DICT = '\{[\w\\\d\-\(\)\'\"\:\,\s]*\}'
+CAPACITY_ADMIN = "admin"
 
 showcase_types_mapping = {
     "application": u'{"fr": "Application", "de": "Applikation", "en": "Application", "it": "Applicazione"}', # noqa
@@ -302,3 +304,17 @@ def ogdch_localize_activity_item(msg):
     except Exception as e:
         log.error("Error {} occured while localizing an activity message".format(e, msg))  # noqa
     return tk.literal(msg)
+
+
+def ogdch_admin_capactity():
+    """tests whether the current user is a sysadmin
+    or an organization admin"""
+    if authz.is_sysadmin(c.user):
+        return True
+    context = {'user': c.user,
+               'auth_user_obj': c.userobj}
+    roles_for_user = tk.get_action('organization_list_for_user')(context, {'id': c.user})  # noqa
+    capacities = [role.get('capacity') for role in roles_for_user]
+    if CAPACITY_ADMIN in capacities:
+        return True
+    return False
