@@ -2,6 +2,8 @@
 
 {% set temporals_rows = h.ogdch_temporals_form_helper(data) %}
 
+<h3>{{ h.scheming_language_text(field.label) }}</h3>
+{%- snippet 'scheming/form_snippets/help_text.html', field=field -%}
 {%- for row in temporals_rows -%}
     {% call form.date_input(
         'temporal-start-date-' + row.index,

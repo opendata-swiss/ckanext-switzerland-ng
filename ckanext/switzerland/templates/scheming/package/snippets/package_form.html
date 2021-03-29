@@ -23,9 +23,6 @@
       {% endif %}
           {{ field.subheader }}
       </h3>
-      {% if field.ogdch_help_text %}
-          <p>{{ field.ogdch_help_text }}</p>
-      {% endif %}
     {% endif %}
     {%- if field.form_snippet is not none -%}
       {%- snippet 'scheming/snippets/form_field.html',
