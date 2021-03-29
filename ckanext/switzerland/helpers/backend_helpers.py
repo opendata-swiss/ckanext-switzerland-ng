@@ -9,7 +9,8 @@ import re
 import logging
 from urlparse import urlparse
 from html.parser import HTMLParser
-from ckan.common import _, g
+from ckan import authz
+from ckan.common import _, g, c
 from ckan.lib.helpers import _link_to, lang, url_for
 from ckan.lib.helpers import dataset_display_name as dataset_display_name_orig
 from ckan.lib.helpers import organization_link as organization_link_orig
@@ -302,3 +303,14 @@ def ogdch_localize_activity_item(msg):
     except Exception as e:
         log.error("Error {} occured while localizing an activity message".format(e, msg))  # noqa
     return tk.literal(msg)
+
+
+def ogdch_admin_capactity(user):
+    if authz.is_sysadmin(user):
+        return True
+    context = {'user': c.user,
+               'auth_user_obj': c.userobj}
+    user_admin_organizations = tk.get_action('ogdch_get_admin_organizations_for_user')(context, {})  # noqa
+    if user_admin_organizations:
+        return True
+    return False
