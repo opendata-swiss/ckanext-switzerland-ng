@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  opendata.swiss\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-03-30 05:03+0000\n"
+"POT-Creation-Date: 2021-03-30 05:39+0000\n"
 "PO-Revision-Date: 2019-03-14 13:44+0100\n"
 "Last-Translator: Jürg Hunziker <juerg.hunziker@gmail.com>\n"
 "Language: fr\n"
@@ -1021,128 +1021,128 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Categories"
-#~ msgstr "Organisations"
+#~ msgstr ""
 
 #~ msgid "A joint project of the Confederation and the cantons"
-#~ msgstr "Catégorie"
+#~ msgstr "Organisations"
 
 #~ msgid "FAQ"
-#~ msgstr "Catégories"
+#~ msgstr "Catégorie"
 
 #~ msgid "Contact"
-#~ msgstr ""
+#~ msgstr "Catégories"
 
 #~ msgid "Data"
-#~ msgstr "FAQ"
+#~ msgstr ""
 
 #~ msgid "Legal framework"
-#~ msgstr "Contact"
+#~ msgstr "FAQ"
 
 #~ msgid "Sourcecode"
-#~ msgstr "Données"
+#~ msgstr "Contact"
 
 #~ msgid "What's opendata.swiss?"
-#~ msgstr "Cadre juridique"
+#~ msgstr "Données"
 
 #~ msgid "Search"
-#~ msgstr "Code source"
+#~ msgstr "Cadre juridique"
 
 #~ msgid "Loading..."
-#~ msgstr "Qu'est-ce opendata.swiss?"
+#~ msgstr "Code source"
 
 #~ msgid "Search categories..."
-#~ msgstr ""
+#~ msgstr "Qu'est-ce opendata.swiss?"
 
 #~ msgid "There are currently no categories available"
-#~ msgstr "Chargement..."
+#~ msgstr ""
 
 #~ msgid "Which organizations publish their data?"
-#~ msgstr "Rechercher les catégories..."
+#~ msgstr "Chargement..."
 
 #~ msgid "I want to publish data"
-#~ msgstr ""
+#~ msgstr "Rechercher les catégories..."
 
 #~ msgid "There are currently no organizations for this site"
-#~ msgstr "Quelles organisations publient des données ?"
+#~ msgstr ""
 
 #~ msgid "More information"
-#~ msgstr "Je souhaite publier des données."
+#~ msgstr "Quelles organisations publient des données ?"
 
 #~ msgid "Private"
-#~ msgstr "Il n'y a actuellement pas d'organisation pour ce site. "
+#~ msgstr "Je souhaite publier des données."
 
 #~ msgid "Last updated"
-#~ msgstr "Plus d'information"
+#~ msgstr "Il n'y a actuellement pas d'organisation pour ce site. "
 
 #~ msgid "Format"
-#~ msgstr "Privé"
+#~ msgstr "Plus d'information"
 
 #~ msgid "Download"
-#~ msgstr "Dernière mise à jour"
+#~ msgstr "Privé"
 
 #~ msgid "Go to resource"
-#~ msgstr "Format"
+#~ msgstr "Dernière mise à jour"
 
 #~ msgid "Got questions?"
-#~ msgstr "Télécharger"
+#~ msgstr "Format"
 
 #~ msgid "This resource view is not available at the moment."
-#~ msgstr "Aller à la ressource"
+#~ msgstr "Télécharger"
 
 #~ msgid "Click here for more information."
-#~ msgstr "Vous avez des questions?"
+#~ msgstr "Aller à la ressource"
 
 #~ msgid "Your browser does not support iframes."
-#~ msgstr "Cette vue de ressource n'est pas disponible en ce moment"
+#~ msgstr "Vous avez des questions?"
 
 #~ msgid "This dataset has no resources"
-#~ msgstr "Cliquez ici pour plus d'informations."
+#~ msgstr "Cette vue de ressource n'est pas disponible en ce moment"
 
 #~ msgid "Show Less {facet_type}"
-#~ msgstr "Votre navigateur ne supporte pas les iframes."
+#~ msgstr "Cliquez ici pour plus d'informations."
 
 #~ msgid "Data visualization"
-#~ msgstr "Il n'y a pas de ressources pour ce jeu de données."
+#~ msgstr "Votre navigateur ne supporte pas les iframes."
 
 #~ msgid "Event"
-#~ msgstr "Montrer moins de {facet_type}"
+#~ msgstr "Il n'y a pas de ressources pour ce jeu de données."
 
 #~ msgid "Blog and media article"
-#~ msgstr "Visualisation de données"
+#~ msgstr "Montrer moins de {facet_type}"
 
 #~ msgid "Paper"
-#~ msgstr "Evènement"
+#~ msgstr "Visualisation de données"
 
 #~ msgid "Best practice"
-#~ msgstr "Article blogs et médias"
+#~ msgstr "Evènement"
 
 #~ msgid "Search showcases..."
-#~ msgstr "Article scientifique"
+#~ msgstr "Article blogs et médias"
 
 #~ msgid "{number} showcase found for '{query}'"
-#~ msgstr "Best practice"
+#~ msgstr "Article scientifique"
 
 #~ msgid "{number} showcases found for '{query}'"
-#~ msgstr "Rechercher les showcases"
+#~ msgstr "Best practice"
 
 #~ msgid "{number} showcase found"
-#~ msgstr "{number} showcase trouvée pour '{query}'"
+#~ msgstr "Rechercher les showcases"
 
 #~ msgid "{number} showcases found"
-#~ msgstr "{number} showcases trouvées pour '{query}'"
+#~ msgstr "{number} showcase trouvée pour '{query}'"
 
 #~ msgid "No showcase found"
-#~ msgstr "{number} showcase trouvée"
+#~ msgstr "{number} showcases trouvées pour '{query}'"
 
 #~ msgid "True"
-#~ msgstr "{number} showcases trouvées"
+#~ msgstr "{number} showcase trouvée"
 
 #~ msgid "False"
-#~ msgstr "Aucun showcase trouvée"
+#~ msgstr "{number} showcases trouvées"
 
 #~ msgid "Start-Date"
-#~ msgstr "Vraix"
+#~ msgstr "Aucun showcase trouvée"
 
 #~ msgid "End-Date"
-#~ msgstr ""
+#~ msgstr "Vraix"
 

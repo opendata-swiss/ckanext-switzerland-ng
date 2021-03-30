@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  opendata.swiss\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-03-30 05:03+0000\n"
+"POT-Creation-Date: 2021-03-30 05:39+0000\n"
 "PO-Revision-Date: 2019-03-14 13:44+0100\n"
 "Last-Translator: Jürg Hunziker <juerg.hunziker@gmail.com>\n"
 "Language: de\n"
@@ -1022,128 +1022,128 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Categories"
-#~ msgstr "Organisationen"
+#~ msgstr ""
 
 #~ msgid "A joint project of the Confederation and the cantons"
-#~ msgstr "Kategorie"
+#~ msgstr "Organisationen"
 
 #~ msgid "FAQ"
-#~ msgstr "Kategorien"
+#~ msgstr "Kategorie"
 
 #~ msgid "Contact"
-#~ msgstr ""
+#~ msgstr "Kategorien"
 
 #~ msgid "Data"
-#~ msgstr "FAQ"
+#~ msgstr ""
 
 #~ msgid "Legal framework"
-#~ msgstr "Kontakt"
+#~ msgstr "FAQ"
 
 #~ msgid "Sourcecode"
-#~ msgstr "Daten"
+#~ msgstr "Kontakt"
 
 #~ msgid "What's opendata.swiss?"
-#~ msgstr "Rechtliche Hinweise"
+#~ msgstr "Daten"
 
 #~ msgid "Search"
-#~ msgstr "Quellcode"
+#~ msgstr "Rechtliche Hinweise"
 
 #~ msgid "Loading..."
-#~ msgstr "Was ist opendata.swiss?"
+#~ msgstr "Quellcode"
 
 #~ msgid "Search categories..."
-#~ msgstr ""
+#~ msgstr "Was ist opendata.swiss?"
 
 #~ msgid "There are currently no categories available"
-#~ msgstr "Lädt..."
+#~ msgstr ""
 
 #~ msgid "Which organizations publish their data?"
-#~ msgstr "Kategorien suchen..."
+#~ msgstr "Lädt..."
 
 #~ msgid "I want to publish data"
-#~ msgstr ""
+#~ msgstr "Kategorien suchen..."
 
 #~ msgid "There are currently no organizations for this site"
-#~ msgstr "Welche Organisationen publizieren ihre Daten?"
+#~ msgstr ""
 
 #~ msgid "More information"
-#~ msgstr "Ich will Daten publizieren"
+#~ msgstr "Welche Organisationen publizieren ihre Daten?"
 
 #~ msgid "Private"
-#~ msgstr "Momentan sind keine Organisationen vorhanden"
+#~ msgstr "Ich will Daten publizieren"
 
 #~ msgid "Last updated"
-#~ msgstr "Weitere Informationen"
+#~ msgstr "Momentan sind keine Organisationen vorhanden"
 
 #~ msgid "Format"
-#~ msgstr "Privat"
+#~ msgstr "Weitere Informationen"
 
 #~ msgid "Download"
-#~ msgstr "Zuletzt aktualisiert"
+#~ msgstr "Privat"
 
 #~ msgid "Go to resource"
-#~ msgstr "Format"
+#~ msgstr "Zuletzt aktualisiert"
 
 #~ msgid "Got questions?"
-#~ msgstr "Herunterladen"
+#~ msgstr "Format"
 
 #~ msgid "This resource view is not available at the moment."
-#~ msgstr "Gehe zur Ressource"
+#~ msgstr "Herunterladen"
 
 #~ msgid "Click here for more information."
-#~ msgstr "Haben Sie Fragen?"
+#~ msgstr "Gehe zur Ressource"
 
 #~ msgid "Your browser does not support iframes."
-#~ msgstr "Die Vorschau für diese Ressource ist momentan nicht verfügbar."
+#~ msgstr "Haben Sie Fragen?"
 
 #~ msgid "This dataset has no resources"
-#~ msgstr "Klicken Sie hier für weitere Informationen"
+#~ msgstr "Die Vorschau für diese Ressource ist momentan nicht verfügbar."
 
 #~ msgid "Show Less {facet_type}"
-#~ msgstr "Ihr Browser unterstützt keine IFrames."
+#~ msgstr "Klicken Sie hier für weitere Informationen"
 
 #~ msgid "Data visualization"
-#~ msgstr "Dieser Datensatz hat keine Ressourcen"
+#~ msgstr "Ihr Browser unterstützt keine IFrames."
 
 #~ msgid "Event"
-#~ msgstr "Zeige weniger {facet_type}"
+#~ msgstr "Dieser Datensatz hat keine Ressourcen"
 
 #~ msgid "Blog and media article"
-#~ msgstr "Daten-Visualisierung"
+#~ msgstr "Zeige weniger {facet_type}"
 
 #~ msgid "Paper"
-#~ msgstr "Veranstaltung"
+#~ msgstr "Daten-Visualisierung"
 
 #~ msgid "Best practice"
-#~ msgstr "Blog und Medienartikel"
+#~ msgstr "Veranstaltung"
 
 #~ msgid "Search showcases..."
-#~ msgstr "Wissenschaftliche Arbeit"
+#~ msgstr "Blog und Medienartikel"
 
 #~ msgid "{number} showcase found for '{query}'"
-#~ msgstr "Best practice"
+#~ msgstr "Wissenschaftliche Arbeit"
 
 #~ msgid "{number} showcases found for '{query}'"
-#~ msgstr "Showcases suchen..."
+#~ msgstr "Best practice"
 
 #~ msgid "{number} showcase found"
-#~ msgstr "{number} Showcase gefunden für \"{query}\""
+#~ msgstr "Showcases suchen..."
 
 #~ msgid "{number} showcases found"
-#~ msgstr "{number} Showcases gefunden für \"{query}\""
+#~ msgstr "{number} Showcase gefunden für \"{query}\""
 
 #~ msgid "No showcase found"
-#~ msgstr "{number} Showcase gefunden"
+#~ msgstr "{number} Showcases gefunden für \"{query}\""
 
 #~ msgid "True"
-#~ msgstr "{number} Showcases gefunden"
+#~ msgstr "{number} Showcase gefunden"
 
 #~ msgid "False"
-#~ msgstr "Kein Showcase gefunden"
+#~ msgstr "{number} Showcases gefunden"
 
 #~ msgid "Start-Date"
-#~ msgstr "Wahr"
+#~ msgstr "Kein Showcase gefunden"
 
 #~ msgid "End-Date"
-#~ msgstr ""
+#~ msgstr "Wahr"
 
