@@ -62,7 +62,12 @@
         "fr": "Organisation",
         "it": "Organizzazione"
       },
-       "help_text": "Organisation zu der das Dataset gehört.",
+      "help_text": {
+        "en": "Organisation that the dataset belongs to",
+        "de": "Organisation zu der das Dataset gehört.",
+        "fr": "organizatione",
+        "it": "org"
+      },
       "preset": "dataset_organization"
     },
     {
