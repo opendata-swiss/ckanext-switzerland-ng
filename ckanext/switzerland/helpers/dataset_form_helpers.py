@@ -165,7 +165,7 @@ def ogdch_relations_form_helper(data):
     if not relations:
         relations = get_relations_from_form(data)
 
-    label = {'title': _('Title'), 'url': _('Url')}
+    label = {'title': _('Text'), 'url': _('Url')}
     data_empty = {'title': '', 'url': ''}
     rows = _build_rows_form_field(
         first_label=label,
@@ -279,7 +279,7 @@ def ogdch_temporals_form_helper(data):
     if not temporals:
         temporals = get_temporals_from_form(data)
 
-    label = {'start_date': _('Start-Date'), 'end_date': _('End-Date')}
+    label = {'start_date': _('from'), 'end_date': _('to')}
     rows = _build_rows_form_field(
         first_label=label,
         default_label=label,

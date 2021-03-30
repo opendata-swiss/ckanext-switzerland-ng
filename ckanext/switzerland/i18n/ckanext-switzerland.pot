@@ -1,15 +1,15 @@
 # Translations template for ckanext-switzerland.
-# Copyright (C) 2020 ORGANIZATION
+# Copyright (C) 2021 ORGANIZATION
 # This file is distributed under the same license as the ckanext-switzerland
 # project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-switzerland 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-04-30 11:53+0000\n"
+"POT-Creation-Date: 2021-03-30 05:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,514 +18,652 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-#: ckanext/switzerland/controller.py:126 ckanext/switzerland/controller.py:381
-#: ckanext/switzerland/plugin.py:72 ckanext/switzerland/plugin.py:84
-#: ckanext/switzerland/templates/footer_ogdch.html:86
-#: ckanext/switzerland/templates/header_ogdch.html:34
-#: ckanext/switzerland/templates/organization/index.html:13
-#: ckanext/switzerland/templates/organization/index.html:16
-#: ckanext/switzerland/templates/organization/index.html:20
-#: ckanext/switzerland/templates/organization/read.html:8
-#: ckanext/switzerland/templates/package/base.html:13
+#: ckanext/switzerland/plugins.py:78 ckanext/switzerland/plugins.py:92
+#: ckanext/switzerland/plugins.py:106
+#: ckanext/switzerland/templates/organization/bulk_process.html:80
+#: ckanext/switzerland/templates/organization/bulk_process.html:85
+#: ckanext/switzerland/templates/package/read.html:10
+#: ckanext/switzerland/templates/package/read.html:27
+#: ckanext/switzerland/templates/scheming/form_snippets/organization.html:29
+#: ckanext/switzerland/templates/snippets/package_item.html:31
+#: ckanext/switzerland/templates/snippets/package_item.html:40
+#: ckanext/switzerland/templates/snippets/private.html:2
+msgid "Draft"
+msgstr ""
+
+#: ckanext/switzerland/plugins.py:79 ckanext/switzerland/plugins.py:107
+#: ckanext/switzerland/plugins.py:516 ckanext/switzerland/templates/header.html:28
+#: ckanext/switzerland/templates/scheming/package/snippets/package_form.html:37
+#: ckanext/switzerland/templates/showcase/new_package_form.html:32
+#: ckanext/switzerland/templates/showcase/snippets/showcase_info.html:52
+msgid "Categories"
+msgstr ""
+
+#: ckanext/switzerland/plugins.py:80 ckanext/switzerland/plugins.py:93
+#: ckanext/switzerland/plugins.py:108
+msgid "Keywords"
+msgstr ""
+
+#: ckanext/switzerland/controllers/group.py:109
+#: ckanext/switzerland/controllers/organization.py:117
+#: ckanext/switzerland/plugins.py:81 ckanext/switzerland/plugins.py:94
+#: ckanext/switzerland/templates/header.html:22
+#: ckanext/switzerland/templates/organization/edit_base.html:10
+#: ckanext/switzerland/templates/organization/new.html:5
+#: ckanext/switzerland/templates/organization/read_base.html:10
+#: ckanext/switzerland/templates/snippets/organization_breadcrumb.html:5
+#: ckanext/switzerland/templates/user/organizations.html:3
+#: ckanext/switzerland/templates/user/organizations.html:7
+#: ckanext/switzerland/templates/user/read_base.html:5
 msgid "Organizations"
 msgstr ""
 
-#: ckanext/switzerland/controller.py:127 ckanext/switzerland/controller.py:382
-msgid "Groups"
+#: ckanext/switzerland/plugins.py:82 ckanext/switzerland/plugins.py:95
+msgid "Political levels"
 msgstr ""
 
-#: ckanext/switzerland/controller.py:128 ckanext/switzerland/controller.py:383
-#: ckanext/switzerland/templates/showcase/snippets/showcase_info.html:31
-msgid "Tags"
+#: ckanext/switzerland/plugins.py:83 ckanext/switzerland/plugins.py:96
+#: ckanext/switzerland/plugins.py:109
+#: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:33
+msgid "Terms of use"
 msgstr ""
 
-#: ckanext/switzerland/controller.py:129 ckanext/switzerland/controller.py:384
-#: ckanext/switzerland/plugin.py:75 ckanext/switzerland/plugin.py:87
-#: ckanext/switzerland/plugin.py:98
+#: ckanext/switzerland/controllers/group.py:112
+#: ckanext/switzerland/controllers/organization.py:120
+#: ckanext/switzerland/plugins.py:84 ckanext/switzerland/plugins.py:97
+#: ckanext/switzerland/plugins.py:110
 msgid "Formats"
 msgstr ""
 
-#: ckanext/switzerland/controller.py:130 ckanext/switzerland/controller.py:385
+#: ckanext/switzerland/plugins.py:517
+#: ckanext/switzerland/templates/showcase/new_package_form.html:47
+#: ckanext/switzerland/templates/showcase/snippets/showcase_info.html:65
+msgid "Type of content"
+msgstr ""
+
+#: ckanext/switzerland/controllers/group.py:110
+#: ckanext/switzerland/controllers/organization.py:118
+#: ckanext/switzerland/templates/group/edit.html:11
+#: ckanext/switzerland/templates/group/edit.html:14
+#: ckanext/switzerland/templates/group/edit_base.html:11
+#: ckanext/switzerland/templates/group/edit_base.html:14
+#: ckanext/switzerland/templates/group/members.html:11
+#: ckanext/switzerland/templates/group/members.html:14
+#: ckanext/switzerland/templates/group/read_base.html:11
+#: ckanext/switzerland/templates/group/read_base.html:14
+msgid "Groups"
+msgstr ""
+
+#: ckanext/switzerland/controllers/group.py:111
+#: ckanext/switzerland/controllers/organization.py:119
+#: ckanext/switzerland/templates/showcase/new_package_form.html:25
+msgid "Tags"
+msgstr ""
+
+#: ckanext/switzerland/controllers/group.py:113
+#: ckanext/switzerland/controllers/organization.py:121
 msgid "Licenses"
 msgstr ""
 
-#: ckanext/switzerland/controller.py:237
+#: ckanext/switzerland/controllers/organization.py:227
 msgid "Not authorized to see this page"
 msgstr ""
 
-#: ckanext/switzerland/controller.py:466
+#: ckanext/switzerland/controllers/organization.py:288
+msgid "Only Posting is availiable"
+msgstr ""
+
+#: ckanext/switzerland/controllers/perma.py:28
 msgid "Dataset not found"
 msgstr ""
 
-#: ckanext/switzerland/helpers.py:145
-msgid "Irregular"
+#: ckanext/switzerland/fanstatic/ogdch_file_upload.js:60
+msgid "file"
 msgstr ""
 
-#: ckanext/switzerland/helpers.py:146
-msgid "Continuous"
+#: ckanext/switzerland/fanstatic/ogdch_file_upload.js:68
+msgid "Please select the file to upload again"
 msgstr ""
 
-#: ckanext/switzerland/helpers.py:147
-msgid "Daily"
+#: ckanext/switzerland/fanstatic/ogdch_file_upload.js:72
+msgid "Remove"
 msgstr ""
 
-#: ckanext/switzerland/helpers.py:148
-msgid "Three times a week"
+#: ckanext/switzerland/fanstatic/ogdch_file_upload.js:87
+msgid "Upload a file on your computer"
 msgstr ""
 
-#: ckanext/switzerland/helpers.py:149
-msgid "Semi weekly"
+#: ckanext/switzerland/fanstatic/ogdch_file_upload.js:109
+#: ckanext/switzerland/fanstatic/ogdch_file_upload.js:178
+#: ckanext/switzerland/templates/showcase/new_package_form.html:16
+msgid "URL"
 msgstr ""
 
-#: ckanext/switzerland/helpers.py:150
-msgid "Weekly"
+#: ckanext/switzerland/fanstatic/ogdch_file_upload.js:118
+#: ckanext/switzerland/fanstatic/ogdch_file_upload.js:209
+#: ckanext/switzerland/templates/macros/form.html:16
+msgid "File"
 msgstr ""
 
-#: ckanext/switzerland/helpers.py:151
-msgid "Three times a month"
-msgstr ""
-
-#: ckanext/switzerland/helpers.py:152
-msgid "Biweekly"
-msgstr ""
-
-#: ckanext/switzerland/helpers.py:153
-msgid "Semimonthly"
-msgstr ""
-
-#: ckanext/switzerland/helpers.py:154
-msgid "Monthly"
-msgstr ""
-
-#: ckanext/switzerland/helpers.py:155
-msgid "Bimonthly"
-msgstr ""
-
-#: ckanext/switzerland/helpers.py:156
-msgid "Quarterly"
-msgstr ""
-
-#: ckanext/switzerland/helpers.py:157
-msgid "Three times a year"
-msgstr ""
-
-#: ckanext/switzerland/helpers.py:158
-msgid "Semi Annual"
-msgstr ""
-
-#: ckanext/switzerland/helpers.py:159
-msgid "Annual"
-msgstr ""
-
-#: ckanext/switzerland/helpers.py:160
-msgid "Biennial"
-msgstr ""
-
-#: ckanext/switzerland/helpers.py:161
-msgid "Triennial"
-msgstr ""
-
-#: ckanext/switzerland/helpers.py:171
+#: ckanext/switzerland/helpers/backend_helpers.py:179
+#: ckanext/switzerland/helpers/frontend_helpers.py:110
 msgid "Confederation"
 msgstr ""
 
-#: ckanext/switzerland/helpers.py:172
+#: ckanext/switzerland/helpers/backend_helpers.py:180
+#: ckanext/switzerland/helpers/frontend_helpers.py:111
 msgid "Canton"
 msgstr ""
 
-#: ckanext/switzerland/helpers.py:173
+#: ckanext/switzerland/helpers/backend_helpers.py:181
+#: ckanext/switzerland/helpers/frontend_helpers.py:112
 msgid "Commune"
 msgstr ""
 
-#: ckanext/switzerland/helpers.py:174
+#: ckanext/switzerland/helpers/backend_helpers.py:182
+#: ckanext/switzerland/helpers/frontend_helpers.py:113
 msgid "Other"
 msgstr ""
 
-#: ckanext/switzerland/helpers.py:182
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:33
+msgid "* Non-commercial Allowed / Commercial Allowed / Reference Not Required"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:35
+msgid ""
+"* Non-commercial Allowed / Commercial With Permission Allowed / Reference Not"
+" Required"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:37
+msgid ""
+"* Non-commercial Allowed / Commercial With Permission Allowed / Reference "
+"Required"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:39
+msgid "* Non-commercial Allowed / Commercial Allowed / Reference Required"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:41
+msgid "Non-commercial Allowed / Commercial Not Allowed / Reference Not Required"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:43
+msgid "Non-commercial Allowed / Commercial Not Allowed / Reference Required"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:45
+msgid "Non-commercial Not Allowed / Commercial Not Allowed / Reference Not Required"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:47
+msgid "Non-commercial Not Allowed / Commercial Not Allowed / Reference Required"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:49
+msgid "Non-commercial Not Allowed / Commercial Allowed / Reference Not Required"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:51
+msgid "Non-commercial Not Allowed / Commercial Allowed / Reference Required"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:53
+msgid ""
+"Non-commercial Not Allowed / Commercial With Permission Allowed / Reference "
+"Not Required"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:55
+msgid ""
+"Non-commercial Not Allowed / Commercial With Permission Allowed / Reference "
+"Required"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:65
+msgid "Publisher"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:66
+msgid "Another Publisher"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:124
+#: ckanext/switzerland/templates/scheming/form_snippets/contact_points.html:11
+msgid "Name"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:124
+#: ckanext/switzerland/templates/scheming/form_snippets/contact_points.html:22
+msgid "Email"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:168
+msgid "Text"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:168
+#: ckanext/switzerland/templates/scheming/form_snippets/relations.html:22
+msgid "Url"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:215
+msgid "Related dataset"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:216
+msgid "Another related dataset"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:282
+msgid "from"
+msgstr ""
+
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:282
+msgid "to"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:82
+msgid "Irregular"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:83
+msgid "Continuous"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:84
+msgid "Daily"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:85
+msgid "Three times a week"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:86
+msgid "Semi weekly"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:87
+msgid "Weekly"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:88
+msgid "Three times a month"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:89
+msgid "Biweekly"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:90
+msgid "Semimonthly"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:91
+msgid "Monthly"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:92
+msgid "Bimonthly"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:93
+msgid "Quarterly"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:94
+msgid "Three times a year"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:95
+msgid "Semi Annual"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:96
+msgid "Annual"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:97
+msgid "Biennial"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:98
+msgid "Triennial"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:121
 msgid "Open use"
 msgstr ""
 
-#: ckanext/switzerland/helpers.py:186
+#: ckanext/switzerland/helpers/frontend_helpers.py:125
 msgid "Open use. Must provide the source."
 msgstr ""
 
-#: ckanext/switzerland/helpers.py:190
+#: ckanext/switzerland/helpers/frontend_helpers.py:129
 msgid "Open use. Use for commercial purposes requires permission of the data owner."
 msgstr ""
 
-#: ckanext/switzerland/helpers.py:194
+#: ckanext/switzerland/helpers/frontend_helpers.py:133
 msgid ""
 "Open use. Must provide the source. Use for commercial purposes requires "
 "permission of the data owner."
 msgstr ""
 
-#: ckanext/switzerland/helpers.py:198
+#: ckanext/switzerland/helpers/frontend_helpers.py:137
 msgid "Closed data"
 msgstr ""
 
-#: ckanext/switzerland/plugin.py:70 ckanext/switzerland/plugin.py:95
-#: ckanext/switzerland/templates/group/index.html:3
-#: ckanext/switzerland/templates/group/index.html:6
-#: ckanext/switzerland/templates/group/index.html:10
-#: ckanext/switzerland/templates/group/read.html:8
-#: ckanext/switzerland/templates/package/snippets/description.html:61
-msgid "Categories"
-msgstr ""
-
-#: ckanext/switzerland/plugin.py:71 ckanext/switzerland/plugin.py:83
-#: ckanext/switzerland/plugin.py:96
-msgid "Keywords"
-msgstr ""
-
-#: ckanext/switzerland/plugin.py:73 ckanext/switzerland/plugin.py:85
-msgid "Political levels"
-msgstr ""
-
-#: ckanext/switzerland/plugin.py:74 ckanext/switzerland/plugin.py:86
-#: ckanext/switzerland/plugin.py:97
-#: ckanext/switzerland/templates/footer_ogdch.html:88
-#: ckanext/switzerland/templates/header_ogdch.html:46
-#: ckanext/switzerland/templates/package/resource_read.html:42
-#: ckanext/switzerland/templates/package/snippets/description.html:31
-msgid "Terms of use"
-msgstr ""
-
-#: ckanext/switzerland/validators.py:35 ckanext/switzerland/validators.py:99
-#: ckanext/switzerland/validators.py:149
+#: ckanext/switzerland/helpers/validators.py:50
+#: ckanext/switzerland/helpers/validators.py:144
+#: ckanext/switzerland/helpers/validators.py:194
 #, python-format
 msgid "Expecting list of strings, got \"%s\""
 msgstr ""
 
-#: ckanext/switzerland/validators.py:162
+#: ckanext/switzerland/helpers/validators.py:207
 #, python-format
 msgid "invalid language \"%s\""
 msgstr ""
 
-#: ckanext/switzerland/validators.py:184
+#: ckanext/switzerland/helpers/validators.py:225
+msgid "Identifier of the dataset is missing."
+msgstr ""
+
+#: ckanext/switzerland/helpers/validators.py:230
+msgid ""
+"Identifier must be of the form <id>@<slug> where slug is the url of the "
+"organization."
+msgstr ""
+
+#: ckanext/switzerland/helpers/validators.py:242
+msgid ""
+"The identifier \"{}\" does not end with the organisation slug \"{}\" of the "
+"organization it belongs to."
+msgstr ""
+
+#: ckanext/switzerland/helpers/validators.py:246
+msgid "The selected organization was not found."
+msgstr ""
+
+#: ckanext/switzerland/helpers/validators.py:256
 msgid "Identifier is already in use, it must be unique."
 msgstr ""
 
-#: ckanext/switzerland/templates/base_ogdch.html:16
-#: ckanext/switzerland/templates/snippets/home_breadcrumb_item_ogdch.html:2
-msgid "Home"
+#: ckanext/switzerland/helpers/validators.py:292
+msgid "A value is required in at least one language"
 msgstr ""
 
-#: ckanext/switzerland/templates/error_document_template.html:3
+#: ckanext/switzerland/helpers/validators.py:389
+msgid "{} can not be chosen since it is a {}."
+msgstr ""
+
+#: ckanext/switzerland/helpers/validators.py:397
+msgid "Dataset {} could not be found ."
+msgstr ""
+
+#: ckanext/switzerland/helpers/validators.py:423
+msgid "A valid temporal must have both start and end date"
+msgstr ""
+
+#: ckanext/switzerland/helpers/validators.py:480
 #, python-format
-msgid "Error %(error_code)s"
+msgid "unexpected choice \"%s\""
 msgstr ""
 
-#: ckanext/switzerland/templates/error_document_template.html:6
-#: ckanext/switzerland/templates/error_document_template.html:10
-msgid "Page not found"
+#: ckanext/switzerland/templates/header.html:9
+#: ckanext/switzerland/templates/user/list.html:12
+msgid "Users"
 msgstr ""
 
-#: ckanext/switzerland/templates/error_document_template.html:18
-msgid ""
-"Ooops... The page you're looking for isn't available. Here is a cool space "
-"shuttle to make you feel better!"
+#: ckanext/switzerland/templates/header.html:15
+#: ckanext/switzerland/templates/source/base.html:6
+#: ckanext/switzerland/templates/source/base.html:9
+msgid "Harvest Sources"
 msgstr ""
 
-#: ckanext/switzerland/templates/footer_ogdch.html:6
-msgid "Get involved"
+#: ckanext/switzerland/templates/group/read_base.html:21
+#: ckanext/switzerland/templates/header.html:19
+#: ckanext/switzerland/templates/organization/bulk_process.html:20
+#: ckanext/switzerland/templates/organization/read_base.html:17
+#: ckanext/switzerland/templates/package/base.html:9
+#: ckanext/switzerland/templates/package/base.html:13
+#: ckanext/switzerland/templates/user/read_base.html:4
+msgid "Datasets"
 msgstr ""
 
-#: ckanext/switzerland/templates/footer_ogdch.html:7
-msgid "Frequently Asked Questions"
+#: ckanext/switzerland/templates/header.html:25
+#: ckanext/switzerland/templates/package/read_base.html:5
+msgid "Showcases"
 msgstr ""
 
-#: ckanext/switzerland/templates/footer_ogdch.html:10
-msgid "Learn to publish data"
+#: ckanext/switzerland/templates/admin/trash.html:20
+msgid "Purge"
 msgstr ""
 
-#: ckanext/switzerland/templates/footer_ogdch.html:11
-msgid "Share your application"
+#: ckanext/switzerland/templates/admin/trash.html:29
+msgid "Trash"
 msgstr ""
 
-#: ckanext/switzerland/templates/footer_ogdch.html:16
-msgid "NewsMail Open Government Data"
+#: ckanext/switzerland/templates/admin/trash.html:32
+msgid " <p>Purge deleted datasets forever and irreversibly.</p> "
 msgstr ""
 
-#: ckanext/switzerland/templates/footer_ogdch.html:26
-msgid "Dataset"
-msgid_plural "Datasets"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ckanext/switzerland/templates/footer_ogdch.html:35
-#: ckanext/switzerland/templates/package/resource_read.html:57
-#: ckanext/switzerland/templates/package/snippets/description.html:47
-msgid "Organization"
-msgid_plural "Organizations"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ckanext/switzerland/templates/footer_ogdch.html:44
-msgid "Category"
-msgid_plural "Categories"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ckanext/switzerland/templates/footer_ogdch.html:58
-msgid "Application"
-msgid_plural "Applications"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ckanext/switzerland/templates/footer_ogdch.html:64
-msgid "A joint project of the Confederation and the cantons"
+#: ckanext/switzerland/templates/group/admins.html:11
+msgid "Administrators"
 msgstr ""
 
-#: ckanext/switzerland/templates/footer_ogdch.html:65
-msgid ""
-"The opendata.swiss portal is a joint project of the Confederation, cantons, "
-"communes and other organizations with a mandate from the state. It makes open"
-" government data available to the general public in a central catalogue. "
-"opendata.swiss is operated by the Federal Statistical Office."
+#: ckanext/switzerland/templates/group/edit.html:11
+#: ckanext/switzerland/templates/group/edit.html:17
+#: ckanext/switzerland/templates/group/edit_base.html:11
+#: ckanext/switzerland/templates/group/edit_base.html:17
+#: ckanext/switzerland/templates/group/members.html:17
+msgid "Manage"
 msgstr ""
 
-#: ckanext/switzerland/templates/footer_ogdch.html:82
-#: ckanext/switzerland/templates/header_ogdch.html:40
+#: ckanext/switzerland/templates/group/followers.html:11
+msgid "Followers"
+msgstr ""
+
+#: ckanext/switzerland/templates/group/index.html:5
+msgid "Add Group"
+msgstr ""
+
+#: ckanext/switzerland/templates/group/member_new.html:10
+#: ckanext/switzerland/templates/organization/member_new.html:10
+msgid "Existing User"
+msgstr ""
+
+#: ckanext/switzerland/templates/group/member_new.html:13
+#: ckanext/switzerland/templates/organization/member_new.html:13
+msgid "If you wish to add an existing user, search for their username below."
+msgstr ""
+
+#: ckanext/switzerland/templates/group/member_new.html:32
+#: ckanext/switzerland/templates/organization/member_new.html:32
+msgid "Role"
+msgstr ""
+
+#: ckanext/switzerland/templates/group/member_new.html:35
+#: ckanext/switzerland/templates/organization/member_new.html:35
+msgid "Are you sure you want to delete this member?"
+msgstr ""
+
+#: ckanext/switzerland/templates/group/member_new.html:35
+#: ckanext/switzerland/templates/organization/bulk_process.html:57
+#: ckanext/switzerland/templates/organization/member_new.html:35
+msgid "Delete"
+msgstr ""
+
+#: ckanext/switzerland/templates/group/member_new.html:37
+msgid "Save"
+msgstr ""
+
+#: ckanext/switzerland/templates/group/member_new.html:41
+#: ckanext/switzerland/templates/organization/member_new.html:41
+msgid "Add Member"
+msgstr ""
+
+#: ckanext/switzerland/templates/group/members.html:11
+msgid "Members"
+msgstr ""
+
+#: ckanext/switzerland/templates/group/read_base.html:22
+#: ckanext/switzerland/templates/organization/read_base.html:18
 msgid "About"
 msgstr ""
 
-#: ckanext/switzerland/templates/footer_ogdch.html:83
-#: ckanext/switzerland/templates/header_ogdch.html:49
-msgid "FAQ"
-msgstr ""
-
-#: ckanext/switzerland/templates/footer_ogdch.html:84
-#: ckanext/switzerland/templates/header_ogdch.html:52
-msgid "Contact"
-msgstr ""
-
-#: ckanext/switzerland/templates/footer_ogdch.html:85
-#: ckanext/switzerland/templates/header_ogdch.html:33
-#: ckanext/switzerland/templates/package/base.html:8
-#: ckanext/switzerland/templates/package/base.html:16
-#: ckanext/switzerland/templates/package/base.html:21
-#: ckanext/switzerland/templates/package/search.html:4
-#: ckanext/switzerland/templates/package/search.html:7
-#: ckanext/switzerland/templates/package/search.html:11
-msgid "Data"
-msgstr ""
-
-#: ckanext/switzerland/templates/footer_ogdch.html:87
-#: ckanext/switzerland/templates/header_ogdch.html:37
-msgid "Applications"
-msgstr ""
-
-#: ckanext/switzerland/templates/footer_ogdch.html:89
-msgid "Legal framework"
-msgstr ""
-
-#: ckanext/switzerland/templates/footer_ogdch.html:90
-msgid "Sourcecode"
-msgstr ""
-
-#: ckanext/switzerland/templates/header_ogdch.html:43
-msgid "What's opendata.swiss?"
-msgstr ""
-
-#: ckanext/switzerland/templates/header_ogdch.html:57
-msgid "Search"
-msgstr ""
-
-#: ckanext/switzerland/templates/recline_view.html:12
-msgid ""
-"The preview of this resource is not available. The file is too big or its "
-"format is not recognized."
-msgstr ""
-
-#: ckanext/switzerland/templates/recline_view.html:12
-msgid "Loading..."
-msgstr ""
-
-#: ckanext/switzerland/templates/group/index.html:22
-msgid "Search categories..."
-msgstr ""
-
-#: ckanext/switzerland/templates/group/index.html:35
-msgid "There are currently no categories available"
-msgstr ""
-
-#: ckanext/switzerland/templates/group/index.html:49
-#: ckanext/switzerland/templates/showcase/snippets/search_box.html:63
-#: ckanext/switzerland/templates/snippets/search_box.html:55
-msgid "Please try another search."
-msgstr ""
-
 #: ckanext/switzerland/templates/group/snippets/group_item.html:20
-#: ckanext/switzerland/templates/package/snippets/description.html:67
 msgid "View {name}"
 msgstr ""
 
 #: ckanext/switzerland/templates/group/snippets/group_item.html:23
-#: ckanext/switzerland/templates/showcase/snippets/showcase_item_small.html:35
 msgid "{num} Dataset"
 msgid_plural "{num} Datasets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ckanext/switzerland/templates/organization/index.html:8
-msgid ""
-"Authorities from the Confederation, cantons and communes as well as third "
-"parties that perform tasks on behalf of the state can publish their open data"
-" on the opendata.swiss portal. Is your organization missing from the list? "
-"Get involved."
-msgstr ""
-
-#: ckanext/switzerland/templates/organization/index.html:9
-msgid "Search organizations..."
-msgstr ""
-
-#: ckanext/switzerland/templates/organization/index.html:28
-msgid "Which organizations publish their data?"
-msgstr ""
-
-#: ckanext/switzerland/templates/organization/index.html:30
-msgid "I want to publish data"
-msgstr ""
-
-#: ckanext/switzerland/templates/organization/index.html:51
-#: ckanext/switzerland/templates/organization/index.html:81
-msgid "organization"
-msgid_plural "organizations"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ckanext/switzerland/templates/organization/index.html:64
-msgid "There are currently no organizations for this site"
-msgstr ""
-
-#: ckanext/switzerland/templates/organization/index.html:82
-msgid "organizations"
-msgstr ""
-
-#: ckanext/switzerland/templates/organization/read.html:26
-#: ckanext/switzerland/templates/package/snippets/resource_item.html:19
-msgid "More information"
-msgstr ""
-
-#: ckanext/switzerland/templates/package/dataset_showcase_list.html:3
-#: ckanext/switzerland/templates/package/snippets/showcases_list.html:15
-#: ckanext/switzerland/templates/showcase/read.html:6
-#: ckanext/switzerland/templates/showcase/read.html:28
-#: ckanext/switzerland/templates/showcase/search.html:4
-#: ckanext/switzerland/templates/showcase/search.html:7
-#: ckanext/switzerland/templates/showcase/search.html:11
-msgid "Showcases"
-msgstr ""
-
-#: ckanext/switzerland/templates/package/dataset_showcase_list.html:17
-msgid "Associate this showcase with this dataset"
-msgstr ""
-
-#: ckanext/switzerland/templates/package/dataset_showcase_list.html:17
-msgid "Add to showcase"
-msgstr ""
-
-#: ckanext/switzerland/templates/package/dataset_showcase_list.html:21
-msgid "Showcases featuring {dataset_name}"
-msgstr ""
-
-#: ckanext/switzerland/templates/package/dataset_showcase_list.html:26
-#: ckanext/switzerland/templates/package/snippets/showcases_list.html:27
-msgid "There are no showcases that feature this dataset"
-msgstr ""
-
-#: ckanext/switzerland/templates/package/read.html:9
-#: ckanext/switzerland/templates/showcase/read.html:34
-#: ckanext/switzerland/templates/showcase/read.html:63
-#: ckanext/switzerland/templates/snippets/package_item.html:31
-msgid "Private"
-msgstr ""
-
-#: ckanext/switzerland/templates/package/read.html:14
-#: ckanext/switzerland/templates/showcase/read.html:39
-#: ckanext/switzerland/templates/snippets/package_item.html:40
-msgid "Draft"
-msgstr ""
-
-#: ckanext/switzerland/templates/package/read.html:17
-#: ckanext/switzerland/templates/showcase/read.html:42
+#: ckanext/switzerland/templates/group/snippets/info.html:7
+#: ckanext/switzerland/templates/organization/bulk_process.html:82
+#: ckanext/switzerland/templates/package/read.html:30
+#: ckanext/switzerland/templates/snippets/organization.html:7
 #: ckanext/switzerland/templates/snippets/package_item.html:42
 msgid "Deleted"
 msgstr ""
 
-#: ckanext/switzerland/templates/package/resource_read.html:29
-#: ckanext/switzerland/templates/package/snippets/description.html:15
-msgid "Last updated"
+#: ckanext/switzerland/templates/group/snippets/info.html:15
+#: ckanext/switzerland/templates/snippets/organization.html:17
+msgid "read more"
 msgstr ""
 
-#: ckanext/switzerland/templates/package/resource_read.html:64
-#: ckanext/switzerland/templates/package/snippets/description.html:54
-msgid "No organization available"
+#: ckanext/switzerland/templates/home/snippets/promoted.html:8
+msgid "opendata.swiss CKAN backend"
 msgstr ""
 
-#: ckanext/switzerland/templates/package/resource_read.html:71
-msgid "Format"
+#: ckanext/switzerland/templates/home/snippets/promoted.html:10
+msgid ""
+"Welcome to the CKAN backend of opendata.swiss. Here you can add and edit "
+"datasets, organizations, categories and showcases. You can also create and "
+"run data harvesters. "
 msgstr ""
 
-#: ckanext/switzerland/templates/package/resource_read.html:85
-#: ckanext/switzerland/templates/package/snippets/resource_item.html:23
-msgid "Download"
+#: ckanext/switzerland/templates/macros/form.html:14
+msgid "http://example.com/my-file.jpg"
 msgstr ""
 
-#: ckanext/switzerland/templates/package/resource_read.html:89
-#: ckanext/switzerland/templates/package/snippets/resource_item.html:27
-msgid "Go to resource"
+#: ckanext/switzerland/templates/macros/form.html:15
+msgid "File URL"
 msgstr ""
 
-#: ckanext/switzerland/templates/package/resource_read.html:97
-#: ckanext/switzerland/templates/package/snippets/description.html:79
-msgid "Description"
+#: ckanext/switzerland/templates/macros/form.html:34
+msgid "Clear Upload"
 msgstr ""
 
-#: ckanext/switzerland/templates/package/resource_read.html:107
+#: ckanext/switzerland/templates/organization/bulk_process.html:3
+#: ckanext/switzerland/templates/organization/bulk_process.html:11
+msgid "Edit datasets"
+msgstr ""
+
+#: ckanext/switzerland/templates/organization/bulk_process.html:16
+msgid " found for \"{query}\""
+msgstr ""
+
+#: ckanext/switzerland/templates/organization/bulk_process.html:18
+msgid "Sorry no datasets found for \"{query}\""
+msgstr ""
+
+#: ckanext/switzerland/templates/organization/bulk_process.html:27
+#: ckanext/switzerland/templates/organization/index.html:10
+#: ckanext/switzerland/templates/showcase/manage_datasets.html:17
+#: ckanext/switzerland/templates/snippets/search_box.html:36
+msgid "Name Ascending"
+msgstr ""
+
+#: ckanext/switzerland/templates/organization/bulk_process.html:28
+#: ckanext/switzerland/templates/organization/index.html:10
+#: ckanext/switzerland/templates/showcase/manage_datasets.html:18
+#: ckanext/switzerland/templates/snippets/search_box.html:37
+msgid "Name Descending"
+msgstr ""
+
+#: ckanext/switzerland/templates/organization/bulk_process.html:29
+#: ckanext/switzerland/templates/showcase/manage_datasets.html:19
+#: ckanext/switzerland/templates/snippets/search_box.html:38
+msgid "Last Modified"
+msgstr ""
+
+#: ckanext/switzerland/templates/organization/bulk_process.html:47
+msgid "Publish"
+msgstr ""
+
+#: ckanext/switzerland/templates/organization/bulk_process.html:51
+msgid "Make draft"
+msgstr ""
+
+#: ckanext/switzerland/templates/organization/bulk_process.html:75
+#: ckanext/switzerland/templates/package/resource_edit_base.html:11
+#: ckanext/switzerland/templates/snippets/resource_subtitle.html:1
+msgid "Edit"
+msgstr ""
+
+#: ckanext/switzerland/templates/organization/bulk_process.html:98
+msgid "This organization has no datasets associated to it"
+msgstr ""
+
+#: ckanext/switzerland/templates/organization/index.html:5
+msgid "Add Organization"
+msgstr ""
+
+#: ckanext/switzerland/templates/organization/index.html:10
+msgid "Search organizations..."
+msgstr ""
+
+#: ckanext/switzerland/templates/organization/member_new.html:22
+msgid "Username"
+msgstr ""
+
+#: ckanext/switzerland/templates/organization/member_new.html:37
+msgid "Update Member"
+msgstr ""
+
+#: ckanext/switzerland/templates/organization/new.html:7
+msgid "Create an Organization"
+msgstr ""
+
+#: ckanext/switzerland/templates/organization/read.html:20
+msgid "Submit"
+msgstr ""
+
+#: ckanext/switzerland/templates/organization/read_base.html:20
+#: ckanext/switzerland/templates/package/read_base.html:7
+#: ckanext/switzerland/templates/user/read_base.html:7
+msgid "Activity Stream"
+msgstr ""
+
+#: ckanext/switzerland/templates/organization/snippets/organization_search_form.html:15
+#: ckanext/switzerland/templates/snippets/search_form.html:27
+#: ckanext/switzerland/templates/snippets/search_form.html:29
+#: ckanext/switzerland/templates/snippets/search_form.html:31
+msgid "Reset search"
+msgstr ""
+
+#: ckanext/switzerland/templates/package/base.html:14
+msgid "Create Dataset"
+msgstr ""
+
+#: ckanext/switzerland/templates/package/read.html:16
+#, python-format
+msgid ""
+" You're currently viewing an old version of this dataset. To see the current "
+"version, click <a href=\"%(url)s\">here</a>. "
+msgstr ""
+
+#: ckanext/switzerland/templates/package/read_base.html:4
+msgid "Dataset"
+msgstr ""
+
 #: ckanext/switzerland/templates/package/snippets/additional_info.html:4
 msgid "Additional information"
-msgstr ""
-
-#: ckanext/switzerland/templates/package/resource_read.html:122
-#: ckanext/switzerland/templates/package/snippets/resource_item.html:19
-msgid "Preview"
-msgstr ""
-
-#: ckanext/switzerland/templates/package/snippets/datapublisher_contact.html:4
-msgid "Got questions?"
-msgstr ""
-
-#: ckanext/switzerland/templates/package/snippets/datapublisher_contact.html:5
-msgid "Ask the publisher directly"
-msgstr ""
-
-#: ckanext/switzerland/templates/package/snippets/related_datasets.html:15
-msgid "Related datasets"
-msgstr ""
-
-#: ckanext/switzerland/templates/package/snippets/resource_view.html:16
-msgid "This resource view is not available at the moment."
-msgstr ""
-
-#: ckanext/switzerland/templates/package/snippets/resource_view.html:18
-msgid "Click here for more information."
-msgstr ""
-
-#: ckanext/switzerland/templates/package/snippets/resource_view.html:25
-msgid "Download resource"
-msgstr ""
-
-#: ckanext/switzerland/templates/package/snippets/resource_view.html:49
-msgid "Your browser does not support iframes."
-msgstr ""
-
-#: ckanext/switzerland/templates/package/snippets/resources_list.html:15
-msgid "Resources"
-msgstr ""
-
-#: ckanext/switzerland/templates/package/snippets/resources_list.html:30
-msgid "This dataset has no resources"
 msgstr ""
 
 #: ckanext/switzerland/templates/scheming/display_snippets/languages.html:19
@@ -537,136 +675,195 @@ msgstr ""
 msgid "Legal basis"
 msgstr ""
 
-#: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:20
+#: ckanext/switzerland/templates/scheming/form_snippets/contact_points.html:34
+#: ckanext/switzerland/templates/scheming/form_snippets/publishers.html:23
+#: ckanext/switzerland/templates/scheming/form_snippets/relations.html:34
+#: ckanext/switzerland/templates/scheming/form_snippets/see_alsos.html:29
+#: ckanext/switzerland/templates/scheming/form_snippets/temporals.html:34
+msgid "Add row"
+msgstr ""
+
+#: ckanext/switzerland/templates/scheming/form_snippets/org_hierarchy.html:3
+msgid "Parent"
+msgstr ""
+
+#: ckanext/switzerland/templates/scheming/form_snippets/org_hierarchy.html:10
+msgid "None - top level"
+msgstr ""
+
+#: ckanext/switzerland/templates/scheming/form_snippets/organization.html:26
+msgid "Visibility"
+msgstr ""
+
+#: ckanext/switzerland/templates/scheming/form_snippets/organization.html:29
+msgid "Public"
+msgstr ""
+
+#: ckanext/switzerland/templates/scheming/form_snippets/organization_slug.html:13
+msgid "Name (Slug)"
+msgstr ""
+
+#: ckanext/switzerland/templates/scheming/form_snippets/organization_slug.html:16
+msgid "my-organization"
+msgstr ""
+
+#: ckanext/switzerland/templates/scheming/form_snippets/publishers.html:11
+msgid "Name of the Publisher"
+msgstr ""
+
+#: ckanext/switzerland/templates/scheming/form_snippets/relations.html:11
+#: ckanext/switzerland/templates/showcase/new_package_form.html:7
+msgid "Title"
+msgstr ""
+
+#: ckanext/switzerland/templates/scheming/form_snippets/see_alsos.html:15
+msgid "Title of the dataset"
+msgstr ""
+
+#: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:19
 msgid "Identifier"
 msgstr ""
 
-#: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:34
+#: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:35
 msgid "Metadata Access"
 msgstr ""
 
-#: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:37
+#: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:38
 msgid "API (JSON)"
 msgstr ""
 
-#: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:40
+#: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:41
 msgid "Download XML"
 msgstr ""
 
-#: ckanext/switzerland/templates/showcase/read.html:53
-msgid "Manage"
+#: ckanext/switzerland/templates/scheming/package/snippets/package_form.html:16
+msgid "{section_title}"
 msgstr ""
 
-#: ckanext/switzerland/templates/showcase/read.html:80
-#: ckanext/switzerland/templates/showcase/snippets/showcase_info.html:44
-msgid "Launch website"
+#: ckanext/switzerland/templates/scheming/package/snippets/package_form.html:22
+msgid "This field is required"
 msgstr ""
 
-#: ckanext/switzerland/templates/showcase/snippets/search_box.html:19
-#: ckanext/switzerland/templates/showcase/snippets/search_box.html:43
+#: ckanext/switzerland/templates/showcase/manage_datasets.html:16
 #: ckanext/switzerland/templates/snippets/search_box.html:35
 msgid "Relevance"
 msgstr ""
 
-#: ckanext/switzerland/templates/showcase/snippets/search_box.html:20
-#: ckanext/switzerland/templates/showcase/snippets/search_box.html:44
-#: ckanext/switzerland/templates/snippets/search_box.html:36
-msgid "Name Ascending"
-msgstr ""
-
-#: ckanext/switzerland/templates/showcase/snippets/search_box.html:21
-#: ckanext/switzerland/templates/showcase/snippets/search_box.html:45
-#: ckanext/switzerland/templates/snippets/search_box.html:37
-msgid "Name Descending"
-msgstr ""
-
-#: ckanext/switzerland/templates/showcase/snippets/search_box.html:22
-#: ckanext/switzerland/templates/showcase/snippets/search_box.html:46
-#: ckanext/switzerland/templates/snippets/search_box.html:38
-msgid "Last Modified"
-msgstr ""
-
-#: ckanext/switzerland/templates/showcase/snippets/search_box.html:23
-#: ckanext/switzerland/templates/showcase/snippets/search_box.html:47
+#: ckanext/switzerland/templates/showcase/manage_datasets.html:20
 #: ckanext/switzerland/templates/snippets/search_box.html:39
 msgid "Popular"
 msgstr ""
 
-#: ckanext/switzerland/templates/showcase/snippets/search_box.html:25
-msgid "Search showcases..."
+#: ckanext/switzerland/templates/showcase/manage_datasets.html:28
+msgid "Datasets available to add to this showcase"
 msgstr ""
 
-#: ckanext/switzerland/templates/showcase/snippets/search_box.html:32
-#: ckanext/switzerland/templates/snippets/search_box.html:24
-msgid "Search Filter"
+#: ckanext/switzerland/templates/showcase/manage_datasets.html:43
+msgid "Add to Showcase"
 msgstr ""
 
-#: ckanext/switzerland/templates/showcase/snippets/search_box.html:50
-#: ckanext/switzerland/templates/snippets/search_box.html:42
-msgid "Order by"
+#: ckanext/switzerland/templates/showcase/manage_datasets.html:80
+msgid "No datasets could be found"
 msgstr ""
 
-#: ckanext/switzerland/templates/showcase/snippets/search_box.html:67
-#: ckanext/switzerland/templates/snippets/search_box.html:59
-msgid "There was an error while searching. Please try again."
+#: ckanext/switzerland/templates/showcase/manage_datasets.html:88
+msgid "Datasets in this showcase"
+msgstr ""
+
+#: ckanext/switzerland/templates/showcase/manage_datasets.html:101
+msgid "Remove from Showcase"
+msgstr ""
+
+#: ckanext/switzerland/templates/showcase/manage_datasets.html:132
+msgid "This showcase has no datasets associated to it"
+msgstr ""
+
+#: ckanext/switzerland/templates/showcase/new_package_form.html:7
+msgid "eg. A descriptive title"
+msgstr ""
+
+#: ckanext/switzerland/templates/showcase/new_package_form.html:16
+msgid "eg. my-showcase"
+msgstr ""
+
+#: ckanext/switzerland/templates/showcase/new_package_form.html:20
+msgid "Description"
+msgstr ""
+
+#: ckanext/switzerland/templates/showcase/new_package_form.html:20
+msgid "eg. Some useful notes about the data"
+msgstr ""
+
+#: ckanext/switzerland/templates/showcase/new_package_form.html:25
+msgid "eg. economy, mental health, government"
+msgstr ""
+
+#: ckanext/switzerland/templates/showcase/search.html:6
+msgid "Add Showcase"
 msgstr ""
 
 #: ckanext/switzerland/templates/showcase/snippets/showcase_info.html:21
 msgid "Submitted by"
 msgstr ""
 
-#: ckanext/switzerland/templates/showcase/snippets/showcase_info.html:55
+#: ckanext/switzerland/templates/showcase/snippets/showcase_info.html:27
+msgid "Launch website"
+msgstr ""
+
+#: ckanext/switzerland/templates/showcase/snippets/showcase_info.html:37
 msgid "Datasets in Showcase"
 msgstr ""
 
-#: ckanext/switzerland/templates/showcase/snippets/showcase_info.html:65
+#: ckanext/switzerland/templates/showcase/snippets/showcase_info.html:47
 msgid "These datasets are not (yet) available on opendata.swiss."
 msgstr ""
 
-#: ckanext/switzerland/templates/showcase/snippets/showcase_item_small.html:30
-msgid "This showcase has no description"
+#: ckanext/switzerland/templates/snippets/activity_item.html:3
+msgid "New activity item"
 msgstr ""
 
-#: ckanext/switzerland/templates/showcase/snippets/showcase_item_small.html:37
-msgid "0 Datasets"
+#: ckanext/switzerland/templates/snippets/add_source_button.html:4
+msgid "Add Harvest Source"
 msgstr ""
 
-#: ckanext/switzerland/templates/showcase/snippets/showcase_item_small.html:41
-#: ckanext/switzerland/templates/showcase/snippets/showcase_item_small.html:42
-msgid "View {showcase_title}"
-msgstr ""
-
-#: ckanext/switzerland/templates/showcase/snippets/showcase_item_small.html:46
-msgid "Remove"
-msgstr ""
-
-#: ckanext/switzerland/templates/showcase/snippets/showcase_item_small.html:46
-msgid "Remove dataset from this showcase"
-msgstr ""
-
-#: ckanext/switzerland/templates/snippets/facet_list_ogdch.html:131
+#: ckanext/switzerland/templates/snippets/facet_list.html:90
 msgid "Show More {facet_type}"
 msgstr ""
 
-#: ckanext/switzerland/templates/snippets/facet_list_ogdch.html:134
-msgid "Show Less {facet_type}"
+#: ckanext/switzerland/templates/snippets/facet_list.html:93
+msgid "Show Only Popular {facet_type}"
 msgstr ""
 
-#: ckanext/switzerland/templates/snippets/facet_list_ogdch.html:137
+#: ckanext/switzerland/templates/snippets/facet_list.html:97
 msgid "There are no {facet_type} that match this search"
+msgstr ""
+
+#: ckanext/switzerland/templates/snippets/organization.html:20
+msgid "There is no description for this organization"
 msgstr ""
 
 #: ckanext/switzerland/templates/snippets/package_item.html:61
 msgid "This dataset has no description"
 msgstr ""
 
-#: ckanext/switzerland/templates/snippets/search_form.html:16
-msgid "Search datasets..."
+#: ckanext/switzerland/templates/snippets/search_box.html:24
+msgid "Search Filter"
 msgstr ""
 
-#: ckanext/switzerland/templates/snippets/search_form.html:27
-#: ckanext/switzerland/templates/snippets/search_form.html:29
-msgid "Reset search"
+#: ckanext/switzerland/templates/snippets/search_box.html:42
+msgid "Order by"
+msgstr ""
+
+#: ckanext/switzerland/templates/snippets/search_box.html:55
+msgid "Please try another search."
+msgstr ""
+
+#: ckanext/switzerland/templates/snippets/search_box.html:59
+msgid "There was an error while searching. Please try again."
+msgstr ""
+
+#: ckanext/switzerland/templates/snippets/search_form.html:16
+msgid "Search datasets..."
 msgstr ""
 
 #: ckanext/switzerland/templates/snippets/search_result_text.html:15
@@ -705,58 +902,34 @@ msgstr[1] ""
 msgid "No organizations found"
 msgstr ""
 
-#: ckanext/switzerland/templates/scheming/form_snippets/org_hierarchy.html:2
-msgid "Parent"
+#: ckanext/switzerland/templates/user/dashboard.html:8
+msgid "Edit settings"
 msgstr ""
 
-#: ckanext/switzerland/templates/scheming/form_snippets/org_hierarchy.html:6
-msgid "None - top level"
+#: ckanext/switzerland/templates/user/dashboard.html:11
+#: ckanext/switzerland/templates/user/dashboard.html:27
+msgid "My Datasets"
 msgstr ""
 
-#: ckanext/switzerland/templates/scheming/form_snippets/organization_slug.html:13
-msgid "Name (Slug)"
+#: ckanext/switzerland/templates/user/dashboard.html:12
+#: ckanext/switzerland/templates/user/dashboard_organizations.html:8
+msgid "My Organizations"
 msgstr ""
 
-#: ckanext/switzerland/templates/scheming/form_snippets/organization_slug.html:16
-msgid "my-organization"
+#: ckanext/switzerland/templates/user/dashboard.html:33
+msgid "You haven't created any datasets."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:214
-msgid "A value is required in at least one language"
+#: ckanext/switzerland/templates/user/dashboard.html:35
+#: ckanext/switzerland/templates/user/dashboard_organizations.html:28
+msgid "Create one now?"
 msgstr ""
 
-#: ckanext/switzerland/validators:180
-msgid "Identifier of the dataset is missing."
+#: ckanext/switzerland/templates/user/dashboard_organizations.html:26
+msgid "You are not a member of any organizations."
 msgstr ""
 
-#: ckanext/switzerland/validators:185
-msgid "Identifier must be of the form <id>@<slug> where slug is the url of the organization."
+#: ckanext/switzerland/templates/user/list.html:9
+msgid "Add User"
 msgstr ""
 
-#: ckanext/switzerland/validators:195
-msgid "No organizations was found with the slug {owner_slug}"
-msgstr ""
-
-#: ckanext/switzerland/validators:196
-msgid "Organisation slug of the identifier {owner_slug} does not match the organisation of the dataset {organization_name}."
-msgstr ""
-
-#: ckanext/switzerland/validators:199
-msgid "No validator yet implemented. Implement validation before the dataset can be saved!"
-msgstr ""
-
-#: ckanext/switzerland/helpers/backend_helpers.py:186
-msgid "Publisher"
-msgstr "Publisher"
-
-#: ckanext/switzerland/helpers/backend_helpers.py:186
-msgid "Another Publisher"
-msgstr "Another Publisher"
-
-#: ckanext/switzerland/helpers/form_snippets/publishers.html:14
-msgid "Name of the Publisher"
-msgstr "Name of the Publisher"
-
-#: ckanext/switzerland/templates/scheming/form_snippets/publishers_help_text.html:5
-msgid "Publisher Information"
-msgstr "Publisher Information"

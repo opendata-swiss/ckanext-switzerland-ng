@@ -1,6 +1,8 @@
 {% import 'macros/form.html' as form %}
 
 {% set see_alsos_rows = h.ogdch_see_alsos_form_helper(data) %}
+<h3>{{ h.scheming_language_text(field.label) }}</h3>
+{%- snippet 'scheming/form_snippets/help_text.html', field=field -%}
 {%- set attrs = {
     'data-module': 'autocomplete',
     'data-module-source': '/api/2/util/dataset/autocomplete?incomplete=?'} -%}
@@ -24,5 +26,5 @@
       id="ogdch_see_alsos_add_row"
       class="btn btn-default ogdch-btn-add-row"
       href="#ogdch_see_alsos_pagemark">
-{{ _('Add another related dataset') }}
+{{ _('Add row') }}
 </a>

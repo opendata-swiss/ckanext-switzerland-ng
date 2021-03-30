@@ -7,10 +7,16 @@
   "dataset_fields": [
     {
       "field_name": "title_for_slug",
-      "label": "Title",
+      "label": {
+        "en": "Title",
+        "de": "Titel",
+        "fr": "Titre",
+        "it": "Titolo"
+      },
       "preset": "title",
       "form_snippet": "title.html",
-      "form_placeholder": "Title for naming the dataset"
+      "form_placeholder": "Titel für das Erzeugen des Dataset Slugs",
+      "help_text": "Dieses Titelfeld dient nur zum ersten Anlegen des Datasets. Später wird es aus den mehrsprachigen Titelfeldern automatisch besetzt."
     },
     {
       "field_name": "name",
@@ -31,11 +37,9 @@
         "it": "Titolo"
       },
       "preset": "multilingual_text_full",
-      "section_title": "Dataset",
-      "subheader": "Dataset Title",
       "mark_required": true,
-      "ogdch_help_text": "please provide in at least one language",
-      "form_placeholder": "Title of the dataset"
+      "help_text": "Bitte geben Sie hier einen Titel Ihres Datasets an.",
+      "form_placeholder": "Titel des Datasets"
     },
     {
       "field_name": "identifier",
@@ -45,10 +49,8 @@
         "fr": "Identifier",
         "it": "Identifier"
       },
-      "section_title": "Dataset Identifier",
-      "subheader": "Unique Identifier with a mark of the organization",
       "mark_required": true,
-      "ogdch_help_text": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden.",
+      "help_text": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden.",
       "validators": "ogdch_unique_identifier",
       "form_placeholder": "123..@organization"
     },
@@ -60,6 +62,7 @@
         "fr": "Organisation",
         "it": "Organizzazione"
       },
+       "help_text": "Organisation zu der das Dataset gehört.",
       "preset": "dataset_organization"
     },
     {
@@ -72,7 +75,7 @@
       },
       "preset": "ogdch_date",
       "required": false,
-      "ogdch_help_text": "Setting this date in the future will publish this dataset on the specified date."
+      "help_text": "Wenn einen Zeitpunlt in der Zukunft setzen wird Ihr Dataset zu diesem Zeitpunkt publiziert."
     },
     {
       "field_name": "display_name",
@@ -105,11 +108,9 @@
         "it": "Descrizione"
       },
       "preset": "multilingual_markdown",
-      "section_title": "Dataset Information",
-      "subheader": "Dataset Description",
       "mark_required": true,
-      "ogdch_help_text": "please provide in at least one language",
-      "form_placeholder": "Description of the dataset"
+      "help_text": "Bitte geben Sie hier eine Beschreibung Ihres Datasets an.",
+      "form_placeholder": "Beschreibung des Datasets"
     },
     {
       "field_name": "issued",
@@ -121,7 +122,7 @@
       },
       "preset": "ogdch_date",
       "required": false,
-      "section_title": "Data"
+      "help_text": "Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss."
     },
     {
       "field_name": "modified",
@@ -131,7 +132,8 @@
         "fr": "Date de modification",
         "it": "Data di modifica"
       },
-      "preset": "ogdch_date"
+      "preset": "ogdch_date",
+      "help_text": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist."
     },
     {
       "field_name": "accrual_periodicity",
@@ -144,7 +146,8 @@
       "display_snippet": "periodicity.html",
       "preset": "select",
       "validators": "scheming_required ogdch_temp_scheming_choices",
-      "choices_helper": "ogdch_get_accrual_periodicity_choices"
+      "choices_helper": "ogdch_get_accrual_periodicity_choices",
+      "help_text": "Das Intervall, in dem Aktualisierungen vorgenommen werden."
     },
     {
       "field_name": "temporals",
@@ -155,8 +158,7 @@
         "it": "Copertura temporale"
       },
       "preset": "temporals",
-      "section_title": "Temporal Coverage",
-      "ogdch_help_text": "Eine oder mehrere Zeitperioden, welche dieser Datensatz abdeckt.",
+      "help_text": "Eine oder mehrere Zeitperioden, welche dieser Datensatz abdeckt.",
       "form_snippet": "temporals.html"
     },
     {
@@ -171,8 +173,7 @@
       "output_validators": "multiple_text_output",
       "display_snippet": "publishers.html",
       "form_snippet": "publishers.html",
-      "ogdch_help_text": "Ein oder mehrere Publisher dieses Datensatzes. Dieser kann der Organisation entsprechen, welche den Datensatz veröffentlicht. Mindestens ein Publisher ist erforderlich.",
-      "section_title": "Publisher Information"
+      "help_text": "Ein oder mehrere Publisher dieses Datensatzes. Dieser kann der Organisation entsprechen, welche den Datensatz veröffentlicht. Mindestens ein Publisher ist erforderlich."
     },
     {
       "field_name": "contact_points",
@@ -186,8 +187,7 @@
       "output_validators": "multiple_text_output",
       "form_snippet": "contact_points.html",
       "display_snippet": "contact_points.html",
-      "help_text": "Die Stelle, welche kontaktiert wird, falls eine Frage zum Datensatz besteht. Mindestens eine Kontaktstelle ist erforderlich.",
-      "section_title": "Contact Information"
+      "help_text": "Die Stelle, welche kontaktiert wird, falls eine Frage zum Datensatz besteht. Mindestens eine Kontaktstelle ist erforderlich."
     },
     {
       "field_name": "language",
@@ -198,6 +198,7 @@
         "it": "Lingue"
       },
       "preset": "languages",
+      "help_text": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden.",
       "choices": [
         {
           "value": "en",
@@ -249,8 +250,7 @@
       "output_validators": "multiple_text_output",
       "form_snippet": "relations.html",
       "display_snippet": "relations.html",
-      "help_text": "Weitere Informationen mit Bezug zu diesem Datensatz.",
-      "section_title": "Further Information"
+      "help_text": "Unter «Beziehungen» geben Sie bitte «legal_basis» ein und erfassen einen Link auf die gesetzliche Grundlage, welche die Publikation dieses Datasets vorsieht."
     },
     {
       "field_name": "url",
@@ -260,7 +260,8 @@
         "fr": "Landing page",
         "it": "Landing page"
       },
-      "preset": "url"
+      "preset": "url",
+      "help_text": "Mit «Landing Page» ist die Website gemeint, auf der die Daten ursprünglich publiziert wurden, falls diese vorhanden ist."
     },
     {
       "field_name": "spatial",
@@ -294,8 +295,7 @@
       "output_validators": "multiple_text_output",
       "form_snippet": "see_alsos.html",
       "display_snippet": "see_alsos.html",
-      "help_text": "Beziehungen zu anderen Datensätzen.",
-      "section_title": "Related Datasets"
+      "help_text": "Unter «Verwandte Datensätze» können Sie aus allen verfügbaren Datasets auf opendata.swiss mit thematischem Bezug zu Ihrem aktuellen Dataset auswählen. Damit signalisieren Sie Datennutzenden, dass weitere Datasets existieren, die sie interessieren könnten."
     },
     {
       "field_name": "keywords",
@@ -306,7 +306,7 @@
         "it": "Parole chiave"
       },
       "preset": "ogdch_fluent_tags",
-      "section_title": "Keywords"
+      "help_text": "Schlagwörter helfen dabei, die Auffindbarkeit zu steigern. Mögliche Schlagwörter können Sie aus Ihren Metadaten oder Ihrem Quellsystem ermitteln."
     }
   ],
   "resource_fields": [
@@ -331,7 +331,7 @@
       "preset": "multilingual_text_full",
       "help_text": "Wenn der Titel leer gelassen wird, wird der Titel des Datensatzes verwendet.",
       "mark_required": true,
-      "form_placeholder": "Title of the resource"
+      "form_placeholder": "Titel der Resource"
     },
     {
       "field_name": "display_name",
