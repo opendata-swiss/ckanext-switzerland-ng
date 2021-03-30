@@ -7,7 +7,12 @@
   "dataset_fields": [
     {
       "field_name": "title_for_slug",
-      "label": "Title",
+      "label": {
+        "en": "Title",
+        "de": "Titel",
+        "fr": "Titre",
+        "it": "Titolo"
+      },
       "preset": "title",
       "form_snippet": "title.html",
       "form_placeholder": "Titel für das Erzeugen des Dataset Slugs",
