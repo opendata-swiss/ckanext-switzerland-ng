@@ -7,10 +7,26 @@
   "dataset_fields": [
     {
       "field_name": "title_for_slug",
-      "label": "Title",
+      "label": {
+        "en": "Title for Slug",
+        "de": "Titel für den Slug",
+        "fr": "Titel für den Slug",
+        "it": "Titel für den Slug"
+      },
       "preset": "title",
       "form_snippet": "title.html",
-      "form_placeholder": "Title for naming the dataset"
+      "form_placeholder": {
+        "en": "Title for generating the Slug",
+        "de": "Titel für das Erzeugen des Dataset Slugs",
+        "fr": "Titel für das Erzeugen des Dataset Slugs",
+        "it": "Titel für das Erzeugen des Dataset Slugs"
+      },
+      "help_text": {
+        "en": "Dieses Titelfeld dient nur zum ersten Anlegen des Datasets. Später wird es aus den mehrsprachigen Titelfeldern automatisch besetzt.",
+        "de": "Dieses Titelfeld dient nur zum ersten Anlegen des Datasets. Später wird es aus den mehrsprachigen Titelfeldern automatisch besetzt.",
+        "fr": "Dieses Titelfeld dient nur zum ersten Anlegen des Datasets. Später wird es aus den mehrsprachigen Titelfeldern automatisch besetzt.",
+        "it": "Dieses Titelfeld dient nur zum ersten Anlegen des Datasets. Später wird es aus den mehrsprachigen Titelfeldern automatisch besetzt."
+      }
     },
     {
       "field_name": "name",
