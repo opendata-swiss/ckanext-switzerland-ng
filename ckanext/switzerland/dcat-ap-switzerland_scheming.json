@@ -159,12 +159,32 @@
         "fr": "Description",
         "it": "Descrizione"
       },
+      "subheader": {
+        "en": "Description",
+        "de": "Beschreibung",
+        "fr": "Description",
+        "it": "Descrizione"
+      },
       "preset": "multilingual_markdown",
-      "section_title": "Dataset Information",
-      "subheader": "Dataset Description",
+      "section_title": {
+        "en": "Dataset Information",
+        "de": "Dataset Information",
+        "fr": "Informations relatives au jeu de données",
+        "it": "Dataset Information"
+      },
       "mark_required": true,
-      "ogdch_help_text": "please provide in at least one language",
-      "form_placeholder": "Description of the dataset"
+      "subheader_help_text": {
+        "de": "Bitte geben Sie eine Beschreibung für Ihr Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
+        "en": "Bitte geben Sie eine Beschreibung für Ihr Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
+        "fr": "Bitte geben Sie eine Beschreibung für Ihr Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
+        "it": "Bitte geben Sie eine Beschreibung für Ihr Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)"
+      },
+      "form_placeholder": {
+        "en": "Description",
+        "de": "Beschreibung",
+        "fr": "Description",
+        "it": "Descrizione"
+      }
     },
     {
       "field_name": "issued",
