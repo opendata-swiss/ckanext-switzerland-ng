@@ -46,12 +46,32 @@
         "fr": "Titre",
         "it": "Titolo"
       },
+      "subheader": {
+        "en": "Title",
+        "de": "Titel",
+        "fr": "Titre",
+        "it": "Titolo"
+      },
       "preset": "multilingual_text_full",
-      "section_title": "Dataset",
-      "subheader": "Dataset Title",
+      "section_title": {
+        "en": "Dataset",
+        "de": "Dataset",
+        "fr": "Jeu de données",
+        "it": "Dataset"
+      },
       "mark_required": true,
-      "ogdch_help_text": "please provide in at least one language",
-      "form_placeholder": "Title of the dataset"
+      "subheader_help_text": {
+        "de": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
+        "en": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
+        "fr": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
+        "it": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)"
+      },
+      "form_placeholder": {
+        "en": "Title of the Dataset",
+        "de": "Titel des Datasets",
+        "fr": "Titre",
+        "it": "Titolo"
+      }
     },
     {
       "field_name": "identifier",
