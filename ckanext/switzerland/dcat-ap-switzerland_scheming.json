@@ -8,14 +8,25 @@
     {
       "field_name": "title_for_slug",
       "label": {
-        "en": "Title",
-        "de": "Titel",
+        "en": "Title for slug",
+        "de": "Titel für den Slug",
         "fr": "Titre",
         "it": "Titolo"
       },
       "preset": "title",
       "form_snippet": "title.html",
-      "form_placeholder": "Titel für das Erzeugen des Dataset Slugs",
+      "form_placeholder": {
+        "de": "Titel für das Erzeugen des Dataset Slugs",
+        "en": "Title for generating the dataset slugs",
+        "fr": "Titel für das Erzeugen des Dataset Slugs",
+        "it": "Titel für das Erzeugen des Dataset Slugs"
+      },
+      "help_text": {
+        "de": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist.",
+        "en": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist.",
+        "fr": "Une fois la publication effectuée, vous pouvez indiquer sous «Modifié» à quand remonte la dernière modification (mise à jour, correction, etc.) du jeu de données.",
+        "it": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist."
+      },
       "help_text": "Dieses Titelfeld dient nur zum ersten Anlegen des Datasets. Später wird es aus den mehrsprachigen Titelfeldern automatisch besetzt."
     },
     {
@@ -38,7 +49,13 @@
       },
       "preset": "multilingual_text_full",
       "mark_required": true,
-      "help_text": "Bitte geben Sie hier einen Titel Ihres Datasets an.",
+      "help_text": {
+        "de": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist.",
+        "en": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist.",
+        "fr": "Une fois la publication effectuée, vous pouvez indiquer sous «Modifié» à quand remonte la dernière modification (mise à jour, correction, etc.) du jeu de données.",
+        "it": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist."
+      },
+      "help_text": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. ",
       "form_placeholder": "Titel des Datasets"
     },
     {
@@ -50,6 +67,12 @@
         "it": "Identifier"
       },
       "mark_required": true,
+      "help_text": {
+        "de": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist.",
+        "en": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist.",
+        "fr": "Une fois la publication effectuée, vous pouvez indiquer sous «Modifié» à quand remonte la dernière modification (mise à jour, correction, etc.) du jeu de données.",
+        "it": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist."
+      },
       "help_text": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden.",
       "validators": "ogdch_unique_identifier",
       "form_placeholder": "123..@organization"
@@ -80,6 +103,12 @@
       },
       "preset": "ogdch_date",
       "required": false,
+      "help_text": {
+        "de": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist.",
+        "en": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist.",
+        "fr": "Une fois la publication effectuée, vous pouvez indiquer sous «Modifié» à quand remonte la dernière modification (mise à jour, correction, etc.) du jeu de données.",
+        "it": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist."
+      },
       "help_text": "Wenn einen Zeitpunlt in der Zukunft setzen wird Ihr Dataset zu diesem Zeitpunkt publiziert."
     },
     {
@@ -114,8 +143,18 @@
       },
       "preset": "multilingual_markdown",
       "mark_required": true,
-      "help_text": "Bitte geben Sie hier eine Beschreibung Ihres Datasets an.",
-      "form_placeholder": "Beschreibung des Datasets"
+      "help_text": {
+        "de": "Please enter a description for your dataset.",
+        "en": "Bitte geben Sie hier eine Beschreibung Ihres Datasets an.",
+        "fr": "Bitte geben Sie hier eine Beschreibung Ihres Datasets an.",
+        "it": "Bitte geben Sie hier eine Beschreibung Ihres Datasets an."
+      },
+      "form_placeholder": {
+        "de": "Beschreibung",
+        "en": "Description",
+        "fr": "Description",
+        "it": "Descrizione"
+      }
     },
     {
       "field_name": "issued",
@@ -138,7 +177,12 @@
         "it": "Data di modifica"
       },
       "preset": "ogdch_date",
-      "help_text": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist."
+      "help_text": {
+        "de": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist.",
+        "en": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist.",
+        "fr": "Une fois la publication effectuée, vous pouvez indiquer sous «Modifié» à quand remonte la dernière modification (mise à jour, correction, etc.) du jeu de données.",
+        "it": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist."
+      }
     },
     {
       "field_name": "accrual_periodicity",

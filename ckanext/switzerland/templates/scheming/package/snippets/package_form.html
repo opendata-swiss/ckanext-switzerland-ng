@@ -11,18 +11,8 @@
   {%- endif -%}
   {%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
   {%- for field in schema.dataset_fields -%}
-    {% if field.section_title %}
-       <h2 id="{{ "ogdch_" + field.field_name + "_pagemark" }}">
-           {{ _("{section_title}").format(section_title=field.section_title) }}
-       </h2>
-    {% endif %}
-    {% if field.subheader %}
-      <h3>
-      {% if field.mark_required %}
+    {% if field.mark_required %}
           <span title="{{ _('This field is required') }}" class="control-required">*</span>
-      {% endif %}
-          {{ field.subheader }}
-      </h3>
     {% endif %}
     {%- if field.form_snippet is not none -%}
       {%- snippet 'scheming/snippets/form_field.html',
