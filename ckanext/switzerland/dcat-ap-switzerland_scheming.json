@@ -75,18 +75,27 @@
     },
     {
       "field_name": "identifier",
+      "subheader": {
+        "en": "Dataset Identifier",
+        "de": "Dataset Identifier",
+        "fr": "Dataset Identifier",
+        "it": "Dataset Identifier"
+      },
       "label": {
         "en": "Identifier",
         "de": "Identifier",
         "fr": "Identifier",
         "it": "Identifier"
       },
-      "section_title": "Dataset Identifier",
-      "subheader": "Unique Identifier with a mark of the organization",
-      "mark_required": true,
-      "ogdch_help_text": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden.",
+      "help_text": {
+        "en": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden. Wichtig: Verändern Sie den Identifier nicht mehr, nachdem das Dataset publiziert ist. Ansonsten können Ihre Daten nicht mehr eindeutig zugeordnet werden.",
+        "de": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden. Wichtig: Verändern Sie den Identifier nicht mehr, nachdem das Dataset publiziert ist. Ansonsten können Ihre Daten nicht mehr eindeutig zugeordnet werden.",
+        "fr": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden. Wichtig: Verändern Sie den Identifier nicht mehr, nachdem das Dataset publiziert ist. Ansonsten können Ihre Daten nicht mehr eindeutig zugeordnet werden.",
+        "it": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden. Wichtig: Verändern Sie den Identifier nicht mehr, nachdem das Dataset publiziert ist. Ansonsten können Ihre Daten nicht mehr eindeutig zugeordnet werden."
+      },
       "validators": "ogdch_unique_identifier",
-      "form_placeholder": "123..@organization"
+      "form_placeholder": "123..@organization",
+      "required": true
     },
     {
       "field_name": "owner_org",
@@ -96,7 +105,13 @@
         "fr": "Organisation",
         "it": "Organizzazione"
       },
-      "preset": "dataset_organization"
+      "preset": "dataset_organization",
+      "help_text": {
+        "en": "The organization that the dataset belongs to.",
+        "de": "Die Organisation zu welcher das Dataset gehört.",
+        "fr": "Die Organisation zu welcher das Dataset gehört.",
+        "it": "Die Organisation zu welcher das Dataset gehört."
+      }
     },
     {
       "field_name": "scheduled",
