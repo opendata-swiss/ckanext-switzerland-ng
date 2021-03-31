@@ -19,9 +19,12 @@ use the following command:
     cd /usr/lib/ckanext/ckanext-switzerland-ng/
     python setup.py extract_messages
 
-Or follow the official CKAN guide at https://docs.ckan.org/en/latest/extensions/translating-extensions.html
+This will generate the `pot` files
+Then update the `po` files with:
 
-All translations are done via Transifex. To compile the po files use the following command:
+    python setup.py update_catalog -l de
+
+Now the translations can be filled in. After that compile the po files into mo files:
 
     python setup.py compile_catalog
 
