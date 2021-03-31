@@ -1,6 +1,6 @@
 {# This is specific to datasets' owner_org field and won't work #}
 {# if used with other fields #}
-
+{% import 'macros/form.html' as form %}
 
 {% macro organization_option_tag(organization, selected_org) %}
   {% block organization_option scoped %}
@@ -21,6 +21,7 @@
 
   {% block package_metadata_fields_visibility %}
     <div class="control-group form-group control-medium">
+      <h3>{{ _('Dataset Publication') }}</h3>
       <label for="field-private" class="control-label">{{ _('Visibility') }}</label>
       <div class="controls">
         <select id="field-private" name="private" class="form-control">
@@ -29,6 +30,10 @@
           {% endfor %}
         </select>
       </div>
+      {{- form.info(
+          text= _('Sichtbarkeit auf Veröffentlicht setzen, um diesen Datensatz zu publizieren'),
+          inline=field.get('help_inline', false)
+      ) -}}
     </div>
   {% endblock %}
 

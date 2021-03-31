@@ -116,14 +116,18 @@
     {
       "field_name": "scheduled",
       "label": {
+          "en": "Schedule the publication",
+          "de": "Veröffentlichung terminieren",
+          "fr": "Veröffentlichung terminieren",
+          "it": "Veröffentlichung terminieren"
+      },
+      "help_text": {
         "en": "Scheduled publication date on portal (set visibility to draft to publish it automatically)",
         "de": "Geplanter Veröffentlichungstermin im Portal (Sichtbarkeit auf Entwurf setzen, um diesen Datensatz automatisch zu veröffentlichen)",
         "fr": "Date de publication sur le portail (Définir la visibilité sur brouillon pour le publier automatiquement)",
         "it": "Data di pubblicazione sul portale (Imposta la visibilità su bozza per pubblicare automaticamente il set di dati)"
       },
-      "preset": "ogdch_date",
-      "required": false,
-      "ogdch_help_text": "Setting this date in the future will publish this dataset on the specified date."
+      "preset": "ogdch_date"
     },
     {
       "field_name": "display_name",
