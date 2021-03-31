@@ -194,9 +194,26 @@
         "fr": "Date de publication",
         "it": "Data di rilascio"
       },
+      "section_title": {
+        "en": "Data",
+        "de": "Daten",
+        "fr": "Données",
+        "it": "Data"
+      },
       "preset": "ogdch_date",
-      "required": false,
-      "section_title": "Data"
+      "help_text": {
+        "en": "Das Erstellungdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss.",
+        "de": "Das Erstellungdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss.",
+        "fr": "Das Erstellungdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss.",
+        "it": "Das Erstellungdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss."
+      },
+      "subheader": {
+        "en": "Issued date",
+        "de": "Publikationsdatum",
+        "fr": "Date de publication",
+        "it": "Data di rilascio"
+      },
+      "mark_required": true
     },
     {
       "field_name": "modified",
@@ -206,7 +223,13 @@
         "fr": "Date de modification",
         "it": "Data di modifica"
       },
-      "preset": "ogdch_date"
+      "preset": "ogdch_date",
+      "help_text": {
+        "de": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist.",
+        "en": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist.",
+        "fr": "Une fois la publication effectuée, vous pouvez indiquer sous «Modifié» à quand remonte la dernière modification (mise à jour, correction, etc.) du jeu de données.",
+        "it": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist."
+      }
     },
     {
       "field_name": "accrual_periodicity",
@@ -219,7 +242,13 @@
       "display_snippet": "periodicity.html",
       "preset": "select",
       "validators": "scheming_required ogdch_temp_scheming_choices",
-      "choices_helper": "ogdch_get_accrual_periodicity_choices"
+      "choices_helper": "ogdch_get_accrual_periodicity_choices",
+      "help_text": {
+        "de": "Das «Aktualisierungsintervall» ist das Intervall, in dem Aktualisierungen vorgenommen werden.",
+        "en": "Das «Aktualisierungsintervall» ist das Intervall, in dem Aktualisierungen vorgenommen werden.",
+        "fr": "Das «Aktualisierungsintervall» ist das Intervall, in dem Aktualisierungen vorgenommen werden.",
+        "it": "Das «Aktualisierungsintervall» ist das Intervall, in dem Aktualisierungen vorgenommen werden."
+      }
     },
     {
       "field_name": "temporals",
