@@ -279,7 +279,7 @@ def ogdch_temporals_form_helper(data):
     if not temporals:
         temporals = get_temporals_from_form(data)
 
-    label = {'start_date': _('Start-Date'), 'end_date': _('End-Date')}
+    label = {'start_date': _('from'), 'end_date': _('to')}
     rows = _build_rows_form_field(
         first_label=label,
         default_label=label,

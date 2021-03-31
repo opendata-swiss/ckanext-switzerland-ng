@@ -259,8 +259,18 @@
         "it": "Copertura temporale"
       },
       "preset": "temporals",
-      "section_title": "Temporal Coverage",
-      "ogdch_help_text": "Eine oder mehrere Zeitperioden, welche dieser Datensatz abdeckt.",
+      "help_text": {
+        "de": "Eine oder mehrere Zeitperioden, welche dieses Datensatz abdeckt.",
+        "en": "Eine oder mehrere Zeitperioden, welche dieses Datensatz abdeckt.",
+        "fr": "Eine oder mehrere Zeitperioden, welche dieses Datensatz abdeckt.",
+        "it": "Eine oder mehrere Zeitperioden, welche dieses Datensatz abdeckt."
+      },
+      "add_row": {
+        "en": "Add another temporal coverage",
+        "de": "Eine weitere Zeitperiode hinzufügen",
+        "fr": "Eine weitere Zeitperiode hinzufügen",
+        "it": "Eine weitere Zeitperiode hinzufügen"
+      },
       "form_snippet": "temporals.html"
     },
     {
