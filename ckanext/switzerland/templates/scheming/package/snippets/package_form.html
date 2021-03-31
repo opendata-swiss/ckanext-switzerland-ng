@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block basic_fields %}
+  {{ form.required_message() }}
   {%- if not dataset_type -%}
     <p>
     dataset_type not passed to template. your version of CKAN
