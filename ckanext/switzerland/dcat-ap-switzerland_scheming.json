@@ -479,10 +479,29 @@
     {
       "field_name": "url",
       "label": {
+        "en": "Url",
+        "de": "Url",
+        "fr": "Url",
+        "it": "Url"
+      },
+      "form_placeholder": {
+        "en": "Url",
+        "de": "Url",
+        "fr": "Url",
+        "it": "Url"
+      },
+      "subheader": {
         "en": "Landing page",
         "de": "Landing page",
         "fr": "Landing page",
         "it": "Landing page"
+      },
+      "mark_required": true,
+      "help_text": {
+        "de": "Mit «Landing Page» ist die Website gemeint, auf der die Daten ursprünglich publiziert wurden, falls diese vorhanden ist.",
+        "en": "Mit «Landing Page» ist die Website gemeint, auf der die Daten ursprünglich publiziert wurden, falls diese vorhanden ist.",
+        "fr": "La «Landing page» est le site internet sur lequel les données ont été publiées initialement, le cas échéant.",
+        "it": "Mit «Landing Page» ist die Website gemeint, auf der die Daten ursprünglich publiziert wurden, falls diese vorhanden ist."
       },
       "preset": "url"
     },
