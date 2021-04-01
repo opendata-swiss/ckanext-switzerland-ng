@@ -7,196 +7,380 @@
   "dataset_fields": [
     {
       "field_name": "title_for_slug",
-      "label": "Title",
       "preset": "title",
       "form_snippet": "title.html",
-      "form_placeholder": "Title for naming the dataset"
+      "label": {
+        "en": "Title for Slug",
+        "de": "Titel für den Slug",
+        "fr": "Titel für den Slug",
+        "it": "Titel für den Slug"
+      },
+      "form_placeholder": {
+        "en": "Title for generating the Slug",
+        "de": "Titel für das Erzeugen des Dataset Slugs",
+        "fr": "Titel für das Erzeugen des Dataset Slugs",
+        "it": "Titel für das Erzeugen des Dataset Slugs"
+      },
+      "help_text": {
+        "en": "Dieses Titelfeld dient nur zum ersten Anlegen des Datasets. Später wird es aus den mehrsprachigen Titelfeldern automatisch besetzt.",
+        "de": "Dieses Titelfeld dient nur zum ersten Anlegen des Datasets. Später wird es aus den mehrsprachigen Titelfeldern automatisch besetzt.",
+        "fr": "Dieses Titelfeld dient nur zum ersten Anlegen des Datasets. Später wird es aus den mehrsprachigen Titelfeldern automatisch besetzt.",
+        "it": "Dieses Titelfeld dient nur zum ersten Anlegen des Datasets. Später wird es aus den mehrsprachigen Titelfeldern automatisch besetzt."
+      }
     },
     {
       "field_name": "name",
+      "preset": "dataset_slug",
       "label": {
         "en": "Slug",
         "de": "Slug",
         "fr": "Slug",
         "it": "Slug"
-      },
-      "preset": "dataset_slug"
+      }
     },
     {
       "field_name": "title",
+      "preset": "multilingual_text_full",
+      "mark_required": true,
+      "section_title": {
+        "en": "Dataset",
+        "de": "Dataset",
+        "fr": "Jeu de données",
+        "it": "Dataset"
+      },
+      "fieldgroup": {
+        "en": "Title",
+        "de": "Titel",
+        "fr": "Titre",
+        "it": "Titolo"
+      },
+      "help_text": {
+        "de": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
+        "en": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
+        "fr": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
+        "it": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)"
+      },
       "label": {
         "en": "Title",
         "de": "Titel",
         "fr": "Titre",
         "it": "Titolo"
       },
-      "preset": "multilingual_text_full",
-      "section_title": "Dataset",
-      "subheader": "Dataset Title",
-      "mark_required": true,
-      "ogdch_help_text": "please provide in at least one language",
-      "form_placeholder": "Title of the dataset"
+      "form_placeholder": {
+        "en": "Title of the Dataset",
+        "de": "Titel des Datasets",
+        "fr": "Titre",
+        "it": "Titolo"
+      }
     },
     {
       "field_name": "identifier",
+      "validators": "ogdch_unique_identifier",
+      "required": true,
+      "fieldgroup": {
+        "en": "Dataset Identifier",
+        "de": "Dataset Identifier",
+        "fr": "Dataset Identifier",
+        "it": "Dataset Identifier"
+      },
       "label": {
         "en": "Identifier",
         "de": "Identifier",
         "fr": "Identifier",
         "it": "Identifier"
       },
-      "section_title": "Dataset Identifier",
-      "subheader": "Unique Identifier with a mark of the organization",
-      "mark_required": true,
-      "ogdch_help_text": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden.",
-      "validators": "ogdch_unique_identifier",
+      "help_text": {
+        "en": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden. Wichtig: Verändern Sie den Identifier nicht mehr, nachdem das Dataset publiziert ist. Ansonsten können Ihre Daten nicht mehr eindeutig zugeordnet werden.",
+        "de": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden. Wichtig: Verändern Sie den Identifier nicht mehr, nachdem das Dataset publiziert ist. Ansonsten können Ihre Daten nicht mehr eindeutig zugeordnet werden.",
+        "fr": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden. Wichtig: Verändern Sie den Identifier nicht mehr, nachdem das Dataset publiziert ist. Ansonsten können Ihre Daten nicht mehr eindeutig zugeordnet werden.",
+        "it": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden. Wichtig: Verändern Sie den Identifier nicht mehr, nachdem das Dataset publiziert ist. Ansonsten können Ihre Daten nicht mehr eindeutig zugeordnet werden."
+      },
       "form_placeholder": "123..@organization"
     },
     {
       "field_name": "owner_org",
+      "preset": "dataset_organization",
       "label": {
         "en": "Organization",
         "de": "Organisation",
         "fr": "Organisation",
         "it": "Organizzazione"
       },
-      "preset": "dataset_organization"
+      "help_text": {
+        "en": "The organization that the dataset belongs to.",
+        "de": "Die Organisation zu welcher das Dataset gehört.",
+        "fr": "Die Organisation zu welcher das Dataset gehört.",
+        "it": "Die Organisation zu welcher das Dataset gehört."
+      }
     },
     {
       "field_name": "scheduled",
+      "preset": "ogdch_date",
       "label": {
+          "en": "Schedule the publication",
+          "de": "Veröffentlichung terminieren",
+          "fr": "Veröffentlichung terminieren",
+          "it": "Veröffentlichung terminieren"
+      },
+      "help_text": {
         "en": "Scheduled publication date on portal (set visibility to draft to publish it automatically)",
         "de": "Geplanter Veröffentlichungstermin im Portal (Sichtbarkeit auf Entwurf setzen, um diesen Datensatz automatisch zu veröffentlichen)",
         "fr": "Date de publication sur le portail (Définir la visibilité sur brouillon pour le publier automatiquement)",
         "it": "Data di pubblicazione sul portale (Imposta la visibilità su bozza per pubblicare automaticamente il set di dati)"
-      },
-      "preset": "ogdch_date",
-      "required": false,
-      "ogdch_help_text": "Setting this date in the future will publish this dataset on the specified date."
+      }
     },
     {
       "field_name": "display_name",
+      "preset": "multilingual_text",
+      "form_snippet": null,
       "label": {
         "en": "Display name",
         "de": "Anzeigename",
         "fr": "Nom d'affichage",
         "it": "Nome visualizzato"
-      },
-      "preset": "multilingual_text",
-      "form_snippet": null
+      }
     },
     {
       "field_name": "notes",
+      "preset": "multilingual_output",
+      "form_snippet": null,
       "label": {
         "en": "Description",
         "de": "Beschreibung",
         "fr": "Description",
         "it": "Descrizione"
-      },
-      "preset": "multilingual_output",
-      "form_snippet": null
+      }
     },
     {
       "field_name": "description",
+      "preset": "multilingual_markdown",
+      "mark_required": true,
+      "section_title": {
+        "en": "Dataset Information",
+        "de": "Dataset Information",
+        "fr": "Informations relatives au jeu de données",
+        "it": "Dataset Information"
+      },
+      "fieldgroup": {
+        "en": "Description",
+        "de": "Beschreibung",
+        "fr": "Description",
+        "it": "Descrizione"
+      },
+      "help_text": {
+        "de": "Bitte geben Sie eine Beschreibung für Ihr Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
+        "en": "Bitte geben Sie eine Beschreibung für Ihr Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
+        "fr": "Bitte geben Sie eine Beschreibung für Ihr Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
+        "it": "Bitte geben Sie eine Beschreibung für Ihr Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)"
+      },
       "label": {
         "en": "Description",
         "de": "Beschreibung",
         "fr": "Description",
         "it": "Descrizione"
       },
-      "preset": "multilingual_markdown",
-      "section_title": "Dataset Information",
-      "subheader": "Dataset Description",
-      "mark_required": true,
-      "ogdch_help_text": "please provide in at least one language",
-      "form_placeholder": "Description of the dataset"
+      "form_placeholder": {
+        "en": "Description",
+        "de": "Beschreibung",
+        "fr": "Description",
+        "it": "Descrizione"
+      }
     },
     {
       "field_name": "issued",
+      "preset": "ogdch_date",
+      "mark_required": true,
+      "section_title": {
+        "en": "Data",
+        "de": "Daten",
+        "fr": "Données",
+        "it": "Data"
+      },
+      "fieldgroup": {
+        "en": "Issued date",
+        "de": "Publikationsdatum",
+        "fr": "Date de publication",
+        "it": "Data di rilascio"
+      },
       "label": {
         "en": "Issued date",
         "de": "Publikationsdatum",
         "fr": "Date de publication",
         "it": "Data di rilascio"
       },
-      "preset": "ogdch_date",
-      "required": false,
-      "section_title": "Data"
+     "help_text": {
+        "en": "Das Erstellungdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss.",
+        "de": "Das Erstellungdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss.",
+        "fr": "Das Erstellungdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss.",
+        "it": "Das Erstellungdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss."
+      }
     },
     {
       "field_name": "modified",
+      "preset": "ogdch_date",
       "label": {
         "en": "Modified date",
         "de": "Änderungsdatum",
         "fr": "Date de modification",
         "it": "Data di modifica"
       },
-      "preset": "ogdch_date"
+      "help_text": {
+        "de": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist.",
+        "en": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist.",
+        "fr": "Une fois la publication effectuée, vous pouvez indiquer sous «Modifié» à quand remonte la dernière modification (mise à jour, correction, etc.) du jeu de données.",
+        "it": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist."
+      }
     },
     {
       "field_name": "accrual_periodicity",
+      "preset": "select",
+      "display_snippet": "periodicity.html",
+      "validators": "scheming_required ogdch_temp_scheming_choices",
+      "choices_helper": "ogdch_get_accrual_periodicity_choices",
       "label": {
         "en": "Update interval",
         "de": "Aktualisierungsintervall",
         "fr": "Intervalle d'actualisation",
         "it": "Intervallo di aggiornamento"
       },
-      "display_snippet": "periodicity.html",
-      "preset": "select",
-      "validators": "scheming_required ogdch_temp_scheming_choices",
-      "choices_helper": "ogdch_get_accrual_periodicity_choices"
+      "help_text": {
+        "de": "Das «Aktualisierungsintervall» ist das Intervall, in dem Aktualisierungen vorgenommen werden.",
+        "en": "Das «Aktualisierungsintervall» ist das Intervall, in dem Aktualisierungen vorgenommen werden.",
+        "fr": "Das «Aktualisierungsintervall» ist das Intervall, in dem Aktualisierungen vorgenommen werden.",
+        "it": "Das «Aktualisierungsintervall» ist das Intervall, in dem Aktualisierungen vorgenommen werden."
+      }
     },
     {
       "field_name": "temporals",
+      "preset": "temporals",
+      "form_snippet": "temporals.html",
       "label": {
         "en": "Temporal coverage",
         "de": "Zeitliche Abdeckung",
         "fr": "Couverture temporelle",
         "it": "Copertura temporale"
       },
-      "preset": "temporals",
-      "section_title": "Temporal Coverage",
-      "ogdch_help_text": "Eine oder mehrere Zeitperioden, welche dieser Datensatz abdeckt.",
-      "form_snippet": "temporals.html"
+      "label_start_date": {
+        "en": "from",
+        "de": "von",
+        "fr": "von",
+        "it": "von"
+      },
+      "label_end_date": {
+        "en": "to",
+        "de": "bis",
+        "fr": "bis",
+        "it": "bis"
+      },
+      "help_text": {
+        "de": "Eine oder mehrere Zeitperioden, welche dieses Datensatz abdeckt.",
+        "en": "Eine oder mehrere Zeitperioden, welche dieses Datensatz abdeckt.",
+        "fr": "Eine oder mehrere Zeitperioden, welche dieses Datensatz abdeckt.",
+        "it": "Eine oder mehrere Zeitperioden, welche dieses Datensatz abdeckt."
+      },
+      "add_row": {
+        "en": "Add another temporal coverage",
+        "de": "Eine weitere Zeitperiode hinzufügen",
+        "fr": "Eine weitere Zeitperiode hinzufügen",
+        "it": "Eine weitere Zeitperiode hinzufügen"
+      }
     },
     {
       "field_name": "publishers",
+      "validators": "harvest_list_of_dicts ogdch_validate_formfield_publishers",
+      "output_validators": "multiple_text_output",
+      "display_snippet": "publishers.html",
+      "form_snippet": "publishers.html",
+      "mark_required": true,
+      "section_title": {
+        "en": "Publisher Informatio",
+        "de": "Publisher-Informationen",
+        "fr": "Informations relatives à l’éditeur",
+        "it": "Dataset Information"
+      },
       "label": {
+        "en": "Name",
+        "de": "Name",
+        "fr": "Nom",
+        "it": "Name"
+      },
+      "fieldgroup": {
         "en": "Publishers",
         "de": "Publisher",
         "fr": "Editeurs",
         "it": "Editori"
       },
-      "validators": "harvest_list_of_dicts ogdch_validate_formfield_publishers",
-      "output_validators": "multiple_text_output",
-      "display_snippet": "publishers.html",
-      "form_snippet": "publishers.html",
-      "ogdch_help_text": "Ein oder mehrere Publisher dieses Datensatzes. Dieser kann der Organisation entsprechen, welche den Datensatz veröffentlicht. Mindestens ein Publisher ist erforderlich.",
-      "section_title": "Publisher Information"
+      "help_text": {
+        "de": "Ein oder mehrere Publisher dieses Datensatzes. Dieser kann der Organisation entsprechen, welche den Datensatz veröffentlicht. Mindestens ein Publisher ist erforderlich.",
+        "en": "Ein oder mehrere Publisher dieses Datensatzes. Dieser kann der Organisation entsprechen, welche den Datensatz veröffentlicht. Mindestens ein Publisher ist erforderlich.",
+        "fr": "L'/Les éditeur(s) du jeu données. Il peut s'agir de l'organisation publiant le jeu données. Vous devez indiquer au moins un éditeur.",
+        "it": "Ein oder mehrere Publisher dieses Datensatzes. Dieser kann der Organisation entsprechen, welche den Datensatz veröffentlicht. Mindestens ein Publisher ist erforderlich."
+      },
+      "form_placeholder": {
+        "en": "Publishers name",
+        "de": "Publisher Name",
+        "fr": "Editeurs",
+        "it": "Editori"
+      },
+      "add_row": {
+        "en": "Add another publisher",
+        "de": "Einen weiteren Publisher hinzufügen",
+        "fr": "Einen weiteren Publisher hinzufügen",
+        "it": "Einen weiteren Publisher hinzufügen"
+      }
     },
     {
       "field_name": "contact_points",
-      "label": {
+      "validators": "harvest_list_of_dicts ogdch_validate_formfield_contact_points",
+      "output_validators": "multiple_text_output",
+      "form_snippet": "contact_points.html",
+      "display_snippet": "contact_points.html",
+      "mark_required": true,
+      "fieldgroup": {
         "en": "Contact points",
         "de": "Kontaktstellen",
         "fr": "Points de contact",
         "it": "Punti di contatto"
       },
-      "validators": "harvest_list_of_dicts ogdch_validate_formfield_contact_points",
-      "output_validators": "multiple_text_output",
-      "form_snippet": "contact_points.html",
-      "display_snippet": "contact_points.html",
-      "help_text": "Die Stelle, welche kontaktiert wird, falls eine Frage zum Datensatz besteht. Mindestens eine Kontaktstelle ist erforderlich.",
-      "section_title": "Contact Information"
+      "label_name": {
+        "en": "Name",
+        "de": "Name",
+        "fr": "Nom",
+        "it": "Name"
+      },
+      "label_email": {
+        "en": "Email",
+        "de": "Email",
+        "fr": "Courriel",
+        "it": "Email"
+      },
+      "form_placeholder_name": {
+        "en": "Name",
+        "de": "Name",
+        "fr": "Nom",
+        "it": "Name"
+      },
+      "form_placeholder_email": {
+        "en": "Email",
+        "de": "Email",
+        "fr": "Courriel",
+        "it": "Editori"
+      },
+      "help_text": {
+        "de": "Die Stelle, welche kontaktiert wird, falls eine Frage zum Datensatz besteht. Mindestens eine Kontaktstelle ist erforderlich.",
+        "en": "Die Stelle, welche kontaktiert wird, falls eine Frage zum Datensatz besteht. Mindestens eine Kontaktstelle ist erforderlich.",
+        "fr": "L'interlocuteur en cas de questions au suject du jeu données. Vous devez indiquer au minimum un contact.",
+        "it": "Die Stelle, welche kontaktiert wird, falls eine Frage zum Datensatz besteht. Mindestens eine Kontaktstelle ist erforderlich."
+      },
+      "add_row": {
+        "en": "Add another contact point",
+        "de": "Eine weitere Kontakstelle hinzufügen",
+        "fr": "Eine weitere Kontakstelle hinzufügen",
+        "it": "Eine weitere Kontakstelle hinzufügen"
+      }
     },
     {
       "field_name": "language",
-      "label": {
-        "en": "Languages",
-        "de": "Sprachen",
-        "fr": "Langues",
-        "it": "Lingue"
-      },
       "preset": "languages",
       "choices": [
         {
@@ -235,32 +419,103 @@
             "it": "Italiano"
           }
         }
-      ]
-    },
-    {
-      "field_name": "relations",
-      "label": {
-        "en": "Further information",
-        "de": "Weitere Informationen",
-        "fr": "Informations complémentaires",
-        "it": "Addizionali informazioni"
+      ],
+      "help_text": {
+        "de": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden.",
+        "en": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden.",
+        "fr": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden.",
+        "it": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden."
       },
-      "validators": "harvest_list_of_dicts ogdch_validate_formfield_relations",
-      "output_validators": "multiple_text_output",
-      "form_snippet": "relations.html",
-      "display_snippet": "relations.html",
-      "help_text": "Weitere Informationen mit Bezug zu diesem Datensatz.",
-      "section_title": "Further Information"
+      "label": {
+        "en": "Languages",
+        "de": "Sprachen",
+        "fr": "Langues",
+        "it": "Lingue"
+      }
     },
     {
       "field_name": "url",
+      "preset": "url",
+      "mark_required": true,
       "label": {
+        "en": "Url",
+        "de": "Url",
+        "fr": "Url",
+        "it": "Url"
+      },
+      "form_placeholder": {
+        "en": "Url",
+        "de": "Url",
+        "fr": "Url",
+        "it": "Url"
+      },
+      "fieldgroup": {
         "en": "Landing page",
         "de": "Landing page",
         "fr": "Landing page",
         "it": "Landing page"
       },
-      "preset": "url"
+      "help_text": {
+        "de": "Mit «Landing Page» ist die Website gemeint, auf der die Daten ursprünglich publiziert wurden, falls diese vorhanden ist.",
+        "en": "Mit «Landing Page» ist die Website gemeint, auf der die Daten ursprünglich publiziert wurden, falls diese vorhanden ist.",
+        "fr": "La «Landing page» est le site internet sur lequel les données ont été publiées initialement, le cas échéant.",
+        "it": "Mit «Landing Page» ist die Website gemeint, auf der die Daten ursprünglich publiziert wurden, falls diese vorhanden ist."
+      }
+    },
+    {
+      "field_name": "relations",
+      "validators": "harvest_list_of_dicts ogdch_validate_formfield_relations",
+      "output_validators": "multiple_text_output",
+      "form_snippet": "relations.html",
+      "display_snippet": "relations.html",
+      "section_title": {
+        "en": "Further information",
+        "de": "Weitere Informationen",
+        "fr": "Informations complémentaires",
+        "it": "Addizionali informazioni"
+      },
+      "fieldgroup": {
+        "en": "Relations",
+        "de": "Beziehungen",
+        "fr": "Relation",
+        "it": "Beziehungen"
+      },
+      "label_text": {
+        "en": "Text",
+        "de": "Text",
+        "fr": "Text",
+        "it": "Text"
+      },
+      "label_url": {
+        "en": "Url",
+        "de": "Url",
+        "fr": "Url",
+        "it": "Url"
+      },
+      "form_placeholder_text": {
+        "en": "Text",
+        "de": "Text",
+        "fr": "Text",
+        "it": "Text"
+      },
+      "form_placeholder_url": {
+        "en": "Url",
+        "de": "Url",
+        "fr": "Url",
+        "it": "Url"
+      },
+      "add_row": {
+        "en": "Add another relation",
+        "de": "Eine weitere Beziehung anfügen",
+        "fr": "Eine weitere Beziehung anfügen",
+        "it": "Eine weitere Beziehung anfügen"
+      },
+      "help_text": {
+        "de": "Unter «Beziehungen» geben Sie bitte «legal_basis» ein und erfassen einen Link auf die gesetzliche Grundlage, welche die Publikation dieses Datasets vorsieht.",
+        "en": "Unter «Beziehungen» geben Sie bitte «legal_basis» ein und erfassen einen Link auf die gesetzliche Grundlage, welche die Publikation dieses Datasets vorsieht.",
+        "fr": "Sous «Relations», veuillez sélectionner «legal_basis», puis saisir un lien vers la base légale qui prévoit la publication du jeu de données en question.",
+        "it": "Unter «Beziehungen» geben Sie bitte «legal_basis» ein und erfassen einen Link auf die gesetzliche Grundlage, welche die Publikation dieses Datasets vorsieht."
+      }
     },
     {
       "field_name": "spatial",
@@ -284,29 +539,62 @@
     },
     {
       "field_name": "see_alsos",
-      "label": {
+      "validators": "harvest_list_of_dicts ogdch_validate_formfield_see_alsos",
+      "output_validators": "multiple_text_output",
+      "form_snippet": "see_alsos.html",
+      "display_snippet": "see_alsos.html",
+      "fieldgroup": {
         "en": "Related datasets",
         "de": "Verwandte Datensätze",
         "fr": "Jeux de données relationnels",
         "it": "Set di dati relativi"
       },
-      "validators": "harvest_list_of_dicts ogdch_validate_formfield_see_alsos",
-      "output_validators": "multiple_text_output",
-      "form_snippet": "see_alsos.html",
-      "display_snippet": "see_alsos.html",
-      "help_text": "Beziehungen zu anderen Datensätzen.",
-      "section_title": "Related Datasets"
+      "help_text": {
+        "de": "Unter «Verwandte Datensätze» können Sie aus allen verfügbaren Datasets auf opendata.swiss mit thematischem Bezug zu Ihrem aktuellen Dataset auswählen. Damit signalisieren Sie Datennutzenden, dass weitere Datasets existieren, die sie interessieren könnten.",
+        "en": "Unter «Verwandte Datensätze» können Sie aus allen verfügbaren Datasets auf opendata.swiss mit thematischem Bezug zu Ihrem aktuellen Dataset auswählen. Damit signalisieren Sie Datennutzenden, dass weitere Datasets existieren, die sie interessieren könnten.",
+        "fr": "Le champ «Jeux de données connexes» permet de sélectionner parmi tous les jeux de données disponibles sur opendata.swiss ceux dont le thème est en lien avec votre jeu de données actuel. Vous signalez ainsi aux utilisateurs quels autres jeux de données pourraient les intéresser.",
+        "it": "Unter «Verwandte Datensätze» können Sie aus allen verfügbaren Datasets auf opendata.swiss mit thematischem Bezug zu Ihrem aktuellen Dataset auswählen. Damit signalisieren Sie Datennutzenden, dass weitere Datasets existieren, die sie interessieren könnten."
+      },
+      "label": {
+        "en": "Name / Slug",
+        "de": "Name / Slug",
+        "fr": "Nom / Slug",
+        "it": "Name / Slug"
+      },
+      "form_placeholder": {
+        "en": "Name / Slug of a dataset",
+        "de": "Name / Slug eines Datasets",
+        "fr": "Name / Slug eines Datasets",
+        "it": "Name / Slug eines Datasets"
+      },
+      "add_row": {
+        "en": "Add another related dataset",
+        "de": "Einen weiteren verwandten Dataset hinzufügen",
+        "fr": "Einen weiteren verwandten Dataset hinzufügen",
+        "it": "Einen weiteren verwandten Dataset hinzufügen"
+      }
     },
     {
       "field_name": "keywords",
+      "preset": "ogdch_fluent_tags",
+      "fieldgroup": {
+        "en": "Keywords",
+        "de": "Schlagwörter",
+        "fr": "Mots clés",
+        "it": "Parole chiave"
+      },
       "label": {
         "en": "Keywords",
         "de": "Schlagwörter",
         "fr": "Mots clés",
         "it": "Parole chiave"
       },
-      "preset": "ogdch_fluent_tags",
-      "section_title": "Keywords"
+      "fieldgroup_help_text": {
+        "de": "Schlagwörter helfen dabei, die Auffindbarkeit zu steigern. Mögliche Schlagwörter können Sie aus Ihren Metadaten oder Ihrem Quellsystem ermitteln.",
+        "en": "Schlagwörter helfen dabei, die Auffindbarkeit zu steigern. Mögliche Schlagwörter können Sie aus Ihren Metadaten oder Ihrem Quellsystem ermitteln.",
+        "fr": "Ces mots clés permettent de trouver plus aisément le jeu de données voulu. Pour les définir, tenez compte de vos métadonnées et de votre système source.",
+        "it": "Schlagwörter helfen dabei, die Auffindbarkeit zu steigern. Mögliche Schlagwörter können Sie aus Ihren Metadaten oder Ihrem Quellsystem ermitteln."
+      }
     }
   ],
   "resource_fields": [
@@ -318,42 +606,74 @@
         "fr": "Identifier (Permalink)",
         "it": "Identifier (Permalink)"
       },
-      "help_text": "Identifier der Ressource im Quellsystem des Publishers."
+      "help_text": {
+        "en": "Wählen Sie einen geeigneten Identifier aus Ihrem Quellsystem aus.",
+        "de": "Wählen Sie einen geeigneten Identifier aus Ihrem Quellsystem aus.",
+        "fr": "Choisissez un identifiant approprié dans votre système source.",
+        "it": "Wählen Sie einen geeigneten Identifier aus Ihrem Quellsystem aus."
+      }
     },
     {
       "field_name": "title",
+      "preset": "multilingual_text_full",
+      "mark_required": true,
+      "section_title": {
+        "en": "Resource",
+        "de": "Resource",
+        "fr": "Resource",
+        "it": "Resource"
+      },
+      "fieldgroup": {
+        "en": "Title",
+        "de": "Titel",
+        "fr": "Titre",
+        "it": "Titolo"
+      },
+      "help_text": {
+        "de": "Bitte geben Sie einen Titel für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn der Titel leer gelassen wird, wird der Titel des Datensatzes verwendet.",
+        "en": "Please enter a tile for the resource. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn der Titel leer gelassen wird, wird der Titel des Datensatzes verwendet.",
+        "fr": "Bitte geben Sie einen Titel für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn der Titel leer gelassen wird, wird der Titel des Datensatzes verwendet.",
+        "it": "\"Bitte geben Sie einen Titel für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn der Titel leer gelassen wird, wird der Titel des Datensatzes verwendet."
+      },
       "label": {
         "en": "Title",
         "de": "Titel",
         "fr": "Titre",
         "it": "Titolo"
       },
-      "preset": "multilingual_text_full",
-      "help_text": "Wenn der Titel leer gelassen wird, wird der Titel des Datensatzes verwendet.",
-      "mark_required": true,
-      "form_placeholder": "Title of the resource"
+      "form_placeholder": {
+        "en": "Title of the Resource",
+        "de": "Titel der Resource",
+        "fr": "Titre",
+        "it": "Titolo"
+      }
     },
     {
       "field_name": "display_name",
+      "preset": "multilingual_text",
+      "form_snippet": null,
       "label": {
         "en": "Display name",
         "de": "Anzeigename",
         "fr": "Nom d'affichage",
         "it": "Nome visualizzato"
-      },
-      "preset": "multilingual_text",
-      "form_snippet": null
+      }
     },
     {
       "field_name": "description",
+      "preset": "multilingual_markdown",
       "label": {
         "en": "Description",
         "de": "Beschreibung",
         "fr": "Description",
         "it": "Descrizione"
       },
-      "preset": "multilingual_markdown",
-      "help_text": "Wenn die Beschreibung leer gelassen wird, wird die Beschreibung des Datensatzes verwendet."
+      "help_text": {
+        "de": "Bitte geben Sie einen Beschreibung für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn die Beschreibung leer gelassen wird, wird die Beschreibung des Datensatzes verwendet.",
+        "en": "Bitte geben Sie einen Beschreibung für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn die Beschreibung leer gelassen wird, wird die Beschreibung des Datensatzes verwendet.",
+        "fr": "Bitte geben Sie einen Beschreibung für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn die Beschreibung leer gelassen wird, wird die Beschreibung des Datensatzes verwendet.",
+        "it": "Bitte geben Sie einen Beschreibung für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn die Beschreibung leer gelassen wird, wird die Beschreibung des Datensatzes verwendet."
+      }
     },
     {
       "field_name": "issued",
@@ -365,29 +685,32 @@
       },
       "preset": "ogdch_date",
       "required": false,
-      "help_text": "Datum der Veröffentlichung dieser Ressource."
+      "help_text": {
+        "en": "Das Datum der Veröffentlichung dieser Ressource.",
+        "de": "Das Datum der Veröffentlichung dieser Ressource.",
+        "fr": "Das Datum der Veröffentlichung dieser Ressource.",
+        "it": "Das Datum der Veröffentlichung dieser Ressource."
+      }
     },
     {
       "field_name": "modified",
+      "preset": "ogdch_date",
       "label": {
         "en": "Modified date",
         "de": "Änderungsdatum",
         "fr": "Date de modification",
         "it": "Data di modifica"
       },
-      "preset": "ogdch_date",
-      "help_text": "Datum der letzten Änderung dieser Ressource."
+      "help_text": {
+        "de": "Datum der letzten Änderung dieser Ressource.",
+        "en": "Datum der letzten Änderung dieser Ressource.",
+        "fr": "Datum der letzten Änderung dieser Ressource.",
+        "it": "Datum der letzten Änderung dieser Ressource."
+      }
     },
     {
       "field_name": "language",
-      "label": {
-        "en": "Languages",
-        "de": "Sprachen",
-        "fr": "Langues",
-        "it": "Lingue"
-      },
       "preset": "languages",
-      "help_text": "Sprachen, in denen diese Ressource vorliegt. Falls die Ressource sprachunabhängig ist, soll nichts angekreuzt werden.",
       "choices": [
         {
           "value": "en",
@@ -425,95 +748,133 @@
             "it": "Italiano"
           }
         }
-      ]
+      ],
+      "label": {
+        "en": "Languages",
+        "de": "Sprachen",
+        "fr": "Langues",
+        "it": "Lingue"
+      },
+      "help_text": {
+        "de": "Sprachen, in denen diese Ressource vorliegt. Falls die Ressource sprachunabhängig ist, soll nichts angekreuzt werden.",
+        "en": "Sprachen, in denen diese Ressource vorliegt. Falls die Ressource sprachunabhängig ist, soll nichts angekreuzt werden.",
+        "fr": "Sprachen, in denen diese Ressource vorliegt. Falls die Ressource sprachunabhängig ist, soll nichts angekreuzt werden.",
+        "it": "Sprachen, in denen diese Ressource vorliegt. Falls die Ressource sprachunabhängig ist, soll nichts angekreuzt werden."
+      }
     },
     {
       "field_name": "url",
+      "preset": "url",
+      "validators": "scheming_required",
       "label": {
         "en": "Access URL",
         "de": "Zugangs-URL",
         "fr": "URL d'accès",
         "it": "URL d'accesso"
       },
-      "preset": "url",
-      "validators": "scheming_required",
-      "help_text": "Die URL, über welche auf die Ressource zugegriffen werden kann. Dies kann entweder eine Download-URL, eine API-URL oder eine Landing-Page-URL sein. Falls die Ressource nur über eine Landing Page verfügbar ist, muss dieses Feld die URL der Landing Page beinhalten. Falls eine Download-URL für diese Ressource angegeben wurde, muss diese ebenfalls in diesem Feld eingetragen werden."
-
+      "help_text": {
+        "de": "Die URL, über welche auf die Ressource zugegriffen werden kann. Dies kann entweder eine Download-URL, eine API-URL oder eine Landing-Page-URL sein. Falls die Ressource nur über eine Landing Page verfügbar ist, muss dieses Feld die URL der Landing Page beinhalten. Falls eine Download-URL für diese Ressource angegeben wurde, muss diese ebenfalls in diesem Feld eingetragen werden.",
+        "en": "Die URL, über welche auf die Ressource zugegriffen werden kann. Dies kann entweder eine Download-URL, eine API-URL oder eine Landing-Page-URL sein. Falls die Ressource nur über eine Landing Page verfügbar ist, muss dieses Feld die URL der Landing Page beinhalten. Falls eine Download-URL für diese Ressource angegeben wurde, muss diese ebenfalls in diesem Feld eingetragen werden.",
+        "fr": "Die URL, über welche auf die Ressource zugegriffen werden kann. Dies kann entweder eine Download-URL, eine API-URL oder eine Landing-Page-URL sein. Falls die Ressource nur über eine Landing Page verfügbar ist, muss dieses Feld die URL der Landing Page beinhalten. Falls eine Download-URL für diese Ressource angegeben wurde, muss diese ebenfalls in diesem Feld eingetragen werden.",
+        "it": "Die URL, über welche auf die Ressource zugegriffen werden kann. Dies kann entweder eine Download-URL, eine API-URL oder eine Landing-Page-URL sein. Falls die Ressource nur über eine Landing Page verfügbar ist, muss dieses Feld die URL der Landing Page beinhalten. Falls eine Download-URL für diese Ressource angegeben wurde, muss diese ebenfalls in diesem Feld eingetragen werden."
+      }
     },
     {
       "field_name": "download_url",
+      "preset": "url",
       "label": {
         "en": "Download URL",
         "de": "Download-URL",
         "fr": "URL de téléchargement",
         "it": "URL di download"
       },
-      "preset": "url",
-      "help_text": "URL der Datei, falls die Ressource heruntergeladen werden kann."
+      "help_text": {
+        "de": "URL der Datei, falls die Ressource heruntergeladen werden kann.",
+        "en": "URL der Datei, falls die Ressource heruntergeladen werden kann.",
+        "fr": "URL der Datei, falls die Ressource heruntergeladen werden kann.",
+        "it": "URL der Datei, falls die Ressource heruntergeladen werden kann."
+      }
     },
     {
       "field_name": "rights",
+      "preset": "select",
+      "choices_helper": "ogdch_get_rights_choices",
+      "validators": "scheming_required",
+      "required": true,
       "label": {
         "en": "Terms of use",
         "de": "Nutzungsbedingungen",
         "fr": "Conditions d'utilisation",
         "it": "Condizioni d'uso"
       },
-      "help_text": "Alle Nutzungsbedingungen, welche nicht mit einem Stern (*) markiert sind, gelten als 'Closed Data'.",
-      "preset": "select",
-      "choices_helper": "ogdch_get_rights_choices",
-      "validators": "scheming_required",
-      "required": true
+      "help_text": {
+        "de": "Alle Nutzungsbedingungen, welche nicht mit einem Stern (*) markiert sind, gelten als 'Closed Data'.",
+        "en": "Alle Nutzungsbedingungen, welche nicht mit einem Stern (*) markiert sind, gelten als 'Closed Data'.",
+        "fr": "Alle Nutzungsbedingungen, welche nicht mit einem Stern (*) markiert sind, gelten als 'Closed Data'.",
+        "it": "Alle Nutzungsbedingungen, welche nicht mit einem Stern (*) markiert sind, gelten als 'Closed Data'."
+      }
     },
     {
       "field_name": "license",
+      "form_snippet": null,
       "label": {
         "en": "License",
         "de": "Lizenz",
         "fr": "Licence",
         "it": "Licenza"
-      },
-      "form_snippet": null
+      }
     },
     {
       "field_name": "byte_size",
+      "preset": "file_size",
       "label": {
         "en": "File size",
         "de": "Dateigrösse",
         "fr": "Taille du fichier",
         "it": "Grandezza dei dati"
       },
-      "preset": "file_size"
+      "help_text": {
+        "de": "Hier kann die «Grösse» der Ressource in Bytes angegeben werden.",
+        "en": "Hier kann die «Grösse» der Ressource in Bytes angegeben werden.",
+        "fr": "Hier kann die «Grösse» der Ressource in Bytes angegeben werden.",
+        "it": "Hier kann die «Grösse» der Ressource in Bytes angegeben werden."
+      }
     },
     {
       "field_name": "media_type",
+      "form_snippet": null,
       "label": {
         "en": "Format",
         "de": "Format",
         "fr": "Format",
         "it": "Formato"
-      },
-      "form_snippet": null
+      }
     },
     {
       "field_name": "format",
+      "preset": "ogdch_resource_format_autocomplete",
       "label": {
         "en": "Format",
         "de": "Format",
         "fr": "Format",
         "it": "Formato"
       },
-      "preset": "ogdch_resource_format_autocomplete"
+      "help_text": {
+        "de": "Wählen Sie das Format, das dem Ihrer Ressourcen entspricht.",
+        "en": "Wählen Sie das Format, das dem Ihrer Ressourcen entspricht.",
+        "fr": "Wählen Sie das Format, das dem Ihrer Ressourcen entspricht.",
+        "it": "Wählen Sie das Format, das dem Ihrer Ressourcen entspricht."
+      }
     },
     {
       "field_name": "coverage",
+      "form_snippet": null,
       "label": {
         "en": "Coverage",
         "de": "Abdeckung",
         "fr": "Couverture",
         "it": "Copertura"
-      },
-      "form_snippet": null
+      }
     }
   ]
 }

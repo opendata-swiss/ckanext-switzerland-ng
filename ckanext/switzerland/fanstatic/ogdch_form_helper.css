@@ -12,10 +12,23 @@
 }
 
 .ogdch-btn-add-row {
+  margin-top: 30px;
   margin-bottom: 50px;
   background: lightgray;
 }
 
-input[value]:not([value=""]) {
-  border:1px solid black;
+.info-block {
+    padding: 5px 0 5px 10px;
+}
+.info-block, .form-group .info-block {
+  position: relative;
+  display: block;
+  font-size: 1em;
+  color: #aaaaaa;
+  line-height: 1.3;
+  margin-top: 6px;
+}
+
+.ogdch-form-field-group {
+  margin-bottom: 50px;
 }

@@ -9,8 +9,8 @@
   {% call form.input(
     'see-also-' + row.index,
     id='field-see-also-' + row.index,
-    label=row.get('label'),
-    placeholder=_('Title of the dataset'),
+    label=h.scheming_language_text(field.label),
+    placeholder=h.scheming_language_text(field.form_placeholder),
     value=row.data,
     attrs=attrs,
     error=errors['seel_alsos'],
@@ -19,10 +19,10 @@
   {% endcall %}
   <h1 class="hidden-dataset-name">{{ row.data.name }}</h1>
 {%- endfor -%}
-
+{%- snippet 'scheming/form_snippets/help_text.html', field=field -%}
 <a data-module="ogdch_see_alsos_add_rows"
       id="ogdch_see_alsos_add_row"
       class="btn btn-default ogdch-btn-add-row"
       href="#ogdch_see_alsos_pagemark">
-{{ _('Add another related dataset') }}
+  {{ h.scheming_language_text(field.add_row) }}
 </a>

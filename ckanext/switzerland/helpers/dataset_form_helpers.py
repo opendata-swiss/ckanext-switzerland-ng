@@ -62,14 +62,12 @@ def ogdch_publishers_form_helper(data):
         publishers = get_publishers_from_form(data)
 
     rows = _build_rows_form_field(
-        first_label=_('Publisher'),
-        default_label=_('Another Publisher'),
         data_empty='',
         data_list=publishers)
     return rows
 
 
-def _build_rows_form_field(first_label, default_label, data_empty, data_list=None):  # noqa
+def _build_rows_form_field(data_empty, data_list=None):  # noqa
     """
     builds a rows form field
     - gets a list of data to fill in the form
@@ -83,7 +81,6 @@ def _build_rows_form_field(first_label, default_label, data_empty, data_list=Non
     for i in range(1, ADDITIONAL_FORM_ROW_LIMIT + 1):
         row = {'index': str(i), 'data': data_list[i - 1] if i <= len(data_list) else data_empty}  # noqa
         row['css_class'] = SHOW_ROW_CSS_CLASS if (i <= number_of_rows_to_show) else HIDE_ROW_CSS_CLASS  # noqa
-        row['label'] = first_label if i == 1 else default_label
         rows.append(row)
     return rows
 
@@ -121,11 +118,8 @@ def ogdch_contact_points_form_helper(data):
     if not contact_points:
         contact_points = get_contact_points_from_form(data)
 
-    label = {'name': _('Name'), 'email': _('Email')}
     data_empty = {'name': '', 'email': ''}
     rows = _build_rows_form_field(
-        first_label=label,
-        default_label=label,
         data_empty=data_empty,
         data_list=contact_points)
     return rows
@@ -165,11 +159,8 @@ def ogdch_relations_form_helper(data):
     if not relations:
         relations = get_relations_from_form(data)
 
-    label = {'title': _('Title'), 'url': _('Url')}
     data_empty = {'title': '', 'url': ''}
     rows = _build_rows_form_field(
-        first_label=label,
-        default_label=label,
         data_empty=data_empty,
         data_list=relations)
     return rows
@@ -212,8 +203,6 @@ def ogdch_see_alsos_form_helper(data):
         see_alsos = get_see_alsos_from_form(data)
 
     rows = _build_rows_form_field(
-        first_label=_('Related dataset'),
-        default_label=_('Another related dataset'),
         data_empty='',
         data_list=see_alsos)
     return rows
@@ -279,10 +268,7 @@ def ogdch_temporals_form_helper(data):
     if not temporals:
         temporals = get_temporals_from_form(data)
 
-    label = {'start_date': _('Start-Date'), 'end_date': _('End-Date')}
     rows = _build_rows_form_field(
-        first_label=label,
-        default_label=label,
         data_empty={'start_date': '', 'end_date': ''},
         data_list=temporals)
     return rows

@@ -2,11 +2,12 @@
 
 {% set temporals_rows = h.ogdch_temporals_form_helper(data) %}
 
+<h3>{{ h.scheming_language_text(field.label) }}</h3>
 {%- for row in temporals_rows -%}
     {% call form.date_input(
         'temporal-start-date-' + row.index,
         id='field-temporal-start-date-' + row.index,
-        label=row.label.start_date,
+        label=h.scheming_language_text(field.label_start_date),
         value=row.data.start_date,
         language=h.lang(),
         error=errors['temporals'],
@@ -16,7 +17,7 @@
 {% call form.date_input(
         'temporal-end-date-' + row.index,
         id='field-temporal-end-date-' + row.index,
-        label=row.label.end_date,
+        label=h.scheming_language_text(field.label_end_date),
         value=row.data.end_date,
         language=h.lang(),
         error=errors['temporals'],
@@ -24,10 +25,10 @@
         ) %}
     {% endcall %}
 {% endfor %}
-
+{%- snippet 'scheming/form_snippets/help_text.html', field=field -%}
 <a data-module="ogdch_temporals_add_rows"
       id="ogdch_temporals_add_row"
       class="btn btn-default ogdch-btn-add-row"
       href="#ogdch_temporals_pagemark">
-{{ _('Add another temporal') }}
+  {{ h.scheming_language_text(field.add_row) }}
 </a>
