@@ -369,6 +369,12 @@
     },
     {
       "field_name": "language",
+      "help_text": {
+        "de": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden.",
+        "en": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden.",
+        "fr": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden.",
+        "it": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden."
+      },
       "label": {
         "en": "Languages",
         "de": "Sprachen",
