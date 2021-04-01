@@ -319,7 +319,32 @@
     },
     {
       "field_name": "contact_points",
-      "label": {
+      "label_name": {
+        "en": "Name",
+        "de": "Name",
+        "fr": "Nom",
+        "it": "Name"
+      },
+      "label_email": {
+        "en": "Email",
+        "de": "Email",
+        "fr": "Courriel",
+        "it": "Email"
+      },
+      "form_placeholder_name": {
+        "en": "Name",
+        "de": "Name",
+        "fr": "Nom",
+        "it": "Name"
+      },
+      "form_placeholder_email": {
+        "en": "Email",
+        "de": "Email",
+        "fr": "Courriel",
+        "it": "Editori"
+      },
+      "mark_required": true,
+      "subheader": {
         "en": "Contact points",
         "de": "Kontaktstellen",
         "fr": "Points de contact",
@@ -329,8 +354,18 @@
       "output_validators": "multiple_text_output",
       "form_snippet": "contact_points.html",
       "display_snippet": "contact_points.html",
-      "help_text": "Die Stelle, welche kontaktiert wird, falls eine Frage zum Datensatz besteht. Mindestens eine Kontaktstelle ist erforderlich.",
-      "section_title": "Contact Information"
+      "help_text": {
+        "de": "Die Stelle, welche kontaktiert wird, falls eine Frage zum Datensatz besteht. Mindestens eine Kontaktstelle ist erforderlich.",
+        "en": "Die Stelle, welche kontaktiert wird, falls eine Frage zum Datensatz besteht. Mindestens eine Kontaktstelle ist erforderlich.",
+        "fr": "L'interlocuteur en cas de questions au suject du jeu données. Vous devez indiquer au minimum un contact.",
+        "it": "Die Stelle, welche kontaktiert wird, falls eine Frage zum Datensatz besteht. Mindestens eine Kontaktstelle ist erforderlich."
+      },
+      "add_row": {
+        "en": "Add another contact point",
+        "de": "Eine weitere Kontakstelle hinzufügen",
+        "fr": "Eine weitere Kontakstelle hinzufügen",
+        "it": "Eine weitere Kontakstelle hinzufügen"
+      }
     },
     {
       "field_name": "language",
