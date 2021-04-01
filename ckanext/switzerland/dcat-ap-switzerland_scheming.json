@@ -527,18 +527,40 @@
     },
     {
       "field_name": "see_alsos",
-      "label": {
+      "subheader": {
         "en": "Related datasets",
         "de": "Verwandte Datensätze",
         "fr": "Jeux de données relationnels",
         "it": "Set di dati relativi"
       },
+      "help_text": {
+        "de": "Unter «Verwandte Datensätze» können Sie aus allen verfügbaren Datasets auf opendata.swiss mit thematischem Bezug zu Ihrem aktuellen Dataset auswählen. Damit signalisieren Sie Datennutzenden, dass weitere Datasets existieren, die sie interessieren könnten.",
+        "en": "Unter «Verwandte Datensätze» können Sie aus allen verfügbaren Datasets auf opendata.swiss mit thematischem Bezug zu Ihrem aktuellen Dataset auswählen. Damit signalisieren Sie Datennutzenden, dass weitere Datasets existieren, die sie interessieren könnten.",
+        "fr": "Le champ «Jeux de données connexes» permet de sélectionner parmi tous les jeux de données disponibles sur opendata.swiss ceux dont le thème est en lien avec votre jeu de données actuel. Vous signalez ainsi aux utilisateurs quels autres jeux de données pourraient les intéresser.",
+        "it": "Unter «Verwandte Datensätze» können Sie aus allen verfügbaren Datasets auf opendata.swiss mit thematischem Bezug zu Ihrem aktuellen Dataset auswählen. Damit signalisieren Sie Datennutzenden, dass weitere Datasets existieren, die sie interessieren könnten."
+      },
+      "label": {
+        "en": "Name / Slug",
+        "de": "Name / Slug",
+        "fr": "Nom / Slug",
+        "it": "Name / Slug"
+      },
+      "form_placeholder": {
+        "en": "Name / Slug of a dataset",
+        "de": "Name / Slug eines Datasets",
+        "fr": "Name / Slug eines Datasets",
+        "it": "Name / Slug eines Datasets"
+      },
+      "add_row": {
+        "en": "Add another related dataset",
+        "de": "Einen weiteren verwandten Dataset hinzufügen",
+        "fr": "Einen weiteren verwandten Dataset hinzufügen",
+        "it": "Einen weiteren verwandten Dataset hinzufügen"
+      },
       "validators": "harvest_list_of_dicts ogdch_validate_formfield_see_alsos",
       "output_validators": "multiple_text_output",
       "form_snippet": "see_alsos.html",
-      "display_snippet": "see_alsos.html",
-      "help_text": "Beziehungen zu anderen Datensätzen.",
-      "section_title": "Related Datasets"
+      "display_snippet": "see_alsos.html"
     },
     {
       "field_name": "keywords",
