@@ -7,7 +7,7 @@
     {% call form.date_input(
         'temporal-start-date-' + row.index,
         id='field-temporal-start-date-' + row.index,
-        label=row.label.start_date,
+        label=h.scheming_language_text(field.label_start_date),
         value=row.data.start_date,
         language=h.lang(),
         error=errors['temporals'],
@@ -17,7 +17,7 @@
 {% call form.date_input(
         'temporal-end-date-' + row.index,
         id='field-temporal-end-date-' + row.index,
-        label=row.label.end_date,
+        label=h.scheming_language_text(field.label_end_date),
         value=row.data.end_date,
         language=h.lang(),
         error=errors['temporals'],

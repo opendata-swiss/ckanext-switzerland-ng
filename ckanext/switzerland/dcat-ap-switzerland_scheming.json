@@ -260,6 +260,18 @@
         "fr": "Couverture temporelle",
         "it": "Copertura temporale"
       },
+      "label_start_date": {
+        "en": "from",
+        "de": "von",
+        "fr": "von",
+        "it": "von"
+      },
+      "label_end_date": {
+        "en": "to",
+        "de": "bis",
+        "fr": "bis",
+        "it": "bis"
+      },
       "help_text": {
         "de": "Eine oder mehrere Zeitperioden, welche dieses Datensatz abdeckt.",
         "en": "Eine oder mehrere Zeitperioden, welche dieses Datensatz abdeckt.",
