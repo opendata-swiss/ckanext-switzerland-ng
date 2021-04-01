@@ -422,6 +422,35 @@
       }
     },
     {
+      "field_name": "url",
+      "preset": "url",
+      "mark_required": true,
+      "label": {
+        "en": "Url",
+        "de": "Url",
+        "fr": "Url",
+        "it": "Url"
+      },
+      "form_placeholder": {
+        "en": "Url",
+        "de": "Url",
+        "fr": "Url",
+        "it": "Url"
+      },
+      "fieldgroup": {
+        "en": "Landing page",
+        "de": "Landing page",
+        "fr": "Landing page",
+        "it": "Landing page"
+      },
+      "help_text": {
+        "de": "Mit «Landing Page» ist die Website gemeint, auf der die Daten ursprünglich publiziert wurden, falls diese vorhanden ist.",
+        "en": "Mit «Landing Page» ist die Website gemeint, auf der die Daten ursprünglich publiziert wurden, falls diese vorhanden ist.",
+        "fr": "La «Landing page» est le site internet sur lequel les données ont été publiées initialement, le cas échéant.",
+        "it": "Mit «Landing Page» ist die Website gemeint, auf der die Daten ursprünglich publiziert wurden, falls diese vorhanden ist."
+      }
+    },
+    {
       "field_name": "relations",
       "validators": "harvest_list_of_dicts ogdch_validate_formfield_relations",
       "output_validators": "multiple_text_output",
@@ -474,35 +503,6 @@
         "en": "Unter «Beziehungen» geben Sie bitte «legal_basis» ein und erfassen einen Link auf die gesetzliche Grundlage, welche die Publikation dieses Datasets vorsieht.",
         "fr": "Sous «Relations», veuillez sélectionner «legal_basis», puis saisir un lien vers la base légale qui prévoit la publication du jeu de données en question.",
         "it": "Unter «Beziehungen» geben Sie bitte «legal_basis» ein und erfassen einen Link auf die gesetzliche Grundlage, welche die Publikation dieses Datasets vorsieht."
-      }
-    },
-    {
-      "field_name": "url",
-      "preset": "url",
-      "mark_required": true,
-      "label": {
-        "en": "Url",
-        "de": "Url",
-        "fr": "Url",
-        "it": "Url"
-      },
-      "form_placeholder": {
-        "en": "Url",
-        "de": "Url",
-        "fr": "Url",
-        "it": "Url"
-      },
-      "fieldgroup": {
-        "en": "Landing page",
-        "de": "Landing page",
-        "fr": "Landing page",
-        "it": "Landing page"
-      },
-      "help_text": {
-        "de": "Mit «Landing Page» ist die Website gemeint, auf der die Daten ursprünglich publiziert wurden, falls diese vorhanden ist.",
-        "en": "Mit «Landing Page» ist die Website gemeint, auf der die Daten ursprünglich publiziert wurden, falls diese vorhanden ist.",
-        "fr": "La «Landing page» est le site internet sur lequel les données ont été publiées initialement, le cas échéant.",
-        "it": "Mit «Landing Page» ist die Website gemeint, auf der die Daten ursprünglich publiziert wurden, falls diese vorhanden ist."
       }
     },
     {
