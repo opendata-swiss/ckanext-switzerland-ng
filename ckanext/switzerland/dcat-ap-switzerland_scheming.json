@@ -275,7 +275,19 @@
     },
     {
       "field_name": "publishers",
+      "section_title": {
+        "en": "Publisher Informatio",
+        "de": "Publisher-Informationen",
+        "fr": "Informations relatives à l’éditeur",
+        "it": "Dataset Information"
+      },
       "label": {
+        "en": "Name",
+        "de": "Name",
+        "fr": "Nom",
+        "it": "Name"
+      },
+      "subheader": {
         "en": "Publishers",
         "de": "Publisher",
         "fr": "Editeurs",
@@ -285,8 +297,25 @@
       "output_validators": "multiple_text_output",
       "display_snippet": "publishers.html",
       "form_snippet": "publishers.html",
-      "ogdch_help_text": "Ein oder mehrere Publisher dieses Datensatzes. Dieser kann der Organisation entsprechen, welche den Datensatz veröffentlicht. Mindestens ein Publisher ist erforderlich.",
-      "section_title": "Publisher Information"
+      "mark_required": true,
+      "help_text": {
+        "de": "Ein oder mehrere Publisher dieses Datensatzes. Dieser kann der Organisation entsprechen, welche den Datensatz veröffentlicht. Mindestens ein Publisher ist erforderlich.",
+        "en": "Ein oder mehrere Publisher dieses Datensatzes. Dieser kann der Organisation entsprechen, welche den Datensatz veröffentlicht. Mindestens ein Publisher ist erforderlich.",
+        "fr": "L'/Les éditeur(s) du jeu données. Il peut s'agir de l'organisation publiant le jeu données. Vous devez indiquer au moins un éditeur.",
+        "it": "Ein oder mehrere Publisher dieses Datensatzes. Dieser kann der Organisation entsprechen, welche den Datensatz veröffentlicht. Mindestens ein Publisher ist erforderlich."
+      },
+      "form_placeholder": {
+        "en": "Publishers name",
+        "de": "Publisher Name",
+        "fr": "Editeurs",
+        "it": "Editori"
+      },
+      "add_row": {
+        "en": "Add another publisher",
+        "de": "Einen weiteren Publisher hinzufügen",
+        "fr": "Einen weiteren Publisher hinzufügen",
+        "it": "Einen weiteren Publisher hinzufügen"
+      }
     },
     {
       "field_name": "contact_points",
