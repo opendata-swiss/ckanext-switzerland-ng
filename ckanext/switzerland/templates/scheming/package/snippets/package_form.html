@@ -18,25 +18,27 @@
            {{ h.scheming_language_text(field.section_title) }}
        </h2>
     {% endif %}
-    {% if field.subheader %}
-      <h3>
-      {% if field.mark_required %}
+    <div class="ogdch-form-field-group">
+      {% if field.subheader %}
+        <h3>
+        {% if field.mark_required %}
           <span title="{{ _('This field is required') }}" class="control-required">*</span>
-      {% endif %}
+        {% endif %}
           {{ h.scheming_language_text(field.subheader) }}
-      </h3>
+        </h3>
+      {% endif %}
+      {%- if field.form_snippet is not none -%}
+        {%- snippet 'scheming/snippets/form_field.html',
+          field=field, data=data, errors=errors, licenses=c.licenses,
+          entity_type='dataset', object_type=dataset_type -%}
+      {%- endif -%}
       {% if field.subheader_help_text %}
         {{- form.info(
           text=h.scheming_language_text(field.subheader_help_text),
           inline=field.get('help_inline', false)
         ) -}}
-      {% endif %}
-    {% endif %}
-    {%- if field.form_snippet is not none -%}
-      {%- snippet 'scheming/snippets/form_field.html',
-        field=field, data=data, errors=errors, licenses=c.licenses,
-        entity_type='dataset', object_type=dataset_type -%}
-    {%- endif -%}
+      {%- endif -%}
+    </div>
   {%- endfor -%}
 
   {% set groups = h.get_localized_group_list(lang) %}
