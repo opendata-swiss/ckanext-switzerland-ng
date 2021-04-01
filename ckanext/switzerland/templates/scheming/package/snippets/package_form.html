@@ -46,9 +46,6 @@
     <h2 id="{{ "ogdch_groups" + "_pagemark" }}">
            {{ _("Categories") }}
     </h2>
-    {{- form.info(
-       text= _('Here you can chose one or more categories that the dataset relates to.'),
-     ) -}}
     <div class="form-group control-medium">
       <div class="controls">
         {% for group in groups %}
@@ -59,6 +56,9 @@
         {% endfor %}
       </div>
     </div>
+    {{- form.info(
+      text= _('Here you can chose one or more categories that the dataset relates to.'),
+    ) -}}
   {% endif %}
 
   {%- if 'resource_fields' not in schema -%}
