@@ -54,7 +54,7 @@
         "fr": "Titre",
         "it": "Titolo"
       },
-      "fieldgroup_help_text": {
+      "help_text": {
         "de": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
         "en": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
         "fr": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
@@ -167,7 +167,7 @@
         "fr": "Description",
         "it": "Descrizione"
       },
-      "fieldgroup_help_text": {
+      "help_text": {
         "de": "Bitte geben Sie eine Beschreibung für Ihr Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
         "en": "Bitte geben Sie eine Beschreibung für Ihr Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
         "fr": "Bitte geben Sie eine Beschreibung für Ihr Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
@@ -594,42 +594,74 @@
         "fr": "Identifier (Permalink)",
         "it": "Identifier (Permalink)"
       },
-      "help_text": "Identifier der Ressource im Quellsystem des Publishers."
+      "help_text": {
+        "en": "Wählen Sie einen geeigneten Identifier aus Ihrem Quellsystem aus.",
+        "de": "Wählen Sie einen geeigneten Identifier aus Ihrem Quellsystem aus.",
+        "fr": "Choisissez un identifiant approprié dans votre système source.",
+        "it": "Wählen Sie einen geeigneten Identifier aus Ihrem Quellsystem aus."
+      }
     },
     {
       "field_name": "title",
+      "preset": "multilingual_text_full",
+      "mark_required": true,
+      "section_title": {
+        "en": "Resource",
+        "de": "Resource",
+        "fr": "Resource",
+        "it": "Resource"
+      },
+      "fieldgroup": {
+        "en": "Title",
+        "de": "Titel",
+        "fr": "Titre",
+        "it": "Titolo"
+      },
+      "help_text": {
+        "de": "Bitte geben Sie einen Titel für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn der Titel leer gelassen wird, wird der Titel des Datensatzes verwendet.",
+        "en": "Please enter a tile for the resource. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn der Titel leer gelassen wird, wird der Titel des Datensatzes verwendet.",
+        "fr": "Bitte geben Sie einen Titel für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn der Titel leer gelassen wird, wird der Titel des Datensatzes verwendet.",
+        "it": "\"Bitte geben Sie einen Titel für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn der Titel leer gelassen wird, wird der Titel des Datensatzes verwendet."
+      },
       "label": {
         "en": "Title",
         "de": "Titel",
         "fr": "Titre",
         "it": "Titolo"
       },
-      "preset": "multilingual_text_full",
-      "help_text": "Wenn der Titel leer gelassen wird, wird der Titel des Datensatzes verwendet.",
-      "mark_required": true,
-      "form_placeholder": "Title of the resource"
+      "form_placeholder": {
+        "en": "Title of the Resource",
+        "de": "Titel der Resource",
+        "fr": "Titre",
+        "it": "Titolo"
+      }
     },
     {
       "field_name": "display_name",
+      "preset": "multilingual_text",
+      "form_snippet": null,
       "label": {
         "en": "Display name",
         "de": "Anzeigename",
         "fr": "Nom d'affichage",
         "it": "Nome visualizzato"
-      },
-      "preset": "multilingual_text",
-      "form_snippet": null
+      }
     },
     {
       "field_name": "description",
+      "preset": "multilingual_markdown",
       "label": {
         "en": "Description",
         "de": "Beschreibung",
         "fr": "Description",
         "it": "Descrizione"
       },
-      "preset": "multilingual_markdown",
-      "help_text": "Wenn die Beschreibung leer gelassen wird, wird die Beschreibung des Datensatzes verwendet."
+      "help_text": {
+        "de": "Bitte geben Sie einen Beschreibung für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn die Beschreibung leer gelassen wird, wird die Beschreibung des Datensatzes verwendet.",
+        "en": "Bitte geben Sie einen Beschreibung für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn die Beschreibung leer gelassen wird, wird die Beschreibung des Datensatzes verwendet.",
+        "fr": "Bitte geben Sie einen Beschreibung für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn die Beschreibung leer gelassen wird, wird die Beschreibung des Datensatzes verwendet.",
+        "it": "Bitte geben Sie einen Beschreibung für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn die Beschreibung leer gelassen wird, wird die Beschreibung des Datensatzes verwendet."
+      }
     },
     {
       "field_name": "issued",
@@ -641,29 +673,32 @@
       },
       "preset": "ogdch_date",
       "required": false,
-      "help_text": "Datum der Veröffentlichung dieser Ressource."
+      "help_text": {
+        "en": "Das Datum der Veröffentlichung dieser Ressource.",
+        "de": "Das Datum der Veröffentlichung dieser Ressource.",
+        "fr": "Das Datum der Veröffentlichung dieser Ressource.",
+        "it": "Das Datum der Veröffentlichung dieser Ressource."
+      }
     },
     {
       "field_name": "modified",
+      "preset": "ogdch_date",
       "label": {
         "en": "Modified date",
         "de": "Änderungsdatum",
         "fr": "Date de modification",
         "it": "Data di modifica"
       },
-      "preset": "ogdch_date",
-      "help_text": "Datum der letzten Änderung dieser Ressource."
+      "help_text": {
+        "de": "Datum der letzten Änderung dieser Ressource.",
+        "en": "Datum der letzten Änderung dieser Ressource.",
+        "fr": "Datum der letzten Änderung dieser Ressource.",
+        "it": "Datum der letzten Änderung dieser Ressource."
+      }
     },
     {
       "field_name": "language",
-      "label": {
-        "en": "Languages",
-        "de": "Sprachen",
-        "fr": "Langues",
-        "it": "Lingue"
-      },
       "preset": "languages",
-      "help_text": "Sprachen, in denen diese Ressource vorliegt. Falls die Ressource sprachunabhängig ist, soll nichts angekreuzt werden.",
       "choices": [
         {
           "value": "en",
@@ -701,95 +736,133 @@
             "it": "Italiano"
           }
         }
-      ]
+      ],
+      "label": {
+        "en": "Languages",
+        "de": "Sprachen",
+        "fr": "Langues",
+        "it": "Lingue"
+      },
+      "help_text": {
+        "de": "Sprachen, in denen diese Ressource vorliegt. Falls die Ressource sprachunabhängig ist, soll nichts angekreuzt werden.",
+        "en": "Sprachen, in denen diese Ressource vorliegt. Falls die Ressource sprachunabhängig ist, soll nichts angekreuzt werden.",
+        "fr": "Sprachen, in denen diese Ressource vorliegt. Falls die Ressource sprachunabhängig ist, soll nichts angekreuzt werden.",
+        "it": "Sprachen, in denen diese Ressource vorliegt. Falls die Ressource sprachunabhängig ist, soll nichts angekreuzt werden."
+      }
     },
     {
       "field_name": "url",
+      "preset": "url",
+      "validators": "scheming_required",
       "label": {
         "en": "Access URL",
         "de": "Zugangs-URL",
         "fr": "URL d'accès",
         "it": "URL d'accesso"
       },
-      "preset": "url",
-      "validators": "scheming_required",
-      "help_text": "Die URL, über welche auf die Ressource zugegriffen werden kann. Dies kann entweder eine Download-URL, eine API-URL oder eine Landing-Page-URL sein. Falls die Ressource nur über eine Landing Page verfügbar ist, muss dieses Feld die URL der Landing Page beinhalten. Falls eine Download-URL für diese Ressource angegeben wurde, muss diese ebenfalls in diesem Feld eingetragen werden."
-
+      "help_text": {
+        "de": "Die URL, über welche auf die Ressource zugegriffen werden kann. Dies kann entweder eine Download-URL, eine API-URL oder eine Landing-Page-URL sein. Falls die Ressource nur über eine Landing Page verfügbar ist, muss dieses Feld die URL der Landing Page beinhalten. Falls eine Download-URL für diese Ressource angegeben wurde, muss diese ebenfalls in diesem Feld eingetragen werden.",
+        "en": "Die URL, über welche auf die Ressource zugegriffen werden kann. Dies kann entweder eine Download-URL, eine API-URL oder eine Landing-Page-URL sein. Falls die Ressource nur über eine Landing Page verfügbar ist, muss dieses Feld die URL der Landing Page beinhalten. Falls eine Download-URL für diese Ressource angegeben wurde, muss diese ebenfalls in diesem Feld eingetragen werden.",
+        "fr": "Die URL, über welche auf die Ressource zugegriffen werden kann. Dies kann entweder eine Download-URL, eine API-URL oder eine Landing-Page-URL sein. Falls die Ressource nur über eine Landing Page verfügbar ist, muss dieses Feld die URL der Landing Page beinhalten. Falls eine Download-URL für diese Ressource angegeben wurde, muss diese ebenfalls in diesem Feld eingetragen werden.",
+        "it": "Die URL, über welche auf die Ressource zugegriffen werden kann. Dies kann entweder eine Download-URL, eine API-URL oder eine Landing-Page-URL sein. Falls die Ressource nur über eine Landing Page verfügbar ist, muss dieses Feld die URL der Landing Page beinhalten. Falls eine Download-URL für diese Ressource angegeben wurde, muss diese ebenfalls in diesem Feld eingetragen werden."
+      }
     },
     {
       "field_name": "download_url",
+      "preset": "url",
       "label": {
         "en": "Download URL",
         "de": "Download-URL",
         "fr": "URL de téléchargement",
         "it": "URL di download"
       },
-      "preset": "url",
-      "help_text": "URL der Datei, falls die Ressource heruntergeladen werden kann."
+      "help_text": {
+        "de": "URL der Datei, falls die Ressource heruntergeladen werden kann.",
+        "en": "URL der Datei, falls die Ressource heruntergeladen werden kann.",
+        "fr": "URL der Datei, falls die Ressource heruntergeladen werden kann.",
+        "it": "URL der Datei, falls die Ressource heruntergeladen werden kann."
+      }
     },
     {
       "field_name": "rights",
+      "preset": "select",
+      "choices_helper": "ogdch_get_rights_choices",
+      "validators": "scheming_required",
+      "required": true,
       "label": {
         "en": "Terms of use",
         "de": "Nutzungsbedingungen",
         "fr": "Conditions d'utilisation",
         "it": "Condizioni d'uso"
       },
-      "help_text": "Alle Nutzungsbedingungen, welche nicht mit einem Stern (*) markiert sind, gelten als 'Closed Data'.",
-      "preset": "select",
-      "choices_helper": "ogdch_get_rights_choices",
-      "validators": "scheming_required",
-      "required": true
+      "help_text": {
+        "de": "Alle Nutzungsbedingungen, welche nicht mit einem Stern (*) markiert sind, gelten als 'Closed Data'.",
+        "en": "Alle Nutzungsbedingungen, welche nicht mit einem Stern (*) markiert sind, gelten als 'Closed Data'.",
+        "fr": "Alle Nutzungsbedingungen, welche nicht mit einem Stern (*) markiert sind, gelten als 'Closed Data'.",
+        "it": "Alle Nutzungsbedingungen, welche nicht mit einem Stern (*) markiert sind, gelten als 'Closed Data'."
+      }
     },
     {
       "field_name": "license",
+      "form_snippet": null,
       "label": {
         "en": "License",
         "de": "Lizenz",
         "fr": "Licence",
         "it": "Licenza"
-      },
-      "form_snippet": null
+      }
     },
     {
       "field_name": "byte_size",
+      "preset": "file_size",
       "label": {
         "en": "File size",
         "de": "Dateigrösse",
         "fr": "Taille du fichier",
         "it": "Grandezza dei dati"
       },
-      "preset": "file_size"
+      "help_text": {
+        "de": "Hier kann die «Grösse» der Ressource in Bytes angegeben werden.",
+        "en": "Hier kann die «Grösse» der Ressource in Bytes angegeben werden.",
+        "fr": "Hier kann die «Grösse» der Ressource in Bytes angegeben werden.",
+        "it": "Hier kann die «Grösse» der Ressource in Bytes angegeben werden."
+      }
     },
     {
       "field_name": "media_type",
+      "form_snippet": null,
       "label": {
         "en": "Format",
         "de": "Format",
         "fr": "Format",
         "it": "Formato"
-      },
-      "form_snippet": null
+      }
     },
     {
       "field_name": "format",
+      "preset": "ogdch_resource_format_autocomplete",
       "label": {
         "en": "Format",
         "de": "Format",
         "fr": "Format",
         "it": "Formato"
       },
-      "preset": "ogdch_resource_format_autocomplete"
+      "help_text": {
+        "de": "Wählen Sie das Format, das dem Ihrer Ressourcen entspricht.",
+        "en": "Wählen Sie das Format, das dem Ihrer Ressourcen entspricht.",
+        "fr": "Wählen Sie das Format, das dem Ihrer Ressourcen entspricht.",
+        "it": "Wählen Sie das Format, das dem Ihrer Ressourcen entspricht."
+      }
     },
     {
       "field_name": "coverage",
+      "form_snippet": null,
       "label": {
         "en": "Coverage",
         "de": "Abdeckung",
         "fr": "Couverture",
         "it": "Copertura"
-      },
-      "form_snippet": null
+      }
     }
   ]
 }
