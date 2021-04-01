@@ -41,25 +41,27 @@
     </div>
   {%- endfor -%}
 
-  {% set groups = h.get_localized_group_list(lang) %}
-  {% if groups %}
-    <h2 id="{{ "ogdch_groups" + "_pagemark" }}">
-           {{ _("Categories") }}
-    </h2>
-    <div class="form-group control-medium">
-      <div class="controls">
-        {% for group in groups %}
-          <label class="checkbox" for="field-group-{{ loop.index0 }}">
-            <input id="field-group-{{ loop.index0 }}" type="checkbox" name="groups__{{ loop.index0 }}__id" value="{{ group.id }}" {% if h.group_id_in_groups(group.id, data.get('groups', [])) %}checked{% endif %} />
-            {{ group.title }}
-          </label>
-        {% endfor %}
+  <div class="ogdch-form-field-group">
+    {% set groups = h.get_localized_group_list(lang) %}
+    {% if groups %}
+      <h2 id="{{ "ogdch_groups" + "_pagemark" }}">
+             {{ _("Categories") }}
+      </h2>
+      <div class="form-group control-medium">
+        <div class="controls">
+          {% for group in groups %}
+            <label class="checkbox" for="field-group-{{ loop.index0 }}">
+              <input id="field-group-{{ loop.index0 }}" type="checkbox" name="groups__{{ loop.index0 }}__id" value="{{ group.id }}" {% if h.group_id_in_groups(group.id, data.get('groups', [])) %}checked{% endif %} />
+              {{ group.title }}
+            </label>
+          {% endfor %}
+        </div>
       </div>
-    </div>
-    {{- form.info(
-      text= _('Here you can chose one or more categories that the dataset relates to.'),
-    ) -}}
-  {% endif %}
+      {{- form.info(
+        text= _('Here you can chose one or more categories that the dataset relates to.'),
+      ) -}}
+    {% endif %}
+  </div>
 
   {%- if 'resource_fields' not in schema -%}
     <!-- force controller to skip resource-editing step for this type -->
