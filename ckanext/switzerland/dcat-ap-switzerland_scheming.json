@@ -7,14 +7,14 @@
   "dataset_fields": [
     {
       "field_name": "title_for_slug",
+      "preset": "title",
+      "form_snippet": "title.html",
       "label": {
         "en": "Title for Slug",
         "de": "Titel für den Slug",
         "fr": "Titel für den Slug",
         "it": "Titel für den Slug"
       },
-      "preset": "title",
-      "form_snippet": "title.html",
       "form_placeholder": {
         "en": "Title for generating the Slug",
         "de": "Titel für das Erzeugen des Dataset Slugs",
@@ -30,21 +30,23 @@
     },
     {
       "field_name": "name",
+      "preset": "dataset_slug",
       "label": {
         "en": "Slug",
         "de": "Slug",
         "fr": "Slug",
         "it": "Slug"
-      },
-      "preset": "dataset_slug"
+      }
     },
     {
       "field_name": "title",
-      "label": {
-        "en": "Title",
-        "de": "Titel",
-        "fr": "Titre",
-        "it": "Titolo"
+      "preset": "multilingual_text_full",
+      "mark_required": true,
+      "section_title": {
+        "en": "Dataset",
+        "de": "Dataset",
+        "fr": "Jeu de données",
+        "it": "Dataset"
       },
       "fieldgroup": {
         "en": "Title",
@@ -52,19 +54,17 @@
         "fr": "Titre",
         "it": "Titolo"
       },
-      "preset": "multilingual_text_full",
-      "section_title": {
-        "en": "Dataset",
-        "de": "Dataset",
-        "fr": "Jeu de données",
-        "it": "Dataset"
-      },
-      "mark_required": true,
       "fieldgroup_help_text": {
         "de": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
         "en": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
         "fr": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
         "it": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)"
+      },
+      "label": {
+        "en": "Title",
+        "de": "Titel",
+        "fr": "Titre",
+        "it": "Titolo"
       },
       "form_placeholder": {
         "en": "Title of the Dataset",
@@ -75,6 +75,8 @@
     },
     {
       "field_name": "identifier",
+      "validators": "ogdch_unique_identifier",
+      "required": true,
       "fieldgroup": {
         "en": "Dataset Identifier",
         "de": "Dataset Identifier",
@@ -93,19 +95,17 @@
         "fr": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden. Wichtig: Verändern Sie den Identifier nicht mehr, nachdem das Dataset publiziert ist. Ansonsten können Ihre Daten nicht mehr eindeutig zugeordnet werden.",
         "it": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden. Wichtig: Verändern Sie den Identifier nicht mehr, nachdem das Dataset publiziert ist. Ansonsten können Ihre Daten nicht mehr eindeutig zugeordnet werden."
       },
-      "validators": "ogdch_unique_identifier",
-      "form_placeholder": "123..@organization",
-      "required": true
+      "form_placeholder": "123..@organization"
     },
     {
       "field_name": "owner_org",
+      "preset": "dataset_organization",
       "label": {
         "en": "Organization",
         "de": "Organisation",
         "fr": "Organisation",
         "it": "Organizzazione"
       },
-      "preset": "dataset_organization",
       "help_text": {
         "en": "The organization that the dataset belongs to.",
         "de": "Die Organisation zu welcher das Dataset gehört.",
@@ -115,6 +115,7 @@
     },
     {
       "field_name": "scheduled",
+      "preset": "ogdch_date",
       "label": {
           "en": "Schedule the publication",
           "de": "Veröffentlichung terminieren",
@@ -126,38 +127,39 @@
         "de": "Geplanter Veröffentlichungstermin im Portal (Sichtbarkeit auf Entwurf setzen, um diesen Datensatz automatisch zu veröffentlichen)",
         "fr": "Date de publication sur le portail (Définir la visibilité sur brouillon pour le publier automatiquement)",
         "it": "Data di pubblicazione sul portale (Imposta la visibilità su bozza per pubblicare automaticamente il set di dati)"
-      },
-      "preset": "ogdch_date"
+      }
     },
     {
       "field_name": "display_name",
+      "preset": "multilingual_text",
+      "form_snippet": null,
       "label": {
         "en": "Display name",
         "de": "Anzeigename",
         "fr": "Nom d'affichage",
         "it": "Nome visualizzato"
-      },
-      "preset": "multilingual_text",
-      "form_snippet": null
+      }
     },
     {
       "field_name": "notes",
+      "preset": "multilingual_output",
+      "form_snippet": null,
       "label": {
         "en": "Description",
         "de": "Beschreibung",
         "fr": "Description",
         "it": "Descrizione"
-      },
-      "preset": "multilingual_output",
-      "form_snippet": null
+      }
     },
     {
       "field_name": "description",
-      "label": {
-        "en": "Description",
-        "de": "Beschreibung",
-        "fr": "Description",
-        "it": "Descrizione"
+      "preset": "multilingual_markdown",
+      "mark_required": true,
+      "section_title": {
+        "en": "Dataset Information",
+        "de": "Dataset Information",
+        "fr": "Informations relatives au jeu de données",
+        "it": "Dataset Information"
       },
       "fieldgroup": {
         "en": "Description",
@@ -165,19 +167,17 @@
         "fr": "Description",
         "it": "Descrizione"
       },
-      "preset": "multilingual_markdown",
-      "section_title": {
-        "en": "Dataset Information",
-        "de": "Dataset Information",
-        "fr": "Informations relatives au jeu de données",
-        "it": "Dataset Information"
-      },
-      "mark_required": true,
       "fieldgroup_help_text": {
         "de": "Bitte geben Sie eine Beschreibung für Ihr Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
         "en": "Bitte geben Sie eine Beschreibung für Ihr Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
         "fr": "Bitte geben Sie eine Beschreibung für Ihr Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
         "it": "Bitte geben Sie eine Beschreibung für Ihr Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)"
+      },
+      "label": {
+        "en": "Description",
+        "de": "Beschreibung",
+        "fr": "Description",
+        "it": "Descrizione"
       },
       "form_placeholder": {
         "en": "Description",
@@ -188,24 +188,13 @@
     },
     {
       "field_name": "issued",
-      "label": {
-        "en": "Issued date",
-        "de": "Publikationsdatum",
-        "fr": "Date de publication",
-        "it": "Data di rilascio"
-      },
+      "preset": "ogdch_date",
+      "mark_required": true,
       "section_title": {
         "en": "Data",
         "de": "Daten",
         "fr": "Données",
         "it": "Data"
-      },
-      "preset": "ogdch_date",
-      "help_text": {
-        "en": "Das Erstellungdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss.",
-        "de": "Das Erstellungdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss.",
-        "fr": "Das Erstellungdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss.",
-        "it": "Das Erstellungdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss."
       },
       "fieldgroup": {
         "en": "Issued date",
@@ -213,17 +202,28 @@
         "fr": "Date de publication",
         "it": "Data di rilascio"
       },
-      "mark_required": true
+      "label": {
+        "en": "Issued date",
+        "de": "Publikationsdatum",
+        "fr": "Date de publication",
+        "it": "Data di rilascio"
+      },
+     "help_text": {
+        "en": "Das Erstellungdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss.",
+        "de": "Das Erstellungdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss.",
+        "fr": "Das Erstellungdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss.",
+        "it": "Das Erstellungdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss."
+      }
     },
     {
       "field_name": "modified",
+      "preset": "ogdch_date",
       "label": {
         "en": "Modified date",
         "de": "Änderungsdatum",
         "fr": "Date de modification",
         "it": "Data di modifica"
       },
-      "preset": "ogdch_date",
       "help_text": {
         "de": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist.",
         "en": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist.",
@@ -233,16 +233,16 @@
     },
     {
       "field_name": "accrual_periodicity",
+      "preset": "select",
+      "display_snippet": "periodicity.html",
+      "validators": "scheming_required ogdch_temp_scheming_choices",
+      "choices_helper": "ogdch_get_accrual_periodicity_choices",
       "label": {
         "en": "Update interval",
         "de": "Aktualisierungsintervall",
         "fr": "Intervalle d'actualisation",
         "it": "Intervallo di aggiornamento"
       },
-      "display_snippet": "periodicity.html",
-      "preset": "select",
-      "validators": "scheming_required ogdch_temp_scheming_choices",
-      "choices_helper": "ogdch_get_accrual_periodicity_choices",
       "help_text": {
         "de": "Das «Aktualisierungsintervall» ist das Intervall, in dem Aktualisierungen vorgenommen werden.",
         "en": "Das «Aktualisierungsintervall» ist das Intervall, in dem Aktualisierungen vorgenommen werden.",
@@ -252,13 +252,14 @@
     },
     {
       "field_name": "temporals",
+      "preset": "temporals",
+      "form_snippet": "temporals.html",
       "label": {
         "en": "Temporal coverage",
         "de": "Zeitliche Abdeckung",
         "fr": "Couverture temporelle",
         "it": "Copertura temporale"
       },
-      "preset": "temporals",
       "help_text": {
         "de": "Eine oder mehrere Zeitperioden, welche dieses Datensatz abdeckt.",
         "en": "Eine oder mehrere Zeitperioden, welche dieses Datensatz abdeckt.",
@@ -270,11 +271,15 @@
         "de": "Eine weitere Zeitperiode hinzufügen",
         "fr": "Eine weitere Zeitperiode hinzufügen",
         "it": "Eine weitere Zeitperiode hinzufügen"
-      },
-      "form_snippet": "temporals.html"
+      }
     },
     {
       "field_name": "publishers",
+      "validators": "harvest_list_of_dicts ogdch_validate_formfield_publishers",
+      "output_validators": "multiple_text_output",
+      "display_snippet": "publishers.html",
+      "form_snippet": "publishers.html",
+      "mark_required": true,
       "section_title": {
         "en": "Publisher Informatio",
         "de": "Publisher-Informationen",
@@ -293,11 +298,6 @@
         "fr": "Editeurs",
         "it": "Editori"
       },
-      "validators": "harvest_list_of_dicts ogdch_validate_formfield_publishers",
-      "output_validators": "multiple_text_output",
-      "display_snippet": "publishers.html",
-      "form_snippet": "publishers.html",
-      "mark_required": true,
       "help_text": {
         "de": "Ein oder mehrere Publisher dieses Datensatzes. Dieser kann der Organisation entsprechen, welche den Datensatz veröffentlicht. Mindestens ein Publisher ist erforderlich.",
         "en": "Ein oder mehrere Publisher dieses Datensatzes. Dieser kann der Organisation entsprechen, welche den Datensatz veröffentlicht. Mindestens ein Publisher ist erforderlich.",
@@ -319,6 +319,17 @@
     },
     {
       "field_name": "contact_points",
+      "validators": "harvest_list_of_dicts ogdch_validate_formfield_contact_points",
+      "output_validators": "multiple_text_output",
+      "form_snippet": "contact_points.html",
+      "display_snippet": "contact_points.html",
+      "mark_required": true,
+      "fieldgroup": {
+        "en": "Contact points",
+        "de": "Kontaktstellen",
+        "fr": "Points de contact",
+        "it": "Punti di contatto"
+      },
       "label_name": {
         "en": "Name",
         "de": "Name",
@@ -343,17 +354,6 @@
         "fr": "Courriel",
         "it": "Editori"
       },
-      "mark_required": true,
-      "fieldgroup": {
-        "en": "Contact points",
-        "de": "Kontaktstellen",
-        "fr": "Points de contact",
-        "it": "Punti di contatto"
-      },
-      "validators": "harvest_list_of_dicts ogdch_validate_formfield_contact_points",
-      "output_validators": "multiple_text_output",
-      "form_snippet": "contact_points.html",
-      "display_snippet": "contact_points.html",
       "help_text": {
         "de": "Die Stelle, welche kontaktiert wird, falls eine Frage zum Datensatz besteht. Mindestens eine Kontaktstelle ist erforderlich.",
         "en": "Die Stelle, welche kontaktiert wird, falls eine Frage zum Datensatz besteht. Mindestens eine Kontaktstelle ist erforderlich.",
@@ -369,18 +369,6 @@
     },
     {
       "field_name": "language",
-      "help_text": {
-        "de": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden.",
-        "en": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden.",
-        "fr": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden.",
-        "it": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden."
-      },
-      "label": {
-        "en": "Languages",
-        "de": "Sprachen",
-        "fr": "Langues",
-        "it": "Lingue"
-      },
       "preset": "languages",
       "choices": [
         {
@@ -419,10 +407,26 @@
             "it": "Italiano"
           }
         }
-      ]
+      ],
+      "help_text": {
+        "de": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden.",
+        "en": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden.",
+        "fr": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden.",
+        "it": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden."
+      },
+      "label": {
+        "en": "Languages",
+        "de": "Sprachen",
+        "fr": "Langues",
+        "it": "Lingue"
+      }
     },
     {
       "field_name": "relations",
+      "validators": "harvest_list_of_dicts ogdch_validate_formfield_relations",
+      "output_validators": "multiple_text_output",
+      "form_snippet": "relations.html",
+      "display_snippet": "relations.html",
       "section_title": {
         "en": "Further information",
         "de": "Weitere Informationen",
@@ -470,14 +474,12 @@
         "en": "Unter «Beziehungen» geben Sie bitte «legal_basis» ein und erfassen einen Link auf die gesetzliche Grundlage, welche die Publikation dieses Datasets vorsieht.",
         "fr": "Sous «Relations», veuillez sélectionner «legal_basis», puis saisir un lien vers la base légale qui prévoit la publication du jeu de données en question.",
         "it": "Unter «Beziehungen» geben Sie bitte «legal_basis» ein und erfassen einen Link auf die gesetzliche Grundlage, welche die Publikation dieses Datasets vorsieht."
-      },
-      "validators": "harvest_list_of_dicts ogdch_validate_formfield_relations",
-      "output_validators": "multiple_text_output",
-      "form_snippet": "relations.html",
-      "display_snippet": "relations.html"
+      }
     },
     {
       "field_name": "url",
+      "preset": "url",
+      "mark_required": true,
       "label": {
         "en": "Url",
         "de": "Url",
@@ -496,14 +498,12 @@
         "fr": "Landing page",
         "it": "Landing page"
       },
-      "mark_required": true,
       "help_text": {
         "de": "Mit «Landing Page» ist die Website gemeint, auf der die Daten ursprünglich publiziert wurden, falls diese vorhanden ist.",
         "en": "Mit «Landing Page» ist die Website gemeint, auf der die Daten ursprünglich publiziert wurden, falls diese vorhanden ist.",
         "fr": "La «Landing page» est le site internet sur lequel les données ont été publiées initialement, le cas échéant.",
         "it": "Mit «Landing Page» ist die Website gemeint, auf der die Daten ursprünglich publiziert wurden, falls diese vorhanden ist."
-      },
-      "preset": "url"
+      }
     },
     {
       "field_name": "spatial",
@@ -527,6 +527,10 @@
     },
     {
       "field_name": "see_alsos",
+      "validators": "harvest_list_of_dicts ogdch_validate_formfield_see_alsos",
+      "output_validators": "multiple_text_output",
+      "form_snippet": "see_alsos.html",
+      "display_snippet": "see_alsos.html",
       "fieldgroup": {
         "en": "Related datasets",
         "de": "Verwandte Datensätze",
@@ -556,14 +560,11 @@
         "de": "Einen weiteren verwandten Dataset hinzufügen",
         "fr": "Einen weiteren verwandten Dataset hinzufügen",
         "it": "Einen weiteren verwandten Dataset hinzufügen"
-      },
-      "validators": "harvest_list_of_dicts ogdch_validate_formfield_see_alsos",
-      "output_validators": "multiple_text_output",
-      "form_snippet": "see_alsos.html",
-      "display_snippet": "see_alsos.html"
+      }
     },
     {
       "field_name": "keywords",
+      "preset": "ogdch_fluent_tags",
       "fieldgroup": {
         "en": "Keywords",
         "de": "Schlagwörter",
@@ -581,8 +582,7 @@
         "en": "Schlagwörter helfen dabei, die Auffindbarkeit zu steigern. Mögliche Schlagwörter können Sie aus Ihren Metadaten oder Ihrem Quellsystem ermitteln.",
         "fr": "Ces mots clés permettent de trouver plus aisément le jeu de données voulu. Pour les définir, tenez compte de vos métadonnées et de votre système source.",
         "it": "Schlagwörter helfen dabei, die Auffindbarkeit zu steigern. Mögliche Schlagwörter können Sie aus Ihren Metadaten oder Ihrem Quellsystem ermitteln."
-      },
-      "preset": "ogdch_fluent_tags"
+      }
     }
   ],
   "resource_fields": [
