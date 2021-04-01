@@ -677,11 +677,11 @@ msgstr ""
 #: ckanext/switzerland/templates/scheming/form_snippets/organization.html:24
 #, fuzzy
 msgid "Dataset Publication"
-msgstr "Daten-Visualisierung"
+msgstr "Dataset veröffentlichen"
 
 #: ckanext/switzerland/templates/scheming/form_snippets/organization.html:25
 msgid "Visibility"
-msgstr ""
+msgstr "Sichtbarkeit"
 
 #: ckanext/switzerland/templates/scheming/form_snippets/organization.html:28
 msgid "Public"
@@ -689,7 +689,7 @@ msgstr "Veröffentlicht"
 
 #: ckanext/switzerland/templates/scheming/form_snippets/organization.html:34
 msgid "To publish the dataset: set its visibility to published"
-msgstr ""
+msgstr "Sichtbarkeit auf Veröffentlicht setzen, um dieses Datensatz zu publizieren"
 
 #: ckanext/switzerland/templates/scheming/form_snippets/organization_slug.html:13
 msgid "Name (Slug)"
@@ -722,7 +722,7 @@ msgstr ""
 
 #: ckanext/switzerland/templates/scheming/package/snippets/package_form.html:61
 msgid "Here you can chose one or more categories that the dataset relates to."
-msgstr ""
+msgstr "Unter «Kategorien» können Sie eine oder mehrere thematische Kategorien auswählen, denen das Dataset zugeordnet werden kann."
 
 #: ckanext/switzerland/templates/showcase/manage_datasets.html:16
 #: ckanext/switzerland/templates/snippets/search_box.html:35
