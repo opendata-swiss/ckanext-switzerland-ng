@@ -564,14 +564,25 @@
     },
     {
       "field_name": "keywords",
+      "subheader": {
+        "en": "Keywords",
+        "de": "Schlagwörter",
+        "fr": "Mots clés",
+        "it": "Parole chiave"
+      },
       "label": {
         "en": "Keywords",
         "de": "Schlagwörter",
         "fr": "Mots clés",
         "it": "Parole chiave"
       },
-      "preset": "ogdch_fluent_tags",
-      "section_title": "Keywords"
+      "subheader_help_text": {
+        "de": "Schlagwörter helfen dabei, die Auffindbarkeit zu steigern. Mögliche Schlagwörter können Sie aus Ihren Metadaten oder Ihrem Quellsystem ermitteln.",
+        "en": "Schlagwörter helfen dabei, die Auffindbarkeit zu steigern. Mögliche Schlagwörter können Sie aus Ihren Metadaten oder Ihrem Quellsystem ermitteln.",
+        "fr": "Ces mots clés permettent de trouver plus aisément le jeu de données voulu. Pour les définir, tenez compte de vos métadonnées et de votre système source.",
+        "it": "Schlagwörter helfen dabei, die Auffindbarkeit zu steigern. Mögliche Schlagwörter können Sie aus Ihren Metadaten oder Ihrem Quellsystem ermitteln."
+      },
+      "preset": "ogdch_fluent_tags"
     }
   ],
   "resource_fields": [
