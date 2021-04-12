@@ -70,8 +70,9 @@ echo "Upgrading setuptools..."
 pip install --upgrade setuptools
 
 echo "Installing ckanext-scheming and its requirements..."
-git clone https://github.com/ckan/ckanext-scheming
+git clone https://github.com/opendata-swiss/ckanext-scheming.git
 cd ckanext-scheming
+git checkout repair-pyyaml-dependency
 python setup.py develop
 cd -
 
