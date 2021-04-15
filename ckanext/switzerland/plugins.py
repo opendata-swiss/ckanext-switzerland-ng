@@ -466,6 +466,7 @@ class OgdchShowcasePlugin(ShowcasePlugin):
         schema = super(OgdchShowcasePlugin, self).show_package_schema()
         schema.update(
             {
+                "tracking_summary": [toolkit.get_validator("ignore_missing")],
                 "showcase_type": [
                     toolkit.get_converter("convert_from_extras"),
                     toolkit.get_validator("ignore_missing"),
