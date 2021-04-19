@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-switzerland 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-04-01 20:14+0000\n"
+"POT-Creation-Date: 2021-04-15 18:37+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -110,7 +110,7 @@ msgid "Not authorized to see this page"
 msgstr ""
 
 #: ckanext/switzerland/controllers/organization.py:288
-msgid "Only Posting is availiable"
+msgid "Only POST is available"
 msgstr ""
 
 #: ckanext/switzerland/controllers/perma.py:28
@@ -605,7 +605,22 @@ msgid "Reset search"
 msgstr ""
 
 #: ckanext/switzerland/templates/package/base.html:14
+#: ckanext/switzerland/templates/package/new.html:9
 msgid "Create Dataset"
+msgstr ""
+
+#: ckanext/switzerland/templates/package/base_form_page.html:5
+msgid "What are datasets?"
+msgstr ""
+
+#: ckanext/switzerland/templates/package/base_form_page.html:8
+msgid ""
+" Ein Datensatz oder «Dataset» entspricht einem Eintrag auf opendata.swiss. Es"
+" wird von einer Organisation publiziert bzw. kuratiert und ist in einer oder "
+"mehreren Darstellungen („Ressourcen“ oder „Distribution“) zum Download "
+"verfügbar. Auf opendata.swiss entspricht dies einem Metadaten-Eintrag der "
+"Klasse dcat:Dataset (Dataset-Metadaten-Record) und beschreibt ein einzelnes, "
+"thematisch geschlossenes Dataset. "
 msgstr ""
 
 #: ckanext/switzerland/templates/package/read.html:16
@@ -621,6 +636,17 @@ msgstr ""
 
 #: ckanext/switzerland/templates/package/snippets/additional_info.html:4
 msgid "Additional information"
+msgstr ""
+
+#: ckanext/switzerland/templates/package/snippets/stages.html:24
+#: ckanext/switzerland/templates/package/snippets/stages.html:26
+msgid "Create dataset"
+msgstr ""
+
+#: ckanext/switzerland/templates/package/snippets/stages.html:31
+#: ckanext/switzerland/templates/package/snippets/stages.html:35
+#: ckanext/switzerland/templates/package/snippets/stages.html:37
+msgid "Add data"
 msgstr ""
 
 #: ckanext/switzerland/templates/scheming/display_snippets/languages.html:19
@@ -768,6 +794,10 @@ msgstr ""
 
 #: ckanext/switzerland/templates/snippets/activity_item.html:3
 msgid "New activity item"
+msgstr ""
+
+#: ckanext/switzerland/templates/snippets/add_dataset.html:6
+msgid "Add Dataset"
 msgstr ""
 
 #: ckanext/switzerland/templates/snippets/add_source_button.html:4
