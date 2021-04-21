@@ -629,6 +629,19 @@ msgstr "Suche zurücksetzen"
 msgid "What are datasets?"
 msgstr "Datensatz"
 
+#: ckan/templates/package/base_form_page.html:25
+msgid ""
+" A CKAN Dataset is a collection of data resources (such as files), "
+"together with a description and other information, at a fixed URL. "
+"Datasets are what users see when searching for data. "
+msgstr ""
+" Ein Datensatz oder «Dataset» entspricht einem Eintrag auf "
+"opendata.swiss. Es wird von einer Organisation publiziert bzw. kuratiert "
+"und ist in einer oder mehreren Darstellungen („Ressourcen“ oder "
+"„Distribution“) zum Download verfügbar. Auf opendata.swiss entspricht "
+"dies einem Metadaten-Eintrag der Klasse dcat:Dataset (Dataset-Metadaten-"
+"Record) und beschreibt ein einzelnes, thematisch geschlossenes Dataset. "
+
 #: ckanext/switzerland/templates/package/read.html:16
 #, python-format
 msgid ""
@@ -647,8 +660,8 @@ msgstr "Zusätzliche Informationen"
 #: ckanext/switzerland/templates/package/snippets/stages.html:31
 #: ckanext/switzerland/templates/package/snippets/stages.html:35
 #: ckanext/switzerland/templates/package/snippets/stages.html:37
-msgid "Add data"
-msgstr "Daten hinzufügen"
+msgid "Add distributions"
+msgstr "Distributionen hinzufügen"
 
 #: ckanext/switzerland/templates/scheming/display_snippets/languages.html:19
 msgid "Language independent"
@@ -921,3 +934,7 @@ msgstr "Wahr"
 #: value for `draft` dataset facet
 msgid "False"
 msgstr "Falsch"
+
+#: ckanext/switzerland/templates/package/snippets/package_form.html:3
+msgid "Next: Add Distributions"
+msgstr "Als nächstes: Distribution hinzufügen"

@@ -646,7 +646,7 @@ msgstr ""
 #: ckanext/switzerland/templates/package/snippets/stages.html:31
 #: ckanext/switzerland/templates/package/snippets/stages.html:35
 #: ckanext/switzerland/templates/package/snippets/stages.html:37
-msgid "Add data"
+msgid "Add distributions"
 msgstr ""
 
 #: ckanext/switzerland/templates/scheming/display_snippets/languages.html:19

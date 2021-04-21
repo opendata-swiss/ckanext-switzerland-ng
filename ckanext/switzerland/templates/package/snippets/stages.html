@@ -27,13 +27,13 @@ Example:
   </li>
   <li class="last {{ s2 }}">
     {% if s2 != 'complete' %}
-      <span class="highlight">{{ _('Add data') }}</span>
+      <span class="highlight">{{ _('Add distributions') }}</span>
     {% else %}
       {% if s1 == 'active' %}
         {# stage 1 #}
-        <button class="highlight" name="save" value="go-resources" type="submit">{{ _('Add data') }}</button>
+        <button class="highlight" name="save" value="go-resources" type="submit">{{ _('Add distributions') }}</button>
       {% else %}
-        {% link_for _('Add data'), controller='package', action='new', class_="highlight" %}
+        {% link_for _('Add distributions'), controller='package', action='new', class_="highlight" %}
       {% endif %}
     {% endif %}
   </li>

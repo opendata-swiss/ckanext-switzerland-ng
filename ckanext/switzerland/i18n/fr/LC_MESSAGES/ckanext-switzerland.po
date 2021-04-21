@@ -623,6 +623,23 @@ msgstr ""
 msgid "Reset search"
 msgstr "Réinitialiser la recherche"
 
+#: ckan/templates/package/base_form_page.html:22
+msgid "What are datasets?"
+msgstr "Jeu de données"
+
+#: ckan/templates/package/base_form_page.html:25
+msgid ""
+" A CKAN Dataset is a collection of data resources (such as files), "
+"together with a description and other information, at a fixed URL. "
+"Datasets are what users see when searching for data. "
+msgstr ""
+" Un jeu de données correspond à une entrée sur le portail opendata.swiss. "
+"Publié ou structuré par une organisation, il est disponible pour "
+"téléchargement sous différentes formes de distribution («ressource» ou "
+"«distribution»). Sur opendata.swiss, une telle entrée correspond à des "
+"métadonnées de la classe dcat:Dataset (métadonnées d’un jeu de données) et "
+"décrit un seul jeu de données portant sur un certain thème. "
+
 #: ckanext/switzerland/templates/package/base.html:14
 msgid "Create Dataset"
 msgstr ""
@@ -641,6 +658,12 @@ msgstr "Jeu de données"
 #: ckanext/switzerland/templates/package/snippets/additional_info.html:4
 msgid "Additional information"
 msgstr "Informations complémentaires"
+
+#: ckanext/switzerland/templates/package/snippets/stages.html:31
+#: ckanext/switzerland/templates/package/snippets/stages.html:35
+#: ckanext/switzerland/templates/package/snippets/stages.html:37
+msgid "Add distributions"
+msgstr "Ajouter des distributions"
 
 #: ckanext/switzerland/templates/scheming/display_snippets/languages.html:19
 msgid "Language independent"
@@ -907,4 +930,8 @@ msgstr "Vraix"
 #: value for `draft` dataset facet
 msgid "False"
 msgstr "Faux"
+
+#: ckanext/switzerland/templates/package/snippets/package_form.html:3
+msgid "Next: Add Distributions"
+msgstr "Suivant : Ajouter des distributions"
 

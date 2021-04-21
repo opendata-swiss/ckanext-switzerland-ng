@@ -641,6 +641,12 @@ msgstr "Dataset"
 msgid "Additional information"
 msgstr "Informazioni aggiuntive"
 
+#: ckanext/switzerland/templates/package/snippets/stages.html:31
+#: ckanext/switzerland/templates/package/snippets/stages.html:35
+#: ckanext/switzerland/templates/package/snippets/stages.html:37
+msgid "Add distributions"
+msgstr "Aggiungi distribuzioni"
+
 #: ckanext/switzerland/templates/scheming/display_snippets/languages.html:19
 msgid "Language independent"
 msgstr "Indipendente dalla lingua"
@@ -906,3 +912,7 @@ msgstr "Vero"
 #: value for `draft` dataset facet
 msgid "False"
 msgstr "Falso"
+
+#: ckanext/switzerland/templates/package/snippets/package_form.html:3
+msgid "Next: Add Distributions"
+msgstr "Prossimo: Aggiungi Distribuzioni "
