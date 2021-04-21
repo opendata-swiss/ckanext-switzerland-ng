@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  opendata.swiss\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-04-01 20:14+0000\n"
+"POT-Creation-Date: 2021-04-15 18:37+0000\n"
 "PO-Revision-Date: 2019-03-14 13:44+0100\n"
 "Last-Translator: Jürg Hunziker <juerg.hunziker@gmail.com>\n"
 "Language: de\n"
@@ -102,7 +102,7 @@ msgstr "Art des Inhalts"
 #: ckanext/switzerland/templates/group/read_base.html:11
 #: ckanext/switzerland/templates/group/read_base.html:14
 msgid "Groups"
-msgstr ""
+msgstr "Kategorien"
 
 #: ckanext/switzerland/controllers/group.py:111
 #: ckanext/switzerland/controllers/organization.py:119
@@ -120,9 +120,8 @@ msgid "Not authorized to see this page"
 msgstr ""
 
 #: ckanext/switzerland/controllers/organization.py:288
-#, fuzzy
-msgid "Only Posting is availiable"
-msgstr "Keine Organisation vorhanden"
+msgid "Only POST is available"
+msgstr ""
 
 #: ckanext/switzerland/controllers/perma.py:28
 msgid "Dataset not found"
@@ -360,9 +359,8 @@ msgid ""
 msgstr ""
 
 #: ckanext/switzerland/helpers/validators.py:246
-#, fuzzy
 msgid "The selected organization was not found."
-msgstr "Keine Organisation gefunden"
+msgstr "Die ausgewählte Organisation wurde nicht gefunden"
 
 #: ckanext/switzerland/helpers/validators.py:256
 msgid "Identifier is already in use, it must be unique."
@@ -379,9 +377,8 @@ msgid "{} can not be chosen since it is a {}."
 msgstr ""
 
 #: ckanext/switzerland/helpers/validators.py:397
-#, fuzzy
 msgid "Dataset {} could not be found ."
-msgstr "Datensatz nicht gefunden"
+msgstr "Datensatz {} nicht gefunden"
 
 #: ckanext/switzerland/helpers/validators.py:423
 msgid "A valid temporal must have both start and end date"
@@ -400,9 +397,8 @@ msgstr ""
 #: ckanext/switzerland/templates/header.html:15
 #: ckanext/switzerland/templates/source/base.html:6
 #: ckanext/switzerland/templates/source/base.html:9
-#, fuzzy
 msgid "Harvest Sources"
-msgstr "Ressourcen"
+msgstr ""
 
 #: ckanext/switzerland/templates/group/read_base.html:21
 #: ckanext/switzerland/templates/header.html:19
@@ -411,9 +407,8 @@ msgstr "Ressourcen"
 #: ckanext/switzerland/templates/package/base.html:9
 #: ckanext/switzerland/templates/package/base.html:13
 #: ckanext/switzerland/templates/user/read_base.html:4
-#, fuzzy
 msgid "Datasets"
-msgstr "Datensatz"
+msgstr "Datensätze"
 
 #: ckanext/switzerland/templates/header.html:25
 #: ckanext/switzerland/templates/package/read_base.html:5
@@ -450,7 +445,7 @@ msgstr ""
 
 #: ckanext/switzerland/templates/group/index.html:5
 msgid "Add Group"
-msgstr ""
+msgstr "Categorie hinzufügen"
 
 #: ckanext/switzerland/templates/group/member_new.html:10
 #: ckanext/switzerland/templates/organization/member_new.html:10
@@ -475,7 +470,6 @@ msgstr ""
 #: ckanext/switzerland/templates/group/member_new.html:35
 #: ckanext/switzerland/templates/organization/bulk_process.html:57
 #: ckanext/switzerland/templates/organization/member_new.html:35
-#, fuzzy
 msgid "Delete"
 msgstr "Gelöscht"
 
@@ -545,19 +539,16 @@ msgstr ""
 
 #: ckanext/switzerland/templates/organization/bulk_process.html:3
 #: ckanext/switzerland/templates/organization/bulk_process.html:11
-#, fuzzy
 msgid "Edit datasets"
-msgstr "Verwandte Datensätze"
+msgstr ""
 
 #: ckanext/switzerland/templates/organization/bulk_process.html:16
-#, fuzzy
 msgid " found for \"{query}\""
-msgstr "Kein Showcase gefunden bei der Suche {query}"
+msgstr " gefunden bei der Suche {query}"
 
 #: ckanext/switzerland/templates/organization/bulk_process.html:18
-#, fuzzy
 msgid "Sorry no datasets found for \"{query}\""
-msgstr "Kein Showcase gefunden bei der Suche {query}"
+msgstr "Keine Datensätze gefunden bei der Suche {query}"
 
 #: ckanext/switzerland/templates/organization/bulk_process.html:27
 #: ckanext/switzerland/templates/organization/index.html:10
@@ -598,9 +589,8 @@ msgid "This organization has no datasets associated to it"
 msgstr ""
 
 #: ckanext/switzerland/templates/organization/index.html:5
-#, fuzzy
 msgid "Add Organization"
-msgstr "Organisation"
+msgstr ""
 
 #: ckanext/switzerland/templates/organization/index.html:10
 msgid "Search organizations..."
@@ -615,9 +605,8 @@ msgid "Update Member"
 msgstr ""
 
 #: ckanext/switzerland/templates/organization/new.html:7
-#, fuzzy
 msgid "Create an Organization"
-msgstr "Organisation"
+msgstr "Organisation anlegen"
 
 #: ckanext/switzerland/templates/organization/read.html:20
 msgid "Submit"
@@ -636,10 +625,22 @@ msgstr ""
 msgid "Reset search"
 msgstr "Suche zurücksetzen"
 
-#: ckanext/switzerland/templates/package/base.html:14
-#, fuzzy
-msgid "Create Dataset"
-msgstr "Verwandte Datensätze"
+#: ckan/templates/package/base_form_page.html:22
+msgid "What are datasets?"
+msgstr "Datensatz"
+
+#: ckan/templates/package/base_form_page.html:25
+msgid ""
+" A CKAN Dataset is a collection of data resources (such as files), "
+"together with a description and other information, at a fixed URL. "
+"Datasets are what users see when searching for data. "
+msgstr ""
+" Ein Datensatz oder «Dataset» entspricht einem Eintrag auf "
+"opendata.swiss. Es wird von einer Organisation publiziert bzw. kuratiert "
+"und ist in einer oder mehreren Darstellungen („Ressourcen“ oder "
+"„Distribution“) zum Download verfügbar. Auf opendata.swiss entspricht "
+"dies einem Metadaten-Eintrag der Klasse dcat:Dataset (Dataset-Metadaten-"
+"Record) und beschreibt ein einzelnes, thematisch geschlossenes Dataset. "
 
 #: ckanext/switzerland/templates/package/read.html:16
 #, python-format
@@ -649,13 +650,18 @@ msgid ""
 msgstr ""
 
 #: ckanext/switzerland/templates/package/read_base.html:4
-#, fuzzy
 msgid "Dataset"
 msgstr "Datensatz"
 
 #: ckanext/switzerland/templates/package/snippets/additional_info.html:4
 msgid "Additional information"
 msgstr "Zusätzliche Informationen"
+
+#: ckanext/switzerland/templates/package/snippets/stages.html:31
+#: ckanext/switzerland/templates/package/snippets/stages.html:35
+#: ckanext/switzerland/templates/package/snippets/stages.html:37
+msgid "Add distributions"
+msgstr "Distributionen hinzufügen"
 
 #: ckanext/switzerland/templates/scheming/display_snippets/languages.html:19
 msgid "Language independent"
@@ -675,7 +681,6 @@ msgid "None - top level"
 msgstr ""
 
 #: ckanext/switzerland/templates/scheming/form_snippets/organization.html:24
-#, fuzzy
 msgid "Dataset Publication"
 msgstr "Dataset veröffentlichen"
 
@@ -696,9 +701,8 @@ msgid "Name (Slug)"
 msgstr ""
 
 #: ckanext/switzerland/templates/scheming/form_snippets/organization_slug.html:16
-#, fuzzy
 msgid "my-organization"
-msgstr "Organisation"
+msgstr ""
 
 #: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:19
 msgid "Identifier"
@@ -718,11 +722,13 @@ msgstr "XML herunterladen"
 
 #: ckanext/switzerland/templates/scheming/package/snippets/package_form.html:25
 msgid "This field is required"
-msgstr ""
+msgstr "Dieses Feld ist ein Pflichtfeld"
 
 #: ckanext/switzerland/templates/scheming/package/snippets/package_form.html:61
 msgid "Here you can chose one or more categories that the dataset relates to."
-msgstr "Unter «Kategorien» können Sie eine oder mehrere thematische Kategorien auswählen, denen das Dataset zugeordnet werden kann."
+msgstr ""
+"Unter «Kategorien» können Sie eine oder mehrere thematische Kategorien "
+"auswählen, denen das Dataset zugeordnet werden kann."
 
 #: ckanext/switzerland/templates/showcase/manage_datasets.html:16
 #: ckanext/switzerland/templates/snippets/search_box.html:35
@@ -735,32 +741,26 @@ msgid "Popular"
 msgstr "Populär"
 
 #: ckanext/switzerland/templates/showcase/manage_datasets.html:28
-#, fuzzy
 msgid "Datasets available to add to this showcase"
-msgstr "Datensatz aus diesen Showcase entfernen"
+msgstr ""
 
 #: ckanext/switzerland/templates/showcase/manage_datasets.html:43
-#, fuzzy
 msgid "Add to Showcase"
-msgstr "Zeigen Sie uns Ihren Showcase"
+msgstr ""
 
 #: ckanext/switzerland/templates/showcase/manage_datasets.html:80
-#, fuzzy
 msgid "No datasets could be found"
 msgstr "Keinen Datensatz gefunden"
 
 #: ckanext/switzerland/templates/showcase/manage_datasets.html:88
-#, fuzzy
 msgid "Datasets in this showcase"
-msgstr "Datensätze in Showcase"
+msgstr "Datensätze in diesem Showcase"
 
 #: ckanext/switzerland/templates/showcase/manage_datasets.html:101
-#, fuzzy
 msgid "Remove from Showcase"
 msgstr "Datensatz aus diesen Showcase entfernen"
 
 #: ckanext/switzerland/templates/showcase/manage_datasets.html:132
-#, fuzzy
 msgid "This showcase has no datasets associated to it"
 msgstr "Dieser Showcase hat keine Beschreibung"
 
@@ -773,9 +773,8 @@ msgid "eg. A descriptive title"
 msgstr ""
 
 #: ckanext/switzerland/templates/showcase/new_package_form.html:16
-#, fuzzy
 msgid "eg. my-showcase"
-msgstr "Zeigen Sie uns Ihren Showcase"
+msgstr ""
 
 #: ckanext/switzerland/templates/showcase/new_package_form.html:20
 msgid "Description"
@@ -790,9 +789,8 @@ msgid "eg. economy, mental health, government"
 msgstr ""
 
 #: ckanext/switzerland/templates/showcase/search.html:6
-#, fuzzy
 msgid "Add Showcase"
-msgstr "Showcase"
+msgstr "Showcase hinzufügen"
 
 #: ckanext/switzerland/templates/showcase/snippets/showcase_info.html:21
 msgid "Submitted by"
@@ -814,19 +812,21 @@ msgstr "Diese Datensätze sind (noch) nicht auf opendata.swiss verfügbar."
 msgid "New activity item"
 msgstr ""
 
+#: ckanext/switzerland/templates/snippets/add_dataset.html:6
+msgid "Add Dataset"
+msgstr "Datensatz hinzufügen"
+
 #: ckanext/switzerland/templates/snippets/add_source_button.html:4
-#, fuzzy
 msgid "Add Harvest Source"
-msgstr "Ressource herunterladen"
+msgstr "Katalog Endpunkt hinzufügen"
 
 #: ckanext/switzerland/templates/snippets/facet_list.html:90
 msgid "Show More {facet_type}"
 msgstr "Zeige mehr {facet_type}"
 
 #: ckanext/switzerland/templates/snippets/facet_list.html:93
-#, fuzzy
 msgid "Show Only Popular {facet_type}"
-msgstr "Zeige mehr {facet_type}"
+msgstr ""
 
 #: ckanext/switzerland/templates/snippets/facet_list.html:97
 msgid "There are no {facet_type} that match this search"
@@ -902,15 +902,13 @@ msgstr ""
 
 #: ckanext/switzerland/templates/user/dashboard.html:11
 #: ckanext/switzerland/templates/user/dashboard.html:27
-#, fuzzy
 msgid "My Datasets"
-msgstr "{num} Datensatz"
+msgstr ""
 
 #: ckanext/switzerland/templates/user/dashboard.html:12
 #: ckanext/switzerland/templates/user/dashboard_organizations.html:8
-#, fuzzy
 msgid "My Organizations"
-msgstr "Organisationen"
+msgstr ""
 
 #: ckanext/switzerland/templates/user/dashboard.html:33
 msgid "You haven't created any datasets."
@@ -927,210 +925,16 @@ msgstr ""
 
 #: ckanext/switzerland/templates/user/list.html:9
 msgid "Add User"
-msgstr ""
+msgstr "Benutzer hinzufügen"
 
-#~ msgid "unexpected choice \"%s\""
-#~ msgstr "Unerwartete Wahl \"%s\""
+#: value for `draft` dataset facet
+msgid "True"
+msgstr "Wahr"
 
-#~ msgid "Home"
-#~ msgstr "Startseite"
+#: value for `draft` dataset facet
+msgid "False"
+msgstr "Falsch"
 
-#~ msgid "Error %(error_code)s"
-#~ msgstr "Error %(error_code)s"
-
-#~ msgid "Page not found"
-#~ msgstr "Seite nicht gefunden"
-
-#~ msgid ""
-#~ "Ooops... The page you're looking for "
-#~ "isn't available. Here is a cool "
-#~ "space shuttle to make you feel "
-#~ "better!"
-#~ msgstr ""
-#~ "Hoppla... Die Seite, die Sie aufgerufen"
-#~ " haben, scheint nicht verfügbar zu "
-#~ "sein. Hier ist ein cooles Space-"
-#~ "Shuttle, um Sie etwas aufzumuntern!"
-
-#~ msgid "Get involved"
-#~ msgstr "Mitmachen"
-
-#~ msgid "Frequently Asked Questions"
-#~ msgstr "Häufig gestellte Fragen"
-
-#~ msgid "Learn to publish data"
-#~ msgstr "Publizieren Sie Daten"
-
-#~ msgid "NewsMail Open Government Data"
-#~ msgstr "NewsMail abonnieren"
-
-#~ msgid "Organization"
-#~ msgid_plural "Organizations"
-#~ msgstr[0] "Organisation"
-#~ msgstr[1] "Organisationen"
-
-#~ msgid "Category"
-#~ msgid_plural "Categories"
-#~ msgstr[0] "Kategorie"
-#~ msgstr[1] "Kategorien"
-
-#~ msgid "A joint project of the Confederation and the cantons"
-#~ msgstr "Ein Gemeinschaftsprojekt von Bund und Kantonen"
-
-#~ msgid ""
-#~ "The opendata.swiss portal is a joint "
-#~ "project of the Confederation, cantons, "
-#~ "communes and other organizations with a"
-#~ " mandate from the state. It makes "
-#~ "open government data available to the"
-#~ " general public in a central "
-#~ "catalogue. opendata.swiss is operated by "
-#~ "the Federal Statistical Office."
-#~ msgstr ""
-#~ "Das Portal opendata.swiss ist ein "
-#~ "gemeinsames Projekt von Bund, Kantonen, "
-#~ "Gemeinden und weiteren Organisationen mit "
-#~ "einem staatlichen Auftrag. Es stellt der"
-#~ " Allgemeinheit offene Behördendaten in "
-#~ "einem zentralen Katalog zur Verfügung. "
-#~ "Das Bundesamt für Statistik betreibt "
-#~ "opendata.swiss."
-
-#~ msgid "FAQ"
-#~ msgstr "FAQ"
-
-#~ msgid "Contact"
-#~ msgstr "Kontakt"
-
-#~ msgid "Data"
-#~ msgstr "Daten"
-
-#~ msgid "Legal framework"
-#~ msgstr "Rechtliche Hinweise"
-
-#~ msgid "Sourcecode"
-#~ msgstr "Quellcode"
-
-#~ msgid "What's opendata.swiss?"
-#~ msgstr "Was ist opendata.swiss?"
-
-#~ msgid "Search"
-#~ msgstr "Suche"
-
-#~ msgid ""
-#~ "The preview of this resource is "
-#~ "not available. The file is too big"
-#~ " or its format is not recognized."
-#~ msgstr ""
-#~ "Für diese Ressource kann keine Vorschau"
-#~ " angezeigt werden. Die Datei ist zu"
-#~ " gross oder das Format wurde nicht"
-#~ " erkannt."
-
-#~ msgid "Loading..."
-#~ msgstr "Lädt..."
-
-#~ msgid "Search categories..."
-#~ msgstr "Kategorien suchen..."
-
-#~ msgid "There are currently no categories available"
-#~ msgstr "Momentan sind keine Kategorien vorhanden"
-
-#~ msgid ""
-#~ "Authorities from the Confederation, cantons"
-#~ " and communes as well as third "
-#~ "parties that perform tasks on behalf "
-#~ "of the state can publish their "
-#~ "open data on the opendata.swiss portal."
-#~ " Is your organization missing from "
-#~ "the list? Get involved."
-#~ msgstr ""
-#~ "Auf dem Portal opendata.swiss können "
-#~ "Behörden von Bund, Kantonen und "
-#~ "Gemeinden sowie Dritte, die staatliche "
-#~ "Aufgaben ausführen, ihre offenen Daten "
-#~ "publizieren. Fehlt Ihre Organisation in "
-#~ "der Liste? Machen Sie mit."
-
-#~ msgid "Which organizations publish their data?"
-#~ msgstr "Welche Organisationen publizieren ihre Daten?"
-
-#~ msgid "I want to publish data"
-#~ msgstr "Ich will Daten publizieren"
-
-#~ msgid "There are currently no organizations for this site"
-#~ msgstr "Momentan sind keine Organisationen vorhanden"
-
-#~ msgid "More information"
-#~ msgstr "Weitere Informationen"
-
-#~ msgid "Private"
-#~ msgstr "Privat"
-
-#~ msgid "Last updated"
-#~ msgstr "Zuletzt aktualisiert"
-
-#~ msgid "Format"
-#~ msgstr "Format"
-
-#~ msgid "Download"
-#~ msgstr "Herunterladen"
-
-#~ msgid "Go to resource"
-#~ msgstr "Gehe zur Ressource"
-
-#~ msgid "Got questions?"
-#~ msgstr "Haben Sie Fragen?"
-
-#~ msgid "Ask the publisher directly"
-#~ msgstr "Fragen Sie den Publisher direkt"
-
-#~ msgid "This resource view is not available at the moment."
-#~ msgstr "Die Vorschau für diese Ressource ist momentan nicht verfügbar."
-
-#~ msgid "Click here for more information."
-#~ msgstr "Klicken Sie hier für weitere Informationen"
-
-#~ msgid "Your browser does not support iframes."
-#~ msgstr "Ihr Browser unterstützt keine IFrames."
-
-#~ msgid "This dataset has no resources"
-#~ msgstr "Dieser Datensatz hat keine Ressourcen"
-
-#~ msgid "Show Less {facet_type}"
-#~ msgstr "Zeige weniger {facet_type}"
-
-#~ msgid "Event"
-#~ msgstr "Veranstaltung"
-
-#~ msgid "Blog and media article"
-#~ msgstr "Blog und Medienartikel"
-
-#~ msgid "Paper"
-#~ msgstr "Wissenschaftliche Arbeit"
-
-#~ msgid "Best practice"
-#~ msgstr "Best practice"
-
-#~ msgid "Search showcases..."
-#~ msgstr "Showcases suchen..."
-
-#~ msgid "{number} showcase found for '{query}'"
-#~ msgid_plural "{number} showcases found for '{query}'"
-#~ msgstr[0] "{number} Showcase gefunden für \"{query}\""
-#~ msgstr[1] "{number} Showcases gefunden für \"{query}\""
-
-#~ msgid "{number} showcase found"
-#~ msgid_plural "{number} showcases found"
-#~ msgstr[0] "{number} Showcase gefunden"
-#~ msgstr[1] "{number} Showcases gefunden"
-
-#~ msgid "No showcase found"
-#~ msgstr "Kein Showcase gefunden"
-
-#~ msgid "True"
-#~ msgstr "Wahr"
-
-#~ msgid "False"
-#~ msgstr "Falsch"
-
+#: ckanext/switzerland/templates/package/snippets/package_form.html:3
+msgid "Next: Add Distributions"
+msgstr "Als nächstes: Distribution hinzufügen"

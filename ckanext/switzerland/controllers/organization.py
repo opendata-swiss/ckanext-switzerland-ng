@@ -285,7 +285,7 @@ class OgdchOrganizationController(organization.OrganizationController):
 
     def xml_upload(self, name):
         if not tk.request.method == 'POST':
-            tk.abort(409, _('Only Posting is availiable'))
+            tk.abort(409, _('Only POST is available'))
 
         org = tk.get_action('organization_show')({}, {'id': name})
 
