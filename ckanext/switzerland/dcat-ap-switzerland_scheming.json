@@ -10,22 +10,22 @@
       "preset": "title",
       "form_snippet": "title.html",
       "label": {
-        "en": "Title for Slug",
-        "de": "Titel für den Slug",
-        "fr": "Titel für den Slug",
-        "it": "Titel für den Slug"
+        "en": "Title for URL of the dataset",
+        "de": "Titel für die URL des Datasets",
+        "fr": "Titre pour le URL du Dataset",
+        "it": "Titolo per l’URL del dataset"
       },
       "form_placeholder": {
-        "en": "Title for generating the Slug",
-        "de": "Titel für das Erzeugen des Dataset Slugs",
-        "fr": "Titel für das Erzeugen des Dataset Slugs",
-        "it": "Titel für das Erzeugen des Dataset Slugs"
+        "en": "Title for generating the URL of the dataset",
+        "de": "Titel für das Erzeugen des Slugs (URL) des Datasets",
+        "fr": "Titre pour créer le Slug (URL) du dataset",
+        "it": "Titolo per creare lo Slug (URL) del dataset"
       },
       "help_text": {
-        "en": "Dieses Titelfeld dient nur zum ersten Anlegen des Datasets. Später wird es aus den mehrsprachigen Titelfeldern automatisch besetzt.",
+        "en": "This title field is only used for the first creation of the dataset. Later, it is automatically filled from the multilingual title fields.",
         "de": "Dieses Titelfeld dient nur zum ersten Anlegen des Datasets. Später wird es aus den mehrsprachigen Titelfeldern automatisch besetzt.",
-        "fr": "Dieses Titelfeld dient nur zum ersten Anlegen des Datasets. Später wird es aus den mehrsprachigen Titelfeldern automatisch besetzt.",
-        "it": "Dieses Titelfeld dient nur zum ersten Anlegen des Datasets. Später wird es aus den mehrsprachigen Titelfeldern automatisch besetzt."
+        "fr": "Ce champ est utilisé que pour la création d’un dataset dans le système. Il ne sera pas montré sur le web.",
+        "it": "Questo titolo è necessario per la creazione del dataset nel sistema. Non sarà visualizzato sul web."
       }
     },
     {
@@ -55,10 +55,10 @@
         "it": "Titolo"
       },
       "help_text": {
-        "de": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
-        "en": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
-        "fr": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
-        "it": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)"
+        "de": "Bitte geben Sie einen Titel Ihres Datasets ein. Bitte besetzen Sie mindestens eine Landessprache (Bundesstellen sollen zwei Landessprachen besetzen) und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
+        "en": "Please enter a title of your dataset. Please fill in at least one national language (Federal offices should fill in two national languages) and English. (The entry in English is required when forwarding your dataset to the European Data Portal).",
+        "fr": "Veuillez entrer un titre pour votre jeu de données. Veuillez remplir au moins une langue nationale (les Office fédéraux doivent remplir deux langues nationales) et l'anglais. (L'entrée en anglais est requise lors de la transmission de l’ensemble de données au portail européen de données).",
+        "it": "La preghiamo di inserire un titolo del tuo set di dati. Si prega di compilare almeno una lingua nazionale (gli uffici federali dovrebbero compilare due lingue nazionali) e l'inglese. (L’informazione in inglese è necessaria per inoltrare il dataset al portale europeo dei dati)."
       },
       "label": {
         "en": "Title",
@@ -90,10 +90,10 @@
         "it": "Identifier"
       },
       "help_text": {
-        "en": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden. Wichtig: Verändern Sie den Identifier nicht mehr, nachdem das Dataset publiziert ist. Ansonsten können Ihre Daten nicht mehr eindeutig zugeordnet werden.",
-        "de": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden. Wichtig: Verändern Sie den Identifier nicht mehr, nachdem das Dataset publiziert ist. Ansonsten können Ihre Daten nicht mehr eindeutig zugeordnet werden.",
-        "fr": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden. Wichtig: Verändern Sie den Identifier nicht mehr, nachdem das Dataset publiziert ist. Ansonsten können Ihre Daten nicht mehr eindeutig zugeordnet werden.",
-        "it": "Eindeutiger Identifier des Datensatzes verknüpft mit dem Publisher. Ein guter Weg, einen eindeutigen Identifier zu erhalten, ist es, die ID aus dem Quellsystem zu verwenden. Wichtig: Verändern Sie den Identifier nicht mehr, nachdem das Dataset publiziert ist. Ansonsten können Ihre Daten nicht mehr eindeutig zugeordnet werden."
+        "en": "The identifier ensures that the dataset is linked to your organisation. To define it you can use for example the ID from your source system or define any ID for the dataset. Please make sure that your dataset is assigned to the correct organisation. Important: Do not change the identifier after the dataset has been published. Otherwise your data can no longer be clearly assigned.",
+        "de": "Der Identifier sorgt dafür, dass das Dataset mit Ihrer Organisation verknüpft wird. Dafür können Sie beispielsweise die ID aus Ihrem Quellsystem verwenden oder eine beliebige ID fürs Dataset definieren. Bitte stellen Sie sicher, dass Ihr Dataset der richtigen Organisation zugeteilt ist.Wichtig: Verändern Sie den Identifier nicht mehr, nachdem das Dataset publiziert ist. Ansonsten können Ihre Daten nicht mehr eindeutig zugeordnet werden.",
+        "fr": "L'identifier garantit que le jeu de données soit lié à votre organisation. Par exemple, vous pouvez utiliser l'ID de votre système source ou définir n'importe quel ID pour l'ensemble de données. Veuillez vous assurer que votre jeu de données est attribué à la bonne organisation. Important : ne modifiez pas l'identifier après la publication de l'ensemble de données. Sinon, vos données ne peuvent plus être attribuées de manière unique.",
+        "it": "L'identifier assicura che il dataset sia collegato all’organizzazione corretta. L’identifier può essere ad esempio creato a partire dall’ID dal sistema di origine o definendo un ID qualsiasi per il dataset. È importante assicurarsi che il dataset sia assegnato all'organizzazione corretta. Importante: non cambiare l'identifier dopo che il dataset è stato pubblicato. Altrimenti i vostri dati non possono più essere assegnati in modo univoco."
       },
       "form_placeholder": "123..@organization"
     },
@@ -109,24 +109,24 @@
       "help_text": {
         "en": "The organization that the dataset belongs to.",
         "de": "Die Organisation zu welcher das Dataset gehört.",
-        "fr": "Die Organisation zu welcher das Dataset gehört.",
-        "it": "Die Organisation zu welcher das Dataset gehört."
+        "fr": "L'organisation à laquelle appartient l'ensemble de données.",
+        "it": "L'organizzazione alla quale il dataset appartiene."
       }
     },
     {
       "field_name": "scheduled",
       "preset": "ogdch_date",
       "label": {
-          "en": "Schedule the publication",
-          "de": "Veröffentlichung terminieren",
-          "fr": "Veröffentlichung terminieren",
-          "it": "Veröffentlichung terminieren"
+          "en": "Schedule the publication of the dataset",
+          "de": "Veröffentlichung des Datasets terminieren",
+          "fr": "Planifier la publication du jeu de données",
+          "it": "Pianificare la pubblicazione del dataset"
       },
       "help_text": {
-        "en": "Scheduled publication date on portal (set visibility to draft to publish it automatically)",
-        "de": "Geplanter Veröffentlichungstermin im Portal (Sichtbarkeit auf Entwurf setzen, um diesen Datensatz automatisch zu veröffentlichen)",
-        "fr": "Date de publication sur le portail (Définir la visibilité sur brouillon pour le publier automatiquement)",
-        "it": "Data di pubblicazione sul portale (Imposta la visibilità su bozza per pubblicare automaticamente il set di dati)"
+        "en": "Set visibility to \"Draft\" to schedule the automatic publication of the dataset. By setting the visibility to \"Published\", the dataset will be published directly.",
+        "de": "Sichtbarkeit auf “Entwurf” setzen, um die automatische Veröffentlichung des Datasets zu planen. Wenn Sie die Sichtbarkeit auf “Veröffentlicht” setzen, wird das Dataset direkt veröffentlicht.",
+        "fr": "Définissez la visibilité sur \"Draft\" pour programmer la publication automatique de jeu de données. Si vous choisissez la visibilité \"Publié\", le jeu de données sera publié directement.",
+        "it": "Impostare la visibilità su \"Draft\" per programmare la pubblicazione automatica del set di dati. Impostando la visibilità su \"Pubblicato\", il set di dati sarà pubblicato direttamente"
       }
     },
     {
@@ -159,7 +159,7 @@
         "en": "Dataset Information",
         "de": "Dataset Information",
         "fr": "Informations relatives au jeu de données",
-        "it": "Dataset Information"
+        "it": "Informazioni relative al dataset"
       },
       "fieldgroup": {
         "en": "Description",
@@ -168,10 +168,10 @@
         "it": "Descrizione"
       },
       "help_text": {
-        "de": "Bitte geben Sie eine Beschreibung für Ihr Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
-        "en": "Bitte geben Sie eine Beschreibung für Ihr Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
-        "fr": "Bitte geben Sie eine Beschreibung für Ihr Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
-        "it": "Bitte geben Sie eine Beschreibung für Ihr Datasets ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)"
+        "de": "Bitte geben Sie eine Beschreibung für Ihr Datasets ein. Bitte besetzen Sie mindestens eine Landessprache (Bundesstellen soll mindestens zwei Landessprachen besetzen) und Englisch. (Der Eintrag in Englisch wird bei der Weitergabe Ihres Datasets an das europäische Datenportal benötigt.)",
+        "en": "Please enter a description for your dataset. Please fill in at least one national language (federal offices should fill in at least two national languages) and English. (The entry in English is required when submitting your dataset to the European Data Portal.)",
+        "fr": "Veuillez entrer une description pour votre jeu de données. Veuillez remplir au moins une langue nationale (les offices fédéraux doivent remplir au moins deux langues nationales) et l'anglais. (La saisie en anglais est requise lors de la soumission de votre ensemble de données au portail européen de données.)",
+        "it": "Inserire una descrizione per il dataet. Si prega di compilare almeno una lingua nazionale (gli uffici ederali dovrebbero compilare almeno due lingue nazionali) e l'inglese. (La voce in inglese è necessaria quando si presenta il vostro set di dati al portale europeo dei dati.)"
       },
       "label": {
         "en": "Description",
@@ -198,37 +198,37 @@
       },
       "fieldgroup": {
         "en": "Issued date",
-        "de": "Publikationsdatum",
+        "de": "Erstellungsdatum",
         "fr": "Date de publication",
-        "it": "Data di rilascio"
+        "it": "Data di pubblicazione"
       },
       "label": {
         "en": "Issued date",
-        "de": "Publikationsdatum",
+        "de": "Erstellungsdatum",
         "fr": "Date de publication",
-        "it": "Data di rilascio"
+        "it": "Data di pubblicazione"
       },
      "help_text": {
-        "en": "Das Erstellungdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss.",
-        "de": "Das Erstellungdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss.",
-        "fr": "Das Erstellungdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss.",
-        "it": "Das Erstellungdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss."
-      }
+       "en": "The creation date is a mandatory field. This is the date of the first publication in the source system of this dataset. If this is not known, use the date of the planned first publication on opendata.swiss",
+       "de": "Das Erstellungsdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss.",
+       "fr": "La date de création est un champ obligatoire. Il s'agit de la date de la première publication dans le système source de cet ensemble de données. Si celle-ci n'est pas connue, utilisez la date de la première publication prévue sur opendata.swiss.",
+       "it": "La data di creazione è un campo obbligatorio. Questo significa la data della prima pubblicazione nel sistema di origine di questo set di dati. Se questo non è noto, utilizzare la data della prima pubblicazione prevista su opendata.swiss."
+     }
     },
     {
       "field_name": "modified",
       "preset": "ogdch_date",
       "label": {
-        "en": "Modified date",
+        "en": "Modification date",
         "de": "Änderungsdatum",
-        "fr": "Date de modification",
-        "it": "Data di modifica"
+        "fr": "Date de la dernière modification",
+        "it": "Data ultima modifica"
       },
       "help_text": {
-        "de": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist.",
-        "en": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist.",
-        "fr": "Une fois la publication effectuée, vous pouvez indiquer sous «Modifié» à quand remonte la dernière modification (mise à jour, correction, etc.) du jeu de données.",
-        "it": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung, Korrektur etc.) am Dataset vorgenommen worden ist."
+        "de": "Beim Datum der letzten Änderung («geändert») können Sie nach der Publikation kommunizieren, wann die letzte Änderung (Aktualisierung mit neuen Ressourcen, Korrektur der Metadaten etc.) am Dataset vorgenommen worden ist.",
+        "en": "With the modification date, you can communicate after publication when the last change (update with new resources, correction of metadata, etc.) was made to the dataset.",
+        "fr": "Avec la date de la dernière modification, vous pouvez communiquer après la publication quand la dernière modification (mise à jour avec de nouvelles ressources, correction des métadonnées, etc.) a été apportée au jeu de données.",
+        "it": "Con la data dell'ultima modifica, è possibile comunicare dopo la pubblicazione quando è stata fatta l'ultima modifica (aggiornamento con nuove risorse, correzione di metadati, ecc.) al dataset."
       }
     },
     {
@@ -244,10 +244,10 @@
         "it": "Intervallo di aggiornamento"
       },
       "help_text": {
-        "de": "Das «Aktualisierungsintervall» ist das Intervall, in dem Aktualisierungen vorgenommen werden.",
-        "en": "Das «Aktualisierungsintervall» ist das Intervall, in dem Aktualisierungen vorgenommen werden.",
-        "fr": "Das «Aktualisierungsintervall» ist das Intervall, in dem Aktualisierungen vorgenommen werden.",
-        "it": "Das «Aktualisierungsintervall» ist das Intervall, in dem Aktualisierungen vorgenommen werden."
+        "de": "Das «Aktualisierungsintervall» ist das Intervall, in dem Aktualisierungen zu den Daten vorgenommen werden.",
+        "en": "The \"update interval\" is the interval at which updates are made to the data.",
+        "fr": "L'\"intervalle d'actualisation\" est l'intervalle auquel les mises à jour sur les données sont effectuées.",
+        "it": "L'\"intervallo di aggiornamento\" è l'intervallo in cui vengono fatti gli aggiornamenti dei dati."
       }
     },
     {
@@ -263,26 +263,26 @@
       "label_start_date": {
         "en": "from",
         "de": "von",
-        "fr": "von",
-        "it": "von"
+        "fr": "de",
+        "it": "dal"
       },
       "label_end_date": {
         "en": "to",
         "de": "bis",
-        "fr": "bis",
-        "it": "bis"
+        "fr": "à",
+        "it": "al"
       },
       "help_text": {
-        "de": "Eine oder mehrere Zeitperioden, welche dieses Datensatz abdeckt.",
-        "en": "Eine oder mehrere Zeitperioden, welche dieses Datensatz abdeckt.",
-        "fr": "Eine oder mehrere Zeitperioden, welche dieses Datensatz abdeckt.",
-        "it": "Eine oder mehrere Zeitperioden, welche dieses Datensatz abdeckt."
+        "de": "Eine oder mehrere Zeitperioden, welche dieses Datasetabdeckt.",
+        "en": "One or more time periods that this dataset covers.",
+        "fr": "Une ou plusieurs périodes couvertes par ce jeu de données.",
+        "it": "Uno o più periodi temporali che questo set di dati copre."
       },
       "add_row": {
         "en": "Add another temporal coverage",
         "de": "Eine weitere Zeitperiode hinzufügen",
-        "fr": "Eine weitere Zeitperiode hinzufügen",
-        "it": "Eine weitere Zeitperiode hinzufügen"
+        "fr": "Ajouter une autre période",
+        "it": "Aggiungere un altro periodo di tempo"
       }
     },
     {
@@ -293,7 +293,7 @@
       "form_snippet": "publishers.html",
       "mark_required": true,
       "section_title": {
-        "en": "Publisher Informatio",
+        "en": "Publisher Information",
         "de": "Publisher-Informationen",
         "fr": "Informations relatives à l’éditeur",
         "it": "Dataset Information"
@@ -308,19 +308,19 @@
         "en": "Publishers",
         "de": "Publisher",
         "fr": "Editeurs",
-        "it": "Editori"
+        "it": "Publisher"
       },
       "help_text": {
-        "de": "Ein oder mehrere Publisher dieses Datensatzes. Dieser kann der Organisation entsprechen, welche den Datensatz veröffentlicht. Mindestens ein Publisher ist erforderlich.",
-        "en": "Ein oder mehrere Publisher dieses Datensatzes. Dieser kann der Organisation entsprechen, welche den Datensatz veröffentlicht. Mindestens ein Publisher ist erforderlich.",
-        "fr": "L'/Les éditeur(s) du jeu données. Il peut s'agir de l'organisation publiant le jeu données. Vous devez indiquer au moins un éditeur.",
-        "it": "Ein oder mehrere Publisher dieses Datensatzes. Dieser kann der Organisation entsprechen, welche den Datensatz veröffentlicht. Mindestens ein Publisher ist erforderlich."
+        "de": "Ein oder mehrere Publisher dieses Datensatzes, d.h. die Organisation (z.B. Amt, Abteilung), welche den Datensatz veröffentlicht. Damit kann eine präzisere Information als die publizierende Hauptorganisation geliefert werden. Mindestens ein Publisher ist erforderlich.",
+        "en": "One or more publishers of this record, i.e. the organisation (e.g. office, department) that publishes the record. This can provide more precise information than the main publishing organisation. At least one publisher is required.",
+        "fr": "Un ou plusieurs éditeurs de ce jeu de données, c'est-à-dire l'organisation (par exemple, l’unité, le département) qui publie l'ensemble de données. Celui-ci peut fournir des informations plus précises que le principal organisme de publication. Au moins un éditeur est requis.",
+        "it": "Uno o più editori di questo set di dati, cioè l'organizzazione (ad es. ufficio, dipartimento) che pubblica il set di dati. Questo può fornire informazioni più precise rispetto all'organizzazione editoriale principale. È richiesto almeno un publisher."
       },
       "form_placeholder": {
         "en": "Publishers name",
         "de": "Publisher Name",
         "fr": "Editeurs",
-        "it": "Editori"
+        "it": "Nome Publisher"
       },
       "add_row": {
         "en": "Add another publisher",
@@ -337,10 +337,10 @@
       "display_snippet": "contact_points.html",
       "mark_required": true,
       "fieldgroup": {
-        "en": "Contact points",
-        "de": "Kontaktstellen",
-        "fr": "Points de contact",
-        "it": "Punti di contatto"
+        "en": "Contact point",
+        "de": "Kontaktstelle",
+        "fr": "Point de contact",
+        "it": "Punto di contatto"
       },
       "label": {
         "en": "Contact points",
@@ -352,7 +352,7 @@
         "en": "Name",
         "de": "Name",
         "fr": "Nom",
-        "it": "Name"
+        "it": "Nome"
       },
       "label_email": {
         "en": "Email",
@@ -364,25 +364,26 @@
         "en": "Name",
         "de": "Name",
         "fr": "Nom",
-        "it": "Name"
+        "it": "Nome"
       },
       "form_placeholder_email": {
         "en": "Email",
         "de": "Email",
-        "fr": "Courriel",
-        "it": "Editori"
+        "fr": "Email",
+        "it": "Email"
       },
       "help_text": {
-        "de": "Die Stelle, welche kontaktiert wird, falls eine Frage zum Datensatz besteht. Mindestens eine Kontaktstelle ist erforderlich.",
-        "en": "Die Stelle, welche kontaktiert wird, falls eine Frage zum Datensatz besteht. Mindestens eine Kontaktstelle ist erforderlich.",
-        "fr": "L'interlocuteur en cas de questions au suject du jeu données. Vous devez indiquer au minimum un contact.",
-        "it": "Die Stelle, welche kontaktiert wird, falls eine Frage zum Datensatz besteht. Mindestens eine Kontaktstelle ist erforderlich."
+        "de": "Die Stelle, welche kontaktiert wird, falls eine Frage zum Datensatz besteht. Es können mehrere Kontaktstellen erfasst werden, mindestens eine Kontaktstelle ist erforderlich.",
+        "en": "The contact point for questions about the dataset. Several contact points can be recorded, but at least one contact point is required.",
+        "fr": "Le point de contact pour des questions concernant le dataset. Plusieurs points de contact peuvent être enregistrés, mais au moins un point de contact est requis.",
+        "it": "Il punto di contatto per il dataset. Si possono registrare diversi punti di contatto, ma è necessario almeno un punto di contatto."
       },
       "add_row": {
         "en": "Add another contact point",
         "de": "Eine weitere Kontakstelle hinzufügen",
-        "fr": "Eine weitere Kontakstelle hinzufügen",
-        "it": "Eine weitere Kontakstelle hinzufügen"
+        "de": "Eine weitere Kontakstelle hinzufügen",
+        "fr": "Ajouter un autre point de contact",
+        "it": "Aggiungere un altro punto di contatto"
       }
     },
     {
@@ -428,9 +429,9 @@
       ],
       "help_text": {
         "de": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden.",
-        "en": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden.",
-        "fr": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden.",
-        "it": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden."
+        "en": "Languages in which resources are available. If the resources are language-independent, nothing should be selected.",
+        "fr": "Langues dans lesquelles les ressources existent. Si les ressources sont indépendantes de la langue, rien ne doit être marqué.",
+        "it": "Lingue in cui le risorse di dati sono disponibile. Se le risorse sono indipendenti dalla lingua, si prega di non selezionare nulla."
       },
       "label": {
         "en": "Languages",
@@ -462,10 +463,10 @@
         "it": "Landing page"
       },
       "help_text": {
-        "de": "Mit «Landing Page» ist die Website gemeint, auf der die Daten ursprünglich publiziert wurden, falls diese vorhanden ist.",
-        "en": "Mit «Landing Page» ist die Website gemeint, auf der die Daten ursprünglich publiziert wurden, falls diese vorhanden ist.",
-        "fr": "La «Landing page» est le site internet sur lequel les données ont été publiées initialement, le cas échéant.",
-        "it": "Mit «Landing Page» ist die Website gemeint, auf der die Daten ursprünglich publiziert wurden, falls diese vorhanden ist."
+        "de": "Mit «Landing Page» ist die Website gemeint, auf der die Daten ursprünglich publiziert wurden, falls diese vorhanden ist. Dort sollen weitere Informationen zu den Daten und zum Kontext vorhanden sein.",
+        "en": "\"Landing page\" means the website where the data was originally published, if it exists. Further information on the data and the context should be available there.",
+        "fr": "La «Landing page»: le site web où les données ont été initialement publiées, s'il existe. De plus amples informations sur les données et le contexte devraient y être disponibles.",
+        "it": "Per \"Landing page\" si intende il sito web in cui i dati sono stati originariamente pubblicati, se questa esiste. Ulteriori informazioni sui dati e sul contesto dovrebbero essere disponibili lì."
       }
     },
     {
@@ -523,10 +524,10 @@
         "it": "Eine weitere Beziehung anfügen"
       },
       "help_text": {
-        "de": "Unter «Beziehungen» geben Sie bitte «legal_basis» ein und erfassen einen Link auf die gesetzliche Grundlage, welche die Publikation dieses Datasets vorsieht.",
-        "en": "Unter «Beziehungen» geben Sie bitte «legal_basis» ein und erfassen einen Link auf die gesetzliche Grundlage, welche die Publikation dieses Datasets vorsieht.",
-        "fr": "Sous «Relations», veuillez sélectionner «legal_basis», puis saisir un lien vers la base légale qui prévoit la publication du jeu de données en question.",
-        "it": "Unter «Beziehungen» geben Sie bitte «legal_basis» ein und erfassen einen Link auf die gesetzliche Grundlage, welche die Publikation dieses Datasets vorsieht."
+        "de": "Wichtig: Mittels dieses Felds soll auch eine Information zur gesetzlichen Grundlage veröffentlicht werden. Geben Sie bitte dazu «legal_basis» ein und erfassen einen Link auf die gesetzliche Grundlage, welche die Publikation dieses Datasets vorsieht.",
+        "en": "Important: This field should also be used to publish information on the legal basis. Under \"Relationships\" please enter \"legal_basis\" and a link to the legal basis which provides for the publication of this dataset.",
+        "fr": "Important : ce champ doit également être utilisé pour publier des informations sur la base juridique. Sous \"Relations\", veuillez saisir \"legal_basis\" et un lien vers la base juridique qui permet la publication de cet ensemble de données.",
+        "it": "Importante: Questo campo è utilizzato anche per pubblicare informazioni sulla base legale. Sotto \"Relazioni\", inserire \"legal_basis\" e un link alla base giuridica che prevede la pubblicazione di questo dataset."
       }
     },
     {
@@ -563,9 +564,9 @@
       },
       "help_text": {
         "de": "Unter «Verwandte Datensätze» können Sie aus allen verfügbaren Datasets auf opendata.swiss mit thematischem Bezug zu Ihrem aktuellen Dataset auswählen. Damit signalisieren Sie Datennutzenden, dass weitere Datasets existieren, die sie interessieren könnten.",
-        "en": "Unter «Verwandte Datensätze» können Sie aus allen verfügbaren Datasets auf opendata.swiss mit thematischem Bezug zu Ihrem aktuellen Dataset auswählen. Damit signalisieren Sie Datennutzenden, dass weitere Datasets existieren, die sie interessieren könnten.",
-        "fr": "Le champ «Jeux de données connexes» permet de sélectionner parmi tous les jeux de données disponibles sur opendata.swiss ceux dont le thème est en lien avec votre jeu de données actuel. Vous signalez ainsi aux utilisateurs quels autres jeux de données pourraient les intéresser.",
-        "it": "Unter «Verwandte Datensätze» können Sie aus allen verfügbaren Datasets auf opendata.swiss mit thematischem Bezug zu Ihrem aktuellen Dataset auswählen. Damit signalisieren Sie Datennutzenden, dass weitere Datasets existieren, die sie interessieren könnten."
+        "en": "Under \"Related datasets\" you can select from all available datasets on opendata.swiss that are thematically related to your current dataset. This way, you signal to data users that other datasets exist that might be of interest to them.",
+        "fr": "Sous \"Jeux de données en relation\", vous pouvez choisir parmi tous les jeux de données disponibles sur opendata.swiss qui sont thématiquement liés à votre jeu de données actuel. De cette façon, vous signalez aux utilisateurs de données qu'il existe d'autres ensembles de données qui pourraient les intéresser.",
+        "it": "Sotto \"Dataset correlati\" potete selezionare tra tutti i set di dati disponibili su opendata.swiss che sono tematicamente correlati al vostro set di dati attuale. In questo modo, si segnalano agli utenti dei dati che esistono altri set di dati che potrebbero essere di loro interesse."
       },
       "label": {
         "en": "Related datasets",
@@ -609,9 +610,9 @@
       },
       "fieldgroup_help_text": {
         "de": "Schlagwörter helfen dabei, die Auffindbarkeit zu steigern. Mögliche Schlagwörter können Sie aus Ihren Metadaten oder Ihrem Quellsystem ermitteln.",
-        "en": "Schlagwörter helfen dabei, die Auffindbarkeit zu steigern. Mögliche Schlagwörter können Sie aus Ihren Metadaten oder Ihrem Quellsystem ermitteln.",
-        "fr": "Ces mots clés permettent de trouver plus aisément le jeu de données voulu. Pour les définir, tenez compte de vos métadonnées et de votre système source.",
-        "it": "Schlagwörter helfen dabei, die Auffindbarkeit zu steigern. Mögliche Schlagwörter können Sie aus Ihren Metadaten oder Ihrem Quellsystem ermitteln."
+        "en": "Keywords help to increase findability. You can determine possible keywords from your metadata or your source system.",
+        "fr": "Les mots-clés permettent d'accroître la facilité de recherche. Vous pouvez déterminer les mots-clés possibles à partir de vos métadonnées ou de votre système source..",
+        "it": "Le parole chiave aiutano ad aumentare la reperibilità dei dati. Qui si possono determinare le possibili parole chiave a partire dai i metadati o dal sistema di origine."
       }
     }
   ],
@@ -625,10 +626,10 @@
         "it": "Identifier (Permalink)"
       },
       "help_text": {
-        "en": "Wählen Sie einen geeigneten Identifier aus Ihrem Quellsystem aus.",
+        "en": "Select a suitable identifier from your source system.",
         "de": "Wählen Sie einen geeigneten Identifier aus Ihrem Quellsystem aus.",
         "fr": "Choisissez un identifiant approprié dans votre système source.",
-        "it": "Wählen Sie einen geeigneten Identifier aus Ihrem Quellsystem aus."
+        "it": "Seleziona un identificatore adatto dal tuo sistema di origine."
       }
     },
     {
@@ -639,7 +640,7 @@
         "en": "Resource",
         "de": "Resource",
         "fr": "Resource",
-        "it": "Resource"
+        "it": "Risorsa"
       },
       "fieldgroup": {
         "en": "Title",
@@ -649,9 +650,9 @@
       },
       "help_text": {
         "de": "Bitte geben Sie einen Titel für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn der Titel leer gelassen wird, wird der Titel des Datensatzes verwendet.",
-        "en": "Please enter a tile for the resource. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn der Titel leer gelassen wird, wird der Titel des Datensatzes verwendet.",
-        "fr": "Bitte geben Sie einen Titel für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn der Titel leer gelassen wird, wird der Titel des Datensatzes verwendet.",
-        "it": "\"Bitte geben Sie einen Titel für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn der Titel leer gelassen wird, wird der Titel des Datensatzes verwendet."
+        "en": "Please enter a title for your resource. Please fill in at least one national language and English. If the title is left blank, the title of the record will be used.",
+        "fr": "Veuillez entrer un titre pour votre ressource. Veuillez remplir au moins une langue nationale et l'anglais. Si le titre est laissé vide, le titre de l'enregistrement sera utilisé.",
+        "it": "Inserire un titolo per la risorsa. Si prega di compilare almeno una lingua nazionale e l'inglese. Se il titolo viene lasciato vuoto, verrà usato il titolo del record."
       },
       "label": {
         "en": "Title",
@@ -688,9 +689,9 @@
       },
       "help_text": {
         "de": "Bitte geben Sie einen Beschreibung für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn die Beschreibung leer gelassen wird, wird die Beschreibung des Datensatzes verwendet.",
-        "en": "Bitte geben Sie einen Beschreibung für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn die Beschreibung leer gelassen wird, wird die Beschreibung des Datensatzes verwendet.",
-        "fr": "Bitte geben Sie einen Beschreibung für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn die Beschreibung leer gelassen wird, wird die Beschreibung des Datensatzes verwendet.",
-        "it": "Bitte geben Sie einen Beschreibung für Ihre Resource ein. Bitte besetzen Sie mindestens eine Landessprache und Englisch. Wenn die Beschreibung leer gelassen wird, wird die Beschreibung des Datensatzes verwendet."
+        "en": "Please enter a description for your resource. Please fill in at least one national language and English. If the description is left blank, the description of the record will be used.",
+        "fr": "Veuillez entrer une description pour votre ressource. Veuillez remplir au moins une langue nationale et l'anglais. Si la description est laissée en blanc, la description de l'enregistrement sera utilisée.",
+        "it": "Inserisci una descrizione per la tua risorsa. Si prega di compilare almeno una lingua nazionale e l'inglese. Se la descrizione è lasciata in bianco, verrà usata la descrizione del record."
       }
     },
     {
@@ -699,15 +700,15 @@
         "en": "Issued date",
         "de": "Erstellungsdatum",
         "fr": "Date de publication",
-        "it": "Data di rilascio"
+        "it": "Data di pubblicazione"
       },
       "preset": "ogdch_date",
       "required": false,
       "help_text": {
-        "en": "Das Datum der Veröffentlichung dieser Ressource.",
         "de": "Das Datum der Veröffentlichung dieser Ressource.",
-        "fr": "Das Datum der Veröffentlichung dieser Ressource.",
-        "it": "Das Datum der Veröffentlichung dieser Ressource."
+        "en": "The date of publication of this resource.",
+        "fr": "La date de publication de cette ressource.",
+        "it": "La data di pubblicazione di questa risorsa."
       }
     },
     {
@@ -721,9 +722,9 @@
       },
       "help_text": {
         "de": "Datum der letzten Änderung dieser Ressource.",
-        "en": "Datum der letzten Änderung dieser Ressource.",
-        "fr": "Datum der letzten Änderung dieser Ressource.",
-        "it": "Datum der letzten Änderung dieser Ressource."
+        "en": "Date of the last modification of this resource.",
+        "fr": "Date de la dernière modification de cette ressource.",
+        "it": "Data dell'ultima modifica di questa risorsa."
       }
     },
     {
@@ -774,10 +775,10 @@
         "it": "Lingue"
       },
       "help_text": {
-        "de": "Sprachen, in denen diese Ressource vorliegt. Falls die Ressource sprachunabhängig ist, soll nichts angekreuzt werden.",
-        "en": "Sprachen, in denen diese Ressource vorliegt. Falls die Ressource sprachunabhängig ist, soll nichts angekreuzt werden.",
-        "fr": "Sprachen, in denen diese Ressource vorliegt. Falls die Ressource sprachunabhängig ist, soll nichts angekreuzt werden.",
-        "it": "Sprachen, in denen diese Ressource vorliegt. Falls die Ressource sprachunabhängig ist, soll nichts angekreuzt werden."
+        "de": "Sprachen, in denen Ressourcen vorliegen. Falls die Ressourcen sprachunabhängig sind, soll nichts angekreuzt werden.",
+        "en": "Languages in which resources are available. If the resources are language-independent, nothing should be selected.",
+        "fr": "Langues dans lesquelles les ressources existent. Si les ressources sont indépendantes de la langue, rien ne doit être marqué.",
+        "it": "Lingue in cui le risorse di dati sono disponibile. Se le risorse sono indipendenti dalla lingua, si prega di non selezionare nulla."
       }
     },
     {
@@ -791,10 +792,10 @@
         "it": "URL d'accesso"
       },
       "help_text": {
-        "de": "Die URL, über welche auf die Ressource zugegriffen werden kann. Dies kann entweder eine Download-URL, eine API-URL oder eine Landing-Page-URL sein. Falls die Ressource nur über eine Landing Page verfügbar ist, muss dieses Feld die URL der Landing Page beinhalten. Falls eine Download-URL für diese Ressource angegeben wurde, muss diese ebenfalls in diesem Feld eingetragen werden.",
-        "en": "Die URL, über welche auf die Ressource zugegriffen werden kann. Dies kann entweder eine Download-URL, eine API-URL oder eine Landing-Page-URL sein. Falls die Ressource nur über eine Landing Page verfügbar ist, muss dieses Feld die URL der Landing Page beinhalten. Falls eine Download-URL für diese Ressource angegeben wurde, muss diese ebenfalls in diesem Feld eingetragen werden.",
-        "fr": "Die URL, über welche auf die Ressource zugegriffen werden kann. Dies kann entweder eine Download-URL, eine API-URL oder eine Landing-Page-URL sein. Falls die Ressource nur über eine Landing Page verfügbar ist, muss dieses Feld die URL der Landing Page beinhalten. Falls eine Download-URL für diese Ressource angegeben wurde, muss diese ebenfalls in diesem Feld eingetragen werden.",
-        "it": "Die URL, über welche auf die Ressource zugegriffen werden kann. Dies kann entweder eine Download-URL, eine API-URL oder eine Landing-Page-URL sein. Falls die Ressource nur über eine Landing Page verfügbar ist, muss dieses Feld die URL der Landing Page beinhalten. Falls eine Download-URL für diese Ressource angegeben wurde, muss diese ebenfalls in diesem Feld eingetragen werden."
+        "de": "Die URL, über welche auf die Ressource zugegriffen werden kann. Dies kann entweder eine Download-URL oder eine API-URL sein. Falls eine Download-URL für diese Ressource angegeben wurde, muss diese ebenfalls in diesem Feld eingetragen werden.",
+        "en": "The URL through which the resource can be accessed. This can be either a download URL or an API URL. If a download URL has been specified for this resource, it must also be entered in this field.",
+        "fr": "L'URL par laquelle on peut accéder à la ressource. Il peut s'agir d'une URL de téléchargement ou d'une URL d'API. Si une URL de téléchargement a été spécifiée pour cette ressource, elle doit également être saisie dans ce champ.",
+        "it": "L'URL attraverso il quale si può accedere alla risorsa. Questo può essere un URL di download o un URL API. Se è stato specificato un URL di download per questa risorsa, deve essere inserito anche in questo campo."
       }
     },
     {
@@ -808,9 +809,9 @@
       },
       "help_text": {
         "de": "URL der Datei, falls die Ressource heruntergeladen werden kann.",
-        "en": "URL der Datei, falls die Ressource heruntergeladen werden kann.",
-        "fr": "URL der Datei, falls die Ressource heruntergeladen werden kann.",
-        "it": "URL der Datei, falls die Ressource heruntergeladen werden kann."
+        "en": "URL of the file if the resource can be downloaded.",
+        "fr": "URL du fichier, si la ressource peut être téléchargée.",
+        "it": "URL del file, se la risorsa può essere scaricata."
       }
     },
     {
@@ -826,10 +827,10 @@
         "it": "Condizioni d'uso"
       },
       "help_text": {
-        "de": "Alle Nutzungsbedingungen, welche nicht mit einem Stern (*) markiert sind, gelten als 'Closed Data'.",
-        "en": "Alle Nutzungsbedingungen, welche nicht mit einem Stern (*) markiert sind, gelten als 'Closed Data'.",
-        "fr": "Alle Nutzungsbedingungen, welche nicht mit einem Stern (*) markiert sind, gelten als 'Closed Data'.",
-        "it": "Alle Nutzungsbedingungen, welche nicht mit einem Stern (*) markiert sind, gelten als 'Closed Data'."
+        "de": "Wichtig: Alle Nutzungsbedingungen, welche nicht mit einem Stern (*) markiert sind, gelten als 'Closed Data' und werden nicht veröffentlicht.",
+        "en": "Important: All terms of use that are not marked with an asterisk (*) are considered 'Closed Data' and will not be published.",
+        "fr": "Important : Toutes les conditions d'utilisation qui ne sont pas marquées d'un astérisque (*) sont considérées comme des \"données fermées\" et ne seront pas publiées.",
+        "it": "Importante: Tutte le condizioni d'uso che non sono contrassegnate da un asterisco (*) sono considerate \"Dati chiusi\" e non saranno pubblicate."
       }
     },
     {
@@ -853,9 +854,9 @@
       },
       "help_text": {
         "de": "Hier kann die «Grösse» der Ressource in Bytes angegeben werden.",
-        "en": "Hier kann die «Grösse» der Ressource in Bytes angegeben werden.",
-        "fr": "Hier kann die «Grösse» der Ressource in Bytes angegeben werden.",
-        "it": "Hier kann die «Grösse» der Ressource in Bytes angegeben werden."
+        "en": "Here the \"size\" of the resource can be specified in bytes.",
+        "fr": "Ici, la \"taille\" de la ressource en Bytes peut être spécifiée.",
+        "it": "Qui la \"dimensione\" della risorsa in byte può essere specificata."
       }
     },
     {
@@ -879,9 +880,9 @@
       },
       "help_text": {
         "de": "Wählen Sie das Format, das dem Ihrer Ressourcen entspricht.",
-        "en": "Wählen Sie das Format, das dem Ihrer Ressourcen entspricht.",
-        "fr": "Wählen Sie das Format, das dem Ihrer Ressourcen entspricht.",
-        "it": "Wählen Sie das Format, das dem Ihrer Ressourcen entspricht."
+        "en": "Choose the format that corresponds to that of your resources.",
+        "fr": "Choisissez le format qui correspond à celui de vos ressources.",
+        "it": "Scegliere il formato che corrisponde a quello delle tue risorse."
       }
     },
     {

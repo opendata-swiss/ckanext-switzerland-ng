@@ -44,7 +44,7 @@
   <div class="ogdch-form-field-group">
     {% set groups = h.get_localized_group_list(lang) %}
     {% if groups %}
-      <h2 id="{{ "ogdch_groups" + "_pagemark" }}">
+      <h2 id="ogdch_groups_pagemark">
              {{ _("Categories") }}
       </h2>
       <div class="form-group control-medium">
@@ -58,7 +58,7 @@
         </div>
       </div>
       {{- form.info(
-        text= _('Here you can chose one or more categories that the dataset relates to.')
+        text= _('Here you can choose one or more categories to which the data set relates. Defining a category increases the findability of the data.')
       ) -}}
     {% endif %}
   </div>
