@@ -342,6 +342,12 @@
         "fr": "Points de contact",
         "it": "Punti di contatto"
       },
+      "label": {
+        "en": "Contact points",
+        "de": "Kontaktstellen",
+        "fr": "Points de contact",
+        "it": "Punti di contatto"
+      },
       "label_name": {
         "en": "Name",
         "de": "Name",
@@ -480,6 +486,12 @@
         "fr": "Relation",
         "it": "Beziehungen"
       },
+      "label": {
+        "en": "Relations",
+        "de": "Beziehungen",
+        "fr": "Relation",
+        "it": "Beziehungen"
+      },
       "label_text": {
         "en": "Text",
         "de": "Text",
@@ -556,6 +568,12 @@
         "it": "Unter «Verwandte Datensätze» können Sie aus allen verfügbaren Datasets auf opendata.swiss mit thematischem Bezug zu Ihrem aktuellen Dataset auswählen. Damit signalisieren Sie Datennutzenden, dass weitere Datasets existieren, die sie interessieren könnten."
       },
       "label": {
+        "en": "Related datasets",
+        "de": "Verwandte Datensätze",
+        "fr": "Jeux de données relationnels",
+        "it": "Set di dati relativi"
+      },
+      "label_form": {
         "en": "Name / Slug",
         "de": "Name / Slug",
         "fr": "Nom / Slug",

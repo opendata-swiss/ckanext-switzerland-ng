@@ -9,7 +9,7 @@
   {% call form.input(
     'see-also-' + row.index,
     id='field-see-also-' + row.index,
-    label=h.scheming_language_text(field.label),
+    label=h.scheming_language_text(field.label_form),
     placeholder=h.scheming_language_text(field.form_placeholder),
     value=row.data,
     attrs=attrs,
