@@ -42,7 +42,7 @@
   {%- endfor -%}
 
   <div class="ogdch-form-field-group">
-    {% set groups = h.get_localized_group_list(lang) %}
+    {% set groups = h.get_localized_group_list(h.lang()) %}
     {% if groups %}
       <h2 id="ogdch_groups_pagemark">
              {{ _("Categories") }}
