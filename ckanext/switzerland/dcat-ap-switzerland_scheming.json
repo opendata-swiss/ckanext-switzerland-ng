@@ -827,10 +827,10 @@
         "it": "Condizioni d'uso"
       },
       "help_text": {
-        "de": "Wichtig: Alle Nutzungsbedingungen, welche nicht mit einem Stern (*) markiert sind, gelten als 'Closed Data' und werden nicht veröffentlicht.",
-        "en": "Important: All terms of use that are not marked with an asterisk (*) are considered 'Closed Data' and will not be published.",
-        "fr": "Important : Toutes les conditions d'utilisation qui ne sont pas marquées d'un astérisque (*) sont considérées comme des \"données fermées\" et ne seront pas publiées.",
-        "it": "Importante: Tutte le condizioni d'uso che non sono contrassegnate da un asterisco (*) sono considerate \"Dati chiusi\" e non saranno pubblicate."
+        "de": "Wichtig: Alle Nutzungsbedingungen, welche nicht mit einem Stern (*) markiert sind, gelten als 'Closed Data'.",
+        "en": "Important: All terms of use that are not marked with an asterisk (*) are considered 'Closed Data'.",
+        "fr": "Important : Toutes les conditions d'utilisation qui ne sont pas marquées d'un astérisque (*) sont considérées comme des \"données fermées\".",
+        "it": "Importante: Tutte le condizioni d'uso che non sono contrassegnate da un asterisco (*) sono considerate \"Dati chiusi\"."
       }
     },
     {
