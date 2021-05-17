@@ -11,6 +11,7 @@ from ckanext.switzerland.helpers.dataset_form_helpers import (
     get_see_alsos_from_form,
     get_temporals_from_form,
     get_contact_points_from_form)
+from ckan.lib.munge import munge_tag
 from ckan.logic import NotFound, get_action
 import json
 import re
@@ -444,17 +445,24 @@ def ogdch_fluent_tags(field, schema):
 
     What we need to do in this case is save the tag field thus:
     {"de": ["tag-de"], "fr": [], "en": [], "it": []}
+
+    Tags are munged to contain only lowercase letters, numbers, and the
+    characters `-_.`
     """
     def validator(key, data, errors, context):
         if errors[key]:
             return
 
         value = json.loads(data[key])
+        new_value = {}
         for lang in schema['form_languages']:
+            new_value[lang] = []
             if lang not in value.keys():
-                value[lang] = []
+                continue
+            for keyword in value[lang]:
+                new_value[lang].append(munge_tag(keyword))
 
-        data[key] = json.dumps(value)
+        data[key] = json.dumps(new_value)
 
     return validator
 
