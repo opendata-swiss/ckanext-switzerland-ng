@@ -87,6 +87,13 @@ pip install -r requirements.txt
 pip install -r dev-requirements.txt
 cd -
 
+echo "Installing ckanext-harvester_dashboard and its requirements..."
+git clone https://github.com/opendata-swiss/ckanext-harvester_dashboard
+cd ckanext-harvester_dashboard
+python setup.py develop
+pip install -r requirements.txt
+cd -
+
 echo "Installing ckanext-xloader and its requirements..."
 git clone https://github.com/ckan/ckanext-xloader
 cd ckanext-xloader
