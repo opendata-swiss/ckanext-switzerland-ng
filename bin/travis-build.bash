@@ -31,6 +31,9 @@ else
     echo "CKAN version: ${CKAN_TAG#ckan-}"
 fi
 
+# update pip
+pip install --upgrade pip
+
 # install the recommended version of setuptools
 if [ -f requirement-setuptools.txt ]
 then
