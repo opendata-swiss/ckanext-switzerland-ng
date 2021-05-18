@@ -61,6 +61,14 @@ cd ckan
 paster db init -c test-core.ini
 cd -
 
+# The version of setuptools in CKAN (36.1) falls over when installing
+# dependencies for ckanext-scheming on Travis, specifically ckantoolkit.
+# A newer setuptools version works, possibly because in versions >42,
+# pip is used to install dependencies listed in install_requires in
+# setup.py.
+echo "Upgrading setuptools..."
+pip install --upgrade setuptools
+
 echo "Installing ckanext-scheming and its requirements..."
 git clone https://github.com/ckan/ckanext-scheming
 cd ckanext-scheming
