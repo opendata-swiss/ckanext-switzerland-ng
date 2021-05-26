@@ -34,7 +34,7 @@
     {% block package_desc %}
       {% if pkg.description %}
         <div class="notes embedded-content">
-          {{ h.render_markdown(h.get_translated(pkg, 'description')) }}
+          {{ h.render_markdown(h.scheming_language_text(pkg.description)) }}
         </div>
       {% endif %}
     {% endblock %}
