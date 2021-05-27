@@ -337,6 +337,11 @@ msgstr "Closed data"
 msgid "Expecting list of strings, got \"%s\""
 msgstr "Veuillez saisir une chaîne de caractères, vous avez indiqué \"%s\""
 
+#: ckanext/switzerland/helpers/validators.py:142
+#, python-format
+msgid "Expecting DD.MM.YYYY, got \"%s\""
+msgstr "Veuillez saisir JJ.MM.AAAA, vous avez indiqué \"%s\""
+
 #: ckanext/switzerland/helpers/validators.py:207
 #, python-format
 msgid "invalid language \"%s\""
@@ -927,7 +932,7 @@ msgstr ""
 msgid "Add User"
 msgstr ""
 
-#: value for `draft` dataset facet 
+#: value for `draft` dataset facet
 msgid "True"
 msgstr "Vraix"
 

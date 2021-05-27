@@ -68,6 +68,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_validate_formfield_temporals': ogdch_validators.ogdch_validate_formfield_temporals,  # noqa
             'ogdch_fluent_tags': ogdch_validators.ogdch_fluent_tags,
             'ogdch_temp_scheming_choices': ogdch_validators.ogdch_temp_scheming_choices,  # noqa
+            'ogdch_date_string_format': ogdch_validators.ogdch_date_string_format,  # noqa
         }
 
     # IFacets

@@ -22,6 +22,7 @@ log = logging.getLogger(__name__)
 HARVEST_JUNK = ('__junk',)
 FORM_EXTRAS = ('__extras',)
 HARVEST_USER = 'harvest'
+DATE_FORMAT_PATTERN = re.compile('[0-9]{2}.[0-9]{2}.[0-9]{4}')
 
 OneOf = tk.get_validator('OneOf')
 
@@ -124,6 +125,28 @@ def temporals_to_datetime_output(value):
             else:
                 temporal[key] = None
     return value
+
+
+@scheming_validator
+def ogdch_date_string_format(field, schema):
+    def validator(key, data, errors, context):
+        # if there was an error before calling our validator
+        # don't bother with our validation
+        if errors[key]:
+            return
+        value = data[key]
+        if isinstance(value, int) or len(value) == 0:
+            # A date that is an int has already been converted to a POSIX
+            # timestamp for storage.
+            return
+        if DATE_FORMAT_PATTERN.match(value) is None:
+            # This is the format from the datepicker in the package form.
+            errors[key].append(
+                _('Expecting DD.MM.YYYY, got "%s"') % str(value)
+            )
+            return
+
+    return validator
 
 
 @scheming_validator
@@ -274,7 +297,7 @@ def ogdch_required_in_one_language(field, schema):
 
         output = {}
         prefix = key[-1] + '-'
-        extras = data.get(key[:-1] + ('__extras',), {})
+        extras = data.get(key[:-1] + FORM_EXTRAS, {})
         languages = fluent_form_languages(field, schema=schema)
 
         for lang in languages:
@@ -423,6 +446,11 @@ def ogdch_validate_formfield_temporals(field, schema):
                     raise df.Invalid(
                         _('A valid temporal must have both start and end date')  # noqa
                     )
+                for value in temporal['start_date'], temporal['end_date']:
+                    if DATE_FORMAT_PATTERN.match(value) is None:
+                        errors[key].append(
+                            _('Expecting DD.MM.YYYY, got "%s"') % str(value)
+                        )
                 temporal['start_date'] = date_string_to_timestamp(temporal['start_date'])  # noqa
                 temporal['end_date'] = date_string_to_timestamp(temporal['end_date'])  # noqa
         if temporals:

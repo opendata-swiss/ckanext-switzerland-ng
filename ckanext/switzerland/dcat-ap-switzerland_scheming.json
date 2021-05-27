@@ -209,7 +209,7 @@
         "it": "Data di pubblicazione"
       },
      "help_text": {
-       "en": "The creation date is a mandatory field. This is the date of the first publication in the source system of this dataset. If this is not known, use the date of the planned first publication on opendata.swiss",
+       "en": "The creation date is a mandatory field. This is the date of the first publication in the source system of this dataset. If this is not known, use the date of the planned first publication on opendata.swiss.",
        "de": "Das Erstellungsdatum ist ein Pflichtfeld. Damit ist das Datum der ersten Publikation im Quellsystem dieses Datasets gemeint. Falls dies nicht bekannt ist, verwenden Sie das Datum der geplanten ersten Publikation auf opendata.swiss.",
        "fr": "La date de création est un champ obligatoire. Il s'agit de la date de la première publication dans le système source de cet ensemble de données. Si celle-ci n'est pas connue, utilisez la date de la première publication prévue sur opendata.swiss.",
        "it": "La data di creazione è un campo obbligatorio. Questo significa la data della prima pubblicazione nel sistema di origine di questo set di dati. Se questo non è noto, utilizzare la data della prima pubblicazione prevista su opendata.swiss."
