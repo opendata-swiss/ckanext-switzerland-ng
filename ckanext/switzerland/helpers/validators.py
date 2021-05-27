@@ -135,9 +135,12 @@ def ogdch_date_string_format(field, schema):
         if errors[key]:
             return
         value = data[key]
-        if len(value) == 0:
+        if isinstance(value, int) or len(value) == 0:
+            # A date that is an int has already been converted to a POSIX
+            # timestamp for storage.
             return
         if DATE_FORMAT_PATTERN.match(value) is None:
+            # This is the format from the datepicker in the package form.
             errors[key].append(
                 _('Expecting DD.MM.YYYY, got "%s"') % str(value)
             )
