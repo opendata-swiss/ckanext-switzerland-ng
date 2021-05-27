@@ -297,7 +297,7 @@ def ogdch_required_in_one_language(field, schema):
 
         output = {}
         prefix = key[-1] + '-'
-        extras = data.get(key[:-1] + ('__extras',), {})
+        extras = data.get(key[:-1] + FORM_EXTRAS, {})
         languages = fluent_form_languages(field, schema=schema)
 
         for lang in languages:
