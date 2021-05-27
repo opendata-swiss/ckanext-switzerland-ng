@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-switzerland 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-04-15 18:37+0000\n"
+"POT-Creation-Date: 2021-05-27 07:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-#: ckanext/switzerland/plugins.py:78 ckanext/switzerland/plugins.py:92
-#: ckanext/switzerland/plugins.py:106
+#: ckanext/switzerland/plugins.py:79 ckanext/switzerland/plugins.py:93
+#: ckanext/switzerland/plugins.py:107
 #: ckanext/switzerland/templates/organization/bulk_process.html:80
 #: ckanext/switzerland/templates/organization/bulk_process.html:85
 #: ckanext/switzerland/templates/package/read.html:10
@@ -31,23 +31,23 @@ msgstr ""
 msgid "Draft"
 msgstr ""
 
-#: ckanext/switzerland/plugins.py:79 ckanext/switzerland/plugins.py:107
-#: ckanext/switzerland/plugins.py:516 ckanext/switzerland/templates/header.html:28
+#: ckanext/switzerland/plugins.py:80 ckanext/switzerland/plugins.py:108
+#: ckanext/switzerland/plugins.py:518 ckanext/switzerland/templates/header.html:31
 #: ckanext/switzerland/templates/scheming/package/snippets/package_form.html:48
 #: ckanext/switzerland/templates/showcase/new_package_form.html:32
 #: ckanext/switzerland/templates/showcase/snippets/showcase_info.html:52
 msgid "Categories"
 msgstr ""
 
-#: ckanext/switzerland/plugins.py:80 ckanext/switzerland/plugins.py:93
-#: ckanext/switzerland/plugins.py:108
+#: ckanext/switzerland/plugins.py:81 ckanext/switzerland/plugins.py:94
+#: ckanext/switzerland/plugins.py:109
 msgid "Keywords"
 msgstr ""
 
 #: ckanext/switzerland/controllers/group.py:109
 #: ckanext/switzerland/controllers/organization.py:117
-#: ckanext/switzerland/plugins.py:81 ckanext/switzerland/plugins.py:94
-#: ckanext/switzerland/templates/header.html:22
+#: ckanext/switzerland/plugins.py:82 ckanext/switzerland/plugins.py:95
+#: ckanext/switzerland/templates/header.html:25
 #: ckanext/switzerland/templates/organization/edit_base.html:10
 #: ckanext/switzerland/templates/organization/new.html:5
 #: ckanext/switzerland/templates/organization/read_base.html:10
@@ -58,24 +58,24 @@ msgstr ""
 msgid "Organizations"
 msgstr ""
 
-#: ckanext/switzerland/plugins.py:82 ckanext/switzerland/plugins.py:95
+#: ckanext/switzerland/plugins.py:83 ckanext/switzerland/plugins.py:96
 msgid "Political levels"
 msgstr ""
 
-#: ckanext/switzerland/plugins.py:83 ckanext/switzerland/plugins.py:96
-#: ckanext/switzerland/plugins.py:109
+#: ckanext/switzerland/plugins.py:84 ckanext/switzerland/plugins.py:97
+#: ckanext/switzerland/plugins.py:110
 #: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:33
 msgid "Terms of use"
 msgstr ""
 
 #: ckanext/switzerland/controllers/group.py:112
 #: ckanext/switzerland/controllers/organization.py:120
-#: ckanext/switzerland/plugins.py:84 ckanext/switzerland/plugins.py:97
-#: ckanext/switzerland/plugins.py:110
+#: ckanext/switzerland/plugins.py:85 ckanext/switzerland/plugins.py:98
+#: ckanext/switzerland/plugins.py:111
 msgid "Formats"
 msgstr ""
 
-#: ckanext/switzerland/plugins.py:517
+#: ckanext/switzerland/plugins.py:519
 #: ckanext/switzerland/templates/showcase/new_package_form.html:47
 #: ckanext/switzerland/templates/showcase/snippets/showcase_info.html:65
 msgid "Type of content"
@@ -311,59 +311,64 @@ msgstr ""
 msgid "Closed data"
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:50
-#: ckanext/switzerland/helpers/validators.py:144
-#: ckanext/switzerland/helpers/validators.py:194
+#: ckanext/switzerland/helpers/validators.py:52
+#: ckanext/switzerland/helpers/validators.py:165
+#: ckanext/switzerland/helpers/validators.py:215
 #, python-format
 msgid "Expecting list of strings, got \"%s\""
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:207
+#: ckanext/switzerland/helpers/validators.py:142
+#, python-format
+msgid "Expecting DD.MM.YYYY, got \"%s\""
+msgstr ""
+
+#: ckanext/switzerland/helpers/validators.py:228
 #, python-format
 msgid "invalid language \"%s\""
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:225
+#: ckanext/switzerland/helpers/validators.py:246
 msgid "Identifier of the dataset is missing."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:230
+#: ckanext/switzerland/helpers/validators.py:251
 msgid ""
 "Identifier must be of the form <id>@<slug> where slug is the url of the "
 "organization."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:242
+#: ckanext/switzerland/helpers/validators.py:263
 msgid ""
 "The identifier \"{}\" does not end with the organisation slug \"{}\" of the "
 "organization it belongs to."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:246
+#: ckanext/switzerland/helpers/validators.py:267
 msgid "The selected organization was not found."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:256
+#: ckanext/switzerland/helpers/validators.py:277
 msgid "Identifier is already in use, it must be unique."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:292
+#: ckanext/switzerland/helpers/validators.py:313
 msgid "A value is required in at least one language"
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:389
+#: ckanext/switzerland/helpers/validators.py:410
 msgid "{} can not be chosen since it is a {}."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:397
+#: ckanext/switzerland/helpers/validators.py:418
 msgid "Dataset {} could not be found ."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:423
+#: ckanext/switzerland/helpers/validators.py:444
 msgid "A valid temporal must have both start and end date"
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:480
+#: ckanext/switzerland/helpers/validators.py:508
 #, python-format
 msgid "unexpected choice \"%s\""
 msgstr ""
@@ -374,13 +379,17 @@ msgid "Users"
 msgstr ""
 
 #: ckanext/switzerland/templates/header.html:15
+msgid "Harvest Dashboard"
+msgstr ""
+
+#: ckanext/switzerland/templates/header.html:18
 #: ckanext/switzerland/templates/source/base.html:6
 #: ckanext/switzerland/templates/source/base.html:9
 msgid "Harvest Sources"
 msgstr ""
 
 #: ckanext/switzerland/templates/group/read_base.html:21
-#: ckanext/switzerland/templates/header.html:19
+#: ckanext/switzerland/templates/header.html:22
 #: ckanext/switzerland/templates/organization/bulk_process.html:20
 #: ckanext/switzerland/templates/organization/read_base.html:17
 #: ckanext/switzerland/templates/package/base.html:9
@@ -389,7 +398,7 @@ msgstr ""
 msgid "Datasets"
 msgstr ""
 
-#: ckanext/switzerland/templates/header.html:25
+#: ckanext/switzerland/templates/header.html:28
 #: ckanext/switzerland/templates/package/read_base.html:5
 msgid "Showcases"
 msgstr ""
@@ -605,22 +614,7 @@ msgid "Reset search"
 msgstr ""
 
 #: ckanext/switzerland/templates/package/base.html:14
-#: ckanext/switzerland/templates/package/new.html:9
 msgid "Create Dataset"
-msgstr ""
-
-#: ckanext/switzerland/templates/package/base_form_page.html:5
-msgid "What are datasets?"
-msgstr ""
-
-#: ckanext/switzerland/templates/package/base_form_page.html:8
-msgid ""
-" Ein Datensatz oder «Dataset» entspricht einem Eintrag auf opendata.swiss. Es"
-" wird von einer Organisation publiziert bzw. kuratiert und ist in einer oder "
-"mehreren Darstellungen („Ressourcen“ oder „Distribution“) zum Download "
-"verfügbar. Auf opendata.swiss entspricht dies einem Metadaten-Eintrag der "
-"Klasse dcat:Dataset (Dataset-Metadaten-Record) und beschreibt ein einzelnes, "
-"thematisch geschlossenes Dataset. "
 msgstr ""
 
 #: ckanext/switzerland/templates/package/read.html:16
@@ -638,14 +632,18 @@ msgstr ""
 msgid "Additional information"
 msgstr ""
 
-#: ckanext/switzerland/templates/package/snippets/stages.html:24
-#: ckanext/switzerland/templates/package/snippets/stages.html:26
+#: ckanext/switzerland/templates/package/snippets/package_form.html:3
+msgid "Next: Add Distributions"
+msgstr ""
+
+#: ckanext/switzerland/templates/package/snippets/stages.html:23
+#: ckanext/switzerland/templates/package/snippets/stages.html:25
 msgid "Create dataset"
 msgstr ""
 
-#: ckanext/switzerland/templates/package/snippets/stages.html:31
-#: ckanext/switzerland/templates/package/snippets/stages.html:35
-#: ckanext/switzerland/templates/package/snippets/stages.html:37
+#: ckanext/switzerland/templates/package/snippets/stages.html:30
+#: ckanext/switzerland/templates/package/snippets/stages.html:34
+#: ckanext/switzerland/templates/package/snippets/stages.html:36
 msgid "Add distributions"
 msgstr ""
 
@@ -678,10 +676,6 @@ msgstr ""
 msgid "Public"
 msgstr ""
 
-#: ckanext/switzerland/templates/scheming/form_snippets/organization.html:34
-msgid "To publish the dataset: set its visibility to published"
-msgstr ""
-
 #: ckanext/switzerland/templates/scheming/form_snippets/organization_slug.html:13
 msgid "Name (Slug)"
 msgstr ""
@@ -711,7 +705,9 @@ msgid "This field is required"
 msgstr ""
 
 #: ckanext/switzerland/templates/scheming/package/snippets/package_form.html:61
-msgid "Here you can choose one or more categories to which the data set relates. Defining a category increases the findability of the data."
+msgid ""
+"Here you can choose one or more categories to which the data set relates. "
+"Defining a category increases the findability of the data."
 msgstr ""
 
 #: ckanext/switzerland/templates/showcase/manage_datasets.html:16
@@ -794,10 +790,6 @@ msgstr ""
 
 #: ckanext/switzerland/templates/snippets/activity_item.html:3
 msgid "New activity item"
-msgstr ""
-
-#: ckanext/switzerland/templates/snippets/add_dataset.html:6
-msgid "Add Dataset"
 msgstr ""
 
 #: ckanext/switzerland/templates/snippets/add_source_button.html:4

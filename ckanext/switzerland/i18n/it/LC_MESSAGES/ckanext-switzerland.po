@@ -336,6 +336,11 @@ msgstr "Closed data"
 msgid "Expecting list of strings, got \"%s\""
 msgstr " il tipo di dato atteso è un elenco di stringhe, il dato immesso è \"%s\""
 
+#: ckanext/switzerland/helpers/validators.py:142
+#, python-format
+msgid "Expecting DD.MM.YYYY, got \"%s\""
+msgstr " il tipo di dato atteso è GG.MM.AAAA, il dato immesso è \"%s\""
+
 #: ckanext/switzerland/helpers/validators.py:207
 #, python-format
 msgid "invalid language \"%s\""
