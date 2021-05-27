@@ -38,7 +38,7 @@ class TestController(helpers.FunctionalTestBase):
         # create a valid DCAT-AP Switzerland compliant dataset
         self.dataset = {
             'coverage': '',
-            'issued': '2015-09-08T00:00:00',
+            'issued': '08.09.2015',
             'contact_points': [{'email': 'pierre@bar.ch', 'name': 'Pierre'}],
             'keywords': {
                 'fr': [],
@@ -69,7 +69,7 @@ class TestController(helpers.FunctionalTestBase):
             'see_alsos': [],
             'temporals': [],
             'accrual_periodicity': 'http://purl.org/cld/freq/completelyIrregular',
-            'modified': '2015-09-09T00:00:00',
+            'modified': '09.09.2015',
             'url': 'http://some_url',
             'owner_org': 'test-org',
             'identifier': 'test@test-org'
