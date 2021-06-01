@@ -6,7 +6,7 @@ error_summary - A tuple/list of form errors.
 
 Example:
 
-{% snippet "user/snippets/login_form.html", action=g.login_handler, error_summary=error_summary %}
+  {% snippet "user/snippets/login_form.html", action=g.login_handler, error_summary=error_summary %}
 
 #}
 {% import 'macros/form.html' as form %}
@@ -17,7 +17,9 @@ Example:
 <form action="{{ action }}" method="post">
   {{ form.errors(errors=error_summary) }}
 
-  {{ form.input('login', label=_("Username"), id='field-login', value="", error=username_error, classes=["control-medium"]) }}
+  {% call form.input('login', label=_("Username"), id='field-login', value="", error=username_error, classes=["control-medium"]) %}
+  {{ form.info(_('Login functions only with username, not email address.')) }}
+  {% endcall %}
 
   {{ form.input('password', label=_("Password"), id='field-password', type="password", value="", error=password_error, classes=["control-medium"]) }}
 
