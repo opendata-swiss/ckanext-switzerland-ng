@@ -557,3 +557,141 @@ msgstr "Falsch"
 #: ckanext/switzerland/templates/package/snippets/package_form.html:3
 msgid "Next: Add Distributions"
 msgstr "Als nächstes: Distribution hinzufügen"
+
+#: ckan/controllers/feed.py:234 ckan/controllers/group.py:128
+#: ckan/controllers/group.py:226 ckan/controllers/group.py:394
+#: ckan/controllers/group.py:504 ckan/controllers/group.py:537
+#: ckan/controllers/group.py:567 ckan/controllers/group.py:578
+#: ckan/controllers/group.py:632 ckan/controllers/group.py:658
+#: ckan/controllers/group.py:714 ckan/controllers/group.py:746
+#: ckan/controllers/group.py:779 ckan/controllers/group.py:836
+#: ckan/controllers/group.py:933 ckan/controllers/package.py:1265
+#: ckan/controllers/package.py:1280 ckan/logic/action/create.py:1373
+#: ckan/views/feed.py:143
+msgid "Group not found"
+msgstr "Kategorie nicht gefunden"
+
+#: ckan/controllers/group.py:623
+msgid "Group has been deleted."
+msgstr "Kategorie wurde gelöscht."
+
+#: ckan/controllers/group.py:738
+msgid "Group member has been deleted."
+msgstr "Kategorienmitglied wurde gelöscht."
+
+#: ckan/lib/activity_streams.py:63
+msgid "{actor} updated the group {group}"
+msgstr "{actor} hat die Kategorie {group} aktualisiert"
+
+#: ckan/lib/activity_streams.py:81
+msgid "{actor} deleted the group {group}"
+msgstr "{actor} hat die Kategorie {group} gelöscht"
+
+#: ckan/lib/activity_streams.py:97
+msgid "{actor} created the group {group}"
+msgstr "{actor} hat die Kategorie {group} erstellt"
+
+#: ckan/logic/action/create.py:1454 ckan/logic/action/create.py:1462
+msgid "You must be logged in to follow a group."
+msgstr "Sie müssen angemeldet sein um einer Kategorie folgen zu können."
+
+#: ckan/logic/auth/create.py:189
+msgid "Group was not found."
+msgstr "Kategorie wurde nicht gefunden"
+
+#: ckan/templates/group/base_form_page.html:7
+msgid "Add a Group"
+msgstr "Füge eine Kategorie hinzu"
+
+#: ckan/templates/group/confirm_delete.html:11
+msgid "Are you sure you want to delete group - {name}?"
+msgstr "Sind Sie sicher, dass Sie die Kategorie {name} löschen wollen?"
+
+#: ckan/templates/group/index.html:20
+msgid "Search groups..."
+msgstr "Kategorie suchen..."
+
+#: ckan/templates/group/member_new.html:86
+msgid ""
+" <p><strong>Admin:</strong> Can edit group information, as well as manage "
+"organization members.</p> <p><strong>Member:</strong> Can add/remove "
+"datasets from groups</p> "
+msgstr ""
+" <p><strong>Admin:</strong> Kann Kategorien-Informationen und "
+"Organisationsmitglieder verwalten.</p> <p><strong>Member:</strong> Kann "
+"Datensätze von Kategorien hinzufügen und entfernen.</p> "
+
+#: ckan/templates/group/snippets/feeds.html:3
+msgid "Datasets in group: {group}"
+msgstr "Datensätze in der Kategorie: {group}"
+
+#: ckan/templates/group/snippets/group_form.html:37
+msgid "Are you sure you want to delete this Group?"
+msgstr "Sind Sie sicher, dass Sie diese Kategorie löschen wollen?"
+
+#: ckan/templates/group/snippets/group_form.html:40
+msgid "Save Group"
+msgstr "Kategorie speichern"
+
+#: ckan/templates/group/edit.html:12
+msgid "Edit Group"
+msgstr "Bearbeite Kategorie"
+
+#: ckan/templates/group/new.html:3 ckan/templates/group/new.html:5
+#: ckan/templates/group/new.html:7
+msgid "Create a Group"
+msgstr "Leg eine Kategorie an"
+
+#: ckan/templates/group/new_group_form.html:17
+msgid "Update Group"
+msgstr "Aktualisiere Kategorie"
+
+#: ckan/templates/group/new_group_form.html:19
+msgid "Create Group"
+msgstr "Kategorie anlegen"
+
+#: ckan/templates/group/snippets/group_item.html:43
+msgid "Remove dataset from this group"
+msgstr "Datensatz aus dieser Kategorie entfernen"
+
+#: ckan/templates/group/snippets/helper.html:4
+msgid "What are Groups?"
+msgstr "Was sind Kategorien?"
+
+#: ckan/templates/group/snippets/helper.html:8
+msgid ""
+" You can use CKAN Groups to create and manage collections of datasets. This "
+"could be to catalogue datasets for a particular project or team, or on a "
+"particular theme, or as a very simple way to help people find and search "
+"your own published datasets. "
+msgstr ""
+"Sie können mit CKAN Kategorien Datensätze erstellen und verwalten. Damit können"
+" Datensätze für ein bestimmtes Projekt, ein Team oder zu einem bestimmten "
+"Thema katalogisiert oder sehr leicht die eigenen veröffentlichten Datensätze"
+" anderen Leuten zugänglich gemacht werden."
+
+#: ckan/lib/mailer.py:137 ckan/templates/home/snippets/stats.html:23
+msgid "group"
+msgstr "Kategorie"
+
+#: ckan/templates/home/snippets/stats.html:23
+msgid "groups"
+msgstr "Kategorien"
+
+#: ckan/templates/package/group_list.html:14
+msgid "Associate this group with this dataset"
+msgstr "Diese Kategorie mit einem Datensatz verbinden"
+
+#: ckan/templates/package/group_list.html:14
+msgid "Add to group"
+msgstr "Zu einer Kategorie hinzufügen"
+
+#: ckan/templates/package/group_list.html:23
+msgid "There are no groups associated with this dataset"
+msgstr "Es gibt keine Kategorien, die mit diesem Datensatz verbunden sind"
+
+#: ckanext/stats/templates/ckanext/stats/index.html:108
+#: ckanext/stats/templates/ckanext/stats/index.html:182
+msgid "Largest Groups"
+msgstr "Größte Kategorien"
+
