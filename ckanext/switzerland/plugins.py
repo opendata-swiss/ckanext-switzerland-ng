@@ -263,7 +263,7 @@ class OgdchGroupPlugin(plugins.SingletonPlugin, OgdchMixin):
         :param grp_dict:
         :return:
         """
-        ogdch_backend_helpers.ogdch_add_users_to_groups(None, None)
+        ogdch_logic.ogdch_add_users_to_groups(None, {})
 
 
 class OgdchOrganizationPlugin(plugins.SingletonPlugin, OgdchMixin):
