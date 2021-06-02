@@ -49,6 +49,11 @@ msgstr "Entwurf"
 msgid "Categories"
 msgstr "Kategorien"
 
+#: ckan/logic/converters.py:173 ckan/logic/validators.py:246
+#: ckanext/stats/templates/ckanext/stats/index.html:113
+msgid "Group"
+msgstr "Kategorie"
+
 #: ckanext/switzerland/plugins.py:80 ckanext/switzerland/plugins.py:93
 #: ckanext/switzerland/plugins.py:108
 msgid "Keywords"
@@ -291,16 +296,6 @@ msgstr ""
 #, python-format
 msgid "unexpected choice \"%s\""
 msgstr ""
-
-#: ckanext/switzerland/templates/group/read_base.html:21
-#: ckanext/switzerland/templates/header.html:19
-#: ckanext/switzerland/templates/organization/bulk_process.html:20
-#: ckanext/switzerland/templates/organization/read_base.html:17
-#: ckanext/switzerland/templates/package/base.html:9
-#: ckanext/switzerland/templates/package/base.html:13
-#: ckanext/switzerland/templates/user/read_base.html:4
-msgid "Datasets"
-msgstr "Datensätze"
 
 #: ckanext/switzerland/templates/header.html:25
 #: ckanext/switzerland/templates/package/read_base.html:5

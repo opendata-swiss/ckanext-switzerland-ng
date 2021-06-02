@@ -105,6 +105,11 @@ msgstr "Type de contenu"
 msgid "Groups"
 msgstr "Catégories"
 
+#: ckan/logic/converters.py:173 ckan/logic/validators.py:246
+#: ckanext/stats/templates/ckanext/stats/index.html:113
+msgid "Group"
+msgstr "Catégorie"
+
 #: ckanext/switzerland/controllers/organization.py:288
 msgid "Only POST is available"
 msgstr ""
@@ -296,6 +301,10 @@ msgstr ""
 msgid "Showcases"
 msgstr "Showcases"
 
+#: ckanext/switzerland/templates/group/index.html:5
+msgid "Add Group"
+msgstr "Ajouter une catégorie"
+
 #: ckanext/switzerland/templates/group/read_base.html:22
 #: ckanext/switzerland/templates/organization/read_base.html:18
 msgid "About"
@@ -394,7 +403,7 @@ msgstr ""
 
 #: ckanext/switzerland/templates/scheming/form_snippets/organization.html:24
 msgid "Dataset Publication"
-msgstr ""
+msgstr "Publier le jeu de données"
 
 #: ckanext/switzerland/templates/scheming/form_snippets/organization.html:28
 msgid "Public"
@@ -402,7 +411,7 @@ msgstr "Publié"
 
 #: ckanext/switzerland/templates/scheming/form_snippets/organization.html:34
 msgid "To publish the dataset: set its visibility to published"
-msgstr ""
+msgstr "Pour publier le jeu de données : définissez sa visibilité sur publié"
 
 #: ckanext/switzerland/templates/scheming/form_snippets/organization_slug.html:13
 msgid "Name (Slug)"
@@ -447,6 +456,10 @@ msgstr "Jeux de données dans le showcase"
 #: ckanext/switzerland/templates/showcase/manage_datasets.html:101
 msgid "Remove from Showcase"
 msgstr "Supprimer le jeu de données de ce showcase"
+
+#: ckanext/switzerland/templates/showcase/search.html:6
+msgid "Add Showcase"
+msgstr "Ajouter un showcase"
 
 #: ckanext/switzerland/templates/showcase/snippets/showcase_info.html:37
 msgid "Datasets in Showcase"
@@ -535,4 +548,3 @@ msgstr "Faux"
 #: ckanext/switzerland/templates/package/snippets/package_form.html:3
 msgid "Next: Add Distributions"
 msgstr "Suivant : Ajouter des distributions"
-
