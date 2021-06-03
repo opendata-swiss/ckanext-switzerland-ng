@@ -304,7 +304,7 @@ msgstr "Showcases"
 
 #: ckanext/switzerland/templates/group/index.html:5
 msgid "Add Group"
-msgstr "Categorie hinzufügen"
+msgstr "Kategorie hinzufügen"
 
 #: ckanext/switzerland/templates/group/snippets/group_item.html:20
 msgid "View {name}"
