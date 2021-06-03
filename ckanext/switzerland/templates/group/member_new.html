@@ -44,3 +44,20 @@
 </div>
 </form>
 {% endblock %}
+
+{% block secondary_content %}
+{% snippet "group/snippets/info.html", group=group, show_nums=false, schema=schema, display_name=display_name %}
+<div class="module module-narrow module-shallow">
+  <h2 class="module-heading">
+    <i class="fa fa-lg fa-info-circle"></i>
+    {{ _('What are roles?') }}
+  </h2>
+  <div class="module-content">
+    {% trans %}
+    <p><strong>Admin:</strong> Can edit category information, as well as
+      manage organization members.</p>
+    <p><strong>Member:</strong> Can add/remove datasets from category</p>
+    {% endtrans %}
+  </div>
+</div>
+{% endblock %}

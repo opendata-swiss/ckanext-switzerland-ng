@@ -68,7 +68,7 @@
           <tbody>
             {% for package, rating, num_ratings in c.top_rated_packages %}
               <tr>
-                <th>{{ h.link_to(package.title or package.name, h.url_for(controller='package', action='read', id=package.name)) }}</th>
+                <th>{{ h.link_to(h.get_localized_value_for_display(package.title or package.name), h.url_for(controller='package', action='read', id=package.name)) }}</th>
                 <td class="metric">{{ rating }}</td>
                 <td class="metric">{{ num_ratings }}</td>
               </tr>
@@ -93,7 +93,7 @@
           <tbody>
             {% for package, edits in c.most_edited_packages %}
               <tr py:for="package, edits in c.most_edited_packages">
-                <td>{{ h.link_to(package.title or package.name, h.url_for(controller='package', action='read', id=package.name)) }}</td>
+                <td>{{ h.link_to(h.get_localized_value_for_display(package.title or package.name), h.url_for(controller='package', action='read', id=package.name)) }}</td>
                 <td class="metric">{{ edits }}</td>
               </tr>
             {% endfor %}
@@ -105,26 +105,26 @@
     </section>
 
     <section id="stats-largest-groups" class="module-content tab-content">
-      <h2>{{ _('Largest Groups') }}</h2>
+      <h2>{{ _('Largest Categories') }}</h2>
       {% if c.largest_groups %}
         <table class="table table-chunky table-bordered table-striped">
           <thead>
             <tr>
-              <th>{{ _('Group') }}</th>
+              <th>{{ _('Category') }}</th>
               <th class="metric">{{ _('Number of datasets') }}</th>
             </tr>
           </thead>
           <tbody>
             {% for group, num_packages in c.largest_groups %}
               <tr>
-                <td>{{ h.link_to(group.title or group.name, h.url_for(controller=group.type, action='read', id=group.name)) }}</td>
+                <td>{{ h.link_to(h.get_localized_value_for_display(group.title or group.name), h.url_for(controller=group.type, action='read', id=group.name)) }}</td>
                 <td class="metric">{{ num_packages }}</td>
               </tr>
             {% endfor %}
           </tbody>
         </table>
       {% else %}
-        <p class="empty">{{ _('No groups') }}</p>
+        <p class="empty">{{ _('No categories') }}</p>
       {% endif %}
     </section>
 
@@ -179,7 +179,7 @@
         <li class="nav-item"><a href="#stats-dataset-revisions" data-toggle="tab">{{ _('Dataset Revisions per Week') }}</a></li>
         <li class="nav-item"><a href="#stats-top-rated" data-toggle="tab">{{ _('Top Rated Datasets') }}</a></li>
         <li class="nav-item"><a href="#stats-most-edited" data-toggle="tab">{{ _('Most Edited Datasets') }}</a></li>
-        <li class="nav-item"><a href="#stats-largest-groups" data-toggle="tab">{{ _('Largest Groups') }}</a></li>
+        <li class="nav-item"><a href="#stats-largest-groups" data-toggle="tab">{{ _('Largest Categories') }}</a></li>
         <li class="nav-item"><a href="#stats-top-tags" data-toggle="tab">{{ _('Top Tags') }}</a></li>
         <li class="nav-item"><a href="#stats-most-create" data-toggle="tab">{{ _('Users Creating Most Datasets') }}</a></li>
       </ul>
