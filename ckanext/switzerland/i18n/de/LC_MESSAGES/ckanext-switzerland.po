@@ -304,12 +304,7 @@ msgstr "Showcases"
 
 #: ckanext/switzerland/templates/group/index.html:5
 msgid "Add Group"
-msgstr "Categorie hinzufügen"
-
-#: ckanext/switzerland/templates/group/read_base.html:22
-#: ckanext/switzerland/templates/organization/read_base.html:18
-msgid "About"
-msgstr "Über das Portal"
+msgstr "Kategorie hinzufügen"
 
 #: ckanext/switzerland/templates/group/snippets/group_item.html:20
 msgid "View {name}"
@@ -354,6 +349,14 @@ msgstr "Entwurf machen"
 #: ckanext/switzerland/templates/snippets/search_form.html:31
 msgid "Reset search"
 msgstr "Suche zurücksetzen"
+
+#: ckanext/switzerland/templates/organization/read.html:17
+msgid "Add datasets from XML"
+msgstr "Datensätze aus XML hinzufügen"
+
+#: ckanext/switzerland/templates/organization/read.html:20
+msgid "Submit"
+msgstr "Absenden"
 
 #: ckan/templates/package/base_form_page.html:25
 msgid ""
