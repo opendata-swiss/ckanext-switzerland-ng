@@ -19,9 +19,6 @@ Example:
       {% set url = h.url_for('group_read', action='read', id=group.name) %}
       <h3><a href="{{ url }}" title="{{ _('View {name}').format(name=group.display_name) }}">{{ group.display_name }}</a></h3>
     {% endblock %}
-    {% block datasets %}
-      <p class="small">{{ ungettext('{num} Dataset', '{num} Datasets', group.package_count).format(num=group.package_count) }}</p>
-    {% endblock %}
     {% block description %}
       {% if group.description %}
         <p>{{ group.description }}</p>
