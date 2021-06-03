@@ -8,10 +8,10 @@
 {% set schema = h.scheming_get_group_schema(group_type) %}
 {% set display_name = h.scheming_language_text(group[h.scheming_field_by_name(schema.fields, 'display_name').field_name]) %}
 
-{% block subtitle %}{{ _('Members') }} {{ g.template_title_delimiter }} {{ display_name }} {{ g.template_title_delimiter }} {{ _('Groups') }}{% endblock %}
+{% block subtitle %}{{ _('Members') }} {{ g.template_title_delimiter }} {{ display_name }} {{ g.template_title_delimiter }} {{ _('Categories') }}{% endblock %}
 
 {% block breadcrumb_content %}
-  <li>{% link_for _('Groups'), controller='group', action='index' %}</li>
+  <li>{% link_for _('Categories'), controller='group', action='index' %}</li>
   {% block breadcrumb_content_inner %}
     <li>{% link_for display_name|truncate(35), controller='group', action='read', id=group.name %}</li>
     <li class="active">{% link_for _('Manage'), controller='group', action='edit', id=group.name %}</li>
