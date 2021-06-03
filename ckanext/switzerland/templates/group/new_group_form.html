@@ -1,0 +1,9 @@
+{% ckan_extends "group/snippets/group_form.html" %}
+
+{% block save_text %}
+  {%- if action == "edit" -%}
+    {{ _('Update Category') }}
+  {%- else -%}
+    {{ _('Create Category') }}
+  {%- endif -%}
+{% endblock %}

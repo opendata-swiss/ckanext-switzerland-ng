@@ -580,22 +580,22 @@ msgid "Group was not found."
 msgstr "Categoria non trovato."
 
 #: ckan/templates/group/base_form_page.html:7
-msgid "Add a Group"
+msgid "Add a Category"
 msgstr "Aggiungi una categoria"
 
 #: ckan/templates/group/confirm_delete.html:11
-msgid "Are you sure you want to delete group - {name}?"
+msgid "Are you sure you want to delete category - {name}?"
 msgstr "Sei sicuro di voler eliminare la categoria - {name}?"
 
 #: ckan/templates/group/index.html:20
-msgid "Search groups..."
+msgid "Search categories..."
 msgstr "Cerca categorie..."
 
 #: ckan/templates/group/member_new.html:86
 msgid ""
-" <p><strong>Admin:</strong> Can edit group information, as well as manage "
-"organization members.</p> <p><strong>Member:</strong> Can add/remove "
-"datasets from groups</p> "
+" <p><strong>Admin:</strong> Can edit category information, as well as manage "
+"organization members.</p> <p><strong>Member:</strong> Can add/remove datasets"
+" from category</p> "
 msgstr ""
 " <p><strong>Amministratore:</strong> Può modificare le informazioni del "
 "categoria e gestire i membri delle organizzazioni.</p> "
@@ -603,47 +603,47 @@ msgstr ""
 "categorie</p> "
 
 #: ckan/templates/group/snippets/feeds.html:3
-msgid "Datasets in group: {group}"
+msgid "Datasets in category: {group}"
 msgstr "Dataset nella categoria: {group}"
 
 #: ckan/templates/group/snippets/group_form.html:37
-msgid "Are you sure you want to delete this Group?"
+msgid "Are you sure you want to delete this Category?"
 msgstr "Sei sicuro di voler cancellare questa Categoria?"
 
 #: ckan/templates/group/snippets/group_form.html:40
-msgid "Save Group"
+msgid "Save Category"
 msgstr "Salva Categoria"
 
 #: ckan/templates/group/edit.html:12
-msgid "Edit Group"
+msgid "Edit Category"
 msgstr "Modifica categoria"
 
 #: ckan/templates/group/new.html:3 ckan/templates/group/new.html:5
 #: ckan/templates/group/new.html:7
-msgid "Create a Group"
+msgid "Create a Category"
 msgstr "Crea una Categoria"
 
 #: ckan/templates/group/new_group_form.html:17
-msgid "Update Group"
+msgid "Update Category"
 msgstr "Aggiorna Categoria"
 
 #: ckan/templates/group/new_group_form.html:19
-msgid "Create Group"
+msgid "Create Category"
 msgstr "Crea Categoria"
 
 #: ckan/templates/group/snippets/group_item.html:43
-msgid "Remove dataset from this group"
+msgid "Remove dataset from this category"
 msgstr "Elimina il dataset da questa categoria"
 
 #: ckan/templates/group/snippets/helper.html:4
-msgid "What are Groups?"
+msgid "What are Categories?"
 msgstr "Cosa sono i Categorie?"
 
 #: ckan/templates/group/snippets/helper.html:8
 msgid ""
-" You can use CKAN Groups to create and manage collections of datasets. This "
-"could be to catalogue datasets for a particular project or team, or on a "
-"particular theme, or as a very simple way to help people find and search "
+" You can use CKAN Categories to create and manage collections of datasets. "
+"This could be to catalogue datasets for a particular project or team, or on a"
+" particular theme, or as a very simple way to help people find and search "
 "your own published datasets. "
 msgstr ""
 "Puoi usare i categorie di CKAN per creare e gestire collezioni di dataset, come"
@@ -652,26 +652,35 @@ msgstr ""
 "cercare i dataset che hai pubblicato."
 
 #: ckan/lib/mailer.py:137 ckan/templates/home/snippets/stats.html:23
-msgid "group"
+msgid "category"
 msgstr "categoria"
 
 #: ckan/templates/home/snippets/stats.html:23
-msgid "groups"
+msgid "categories"
 msgstr "categorie"
 
 #: ckan/templates/package/group_list.html:14
-msgid "Associate this group with this dataset"
+msgid "Associate this category with this dataset"
 msgstr "Associa questa categoria con questo dataset"
 
 #: ckan/templates/package/group_list.html:14
-msgid "Add to group"
+msgid "Add to category"
 msgstr "Aggiungi alla categoria"
 
 #: ckan/templates/package/group_list.html:23
-msgid "There are no groups associated with this dataset"
+msgid "There are no categories associated with this dataset"
 msgstr "Non ci sono categorie associati con questo dataset"
 
 #: ckanext/stats/templates/ckanext/stats/index.html:108
 #: ckanext/stats/templates/ckanext/stats/index.html:182
-msgid "Largest Groups"
+msgid "Largest Categories"
 msgstr "Categorie più numerosi"
+
+#: ckanext/switzerland/templates/ckanext/stats/index.html:113
+#: ckanext/switzerland/templates/group/index.html:16
+msgid "Category"
+msgstr "Categoria"
+
+#: ckanext/switzerland/templates/ckanext/stats/index.html:127
+msgid "No categories"
+msgstr "Nessuna categoria"
