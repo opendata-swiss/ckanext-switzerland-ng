@@ -305,11 +305,6 @@ msgstr "Showcases"
 msgid "Add Group"
 msgstr "Ajouter une catégorie"
 
-#: ckanext/switzerland/templates/group/read_base.html:22
-#: ckanext/switzerland/templates/organization/read_base.html:18
-msgid "About"
-msgstr "A propos du portail"
-
 #: ckanext/switzerland/templates/group/snippets/group_item.html:20
 msgid "View {name}"
 msgstr "Voir {name}"
