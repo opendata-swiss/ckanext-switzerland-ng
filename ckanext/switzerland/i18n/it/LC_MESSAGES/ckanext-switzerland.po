@@ -353,6 +353,14 @@ msgstr "Rendi bozza"
 msgid "Reset search"
 msgstr "Resetta la ricerca"
 
+#: ckanext/switzerland/templates/organization/read.html:17
+msgid "Add datasets from XML"
+msgstr "Aggiungi set di dati da XML"
+
+#: ckanext/switzerland/templates/organization/read.html:20
+msgid "Submit"
+msgstr "Invia"
+
 #: ckanext/switzerland/templates/package/read.html:16
 #, python-format
 msgid ""

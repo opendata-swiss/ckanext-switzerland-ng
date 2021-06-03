@@ -354,6 +354,14 @@ msgstr "Faire brouillon"
 msgid "Reset search"
 msgstr "Réinitialiser la recherche"
 
+#: ckanext/switzerland/templates/organization/read.html:17
+msgid "Add datasets from XML"
+msgstr "Ajouter des jeux de données à partir de XML"
+
+#: ckanext/switzerland/templates/organization/read.html:20
+msgid "Submit"
+msgstr "Soumettre"
+
 #: ckan/templates/package/base_form_page.html:25
 msgid ""
 " A CKAN Dataset is a collection of data resources (such as files), "

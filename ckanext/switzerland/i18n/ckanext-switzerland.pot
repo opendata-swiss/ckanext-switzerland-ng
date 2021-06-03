@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-switzerland 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-05-27 07:24+0000\n"
+"POT-Creation-Date: 2021-06-03 09:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -312,63 +312,64 @@ msgid "Closed data"
 msgstr ""
 
 #: ckanext/switzerland/helpers/validators.py:52
-#: ckanext/switzerland/helpers/validators.py:165
-#: ckanext/switzerland/helpers/validators.py:215
+#: ckanext/switzerland/helpers/validators.py:168
+#: ckanext/switzerland/helpers/validators.py:218
 #, python-format
 msgid "Expecting list of strings, got \"%s\""
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:142
+#: ckanext/switzerland/helpers/validators.py:145
+#: ckanext/switzerland/helpers/validators.py:452
 #, python-format
 msgid "Expecting DD.MM.YYYY, got \"%s\""
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:228
+#: ckanext/switzerland/helpers/validators.py:231
 #, python-format
 msgid "invalid language \"%s\""
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:246
+#: ckanext/switzerland/helpers/validators.py:249
 msgid "Identifier of the dataset is missing."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:251
+#: ckanext/switzerland/helpers/validators.py:254
 msgid ""
 "Identifier must be of the form <id>@<slug> where slug is the url of the "
 "organization."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:263
+#: ckanext/switzerland/helpers/validators.py:266
 msgid ""
 "The identifier \"{}\" does not end with the organisation slug \"{}\" of the "
 "organization it belongs to."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:267
+#: ckanext/switzerland/helpers/validators.py:270
 msgid "The selected organization was not found."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:277
+#: ckanext/switzerland/helpers/validators.py:280
 msgid "Identifier is already in use, it must be unique."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:313
+#: ckanext/switzerland/helpers/validators.py:316
 msgid "A value is required in at least one language"
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:410
+#: ckanext/switzerland/helpers/validators.py:413
 msgid "{} can not be chosen since it is a {}."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:418
+#: ckanext/switzerland/helpers/validators.py:421
 msgid "Dataset {} could not be found ."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:444
+#: ckanext/switzerland/helpers/validators.py:447
 msgid "A valid temporal must have both start and end date"
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:508
+#: ckanext/switzerland/helpers/validators.py:516
 #, python-format
 msgid "unexpected choice \"%s\""
 msgstr ""
@@ -594,6 +595,10 @@ msgstr ""
 
 #: ckanext/switzerland/templates/organization/new.html:7
 msgid "Create an Organization"
+msgstr ""
+
+#: ckanext/switzerland/templates/organization/read.html:17
+msgid "Add datasets from XML"
 msgstr ""
 
 #: ckanext/switzerland/templates/organization/read.html:20
