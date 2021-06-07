@@ -101,12 +101,12 @@ msgstr "Tipo di contenuto"
 #: ckanext/switzerland/templates/group/members.html:14
 #: ckanext/switzerland/templates/group/read_base.html:11
 #: ckanext/switzerland/templates/group/read_base.html:14
-msgid "Groups"
+msgid "Categories"
 msgstr "Categorie"
 
 #: ckan/logic/converters.py:173 ckan/logic/validators.py:246
 #: ckanext/stats/templates/ckanext/stats/index.html:113
-msgid "Group"
+msgid "Category"
 msgstr "Categoria"
 
 #: ckanext/switzerland/controllers/organization.py:288
@@ -301,7 +301,7 @@ msgid "Showcases"
 msgstr "Showcases"
 
 #: ckanext/switzerland/templates/group/index.html:5
-msgid "Add Group"
+msgid "Add Category"
 msgstr "Aggiungi una categoria"
 
 #: ckanext/switzerland/templates/group/snippets/group_item.html:20
