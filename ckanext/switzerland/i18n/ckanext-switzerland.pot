@@ -801,6 +801,7 @@ msgid "Search organizations..."
 msgstr ""
 
 #: ckanext/switzerland/templates/organization/member_new.html:22
+#: ckanext/switzerland/templates/user/snippets/login_form.html:20
 msgid "Username"
 msgstr ""
 
@@ -1137,5 +1138,21 @@ msgstr ""
 
 #: ckanext/switzerland/templates/user/list.html:9
 msgid "Add User"
+msgstr ""
+
+#: ckanext/switzerland/templates/user/snippets/login_form.html:21
+msgid "Login functions only with username, not email address."
+msgstr ""
+
+#: ckanext/switzerland/templates/user/snippets/login_form.html:24
+msgid "Password"
+msgstr ""
+
+#: ckanext/switzerland/templates/user/snippets/login_form.html:26
+msgid "Remember me"
+msgstr ""
+
+#: ckanext/switzerland/templates/user/snippets/login_form.html:30
+msgid "Login"
 msgstr ""
 

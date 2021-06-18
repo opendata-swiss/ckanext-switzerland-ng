@@ -706,3 +706,7 @@ msgstr "Kategorie"
 #: ckanext/switzerland/templates/ckanext/stats/index.html:127
 msgid "No categories"
 msgstr "Keine Kategorien"
+
+#: ckanext/switzerland/templates/user/snippets/login_form.html:21
+msgid "Login functions only with username, not email address."
+msgstr "Anmeldung funktioniert nur mit Benutzername, nicht mit Email-Adresse."
