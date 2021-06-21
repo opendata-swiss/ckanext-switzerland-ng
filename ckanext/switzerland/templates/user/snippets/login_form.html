@@ -18,7 +18,7 @@ Example:
   {{ form.errors(errors=error_summary) }}
 
   {% call form.input('login', label=_("Username"), id='field-login', value="", error=username_error, classes=["control-medium"]) %}
-  {{ form.info(_('Login functions only with username, not email address.')) }}
+  {{ form.info(_('Login functions only with username, not e-mail address.')) }}
   {% endcall %}
 
   {{ form.input('password', label=_("Password"), id='field-password', type="password", value="", error=password_error, classes=["control-medium"]) }}
