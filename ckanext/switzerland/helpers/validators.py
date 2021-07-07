@@ -120,10 +120,8 @@ def temporals_to_datetime_output(value):
 
     for temporal in value:
         for key in temporal:
-            if temporal[key]:
+            if temporal[key] is not None:
                 temporal[key] = timestamp_to_date_string(temporal[key])
-            else:
-                temporal[key] = None
     return value
 
 
