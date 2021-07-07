@@ -16,6 +16,7 @@ import ckan.lib.i18n as i18n
 from ckanext.hierarchy.helpers import group_tree
 import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
 import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
+from dateutil.parser import parse, ParserError
 
 import logging
 log = logging.getLogger(__name__)
@@ -302,13 +303,15 @@ def get_localized_value_for_display(value):
 
 def get_localized_date(date_string):
     """
-    Take a date string formatted as DD.MM.YYYY and return a localized date,
-    e.g. '24. Juni 2020'.
+    Take a date string and return a localized date, e.g. '24. Juni 2020'.
+    `parse` should be able to handle various date formats, including
+    DD.MM.YYYY, DD.MM.YYY (necessary for collections with pre-1000 temporals)
+    and DD.MM.YY (in this case, it assumes the century isn't specified and
+    the year is between 50 years ago and 49 years in the future. This means
+    that '01.01.60' => 01.01.2060, and '01.01.90' => 01.01.1990).
     """
     try:
-        date_format = tk.config.get(
-            'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
-        dt = datetime.datetime.strptime(date_string, date_format)
+        dt = parse(date_string, dayfirst=True)
         return localised_nice_date(dt, show_date=True, with_hours=False)
-    except ValueError:
+    except (TypeError, ParserError):
         return ''

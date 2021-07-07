@@ -11,6 +11,7 @@ import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
 import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
 import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
+from dateutil.parser import parse, ParserError
 
 
 def _prepare_suggest_context(search_data, pkg_dict):
@@ -293,9 +294,7 @@ def _transform_package_dates(pkg_dict):
 def _transform_datetime_to_isoformat(value):
     """derive isoformat from datepicker date format"""
     try:
-        date_format = toolkit.config.get(
-            'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
-        d = datetime.datetime.strptime(value, date_format)
+        d = parse(value)
         return d.isoformat()
-    except ValueError:
+    except (TypeError, ParserError):
         return ""

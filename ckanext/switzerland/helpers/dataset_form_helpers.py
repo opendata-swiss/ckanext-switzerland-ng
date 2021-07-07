@@ -13,12 +13,12 @@ from ckanext.switzerland.helpers.frontend_helpers import (
 from ckanext.switzerland.helpers.localize_utils import localize_by_language_order  # noqa
 from ckanext.switzerland.helpers.terms_of_use_utils import (
     TERMS_OF_USE_BY_ASK, TERMS_OF_USE_OPEN, TERMS_OF_USE_BY, TERMS_OF_USE_ASK)
+from dateutil.parser import parse
 
 
 ADDITIONAL_FORM_ROW_LIMIT = 10
 HIDE_ROW_CSS_CLASS = 'ogdch-hide-row'
 SHOW_ROW_CSS_CLASS = 'ogdch-show-row'
-ISODATE_FORMAT = '%Y-%m-%dT%H:%M:%S'
 
 log = logging.getLogger(__name__)
 
@@ -252,7 +252,7 @@ def ogdch_date_form_helper(date_value):
             return dt.strftime(date_format)
         except ValueError:
             # ISO format date (YYYY-MM-DDTHH:MM:SS)
-            dt = datetime.datetime.strptime(date_value, ISODATE_FORMAT)
+            dt = parse(date_value)
             return dt.strftime(date_format)
     else:
         return ""
