@@ -17,6 +17,8 @@ import json
 import re
 import datetime
 import logging
+from dateutil.parser import parse, ParserError
+
 log = logging.getLogger(__name__)
 
 HARVEST_JUNK = ('__junk',)
@@ -77,13 +79,11 @@ def date_string_to_timestamp(value):
     Necessary as the date form submits dates in this format.
     """
     try:
-        date_format = tk.config.get(
-            'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
-        d = datetime.datetime.strptime(str(value), date_format)
+        d = parse(str(value), dayfirst=True)
         epoch = datetime.datetime(1970, 1, 1)
 
         return int((d - epoch).total_seconds())
-    except ValueError:
+    except (TypeError, ParserError):
         return value
 
 
@@ -120,33 +120,9 @@ def temporals_to_datetime_output(value):
 
     for temporal in value:
         for key in temporal:
-            if temporal[key]:
+            if temporal[key] is not None:
                 temporal[key] = timestamp_to_date_string(temporal[key])
-            else:
-                temporal[key] = None
     return value
-
-
-@scheming_validator
-def ogdch_date_string_format(field, schema):
-    def validator(key, data, errors, context):
-        # if there was an error before calling our validator
-        # don't bother with our validation
-        if errors[key]:
-            return
-        value = data[key]
-        if isinstance(value, int) or len(value) == 0:
-            # A date that is an int has already been converted to a POSIX
-            # timestamp for storage.
-            return
-        if DATE_FORMAT_PATTERN.match(value) is None:
-            # This is the format from the datepicker in the package form.
-            errors[key].append(
-                _('Expecting DD.MM.YYYY, got "%s"') % str(value)
-            )
-            return
-
-    return validator
 
 
 @scheming_validator

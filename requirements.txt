@@ -1,8 +1,9 @@
+Unidecode==1.0.22
+ckantoolkit==0.0.3
+iribaker==0.1.2
+pandas==0.24.2
+pysolr==3.6.0
+python-dateutil==2.8.1
+pyyaml==5.4
 requests[security]==2.25.1
 urllib3[secure]==1.26.5
-iribaker==0.1.2
-pyyaml==5.4
-ckantoolkit==0.0.3
-pysolr==3.6.0
-Unidecode==1.0.22
-pandas==0.24.2
