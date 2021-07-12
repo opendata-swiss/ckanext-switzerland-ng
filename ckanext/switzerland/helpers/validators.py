@@ -83,7 +83,7 @@ def date_string_to_timestamp(value):
         epoch = datetime.datetime(1970, 1, 1)
 
         return int((d - epoch).total_seconds())
-    except (TypeError, ParserError):
+    except (TypeError, OverflowError, ParserError):
         return value
 
 
