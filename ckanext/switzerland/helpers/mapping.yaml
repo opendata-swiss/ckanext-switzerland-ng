@@ -2,6 +2,9 @@ CSV:
   - 'csv'
   - 'text (.csv)'
   - 'comma ...'
+ESRI ASCII Grid:
+  - 'ESRI ASCII Grid (.grd/.asc)'
+  - '.asc)'
 GeoJSON:
   - 'geojson'
 GeoTIFF:
