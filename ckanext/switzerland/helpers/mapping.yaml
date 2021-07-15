@@ -1,23 +1,44 @@
+API:
+  - 'api'
+  - 'rest'
+  - 'rest api'
 CSV:
   - 'csv'
   - 'text (.csv)'
   - 'comma ...'
+  - 'text (.csv), comma separated'
+DXF:
+  - 'dxf'
+  - 'dxf (.dxf)'
+ESRI ASCII Grid:
+  - 'esri ascii grid (.grd/.asc)'
+  - 'esri arcinfo ascii grid'
+  - '.asc)'
+GDB:
+  - 'gdb'
 GeoJSON:
   - 'geojson'
 GeoTIFF:
   - 'geotiff'
 GPKG:
   - 'gpkg'
+  - 'geopackage (ogc)'
 HTML:
   - 'html'
 INTERLIS:
   - 'interlis'
 JSON:
   - 'json'
+KML:
+  - 'kml'
+  - 'vnd.google-earth.kml+xml'
 KMZ:
   - 'kmz'
+LAZ:
+  - 'laz (.laz)'
 MULTIFORMAT:
   - 'multiformat'
+  - 'multi'
 ODS:
   - 'ods'
   - 'vnd.oas...'
@@ -37,6 +58,7 @@ SHAPEFILE:
   - 'esri file geodatabase'
   - 'esri arcinfo ascii ...'
   - 'esri personal geodatabase (.mdb)'
+  - 'shape'
 TXT:
   - 'text'
   - 'txt'
@@ -56,6 +78,7 @@ WMS:
 WORLDFILE:
   - 'geotiff/worldfile (.tif/.tfw)'
   - 'jpeg/worldfile (.jpg/.jgw)'
+  - '.jgw)'
   - '.tfw)'
 WMTS:
   - 'wmts'
@@ -66,5 +89,7 @@ XLS:
   - 'vnd.ms-excel'
 XML:
   - 'xml'
+YAML:
+  - 'yaml'
 ZIP:
   - 'zip'
