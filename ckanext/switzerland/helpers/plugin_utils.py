@@ -294,7 +294,7 @@ def _transform_package_dates(pkg_dict):
 def _transform_datetime_to_isoformat(value):
     """derive isoformat from datepicker date format"""
     try:
-        d = parse(value)
+        d = parse(value, dayfirst=True)
         return d.isoformat()
     except (TypeError, ParserError):
         return ""
