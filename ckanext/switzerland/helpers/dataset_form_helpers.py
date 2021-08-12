@@ -220,9 +220,17 @@ def _get_see_alsos_from_storage(data):
     see_alsos_display = []
     if see_alsos_storage:
         for see_also in see_alsos_storage:
-            dataset_from_storage = get_dataset_by_identifier(identifier=see_also['dataset_identifier'])  # noqa
-            if dataset_from_storage:
-                see_alsos_display.append(dataset_from_storage.get('name'))
+            identifier = see_also['dataset_identifier']
+            if identifier:
+                try:
+                    dataset_from_storage = get_dataset_by_identifier(
+                        identifier=identifier)
+                except Exception as e:
+                    log.error("Error {} occured while retrieving identifier {}"
+                              .format(e, identifier))
+                else:
+                    if dataset_from_storage:
+                        see_alsos_display.append(dataset_from_storage.get('name'))
         return see_alsos_display
     return None
 
