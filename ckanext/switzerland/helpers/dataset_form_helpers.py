@@ -10,7 +10,8 @@ import ckan.plugins.toolkit as tk
 from ckan.common import _
 from ckanext.switzerland.helpers.frontend_helpers import (
     get_frequency_name, get_dataset_by_identifier)
-from ckanext.switzerland.helpers.localize_utils import localize_by_language_order  # noqa
+from ckanext.switzerland.helpers.localize_utils import (
+    localize_by_language_order)
 from ckanext.switzerland.helpers.terms_of_use_utils import (
     TERMS_OF_USE_BY_ASK, TERMS_OF_USE_OPEN, TERMS_OF_USE_BY, TERMS_OF_USE_ASK)
 from dateutil.parser import parse
@@ -67,9 +68,8 @@ def ogdch_publishers_form_helper(data):
     return rows
 
 
-def _build_rows_form_field(data_empty, data_list=None):  # noqa
-    """
-    builds a rows form field
+def _build_rows_form_field(data_empty, data_list=None):
+    """builds a rows form field
     - gets a list of data to fill in the form
     - the form is build with that data
     - rows that are empty are set to hidden
@@ -79,8 +79,13 @@ def _build_rows_form_field(data_empty, data_list=None):  # noqa
     number_of_rows_to_show = len(data_list) if data_list else 1
     rows = []
     for i in range(1, ADDITIONAL_FORM_ROW_LIMIT + 1):
-        row = {'index': str(i), 'data': data_list[i - 1] if i <= len(data_list) else data_empty}  # noqa
-        row['css_class'] = SHOW_ROW_CSS_CLASS if (i <= number_of_rows_to_show) else HIDE_ROW_CSS_CLASS  # noqa
+        row = {
+            "index": str(i),
+            "data": data_list[i - 1] if i <= len(data_list) else data_empty,
+        }
+        row["css_class"] = (
+            SHOW_ROW_CSS_CLASS if (i <= number_of_rows_to_show) else HIDE_ROW_CSS_CLASS  # noqa
+        )
         rows.append(row)
     return rows
 
@@ -230,7 +235,9 @@ def _get_see_alsos_from_storage(data):
                               .format(e, identifier))
                 else:
                     if dataset_from_storage:
-                        see_alsos_display.append(dataset_from_storage.get('name'))
+                        see_alsos_display.append(
+                            dataset_from_storage.get('name')
+                        )
         return see_alsos_display
     return None
 
