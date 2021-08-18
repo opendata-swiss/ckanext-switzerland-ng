@@ -3,7 +3,6 @@ helpers of the plugins.py
 """
 import json
 import re
-import datetime
 from ckan import logic
 import ckan.plugins.toolkit as toolkit
 from ckan.lib.munge import munge_title_to_name
