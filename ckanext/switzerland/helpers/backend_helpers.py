@@ -294,17 +294,19 @@ def ogdch_localize_activity_item(msg):
     """localizing activity messages: this function gets an html message and
     replaces the language dict in there with the localized value
     """
-    try:
-        parser = HTMLParser()
-        unescaped_msg = parser.unescape(msg)
-        language_dict = re.search(REGEX_LANGUAGE_DICT, unescaped_msg).group(0)
-        localized_language_dict = get_localized_value_for_display(language_dict)  # noqa
-        localized_msg = unescaped_msg.replace(language_dict, localized_language_dict)  # noqa
-        return tk.literal(localized_msg)
-    except Exception as e:
-        log.error("Error {} occured while localizing an activity message".format(e, msg))  # noqa
-    return tk.literal(msg)
+    parser = HTMLParser()
+    unescaped_msg = parser.unescape(msg)
 
+    language_dict_result = re.search(REGEX_LANGUAGE_DICT, unescaped_msg)
+    if not language_dict_result:
+        return tk.literal(msg)
+
+    language_dict = language_dict_result.group(0)
+    localized_language_dict = get_localized_value_for_display(language_dict)
+    localized_msg = unescaped_msg.replace(
+        language_dict, localized_language_dict
+    )
+    return tk.literal(localized_msg)
 
 def ogdch_admin_capactity():
     """tests whether the current user is a sysadmin
