@@ -308,15 +308,18 @@ def ogdch_localize_activity_item(msg):
     )
     return tk.literal(localized_msg)
 
-def ogdch_admin_capactity():
+
+def ogdch_admin_capacity():
     """tests whether the current user is a sysadmin
-    or an organization admin"""
+    or an organization admin
+    """
     if authz.is_sysadmin(c.user):
         return True
-    context = {'user': c.user,
-               'auth_user_obj': c.userobj}
-    roles_for_user = tk.get_action('organization_list_for_user')(context, {'id': c.user})  # noqa
-    capacities = [role.get('capacity') for role in roles_for_user]
+    context = {"user": c.user, "auth_user_obj": c.userobj}
+    roles_for_user = tk.get_action("organization_list_for_user")(
+        context, {"id": c.user}
+    )
+    capacities = [role.get("capacity") for role in roles_for_user]
     if CAPACITY_ADMIN in capacities:
         return True
     return False
