@@ -6,7 +6,6 @@ from collections import OrderedDict
 import ckan.plugins.toolkit as tk
 import ckan.logic as logic
 import json
-import datetime
 from ckan.common import _
 from babel import numbers
 
