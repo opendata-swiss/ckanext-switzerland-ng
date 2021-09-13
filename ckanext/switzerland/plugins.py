@@ -395,6 +395,14 @@ class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
         search_params = ogdch_plugin_utils.ogdch_adjust_search_params(search_params) # noqa
         return search_params
 
+    def after_search(self, search_results, search_params):
+        """
+        Process search result before view
+        """
+        for pkg_dict in search_results.get('results', []):
+            ogdch_plugin_utils._transform_package_dates(pkg_dict)
+        return search_results
+
     # IXloader
 
     def after_upload(self, context, resource_dict, dataset_dict):
