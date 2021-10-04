@@ -1,4 +1,0 @@
-User-agent: *
-{% block all_user_agents -%}
-Disallow: /
-{%- endblock %}
