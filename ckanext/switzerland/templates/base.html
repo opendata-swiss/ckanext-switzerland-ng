@@ -1,5 +1,10 @@
 {% ckan_extends %}
 
+{% block meta %}
+  {{ super() }}
+  <meta name="robots" content="noindex" />
+{% endblock %}
+
 {% block styles %}
 {{ super() }}
   {% resource 'switzerland/ogdch_file_upload.js' %}
