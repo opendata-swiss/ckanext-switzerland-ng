@@ -2,9 +2,6 @@
 
 <div class="module-content box">
   <header>
-    {% if intro %}
-      {{ h.render_markdown(intro) }}
-    {% else %}
       <h1 class="page-heading">{{ _("opendata.swiss CKAN backend") }}</h1>
       <p>
         {% trans %}Welcome to the CKAN backend of opendata.swiss.
@@ -12,7 +9,6 @@
         You can also create and run data harvesters.
         {% endtrans %}
       </p>
-    {% endif %}
   </header>
 
   {% block home_image %}
