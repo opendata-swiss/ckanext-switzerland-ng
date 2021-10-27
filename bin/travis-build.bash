@@ -99,6 +99,7 @@ cd -
 echo "Installing ckanext-dcat and its requirements..."
 git clone https://github.com/ckan/ckanext-dcat
 cd ckanext-dcat
+git checkout 6b7ec505
 python setup.py develop
 pip install -r requirements.txt
 pip install -r dev-requirements.txt
