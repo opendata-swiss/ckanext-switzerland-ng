@@ -331,7 +331,8 @@ def ogdch_render_infobox(markdown_text):
     ...
     if this structure is encountered and text in
     the current user language is detected, it is returned.
-    if the current user language can not be detected the
+    if the current user language can not be detected a fallback
+    language is tried, if no fallback is found the
     markdown string is returned as is.
     """
     lang_code = lang()
@@ -341,4 +342,7 @@ def ogdch_render_infobox(markdown_text):
     for item in items:
         if item[:2].lower() == lang_code:
             return render_markdown(item[2:].strip())
+        for lang_code in ogdch_loc_utils.get_language_priorities():
+            if item[:2].lower() == lang_code:
+                return render_markdown(item[2:].strip())
     return render_markdown(markdown_text)
