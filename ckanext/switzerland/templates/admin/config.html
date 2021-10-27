@@ -1,0 +1,43 @@
+{% ckan_extends %}
+{% block secondary_content %}
+  <div class="module module-narrow module-shallow">
+    <h2 class="module-heading">
+      <i class="fa fa-info-circle"></i>
+      {{ _('CKAN config options') }}
+    </h2>
+    <div class="module-content">
+      {% block admin_form_help %}
+        {% set about_url = h.url_for(controller='home', action='about') %}
+        {% set home_url = h.url_for(controller='home', action='index') %}
+        {% set docs_url = "http://docs.ckan.org/en/{0}/theming".format(g.ckan_doc_version) %}
+        {% trans %}
+          <h3>News on opendata.swiss</h3>
+          <p><strong>Intro Text:</strong> This text will appear as news on the
+            <a href="{{ home_url }}">home page</a> if it is set.</p>
+          <ul>
+            <li>When it is set a link will be genrated to point to it on each page other
+            then the homepage</li>
+            <li>Use Markdown to write it: Use subheaders #de, #fr, #en, #it to add different texts for
+            each language.</li>
+          </ul>
+        {% endtrans %}
+        {% trans %}
+          <p><strong>Site Title:</strong> This is the title of this CKAN instance
+            It appears in various places throughout CKAN.</p>
+          <p><strong>Style:</strong> Choose from a list of simple variations of
+            the main colour scheme to get a very quick custom theme working.</p>
+          <p><strong>Site Tag Logo:</strong> This is the logo that appears in the
+            header of all the CKAN instance templates.</p>
+          <p><strong>About:</strong> This text will appear on this CKAN instances
+            <a href="{{ about_url }}">about page</a>.</p>
+          <p><strong>Custom CSS:</strong> This is a block of CSS that appears in
+            <code>&lt;head&gt;</code> tag of every page. If you wish to customize
+            the templates more fully we recommend
+            <a href="{{ docs_url }}" target="_blank">reading the documentation</a>.</p>
+          <p><strong>Homepage:</strong> This is for choosing a predefined layout for
+            the modules that appear on your homepage.</p>
+        {% endtrans %}
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}
