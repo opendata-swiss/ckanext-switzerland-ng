@@ -1,11 +1,13 @@
 {% ckan_extends %}
 {% block flash %}
-{% if request.path != "/" %}
-{% set intro = g.site_intro_text %}
-{% if intro %}
-<p><a href="{{ h.url_for('home.index') }}">
-  {{ _('Please check the news!') }}
-</a></p>
-{% endif %}
-{% endif %}
+  {% if request.path != "/" %}
+  {% set intro = g.site_intro_text %}
+    {% if intro %}
+      <p>
+        <a href="{{ h.url_for('home.index') }}">
+          {{ _('Please check the news!') }}
+        </a>
+      </p>
+    {% endif %}
+  {% endif %}
 {% endblock %}
