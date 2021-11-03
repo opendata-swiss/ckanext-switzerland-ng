@@ -315,34 +315,3 @@ def get_localized_date(date_string):
         return localised_nice_date(dt, show_date=True, with_hours=False)
     except (TypeError, ParserError):
         return ''
-
-
-def ogdch_render_infobox(markdown_text):
-    """
-    Expected input is markdown_text as Markdown,
-    structured in the following way:
-    #de
-    ...
-    #fr
-    ...
-    #en
-    ...
-    #it
-    ...
-    if this structure is encountered and text in
-    the current user language is detected, it is returned.
-    if the current user language can not be detected a fallback
-    language is tried, if no fallback is found the
-    markdown string is returned as is.
-    """
-    lang_code = lang()
-    if not markdown_text:
-        return markdown_text
-    items = re.split('#', markdown_text)
-    for item in items:
-        if item[:2].lower() == lang_code:
-            return render_markdown(item[2:].strip())
-        for lang_code in ogdch_loc_utils.get_language_priorities():
-            if item[:2].lower() == lang_code:
-                return render_markdown(item[2:].strip())
-    return render_markdown(markdown_text)
