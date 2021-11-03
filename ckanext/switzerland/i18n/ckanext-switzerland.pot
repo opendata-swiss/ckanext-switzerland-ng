@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-switzerland 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-03 16:23+0000\n"
+"POT-Creation-Date: 2021-11-03 17:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -430,82 +430,82 @@ msgstr ""
 msgid "If this text is set, it will appear as news on the Homepage, see"
 msgstr ""
 
-#: ckanext/switzerland/templates/admin/config.html:18
-#: ckanext/switzerland/templates/admin/config.html:51
+#: ckanext/switzerland/templates/admin/config.html:17
+#: ckanext/switzerland/templates/admin/config.html:45
 msgid "Homepage"
 msgstr ""
 
-#: ckanext/switzerland/templates/admin/config.html:21
+#: ckanext/switzerland/templates/admin/config.html:20
 msgid "Instruction how to set the text"
 msgstr ""
 
-#: ckanext/switzerland/templates/admin/config.html:30
+#: ckanext/switzerland/templates/admin/config.html:29
 msgid "Important"
 msgstr ""
 
-#: ckanext/switzerland/templates/admin/config.html:31
+#: ckanext/switzerland/templates/admin/config.html:30
 msgid ""
 "Currently all 4 languages are need to be set. The text for each language will"
-" appear on the locale of the homepage for that language ."
+" appear on the locale of the homepage for that language."
 msgstr ""
 
-#: ckanext/switzerland/templates/admin/config.html:34
+#: ckanext/switzerland/templates/admin/config.html:31
 msgid "Standard CKAN settings"
 msgstr ""
 
-#: ckanext/switzerland/templates/admin/config.html:35
+#: ckanext/switzerland/templates/admin/config.html:32
 msgid "Site Title"
 msgstr ""
 
-#: ckanext/switzerland/templates/admin/config.html:36
+#: ckanext/switzerland/templates/admin/config.html:33
 msgid ""
 "This is the title of this CKAN instance It appears in various places "
 "throughout CKAN."
 msgstr ""
 
-#: ckanext/switzerland/templates/admin/config.html:38
+#: ckanext/switzerland/templates/admin/config.html:34
 msgid "Style"
 msgstr ""
 
-#: ckanext/switzerland/templates/admin/config.html:39
+#: ckanext/switzerland/templates/admin/config.html:35
 msgid ""
 "Choose from a list of simple variations of the main colour scheme to get a "
 "very quick custom theme working."
 msgstr ""
 
-#: ckanext/switzerland/templates/admin/config.html:42
+#: ckanext/switzerland/templates/admin/config.html:37
 msgid "Site Tag Logo"
 msgstr ""
 
-#: ckanext/switzerland/templates/admin/config.html:43
+#: ckanext/switzerland/templates/admin/config.html:38
 msgid ""
 "This is the logo that appears in the header of all the CKAN instance "
 "templates."
 msgstr ""
 
-#: ckanext/switzerland/templates/admin/config.html:45
+#: ckanext/switzerland/templates/admin/config.html:39
 #: ckanext/switzerland/templates/group/read_base.html:22
 #: ckanext/switzerland/templates/organization/read_base.html:18
 msgid "About"
 msgstr ""
 
-#: ckanext/switzerland/templates/admin/config.html:46
+#: ckanext/switzerland/templates/admin/config.html:40
 msgid "This text will appear on this CKAN instances, see "
 msgstr ""
 
-#: ckanext/switzerland/templates/admin/config.html:47
+#: ckanext/switzerland/templates/admin/config.html:41
 msgid "About page"
 msgstr ""
 
-#: ckanext/switzerland/templates/admin/config.html:48
+#: ckanext/switzerland/templates/admin/config.html:42
 msgid "Custom CSS"
 msgstr ""
 
-#: ckanext/switzerland/templates/admin/config.html:49
+#: ckanext/switzerland/templates/admin/config.html:43
 msgid "This can be used for custom CSS on a CKAN site."
 msgstr ""
 
-#: ckanext/switzerland/templates/admin/config.html:52
+#: ckanext/switzerland/templates/admin/config.html:46
 msgid ""
 "This is for choosing a predefined layout for the modules that appear on your "
 "homepage."
