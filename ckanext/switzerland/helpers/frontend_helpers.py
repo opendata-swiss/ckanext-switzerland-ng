@@ -10,7 +10,7 @@ from ckan.common import _
 from babel import numbers
 
 from ckan.lib.formatters import localised_nice_date
-from ckan.lib.helpers import lang, url_for, localised_number, render_markdown
+from ckan.lib.helpers import lang, url_for, localised_number
 import ckan.lib.i18n as i18n
 from ckanext.hierarchy.helpers import group_tree
 import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
