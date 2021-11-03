@@ -12,33 +12,45 @@
         {% set docs_url = "http://docs.ckan.org/en/{0}/theming".format(g.ckan_doc_version) %}
           <h3>{{ _('Frontpage news box') }}</h3>
           <p><strong>{{ _('Intro Text') }}:</strong>
-            {% trans %} If this text is set, it will appear on the {% endtrans %}
-            <a href="{{ home_url }}">{{ _('home page') }}</a>.</p>
-          <ul>
-            <li>{% trans %}When it is set a link will be generated to point to it on each page other
-            than the homepage.{% endtrans %}</li>
-            <li>{% trans %}Use Markdown to write it: Use subheaders #de, #fr, #en, #it
-            to add different texts for
-            each language.{% endtrans %}
-            </li>
-          </ul>
+            {{ _( 'If this text is set, it will appear as news on the
+            Homepage, see') }}:
+            <a href="{{ home_url }}">
+              {{ _('Homepage') }}
+            </a>
+          </p>
+        <p><strong>{{ _('Instruction how to set the text') }}</strong>:</p>
+            <code>#de</code><br>
+            <code>Neuigkeiten in Deutsch</code><br>
+            <code>#en</code><br>
+            <code>News in English</code><br>
+            <code>#fr</code><br>
+            <code>Nouvelles en français</code><br>
+            <code>#it</code><br>
+            <code>Notizie in italiano</code><br>
+        <p><strong>{{ _('Important') }}</strong>
+        {{ _('Currently all 4 languages are need to be set. The text for each
+        language will appear on the locale of the homepage for that language
+        .') }}</p>
         <h3>{{ _('Standard CKAN settings') }}</h3>
-        {% trans %}
-          <p><strong>Site Title:</strong> This is the title of this CKAN instance
-            It appears in various places throughout CKAN.</p>
-          <p><strong>Style:</strong> Choose from a list of simple variations of
-            the main colour scheme to get a very quick custom theme working.</p>
-          <p><strong>Site Tag Logo:</strong> This is the logo that appears in the
-            header of all the CKAN instance templates.</p>
-          <p><strong>About:</strong> This text will appear on this CKAN instances
-            <a href="{{ about_url }}">about page</a>.</p>
-          <p><strong>Custom CSS:</strong> This is a block of CSS that appears in
-            <code>&lt;head&gt;</code> tag of every page. If you wish to customize
-            the templates more fully we recommend
-            <a href="{{ docs_url }}" target="_blank">reading the documentation</a>.</p>
-          <p><strong>Homepage:</strong> This is for choosing a predefined layout for
-            the modules that appear on your homepage.</p>
-        {% endtrans %}
+        <p><strong>{{ _('Site Title') }}:</strong>
+          {{ _('This is the title of this CKAN instance
+          It appears in various places throughout CKAN.') }}</p>
+        <p><strong>{{ _('Style') }}:</strong>
+          {{ _('Choose from a list of simple variations of
+          the main colour scheme to get a very quick custom theme working.') }}
+        </p>
+        <p><strong>{{ _('Site Tag Logo') }}:</strong>
+        {{ _('This is the logo that appears in the
+          header of all the CKAN instance templates.') }}</p>
+        <p><strong>{{ _('About') }}:</strong>
+          {{ _('This text will appear on this CKAN instances, see ') }}
+          <a href="{{ about_url }}">{{ _('About page') }}</a>.</p>
+        <p><strong>{{ _('Custom CSS') }}:</strong>
+        {{ _('This can be used for custom CSS on a CKAN site.') }}
+        </p>
+        <p><strong>{{ _('Homepage') }}:</strong>
+          {{ _('This is for choosing a predefined layout for
+          the modules that appear on your homepage.') }}</p>
       {% endblock %}
     </div>
   </div>
