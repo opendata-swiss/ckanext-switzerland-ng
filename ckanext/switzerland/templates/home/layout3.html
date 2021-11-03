@@ -10,9 +10,9 @@
       {% if intro %}
         <div class="col-md-6 col1">
           <div class="box stats">
-            <div class="inner">
-              <h3>{{ _('News on opendata.swiss') }}</h3>
-              {{ h.ogdch_render_infobox(intro) }}
+            <div class="inner" id="ogdch_info_box" data-module="ogdch_info_box">
+              <h3>{{ _('News') }}</h3>
+              {{ h.render_markdown(intro) }}
             </div>
           </div>
         </div>
