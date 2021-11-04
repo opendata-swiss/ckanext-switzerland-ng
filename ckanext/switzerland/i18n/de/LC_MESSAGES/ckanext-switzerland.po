@@ -715,10 +715,6 @@ msgstr "Anmeldung funktioniert nur mit Benutzername, nicht mit E-Mail-Adresse."
 msgid "Please check the news!"
 msgstr "Es gibt Neuigkeiten!"
 
-#: ckanext/switzerland/templates/admin/config.html:6
-msgid "CKAN config options"
-msgstr "CKAN Einstellungen"
-
 #: ckanext/switzerland/templates/admin/config.html:14
 msgid "Intro Text"
 msgstr "Neuigkeiten Text"
@@ -737,13 +733,8 @@ msgstr ""
 "Wenn dieser Text gesetzt ist, erscheint er als Neuigkeiten Box auf der "
 "Startseite, siehe"
 
-#: ckanext/switzerland/templates/admin/config.html:18
-#: ckanext/switzerland/templates/admin/config.html:51
-msgid "Homepage"
-msgstr "Startseite"
-
 #: ckanext/switzerland/templates/admin/config.html:21
-msgid "Instruction how to set the text"
+msgid "Instructions for how to set the text"
 msgstr "Anleitung für das Setzen des Textes"
 
 #: ckanext/switzerland/templates/admin/config.html:30
@@ -752,8 +743,8 @@ msgstr "Wichtig"
 
 #: ckanext/switzerland/templates/admin/config.html:31
 msgid ""
-"Currently all 4 languages are need to be set. The text for each language will"
-" appear on the locale of the homepage for that language."
+"Currently all 4 languages need to be set. The text for each language will "
+"appear on the homepage for that language."
 msgstr "Aktuell müssen alle 4 Sprachen gesetzt werden. Der Text jeder Sprache "
 "wird dann in der jeweiligen Lokale der Startseite angezeigt."
 
@@ -763,7 +754,7 @@ msgstr "CKAN Standard Einstellungen"
 
 #: ckanext/switzerland/templates/admin/config.html:36
 msgid ""
-"This is the title of this CKAN instance It appears in various places "
+"This is the title of this CKAN instance. It appears in various places "
 "throughout CKAN."
 msgstr "Der Titel der CKAN Instanz wird an verschiedenen Stellen auf "
 "der CKAN Instanz angezeigt."
