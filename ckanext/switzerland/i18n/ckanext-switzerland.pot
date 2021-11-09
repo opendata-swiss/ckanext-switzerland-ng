@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-switzerland 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-27 15:41+0000\n"
+"POT-Creation-Date: 2021-11-09 07:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,7 +32,7 @@ msgid "Draft"
 msgstr ""
 
 #: ckanext/switzerland/plugins.py:79 ckanext/switzerland/plugins.py:107
-#: ckanext/switzerland/plugins.py:526
+#: ckanext/switzerland/plugins.py:525
 #: ckanext/switzerland/templates/group/base_form_page.html:4
 #: ckanext/switzerland/templates/group/edit.html:11
 #: ckanext/switzerland/templates/group/edit.html:14
@@ -89,7 +89,7 @@ msgstr ""
 msgid "Formats"
 msgstr ""
 
-#: ckanext/switzerland/plugins.py:527
+#: ckanext/switzerland/plugins.py:526
 #: ckanext/switzerland/templates/showcase/new_package_form.html:47
 #: ckanext/switzerland/templates/showcase/snippets/showcase_info.html:65
 msgid "Type of content"
@@ -153,22 +153,22 @@ msgid "File"
 msgstr ""
 
 #: ckanext/switzerland/helpers/backend_helpers.py:179
-#: ckanext/switzerland/helpers/frontend_helpers.py:111
+#: ckanext/switzerland/helpers/frontend_helpers.py:110
 msgid "Confederation"
 msgstr ""
 
 #: ckanext/switzerland/helpers/backend_helpers.py:180
-#: ckanext/switzerland/helpers/frontend_helpers.py:112
+#: ckanext/switzerland/helpers/frontend_helpers.py:111
 msgid "Canton"
 msgstr ""
 
 #: ckanext/switzerland/helpers/backend_helpers.py:181
-#: ckanext/switzerland/helpers/frontend_helpers.py:113
+#: ckanext/switzerland/helpers/frontend_helpers.py:112
 msgid "Commune"
 msgstr ""
 
 #: ckanext/switzerland/helpers/backend_helpers.py:182
-#: ckanext/switzerland/helpers/frontend_helpers.py:114
+#: ckanext/switzerland/helpers/frontend_helpers.py:113
 msgid "Other"
 msgstr ""
 
@@ -228,93 +228,93 @@ msgid ""
 "Required"
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:83
+#: ckanext/switzerland/helpers/frontend_helpers.py:82
 msgid "Irregular"
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:84
+#: ckanext/switzerland/helpers/frontend_helpers.py:83
 msgid "Continuous"
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:85
+#: ckanext/switzerland/helpers/frontend_helpers.py:84
 msgid "Daily"
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:86
+#: ckanext/switzerland/helpers/frontend_helpers.py:85
 msgid "Three times a week"
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:87
+#: ckanext/switzerland/helpers/frontend_helpers.py:86
 msgid "Semi weekly"
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:88
+#: ckanext/switzerland/helpers/frontend_helpers.py:87
 msgid "Weekly"
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:89
+#: ckanext/switzerland/helpers/frontend_helpers.py:88
 msgid "Three times a month"
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:90
+#: ckanext/switzerland/helpers/frontend_helpers.py:89
 msgid "Biweekly"
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:91
+#: ckanext/switzerland/helpers/frontend_helpers.py:90
 msgid "Semimonthly"
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:92
+#: ckanext/switzerland/helpers/frontend_helpers.py:91
 msgid "Monthly"
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:93
+#: ckanext/switzerland/helpers/frontend_helpers.py:92
 msgid "Bimonthly"
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:94
+#: ckanext/switzerland/helpers/frontend_helpers.py:93
 msgid "Quarterly"
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:95
+#: ckanext/switzerland/helpers/frontend_helpers.py:94
 msgid "Three times a year"
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:96
+#: ckanext/switzerland/helpers/frontend_helpers.py:95
 msgid "Semi Annual"
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:97
+#: ckanext/switzerland/helpers/frontend_helpers.py:96
 msgid "Annual"
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:98
+#: ckanext/switzerland/helpers/frontend_helpers.py:97
 msgid "Biennial"
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:99
+#: ckanext/switzerland/helpers/frontend_helpers.py:98
 msgid "Triennial"
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:122
+#: ckanext/switzerland/helpers/frontend_helpers.py:121
 msgid "Open use"
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:126
+#: ckanext/switzerland/helpers/frontend_helpers.py:125
 msgid "Open use. Must provide the source."
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:130
+#: ckanext/switzerland/helpers/frontend_helpers.py:129
 msgid "Open use. Use for commercial purposes requires permission of the data owner."
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:134
+#: ckanext/switzerland/helpers/frontend_helpers.py:133
 msgid ""
 "Open use. Must provide the source. Use for commercial purposes requires "
 "permission of the data owner."
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:138
+#: ckanext/switzerland/helpers/frontend_helpers.py:137
 msgid "Closed data"
 msgstr ""
 
@@ -427,45 +427,88 @@ msgid "Intro Text"
 msgstr ""
 
 #: ckanext/switzerland/templates/admin/config.html:15
-msgid " If this text is set, it will appear on the "
+msgid "If this text is set, it will appear as news on the Homepage, see"
 msgstr ""
 
-#: ckanext/switzerland/templates/admin/config.html:16
-msgid "home page"
-msgstr ""
-
-#: ckanext/switzerland/templates/admin/config.html:18
-msgid ""
-"When it is set a link will be generated to point to it on each page other "
-"than the homepage."
+#: ckanext/switzerland/templates/admin/config.html:17
+#: ckanext/switzerland/templates/admin/config.html:45
+msgid "Homepage"
 msgstr ""
 
 #: ckanext/switzerland/templates/admin/config.html:20
-msgid ""
-"Use Markdown to write it: Use subheaders #de, #fr, #en, #it to add different "
-"texts for each language."
+msgid "Instructions for how to set the text"
 msgstr ""
 
-#: ckanext/switzerland/templates/admin/config.html:25
+#: ckanext/switzerland/templates/admin/config.html:29
+msgid "Important"
+msgstr ""
+
+#: ckanext/switzerland/templates/admin/config.html:30
+msgid ""
+"Currently all 4 languages need to be set. The text for each language will "
+"appear on the homepage for that language."
+msgstr ""
+
+#: ckanext/switzerland/templates/admin/config.html:31
 msgid "Standard CKAN settings"
 msgstr ""
 
-#: ckanext/switzerland/templates/admin/config.html:26
-#, python-format
+#: ckanext/switzerland/templates/admin/config.html:32
+msgid "Site Title"
+msgstr ""
+
+#: ckanext/switzerland/templates/admin/config.html:33
 msgid ""
-" <p><strong>Site Title:</strong> This is the title of this CKAN instance It "
-"appears in various places throughout CKAN.</p> <p><strong>Style:</strong> "
+"This is the title of this CKAN instance. It appears in various places "
+"throughout CKAN."
+msgstr ""
+
+#: ckanext/switzerland/templates/admin/config.html:34
+msgid "Style"
+msgstr ""
+
+#: ckanext/switzerland/templates/admin/config.html:35
+msgid ""
 "Choose from a list of simple variations of the main colour scheme to get a "
-"very quick custom theme working.</p> <p><strong>Site Tag Logo:</strong> This "
-"is the logo that appears in the header of all the CKAN instance "
-"templates.</p> <p><strong>About:</strong> This text will appear on this CKAN "
-"instances <a href=\"%(about_url)s\">about page</a>.</p> <p><strong>Custom "
-"CSS:</strong> This is a block of CSS that appears in "
-"<code>&lt;head&gt;</code> tag of every page. If you wish to customize the "
-"templates more fully we recommend <a href=\"%(docs_url)s\" "
-"target=\"_blank\">reading the documentation</a>.</p> "
-"<p><strong>Homepage:</strong> This is for choosing a predefined layout for "
-"the modules that appear on your homepage.</p> "
+"very quick custom theme working."
+msgstr ""
+
+#: ckanext/switzerland/templates/admin/config.html:37
+msgid "Site Tag Logo"
+msgstr ""
+
+#: ckanext/switzerland/templates/admin/config.html:38
+msgid ""
+"This is the logo that appears in the header of all the CKAN instance "
+"templates."
+msgstr ""
+
+#: ckanext/switzerland/templates/admin/config.html:39
+#: ckanext/switzerland/templates/group/read_base.html:22
+#: ckanext/switzerland/templates/organization/read_base.html:18
+msgid "About"
+msgstr ""
+
+#: ckanext/switzerland/templates/admin/config.html:40
+msgid "This text will appear on this CKAN instances, see "
+msgstr ""
+
+#: ckanext/switzerland/templates/admin/config.html:41
+msgid "About page"
+msgstr ""
+
+#: ckanext/switzerland/templates/admin/config.html:42
+msgid "Custom CSS"
+msgstr ""
+
+#: ckanext/switzerland/templates/admin/config.html:43
+msgid "This can be used for custom CSS on a CKAN site."
+msgstr ""
+
+#: ckanext/switzerland/templates/admin/config.html:46
+msgid ""
+"This is for choosing a predefined layout for the modules that appear on your "
+"homepage."
 msgstr ""
 
 #: ckanext/switzerland/templates/admin/trash.html:20
@@ -715,11 +758,6 @@ msgstr ""
 msgid "Create a Category"
 msgstr ""
 
-#: ckanext/switzerland/templates/group/read_base.html:22
-#: ckanext/switzerland/templates/organization/read_base.html:18
-msgid "About"
-msgstr ""
-
 #: ckanext/switzerland/templates/group/snippets/feeds.html:3
 msgid "Datasets in category: {group}"
 msgstr ""
@@ -762,7 +800,7 @@ msgid "read more"
 msgstr ""
 
 #: ckanext/switzerland/templates/home/layout3.html:14
-msgid "News on opendata.swiss"
+msgid "News"
 msgstr ""
 
 #: ckanext/switzerland/templates/home/snippets/promoted.html:5

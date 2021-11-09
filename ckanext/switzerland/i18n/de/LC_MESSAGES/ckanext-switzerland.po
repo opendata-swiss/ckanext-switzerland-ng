@@ -715,45 +715,83 @@ msgstr "Anmeldung funktioniert nur mit Benutzername, nicht mit E-Mail-Adresse."
 msgid "Please check the news!"
 msgstr "Es gibt Neuigkeiten!"
 
-#: ckanext/switzerland/templates/admin/config.html:6
-msgid "CKAN config options"
-msgstr ""
-
 #: ckanext/switzerland/templates/admin/config.html:14
 msgid "Intro Text"
 msgstr "Neuigkeiten Text"
 
-#: ckanext/switzerland/templates/admin/config.html:6
-msgid "CKAN config options"
-msgstr ""
-
 #: ckanext/switzerland/templates/home/layout3.html:14
-msgid "News on opendata.swiss"
-msgstr "Neuigkeiten auf opendata.swiss"
+msgid "News"
+msgstr "Neuigkeiten"
 
 #: ckanext/switzerland/templates/admin/config.html:13
 msgid "Frontpage news box"
 msgstr "Neuigkeiten für die Startseite"
 
 #: ckanext/switzerland/templates/admin/config.html:15
-msgid " If this text is set, it will appear on the "
-msgstr " Wenn dieser Text gesetzt ist, wird er angezeigt auf der "
+msgid "If this text is set, it will appear as news on the Homepage, see"
+msgstr ""
+"Wenn dieser Text gesetzt ist, erscheint er als Neuigkeiten Box auf der "
+"Startseite, siehe"
 
-#: ckanext/switzerland/templates/admin/config.html:16
-msgid "home page"
-msgstr "Startseite"
+#: ckanext/switzerland/templates/admin/config.html:21
+msgid "Instructions for how to set the text"
+msgstr "Anleitung für das Setzen des Textes"
 
-#: ckanext/switzerland/templates/admin/config.html:18
+#: ckanext/switzerland/templates/admin/config.html:30
+msgid "Important"
+msgstr "Wichtig"
+
+#: ckanext/switzerland/templates/admin/config.html:31
 msgid ""
-"When it is set a link will be generated to point to it on each page other "
-"than the homepage."
-msgstr "Wenn gesetzt wird auf jeder Seite ausser der Startseite ein Link zu "
-"den Neuigkeiten eingefügt."
+"Currently all 4 languages need to be set. The text for each language will "
+"appear on the homepage for that language."
+msgstr "Aktuell müssen alle 4 Sprachen gesetzt werden. Der Text jeder Sprache "
+"wird dann in der jeweiligen Lokale der Startseite angezeigt."
 
-#: ckanext/switzerland/templates/admin/config.html:20
+#: ckanext/switzerland/templates/admin/config.html:34
+msgid "Standard CKAN settings"
+msgstr "CKAN Standard Einstellungen"
+
+#: ckanext/switzerland/templates/admin/config.html:36
 msgid ""
-"Use Markdown to write it: Use subheaders #de, #fr, #en, #it to add different "
-"texts for each language."
-msgstr "Benutze Markdown um den Text zu schreiben: über die Unterüberschriften "
-"#de, #fr, #en, #it lässt sich steuern, welcher Text in jeder Spachversion "
-"erscheinen soll."
+"This is the title of this CKAN instance. It appears in various places "
+"throughout CKAN."
+msgstr "Der Titel der CKAN Instanz wird an verschiedenen Stellen auf "
+"der CKAN Instanz angezeigt."
+
+#: ckanext/switzerland/templates/admin/config.html:39
+msgid ""
+"Choose from a list of simple variations of the main colour scheme to get a "
+"very quick custom theme working."
+msgstr "Hier kann ein simples Farbschema für die CKAN Instanz "
+"gewählt werden."
+
+#: ckanext/switzerland/templates/admin/config.html:43
+msgid ""
+"This is the logo that appears in the header of all the CKAN instance "
+"templates."
+msgstr "Hier kann der Seitenslogan eingegeben werden, der dann auf jeder "
+"Seite erscheint."
+
+#: ckanext/switzerland/templates/admin/config.html:46
+msgid "This text will appear on this CKAN instances, see "
+msgstr "Dieser Text erscheint auf dieser CKAN Instanz, siehe "
+
+#: ckanext/switzerland/templates/admin/config.html:47
+msgid "About page"
+msgstr "Über uns Seite"
+
+#: ckanext/switzerland/templates/admin/config.html:48
+msgid "Custom CSS"
+msgstr "Custom CSS"
+
+#: ckanext/switzerland/templates/admin/config.html:49
+msgid "This can be used for custom CSS on a CKAN site."
+msgstr "Diese Einstellung kann für CSS Definitionen benutzt werden."
+
+#: ckanext/switzerland/templates/admin/config.html:52
+msgid ""
+"This is for choosing a predefined layout for the modules that appear on your "
+"homepage."
+msgstr "Mit dieser Einstellung kann ein vordefiniertes Layout für die "
+"Starseite gewähtl werden."
