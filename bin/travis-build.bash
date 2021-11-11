@@ -99,11 +99,6 @@ cd -
 echo "Installing ckanext-dcat and its requirements..."
 git clone https://github.com/ckan/ckanext-dcat
 cd ckanext-dcat
-# TODO
-# checking out a commit as below is a temporary fix until we clear up
-# the dependency in ckanext-dcatapchharvest to a function
-# that got removed in the latest version of ckanext-dcat
-git checkout 6b7ec505
 python setup.py develop
 pip install -r requirements.txt
 pip install -r dev-requirements.txt
