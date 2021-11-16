@@ -79,7 +79,7 @@ def localize_json_facet_title(facet_item):
 
 def get_frequency_name(identifier=None, get_map=False):
     frequencies = OrderedDict([
-        ('http://purl.org/cld/freq/completelyIrregular', _('Irregular')),  # noqa
+        ('http://purl.org/cld/freq/irregular', _('Irregular')),  # noqa
         ('http://purl.org/cld/freq/continuous', _('Continuous')),  # noqa
         ('http://purl.org/cld/freq/daily', _('Daily')),  # noqa
         ('http://purl.org/cld/freq/threeTimesAWeek', _('Three times a week')),  # noqa
