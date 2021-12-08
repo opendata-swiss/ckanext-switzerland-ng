@@ -3,6 +3,7 @@ helpers of the plugins.py
 """
 import json
 import re
+import logging
 from ckan import logic
 import ckan.plugins.toolkit as toolkit
 from ckan.lib.munge import munge_title_to_name
@@ -12,6 +13,7 @@ import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
 import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
 from dateutil.parser import parse, ParserError
 
+log = logging.getLogger(__name__)
 
 def _prepare_suggest_context(search_data, pkg_dict):
     def clean_suggestion(term):
@@ -49,8 +51,8 @@ def map_ckan_default_fields(pkg_dict):  # noqa
 
     if pkg_dict.get('author') is None:
         try:
-            pkg_dict['author'] = pkg_dict['publishers'][0]['label']  # noqa
-        except (KeyError, IndexError):
+            pkg_dict['author'] = pkg_dict['publisher']['name']  # noqa
+        except KeyError:
             pass
 
     if pkg_dict.get('resources') is not None:
@@ -101,7 +103,10 @@ def ogdch_prepare_search_data_for_index(search_data, format_mapping):
 
     search_data['identifier'] = validated_dict.get('identifier')
     search_data['contact_points'] = [c['name'] for c in validated_dict.get('contact_points', [])]  # noqa
-    search_data['publishers'] = [p['label'] for p in validated_dict.get('publishers', [])]  # noqa
+    if 'publisher' in validated_dict:
+        publisher = json.loads(validated_dict['publisher'])
+        search_data['publisher'] = publisher.get('name', '')  # noqa
+        search_data['publisher_url'] =publisher.get('url', '')  # noqa
 
     # TODO: Remove the try-except-block.
     # This fixes the index while we have 'wrong' relations on
@@ -168,8 +173,8 @@ def package_map_ckan_default_fields(pkg_dict):  # noqa
 
     if pkg_dict.get('author') is None:
         try:
-            pkg_dict['author'] = pkg_dict['publishers'][0]['label']  # noqa
-        except (KeyError, IndexError):
+            pkg_dict['author'] = pkg_dict['publisher']['name']  # noqa
+        except KeyError:
             pass
 
     if pkg_dict.get('resources') is not None:

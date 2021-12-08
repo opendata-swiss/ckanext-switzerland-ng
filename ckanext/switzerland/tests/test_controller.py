@@ -47,7 +47,7 @@ class TestController(helpers.FunctionalTestBase):
                 'it': []
             },
             'spatial': '',
-            'publishers': [{'label': 'Bundesarchiv'}],
+            'publisher': {'name': 'Bundesarchiv', 'url': 'https://bfs.admin.ch'},
             'description': {
                 'fr': 'Description FR',
                 'de': 'Beschreibung DE',
