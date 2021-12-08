@@ -322,10 +322,14 @@ def _get_publisher_from_form(extras):
                             for key, value in extras.items()
                             if key.startswith('publisher-')
                             if value.strip() != '']
-        publisher_url = [field[1] for field in publisher_fields if field[0] == 'publisher-url']
+        publisher_url = [field[1]
+                         for field in publisher_fields
+                         if field[0] == 'publisher-url']
         if publisher_url:
             publisher_url = publisher_url[0]
-        publisher_name = [field[1] for field in publisher_fields if field[0] == 'publisher-name']
+        publisher_name = [field[1]
+                          for field in publisher_fields
+                          if field[0] == 'publisher-name']
         if publisher_name:
             publisher_name = publisher_name[0]
         return {'url': publisher_url, 'name': publisher_name}
