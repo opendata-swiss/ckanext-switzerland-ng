@@ -15,6 +15,7 @@ from dateutil.parser import parse, ParserError
 
 log = logging.getLogger(__name__)
 
+
 def _prepare_suggest_context(search_data, pkg_dict):
     def clean_suggestion(term):
         return term.replace('-', '')
@@ -70,7 +71,7 @@ def _is_dataset_package_type(pkg_dict):
         return False
 
 
-def ogdch_prepare_search_data_for_index(search_data, format_mapping):
+def ogdch_prepare_search_data_for_index(search_data, format_mapping):  # noqa
     """prepares the data for indexing"""
     if not _is_dataset_package_type(search_data):
         return search_data

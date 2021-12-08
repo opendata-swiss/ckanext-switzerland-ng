@@ -66,7 +66,9 @@ def ogdch_publisher_form_helper(data):
         return json.loads(publisher_stored)
     pkg_extras = data.get('extras')
     if pkg_extras:
-        publishers_list = [item['value'] for item in pkg_extras if item['key'] == 'publishers']
+        publishers_list = [item['value']
+                           for item in pkg_extras
+                           if item['key'] == 'publishers']
         log.error(publishers_list)
         if publishers_list:
             publisher_old = json.loads(publishers_list[0])
@@ -75,17 +77,15 @@ def ogdch_publisher_form_helper(data):
             publisher = {'name': publisher_name}
             organization = data.get('organization')
             if organization:
-                publisher['url'] = _get_organization_url(organization.get('name'))
+                publisher['url'] \
+                    = _get_organization_url(organization.get('name'))
             return publisher
     return {'name': '', 'url': ''}
 
 
 def _get_publisher_from_db_extras(extras):
     """
-    [{u'key': u'guid', u'value': u'timetable-54-draft-hrdf@oevch'},
-    {u'key': u'publishers', u'value': u'[{"label": "Publisher 1"}]'},
-    {u'key': u'uri', u'value': u'https://opentransportdata.swiss/dataset/b00b9f85-f1fc-4fc0-bb03-bf822dbf2622'}]
-
+    [{u'key': u'publishers', u'value': u'[{"label": "Publisher 1"}]'},
     """
     if isinstance(extras, dict):
         publisher_fields = [(key, value.strip())
