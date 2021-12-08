@@ -1,0 +1,6 @@
+{%- set publisher = data[field.field_name] -%}
+{% if publisher %}
+  <a href="{{ publisher.url }}" target="_blank" class="break-word">{{ publisher.name }}</a>
+{% else %}
+  -
+{% endif %}

@@ -6,6 +6,7 @@ used for rendering the dataset form
 """
 import datetime
 import logging
+import json
 import ckan.plugins.toolkit as tk
 from ckan.common import _
 from ckanext.switzerland.helpers.frontend_helpers import (
@@ -20,6 +21,8 @@ from dateutil.parser import parse
 ADDITIONAL_FORM_ROW_LIMIT = 10
 HIDE_ROW_CSS_CLASS = 'ogdch-hide-row'
 SHOW_ROW_CSS_CLASS = 'ogdch-show-row'
+PUBLISHER_EMPTY = {'name': '', 'url': ''}
+ORGANIZATION_BASE_URL = 'https://opendata.swiss/organization/'
 
 log = logging.getLogger(__name__)
 
@@ -57,15 +60,17 @@ def ogdch_get_rights_choices(field):
              'value': 'NonCommercialNotAllowed-CommercialWithPermission-ReferenceRequired'}]  # noqa
 
 
-def ogdch_publishers_form_helper(data):
-    publishers = _get_publishers_from_storage(data)
-    if not publishers:
-        publishers = get_publishers_from_form(data)
-
-    rows = _build_rows_form_field(
-        data_empty='',
-        data_list=publishers)
-    return rows
+def ogdch_publisher_form_helper(data):
+    publisher_stored = data.get('publisher', '')
+    if publisher_stored:
+        publisher = json.loads(publisher_stored)
+    if not publisher_stored:
+        publishers_stored_deprecated = data.get('publishers')
+        if publishers_stored_deprecated:
+            organization_name = data.get('organization').get('name')
+            publisher = {'name': publishers_stored_deprecated[0].get('label'),
+                         'url': _get_organization_url(organization_name)}
+    return publisher
 
 
 def _build_rows_form_field(data_empty, data_list=None):
@@ -88,28 +93,6 @@ def _build_rows_form_field(data_empty, data_list=None):
         )
         rows.append(row)
     return rows
-
-
-def _get_publishers_from_storage(data):
-    """
-    the data is expected to be stored as: "publishers":
-    [{u'label': u'amt-fur-mobilitat-kanton-basel-stadt'}]
-    """
-    publishers_stored_data = data.get('publishers')
-    if publishers_stored_data:
-        publishers = [item['label'] for item in publishers_stored_data]
-        return publishers
-    return None
-
-
-def get_publishers_from_form(data):
-    if isinstance(data, dict):
-        publishers = [value.strip()
-                      for key, value in data.items()
-                      if key.startswith('publisher-')
-                      if value.strip() != '']
-        return publishers
-    return None
 
 
 def ogdch_contact_points_form_helper(data):
@@ -315,3 +298,7 @@ def ogdch_dataset_title_form_helper(data):
         if title:
             return localize_by_language_order(title)
         return ''
+
+
+def _get_organization_url(organization_name):
+    return ORGANIZATION_BASE_URL + organization_name
