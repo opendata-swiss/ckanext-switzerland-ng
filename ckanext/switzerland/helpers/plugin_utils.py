@@ -174,7 +174,7 @@ def package_map_ckan_default_fields(pkg_dict):  # noqa
     if pkg_dict.get('author') is None:
         try:
             pkg_dict['author'] = pkg_dict['publisher']['name']  # noqa
-        except KeyError:
+        except (KeyError, TypeError):
             pass
 
     if pkg_dict.get('resources') is not None:
