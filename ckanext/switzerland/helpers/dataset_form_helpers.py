@@ -61,7 +61,7 @@ def ogdch_get_rights_choices(field):
 
 
 def ogdch_publisher_form_helper(data):
-    for k,v in data.items():
+    for k, v in data.items():
         log.error(k)
         log.error(v)
     publisher_form_name = data.get('publisher-name')
