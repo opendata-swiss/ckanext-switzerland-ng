@@ -305,18 +305,21 @@ def ogdch_validate_formfield_publisher(field, schema):
     """
     def validator(key, data, errors, context):
         extras = data.get(FORM_EXTRAS)
+        output = ''
         if extras:
             publisher = _get_publisher_from_form(extras)
             if publisher:
                 output = publisher
-                data[key] = json.dumps(output)
-            elif not _jsondata_for_key_is_set(data, key):
-                data[key] = '{}'
+                log.error(output)
+        data[key] = json.dumps(output)
 
     return validator
 
 
 def _get_publisher_from_form(extras):
+    log.error("get data from form")
+    log.error(extras)
+
     if isinstance(extras, dict):
         publisher_fields = [(key, value.strip())
                             for key, value in extras.items()

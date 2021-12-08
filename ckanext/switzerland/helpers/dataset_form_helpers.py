@@ -61,6 +61,14 @@ def ogdch_get_rights_choices(field):
 
 
 def ogdch_publisher_form_helper(data):
+    for k,v in data.items():
+        log.error(k)
+        log.error(v)
+    publisher_form_name = data.get('publisher-name')
+    publisher_form_url = data.get('publisher-url')
+    if publisher_form_url or publisher_form_name:
+        return {'name': publisher_form_name,
+                'url': publisher_form_url}
     publisher_stored = data.get('publisher')
     if publisher_stored:
         return json.loads(publisher_stored)

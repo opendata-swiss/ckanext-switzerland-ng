@@ -47,6 +47,7 @@ class TestController(helpers.FunctionalTestBase):
                 'it': []
             },
             'spatial': '',
+            'publishers': [{'label': 'Bundesarchiv'}],
             'description': {
                 'fr': 'Description FR',
                 'de': 'Beschreibung DE',
