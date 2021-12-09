@@ -317,20 +317,21 @@ def ogdch_validate_formfield_publisher(field, schema):
     def validator(key, data, errors, context):
         log.error("===================== publisher validator")
         log.error(data.get(key))
-        extras = data.get(FORM_EXTRAS)
-        output = {'url': '', 'name': ''}
-        if extras:
-            publisher = _get_publisher_from_form(extras)
-            if publisher:
-                output = publisher
-                log.error(output)
-                if 'publisher-url' in extras:
-                    del extras['publisher-url']
-                if 'publisher-name' in extras:
-                    del extras['publisher-name']
+        if not data.get(key):
+            extras = data.get(FORM_EXTRAS)
+            output = {'url': '', 'name': ''}
+            if extras:
+                publisher = _get_publisher_from_form(extras)
+                if publisher:
+                    output = publisher
+                    log.error(output)
+                    if 'publisher-url' in extras:
+                        del extras['publisher-url']
+                    if 'publisher-name' in extras:
+                        del extras['publisher-name']
 
-        data[key] = json.dumps(output)
-        log.error(data.get(key))
+            data[key] = json.dumps(output)
+            log.error(data.get(key))
     return validator
 
 
