@@ -44,7 +44,7 @@ def multiple_text(field, schema):
         # don't bother with our validation
         # if errors[key]:
         #     return
-
+        log.error("===================== multiple text validator")
         value = data[key]
         if value is not missing:
             if isinstance(value, basestring):
@@ -130,6 +130,7 @@ def harvest_list_of_dicts(field, schema):
     def validator(key, data, errors, context):
         # if there was an error before calling our validator
         # don't bother with our validation
+        log.error("===================== list of dict validator")
         if errors[key]:
             return
 
@@ -177,6 +178,7 @@ def ogdch_language(field, schema):
        "choice-a"
     3. An ISO 639-1 two-letter language code (like en, de)
     """
+    log.error("===================== language validator")
     choice_values = set(c['value'] for c in field['choices'])
 
     def validator(key, data, errors, context):
@@ -217,6 +219,7 @@ def ogdch_language(field, schema):
 @scheming_validator
 def ogdch_unique_identifier(field, schema):
     def validator(key, data, errors, context):
+        log.error("===================== identifier validator")
         identifier = data.get(key[:-1] + ('identifier',))
         dataset_id = data.get(key[:-1] + ('id',))
         dataset_owner_org = data.get(key[:-1] + ('owner_org',))
@@ -266,6 +269,7 @@ def ogdch_unique_identifier(field, schema):
 @scheming_validator
 def ogdch_required_in_one_language(field, schema):
     def validator(key, data, errors, context):
+        log.error("===================== required in one language validator")
         # if there was an error before calling our validator
         # don't bother with our validation
         if errors[key]:
@@ -303,19 +307,30 @@ def ogdch_validate_formfield_publisher(field, schema):
     The data is extracted form the publisher form fields and transformed
     into a form that is expected for database storage:
     '{'url': 'Publisher Name', 'url': 'Publisher URL}'
+        for key in data:
+            log.error(key)
+            try:
+                log.error(data.get(key))
+            except Exception:
+                pass
     """
     def validator(key, data, errors, context):
+        log.error("===================== publisher validator")
+        log.error(data.get(key))
         extras = data.get(FORM_EXTRAS)
-        output = ''
+        output = {'url': '', 'name': ''}
         if extras:
             publisher = _get_publisher_from_form(extras)
             if publisher:
                 output = publisher
                 log.error(output)
-        data[key] = json.dumps(output)
-        log.error("output of publisher validator")
-        log.error(data[key])
+                if 'publisher-url' in extras:
+                    del extras['publisher-url']
+                if 'publisher-name' in extras:
+                    del extras['publisher-name']
 
+        data[key] = json.dumps(output)
+        log.error(data.get(key))
     return validator
 
 
@@ -325,17 +340,21 @@ def _get_publisher_from_form(extras):
                             for key, value in extras.items()
                             if key.startswith('publisher-')
                             if value.strip() != '']
-        publisher_url = [field[1]
-                         for field in publisher_fields
-                         if field[0] == 'publisher-url']
-        if publisher_url:
-            publisher_url = publisher_url[0]
-        publisher_name = [field[1]
-                          for field in publisher_fields
-                          if field[0] == 'publisher-name']
-        if publisher_name:
-            publisher_name = publisher_name[0]
-        return {'url': publisher_url, 'name': publisher_name}
+        if not publisher_fields:
+            return None
+        else:
+            publisher = {'url:': '', 'name': ''}
+            publisher_url = [field[1]
+                             for field in publisher_fields
+                             if field[0] == 'publisher-url']
+            if publisher_url:
+                publisher['url'] = publisher_url[0]
+            publisher_name = [field[1]
+                              for field in publisher_fields
+                              if field[0] == 'publisher-name']
+            if publisher_name:
+                publisher['name'] = publisher_name[0]
+            return publisher
     return None
 
 
@@ -348,7 +367,8 @@ def ogdch_validate_formfield_contact_points(field, schema):
     u'name': u'tischhauser@ak-strategy.ch'}]
     """
     def validator(key, data, errors, context):
-
+        log.error("===================== contact point validator")
+        log.error(data.get(key))
         extras = data.get(FORM_EXTRAS)
         if extras:
             contact_points = get_contact_points_from_form(extras)
@@ -357,7 +377,7 @@ def ogdch_validate_formfield_contact_points(field, schema):
                 data[key] = json.dumps(output)
             elif not _jsondata_for_key_is_set(data, key):
                 data[key] = '{}'
-
+        log.error(data.get(key))
     return validator
 
 
@@ -371,7 +391,8 @@ def ogdch_validate_formfield_relations(field, schema):
     {"label": "legal_basis", "url": "https://www.admin.ch/#a21"}]
     """
     def validator(key, data, errors, context):
-
+        log.error("===================== relations validator")
+        log.error(data.get(key))
         extras = data.get(FORM_EXTRAS)
         if extras:
             relations = get_relations_from_form(extras)
@@ -381,7 +402,7 @@ def ogdch_validate_formfield_relations(field, schema):
                 data[key] = json.dumps(output)
             elif not _jsondata_for_key_is_set(data, key):
                 data[key] = '{}'
-
+        log.error(data.get(key))
     return validator
 
 
@@ -396,6 +417,7 @@ def ogdch_validate_formfield_see_alsos(field, schema):
     {"dataset_identifier": "10001@statistisches-amt-kanton-zuerich"}],
     """
     def validator(key, data, errors, context):
+        log.error("===================== see alsos validator")
         extras = data.get(FORM_EXTRAS)
         see_alsos_validated = []
         if extras:
@@ -435,6 +457,7 @@ def ogdch_validate_formfield_temporals(field, schema):
     "temporals": [{"start_date": 0123456789, "end_date": 0123456789}]
     """
     def validator(key, data, errors, context):
+        log.error("===================== temporals validator")
         extras = data.get(FORM_EXTRAS)
         temporals = []
         if extras:
@@ -476,6 +499,7 @@ def ogdch_fluent_tags(field, schema):
     characters `-_.`
     """
     def validator(key, data, errors, context):
+        log.error("=====================fluent tags validator")
         if errors[key]:
             return
 
@@ -501,6 +525,7 @@ def ogdch_temp_scheming_choices(field, schema):
     new ogdch version and want to import existing datasets that have invalid
     data.
     """
+    log.error("===================== temp choices")
     if 'choices' in field:
         return OneOf([c['value'] for c in field['choices']])
 
