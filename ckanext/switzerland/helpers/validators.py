@@ -6,7 +6,6 @@ from ckanext.scheming.helpers import scheming_field_choices
 from ckanext.scheming.validation import scheming_validator
 from ckanext.switzerland.helpers.localize_utils import parse_json
 from ckanext.switzerland.helpers.dataset_form_helpers import (
-    get_publishers_from_form,
     get_relations_from_form,
     get_see_alsos_from_form,
     get_temporals_from_form,
@@ -298,23 +297,56 @@ def ogdch_required_in_one_language(field, schema):
 
 
 @scheming_validator
-def ogdch_validate_formfield_publishers(field, schema):
+def ogdch_validate_formfield_publisher(field, schema):
     """This validator is only used for form validation
     The data is extracted form the publisher form fields and transformed
     into a form that is expected for database storage:
-    '[{'label': 'Publisher1'}, {'label': 'Publisher 2}]
+    '{'url': 'Publisher Name', 'url': 'Publisher URL}'
+        for key in data:
+            log.error(key)
+            try:
+                log.error(data.get(key))
+            except Exception:
+                pass
     """
     def validator(key, data, errors, context):
-        extras = data.get(FORM_EXTRAS)
-        if extras:
-            publishers = get_publishers_from_form(extras)
-            if publishers:
-                output = [{'label': publisher} for publisher in publishers]
-                data[key] = json.dumps(output)
-            elif not _jsondata_for_key_is_set(data, key):
-                data[key] = '{}'
-
+        if not data.get(key):
+            extras = data.get(FORM_EXTRAS)
+            output = {'url': '', 'name': ''}
+            if extras:
+                publisher = _get_publisher_from_form(extras)
+                if publisher:
+                    output = publisher
+                    if 'publisher-url' in extras:
+                        del extras['publisher-url']
+                    if 'publisher-name' in extras:
+                        del extras['publisher-name']
+            data[key] = json.dumps(output)
     return validator
+
+
+def _get_publisher_from_form(extras):
+    if isinstance(extras, dict):
+        publisher_fields = [(key, value.strip())
+                            for key, value in extras.items()
+                            if key.startswith('publisher-')
+                            if value.strip() != '']
+        if not publisher_fields:
+            return None
+        else:
+            publisher = {'url': '', 'name': ''}
+            publisher_url = [field[1]
+                             for field in publisher_fields
+                             if field[0] == 'publisher-url']
+            if publisher_url:
+                publisher['url'] = publisher_url[0]
+            publisher_name = [field[1]
+                              for field in publisher_fields
+                              if field[0] == 'publisher-name']
+            if publisher_name:
+                publisher['name'] = publisher_name[0]
+            return publisher
+    return None
 
 
 @scheming_validator
