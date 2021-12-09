@@ -5,6 +5,7 @@ from ckanext.fluent.helpers import fluent_form_languages
 from ckanext.scheming.helpers import scheming_field_choices
 from ckanext.scheming.validation import scheming_validator
 from ckanext.switzerland.helpers.localize_utils import parse_json
+from ckan.logic.converters import convert_to_extras
 from ckanext.switzerland.helpers.dataset_form_helpers import (
     get_relations_from_form,
     get_see_alsos_from_form,
@@ -312,14 +313,13 @@ def ogdch_validate_formfield_publisher(field, schema):
                 output = publisher
                 log.error(output)
         data[key] = json.dumps(output)
+        log.error("output of publisher validator")
+        log.error(data[key])
 
     return validator
 
 
 def _get_publisher_from_form(extras):
-    log.error("get data from form")
-    log.error(extras)
-
     if isinstance(extras, dict):
         publisher_fields = [(key, value.strip())
                             for key, value in extras.items()
