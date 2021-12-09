@@ -49,8 +49,8 @@ def map_ckan_default_fields(pkg_dict):  # noqa
 
     if pkg_dict.get('author') is None:
         try:
-            pkg_dict['author'] = pkg_dict['publishers'][0]['label']  # noqa
-        except (KeyError, IndexError):
+            pkg_dict['author'] = pkg_dict['publisher']['name']  # noqa
+        except KeyError:
             pass
 
     if pkg_dict.get('resources') is not None:
@@ -68,7 +68,7 @@ def _is_dataset_package_type(pkg_dict):
         return False
 
 
-def ogdch_prepare_search_data_for_index(search_data, format_mapping):
+def ogdch_prepare_search_data_for_index(search_data, format_mapping):  # noqa
     """prepares the data for indexing"""
     if not _is_dataset_package_type(search_data):
         return search_data
@@ -101,7 +101,10 @@ def ogdch_prepare_search_data_for_index(search_data, format_mapping):
 
     search_data['identifier'] = validated_dict.get('identifier')
     search_data['contact_points'] = [c['name'] for c in validated_dict.get('contact_points', [])]  # noqa
-    search_data['publishers'] = [p['label'] for p in validated_dict.get('publishers', [])]  # noqa
+    if 'publisher' in validated_dict:
+        publisher = json.loads(validated_dict['publisher'])
+        search_data['publisher'] = publisher.get('name', '')  # noqa
+        search_data['publisher_url'] =publisher.get('url', '')  # noqa
 
     # TODO: Remove the try-except-block.
     # This fixes the index while we have 'wrong' relations on
@@ -168,8 +171,8 @@ def package_map_ckan_default_fields(pkg_dict):  # noqa
 
     if pkg_dict.get('author') is None:
         try:
-            pkg_dict['author'] = pkg_dict['publishers'][0]['label']  # noqa
-        except (KeyError, IndexError):
+            pkg_dict['author'] = pkg_dict['publisher']['name']  # noqa
+        except (KeyError, TypeError):
             pass
 
     if pkg_dict.get('resources') is not None:
