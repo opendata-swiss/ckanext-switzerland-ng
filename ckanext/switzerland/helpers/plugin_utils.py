@@ -213,7 +213,7 @@ def ogdch_prepare_pkg_dict_for_api(pkg_dict):
 
     if ogdch_request_utils.request_is_api_request():
         _transform_package_dates(pkg_dict)
-
+        _transform_publisher(pkg_dict)
     return pkg_dict
 
 
@@ -300,3 +300,9 @@ def _transform_datetime_to_isoformat(value):
         return d.isoformat()
     except (TypeError, ParserError):
         return ""
+
+
+def _transform_publisher(pkg_dict):
+    publisher = pkg_dict.get('publisher')
+    if publisher and not isinstance(publisher, dict):
+        pkg_dict['publisher'] = json.loads(publisher)
