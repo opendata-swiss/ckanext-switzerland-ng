@@ -435,3 +435,39 @@ def ogdch_user_create(context, data_dict):
             h.flash_error("The email could not be send to {} for user {}. An error {} occured"  # noqa
                           .format(user['email'], user['name'], e))  # noqa
     return user
+
+
+def ogdch_package_patch(context, data_dict):
+    '''Patch a dataset (package).
+
+    :param id: the id or name of the dataset
+    :type id: string
+
+    The difference between the update and patch methods is that the patch will
+    perform an update of the provided parameters, while leaving all other
+    parameters unchanged, whereas the update methods deletes all parameters
+    not explicitly provided in the data_dict
+
+    You must be authorized to edit the dataset and the groups that it belongs
+    to.
+    '''
+    tk.check_access('package_patch', context, data_dict)
+
+    show_context = {
+        'model': context['model'],
+        'session': context['session'],
+        'user': context['user'],
+        'auth_user_obj': context['auth_user_obj'],
+        }
+
+    package_dict = tk.get_action('package_show')(
+        show_context,
+        {'id': tk.get_or_bust(data_dict, 'id')})
+
+    patched = dict(package_dict)
+    patched.update(data_dict)
+    patched['id'] = package_dict['id']
+    result = tk.get_action('package_update')(context, patched)
+    return result
+
+
