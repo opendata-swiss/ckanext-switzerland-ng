@@ -73,6 +73,7 @@ class TestLogic(helpers.FunctionalTestBase):
             'name': 'test-dataset',
             'relations': [],
             'see_alsos': [],
+            'temporals': [],
             'accrual_periodicity': 'http://purl.org/cld/freq/completelyIrregular',
             'modified': '09.09.2015',
             'url': 'http://some_url',
@@ -83,12 +84,12 @@ class TestLogic(helpers.FunctionalTestBase):
 
     def test_correct_temporals_format(self):
 
-        self.dataset["temporals"] = [
-                {
-                    "start_date": "2020-03-05T00:00:00",
-                    "end_date": "2021-12-22T00:00:00"
-                }
-            ]
+        # self.dataset["temporals"] = [
+        #         {
+        #             "start_date": "2020-03-05T00:00:00",
+        #             "end_date": "2021-12-22T00:00:00"
+        #         }
+        #     ]
         tk.get_action('package_create')(self.context, self.dataset)
 
         result = logic.ogdch_package_patch(self.context, self.dataset)
