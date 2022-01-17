@@ -128,6 +128,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_add_users_to_groups': ogdch_logic.ogdch_add_users_to_groups,
             'user_create': ogdch_logic.ogdch_user_create,
             'package_patch': ogdch_logic.ogdch_package_patch,
+            'resource_patch': ogdch_logic.ogdch_resource_patch,
         }
 
     # ITemplateHelpers

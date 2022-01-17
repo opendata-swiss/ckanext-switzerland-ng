@@ -472,13 +472,43 @@ def ogdch_package_patch(context, data_dict):
     return result
 
 
-def update_temporals(package_dict):
-    start_date_str = map(lambda d: d['start_date'], package_dict['temporals'])[0]
-    end_date_str = map(lambda d: d['end_date'], package_dict['temporals'])[0]
+def ogdch_resource_patch(context, data_dict):
+    '''Patch a resource
+
+    :param id: the id of the resource
+    :type id: string
+
+    The difference between the update and patch methods is that the patch will
+    perform an update of the provided parameters, while leaving all other
+    parameters unchanged, whereas the update methods deletes all parameters
+    not explicitly provided in the data_dict
+    '''
+    tk.check_access('package_patch', context, data_dict)
+
+    show_context = {
+        'model': context['model'],
+        'session': context['session'],
+        'user': context['user'],
+        'auth_user_obj': context['auth_user_obj'],
+        }
+
+    resource_dict = tk.get_action('resource_show')(
+        show_context,
+        {'id': tk.get_or_bust(data_dict, 'id')})
+
+    update_temporals(resource_dict)
+    patched = dict(resource_dict)
+    patched.update(data_dict)
+    return tk.get_action('resource_update')(context, patched)
+
+
+def update_temporals(dict):
+    start_date_str = map(lambda d: d['start_date'], dict['temporals'])[0]
+    end_date_str = map(lambda d: d['end_date'], dict['temporals'])[0]
     start_date = time.strftime("%d.%m.%Y", time.strptime(start_date_str, '%Y-%m-%dT%H:%M:%S'))
     end_date = time.strftime("%d.%m.%Y", time.strptime(end_date_str, '%Y-%m-%dT%H:%M:%S'))
     temporals = {'start_date': str(start_date),
                  'end_date': str(end_date)
                  }
-    package_dict['temporals'][0].update(temporals)
+    dict['temporals'][0].update(temporals)
 
