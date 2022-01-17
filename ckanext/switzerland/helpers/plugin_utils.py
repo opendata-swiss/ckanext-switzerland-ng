@@ -103,8 +103,8 @@ def ogdch_prepare_search_data_for_index(search_data, format_mapping):  # noqa
     search_data['contact_points'] = [c['name'] for c in validated_dict.get('contact_points', [])]  # noqa
     if 'publisher' in validated_dict:
         publisher = json.loads(validated_dict['publisher'])
-        search_data['publisher'] = publisher.get('name', '')  # noqa
-        search_data['publisher_url'] =publisher.get('url', '')  # noqa
+        search_data['publisher'] = publisher.get('name', '')
+        search_data['publisher_url'] = publisher.get('url', '')
 
     # TODO: Remove the try-except-block.
     # This fixes the index while we have 'wrong' relations on
@@ -114,7 +114,7 @@ def ogdch_prepare_search_data_for_index(search_data, format_mapping):  # noqa
     except TypeError:
         search_data['see_alsos'] = [d for d in
                                     validated_dict.get('see_alsos',
-                                                       [])]  # noqa
+                                                       [])]
 
     # make sure we're not dealing with NoneType
     if search_data['metadata_created'] is None:
@@ -139,7 +139,7 @@ def ogdch_prepare_search_data_for_index(search_data, format_mapping):  # noqa
                 ogdch_loc_utils.get_localized_value_from_dict(
                    validated_dict['keywords'], lang_code)
             search_data['organization_' + lang_code] = \
-                ogdch_loc_utils.get_localized_value_from_dict(  # noqa
+                ogdch_loc_utils.get_localized_value_from_dict(
                     validated_dict['organization']['title'], lang_code)
 
     except KeyError:
@@ -159,7 +159,7 @@ def package_map_ckan_default_fields(pkg_dict):  # noqa
 
     if pkg_dict.get('maintainer') is None:
         try:
-            pkg_dict['maintainer'] = pkg_dict['contact_points'][0]['name']  # noqa
+            pkg_dict['maintainer'] = pkg_dict['contact_points'][0]['name']
         except (KeyError, IndexError):
             pass
 
@@ -171,7 +171,7 @@ def package_map_ckan_default_fields(pkg_dict):  # noqa
 
     if pkg_dict.get('author') is None:
         try:
-            pkg_dict['author'] = pkg_dict['publisher']['name']  # noqa
+            pkg_dict['author'] = pkg_dict['publisher']['name']
         except (KeyError, TypeError):
             pass
 
