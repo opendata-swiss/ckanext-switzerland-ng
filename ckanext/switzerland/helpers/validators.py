@@ -299,18 +299,13 @@ def ogdch_required_in_one_language(field, schema):
 @scheming_validator
 def ogdch_validate_formfield_publisher(field, schema):
     """This validator is only used for form validation
-    The data is extracted form the publisher form fields and transformed
+    The data is extracted from the publisher form fields and transformed
     into a form that is expected for database storage:
-    '{'url': 'Publisher Name', 'url': 'Publisher URL}'
-        for key in data:
-            log.error(key)
-            try:
-                log.error(data.get(key))
-            except Exception:
-                pass
+    '{"name": "Publisher Name", "url": "Publisher URL"}'
     """
     def validator(key, data, errors, context):
         if not data.get(key):
+            log.error("case key not set")
             extras = data.get(FORM_EXTRAS)
             output = {'url': '', 'name': ''}
             if extras:
@@ -322,6 +317,8 @@ def ogdch_validate_formfield_publisher(field, schema):
                     if 'publisher-name' in extras:
                         del extras['publisher-name']
             data[key] = json.dumps(output)
+        elif isinstance(data.get(key), dict):
+            data[key] = json.dumps(data.get(key))
     return validator
 
 
