@@ -336,19 +336,19 @@
       "help_text": {
         "de": "Der Publisher dieses Datensatzes, d.h. die Organisation (z.B. Amt, Abteilung), welche den Datensatz veröffentlicht. Damit kann eine präzisere Information als die publizierende Hauptorganisation geliefert werden.",
         "en": "The publisher of this record, i.e. the organisation (e.g. office, department) that publishes the record. This can provide more precise information than the main publishing organisation.",
-        "fr": "le éditeurs de ce jeu de données, c'est-à-dire l'organisation (par exemple, l’unité, le département) qui publie l'ensemble de données. Celui-ci peut fournir des informations plus précises que le principal organisme de publication.",
-        "it": "La editori di questo set di dati, cioè l'organizzazione (ad es. ufficio, dipartimento) che pubblica il set di dati. Questo può fornire informazioni più precise rispetto all'organizzazione editoriale principale."
+        "fr": "L'éditeur de ce jeu de données, c'est-à-dire l'organisation (par exemple, l’unité, le département) qui publie l'ensemble de données. Celui-ci peut fournir des informations plus précises que le principal organisme de publication.",
+        "it": "L'editore di questo set di dati, cioè l'organizzazione (ad es. ufficio, dipartimento) che pubblica il set di dati. Questo può fornire informazioni più precise rispetto all'organizzazione editoriale principale."
       },
       "form_placeholder_name": {
-        "en": "Publishers name",
+        "en": "Publisher name",
         "de": "Publisher Name",
-        "fr": "Editeur",
+        "fr": "Éditeur",
         "it": "Nome Publisher"
       },
       "form_placeholder_url": {
-        "en": "Publishers URL",
+        "en": "Publisher URL",
         "de": "Publisher URL",
-        "fr": "Editeur URL",
+        "fr": "Éditeur URL",
         "it": "URL Publisher"
       }
     },
