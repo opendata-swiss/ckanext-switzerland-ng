@@ -79,23 +79,37 @@ def localize_json_facet_title(facet_item):
 
 def get_frequency_name(identifier=None, get_map=False):
     frequencies = OrderedDict([
-        ('http://purl.org/cld/freq/irregular', _('Irregular')),  # noqa
-        ('http://purl.org/cld/freq/continuous', _('Continuous')),  # noqa
-        ('http://purl.org/cld/freq/daily', _('Daily')),  # noqa
-        ('http://purl.org/cld/freq/threeTimesAWeek', _('Three times a week')),  # noqa
-        ('http://purl.org/cld/freq/semiweekly', _('Semi weekly')),  # noqa
-        ('http://purl.org/cld/freq/weekly', _('Weekly')),  # noqa
-        ('http://purl.org/cld/freq/threeTimesAMonth', _('Three times a month')),  # noqa
-        ('http://purl.org/cld/freq/biweekly', _('Biweekly')),  # noqa
-        ('http://purl.org/cld/freq/semimonthly', _('Semimonthly')),  # noqa
-        ('http://purl.org/cld/freq/monthly', _('Monthly')),  # noqa
-        ('http://purl.org/cld/freq/bimonthly', _('Bimonthly')),  # noqa
-        ('http://purl.org/cld/freq/quarterly', _('Quarterly')),  # noqa
-        ('http://purl.org/cld/freq/threeTimesAYear', _('Three times a year')),  # noqa
-        ('http://purl.org/cld/freq/semiannual', _('Semi Annual')),  # noqa
-        ('http://purl.org/cld/freq/annual', _('Annual')),  # noqa
-        ('http://purl.org/cld/freq/biennial', _('Biennial')),  # noqa
-        ('http://purl.org/cld/freq/triennial', _('Triennial')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/OTHER', _('OTHER')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/WEEKLY', _('WEEKLY')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/ANNUAL', _('ANNUAL')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/ANNUAL_2', _('ANNUAL_2')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/ANNUAL_3', _('ANNUAL_3')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/BIENNIAL', _('BIENNIAL')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/BIMONTHLY', _('BIMONTHLY')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/BIWEEKLY', _('BIWEEKLY')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/CONT', _('CONT')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/DAILY', _('DAILY')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/DAILY_2', _('DAILY_2')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/IRREG', _('IRREG')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/MONTHLY', _('MONTHLY')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/MONTHLY_2', _('MONTHLY_2')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/MONTHLY_3', _('MONTHLY_3')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/NEVER', _('NEVER')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/OP_DATPRO', _('OP_DATPRO')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/QUARTERLY', _('QUARTERLY')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/TRIENNIAL', _('TRIENNIAL')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/UNKNOWN', _('UNKNOWN')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/UPDATE_CONT', _('UPDATE_CONT')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/WEEKLY_2', _('WEEKLY_2')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/WEEKLY_3', _('WEEKLY_3')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/QUINQUENNIAL', _('QUINQUENNIAL')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/DECENNIAL', _('DECENNIAL')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/HOURLY', _('HOURLY')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/QUADRENNIAL', _('QUADRENNIAL')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/BIHOURLY', _('BIHOURLY')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/TRIHOURLY', _('TRIHOURLY')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/BIDECENNIAL', _('BIDECENNIAL')),  # noqa
+        ('http://publications.europa.eu/resource/authority/frequency/TRIDECENNIAL', _('TRIDECENNIAL')),  # noqa
     ])
     if get_map:
         return frequencies
