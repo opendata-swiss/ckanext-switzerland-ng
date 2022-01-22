@@ -442,28 +442,48 @@ def ogdch_validate_formfield_temporals(field, schema):
     "temporals": [{"start_date": 0123456789, "end_date": 0123456789}]
     """
     def validator(key, data, errors, context):
-        extras = data.get(FORM_EXTRAS)
-        temporals = []
-        if extras:
-            temporals = get_temporals_from_form(extras)
-            for temporal in temporals:
-                if not temporal['start_date'] and temporal['end_date']:
-                    raise df.Invalid(
-                        _('A valid temporal must have both start and end date')  # noqa
-                    )
-                for value in temporal['start_date'], temporal['end_date']:
-                    if DATE_FORMAT_PATTERN.match(value) is None:
-                        errors[key].append(
-                            _('Expecting DD.MM.YYYY, got "%s"') % str(value)
-                        )
-                temporal['start_date'] = date_string_to_timestamp(temporal['start_date'])  # noqa
-                temporal['end_date'] = date_string_to_timestamp(temporal['end_date'])  # noqa
-        if temporals:
-            data[key] = json.dumps(temporals)
-        elif not _jsondata_for_key_is_set(data, key):
+        if not key in data:
             data[key] = '{}'
+        else:
+            if not data.get(key):
+                extras = data.get(FORM_EXTRAS)
+                temporals = []
+                if extras:
+                    temporals = get_temporals_from_form(extras)
+                    for temporal in temporals:
+                        if not temporal['start_date'] and temporal['end_date']:
+                            raise df.Invalid(
+                                _('A valid temporal must have both start and end date')  # noqa
+                            )
+            else:
+                temporals = data[key]
+                
+            if not isinstance(temporals, list):
+                temporals = json.loads(temporals)
+
+            log.error(temporals)
+            log.error(type(temporals))
+
+            cleaned_temporals = []
+            for temporal in temporals:
+                log.error(type(temporal))
+                cleaned_temporal = {}
+                for k, v in temporal.items():
+                    cleaned_temporal[k] = _correct_date_value(v)
+                cleaned_temporals.append(cleaned_temporal)
+
+            data[key] = json.dumps(cleaned_temporals)
 
     return validator
+
+
+def _correct_date_value(value):
+    try:
+        if not isinstance(value, datetime.datetime):
+            value = parse(value)
+        return date_string_to_timestamp(value)
+    except Exception as e:
+        return value
 
 
 @scheming_validator
