@@ -6,6 +6,7 @@ from collections import OrderedDict
 import ckan.plugins.toolkit as tk
 import ckan.logic as logic
 import json
+import datetime
 from ckan.common import _
 from babel import numbers
 
@@ -313,7 +314,12 @@ def get_localized_date(date_string):
         dt = parse(date_string, dayfirst=True)
         return localised_nice_date(dt, show_date=True, with_hours=False)
     except (TypeError, ParserError):
-        return ''
+        pass
+    try:
+        dt = datetime.datetime.fromtimestamp(int(date_string))
+        return localised_nice_date(dt, show_date=True, with_hours=False)
+    except Exception:
+        return ""
 
 
 def render_publisher(publisher_value):

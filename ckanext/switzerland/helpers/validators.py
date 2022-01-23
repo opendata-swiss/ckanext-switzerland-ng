@@ -9,6 +9,7 @@ from ckanext.switzerland.helpers.dataset_form_helpers import (
     get_relations_from_form,
     get_see_alsos_from_form,
     get_temporals_from_form,
+    display_date,
     get_contact_points_from_form)
 from ckan.lib.munge import munge_tag
 from ckan.logic import NotFound, get_action
@@ -72,108 +73,45 @@ def multilingual_text_output(value):
     return parse_json(value)
 
 
-def date_string_to_timestamp(value):
-    """"
-    Convert a date string (DD.MM.YYYY) into a POSIX timestamp to be stored.
-    Necessary as the date form submits dates in this format.
-    """
-    try:
-        d = parse(str(value), dayfirst=True)
-        epoch = datetime.datetime(1970, 1, 1)
-
-        return int((d - epoch).total_seconds())
-    except (TypeError, OverflowError, ParserError):
-        return value
-
-
-def timestamp_to_date_string(value):
-    """
-    Return a date string formatted for the datepicker (DD.MM.YYYY) for a given
-    POSIX timestamp (1234567890).
-    """
-    try:
-        dt = datetime.datetime.fromtimestamp(int(value))
-    except ValueError:
-        # The value is probably already formatted, so just return it.
-        return value
-
-    date_format = tk.config.get(
-        'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
-    try:
-        return dt.strftime(date_format)
-    except ValueError:
-        # The date is before 1900 so we have to format it ourselves.
-        # See the docs for the Python 2 time library:
-        # https://docs.python.org/2.7/library/time.html
-        return date_format.replace('%d', str(dt.day).zfill(2))\
-            .replace('%m', str(dt.month).zfill(2))\
-            .replace('%Y', str(dt.year))
-
-
 @register_validator
 def ogdch_date_validator(value):
     if isinstance(value, datetime.datetime):
-        return_value = date_string_to_timestamp(value)
-        return return_value
+        return value.isoformat()
     try:
-        datetime_date = parse(value)
-        return_value = date_string_to_timestamp(datetime_date)
-        return return_value
-    except ParserError:
-        return value
-
-
-@register_validator
-def ogdch_date_validator(value):
-    log.error("in date validator with value {}".format(value))
-    if isinstance(value, datetime.datetime):
-        return_value = value.isoformat()
-        log.error("-> {}".format(return_value))
-        return return_value
+        return parse(value, dayfirst=True).isoformat()
+    except Exception:
+        pass
     try:
-        datetime_date = parse(value, dayfirst=True)
-        return_value = datetime_date.isoformat()
-        log.error("-> {}".format(return_value))
-        return return_value
-    except ParserError:
-        log.error("-> {}".format(value))
-        return value
+        return datetime.datetime.fromtimestamp(int(value)).isoformat()
+    except Exception:
+        return ""
 
 
 @register_validator
 def ogdch_date_output(value):
-    log.error("in res date output with value {}".format(value))
     try:
-        datetime_date = parse(value)
-        log.error("datatime value {}".format(datetime_date))
-    except Exception as e:
-        log.error("could not be parsed")
-        return value
-
-    date_format = tk.config.get(
-        'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
+        return display_date(parse(value))
+    except (ParserError, TypeError):
+        pass
+    except Exception:
+        pass
     try:
-        return datetime_date.strftime(date_format)
-    except ValueError:
-        # The date is before 1900 so we have to format it ourselves.
-        # See the docs for the Python 2 time library:
-        # https://docs.python.org/2.7/library/time.html
-        return date_format.replace('%d', str(datetime_date.day).zfill(2)) \
-            .replace('%m', str(datetime_date.month).zfill(2)) \
-            .replace('%Y', str(datetime_date.year))
+        return display_date(datetime.datetime.fromtimestamp(int(value)))
+    except Exception:
+        return ""
 
 
-def temporals_to_datetime_output(value):
+@register_validator
+def temporals_display(value):
     """
     Converts a temporal with start and end date
     as timestamps to temporal as datetimes
     """
     value = parse_json(value)
-
     for temporal in value:
         for key in temporal:
             if temporal[key] is not None:
-                temporal[key] = timestamp_to_date_string(temporal[key])
+                temporal[key] = display_date(parse(temporal[key]))
     return value
 
 
@@ -529,7 +467,7 @@ def _correct_date_value(value):
     try:
         if not isinstance(value, datetime.datetime):
             value = parse(value)
-        return date_string_to_timestamp(value)
+        return value.isoformat()
     except Exception as e:
         return value
 

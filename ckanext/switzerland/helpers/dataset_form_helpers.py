@@ -264,27 +264,6 @@ def get_see_alsos_from_form(data):
     return None
 
 
-def ogdch_date_form_helper(date_value):
-    """
-    Transform isodate or posix date into the format used by the datepicker.
-    Sometimes the package field `modified` has the string value 'False' or is
-    empty. In these cases, an empty string is returned.
-    """
-    if date_value and date_value != 'False':
-        date_format = tk.config.get(
-            'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
-        try:
-            # Posix timestamp
-            dt = datetime.datetime.fromtimestamp(int(date_value))
-            return dt.strftime(date_format)
-        except ValueError:
-            # ISO format date (YYYY-MM-DDTHH:MM:SS)
-            dt = parse(date_value)
-            return dt.strftime(date_format)
-    else:
-        return ""
-
-
 def ogdch_temporals_form_helper(data):
     """
     Set the form field for temporals
@@ -331,3 +310,17 @@ def ogdch_dataset_title_form_helper(data):
 
 def _get_organization_url(organization_name):
     return ORGANIZATION_URI_BASE + organization_name
+
+
+def display_date(datetime_date):
+    date_format = tk.config.get(
+        'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
+    try:
+        return datetime_date.strftime(date_format)
+    except ValueError:
+        # The date is before 1900 so we have to format it ourselves.
+        # See the docs for the Python 2 time library:
+        # https://docs.python.org/2.7/library/time.html
+        return date_format.replace('%d', str(datetime_date.day).zfill(2)) \
+            .replace('%m', str(datetime_date.month).zfill(2)) \
+            .replace('%Y', str(datetime_date.year))
