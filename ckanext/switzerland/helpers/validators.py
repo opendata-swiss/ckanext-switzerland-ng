@@ -3,7 +3,7 @@ import ckan.lib.navl.dictization_functions as df
 import ckan.plugins.toolkit as tk
 from ckanext.fluent.helpers import fluent_form_languages
 from ckanext.scheming.helpers import scheming_field_choices
-from ckanext.scheming.validation import scheming_validator
+from ckanext.scheming.validation import scheming_validator, register_validator
 from ckanext.switzerland.helpers.localize_utils import parse_json
 from ckanext.switzerland.helpers.dataset_form_helpers import (
     get_relations_from_form,
@@ -108,6 +108,59 @@ def timestamp_to_date_string(value):
         return date_format.replace('%d', str(dt.day).zfill(2))\
             .replace('%m', str(dt.month).zfill(2))\
             .replace('%Y', str(dt.year))
+
+
+@register_validator
+def ogdch_date_validator(value):
+    if isinstance(value, datetime.datetime):
+        return_value = date_string_to_timestamp(value)
+        return return_value
+    try:
+        datetime_date = parse(value)
+        return_value = date_string_to_timestamp(datetime_date)
+        return return_value
+    except ParserError:
+        return value
+
+
+@register_validator
+def ogdch_date_validator(value):
+    log.error("in date validator with value {}".format(value))
+    if isinstance(value, datetime.datetime):
+        return_value = value.isoformat()
+        log.error("-> {}".format(return_value))
+        return return_value
+    try:
+        datetime_date = parse(value, dayfirst=True)
+        return_value = datetime_date.isoformat()
+        log.error("-> {}".format(return_value))
+        return return_value
+    except ParserError:
+        log.error("-> {}".format(value))
+        return value
+
+
+@register_validator
+def ogdch_date_output(value):
+    log.error("in res date output with value {}".format(value))
+    try:
+        datetime_date = parse(value)
+        log.error("datatime value {}".format(datetime_date))
+    except Exception as e:
+        log.error("could not be parsed")
+        return value
+
+    date_format = tk.config.get(
+        'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
+    try:
+        return datetime_date.strftime(date_format)
+    except ValueError:
+        # The date is before 1900 so we have to format it ourselves.
+        # See the docs for the Python 2 time library:
+        # https://docs.python.org/2.7/library/time.html
+        return date_format.replace('%d', str(datetime_date.day).zfill(2)) \
+            .replace('%m', str(datetime_date.month).zfill(2)) \
+            .replace('%Y', str(datetime_date.year))
 
 
 def temporals_to_datetime_output(value):
@@ -305,7 +358,6 @@ def ogdch_validate_formfield_publisher(field, schema):
     """
     def validator(key, data, errors, context):
         if not data.get(key):
-            log.error("case key not set")
             extras = data.get(FORM_EXTRAS)
             output = {'url': '', 'name': ''}
             if extras:
@@ -461,12 +513,8 @@ def ogdch_validate_formfield_temporals(field, schema):
             if not isinstance(temporals, list):
                 temporals = json.loads(temporals)
 
-            log.error(temporals)
-            log.error(type(temporals))
-
             cleaned_temporals = []
             for temporal in temporals:
-                log.error(type(temporal))
                 cleaned_temporal = {}
                 for k, v in temporal.items():
                     cleaned_temporal[k] = _correct_date_value(v)
