@@ -111,7 +111,14 @@ def temporals_display(value):
     for temporal in value:
         for key in temporal:
             if temporal[key] is not None:
-                temporal[key] = display_date(parse(temporal[key]))
+                try:
+                    temporal[key] = display_date(parse(temporal[key]))
+                except Exception:
+                    pass
+                try:
+                    temporal[key] = display_date(datetime.datetime.fromtimestamp(int(value)))
+                except Exception:
+                    pass
     return value
 
 
