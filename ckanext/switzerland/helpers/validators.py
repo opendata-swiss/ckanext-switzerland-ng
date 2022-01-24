@@ -117,7 +117,9 @@ def temporals_display(value):
                     pass
                 try:
                     temporal[key] = \
-                        display_date(datetime.datetime.fromtimestamp(int(value)))
+                        display_date(
+                            datetime.datetime.fromtimestamp(int(value))
+                        )
                 except Exception:
                     pass
     return value
