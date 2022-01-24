@@ -4,7 +4,6 @@
 Helpers belong in this file if they are
 used for rendering the dataset form
 """
-import datetime
 import logging
 import json
 import ckan.plugins.toolkit as tk
@@ -15,7 +14,6 @@ from ckanext.switzerland.helpers.localize_utils import (
     localize_by_language_order)
 from ckanext.switzerland.helpers.terms_of_use_utils import (
     TERMS_OF_USE_BY_ASK, TERMS_OF_USE_OPEN, TERMS_OF_USE_BY, TERMS_OF_USE_ASK)
-from dateutil.parser import parse
 
 
 ADDITIONAL_FORM_ROW_LIMIT = 10
