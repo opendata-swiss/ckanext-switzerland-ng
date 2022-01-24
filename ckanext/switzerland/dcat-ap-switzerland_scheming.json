@@ -286,11 +286,10 @@
       }
     },
     {
-      "field_name": "publishers",
-      "validators": "harvest_list_of_dicts ogdch_validate_formfield_publishers",
-      "output_validators": "multiple_text_output",
-      "display_snippet": "publishers.html",
-      "form_snippet": "publishers.html",
+      "field_name": "publisher",
+      "validators": "ogdch_validate_formfield_publisher",
+      "display_snippet": "publisher.html",
+      "form_snippet": "publisher.html",
       "mark_required": true,
       "section_title": {
         "en": "Publisher Information",
@@ -298,35 +297,59 @@
         "fr": "Informations relatives à l’éditeur",
         "it": "Dataset Information"
       },
-      "label": {
+      "name": {
         "en": "Name",
         "de": "Name",
         "fr": "Nom",
         "it": "Name"
       },
+      "url": {
+        "en": "URL",
+        "de": "URL",
+        "fr": "URL",
+        "it": "URL"
+      },
+      "label": {
+        "en": "Publisher Information",
+        "de": "Publisher-Informationen",
+        "fr": "Informations relatives à l’éditeur",
+        "it": "Dataset Information"
+      },
+      "label_name": {
+        "en": "Name",
+        "de": "Name",
+        "fr": "Nom",
+        "it": "Nome"
+      },
+      "label_url": {
+        "en": "URL",
+        "de": "URL",
+        "fr": "URL",
+        "it": "URL"
+      },
       "fieldgroup": {
-        "en": "Publishers",
+        "en": "Publisher",
         "de": "Publisher",
         "fr": "Editeurs",
         "it": "Publisher"
       },
       "help_text": {
-        "de": "Ein oder mehrere Publisher dieses Datensatzes, d.h. die Organisation (z.B. Amt, Abteilung), welche den Datensatz veröffentlicht. Damit kann eine präzisere Information als die publizierende Hauptorganisation geliefert werden. Mindestens ein Publisher ist erforderlich.",
-        "en": "One or more publishers of this record, i.e. the organisation (e.g. office, department) that publishes the record. This can provide more precise information than the main publishing organisation. At least one publisher is required.",
-        "fr": "Un ou plusieurs éditeurs de ce jeu de données, c'est-à-dire l'organisation (par exemple, l’unité, le département) qui publie l'ensemble de données. Celui-ci peut fournir des informations plus précises que le principal organisme de publication. Au moins un éditeur est requis.",
-        "it": "Uno o più editori di questo set di dati, cioè l'organizzazione (ad es. ufficio, dipartimento) che pubblica il set di dati. Questo può fornire informazioni più precise rispetto all'organizzazione editoriale principale. È richiesto almeno un publisher."
+        "de": "Der Publisher dieses Datensatzes, d.h. die Organisation (z.B. Amt, Abteilung), welche den Datensatz veröffentlicht. Damit kann eine präzisere Information als die publizierende Hauptorganisation geliefert werden.",
+        "en": "The publisher of this record, i.e. the organisation (e.g. office, department) that publishes the record. This can provide more precise information than the main publishing organisation.",
+        "fr": "L'éditeur de ce jeu de données, c'est-à-dire l'organisation (par exemple, l’unité, le département) qui publie l'ensemble de données. Celui-ci peut fournir des informations plus précises que le principal organisme de publication.",
+        "it": "L'editore di questo set di dati, cioè l'organizzazione (ad es. ufficio, dipartimento) che pubblica il set di dati. Questo può fornire informazioni più precise rispetto all'organizzazione editoriale principale."
       },
-      "form_placeholder": {
-        "en": "Publishers name",
+      "form_placeholder_name": {
+        "en": "Publisher name",
         "de": "Publisher Name",
-        "fr": "Editeurs",
+        "fr": "Éditeur",
         "it": "Nome Publisher"
       },
-      "add_row": {
-        "en": "Add another publisher",
-        "de": "Einen weiteren Publisher hinzufügen",
-        "fr": "Einen weiteren Publisher hinzufügen",
-        "it": "Einen weiteren Publisher hinzufügen"
+      "form_placeholder_url": {
+        "en": "Publisher URL",
+        "de": "Publisher URL",
+        "fr": "Éditeur URL",
+        "it": "URL Publisher"
       }
     },
     {
@@ -380,7 +403,6 @@
       },
       "add_row": {
         "en": "Add another contact point",
-        "de": "Eine weitere Kontakstelle hinzufügen",
         "de": "Eine weitere Kontakstelle hinzufügen",
         "fr": "Ajouter un autre point de contact",
         "it": "Aggiungere un altro punto di contatto"

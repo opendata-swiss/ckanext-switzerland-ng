@@ -314,3 +314,17 @@ def get_localized_date(date_string):
         return localised_nice_date(dt, show_date=True, with_hours=False)
     except (TypeError, ParserError):
         return ''
+
+
+def render_publisher(publisher_value):
+    """
+    render the publisher
+    {'name': <name>, 'url': <url>}
+    it can be either a json string or a dict
+    """
+    try:
+        publisher = json.loads(publisher_value)
+    except TypeError:
+        return publisher_value
+    else:
+        return publisher

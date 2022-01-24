@@ -6,6 +6,7 @@ used for rendering the dataset form
 """
 import datetime
 import logging
+import json
 import ckan.plugins.toolkit as tk
 from ckan.common import _
 from ckanext.switzerland.helpers.frontend_helpers import (
@@ -20,6 +21,8 @@ from dateutil.parser import parse
 ADDITIONAL_FORM_ROW_LIMIT = 10
 HIDE_ROW_CSS_CLASS = 'ogdch-hide-row'
 SHOW_ROW_CSS_CLASS = 'ogdch-show-row'
+PUBLISHER_EMPTY = {'name': '', 'url': ''}
+ORGANIZATION_URI_BASE = 'https://opendata.swiss/organization/'
 
 log = logging.getLogger(__name__)
 
@@ -57,15 +60,46 @@ def ogdch_get_rights_choices(field):
              'value': 'NonCommercialNotAllowed-CommercialWithPermission-ReferenceRequired'}]  # noqa
 
 
-def ogdch_publishers_form_helper(data):
-    publishers = _get_publishers_from_storage(data)
-    if not publishers:
-        publishers = get_publishers_from_form(data)
+def ogdch_publisher_form_helper(data):
+    """
+    fills the publisher form snippet either from a previous form entry
+    or from the db
+    """
+    publisher_form_name = data.get('publisher-name')
+    publisher_form_url = data.get('publisher-url')
+    publisher_in_form = publisher_form_url or publisher_form_name
+    if publisher_in_form:
+        return {'name': publisher_form_name,
+                'url': publisher_form_url}
 
-    rows = _build_rows_form_field(
-        data_empty='',
-        data_list=publishers)
-    return rows
+    publisher_stored = data.get('publisher')
+    if publisher_stored:
+        return json.loads(publisher_stored)
+
+    publisher_deprecated = _convert_from_publisher_deprecated(data)
+    if publisher_deprecated:
+        return publisher_deprecated
+
+    return {'name': '', 'url': ''}
+
+
+def _convert_from_publisher_deprecated(data):
+    pkg_extras = data.get('extras')
+    if pkg_extras:
+        publishers_in_pkg_extras = [item['value']
+                                    for item in pkg_extras
+                                    if item['key'] == 'publishers']
+        if publishers_in_pkg_extras:
+            publisher_labeled = json.loads(publishers_in_pkg_extras[0])
+            if publisher_labeled:
+                publisher_name = publisher_labeled[0].get('label')
+                publisher = {'name': publisher_name}
+                organization = data.get('organization')
+                if organization:
+                    publisher['url'] \
+                        = _get_organization_url(organization.get('name'))
+                return publisher
+    return None
 
 
 def _build_rows_form_field(data_empty, data_list=None):
@@ -88,28 +122,6 @@ def _build_rows_form_field(data_empty, data_list=None):
         )
         rows.append(row)
     return rows
-
-
-def _get_publishers_from_storage(data):
-    """
-    the data is expected to be stored as: "publishers":
-    [{u'label': u'amt-fur-mobilitat-kanton-basel-stadt'}]
-    """
-    publishers_stored_data = data.get('publishers')
-    if publishers_stored_data:
-        publishers = [item['label'] for item in publishers_stored_data]
-        return publishers
-    return None
-
-
-def get_publishers_from_form(data):
-    if isinstance(data, dict):
-        publishers = [value.strip()
-                      for key, value in data.items()
-                      if key.startswith('publisher-')
-                      if value.strip() != '']
-        return publishers
-    return None
 
 
 def ogdch_contact_points_form_helper(data):
@@ -315,3 +327,7 @@ def ogdch_dataset_title_form_helper(data):
         if title:
             return localize_by_language_order(title)
         return ''
+
+
+def _get_organization_url(organization_name):
+    return ORGANIZATION_URI_BASE + organization_name
