@@ -116,7 +116,8 @@ def temporals_display(value):
                 except Exception:
                     pass
                 try:
-                    temporal[key] = display_date(datetime.datetime.fromtimestamp(int(value)))
+                    temporal[key] = \
+                        display_date(datetime.datetime.fromtimestamp(int(value)))
                 except Exception:
                     pass
     return value
@@ -439,7 +440,7 @@ def ogdch_validate_formfield_temporals(field, schema):
     "temporals": [{"start_date": 0123456789, "end_date": 0123456789}]
     """
     def validator(key, data, errors, context):
-        if not key in data:
+        if key not in data:
             data[key] = '{}'
         else:
             if not data.get(key):
@@ -454,7 +455,7 @@ def ogdch_validate_formfield_temporals(field, schema):
                             )
             else:
                 temporals = data[key]
-                
+
             if not isinstance(temporals, list):
                 temporals = json.loads(temporals)
 
@@ -475,7 +476,7 @@ def _correct_date_value(value):
         if not isinstance(value, datetime.datetime):
             value = parse(value)
         return value.isoformat()
-    except Exception as e:
+    except Exception:
         return value
 
 
