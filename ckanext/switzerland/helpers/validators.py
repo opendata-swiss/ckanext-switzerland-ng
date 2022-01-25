@@ -1,6 +1,7 @@
 from ckan.plugins.toolkit import missing, _
 import ckan.lib.navl.dictization_functions as df
 import ckan.plugins.toolkit as tk
+import ckanext.switzerland.helper.date_helpers as ogdch_date_helpers
 from ckanext.fluent.helpers import fluent_form_languages
 from ckanext.scheming.helpers import scheming_field_choices
 from ckanext.scheming.validation import scheming_validator, register_validator
@@ -27,6 +28,18 @@ HARVEST_USER = 'harvest'
 DATE_FORMAT_PATTERN = re.compile('[0-9]{2}.[0-9]{2}.[0-9]{4}')
 
 OneOf = tk.get_validator('OneOf')
+
+storage_date_helpers = [
+    ogdch_date_helpers.get_isodate,
+    ogdch_date_helpers.get_ogdch_date,
+    ogdch_date_helpers.get_timestamp_date,
+]
+
+display_date_helpers = [
+    ogdch_date_helpers.get_ogdch_date_from_isodate,
+    ogdch_date_helpers.get_ogdch_date_from_ogdch_date,
+    ogdch_date_helpers.get_ogdch_date_from_timestamp,
+]
 
 
 @scheming_validator
@@ -75,30 +88,24 @@ def multilingual_text_output(value):
 
 @register_validator
 def ogdch_date_validator(value):
-    if isinstance(value, datetime.datetime):
-        return value.isoformat()
-    try:
-        return parse(value, dayfirst=True).isoformat()
-    except Exception:
-        pass
-    try:
-        return datetime.datetime.fromtimestamp(int(value)).isoformat()
-    except Exception:
-        return ""
+    for date_helper in storage_date_helpers:
+        storage_date = date_helper(value)
+        if storage_date:
+            return storage_date
+    log.error("unknown date format detected {}, "
+              "could not be transformed to isodate"
+              .format(value))
 
 
 @register_validator
 def ogdch_date_output(value):
-    try:
-        return display_date(parse(value))
-    except (ParserError, TypeError):
-        pass
-    except Exception:
-        pass
-    try:
-        return display_date(datetime.datetime.fromtimestamp(int(value)))
-    except Exception:
-        return ""
+    for date_helper in display_date_helpers:
+        display_date = date_helper(value)
+        if display_date:
+            return display_date
+    log.error("unknown date format detected {}, "
+              "could not be transformed to ogdch_date"
+              .format(value))
 
 
 @register_validator
@@ -111,17 +118,7 @@ def temporals_display(value):
     for temporal in value:
         for key in temporal:
             if temporal[key] is not None:
-                try:
-                    temporal[key] = display_date(parse(temporal[key]))
-                except Exception:
-                    pass
-                try:
-                    temporal[key] = \
-                        display_date(
-                            datetime.datetime.fromtimestamp(int(value))
-                        )
-                except Exception:
-                    pass
+                temporal[key] = ogdch_date_output(temporal[key])
     return value
 
 
@@ -465,21 +462,12 @@ def ogdch_validate_formfield_temporals(field, schema):
             for temporal in temporals:
                 cleaned_temporal = {}
                 for k, v in temporal.items():
-                    cleaned_temporal[k] = _correct_date_value(v)
+                    cleaned_temporal[k] = ogdch_date_validator(v)
                 cleaned_temporals.append(cleaned_temporal)
 
             data[key] = json.dumps(cleaned_temporals)
 
     return validator
-
-
-def _correct_date_value(value):
-    try:
-        if not isinstance(value, datetime.datetime):
-            value = parse(value)
-        return value.isoformat()
-    except Exception:
-        return value
 
 
 @scheming_validator

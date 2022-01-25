@@ -308,17 +308,3 @@ def ogdch_dataset_title_form_helper(data):
 
 def _get_organization_url(organization_name):
     return ORGANIZATION_URI_BASE + organization_name
-
-
-def display_date(datetime_date):
-    date_format = tk.config.get(
-        'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
-    try:
-        return datetime_date.strftime(date_format)
-    except ValueError:
-        # The date is before 1900 so we have to format it ourselves.
-        # See the docs for the Python 2 time library:
-        # https://docs.python.org/2.7/library/time.html
-        return date_format.replace('%d', str(datetime_date.day).zfill(2)) \
-            .replace('%m', str(datetime_date.month).zfill(2)) \
-            .replace('%Y', str(datetime_date.year))
