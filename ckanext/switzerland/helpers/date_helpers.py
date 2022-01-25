@@ -43,8 +43,12 @@ def get_ogdch_date_from_isodate(value):
     try:
         value_as_isoformat = parse(value).isoformat()
         if value_as_isoformat == value:
-            return parse(value).strftime(DATE_FORMAT)
-    except Exception:
+            print(value_as_isoformat)
+            x = parse(value).strftime(DATE_FORMAT)
+            return x
+    except Exception as e:
+        print("an error happend for".format(value))
+        print(e)
         return None
 
 

@@ -12,4 +12,4 @@ trap "cleanup" EXIT
 flake8 --statistics --show-source ckanext
 
 # run tests
-nosetests --ckan --nologcapture --with-pylons=subdir/test.ini --verbose ckanext/switzerland
+nosetests --ckan --nologcapture --nocapture --with-pylons=subdir/test.ini --verbose ckanext/switzerland
