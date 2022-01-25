@@ -30,12 +30,14 @@ storage_date_helpers = [
     ogdch_date_helpers.get_isodate_as_isodate,
     ogdch_date_helpers.get_ogdch_date_as_isodate,
     ogdch_date_helpers.get_timestamp_date_as_isodate,
+    ogdch_date_helpers.get_datetime_as_isodate,
 ]
 
 display_date_helpers = [
     ogdch_date_helpers.get_ogdch_date_from_isodate,
     ogdch_date_helpers.get_ogdch_date_from_ogdch_date,
     ogdch_date_helpers.get_ogdch_date_from_timestamp,
+    ogdch_date_helpers.get_ogdch_date_from_datetime,
 ]
 
 
