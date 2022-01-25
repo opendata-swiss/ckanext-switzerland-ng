@@ -437,7 +437,8 @@ def ogdch_validate_formfield_temporals(field, schema):
     This validator is only used for form validation.
     The data is extracted form the temporals form fields and transformed
     into a form that is expected for database storage:
-    "temporals": [{"start_date": <date as isodate>, "end_date": <date as isodate>}]
+    "temporals": [{"start_date": <date as isodate>,
+    "end_date": <date as isodate>}]
     """
     def validator(key, data, errors, context):
         if key not in data:
