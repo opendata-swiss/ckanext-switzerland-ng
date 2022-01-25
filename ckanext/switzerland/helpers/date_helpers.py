@@ -39,14 +39,14 @@ def get_datetime_as_isodate(value):
         return None
 
 
-def get_ogdch_date_from_isodate(value):
+def get_datetime_from_isodate(value):
     try:
         return parse(value)
     except Exception:
         return None
 
 
-def get_ogdch_date_from_ogdch_date(value):
+def get_datetime_from_ogdch_date(value):
     try:
         if datetime.strptime(value, DATE_FORMAT):
             return value
