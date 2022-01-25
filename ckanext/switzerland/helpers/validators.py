@@ -1,9 +1,10 @@
 from ckan.plugins.toolkit import missing, _
 import ckan.lib.navl.dictization_functions as df
 import ckan.plugins.toolkit as tk
+import ckanext.switzerland.helpers.date_helpers as ogdch_date_helpers
 from ckanext.fluent.helpers import fluent_form_languages
 from ckanext.scheming.helpers import scheming_field_choices
-from ckanext.scheming.validation import scheming_validator
+from ckanext.scheming.validation import scheming_validator, register_validator
 from ckanext.switzerland.helpers.localize_utils import parse_json
 from ckanext.switzerland.helpers.dataset_form_helpers import (
     get_relations_from_form,
@@ -14,9 +15,7 @@ from ckan.lib.munge import munge_tag
 from ckan.logic import NotFound, get_action
 import json
 import re
-import datetime
 import logging
-from dateutil.parser import parse, ParserError
 
 log = logging.getLogger(__name__)
 
@@ -26,6 +25,18 @@ HARVEST_USER = 'harvest'
 DATE_FORMAT_PATTERN = re.compile('[0-9]{2}.[0-9]{2}.[0-9]{4}')
 
 OneOf = tk.get_validator('OneOf')
+
+storage_date_helpers = [
+    ogdch_date_helpers.get_isodate_as_isodate,
+    ogdch_date_helpers.get_ogdch_date_as_isodate,
+    ogdch_date_helpers.get_timestamp_date_as_isodate,
+]
+
+display_date_helpers = [
+    ogdch_date_helpers.get_ogdch_date_from_isodate,
+    ogdch_date_helpers.get_ogdch_date_from_ogdch_date,
+    ogdch_date_helpers.get_ogdch_date_from_timestamp,
+]
 
 
 @scheming_validator
@@ -72,55 +83,39 @@ def multilingual_text_output(value):
     return parse_json(value)
 
 
-def date_string_to_timestamp(value):
-    """"
-    Convert a date string (DD.MM.YYYY) into a POSIX timestamp to be stored.
-    Necessary as the date form submits dates in this format.
-    """
-    try:
-        d = parse(str(value), dayfirst=True)
-        epoch = datetime.datetime(1970, 1, 1)
-
-        return int((d - epoch).total_seconds())
-    except (TypeError, OverflowError, ParserError):
-        return value
+@register_validator
+def ogdch_date_validator(value):
+    for date_helper in storage_date_helpers:
+        storage_date = date_helper(value)
+        if storage_date:
+            return storage_date
+    log.error("unknown date format detected {}, "
+              "could not be transformed to isodate"
+              .format(value))
 
 
-def timestamp_to_date_string(value):
-    """
-    Return a date string formatted for the datepicker (DD.MM.YYYY) for a given
-    POSIX timestamp (1234567890).
-    """
-    try:
-        dt = datetime.datetime.fromtimestamp(int(value))
-    except ValueError:
-        # The value is probably already formatted, so just return it.
-        return value
-
-    date_format = tk.config.get(
-        'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
-    try:
-        return dt.strftime(date_format)
-    except ValueError:
-        # The date is before 1900 so we have to format it ourselves.
-        # See the docs for the Python 2 time library:
-        # https://docs.python.org/2.7/library/time.html
-        return date_format.replace('%d', str(dt.day).zfill(2))\
-            .replace('%m', str(dt.month).zfill(2))\
-            .replace('%Y', str(dt.year))
+@register_validator
+def ogdch_date_output(value):
+    for date_helper in display_date_helpers:
+        display_date = date_helper(value)
+        if display_date:
+            return display_date
+    log.error("unknown date format detected {}, "
+              "could not be transformed to ogdch_date"
+              .format(value))
 
 
-def temporals_to_datetime_output(value):
+@register_validator
+def temporals_display(value):
     """
     Converts a temporal with start and end date
     as timestamps to temporal as datetimes
     """
     value = parse_json(value)
-
     for temporal in value:
         for key in temporal:
             if temporal[key] is not None:
-                temporal[key] = timestamp_to_date_string(temporal[key])
+                temporal[key] = ogdch_date_output(temporal[key])
     return value
 
 
@@ -442,29 +437,36 @@ def ogdch_validate_formfield_temporals(field, schema):
     This validator is only used for form validation.
     The data is extracted form the temporals form fields and transformed
     into a form that is expected for database storage:
-    "temporals": [{"start_date": 0123456789, "end_date": 0123456789}]
+    "temporals": [{"start_date": <date as isodate>, "end_date": <date as isodate>}]
     """
     def validator(key, data, errors, context):
-        extras = data.get(FORM_EXTRAS)
-        temporals = []
-        if extras:
-            temporals = get_temporals_from_form(extras)
-            for temporal in temporals:
-                if not temporal['start_date'] and temporal['end_date']:
-                    raise df.Invalid(
-                        _('A valid temporal must have both start and end date')  # noqa
-                    )
-                for value in temporal['start_date'], temporal['end_date']:
-                    if DATE_FORMAT_PATTERN.match(value) is None:
-                        errors[key].append(
-                            _('Expecting DD.MM.YYYY, got "%s"') % str(value)
-                        )
-                temporal['start_date'] = date_string_to_timestamp(temporal['start_date'])  # noqa
-                temporal['end_date'] = date_string_to_timestamp(temporal['end_date'])  # noqa
-        if temporals:
-            data[key] = json.dumps(temporals)
-        elif not _jsondata_for_key_is_set(data, key):
+        if key not in data:
             data[key] = '{}'
+        else:
+            if not data.get(key):
+                extras = data.get(FORM_EXTRAS)
+                temporals = []
+                if extras:
+                    temporals = get_temporals_from_form(extras)
+                    for temporal in temporals:
+                        if not temporal['start_date'] and temporal['end_date']:
+                            raise df.Invalid(
+                                _('A valid temporal must have both start and end date')  # noqa
+                            )
+            else:
+                temporals = data[key]
+
+            if not isinstance(temporals, list):
+                temporals = json.loads(temporals)
+
+            cleaned_temporals = []
+            for temporal in temporals:
+                cleaned_temporal = {}
+                for k, v in temporal.items():
+                    cleaned_temporal[k] = ogdch_date_validator(v)
+                cleaned_temporals.append(cleaned_temporal)
+
+            data[key] = json.dumps(cleaned_temporals)
 
     return validator
 
