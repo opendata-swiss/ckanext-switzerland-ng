@@ -12,7 +12,7 @@ class TestOgdchDateValidators(object):
         self.validator = get_validator('ogdch_date_validator')
 
     def test_ogdch_date_validator_parseeable_date_to_isodate(self):
-        d = parse('2022-01-02').isoformat()
+        d = parse('2022-01-02')
         d_isodate = d.isoformat()
         assert_equals(d_isodate, self.validator(d))
 
