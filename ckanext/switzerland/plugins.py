@@ -415,6 +415,18 @@ class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
             }
         )
 
+class OgdchArchivePlugin(plugins.SingletonPlugin, OgdchMixin):
+    plugins.implements(plugins.IMapper, inherit=True)
+
+    # IMapper
+
+    def before_update(self, mapper, connection, package_extra):
+        """
+        If a package is being deleted it is saved in the CKAN-trash with
+        the prefix "_archived-" so that the slug remains available.
+        This prevents future datasets with the same name will not have a
+        number appended.
+        """
 
 class OgdchShowcasePlugin(ShowcasePlugin):
     plugins.implements(plugins.IConfigurable, inherit=True)
