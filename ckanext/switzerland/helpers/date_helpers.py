@@ -42,7 +42,7 @@ def get_datetime_as_isodate(value):
 def get_ogdch_date_from_isodate(value):
     try:
         return parse(value)
-    except Exception as e:
+    except Exception:
         return None
 
 
