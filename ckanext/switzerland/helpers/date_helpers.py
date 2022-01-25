@@ -1,6 +1,6 @@
 from datetime import datetime
 import logging
-from dateutil.parser import parse, ParserError
+from dateutil.parser import parse
 import ckan.plugins.toolkit as tk
 
 DATE_FORMAT = tk.config.get(
@@ -20,7 +20,7 @@ def get_isodate_as_isodate(value):
 
 def get_ogdch_date_as_isodate(value):
     try:
-        return  datetime.strptime(value, DATE_FORMAT).isoformat()
+        return datetime.strptime(value, DATE_FORMAT).isoformat()
     except Exception:
         return None
 

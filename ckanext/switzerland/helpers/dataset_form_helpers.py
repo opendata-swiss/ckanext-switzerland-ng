@@ -6,7 +6,6 @@ used for rendering the dataset form
 """
 import logging
 import json
-import ckan.plugins.toolkit as tk
 from ckan.common import _
 from ckanext.switzerland.helpers.frontend_helpers import (
     get_frequency_name, get_dataset_by_identifier)
