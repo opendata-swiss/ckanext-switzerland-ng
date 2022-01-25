@@ -9,7 +9,7 @@ DATE_FORMAT = tk.config.get(
 log = logging.getLogger(__name__)
 
 
-def get_isodate_as_isodate(value):
+def isodate_or_none_for_storage(value):
     try:
         value_as_isoformat = parse(value).isoformat()
         if value_as_isoformat == value:
@@ -18,35 +18,38 @@ def get_isodate_as_isodate(value):
         return None
 
 
-def get_ogdch_date_as_isodate(value):
+def ogdch_date_or_none_for_storage(value):
     try:
         return datetime.strptime(value, DATE_FORMAT).isoformat()
     except Exception:
         return None
 
 
-def get_timestamp_date_as_isodate(value):
+def timestamp_date_or_none_for_storage(value):
     try:
         return datetime.fromtimestamp(int(value)).isoformat()
     except Exception:
         return None
 
 
-def get_datetime_as_isodate(value):
+def datetime_or_none_for_storage(value):
     try:
-        return value.isoformat()
+        if isinstance(value, datetime):
+            return value.isoformat()
     except Exception:
         return None
 
 
-def get_datetime_from_isodate(value):
+def isodate_or_none_for_display(value):
     try:
-        return parse(value)
+        value_datetime = parse(value)
+        if value_datetime.isoformat() == value:
+            return get_ogdch_date(value_datetime)
     except Exception:
         return None
 
 
-def get_datetime_from_ogdch_date(value):
+def ogdch_date_or_none_for_display(value):
     try:
         if datetime.strptime(value, DATE_FORMAT):
             return value
@@ -54,22 +57,23 @@ def get_datetime_from_ogdch_date(value):
         return None
 
 
-def get_datetime_from_timestamp(value):
+def timestamp_or_none_for_display(value):
     try:
-        return datetime.fromtimestamp(int(value))
+        value_datetime = datetime.fromtimestamp(int(value))
+        return get_ogdch_date(value_datetime)
     except Exception:
         return None
 
 
-def get_datetime_from_datetime(value):
+def datetime_or_none_for_display(value):
     try:
         if isinstance(value, datetime):
-            return value
+            return get_ogdch_date(value)
     except Exception:
         return None
 
 
-def get_ogdch_date_from_datetime(date_time_value):
+def get_ogdch_date(date_time_value):
     try:
         return date_time_value.strftime(DATE_FORMAT)
     except ValueError:
