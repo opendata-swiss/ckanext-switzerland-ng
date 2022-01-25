@@ -18,7 +18,7 @@
       "values": {
         "display_snippet": "temporals.html",
         "validators": "harvest_list_of_dicts ogdch_validate_formfield_temporals",
-        "output_validators": "temporals_to_datetime_output"
+        "output_validators": "temporals_display"
       }
     },
     {
@@ -146,8 +146,8 @@
       "values": {
         "display_snippet": "date.html",
         "form_snippet": "date.html",
-        "validators": "scheming_required date_string_to_timestamp",
-        "output_validators": "timestamp_to_date_string"
+        "validators": "scheming_required ogdch_date_validator",
+        "output_validators": "ogdch_date_output"
       }
     },
     {
