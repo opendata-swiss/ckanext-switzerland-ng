@@ -32,6 +32,13 @@ def get_timestamp_date_as_isodate(value):
         return None
 
 
+def get_datetime_date_as_isodate(value):
+    try:
+        return value.isoformat()
+    except Exception:
+        return None
+
+
 def get_ogdch_date_from_isodate(value):
     try:
         value_as_isoformat = parse(value).isoformat()
@@ -43,8 +50,8 @@ def get_ogdch_date_from_isodate(value):
 
 def get_ogdch_date_from_ogdch_date(value):
     try:
-        value_datetime = datetime.strptime(value, DATE_FORMAT)
-        if value_datetime:
+        datetime_derived_from_value_by_format = datetime.strptime(value, DATE_FORMAT)
+        if datetime_derived_from_value_by_format:
             return value
     except Exception:
         return None
@@ -54,5 +61,12 @@ def get_ogdch_date_from_timestamp(value):
     try:
         value_as_datetime = datetime.fromtimestamp(int(value))
         return value_as_datetime.strftime(DATE_FORMAT)
+    except Exception:
+        return None
+
+
+def get_ogdch_date_from_datetime(value):
+    try:
+        return value.strftime(DATE_FORMAT)
     except Exception:
         return None
