@@ -32,7 +32,7 @@ def get_timestamp_date_as_isodate(value):
         return None
 
 
-def get_datetime_date_as_isodate(value):
+def get_datetime_as_isodate(value):
     try:
         return value.isoformat()
     except Exception:
