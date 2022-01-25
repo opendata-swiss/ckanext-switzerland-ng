@@ -50,7 +50,8 @@ def get_ogdch_date_from_isodate(value):
 
 def get_ogdch_date_from_ogdch_date(value):
     try:
-        datetime_derived_from_value_by_format = datetime.strptime(value, DATE_FORMAT)
+        datetime_derived_from_value_by_format \
+            = datetime.strptime(value, DATE_FORMAT)
         if datetime_derived_from_value_by_format:
             return value
     except Exception:
