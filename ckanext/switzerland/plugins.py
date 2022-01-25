@@ -11,7 +11,6 @@ import ckanext.switzerland.helpers.plugin_utils as ogdch_plugin_utils
 import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
-import ckanext.switzerland.helpers.date_helpers as ogdch_date_helpers
 import ckan.plugins as plugins
 from ckan.lib.plugins import DefaultTranslation
 import ckanext.xloader.interfaces as ix
@@ -176,7 +175,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_localize_activity_item': ogdch_backend_helpers.ogdch_localize_activity_item,  # noqa
             'ogdch_admin_capacity': ogdch_backend_helpers.ogdch_admin_capacity,  # noqa
             'render_publisher': ogdch_frontend_helpers.render_publisher,  # noqa
-            'ogdch_date_helpers': ogdch_date_helpers.date_helpers,
         }
 
     # IRouter

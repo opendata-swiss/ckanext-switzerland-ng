@@ -1,7 +1,7 @@
 from ckan.plugins.toolkit import missing, _
 import ckan.lib.navl.dictization_functions as df
 import ckan.plugins.toolkit as tk
-import ckanext.switzerland.helper.date_helpers as ogdch_date_helpers
+import ckanext.switzerland.helpers.date_helpers as ogdch_date_helpers
 from ckanext.fluent.helpers import fluent_form_languages
 from ckanext.scheming.helpers import scheming_field_choices
 from ckanext.scheming.validation import scheming_validator, register_validator
@@ -10,15 +10,12 @@ from ckanext.switzerland.helpers.dataset_form_helpers import (
     get_relations_from_form,
     get_see_alsos_from_form,
     get_temporals_from_form,
-    display_date,
     get_contact_points_from_form)
 from ckan.lib.munge import munge_tag
 from ckan.logic import NotFound, get_action
 import json
 import re
-import datetime
 import logging
-from dateutil.parser import parse, ParserError
 
 log = logging.getLogger(__name__)
 
@@ -30,9 +27,9 @@ DATE_FORMAT_PATTERN = re.compile('[0-9]{2}.[0-9]{2}.[0-9]{4}')
 OneOf = tk.get_validator('OneOf')
 
 storage_date_helpers = [
-    ogdch_date_helpers.get_isodate,
-    ogdch_date_helpers.get_ogdch_date,
-    ogdch_date_helpers.get_timestamp_date,
+    ogdch_date_helpers.get_isodate_as_isodate,
+    ogdch_date_helpers.get_ogdch_date_as_isodate,
+    ogdch_date_helpers.get_timestamp_date_as_isodate,
 ]
 
 display_date_helpers = [
