@@ -99,9 +99,9 @@ def ogdch_date_validator(value):
 @register_validator
 def ogdch_date_output(value):
     for date_helper in display_date_helpers:
-        datetime_value = date_helper(value)
-        if datetime_value:
-            return ogdch_date_helpers.get_ogdch_date_from_datetime(value)
+        display_value = date_helper(value)
+        if display_value:
+            return display_value
     log.error("unknown date format detected {}, "
               "could not be transformed to ogdch_date"
               .format(value))
