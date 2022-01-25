@@ -41,37 +41,41 @@ def get_datetime_as_isodate(value):
 
 def get_ogdch_date_from_isodate(value):
     try:
-        value_as_isoformat = parse(value).isoformat()
-        if value_as_isoformat == value:
-            print(value_as_isoformat)
-            x = parse(value).strftime(DATE_FORMAT)
-            return x
+        return parse(value)
     except Exception as e:
-        print("an error happend for".format(value))
-        print(e)
         return None
 
 
 def get_ogdch_date_from_ogdch_date(value):
     try:
-        datetime_derived_from_value_by_format \
-            = datetime.strptime(value, DATE_FORMAT)
-        if datetime_derived_from_value_by_format:
+        if datetime.strptime(value, DATE_FORMAT):
             return value
     except Exception:
         return None
 
 
-def get_ogdch_date_from_timestamp(value):
+def get_datetime_from_timestamp(value):
     try:
-        value_as_datetime = datetime.fromtimestamp(int(value))
-        return value_as_datetime.strftime(DATE_FORMAT)
+        return datetime.fromtimestamp(int(value))
     except Exception:
         return None
 
 
-def get_ogdch_date_from_datetime(value):
+def get_datetime_from_datetime(value):
     try:
-        return value.strftime(DATE_FORMAT)
+        if isinstance(value, datetime):
+            return value
     except Exception:
         return None
+
+
+def get_ogdch_date_from_datetime(date_time_value):
+    try:
+        return date_time_value.strftime(DATE_FORMAT)
+    except ValueError:
+        # The date is before 1900 so we have to format it ourselves.
+        # See the docs for the Python 2 time library:
+        # https://docs.python.org/2.7/library/time.html
+        return DATE_FORMAT.replace('%d', str(date_time_value.day).zfill(2))\
+            .replace('%m', str(date_time_value.month).zfill(2))\
+            .replace('%Y', str(date_time_value.year))
