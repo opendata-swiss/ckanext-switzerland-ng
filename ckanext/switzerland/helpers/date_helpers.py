@@ -1,6 +1,6 @@
 from datetime import datetime
 import logging
-from dateutil.parser import parse
+import isodate
 import ckan.plugins.toolkit as tk
 
 DATE_FORMAT = tk.config.get(
@@ -9,30 +9,44 @@ DATE_FORMAT = tk.config.get(
 log = logging.getLogger(__name__)
 
 
-def isodate_or_none_for_storage(value):
+def store_if_isodate(value):
+    """as the storage format is isodate, isodate are just
+    stored the way they come in: the function just tests whether
+    the value is an isodate. In that case it is returned the way
+    it is."""
     try:
-        value_as_isoformat = parse(value).isoformat()
-        if value_as_isoformat == value:
+        dt = isodate.parse_datetime(value)
+        if isinstance(dt, datetime):
             return value
     except Exception:
         return None
 
 
-def ogdch_date_or_none_for_storage(value):
+def store_if_ogdch_date(value):
+    """date in the ckanext.switzerland.date_picker_format will be transformed
+    into isodates and stored that way."""
     try:
-        return datetime.strptime(value, DATE_FORMAT).isoformat()
+        dt = datetime.strptime(value, DATE_FORMAT)
+        if isinstance(dt, datetime):
+            return dt.isoformat()
     except Exception:
         return None
 
 
-def timestamp_date_or_none_for_storage(value):
+def store_if_timestamp(value):
+    """timestamps will be transformed
+    into isodates and stored that way."""
     try:
-        return datetime.fromtimestamp(int(value)).isoformat()
+        dt = datetime.fromtimestamp(int(value))
+        if isinstance(dt, datetime):
+            return dt.isoformat()
     except Exception:
         return None
 
 
-def datetime_or_none_for_storage(value):
+def store_if_datetime(value):
+    """datetimes will be transformed
+    into isodates and stored that way."""
     try:
         if isinstance(value, datetime):
             return value.isoformat()
@@ -40,46 +54,49 @@ def datetime_or_none_for_storage(value):
         return None
 
 
-def isodate_or_none_for_display(value):
+def display_if_isodate(value):
+    """isodate values will be displayed in
+    ckanext.switzerland.date_picker_format
+    """
     try:
-        value_datetime = parse(value)
-        if value_datetime.isoformat() == value:
-            return get_ogdch_date(value_datetime)
+        dt = isodate.parse_datetime(value)
+        if isinstance(dt, datetime):
+            return isodate.strftime(dt, DATE_FORMAT)
     except Exception:
         return None
 
 
-def ogdch_date_or_none_for_display(value):
+def display_if_ogdch_date(value):
+    """since the display date format is
+    the ckanext.switzerland.date_picker_format the value will
+    be checked whether it is in this format. If so it
+    will be returned as is."""
     try:
-        if datetime.strptime(value, DATE_FORMAT):
+        dt = datetime.strptime(value, DATE_FORMAT)
+        if isinstance(dt, datetime):
             return value
     except Exception:
         return None
 
 
-def timestamp_or_none_for_display(value):
+def display_if_timestamp(value):
+    """timestamps will be displayed in
+    ckanext.switzerland.date_picker_format
+    """
     try:
-        value_datetime = datetime.fromtimestamp(int(value))
-        return get_ogdch_date(value_datetime)
+        dt = datetime.fromtimestamp(int(value))
+        if isinstance(dt, datetime):
+            return isodate.strftime(dt, DATE_FORMAT)
     except Exception:
         return None
 
 
-def datetime_or_none_for_display(value):
+def display_if_datetime(value):
+    """datetime values will be displayed in
+    ckanext.switzerland.date_picker_format
+    """
     try:
         if isinstance(value, datetime):
-            return get_ogdch_date(value)
+            return isodate.strftime(value, DATE_FORMAT)
     except Exception:
         return None
-
-
-def get_ogdch_date(date_time_value):
-    try:
-        return date_time_value.strftime(DATE_FORMAT)
-    except ValueError:
-        # The date is before 1900 so we have to format it ourselves.
-        # See the docs for the Python 2 time library:
-        # https://docs.python.org/2.7/library/time.html
-        return DATE_FORMAT.replace('%d', str(date_time_value.day).zfill(2))\
-            .replace('%m', str(date_time_value.month).zfill(2))\
-            .replace('%Y', str(date_time_value.year))
