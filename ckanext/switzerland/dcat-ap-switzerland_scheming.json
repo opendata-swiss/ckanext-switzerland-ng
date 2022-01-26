@@ -785,6 +785,7 @@
       "field_name": "url",
       "preset": "url",
       "validators": "scheming_required",
+      "required": true,
       "label": {
         "en": "Access URL",
         "de": "Zugangs-URL",
