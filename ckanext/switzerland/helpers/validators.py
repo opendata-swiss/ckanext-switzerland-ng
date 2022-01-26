@@ -27,17 +27,17 @@ DATE_FORMAT_PATTERN = re.compile('[0-9]{2}.[0-9]{2}.[0-9]{4}')
 OneOf = tk.get_validator('OneOf')
 
 storage_date_helpers = [
-    ogdch_date_helpers.isodate_or_none_for_storage,
-    ogdch_date_helpers.ogdch_date_or_none_for_storage,
-    ogdch_date_helpers.datetime_or_none_for_storage,
-    ogdch_date_helpers.timestamp_date_or_none_for_storage,
+    ogdch_date_helpers.store_if_isodate,
+    ogdch_date_helpers.store_if_ogdch_date,
+    ogdch_date_helpers.store_if_timestamp,
+    ogdch_date_helpers.store_if_datetime,
 ]
 
 display_date_helpers = [
-    ogdch_date_helpers.isodate_or_none_for_display,
-    ogdch_date_helpers.ogdch_date_or_none_for_display,
-    ogdch_date_helpers.timestamp_or_none_for_display,
-    ogdch_date_helpers.datetime_or_none_for_display,
+    ogdch_date_helpers.display_if_isodate,
+    ogdch_date_helpers.display_if_ogdch_date,
+    ogdch_date_helpers.display_if_timestamp,
+    ogdch_date_helpers.display_if_datetime,
 ]
 
 
