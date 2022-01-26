@@ -43,6 +43,11 @@ class TestOgdchDateStorageValidator(object):
         d_storage = d.isoformat()
         assert_equals(d_storage, self.validator(d))
 
+    def test_ogdch_date_validator_parseeable_with_timezone_to_isodate(self):
+        d = '2008-09-03T20:56:35.450686Z'
+        d_storage = d
+        assert_equals(d_storage, self.validator(d))
+
 
 class TestOgdchDateDisplayValidator(object):
     def setup(self):
