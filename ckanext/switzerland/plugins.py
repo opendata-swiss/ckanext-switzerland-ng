@@ -1,6 +1,7 @@
 # coding=UTF-8
 
 from ckan.common import OrderedDict
+from ckan.model import Session, Package, PACKAGE_NAME_MAX_LENGTH
 from ckanext.showcase.plugin import ShowcasePlugin
 import ckanext.switzerland.helpers.validators as ogdch_validators
 from ckanext.switzerland import logic as ogdch_logic
@@ -414,6 +415,61 @@ class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
                 'package': dataset_dict,
             }
         )
+
+
+class OgdchArchivePlugin(plugins.SingletonPlugin, OgdchMixin):
+    plugins.implements(plugins.IMapper, inherit=True)
+
+    # IMapper
+
+    def before_update(self, mapper, connection, package_extra):
+        """
+        If a package is being deleted it is saved in the CKAN-trash with
+        the prefix "_archived-" so that the slug remains available.
+        This prevents future datasets with the same name will not have a
+        number appended.
+        """
+        if "deleted" == package_extra.state:
+            package_extra.name = self._ensure_name_is_unique(
+                    "_archived-{0}".format(package_extra.name)
+            )
+
+    @staticmethod
+    def _ensure_name_is_unique(ideal_name):
+        """
+        Returns a dataset name based on the ideal_name, only it will be
+        guaranteed to be different than all the other datasets, by adding a
+        number on the end if necessary.
+        The maximum dataset name length is taken account of.
+        :param ideal_name: the desired name for the dataset, if its not already
+                           been taken (usually derived by munging the dataset
+                           title)
+        :type ideal_name: string
+        """
+        MAX_NUMBER_APPENDED = 999
+        APPEND_MAX_CHARS = len(str(MAX_NUMBER_APPENDED))
+        # Find out which package names have been taken. Restrict it to names
+        # derived from the ideal name plus and numbers added
+        like_q = u'%s%%' % \
+                 ideal_name[:PACKAGE_NAME_MAX_LENGTH-APPEND_MAX_CHARS]
+        name_results = Session.query(Package.name) \
+            .filter(Package.name.ilike(like_q)) \
+            .all()
+        taken = set([name_result[0] for name_result in name_results])
+        if ideal_name not in taken:
+            # great, the ideal name is available
+            return ideal_name
+        else:
+            # find the next available number
+            counter = 1
+            while counter <= MAX_NUMBER_APPENDED:
+                candidate_name = \
+                    ideal_name[:PACKAGE_NAME_MAX_LENGTH-len(str(counter))] + \
+                    str(counter)
+                if candidate_name not in taken:
+                    return candidate_name
+                counter = counter + 1
+            return None
 
 
 class OgdchShowcasePlugin(ShowcasePlugin):
