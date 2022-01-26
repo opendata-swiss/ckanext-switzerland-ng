@@ -114,6 +114,8 @@ def temporals_display(value):
     as timestamps to temporal as datetimes
     """
     value = parse_json(value)
+    if not isinstance(value, list):
+        return ''
     for temporal in value:
         for key in temporal:
             if temporal[key] is not None:
