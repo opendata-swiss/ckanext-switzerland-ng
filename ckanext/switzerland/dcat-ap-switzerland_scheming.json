@@ -236,6 +236,7 @@
       "preset": "select",
       "display_snippet": "periodicity.html",
       "validators": "scheming_required ogdch_temp_scheming_choices",
+      "required": true,
       "choices_helper": "ogdch_get_accrual_periodicity_choices",
       "label": {
         "en": "Update interval",
