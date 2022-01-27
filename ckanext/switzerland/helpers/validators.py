@@ -91,15 +91,11 @@ def multilingual_text_output(value):
 
 @register_validator
 def ogdch_date_validator(value):
-    log.error("entering date validator")
     if value == '':
         return value
-    log.error(value)
     for date_helper in storage_date_helpers:
-        log.error(str(date_helper))
         storage_date = date_helper(value)
         if storage_date:
-            log.error(storage_date)
             return storage_date
     raise OGDCHDateValidationException("Unknown date format detected"
                                        "in ogdch_date_validator : '{}'"
@@ -108,15 +104,11 @@ def ogdch_date_validator(value):
 
 @register_validator
 def ogdch_date_output(value):
-    log.error("entering display validator")
-    log.error(value)
     if value == '':
         return value
     for date_helper in display_date_helpers:
-        log.error(str(date_helper))
         display_value = date_helper(value)
         if display_value:
-            log.error(display_value)
             return display_value
     raise OGDCHDateValidationException("Unknown date format detected"
                                        "in ogdch_date_output : '{}'"
