@@ -5,6 +5,7 @@ from dateutil.parser import parse
 from datetime import datetime
 
 from ckan.plugins.toolkit import get_validator, Invalid
+from ckanext.switzerland.helpers.date_helpers import OGDCHDateValidationException
 
 
 class TestOgdchDateStorageValidator(object):
@@ -48,6 +49,20 @@ class TestOgdchDateStorageValidator(object):
         d_storage = d
         assert_equals(d_storage, self.validator(d))
 
+    def test_ogdch_date_validator_empty_date_value(self):
+        d = ''
+        d_storage = d
+        assert_equals(d_storage, self.validator(d))
+
+    def test_ogdch_date_validator_null_date_value(self):
+        d = 'False'
+        d_storage = d
+        assert_equals(d_storage, self.validator(d))
+
+    def test_ogdch_date_validator_unknown_date_value(self):
+        d = 'Hallo'
+        assert_raises(OGDCHDateValidationException, self.validator, d)
+
 
 class TestOgdchDateDisplayValidator(object):
     def setup(self):
@@ -84,3 +99,17 @@ class TestOgdchDateDisplayValidator(object):
         d = datetime(2022, 1, 2, 0, 0)
         d_display = '02.01.2022'
         assert_equals(d_display, self.validator(d))
+
+    def test_display_empty_date_value(self):
+        d = ''
+        d_display = d
+        assert_equals(d_display, self.validator(d))
+
+    def test_display_false_date_value(self):
+        d = 'False'
+        d_display = ''
+        assert_equals(d_display, self.validator(d))
+
+    def test_display_unknown_date_value(self):
+        d = 'Hallo'
+        assert_raises(OGDCHDateValidationException, self.validator, d)
