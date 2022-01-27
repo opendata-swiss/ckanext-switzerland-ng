@@ -41,10 +41,6 @@ display_date_helpers = [
 ]
 
 
-class OGDCHDateValidationException(Exception):
-    pass
-
-
 @scheming_validator
 def multiple_text(field, schema):
     """
@@ -91,28 +87,32 @@ def multilingual_text_output(value):
 
 @register_validator
 def ogdch_date_validator(value):
-    if value == '':
+    if ogdch_date_helpers.is_null_date_value(value):
         return value
     for date_helper in storage_date_helpers:
         storage_date = date_helper(value)
         if storage_date:
             return storage_date
-    raise OGDCHDateValidationException("Unknown date format detected"
-                                       "in ogdch_date_validator : '{}'"
-                                       .format(value))
+    raise ogdch_date_helpers.OGDCHDateValidationException(
+        "Unknown date format detected"
+        "in ogdch_date_validator : '{}'"
+        .format(value)
+    )
 
 
 @register_validator
 def ogdch_date_output(value):
-    if value == '':
-        return value
+    if ogdch_date_helpers.is_null_date_value(value):
+        return ''
     for date_helper in display_date_helpers:
         display_value = date_helper(value)
         if display_value:
             return display_value
-    raise OGDCHDateValidationException("Unknown date format detected"
-                                       "in ogdch_date_output : '{}'"
-                                       .format(value))
+    raise ogdch_date_helpers.OGDCHDateValidationException(
+        "Unknown date format detected"
+        "in ogdch_date_output : '{}'"
+        .format(value)
+    )
 
 
 @register_validator
