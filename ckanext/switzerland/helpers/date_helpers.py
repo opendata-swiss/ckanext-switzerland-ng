@@ -100,3 +100,13 @@ def display_if_datetime(value):
             return isodate.strftime(value, DATE_FORMAT)
     except Exception:
         return None
+
+
+def is_null_date_value(value):
+    """date values stored in postgres as not set"""
+    if value in ['', 'False']:
+        return True
+
+
+class OGDCHDateValidationException(Exception):
+    pass
