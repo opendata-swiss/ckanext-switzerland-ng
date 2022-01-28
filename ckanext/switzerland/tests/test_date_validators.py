@@ -56,7 +56,7 @@ class TestOgdchDateStorageValidator(object):
 
     def test_ogdch_date_validator_null_date_value(self):
         d = 'False'
-        d_storage = d
+        d_storage = ''
         assert_equals(d_storage, self.validator(d))
 
     def test_ogdch_date_validator_unknown_date_value(self):
