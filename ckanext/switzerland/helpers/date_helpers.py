@@ -8,6 +8,10 @@ DATE_FORMAT = tk.config.get(
 
 log = logging.getLogger(__name__)
 
+INVALID_EMPTY_DATE = 'False'
+VALID_EMPTY_DATE = ''
+ACCEPTED_EMPTY_DATE_VALUES = [INVALID_EMPTY_DATE, VALID_EMPTY_DATE]
+
 
 def store_if_isodate(value):
     """as the storage format is isodate, isodate are just
@@ -100,3 +104,16 @@ def display_if_datetime(value):
             return isodate.strftime(value, DATE_FORMAT)
     except Exception:
         return None
+
+
+def correct_invalid_empty_date(value):
+    """date values stored in postgres as not set"""
+    if value == INVALID_EMPTY_DATE:
+        log.error("Invalid date {} detected in database."
+                  "Date was transformed into {}"
+                  .format(INVALID_EMPTY_DATE, VALID_EMPTY_DATE))
+        return VALID_EMPTY_DATE
+
+
+class OGDCHDateValidationException(Exception):
+    pass
