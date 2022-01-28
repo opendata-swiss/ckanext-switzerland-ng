@@ -87,8 +87,10 @@ def multilingual_text_output(value):
 
 @register_validator
 def ogdch_date_validator(value):
-    if ogdch_date_helpers.is_null_date_value(value):
+    if value == ogdch_date_helpers.VALID_EMPTY_DATE:
         return value
+    if value == ogdch_date_helpers.INVALID_EMPTY_DATE:
+        return ogdch_date_helpers.correct_invalid_empty_date(value)
     for date_helper in storage_date_helpers:
         storage_date = date_helper(value)
         if storage_date:
@@ -102,8 +104,8 @@ def ogdch_date_validator(value):
 
 @register_validator
 def ogdch_date_output(value):
-    if ogdch_date_helpers.is_null_date_value(value):
-        return ''
+    if value in ogdch_date_helpers.ACCEPTED_EMPTY_DATE_VALUES:
+        return ogdch_date_helpers.VALID_EMPTY_DATE
     for date_helper in display_date_helpers:
         display_value = date_helper(value)
         if display_value:
