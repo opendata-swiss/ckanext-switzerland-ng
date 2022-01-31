@@ -429,10 +429,14 @@ class OgdchArchivePlugin(plugins.SingletonPlugin, OgdchMixin):
         This prevents future datasets with the same name will not have a
         number appended.
         """
-        if "deleted" == package_extra.state:
-            package_extra.name = self._ensure_name_is_unique(
+        try:
+            if "deleted" == package_extra.state\
+                    and hasattr(package_extra, 'name'):
+                package_extra.name = self._ensure_name_is_unique(
                     "_archived-{0}".format(package_extra.name)
-            )
+                )
+        except Exception:
+            pass
 
     @staticmethod
     def _ensure_name_is_unique(ideal_name):
