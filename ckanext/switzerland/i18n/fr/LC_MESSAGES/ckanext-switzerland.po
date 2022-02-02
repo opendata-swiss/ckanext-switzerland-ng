@@ -139,72 +139,128 @@ msgid "Other"
 msgstr "Autre"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:82
-msgid "Irregular"
-msgstr "Irrégulier"
+msgid "Other"
+msgstr "Autre"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:83
-msgid "Continuous"
-msgstr "Continu"
+msgid "Weekly"
+msgstr "Hebdomadaire"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:84
-msgid "Daily"
-msgstr "1 fois par jour"
+msgid "Annual"
+msgstr "Annuel"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:85
-msgid "Three times a week"
-msgstr "3 fois par semaine"
+msgid "Semiannual"
+msgstr "Semestriel"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:86
-msgid "Semi weekly"
-msgstr "2 fois par semaine"
+msgid "Three times a year"
+msgstr "Trois fois par an"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:87
-msgid "Weekly"
-msgstr "1 fois par semaine"
+msgid "Biennial"
+msgstr "Biennal"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:88
-msgid "Three times a month"
-msgstr "3 fois par mois"
+msgid "Bimonthly"
+msgstr "Bimestriel"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:89
 msgid "Biweekly"
-msgstr "Toutes les 2 semaines"
+msgstr "Tous les quinze jours"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:90
-msgid "Semimonthly"
-msgstr "2 fois par mois"
+msgid "Continuous"
+msgstr "Continuel"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:91
-msgid "Monthly"
-msgstr "1 fois par mois"
+msgid "Daily"
+msgstr "Quotidien"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:92
-msgid "Bimonthly"
-msgstr "Tous les 2 mois"
+msgid "Twice a day"
+msgstr "Deux fois par jour"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:93
-msgid "Quarterly"
-msgstr "1 fois par trimestre"
+msgid "Irregular"
+msgstr "Irrégulier"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:94
-msgid "Three times a year"
-msgstr "3 fois par an"
+msgid "Monthly"
+msgstr "Mensuel"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:95
-msgid "Semi Annual"
-msgstr "2 fois par an"
+msgid "Semimonthly"
+msgstr "Bimensuel"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:96
-msgid "Annual"
-msgstr "1 fois par an"
+msgid "Three times a month"
+msgstr "Trois fois par mois"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:97
-msgid "Biennial"
-msgstr "Tous les 2 ans"
+msgid "Never"
+msgstr "Jamais"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:98
+msgid "Provisional data"
+msgstr "Données provisoires"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:99
+msgid "Quarterly"
+msgstr "Trimestriel"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:100
 msgid "Triennial"
-msgstr "Tous les 3 ans"
+msgstr "Triennal"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:101
+msgid "Unknown"
+msgstr "Inconnu"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:102
+msgid "Continuously updated"
+msgstr "Mise à jour continuelle"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:103
+msgid "Semiweekly"
+msgstr "Bihebdomadaire"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:104
+msgid "Three times a week"
+msgstr "Trois fois par semaine"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:105
+msgid "Quinquennial"
+msgstr "Tous les cinq ans"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:106
+msgid "Decennial"
+msgstr "Tous les dix ans"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:107
+msgid "Hourly"
+msgstr "Toutes les heures"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:108
+msgid "Quadrennial"
+msgstr "Tous les quatre ans"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:109
+msgid "Bihourly"
+msgstr "Toutes les deux heures"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:110
+msgid "Trihourly"
+msgstr "Toutes les trois heures"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:111
+msgid "Bidecennial"
+msgstr "Tous les vingt ans"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:112
+msgid "Tridecennial"
+msgstr "Tous les trente ans"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:121
 msgid "Open use"
