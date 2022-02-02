@@ -259,7 +259,7 @@ msgstr "Alle zwanzig Jahre"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:112
 msgid "Tridecennial"
-msgstr "Alle dreißig Jahre"
+msgstr "Alle dreissig Jahre"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:121
 msgid "Open use"
