@@ -138,72 +138,128 @@ msgid "Other"
 msgstr "Weitere"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:82
-msgid "Irregular"
-msgstr "Unregelmässig"
+msgid "Other"
+msgstr "Weitere"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:83
-msgid "Continuous"
-msgstr "Kontinuierlich"
-
-#: ckanext/switzerland/helpers/frontend_helpers.py:84
-msgid "Daily"
-msgstr "Täglich"
-
-#: ckanext/switzerland/helpers/frontend_helpers.py:85
-msgid "Three times a week"
-msgstr "Dreimal pro Woche"
-
-#: ckanext/switzerland/helpers/frontend_helpers.py:86
-msgid "Semi weekly"
-msgstr "Halbwöchentlich"
-
-#: ckanext/switzerland/helpers/frontend_helpers.py:87
 msgid "Weekly"
 msgstr "Wöchentlich"
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:88
-msgid "Three times a month"
-msgstr "Dreimal pro Monat"
-
-#: ckanext/switzerland/helpers/frontend_helpers.py:89
-msgid "Biweekly"
-msgstr "Alle zwei Wochen"
-
-#: ckanext/switzerland/helpers/frontend_helpers.py:90
-msgid "Semimonthly"
-msgstr "Halbmonatlich"
-
-#: ckanext/switzerland/helpers/frontend_helpers.py:91
-msgid "Monthly"
-msgstr "Monatlich"
-
-#: ckanext/switzerland/helpers/frontend_helpers.py:92
-msgid "Bimonthly"
-msgstr "Alle zwei Monate"
-
-#: ckanext/switzerland/helpers/frontend_helpers.py:93
-msgid "Quarterly"
-msgstr "Vierteljährlich"
-
-#: ckanext/switzerland/helpers/frontend_helpers.py:94
-msgid "Three times a year"
-msgstr "Dreimal pro Jahr"
-
-#: ckanext/switzerland/helpers/frontend_helpers.py:95
-msgid "Semi Annual"
-msgstr "Halbjährlich"
-
-#: ckanext/switzerland/helpers/frontend_helpers.py:96
+#: ckanext/switzerland/helpers/frontend_helpers.py:84
 msgid "Annual"
 msgstr "Jährlich"
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:97
+#: ckanext/switzerland/helpers/frontend_helpers.py:85
+msgid "Semiannual"
+msgstr "Halbjährlich"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:86
+msgid "Three times a year"
+msgstr "Dreimal im Jahr"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:87
 msgid "Biennial"
 msgstr "Zweijährlich"
 
+#: ckanext/switzerland/helpers/frontend_helpers.py:88
+msgid "Bimonthly"
+msgstr "Zweimonatlich"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:89
+msgid "Biweekly"
+msgstr "Zweiwöchentlich"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:90
+msgid "Continuous"
+msgstr "Kontinuierlich"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:91
+msgid "Daily"
+msgstr "Täglich"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:92
+msgid "Twice a day"
+msgstr "Zweimal täglich"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:93
+msgid "Irregular"
+msgstr "Unregelmässig"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:94
+msgid "Monthly"
+msgstr "Monatlich"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:95
+msgid "Semimonthly"
+msgstr "Zweimal im Monat"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:96
+msgid "Three times a month"
+msgstr "Dreimal im Monat"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:97
+msgid "Never"
+msgstr "Niemals"
+
 #: ckanext/switzerland/helpers/frontend_helpers.py:98
+msgid "Provisional data"
+msgstr "Vorläufige Daten"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:99
+msgid "Quarterly"
+msgstr "Vierteljährlich"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:100
 msgid "Triennial"
 msgstr "Dreijährlich"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:101
+msgid "Unknown"
+msgstr "Unbekannt"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:102
+msgid "Continuously updated"
+msgstr "Ständige Aktualisierung"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:103
+msgid "Semiweekly"
+msgstr "Zweimal in Woche"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:104
+msgid "Three times a week"
+msgstr "Dreimal in Woche"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:105
+msgid "Quinquennial"
+msgstr "Fünfjährlich"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:106
+msgid "Decennial"
+msgstr "Alle zehn Jahre"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:107
+msgid "Hourly"
+msgstr "Stündlich"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:108
+msgid "Quadrennial"
+msgstr "Vierjährlich"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:109
+msgid "Bihourly"
+msgstr "Alle zwei Stunden"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:110
+msgid "Trihourly"
+msgstr "Alle drei Stunden"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:111
+msgid "Bidecennial"
+msgstr "Alle zwanzig Jahre"
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:112
+msgid "Tridecennial"
+msgstr "Alle dreißig Jahre"
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:121
 msgid "Open use"
