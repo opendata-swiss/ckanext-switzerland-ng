@@ -1,4 +1,5 @@
 from collections import OrderedDict
+import datetime
 import os.path
 import pysolr
 import re
@@ -17,9 +18,12 @@ import ckan.lib.helpers as h
 from ckan.lib.search.common import make_connection
 import ckan.lib.plugins as lib_plugins
 import ckan.lib.uploader as uploader
+from ckan.logic import check_access
 from ckan.logic.action.create import user_create as core_user_create
 from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
 from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester
+from ckanext.harvest.model import HarvestJob
+from ckanext.harvest.logic.dictization import harvest_job_dictize
 from ckanext.switzerland.helpers.request_utils import get_content_headers
 from ckanext.switzerland.helpers.mail_helper import send_registration_email
 from ckanext.switzerland.helpers.logic_helpers import (
@@ -33,6 +37,8 @@ log = logging.getLogger(__name__)
 FORMAT_TURTLE = 'ttl'
 DATA_IDENTIFIER = 'data'
 RESULT_IDENTIFIER = 'result'
+HARVEST_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S.%f"
+HARVEST_STATUS_RUNNING = "Running"
 
 DCAT = Namespace("http://www.w3.org/ns/dcat#")
 
@@ -290,6 +296,45 @@ def ogdch_showcase_search(context, data_dict):
         return result
     else:
         raise NotFound
+
+
+@side_effect_free
+def ogdch_harvest_monitor(context, data_dict):
+    """Returns the status of the fetch and gather processes.
+
+    If there are still-running harvest jobs that were created more than
+    6 hours ago, it is likely that either of those processes has stopped
+    and needs to be restarted, so we return result["ok"] = False and a list
+    of long-running jobs.
+    """
+
+    check_access("harvest_job_list", context, data_dict)
+    session = context["session"]
+    query = (
+        session.query(HarvestJob)
+        .filter(HarvestJob.status == HARVEST_STATUS_RUNNING)
+        .order_by(HarvestJob.created.desc())
+    )
+
+    jobs = query.all()
+
+    now = datetime.datetime.now()
+    six_hours = datetime.timedelta(hours=6)
+    long_jobs = []
+    result = {}
+
+    for job in jobs:
+        if now - job.created > six_hours:
+            long_jobs.append(job)
+
+    result["ok"] = len(long_jobs) == 0
+
+    context["return_error_summary"] = False
+    result["long_running_jobs"] = [
+        harvest_job_dictize(job, context) for job in long_jobs
+    ]
+
+    return result
 
 
 def _create_or_update_dataset(dataset):
