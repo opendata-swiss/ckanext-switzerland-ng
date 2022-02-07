@@ -451,7 +451,7 @@ def ogdch_validate_temporals(field, schema):
     """
     def validator(key, data, errors, context):
         if key not in data:
-            data[key] = '{}'
+            data[key] = '[]'
         else:
             temporals = []
             if not data.get(key):
