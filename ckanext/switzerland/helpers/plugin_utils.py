@@ -327,17 +327,17 @@ def _transform_datetime_to_isoformat(value):
     If dates are already in isoformat, just return them.
     """
     try:
-        dt = isodate.parse_datetime(value)
-        if isinstance(dt, datetime):
-            return value
-    except isodate.ISO8601Error:
-        pass
-
-    try:
         dt = datetime.strptime(value, DATE_FORMAT)
         if isinstance(dt, datetime):
             return dt.isoformat()
     except (TypeError, ValueError):
+        pass
+
+    try:
+        dt = isodate.parse_datetime(value)
+        if isinstance(dt, datetime):
+            return value
+    except isodate.ISO8601Error:
         return ""
 
 
