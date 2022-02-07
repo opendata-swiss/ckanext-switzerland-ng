@@ -1,6 +1,7 @@
 """
 helpers of the plugins.py
 """
+import isodate
 import json
 import re
 import logging
@@ -11,9 +12,12 @@ import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
 import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
 import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
-from dateutil.parser import parse, ParserError
+from datetime import datetime
 
 log = logging.getLogger(__name__)
+
+DATE_FORMAT = toolkit.config.get(
+    'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
 
 
 class ReindexException(Exception):
@@ -319,11 +323,21 @@ def _transform_package_dates(pkg_dict):
 
 
 def _transform_datetime_to_isoformat(value):
-    """derive isoformat from datepicker date format"""
+    """Transform dates in ckanext.switzerland.date_picker_format to isodates.
+    If dates are already in isoformat, just return them.
+    """
     try:
-        d = parse(value, dayfirst=True)
-        return d.isoformat()
-    except (TypeError, ParserError):
+        dt = isodate.parse_datetime(value)
+        if isinstance(dt, datetime):
+            return value
+    except isodate.ISO8601Error:
+        pass
+
+    try:
+        dt = datetime.strptime(value, DATE_FORMAT)
+        if isinstance(dt, datetime):
+            return dt.isoformat()
+    except (TypeError, ValueError):
         return ""
 
 
