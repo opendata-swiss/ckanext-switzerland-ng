@@ -453,6 +453,7 @@ def ogdch_validate_temporals(field, schema):
         if key not in data:
             data[key] = '{}'
         else:
+            temporals = []
             if not data.get(key):
                 extras = data.get(FORM_EXTRAS)
                 if extras:
