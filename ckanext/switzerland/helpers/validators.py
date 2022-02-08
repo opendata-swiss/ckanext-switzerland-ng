@@ -443,18 +443,17 @@ def ogdch_validate_formfield_see_alsos(field, schema):
 
 
 @scheming_validator
-def ogdch_validate_formfield_temporals(field, schema):
-    """
-    This validator is only used for form validation.
-    The data is extracted form the temporals form fields and transformed
-    into a form that is expected for database storage:
+def ogdch_validate_temporals(field, schema):
+    """Transforms temporal dates into the form that is expected for
+    database storage:
     "temporals": [{"start_date": <date as isodate>,
     "end_date": <date as isodate>}]
     """
     def validator(key, data, errors, context):
         if key not in data:
-            data[key] = '{}'
+            data[key] = '[]'
         else:
+            temporals = []
             if not data.get(key):
                 extras = data.get(FORM_EXTRAS)
                 if extras:
