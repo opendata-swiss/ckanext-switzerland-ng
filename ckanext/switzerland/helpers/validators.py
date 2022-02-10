@@ -314,7 +314,6 @@ def ogdch_validate_formfield_publisher(field, schema):
     """
     def validator(key, data, errors, context):
         if not data.get(key):
-            log.error("case key not set")
             extras = data.get(FORM_EXTRAS)
             output = {'url': '', 'name': ''}
             if extras:
