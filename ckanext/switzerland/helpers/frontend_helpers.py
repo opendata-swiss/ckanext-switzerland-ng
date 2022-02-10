@@ -110,7 +110,7 @@ def get_frequency_name(identifier=None, get_map=False):
         ('http://publications.europa.eu/resource/authority/frequency/TRIHOURLY', _('Trihourly')),  # noqa
         ('http://publications.europa.eu/resource/authority/frequency/BIDECENNIAL', _('Bidecennial')),  # noqa
         ('http://publications.europa.eu/resource/authority/frequency/TRIDECENNIAL', _('Tridecennial')),  # noqa
-        ('http://purl.org/cld/freq/completlyIrregular', _('CompletelyIrregular_deprecated, please change!')),  # noqa
+        ('http://purl.org/cld/freq/completelyIrregular', _('CompletelyIrregular_deprecated, please change!')),  # noqa
         ('http://purl.org/cld/freq/irregular', _('Irregular_deprecated, please change!')),  # noqa
         ('http://purl.org/cld/freq/continuous', _('Continuous_deprecated, please change!')),  # noqa
         ('http://purl.org/cld/freq/daily', _('Daily_deprecated, please change!')),  # noqa
