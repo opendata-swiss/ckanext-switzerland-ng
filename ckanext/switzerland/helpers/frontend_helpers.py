@@ -110,6 +110,23 @@ def get_frequency_name(identifier=None, get_map=False):
         ('http://publications.europa.eu/resource/authority/frequency/TRIHOURLY', _('Trihourly')),  # noqa
         ('http://publications.europa.eu/resource/authority/frequency/BIDECENNIAL', _('Bidecennial')),  # noqa
         ('http://publications.europa.eu/resource/authority/frequency/TRIDECENNIAL', _('Tridecennial')),  # noqa
+        ('http://purl.org/cld/freq/irregular', _('Irregular_deprecated, please change!')),  # noqa
+        ('http://purl.org/cld/freq/continuous', _('Continuous_deprecated, please change!')),  # noqa
+        ('http://purl.org/cld/freq/daily', _('Daily_deprecated, please change!')),  # noqa
+        ('http://purl.org/cld/freq/threeTimesAWeek', _('Three times a week_deprecated, please change!')),  # noqa
+        ('http://purl.org/cld/freq/semiweekly', _('Semiweekly_deprecated, please change!')),  # noqa
+        ('http://purl.org/cld/freq/weekly', _('Weekly_deprecated, please change!')),  # noqa
+        ('http://purl.org/cld/freq/threeTimesAMonth', _('Three times a month_deprecated, please change!')),  # noqa
+        ('http://purl.org/cld/freq/biweekly', _('Biweekly_deprecated, please change!')),  # noqa
+        ('http://purl.org/cld/freq/semimonthly', _('Semimonthly_deprecated, please change!')),  # noqa
+        ('http://purl.org/cld/freq/monthly', _('Monthly_deprecated, please change!')),  # noqa
+        ('http://purl.org/cld/freq/bimonthly', _('Bimonthly_deprecated, please change!')),  # noqa
+        ('http://purl.org/cld/freq/quarterly', _('Quarterly_deprecated, please change!')),  # noqa
+        ('http://purl.org/cld/freq/threeTimesAYear', _('Three times a year_deprecated, please change!')),  # noqa
+        ('http://purl.org/cld/freq/semiannual', _('Semiannual_deprecated, please change!')),  # noqa
+        ('http://purl.org/cld/freq/annual', _('Annual_deprecated, please change!')),  # noqa
+        ('http://purl.org/cld/freq/biennial', _('Biennial_deprecated, please change!')),  # noqa
+        ('http://purl.org/cld/freq/triennial', _('Triennial_deprecated, please change!')),  # noqa
     ])
     if get_map:
         return frequencies
