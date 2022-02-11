@@ -339,7 +339,17 @@ def _transform_datetime_to_isoformat(value):
             return value
     except isodate.ISO8601Error:
         return ""
+    except AttributeError:
+        log.info("getting AttributeError")
+        pass # TODO explanation
 
+    try:
+        dt = datetime.fromtimestamp(value).isoformat()
+        if isinstance(dt, datetime):
+            return dt
+    except:
+        log.info("unix_timestamp to isoformat does not work")
+        pass
 
 def _transform_publisher(pkg_dict):
     publisher = pkg_dict.get('publisher')
