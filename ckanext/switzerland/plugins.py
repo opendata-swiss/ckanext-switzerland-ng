@@ -423,21 +423,39 @@ class OgdchArchivePlugin(plugins.SingletonPlugin, OgdchMixin):
 
     # IMapper
 
-    def before_update(self, mapper, connection, package_extra):
+    def before_update(self, mapper, connection, instance):
         """
         If a package is being deleted it is saved in the CKAN-trash with
         the prefix "_archived-" so that the slug remains available.
         This prevents future datasets with the same name will not have a
         number appended.
+
+        The method is a ckan interface that is called with a lot of different
+        instances: we need to make sure that the right cases are picked up:
+        datasets that are deleted, but only if they are not already archived.
+        In this cases a new name for archiving the dataset is derived.
         """
-        try:
-            if "deleted" == package_extra.state\
-                    and hasattr(package_extra, 'name'):
-                package_extra.name = self._ensure_name_is_unique(
-                    "_archived-{0}".format(package_extra.name)
+
+        # check instance: should be deleted dataset
+        instance_is_dataset_setup_for_delete = (
+                instance.__class__ == Package and
+                getattr(instance, 'state', None) == 'deleted'
+                and getattr(instance, 'type', None) == 'dataset'
+        )
+
+        # proceed further for deleted datasets:
+        if instance_is_dataset_setup_for_delete:
+            dataset_name = getattr(instance, 'name', '')
+            dataset_is_already_archived = dataset_name.startswith('_archived-')
+            if not dataset_is_already_archived:
+                # only call this expansive method in case of a newly
+                # deleted not yet archived dataset
+                instance.name = self._ensure_name_is_unique(
+                    "_archived-{0}".format(dataset_name)
                 )
-        except Exception:
-            pass
+                log.error("new name '{}' retrieved for dataset '{}' that was "
+                          "set up for delete"
+                          .format(instance.name, dataset_name))
 
     @staticmethod
     def _ensure_name_is_unique(ideal_name):
