@@ -322,9 +322,11 @@ def _transform_package_dates(pkg_dict):
                 resource['modified'])
 
 
-def _transform_datetime_to_isoformat(value):
+def _transform_datetime_to_isoformat(value):  # noqa
     """Transform dates in ckanext.switzerland.date_picker_format to isodates.
     If dates are already in isoformat, just return them.
+    If dataformat is not correct that indicates that dates were not migrated
+    and will just pass and continue reindexing.
     """
     try:
         dt = datetime.strptime(value, DATE_FORMAT)
@@ -341,7 +343,7 @@ def _transform_datetime_to_isoformat(value):
         return ""
     except AttributeError:
         log.info("getting AttributeError")
-        pass # TODO explanation
+        pass
 
     try:
         dt = datetime.fromtimestamp(value).isoformat()
@@ -350,6 +352,7 @@ def _transform_datetime_to_isoformat(value):
     except:
         log.info("unix_timestamp to isoformat does not work")
         pass
+
 
 def _transform_publisher(pkg_dict):
     publisher = pkg_dict.get('publisher')
