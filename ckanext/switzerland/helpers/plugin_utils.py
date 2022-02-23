@@ -1,8 +1,10 @@
 """
 helpers of the plugins.py
 """
+import isodate
 import json
 import re
+import logging
 from ckan import logic
 import ckan.plugins.toolkit as toolkit
 from ckan.lib.munge import munge_title_to_name
@@ -10,7 +12,16 @@ import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
 import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
 import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
-from dateutil.parser import parse, ParserError
+from datetime import datetime
+
+log = logging.getLogger(__name__)
+
+DATE_FORMAT = toolkit.config.get(
+    'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
+
+
+class ReindexException(Exception):
+    pass
 
 
 def _prepare_suggest_context(search_data, pkg_dict):
@@ -49,8 +60,8 @@ def map_ckan_default_fields(pkg_dict):  # noqa
 
     if pkg_dict.get('author') is None:
         try:
-            pkg_dict['author'] = pkg_dict['publishers'][0]['label']  # noqa
-        except (KeyError, IndexError):
+            pkg_dict['author'] = pkg_dict['publisher']['name']  # noqa
+        except KeyError:
             pass
 
     if pkg_dict.get('resources') is not None:
@@ -68,7 +79,7 @@ def _is_dataset_package_type(pkg_dict):
         return False
 
 
-def ogdch_prepare_search_data_for_index(search_data, format_mapping):
+def ogdch_prepare_search_data_for_index(search_data, format_mapping):  # noqa
     """prepares the data for indexing"""
     if not _is_dataset_package_type(search_data):
         return search_data
@@ -101,7 +112,9 @@ def ogdch_prepare_search_data_for_index(search_data, format_mapping):
 
     search_data['identifier'] = validated_dict.get('identifier')
     search_data['contact_points'] = [c['name'] for c in validated_dict.get('contact_points', [])]  # noqa
-    search_data['publishers'] = [p['label'] for p in validated_dict.get('publishers', [])]  # noqa
+    if 'publisher' in validated_dict:
+        _prepare_publisher_for_search(validated_dict['publisher'],
+                                      validated_dict['name'])
 
     # TODO: Remove the try-except-block.
     # This fixes the index while we have 'wrong' relations on
@@ -111,7 +124,7 @@ def ogdch_prepare_search_data_for_index(search_data, format_mapping):
     except TypeError:
         search_data['see_alsos'] = [d for d in
                                     validated_dict.get('see_alsos',
-                                                       [])]  # noqa
+                                                       [])]
 
     # make sure we're not dealing with NoneType
     if search_data['metadata_created'] is None:
@@ -136,7 +149,7 @@ def ogdch_prepare_search_data_for_index(search_data, format_mapping):
                 ogdch_loc_utils.get_localized_value_from_dict(
                    validated_dict['keywords'], lang_code)
             search_data['organization_' + lang_code] = \
-                ogdch_loc_utils.get_localized_value_from_dict(  # noqa
+                ogdch_loc_utils.get_localized_value_from_dict(
                     validated_dict['organization']['title'], lang_code)
 
     except KeyError:
@@ -151,12 +164,31 @@ def ogdch_prepare_search_data_for_index(search_data, format_mapping):
     return search_data
 
 
+def _prepare_publisher_for_search(publisher, dataset_name):
+    try:
+        if not isinstance(publisher, dict):
+            publisher_as_dict = json.loads(publisher)
+            publisher = {}
+            publisher['name'] = publisher_as_dict.get('name', '')
+            publisher['url'] = publisher_as_dict.get('url', '')
+    except TypeError:
+        log.error("publisher got a TypeError for {}"
+                  .format(dataset_name))
+        return ""
+    except AttributeError:
+        log.error("publisher got an AttributeError for {}"
+                  .format(dataset_name))
+        return ""
+    else:
+        return publisher
+
+
 def package_map_ckan_default_fields(pkg_dict):  # noqa
     pkg_dict['display_name'] = pkg_dict['title']
 
     if pkg_dict.get('maintainer') is None:
         try:
-            pkg_dict['maintainer'] = pkg_dict['contact_points'][0]['name']  # noqa
+            pkg_dict['maintainer'] = pkg_dict['contact_points'][0]['name']
         except (KeyError, IndexError):
             pass
 
@@ -168,8 +200,8 @@ def package_map_ckan_default_fields(pkg_dict):  # noqa
 
     if pkg_dict.get('author') is None:
         try:
-            pkg_dict['author'] = pkg_dict['publishers'][0]['label']  # noqa
-        except (KeyError, IndexError):
+            pkg_dict['author'] = pkg_dict['publisher']['name']
+        except (KeyError, TypeError):
             pass
 
     if pkg_dict.get('resources') is not None:
@@ -210,7 +242,7 @@ def ogdch_prepare_pkg_dict_for_api(pkg_dict):
 
     if ogdch_request_utils.request_is_api_request():
         _transform_package_dates(pkg_dict)
-
+        _transform_publisher(pkg_dict)
     return pkg_dict
 
 
@@ -290,10 +322,39 @@ def _transform_package_dates(pkg_dict):
                 resource['modified'])
 
 
-def _transform_datetime_to_isoformat(value):
-    """derive isoformat from datepicker date format"""
+def _transform_datetime_to_isoformat(value):  # noqa
+    """Transform dates in ckanext.switzerland.date_picker_format to isodates.
+    If dates are already in isoformat, just return them.
+    If dataformat is not correct that indicates that dates were not migrated
+    and will just pass and continue reindexing.
+    """
     try:
-        d = parse(value, dayfirst=True)
-        return d.isoformat()
-    except (TypeError, ParserError):
+        dt = datetime.strptime(value, DATE_FORMAT)
+        if isinstance(dt, datetime):
+            return dt.isoformat()
+    except (TypeError, ValueError):
+        pass
+
+    try:
+        dt = isodate.parse_datetime(value)
+        if isinstance(dt, datetime):
+            return value
+    except isodate.ISO8601Error:
         return ""
+    except AttributeError:
+        log.info("getting AttributeError")
+        pass
+
+    try:
+        dt = datetime.fromtimestamp(value).isoformat()
+        if isinstance(dt, datetime):
+            return dt
+    except:
+        log.info("unix_timestamp to isoformat does not work")
+        pass
+
+
+def _transform_publisher(pkg_dict):
+    publisher = pkg_dict.get('publisher')
+    if publisher and not isinstance(publisher, dict):
+        pkg_dict['publisher'] = json.loads(publisher)

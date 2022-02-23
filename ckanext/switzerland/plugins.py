@@ -56,17 +56,14 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'multiple_text_output': ogdch_validators.multiple_text_output,
             'multilingual_text_output': ogdch_validators.multilingual_text_output, # noqa
             'harvest_list_of_dicts': ogdch_validators.harvest_list_of_dicts,
-            'timestamp_to_date_string': ogdch_validators.timestamp_to_date_string, # noqa
-            'date_string_to_timestamp': ogdch_validators.date_string_to_timestamp, # noqa
             'ogdch_language': ogdch_validators.ogdch_language,
             'ogdch_unique_identifier': ogdch_validators.ogdch_unique_identifier, # noqa
             'ogdch_required_in_one_language': ogdch_validators.ogdch_required_in_one_language, # noqa
-            'temporals_to_datetime_output': ogdch_validators.temporals_to_datetime_output, # noqa
-            'ogdch_validate_formfield_publishers': ogdch_validators.ogdch_validate_formfield_publishers,  # noqa
+            'ogdch_validate_formfield_publisher': ogdch_validators.ogdch_validate_formfield_publisher,  # noqa
             'ogdch_validate_formfield_contact_points': ogdch_validators.ogdch_validate_formfield_contact_points,  # noqa
             'ogdch_validate_formfield_relations': ogdch_validators.ogdch_validate_formfield_relations,  # noqa
             'ogdch_validate_formfield_see_alsos': ogdch_validators.ogdch_validate_formfield_see_alsos,  # noqa
-            'ogdch_validate_formfield_temporals': ogdch_validators.ogdch_validate_formfield_temporals,  # noqa
+            'ogdch_validate_temporals': ogdch_validators.ogdch_validate_temporals,  # noqa
             'ogdch_fluent_tags': ogdch_validators.ogdch_fluent_tags,
             'ogdch_temp_scheming_choices': ogdch_validators.ogdch_temp_scheming_choices,  # noqa
         }
@@ -163,7 +160,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'get_localized_value_for_display': ogdch_frontend_helpers.get_localized_value_for_display,  # noqa
             'ogdch_get_accrual_periodicity_choices': ogdch_dataset_form_helpers.ogdch_get_accrual_periodicity_choices,  # noqa
             'ogdch_get_rights_choices': ogdch_dataset_form_helpers.ogdch_get_rights_choices,  # noqa
-            'ogdch_publishers_form_helper': ogdch_dataset_form_helpers.ogdch_publishers_form_helper,  # noqa
+            'ogdch_publisher_form_helper': ogdch_dataset_form_helpers.ogdch_publisher_form_helper,  # noqa
             'ogdch_contact_points_form_helper': ogdch_dataset_form_helpers.ogdch_contact_points_form_helper,  # noqa
             'ogdch_relations_form_helper': ogdch_dataset_form_helpers.ogdch_relations_form_helper,  # noqa
             'ogdch_see_alsos_form_helper': ogdch_dataset_form_helpers.ogdch_see_alsos_form_helper,  # noqa
@@ -180,6 +177,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'organization_link': ogdch_backend_helpers.organization_link,
             'ogdch_localize_activity_item': ogdch_backend_helpers.ogdch_localize_activity_item,  # noqa
             'ogdch_admin_capacity': ogdch_backend_helpers.ogdch_admin_capacity,  # noqa
+            'render_publisher': ogdch_frontend_helpers.render_publisher,  # noqa
         }
 
     # IRouter

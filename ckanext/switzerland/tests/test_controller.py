@@ -47,7 +47,7 @@ class TestController(helpers.FunctionalTestBase):
                 'it': []
             },
             'spatial': '',
-            'publishers': [{'label': 'Bundesarchiv'}],
+            'publisher': [{'name': 'Bundesarchiv', 'url':'https//opendata.swiss/organization/bundesarchiv'}],
             'description': {
                 'fr': 'Description FR',
                 'de': 'Beschreibung DE',
@@ -68,7 +68,7 @@ class TestController(helpers.FunctionalTestBase):
             'relations': [],
             'see_alsos': [],
             'temporals': [],
-            'accrual_periodicity': 'http://purl.org/cld/freq/completelyIrregular',
+            'accrual_periodicity': 'http://publications.europa.eu/resource/authority/frequency/IRREG',
             'modified': '09.09.2015',
             'url': 'http://some_url',
             'owner_org': 'test-org',
