@@ -205,3 +205,12 @@ class TestPlugin(unittest.TestCase):
         resource_with_comma_format_cleaned = ogdch_format_utils.prepare_resource_format(
             resource_with_comma_format.copy())
         self.assertEquals('CSV', resource_with_comma_format_cleaned['format'])
+
+        resource_with_mapped_format = {
+            'download_url': None,
+            'media_type': None,
+            'format': 'SHP'
+        }
+        resource_with_mapped_format_cleaned = ogdch_format_utils.prepare_resource_format(
+            resource_with_mapped_format.copy())
+        self.assertEquals('SHP', resource_with_mapped_format_cleaned['format'])
