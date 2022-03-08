@@ -34,6 +34,10 @@ def ogdch_get_format_mapping():
 
 # Generates format of resource and saves it in format field
 def prepare_resource_format(resource, format_mapping):
+    if resource.get('format') in format_mapping.keys():
+        # format has already been mapped
+        return resource
+
     resource_format = ''
 
     # get format from media_type field if available
