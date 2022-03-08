@@ -17,7 +17,7 @@ class FormatMappingNotLoadedError(Exception):
 
 
 def ogdch_get_format_mapping():
-    """gets the format mapping from  a file for ogdch controller plugins"""
+    """reads in the format mapping from a yaml file"""
     try:
         mapping_path = os.path.join(__location__, 'mapping.yaml')
         with open(mapping_path, 'r') as format_mapping_file:
@@ -32,8 +32,11 @@ def ogdch_get_format_mapping():
         return format_mapping
 
 
+format_mapping = ogdch_get_format_mapping()
+
+
 # Generates format of resource and saves it in format field
-def prepare_resource_format(resource, format_mapping):
+def prepare_resource_format(resource):
     if resource.get('format') in format_mapping.keys():
         # format has already been mapped
         return resource
@@ -50,8 +53,7 @@ def prepare_resource_format(resource, format_mapping):
 
     # check if 'media_type' or 'format' can be mapped
     has_format = (_map_to_valid_format(
-        resource_format,
-        format_mapping
+        resource_format
     ) is not None)
 
     # if the fields can't be mapped,
@@ -63,8 +65,7 @@ def prepare_resource_format(resource, format_mapping):
             resource_format = ext.replace('.', '').lower()
 
     mapped_format = _map_to_valid_format(
-        resource_format,
-        format_mapping
+        resource_format
     )
     if mapped_format:
         # if format could be successfully mapped write it to format field
@@ -82,13 +83,12 @@ def prepare_resource_format(resource, format_mapping):
     return resource
 
 
-def prepare_formats_for_index(resources, format_mapping):
+def prepare_formats_for_index(resources):
     """generates a set with formats of all resources"""
     formats = set()
     for r in resources:
         resource = prepare_resource_format(
-            resource=r,
-            format_mapping=format_mapping
+            resource=r
         )
         if resource['format']:
             formats.add(resource['format'])
@@ -99,7 +99,7 @@ def prepare_formats_for_index(resources, format_mapping):
 
 
 # all formats that need to be mapped have to be entered in the mapping.yaml
-def _map_to_valid_format(resource_format, format_mapping):
+def _map_to_valid_format(resource_format):
     resource_format_lower = resource_format.lower()
     for key, values in format_mapping.iteritems():
         if resource_format_lower in values:

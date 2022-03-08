@@ -1,5 +1,4 @@
 """Tests for helpers.format_utils.py."""
-import ckanext.switzerland.plugins as plugins
 import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
 from nose.tools import *  # noqa
 import sys
@@ -17,29 +16,14 @@ else:
     import unittest
 
 class TestPlugin(unittest.TestCase):
-    def setUp(self):
-        return
-
-    def tearDown(self):
-        return
-
-    def _load_test_format_mapping(self):
-        with open(os.path.join(__location__, 'test_mapping.yaml'),
-                  'r') as format_mapping_file:
-            return yaml.safe_load(format_mapping_file)
-
     def test_prepare_resource_format(self):
-        ogdch_mixin = plugins.OgdchMixin()
-
-        ogdch_mixin.format_mapping = self._load_test_format_mapping()
-
         resource_with_no_format_and_no_download_url = {
             'download_url': None,
             'media_type': None,
             'format': None
         }
         resource_with_no_format_and_no_download_url_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_no_format_and_no_download_url.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resource_with_no_format_and_no_download_url.copy())
         self.assertEquals('SERVICE', resource_with_no_format_and_no_download_url_cleaned['format'])
 
         resource_with_invalid_format_and_with_download_url = {
@@ -48,7 +32,7 @@ class TestPlugin(unittest.TestCase):
             'format': 'dogvideo'
         }
         resource_with_invalid_format_and_with_download_url_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_invalid_format_and_with_download_url.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resource_with_invalid_format_and_with_download_url.copy())
         self.assertEquals('', resource_with_invalid_format_and_with_download_url_cleaned['format'])
 
         resource_without_any_formats_with_download_url = {
@@ -57,7 +41,7 @@ class TestPlugin(unittest.TestCase):
             'format': None
         }
         resource_without_any_formats_with_download_url_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_without_any_formats_with_download_url.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resource_without_any_formats_with_download_url.copy())
         self.assertEquals('', resource_without_any_formats_with_download_url_cleaned['format'])
 
         resource_with_invalid_format_and_no_download_url = {
@@ -66,7 +50,7 @@ class TestPlugin(unittest.TestCase):
             'format': 'catgif'
         }
         resource_with_invalid_format_and_no_download_url_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_invalid_format_and_no_download_url.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resource_with_invalid_format_and_no_download_url.copy())
         self.assertEquals('SERVICE', resource_with_invalid_format_and_no_download_url_cleaned['format'])
 
         resource_with_valid_format = {
@@ -75,7 +59,7 @@ class TestPlugin(unittest.TestCase):
             'format': 'xml'
         }
         resource_with_valid_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_valid_format.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resource_with_valid_format.copy())
         self.assertEquals('XML', resource_with_valid_format_cleaned['format'])
 
         resource_with_invalid_media_type_but_valid_after_slash = {
@@ -84,7 +68,7 @@ class TestPlugin(unittest.TestCase):
             'format': 'gif'
         }
         resource_with_invalid_media_type_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_invalid_media_type_but_valid_after_slash.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resource_with_invalid_media_type_but_valid_after_slash.copy())
         self.assertEquals('gif', resource_with_invalid_media_type_cleaned['format'])
 
         resource_with_valid_media_type_without_slash = {
@@ -93,7 +77,7 @@ class TestPlugin(unittest.TestCase):
             'format': 'xml'
         }
         resource_with_valid_media_type_without_slash_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_valid_media_type_without_slash.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resource_with_valid_media_type_without_slash.copy())
         self.assertEquals('HTML', resource_with_valid_media_type_without_slash_cleaned['format'])
 
         resource_with_valid_media_type_with_slash = {
@@ -102,7 +86,7 @@ class TestPlugin(unittest.TestCase):
             'format': 'xml'
         }
         resource_with_valid_media_type_with_slash_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_valid_media_type_with_slash.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resource_with_valid_media_type_with_slash.copy())
         self.assertEquals('HTML', resource_with_valid_media_type_with_slash_cleaned['format'])
 
         resourse_with_download_url_without_extension = {
@@ -111,7 +95,7 @@ class TestPlugin(unittest.TestCase):
             'format': 'html'
         }
         resourse_with_download_url_without_extension_cleaned = ogdch_format_utils.prepare_resource_format(
-            resourse_with_download_url_without_extension.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resourse_with_download_url_without_extension.copy())
         self.assertEquals('XML', resourse_with_download_url_without_extension_cleaned['format'])
 
         resourse_with_download_url_with_invalid_extension = {
@@ -120,7 +104,7 @@ class TestPlugin(unittest.TestCase):
             'format': ''
         }
         resourse_with_download_url_with_invalid_extension_cleaned = ogdch_format_utils.prepare_resource_format(
-            resourse_with_download_url_with_invalid_extension.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resourse_with_download_url_with_invalid_extension.copy())
         self.assertEquals('', resourse_with_download_url_with_invalid_extension_cleaned['format'])
 
         resourse_with_download_url_with_invalid_extension_but_format = {
@@ -129,7 +113,7 @@ class TestPlugin(unittest.TestCase):
             'format': 'xml'
         }
         resourse_with_download_url_with_invalid_extension_but_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resourse_with_download_url_with_invalid_extension_but_format.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resourse_with_download_url_with_invalid_extension_but_format.copy())
         self.assertEquals('XML', resourse_with_download_url_with_invalid_extension_but_format_cleaned['format'])
 
         resourse_with_download_url_with_valid_extension = {
@@ -138,7 +122,7 @@ class TestPlugin(unittest.TestCase):
             'format': ''
         }
         resourse_with_download_url_with_valid_extension_cleaned = ogdch_format_utils.prepare_resource_format(
-            resourse_with_download_url_with_valid_extension.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resourse_with_download_url_with_valid_extension.copy())
         self.assertEquals('ZIP', resourse_with_download_url_with_valid_extension_cleaned['format'])
 
         resourse_with_download_url_with_valid_extension_but_format = {
@@ -147,7 +131,7 @@ class TestPlugin(unittest.TestCase):
             'format': 'xml'
         }
         resourse_with_download_url_with_valid_extension_but_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resourse_with_download_url_with_valid_extension_but_format.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resourse_with_download_url_with_valid_extension_but_format.copy())
         self.assertEquals('XML', resourse_with_download_url_with_valid_extension_but_format_cleaned['format'])
 
         resource_with_ods_vndoas_format = {
@@ -156,7 +140,7 @@ class TestPlugin(unittest.TestCase):
             'format': 'application/vnd.oas...'
         }
         resource_with_ods_vndoas_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_ods_vndoas_format.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resource_with_ods_vndoas_format.copy())
         self.assertEquals('ODS', resource_with_ods_vndoas_format_cleaned['format'])
 
         resource_with_vndoxml_format = {
@@ -165,7 +149,7 @@ class TestPlugin(unittest.TestCase):
             'format': 'vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         }
         resource_with_vndoxml_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_vndoxml_format.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resource_with_vndoxml_format.copy())
         self.assertEquals('XLS', resource_with_vndoxml_format_cleaned['format'])
 
         resource_with_pcaxis_format = {
@@ -174,7 +158,7 @@ class TestPlugin(unittest.TestCase):
             'format': 'pc-axis file'
         }
         resource_with_pcaxis_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_pcaxis_format.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resource_with_pcaxis_format.copy())
         self.assertEquals('PC-AXIS', resource_with_pcaxis_format_cleaned['format'])
 
         resource_with_pcaxis_format = {
@@ -183,7 +167,7 @@ class TestPlugin(unittest.TestCase):
             'format': 'CSV'
         }
         resource_with_pcaxis_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_pcaxis_format.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resource_with_pcaxis_format.copy())
         self.assertEquals('PC-AXIS', resource_with_pcaxis_format_cleaned['format'])
 
         resource_with_rdf_sparql_format = {
@@ -192,7 +176,7 @@ class TestPlugin(unittest.TestCase):
             'format': 'Application/Sparql-...'
         }
         resource_with_rdf_sparql_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_rdf_sparql_format.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resource_with_rdf_sparql_format.copy())
         self.assertEquals('RDF', resource_with_rdf_sparql_format_cleaned['format'])
 
         resource_with_shapefile_esri_format = {
@@ -201,7 +185,7 @@ class TestPlugin(unittest.TestCase):
             'format': 'ESRI Shapefile'
         }
         resource_with_shapefile_esri_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_shapefile_esri_format.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resource_with_shapefile_esri_format.copy())
         self.assertEquals('SHAPEFILE', resource_with_shapefile_esri_format_cleaned['format'])
 
         resource_with_text_format = {
@@ -210,7 +194,7 @@ class TestPlugin(unittest.TestCase):
             'format': 'text (.txt)'
         }
         resource_with_text_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_text_format.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resource_with_text_format.copy())
         self.assertEquals('TXT', resource_with_text_format_cleaned['format'])
 
         resource_with_comma_format = {
@@ -219,5 +203,5 @@ class TestPlugin(unittest.TestCase):
             'format': 'comma ...'
         }
         resource_with_comma_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_comma_format.copy(), format_mapping=ogdch_mixin.format_mapping)
+            resource_with_comma_format.copy())
         self.assertEquals('CSV', resource_with_comma_format_cleaned['format'])
