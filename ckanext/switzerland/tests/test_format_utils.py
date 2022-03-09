@@ -214,3 +214,12 @@ class TestPlugin(unittest.TestCase):
         resource_with_mapped_format_cleaned = ogdch_format_utils.prepare_resource_format(
             resource_with_mapped_format.copy())
         self.assertEquals('SHP', resource_with_mapped_format_cleaned['format'])
+
+        resource_with_format_that_has_multiple_values = {
+            'download_url': None,
+            'media_type': None,
+            'format': 'esri shapefile'
+        }
+        resource_with_format_that_has_multiple_values_cleaned = ogdch_format_utils.prepare_resource_format(
+            resource_with_format_that_has_multiple_values.copy())
+        self.assertEquals('SHP', resource_with_format_that_has_multiple_values_cleaned['format'])
