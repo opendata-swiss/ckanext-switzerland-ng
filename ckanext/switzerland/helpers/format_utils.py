@@ -22,17 +22,21 @@ def ogdch_get_format_mapping():
         mapping_path = os.path.join(__location__, 'mapping.yaml')
         with open(mapping_path, 'r') as format_mapping_file:
             format_mapping = yaml.safe_load(format_mapping_file)
+            reverse_format_mapping = {}
+            for key, format_list in format_mapping.iteritems():
+                for format in format_list:
+                    reverse_format_mapping[format] = key
     except (IOError, yaml.YAMLError) as exception:
         raise FormatMappingNotLoadedError(
             'Loading Format-Mapping from Path: (%s) '
             'failed with Exception: (%s)'
             % (mapping_path, exception)
         )
-    else:
-        return format_mapping
+
+    return format_mapping, reverse_format_mapping
 
 
-format_mapping = ogdch_get_format_mapping()
+format_mapping, reverse_format_mapping = ogdch_get_format_mapping()
 
 
 def prepare_resource_format(resource):
@@ -94,13 +98,12 @@ def _map_to_valid_format(format):
     if format in format_mapping.keys():
         return format
 
-    mappable_formats = format_mapping.values()
-    if format in mappable_formats:
-        return list(mappable_formats).index(format)
+    if format in reverse_format_mapping.keys():
+        return reverse_format_mapping[format]
 
     format = _get_cleaned_format(format)
-    if format in mappable_formats:
-        return list(mappable_formats).index(format)
+    if format in reverse_format_mapping.keys():
+        return reverse_format_mapping[format]
 
     return None
 
