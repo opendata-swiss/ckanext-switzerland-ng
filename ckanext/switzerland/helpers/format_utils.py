@@ -58,7 +58,7 @@ def prepare_resource_format(resource):
             return resource
 
     format = resource.get('format')
-    resource_format = _map_to_valid_format(format)
+    resource_format = _map_to_valid_format(format, try_to_clean=True)
     if resource_format:
         resource['format'] = resource_format
         return resource
@@ -90,8 +90,7 @@ def prepare_formats_for_index(resources):
     return list(formats)
 
 
-# all formats that need to be mapped have to be entered in the mapping.yaml
-def _map_to_valid_format(format):
+def _map_to_valid_format(format, try_to_clean=False):
     """check whether the format if in the mapping:
     either as a key or as a value or if it can be derived
     after cleaning the input format string"""
@@ -100,12 +99,11 @@ def _map_to_valid_format(format):
 
     if format in reverse_format_mapping.keys():
         return reverse_format_mapping[format]
-
-    format = _get_cleaned_format(format)
-    if format in reverse_format_mapping.keys():
-        return reverse_format_mapping[format]
-
-    return None
+    if try_to_clean:
+        cleaned_format = _get_cleaned_format(format)
+        if cleaned_format in reverse_format_mapping.keys():
+            return reverse_format_mapping[cleaned_format]
+    return ""
 
 
 def _get_format_from_media_type(media_type):
@@ -117,8 +115,12 @@ def _get_format_from_media_type(media_type):
 
 def _get_cleaned_format(format):
     """clean the format"""
-    cleaned_format = format.split('/')[-1].lower()
-    return cleaned_format
+    print("format {}".format(format))
+    if format:
+        cleaned_format = format.split('/')[-1].lower()
+        print("cleaned format {}".format(cleaned_format))
+        return cleaned_format
+    return ""
 
 
 def _get_format_from_path(resource):
@@ -129,4 +131,4 @@ def _get_format_from_path(resource):
     if ext:
         resource_format = ext.replace('.', '').lower()
         return _map_to_valid_format(resource_format)
-    return False
+    return ""
