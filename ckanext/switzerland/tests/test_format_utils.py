@@ -64,12 +64,12 @@ class TestPlugin(unittest.TestCase):
 
         resource_with_invalid_media_type_but_valid_after_slash = {
             'download_url': 'http://download.url',
-            'media_type': 'cat/gif',
-            'format': 'gif'
+            'media_type': 'rdf/xml',
+            'format': 'xml'
         }
         resource_with_invalid_media_type_cleaned = ogdch_format_utils.prepare_resource_format(
             resource_with_invalid_media_type_but_valid_after_slash.copy())
-        self.assertEquals('gif', resource_with_invalid_media_type_cleaned['format'])
+        self.assertEquals('XML', resource_with_invalid_media_type_cleaned['format'])
 
         resource_with_valid_media_type_without_slash = {
             'download_url': None,
@@ -186,7 +186,7 @@ class TestPlugin(unittest.TestCase):
         }
         resource_with_shapefile_esri_format_cleaned = ogdch_format_utils.prepare_resource_format(
             resource_with_shapefile_esri_format.copy())
-        self.assertEquals('SHAPEFILE', resource_with_shapefile_esri_format_cleaned['format'])
+        self.assertEquals('SHP', resource_with_shapefile_esri_format_cleaned['format'])
 
         resource_with_text_format = {
             'download_url': 'http://download.url',
