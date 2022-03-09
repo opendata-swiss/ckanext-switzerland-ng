@@ -65,13 +65,10 @@ def prepare_resource_format(resource):
 
     if resource.get('download_url'):
         resource_format = _get_format_from_path(resource)
-        if resource_format:
-            resource['format'] = resource_format
-        else:
-            resource['format'] = 'SERVICE'
+        resource['format'] = resource_format
         return resource
 
-    resource['format'] = ''
+    resource['format'] = 'SERVICE'
     return resource
 
 
