@@ -64,12 +64,12 @@ class TestPlugin(unittest.TestCase):
 
         resource_with_invalid_media_type_but_valid_after_slash = {
             'download_url': 'http://download.url',
-            'media_type': 'rdf/xml',
-            'format': 'xml'
+            'media_type': 'cat/gif',
+            'format': 'gif'
         }
         resource_with_invalid_media_type_cleaned = ogdch_format_utils.prepare_resource_format(
             resource_with_invalid_media_type_but_valid_after_slash.copy())
-        self.assertEquals('XML', resource_with_invalid_media_type_cleaned['format'])
+        self.assertEquals('gif', resource_with_invalid_media_type_cleaned['format'])
 
         resource_with_valid_media_type_without_slash = {
             'download_url': None,
