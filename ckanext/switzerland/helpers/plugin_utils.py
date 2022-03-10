@@ -79,7 +79,7 @@ def _is_dataset_package_type(pkg_dict):
         return False
 
 
-def ogdch_prepare_search_data_for_index(search_data, format_mapping):  # noqa
+def ogdch_prepare_search_data_for_index(search_data):  # noqa
     """prepares the data for indexing"""
     if not _is_dataset_package_type(search_data):
         return search_data
@@ -101,9 +101,8 @@ def ogdch_prepare_search_data_for_index(search_data, format_mapping):  # noqa
     search_data['groups_it'] = [ogdch_loc_utils.get_localized_value_from_dict(g['display_name'], 'it') for g in validated_dict[u'groups']]  # noqa
     search_data['res_description'] = [ogdch_loc_utils.lang_to_string(r, 'description') for r in validated_dict[u'resources']]  # noqa
     search_data['res_format'] = ogdch_format_utils.prepare_formats_for_index(
-        resources=validated_dict[u'resources'],
-        format_mapping=format_mapping
-    )  # noqa
+        resources=validated_dict[u'resources']
+    )
     search_data['res_rights'] = [ogdch_term_utils.simplify_terms_of_use(r['rights']) for r in validated_dict[u'resources'] if 'rights' in r.keys()]  # noqa
     search_data['title_string'] = ogdch_loc_utils.lang_to_string(validated_dict, 'title') # noqa
     search_data['description'] = ogdch_loc_utils.lang_to_string(validated_dict, 'description')  # noqa

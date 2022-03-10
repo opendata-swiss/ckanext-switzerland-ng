@@ -4,7 +4,7 @@ from ckan.lib.helpers import url_for
 import ckan.plugins.toolkit as tk
 import ckan.model as model
 
-from ckan.tests import helpers, factories
+from ckan.tests import helpers
 
 assert_equal = nose.tools.assert_equal
 assert_true = nose.tools.assert_true
@@ -47,7 +47,7 @@ class TestController(helpers.FunctionalTestBase):
                 'it': []
             },
             'spatial': '',
-            'publisher': [{'name': 'Bundesarchiv', 'url':'https//opendata.swiss/organization/bundesarchiv'}],
+            'publisher': {'name': 'Bundesarchiv', 'url':'https//opendata.swiss/organization/bundesarchiv'},
             'description': {
                 'fr': 'Description FR',
                 'de': 'Beschreibung DE',

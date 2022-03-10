@@ -223,16 +223,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         return map
 
 
-class OgdchMixin(object):
-    """
-    gets format mapping
-    """
-    def update_config(self, config):
-        self.format_mapping = \
-            ogdch_format_utils.ogdch_get_format_mapping()
-
-
-class OgdchGroupPlugin(plugins.SingletonPlugin, OgdchMixin):
+class OgdchGroupPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer, inherit=True)
     plugins.implements(plugins.IGroupController, inherit=True)
 
@@ -265,7 +256,7 @@ class OgdchGroupPlugin(plugins.SingletonPlugin, OgdchMixin):
         ogdch_logic.ogdch_add_users_to_groups(None, {})
 
 
-class OgdchOrganizationPlugin(plugins.SingletonPlugin, OgdchMixin):
+class OgdchOrganizationPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer, inherit=True)
     plugins.implements(plugins.IOrganizationController, inherit=True)
 
@@ -291,7 +282,7 @@ class OgdchOrganizationPlugin(plugins.SingletonPlugin, OgdchMixin):
         return org_dict
 
 
-class OgdchResourcePlugin(plugins.SingletonPlugin, OgdchMixin):
+class OgdchResourcePlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer, inherit=True)
     plugins.implements(plugins.IResourceController, inherit=True)
 
@@ -307,7 +298,7 @@ class OgdchResourcePlugin(plugins.SingletonPlugin, OgdchMixin):
         res_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=res_dict) # noqa
         res_dict['display_name'] = res_dict['title']
         res_dict = ogdch_format_utils.prepare_resource_format(
-            resource=res_dict, format_mapping=self.format_mapping)
+            resource=res_dict)
 
         if ogdch_request_utils.request_is_api_request():
             return res_dict
@@ -319,7 +310,7 @@ class OgdchResourcePlugin(plugins.SingletonPlugin, OgdchMixin):
         return res_dict
 
 
-class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
+class OgdchPackagePlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer, inherit=True)
     plugins.implements(plugins.IPackageController, inherit=True)
     plugins.implements(plugins.IRoutes, inherit=True)
@@ -340,8 +331,7 @@ class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
         pkg_dict = ogdch_plugin_utils.package_map_ckan_default_fields(pkg_dict)
         pkg_dict['resources'] = [
             ogdch_format_utils.prepare_resource_format(
-                resource=resource,
-                format_mapping=self.format_mapping)
+                resource=resource)
             for resource in pkg_dict.get('resources')]
 
         if ogdch_request_utils.request_is_api_request():
@@ -383,8 +373,7 @@ class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
         Search data before index
         """
         search_data = ogdch_plugin_utils.ogdch_prepare_search_data_for_index( # noqa
-            search_data=search_data,
-            format_mapping=self.format_mapping
+            search_data=search_data
         )
         return search_data
 
@@ -416,7 +405,7 @@ class OgdchPackagePlugin(plugins.SingletonPlugin, OgdchMixin):
         )
 
 
-class OgdchArchivePlugin(plugins.SingletonPlugin, OgdchMixin):
+class OgdchArchivePlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IMapper, inherit=True)
 
     # IMapper

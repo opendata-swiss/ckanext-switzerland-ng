@@ -17,74 +17,81 @@ class FormatMappingNotLoadedError(Exception):
 
 
 def ogdch_get_format_mapping():
-    """gets the format mapping from  a file for ogdch controller plugins"""
+    """reads in the format mapping from a yaml file"""
     try:
         mapping_path = os.path.join(__location__, 'mapping.yaml')
         with open(mapping_path, 'r') as format_mapping_file:
             format_mapping = yaml.safe_load(format_mapping_file)
+            reverse_format_mapping = {}
+            for key, format_list in format_mapping.iteritems():
+                for format in format_list:
+                    reverse_format_mapping[format] = key
     except (IOError, yaml.YAMLError) as exception:
         raise FormatMappingNotLoadedError(
             'Loading Format-Mapping from Path: (%s) '
             'failed with Exception: (%s)'
             % (mapping_path, exception)
         )
-    else:
-        return format_mapping
+
+    return format_mapping, reverse_format_mapping
 
 
-# Generates format of resource and saves it in format field
-def prepare_resource_format(resource, format_mapping):
-    resource_format = ''
+format_mapping, reverse_format_mapping = ogdch_get_format_mapping()
 
-    # get format from media_type field if available
-    if not resource_format and resource.get('media_type'):  # noqa
-        resource_format = resource['media_type'].split('/')[-1].lower()
 
-    # get format from format field if available (lol)
-    if not resource_format and resource.get('format'):
-        resource_format = resource['format'].split('/')[-1].lower()
-
-    # check if 'media_type' or 'format' can be mapped
-    has_format = (_map_to_valid_format(
-        resource_format,
-        format_mapping
-    ) is not None)
-
-    # if the fields can't be mapped,
-    # try to parse the download_url as a last resort
-    if not has_format and resource.get('download_url'):
-        path = urlparse.urlparse(resource['download_url']).path
-        ext = os.path.splitext(path)[1]
-        if ext:
-            resource_format = ext.replace('.', '').lower()
-
-    mapped_format = _map_to_valid_format(
-        resource_format,
-        format_mapping
+def prepare_resource_format(resource):
+    """determine resource format depending on
+    media_type, format and download_url
+    """
+    resource['format'] = get_resource_format(
+        media_type=resource.get('media_type'),
+        format=resource.get('format'),
+        download_url=resource.get('download_url')
     )
-    if mapped_format:
-        # if format could be successfully mapped write it to format field
-        resource['format'] = mapped_format
-    elif not resource.get('download_url'):
-        resource['format'] = 'SERVICE'
-    else:
-        # else return empty string (this will be indexed as N/A)
-        resource['format'] = ''
-
-    # if format could not be mapped and media_type exists use this value  # noqa
-    if (not resource.get('format') and resource.get('media_type')):
-        resource['format'] = resource['media_type'].split('/')[-1]
-
     return resource
 
 
-def prepare_formats_for_index(resources, format_mapping):
+def get_resource_format(media_type, format, download_url):
+    """the format of the resource is derived in the following way:
+    the first matching case is taken
+    - case 1 media_type is set and matches as format
+             from the format list: this format will be taken
+    - case 2 format is set: check whether the format is already mapped
+             or whether it can be mapped
+    - case 3 download url is set: check if the format can be derived
+             from the file extention, otherwise if the media type is
+             set and valid take the media type as format, otherwise
+             set it as blank
+    - case 4 no download url: set the format to SERVICE
+    """
+    if media_type:
+        cleaned_media_type = _get_cleaned_format_or_media_type(media_type)
+        format_from_media_type = _map_to_valid_format(cleaned_media_type)
+        if format_from_media_type:
+            return format_from_media_type
+
+    if format:
+        format_from_format = _map_to_valid_format(format, try_to_clean=True)
+        if format_from_format:
+            return format_from_format
+
+    if download_url:
+        format_from_file_extension = _get_format_from_path(download_url)
+        if format_from_file_extension:
+            return format_from_file_extension
+        elif media_type:
+            return cleaned_media_type
+        return ""
+
+    return 'SERVICE'
+
+
+def prepare_formats_for_index(resources):
     """generates a set with formats of all resources"""
     formats = set()
     for r in resources:
         resource = prepare_resource_format(
-            resource=r,
-            format_mapping=format_mapping
+            resource=r
         )
         if resource['format']:
             formats.add(resource['format'])
@@ -94,11 +101,37 @@ def prepare_formats_for_index(resources, format_mapping):
     return list(formats)
 
 
-# all formats that need to be mapped have to be entered in the mapping.yaml
-def _map_to_valid_format(resource_format, format_mapping):
-    resource_format_lower = resource_format.lower()
-    for key, values in format_mapping.iteritems():
-        if resource_format_lower in values:
-            return key
-    else:
-        return None
+def _map_to_valid_format(format, try_to_clean=False):
+    """check whether the format if in the mapping:
+    either as a key or as a value or if it can be derived
+    after cleaning the input format string"""
+    if format in format_mapping.keys():
+        return format
+
+    if format in reverse_format_mapping.keys():
+        return reverse_format_mapping[format]
+    if try_to_clean:
+        cleaned_format = _get_cleaned_format_or_media_type(format)
+        if cleaned_format in reverse_format_mapping.keys():
+            return reverse_format_mapping[cleaned_format]
+    return ""
+
+
+def _get_cleaned_format_or_media_type(format):
+    """clean the format"""
+    if format:
+        cleaned_format = format.split('/')[-1].lower()
+        if cleaned_format:
+            return cleaned_format
+    return ""
+
+
+def _get_format_from_path(download_url):
+    """check whether the format can be derived from the file
+    extension"""
+    path = urlparse.urlparse(download_url).path
+    ext = os.path.splitext(path)[1]
+    if ext:
+        resource_format = ext.replace('.', '').lower()
+        return _map_to_valid_format(resource_format)
+    return ""
