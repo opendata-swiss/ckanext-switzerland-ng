@@ -65,14 +65,15 @@ def get_resource_format(media_type, format, download_url):
     - case 4 no download url: set the format to SERVICE
     """
     if media_type:
-        cleaned_media_type = _get_cleaned_media_type(media_type)
+        cleaned_media_type = _get_cleaned_format_or_media_type(media_type)
         format_from_media_type = _map_to_valid_format(cleaned_media_type)
         if format_from_media_type:
             return format_from_media_type
 
-    format_from_format = _map_to_valid_format(format, try_to_clean=True)
-    if format_from_format:
-        return format_from_format
+    if format:
+        format_from_format = _map_to_valid_format(format, try_to_clean=True)
+        if format_from_format:
+            return format_from_format
 
     if download_url:
         format_from_file_extension = _get_format_from_path(download_url)
@@ -110,25 +111,18 @@ def _map_to_valid_format(format, try_to_clean=False):
     if format in reverse_format_mapping.keys():
         return reverse_format_mapping[format]
     if try_to_clean:
-        cleaned_format = _get_cleaned_format(format)
+        cleaned_format = _get_cleaned_format_or_media_type(format)
         if cleaned_format in reverse_format_mapping.keys():
             return reverse_format_mapping[cleaned_format]
     return ""
 
 
-def _get_cleaned_media_type(media_type):
-    """clean the media type"""
-    cleaned_media_type = media_type.split('/')[-1].lower()
-    if cleaned_media_type:
-        return cleaned_media_type
-    return ""
-
-
-def _get_cleaned_format(format):
+def _get_cleaned_format_or_media_type(format):
     """clean the format"""
     if format:
         cleaned_format = format.split('/')[-1].lower()
-        return cleaned_format
+        if cleaned_format:
+            return cleaned_format
     return ""
 
 
