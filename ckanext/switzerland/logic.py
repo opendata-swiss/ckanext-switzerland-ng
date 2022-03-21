@@ -475,14 +475,34 @@ def ogdch_user_create(context, data_dict):
     send_email_on_registration = tk.asbool(config.get(
         'ckanext.switzerland.send_email_on_user_registration', True
     ))
-    if send_email_on_registration and user.get('email'):
-        try:
-            send_registration_email(user)
+
+    if not(send_email_on_registration and user.get('email')):
+        return user
+
+    success = False
+    exception = ''
+    try:
+        send_registration_email(user)
+        success = True
+    except Exception as e:
+        exception = e
+
+    try:
+        if success:
             h.flash_success("An email has been sent to the user {} at {}."
                             .format(user['name'], user['email']))
-        except Exception as e:
-            h.flash_error(
-                "The email could not be sent to {} for user {}. An error {} occured"  # noqa
-                .format(user['email'], user['name'], e)
-            )
+        else:
+            message = "The email could not be sent to {} for user {}.".format(
+                user['email'], user['name'])
+            if exception:
+                message += " An error occured: {}".format(exception)
+            h.flash_error(message)
+    except TypeError:
+        # We get this error when creating a user via the command line.
+        # Then there is no session, so showing a flash message fails.
+        log.warning(
+            "The email could not be sent to {} for user {}."
+            " An error occured: {}"
+            .format(user['email'], user['name'], exception))
+
     return user
