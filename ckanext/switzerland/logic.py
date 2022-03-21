@@ -478,11 +478,11 @@ def ogdch_user_create(context, data_dict):
     if send_email_on_registration and user.get('email'):
         try:
             send_registration_email(user)
-            h.flash_success("An email has been send to the user {} at {}."
+            h.flash_success("An email has been sent to the user {} at {}."
                             .format(user['name'], user['email']))
         except Exception as e:
             h.flash_error(
-                "The email could not be send to {} for user {}. An error {} occured"  # noqa
+                "The email could not be sent to {} for user {}. An error {} occured"  # noqa
                 .format(user['email'], user['name'], e)
             )
     return user
