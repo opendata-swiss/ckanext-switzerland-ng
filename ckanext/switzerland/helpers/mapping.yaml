@@ -14,10 +14,11 @@ ESRI ASCII Grid:
   - 'esri ascii grid (.grd/.asc)'
   - 'esri arcinfo ascii grid'
   - '.asc)'
-FileGDB:
-  - 'esri file geodatabase'
 GDB:
+  - 'esri file geodatabase'
+  - 'filegeodatabase'
   - 'gdb'
+  - 'FileGDB'
 GeoJSON:
   - 'geojson'
 GeoTIFF:
@@ -60,6 +61,7 @@ SHP:
   - 'esri arcinfo ascii ...'
   - 'esri personal geodatabase (.mdb)'
   - 'shape'
+  - 'shapefile'
 TXT:
   - 'text'
   - 'txt'
