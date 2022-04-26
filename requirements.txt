@@ -1,5 +1,5 @@
 Unidecode==1.0.22
-ckantoolkit==0.0.3
+ckantoolkit>=0.0.7
 iribaker==0.1.2
 pandas==0.24.2
 pysolr==3.6.0
