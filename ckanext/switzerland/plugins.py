@@ -435,14 +435,14 @@ class OgdchArchivePlugin(plugins.SingletonPlugin):
             dataset_name = getattr(instance, 'name', '')
             dataset_is_already_archived = dataset_name.startswith('_archived-')
             if not dataset_is_already_archived:
-                # only call this expansive method in case of a newly
+                # only call this expensive method in case of a newly
                 # deleted not yet archived dataset
                 instance.name = self._ensure_name_is_unique(
                     "_archived-{0}".format(dataset_name)
                 )
-                log.error("new name '{}' retrieved for dataset '{}' that was "
-                          "set up for delete"
-                          .format(instance.name, dataset_name))
+                log.info("new name '{}' retrieved for dataset '{}' that was "
+                         "set up for delete"
+                         .format(instance.name, dataset_name))
 
     @staticmethod
     def _ensure_name_is_unique(ideal_name):
