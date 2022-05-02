@@ -456,6 +456,8 @@ class OgdchArchivePlugin(plugins.SingletonPlugin):
                            title)
         :type ideal_name: string
         """
+        ideal_name = ideal_name[:PACKAGE_NAME_MAX_LENGTH]
+
         MAX_NUMBER_APPENDED = 999
         APPEND_MAX_CHARS = len(str(MAX_NUMBER_APPENDED))
         # Find out which package names have been taken. Restrict it to names
