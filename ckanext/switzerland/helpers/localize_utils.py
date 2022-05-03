@@ -31,7 +31,7 @@ def parse_json(value, default_value=None):
 
 def lang_to_string(data_dict, attribute):
     """make a long string with all 4 languages of an attribute"""
-    value_dict = data_dict.get(attribute)
+    value_dict = data_dict.get(attribute, {})
     return ('%s - %s - %s - %s' % (
         value_dict.get('de', ''),
         value_dict.get('fr', ''),
