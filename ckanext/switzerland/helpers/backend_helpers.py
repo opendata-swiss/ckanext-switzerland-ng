@@ -21,6 +21,7 @@ import ckan.plugins.toolkit as tk
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 from ckanext.switzerland.helpers.frontend_helpers import get_localized_value_for_display  # noqa
 from ckanext.harvest.helpers import harvester_types
+from ckanext.hierarchy.helpers import group_tree
 
 log = logging.getLogger(__name__)
 
@@ -272,11 +273,8 @@ def ogdch_get_top_level_organisations():
     """
     get the top level organisations as parent choices for suborganisations
     """
-    context = {'ignore_auth': True}
-    data_dict = {'all_fields': True, 'include_groups': True, 'include_dataset_count': False }  # noqa
     try:
-        all_organizations = tk.get_action('organization_list')(context, data_dict)  # noqa
-        parent_organizations = [organization for organization in all_organizations if not organization.get('groups') ]  # noqa
+        parent_organizations = group_tree(type_='organization')
         return parent_organizations
     except tk.ObjectNotFound:
         return []
