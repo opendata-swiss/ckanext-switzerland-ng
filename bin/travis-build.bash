@@ -100,8 +100,8 @@ echo "Installing ckanext-dcat and its requirements..."
 git clone https://github.com/ckan/ckanext-dcat
 cd ckanext-dcat
 python setup.py develop
-pip install -r requirements.txt
-pip install -r dev-requirements.txt
+pip install -r requirements-py2-py36.txt
+pip install -r dev-requirements-py2.txt
 cd -
 
 echo "Installing ckanext-dcatapchharvest and its requirements..."
