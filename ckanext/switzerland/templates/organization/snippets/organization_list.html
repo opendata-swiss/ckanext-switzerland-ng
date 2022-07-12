@@ -7,7 +7,7 @@ Example:
     {% snippet "organization/snippets/organization_list.html" %}
 
 #}
-<div id="publisher-tree">
+<div id="publisher-tree" class="empty-search">
   {# we use ogdch_render_tree instead of the organization_tree template to speed up the rendering #}
   {% if c.q %}
     {{ h.ogdch_render_tree(organizations)|safe }}
