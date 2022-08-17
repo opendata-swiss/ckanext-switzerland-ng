@@ -74,7 +74,107 @@ prepare_resource_data = [
          'download_url': 'http://download.url',
          'media_type': None,
          'format': 'Application/Sparql-...'
+     }, 'SPARQL'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': 'application/sparql-query',
+         'format': None
+     }, 'SPARQL'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'rq'
+     }, 'SPARQL'),
+    ({
+         'download_url': 'http://download.url/foo.sparqlq',
+         'media_type': None,
+         'format': None
+     }, 'SPARQL'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': 'application/ld+json',
+         'format': None
+     }, 'JSONLD'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'jsonld'
+     }, 'JSONLD'),
+    ({
+         'download_url': 'http://download.url/foo',
+         'media_type': 'text/n3',
+         'format': None
+     }, 'N3'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'n3'
+     }, 'N3'),
+    ({
+         'download_url': 'http://download.url/foo.n3',
+         'media_type': None,
+         'format': None
+     }, 'N3'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': 'application/rdf+xml',
+         'format': None
      }, 'RDF'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'rdf'
+     }, 'RDF'),
+    ({
+         'download_url': 'http://download.url/foo.rdf',
+         'media_type': None,
+         'format': None
+     }, 'RDF'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': 'application/n-triples',
+         'format': None
+     }, 'RDF N-Triples'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'nt'
+     }, 'RDF N-Triples'),
+    ({
+         'download_url': 'http://download.url/foo.nt',
+         'media_type': None,
+         'format': None
+     }, 'RDF N-Triples'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': 'text/turtle',
+         'format': None
+     }, 'RDF Turtle'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'ttl'
+     }, 'RDF Turtle'),
+    ({
+         'download_url': 'http://download.url/foo.ttl',
+         'media_type': None,
+         'format': None
+     }, 'RDF Turtle'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': 'turtle',
+         'format': None
+     }, 'RDF Turtle'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'ttl'
+     }, 'RDF Turtle'),
+    ({
+         'download_url': 'http://download.url/foo.ttl',
+         'media_type': None,
+         'format': None
+     }, 'RDF Turtle'),
     ({
          'download_url': 'http://download.url',
          'media_type': None,
