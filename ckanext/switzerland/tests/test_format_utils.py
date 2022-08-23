@@ -1,225 +1,238 @@
 """Tests for helpers.format_utils.py."""
 import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
 from nose.tools import *  # noqa
-import sys
 import os
-import yaml
 
 __location__ = os.path.realpath(os.path.join(
     os.getcwd(),
     os.path.dirname(__file__))
 )
 
-if sys.version_info < (2, 7):
-    import unittest2 as unittest
-else:
-    import unittest
 
-class TestPlugin(unittest.TestCase):
-    def test_prepare_resource_format(self):
-        resource_with_no_format_and_no_download_url = {
-            'download_url': None,
-            'media_type': None,
-            'format': None
-        }
-        resource_with_no_format_and_no_download_url_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_no_format_and_no_download_url.copy())
-        self.assertEquals('SERVICE', resource_with_no_format_and_no_download_url_cleaned['format'])
+prepare_resource_data = [
+    ({
+        'download_url': None,
+        'media_type': None,
+        'format': None
+    }, 'SERVICE'),
+    ({
+        'download_url': 'http://download.url',
+        'media_type': None,
+        'format': 'dogvideo'
+    }, ''),
+    ({
+        'download_url': 'http://download.url',
+        'media_type': None,
+        'format': None
+    }, ''),
+    ({
+        'download_url': None,
+        'media_type': None,
+        'format': 'catgif'
+    }, 'SERVICE'),
+    ({
+        'download_url': None,
+        'media_type': None,
+        'format': 'xml'
+    }, 'XML'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': 'cat/gif',
+         'format': 'gif'
+     }, 'gif'),
+    ({
+         'download_url': None,
+         'media_type': 'html',
+         'format': 'xml'
+     }, 'HTML'),
+    ({
+         'download_url': None,
+         'media_type': 'text/html',
+         'format': 'xml'
+     }, 'HTML'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'application/vnd.oas...'
+     }, 'ODS'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+     }, 'XLS'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'pc-axis file'
+     }, 'PC-AXIS'),
+    ({
+         'download_url': 'http://download.url/Download.aspx?file=pc-axis-file-001',
+         'media_type': 'pc-axis file',
+         'format': 'CSV'
+     }, 'PC-AXIS'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'Application/Sparql-...'
+     }, 'SPARQL'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': 'application/sparql-query',
+         'format': None
+     }, 'SPARQL'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'rq'
+     }, 'SPARQL'),
+    ({
+         'download_url': 'http://download.url/foo.sparqlq',
+         'media_type': None,
+         'format': None
+     }, 'SPARQL'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': 'application/ld+json',
+         'format': None
+     }, 'JSONLD'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'jsonld'
+     }, 'JSONLD'),
+    ({
+         'download_url': 'http://download.url/foo',
+         'media_type': 'text/n3',
+         'format': None
+     }, 'N3'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'n3'
+     }, 'N3'),
+    ({
+         'download_url': 'http://download.url/foo.n3',
+         'media_type': None,
+         'format': None
+     }, 'N3'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': 'application/rdf+xml',
+         'format': None
+     }, 'RDF XML'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'rdf'
+     }, 'RDF XML'),
+    ({
+         'download_url': 'http://download.url/foo.rdf',
+         'media_type': None,
+         'format': None
+     }, 'RDF XML'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': 'application/n-triples',
+         'format': None
+     }, 'RDF N-Triples'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'nt'
+     }, 'RDF N-Triples'),
+    ({
+         'download_url': 'http://download.url/foo.nt',
+         'media_type': None,
+         'format': None
+     }, 'RDF N-Triples'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': 'text/turtle',
+         'format': None
+     }, 'RDF Turtle'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'ttl'
+     }, 'RDF Turtle'),
+    ({
+         'download_url': 'http://download.url/foo.ttl',
+         'media_type': None,
+         'format': None
+     }, 'RDF Turtle'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': 'turtle',
+         'format': None
+     }, 'RDF Turtle'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'ttl'
+     }, 'RDF Turtle'),
+    ({
+         'download_url': 'http://download.url/foo.ttl',
+         'media_type': None,
+         'format': None
+     }, 'RDF Turtle'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'ESRI Shapefile'
+     }, 'SHP'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'text (.txt)'
+     }, 'TXT'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'comma ...'
+     }, 'CSV'),
+    ({
+         'download_url': None,
+         'media_type': None,
+         'format': 'SHP'
+     }, 'SHP'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': 'text/xml',
+         'format': 'html'
+     }, 'XML'),
+    ({
+         'download_url': 'http://download.url/cat.gif?param=1',
+         'media_type': '',
+         'format': ''
+     }, ''),
+    ({
+         'download_url': 'http://download.url/cat.gif?param=1',
+         'media_type': 'text/xml',
+         'format': 'xml'
+     }, 'XML'),
+    ({
+         'download_url': 'http://download.url/file.zip?param=1',
+         'media_type': '',
+         'format': ''
+     }, 'ZIP'),
+    ({
+         'download_url': 'http://download.url/file.zip?param=1',
+         'media_type': 'text/xml',
+         'format': 'xml'
+     }, 'XML'),
+    ({
+         'download_url': None,
+         'media_type': None,
+         'format': 'esri shapefile'
+     }, 'SHP'),
+]
 
-        resource_with_invalid_format_and_with_download_url = {
-            'download_url': 'http://download.url',
-            'media_type': None,
-            'format': 'dogvideo'
-        }
-        resource_with_invalid_format_and_with_download_url_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_invalid_format_and_with_download_url.copy())
-        self.assertEquals('', resource_with_invalid_format_and_with_download_url_cleaned['format'])
 
-        resource_without_any_formats_with_download_url = {
-            'download_url': 'http://download.url',
-            'media_type': None,
-            'format': None
-        }
-        resource_without_any_formats_with_download_url_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_without_any_formats_with_download_url.copy())
-        self.assertEquals('', resource_without_any_formats_with_download_url_cleaned['format'])
+def _check_prepare_resource_format(resource_data, expected_format):
+    cleaned_resource = ogdch_format_utils.prepare_resource_format(resource_data.copy())
+    assert expected_format == cleaned_resource['format']
 
-        resource_with_invalid_format_and_no_download_url = {
-            'download_url': None,
-            'media_type': None,
-            'format': 'catgif'
-        }
-        resource_with_invalid_format_and_no_download_url_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_invalid_format_and_no_download_url.copy())
-        self.assertEquals('SERVICE', resource_with_invalid_format_and_no_download_url_cleaned['format'])
 
-        resource_with_valid_format = {
-            'download_url': None,
-            'media_type': None,
-            'format': 'xml'
-        }
-        resource_with_valid_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_valid_format.copy())
-        self.assertEquals('XML', resource_with_valid_format_cleaned['format'])
-
-        resource_with_invalid_media_type_but_valid_after_slash = {
-            'download_url': 'http://download.url',
-            'media_type': 'cat/gif',
-            'format': 'gif'
-        }
-        resource_with_invalid_media_type_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_invalid_media_type_but_valid_after_slash.copy())
-        self.assertEquals('gif', resource_with_invalid_media_type_cleaned['format'])
-
-        resource_with_valid_media_type_without_slash = {
-            'download_url': None,
-            'media_type': 'html',
-            'format': 'xml'
-        }
-        resource_with_valid_media_type_without_slash_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_valid_media_type_without_slash.copy())
-        self.assertEquals('HTML', resource_with_valid_media_type_without_slash_cleaned['format'])
-
-        resource_with_valid_media_type_with_slash = {
-            'download_url': None,
-            'media_type': 'text/html',
-            'format': 'xml'
-        }
-        resource_with_valid_media_type_with_slash_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_valid_media_type_with_slash.copy())
-        self.assertEquals('HTML', resource_with_valid_media_type_with_slash_cleaned['format'])
-
-        resourse_with_download_url_without_extension = {
-            'download_url': 'http://download.url',
-            'media_type': 'text/xml',
-            'format': 'html'
-        }
-        resourse_with_download_url_without_extension_cleaned = ogdch_format_utils.prepare_resource_format(
-            resourse_with_download_url_without_extension.copy())
-        self.assertEquals('XML', resourse_with_download_url_without_extension_cleaned['format'])
-
-        resourse_with_download_url_with_invalid_extension = {
-            'download_url': 'http://download.url/cat.gif?param=1',
-            'media_type': '',
-            'format': ''
-        }
-        resourse_with_download_url_with_invalid_extension_cleaned = ogdch_format_utils.prepare_resource_format(
-            resourse_with_download_url_with_invalid_extension.copy())
-        self.assertEquals('', resourse_with_download_url_with_invalid_extension_cleaned['format'])
-
-        resourse_with_download_url_with_invalid_extension_but_format = {
-            'download_url': 'http://download.url/cat.gif?param=1',
-            'media_type': 'text/xml',
-            'format': 'xml'
-        }
-        resourse_with_download_url_with_invalid_extension_but_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resourse_with_download_url_with_invalid_extension_but_format.copy())
-        self.assertEquals('XML', resourse_with_download_url_with_invalid_extension_but_format_cleaned['format'])
-
-        resourse_with_download_url_with_valid_extension = {
-            'download_url': 'http://download.url/file.zip?param=1',
-            'media_type': '',
-            'format': ''
-        }
-        resourse_with_download_url_with_valid_extension_cleaned = ogdch_format_utils.prepare_resource_format(
-            resourse_with_download_url_with_valid_extension.copy())
-        self.assertEquals('ZIP', resourse_with_download_url_with_valid_extension_cleaned['format'])
-
-        resourse_with_download_url_with_valid_extension_but_format = {
-            'download_url': 'http://download.url/file.zip?param=1',
-            'media_type': 'text/xml',
-            'format': 'xml'
-        }
-        resourse_with_download_url_with_valid_extension_but_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resourse_with_download_url_with_valid_extension_but_format.copy())
-        self.assertEquals('XML', resourse_with_download_url_with_valid_extension_but_format_cleaned['format'])
-
-        resource_with_ods_vndoas_format = {
-            'download_url': 'http://download.url',
-            'media_type': None,
-            'format': 'application/vnd.oas...'
-        }
-        resource_with_ods_vndoas_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_ods_vndoas_format.copy())
-        self.assertEquals('ODS', resource_with_ods_vndoas_format_cleaned['format'])
-
-        resource_with_vndoxml_format = {
-            'download_url': 'http://download.url',
-            'media_type': None,
-            'format': 'vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        }
-        resource_with_vndoxml_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_vndoxml_format.copy())
-        self.assertEquals('XLS', resource_with_vndoxml_format_cleaned['format'])
-
-        resource_with_pcaxis_format = {
-            'download_url': 'http://download.url',
-            'media_type': None,
-            'format': 'pc-axis file'
-        }
-        resource_with_pcaxis_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_pcaxis_format.copy())
-        self.assertEquals('PC-AXIS', resource_with_pcaxis_format_cleaned['format'])
-
-        resource_with_pcaxis_format = {
-            'download_url': 'http://download.url/Download.aspx?file=pc-axis-file-001',
-            'media_type': 'pc-axis file',
-            'format': 'CSV'
-        }
-        resource_with_pcaxis_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_pcaxis_format.copy())
-        self.assertEquals('PC-AXIS', resource_with_pcaxis_format_cleaned['format'])
-
-        resource_with_rdf_sparql_format = {
-            'download_url': 'http://download.url',
-            'media_type': None,
-            'format': 'Application/Sparql-...'
-        }
-        resource_with_rdf_sparql_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_rdf_sparql_format.copy())
-        self.assertEquals('RDF', resource_with_rdf_sparql_format_cleaned['format'])
-
-        resource_with_shapefile_esri_format = {
-            'download_url': 'http://download.url',
-            'media_type': None,
-            'format': 'ESRI Shapefile'
-        }
-        resource_with_shapefile_esri_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_shapefile_esri_format.copy())
-        self.assertEquals('SHP', resource_with_shapefile_esri_format_cleaned['format'])
-
-        resource_with_text_format = {
-            'download_url': 'http://download.url',
-            'media_type': None,
-            'format': 'text (.txt)'
-        }
-        resource_with_text_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_text_format.copy())
-        self.assertEquals('TXT', resource_with_text_format_cleaned['format'])
-
-        resource_with_comma_format = {
-            'download_url': 'http://download.url',
-            'media_type': None,
-            'format': 'comma ...'
-        }
-        resource_with_comma_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_comma_format.copy())
-        self.assertEquals('CSV', resource_with_comma_format_cleaned['format'])
-
-        resource_with_mapped_format = {
-            'download_url': None,
-            'media_type': None,
-            'format': 'SHP'
-        }
-        resource_with_mapped_format_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_mapped_format.copy())
-        self.assertEquals('SHP', resource_with_mapped_format_cleaned['format'])
-
-        resource_with_format_that_has_multiple_values = {
-            'download_url': None,
-            'media_type': None,
-            'format': 'esri shapefile'
-        }
-        resource_with_format_that_has_multiple_values_cleaned = ogdch_format_utils.prepare_resource_format(
-            resource_with_format_that_has_multiple_values.copy())
-        self.assertEquals('SHP', resource_with_format_that_has_multiple_values_cleaned['format'])
+def test_prepare_resource_format():
+    for r in prepare_resource_data:
+        yield _check_prepare_resource_format, r[0], r[1]

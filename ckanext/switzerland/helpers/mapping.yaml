@@ -32,6 +32,9 @@ INTERLIS:
   - 'interlis'
 JSON:
   - 'json'
+JSONLD:
+  - 'ld+json'
+  - 'jsonld'
 KML:
   - 'kml'
   - 'vnd.google-earth.kml+xml'
@@ -42,6 +45,8 @@ LAZ:
 MULTIFORMAT:
   - 'multiformat'
   - 'multi'
+N3:
+  - 'n3'
 ODS:
   - 'ods'
   - 'vnd.oas...'
@@ -52,8 +57,17 @@ PDF:
   - 'pdf'
 PNG:
   - 'png'
-RDF:
-  - 'sparql-...'
+RDF N-Triples:
+  - 'n-triples'
+  - 'nt'
+  - 'rdf_n_triples'
+RDF Turtle:
+  - 'rdf_turtle'
+  - 'ttl'
+  - 'turtle'
+RDF XML:
+  - 'rdf'
+  - 'rdf+xml'
 SHP:
   - 'esri shapefile'
   - 'esri shapefile (.shp)'
@@ -62,6 +76,11 @@ SHP:
   - 'esri personal geodatabase (.mdb)'
   - 'shape'
   - 'shapefile'
+SPARQL:
+  - 'rq'
+  - 'sparqlq'
+  - 'sparql-query'
+  - 'sparql-...'
 TXT:
   - 'text'
   - 'txt'
