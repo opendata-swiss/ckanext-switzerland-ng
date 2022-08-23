@@ -236,3 +236,38 @@ def _check_prepare_resource_format(resource_data, expected_format):
 def test_prepare_resource_format():
     for r in prepare_resource_data:
         yield _check_prepare_resource_format, r[0], r[1]
+
+
+prepare_formats_data = [
+    {
+        'resources': [{'media_type': 'rdf+xml'}, {'media_type': 'png'}],
+        'linked_data_only': True,
+        'expected_formats': ['RDF XML']
+    },
+    {
+        'resources': [{'media_type': 'rdf+xml'}, {'media_type': 'png'}],
+        'linked_data_only': False,
+        'expected_formats': ['RDF XML', 'PNG']
+    },
+    {
+        'resources': [{'media_type': 'rdf+xml'}, {'media_type': 'rdf+xml'}, {'media_type': 'png'}],
+        'linked_data_only': False,
+        'expected_formats': ['RDF XML', 'PNG']
+    },
+    {
+        'resources': [{'media_type': 'ld+json'}, {'media_type': 'n3'}, {'media_type': 'n-triples'}, {'media_type': 'turtle'}, {'media_type': 'rdf+xml'}, {'media_type': 'sparql-query'}],
+        'linked_data_only': True,
+        'expected_formats': ['N3', 'SPARQL', 'JSONLD', 'RDF XML', 'RDF N-Triples', 'RDF Turtle']
+    },
+]
+
+
+def _check_prepare_formats_for_index(resources, linked_data_only, expected_formats):
+    prepared_formats = ogdch_format_utils.prepare_formats_for_index(
+        resources, linked_data_only)
+    assert sorted(prepared_formats) == sorted(expected_formats)
+
+
+def test_prepare_formats_for_index():
+    for i in prepare_formats_data:
+        yield _check_prepare_formats_for_index, i['resources'], i['linked_data_only'], i['expected_formats']
