@@ -11,6 +11,15 @@ __location__ = os.path.realpath(os.path.join(
     os.path.dirname(__file__))
 )
 
+LINKED_DATA_FORMATS = [
+    'JSONLD',
+    'N3',
+    'RDF N-Triples',
+    'RDF Turtle',
+    'RDF XML',
+    'SPARQL',
+]
+
 
 class FormatMappingNotLoadedError(Exception):
     pass
@@ -86,13 +95,18 @@ def get_resource_format(media_type, format, download_url):
     return 'SERVICE'
 
 
-def prepare_formats_for_index(resources):
-    """generates a set with formats of all resources"""
+def prepare_formats_for_index(resources, linked_data_only=False):
+    """Generate a deduplicated list with formats of all resources, or all
+    Linked Data formats that are present.
+    """
     formats = set()
     for r in resources:
         resource = prepare_resource_format(
             resource=r
         )
+        if linked_data_only \
+                and resource.get('format') not in LINKED_DATA_FORMATS:
+            continue
         if resource['format']:
             formats.add(resource['format'])
         else:
