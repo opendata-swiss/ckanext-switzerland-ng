@@ -96,8 +96,8 @@ def get_resource_format(media_type, format, download_url):
 
 
 def prepare_formats_for_index(resources, linked_data_only=False):
-    """generates a set with formats of all resources, or all Linked Data
-    formats that are present.
+    """Generate a deduplicated list with formats of all resources, or all
+    Linked Data formats that are present.
     """
     formats = set()
     for r in resources:
