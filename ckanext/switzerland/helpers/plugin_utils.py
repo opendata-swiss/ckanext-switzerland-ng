@@ -104,6 +104,10 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
         resources=validated_dict[u'resources']
     )
     search_data['res_rights'] = [ogdch_term_utils.simplify_terms_of_use(r['rights']) for r in validated_dict[u'resources'] if 'rights' in r.keys()]  # noqa
+    search_data['linked_data'] = ogdch_format_utils.prepare_formats_for_index(
+        resources=validated_dict[u'resources'],
+        linked_data_only=True
+    )
     search_data['title_string'] = ogdch_loc_utils.lang_to_string(validated_dict, 'title') # noqa
     search_data['description'] = ogdch_loc_utils.lang_to_string(validated_dict, 'description')  # noqa
     if 'political_level' in validated_dict[u'organization']:
