@@ -119,17 +119,17 @@ prepare_resource_data = [
          'download_url': 'http://download.url',
          'media_type': 'application/rdf+xml',
          'format': None
-     }, 'RDF'),
+     }, 'RDF XML'),
     ({
          'download_url': 'http://download.url',
          'media_type': None,
          'format': 'rdf'
-     }, 'RDF'),
+     }, 'RDF XML'),
     ({
          'download_url': 'http://download.url/foo.rdf',
          'media_type': None,
          'format': None
-     }, 'RDF'),
+     }, 'RDF XML'),
     ({
          'download_url': 'http://download.url',
          'media_type': 'application/n-triples',
