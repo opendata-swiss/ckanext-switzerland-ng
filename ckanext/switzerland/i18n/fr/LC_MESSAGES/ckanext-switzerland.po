@@ -28,6 +28,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
+#: ckanext/switzerland/plugins.py:76
+msgid "Linked Data"
+msgstr "Données Liées (Linked Data)"
+
 #: ckanext/switzerland/plugins.py:78 ckanext/switzerland/plugins.py:92
 #: ckanext/switzerland/plugins.py:106
 #: ckanext/switzerland/templates/organization/bulk_process.html:80
