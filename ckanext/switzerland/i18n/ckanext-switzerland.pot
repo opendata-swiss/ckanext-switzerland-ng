@@ -1,15 +1,15 @@
 # Translations template for ckanext-switzerland.
-# Copyright (C) 2021 ORGANIZATION
+# Copyright (C) 2022 ORGANIZATION
 # This file is distributed under the same license as the ckanext-switzerland
 # project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-switzerland 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-09 07:24+0000\n"
+"POT-Creation-Date: 2022-08-31 09:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,8 +18,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-#: ckanext/switzerland/plugins.py:78 ckanext/switzerland/plugins.py:92
-#: ckanext/switzerland/plugins.py:106
+#: ckanext/switzerland/plugins.py:76
+msgid "Linked Data"
+msgstr ""
+
+#: ckanext/switzerland/plugins.py:77 ckanext/switzerland/plugins.py:91
+#: ckanext/switzerland/plugins.py:105
 #: ckanext/switzerland/templates/organization/bulk_process.html:80
 #: ckanext/switzerland/templates/organization/bulk_process.html:85
 #: ckanext/switzerland/templates/package/read.html:10
@@ -31,8 +35,8 @@ msgstr ""
 msgid "Draft"
 msgstr ""
 
-#: ckanext/switzerland/plugins.py:79 ckanext/switzerland/plugins.py:107
-#: ckanext/switzerland/plugins.py:525
+#: ckanext/switzerland/plugins.py:78 ckanext/switzerland/plugins.py:106
+#: ckanext/switzerland/plugins.py:594
 #: ckanext/switzerland/templates/group/base_form_page.html:4
 #: ckanext/switzerland/templates/group/edit.html:11
 #: ckanext/switzerland/templates/group/edit.html:14
@@ -53,14 +57,14 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
-#: ckanext/switzerland/plugins.py:80 ckanext/switzerland/plugins.py:93
-#: ckanext/switzerland/plugins.py:108
+#: ckanext/switzerland/plugins.py:79 ckanext/switzerland/plugins.py:92
+#: ckanext/switzerland/plugins.py:107
 msgid "Keywords"
 msgstr ""
 
 #: ckanext/switzerland/controllers/group.py:109
 #: ckanext/switzerland/controllers/organization.py:117
-#: ckanext/switzerland/plugins.py:81 ckanext/switzerland/plugins.py:94
+#: ckanext/switzerland/plugins.py:80 ckanext/switzerland/plugins.py:93
 #: ckanext/switzerland/templates/header.html:25
 #: ckanext/switzerland/templates/organization/edit_base.html:10
 #: ckanext/switzerland/templates/organization/new.html:5
@@ -72,24 +76,24 @@ msgstr ""
 msgid "Organizations"
 msgstr ""
 
-#: ckanext/switzerland/plugins.py:82 ckanext/switzerland/plugins.py:95
+#: ckanext/switzerland/plugins.py:81 ckanext/switzerland/plugins.py:94
 msgid "Political levels"
 msgstr ""
 
-#: ckanext/switzerland/plugins.py:83 ckanext/switzerland/plugins.py:96
-#: ckanext/switzerland/plugins.py:109
-#: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:33
+#: ckanext/switzerland/plugins.py:82 ckanext/switzerland/plugins.py:95
+#: ckanext/switzerland/plugins.py:108
+#: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:32
 msgid "Terms of use"
 msgstr ""
 
 #: ckanext/switzerland/controllers/group.py:112
 #: ckanext/switzerland/controllers/organization.py:120
-#: ckanext/switzerland/plugins.py:84 ckanext/switzerland/plugins.py:97
-#: ckanext/switzerland/plugins.py:110
+#: ckanext/switzerland/plugins.py:83 ckanext/switzerland/plugins.py:96
+#: ckanext/switzerland/plugins.py:109
 msgid "Formats"
 msgstr ""
 
-#: ckanext/switzerland/plugins.py:526
+#: ckanext/switzerland/plugins.py:595
 #: ckanext/switzerland/templates/showcase/new_package_form.html:47
 #: ckanext/switzerland/templates/showcase/snippets/showcase_info.html:65
 msgid "Type of content"
@@ -152,84 +156,81 @@ msgstr ""
 msgid "File"
 msgstr ""
 
-#: ckanext/switzerland/helpers/backend_helpers.py:179
-#: ckanext/switzerland/helpers/frontend_helpers.py:110
+#: ckanext/switzerland/helpers/backend_helpers.py:180
+#: ckanext/switzerland/helpers/frontend_helpers.py:142
 msgid "Confederation"
 msgstr ""
 
-#: ckanext/switzerland/helpers/backend_helpers.py:180
-#: ckanext/switzerland/helpers/frontend_helpers.py:111
+#: ckanext/switzerland/helpers/backend_helpers.py:181
+#: ckanext/switzerland/helpers/frontend_helpers.py:143
 msgid "Canton"
 msgstr ""
 
-#: ckanext/switzerland/helpers/backend_helpers.py:181
-#: ckanext/switzerland/helpers/frontend_helpers.py:112
+#: ckanext/switzerland/helpers/backend_helpers.py:182
+#: ckanext/switzerland/helpers/frontend_helpers.py:144
 msgid "Commune"
 msgstr ""
 
-#: ckanext/switzerland/helpers/backend_helpers.py:182
-#: ckanext/switzerland/helpers/frontend_helpers.py:113
+#: ckanext/switzerland/helpers/backend_helpers.py:183
+#: ckanext/switzerland/helpers/frontend_helpers.py:82
+#: ckanext/switzerland/helpers/frontend_helpers.py:145
 msgid "Other"
 msgstr ""
 
-#: ckanext/switzerland/helpers/dataset_form_helpers.py:34
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:37
 msgid "* Non-commercial Allowed / Commercial Allowed / Reference Not Required"
 msgstr ""
 
-#: ckanext/switzerland/helpers/dataset_form_helpers.py:36
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:39
 msgid ""
 "* Non-commercial Allowed / Commercial With Permission Allowed / Reference Not"
 " Required"
 msgstr ""
 
-#: ckanext/switzerland/helpers/dataset_form_helpers.py:38
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:41
 msgid ""
 "* Non-commercial Allowed / Commercial With Permission Allowed / Reference "
 "Required"
 msgstr ""
 
-#: ckanext/switzerland/helpers/dataset_form_helpers.py:40
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:43
 msgid "* Non-commercial Allowed / Commercial Allowed / Reference Required"
 msgstr ""
 
-#: ckanext/switzerland/helpers/dataset_form_helpers.py:42
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:45
 msgid "Non-commercial Allowed / Commercial Not Allowed / Reference Not Required"
 msgstr ""
 
-#: ckanext/switzerland/helpers/dataset_form_helpers.py:44
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:47
 msgid "Non-commercial Allowed / Commercial Not Allowed / Reference Required"
 msgstr ""
 
-#: ckanext/switzerland/helpers/dataset_form_helpers.py:46
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:49
 msgid "Non-commercial Not Allowed / Commercial Not Allowed / Reference Not Required"
 msgstr ""
 
-#: ckanext/switzerland/helpers/dataset_form_helpers.py:48
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:51
 msgid "Non-commercial Not Allowed / Commercial Not Allowed / Reference Required"
 msgstr ""
 
-#: ckanext/switzerland/helpers/dataset_form_helpers.py:50
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:53
 msgid "Non-commercial Not Allowed / Commercial Allowed / Reference Not Required"
 msgstr ""
 
-#: ckanext/switzerland/helpers/dataset_form_helpers.py:52
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:55
 msgid "Non-commercial Not Allowed / Commercial Allowed / Reference Required"
 msgstr ""
 
-#: ckanext/switzerland/helpers/dataset_form_helpers.py:54
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:57
 msgid ""
 "Non-commercial Not Allowed / Commercial With Permission Allowed / Reference "
 "Not Required"
 msgstr ""
 
-#: ckanext/switzerland/helpers/dataset_form_helpers.py:56
+#: ckanext/switzerland/helpers/dataset_form_helpers.py:59
 msgid ""
 "Non-commercial Not Allowed / Commercial With Permission Allowed / Reference "
 "Required"
-msgstr ""
-
-#: ckanext/switzerland/helpers/frontend_helpers.py:82
-msgid "Other"
 msgstr ""
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:83
@@ -352,86 +353,153 @@ msgstr ""
 msgid "Tridecennial"
 msgstr ""
 
+#: ckanext/switzerland/helpers/frontend_helpers.py:113
+msgid "CompletelyIrregular_deprecated, please change!"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:114
+msgid "Irregular_deprecated, please change!"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:115
+msgid "Continuous_deprecated, please change!"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:116
+msgid "Daily_deprecated, please change!"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:117
+msgid "Three times a week_deprecated, please change!"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:118
+msgid "Semiweekly_deprecated, please change!"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:119
+msgid "Weekly_deprecated, please change!"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:120
+msgid "Three times a month_deprecated, please change!"
+msgstr ""
+
 #: ckanext/switzerland/helpers/frontend_helpers.py:121
-msgid "Open use"
+msgid "Biweekly_deprecated, please change!"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:122
+msgid "Semimonthly_deprecated, please change!"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:123
+msgid "Monthly_deprecated, please change!"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:124
+msgid "Bimonthly_deprecated, please change!"
 msgstr ""
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:125
-msgid "Open use. Must provide the source."
+msgid "Quarterly_deprecated, please change!"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:126
+msgid "Three times a year_deprecated, please change!"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:127
+msgid "Semiannual_deprecated, please change!"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:128
+msgid "Annual_deprecated, please change!"
 msgstr ""
 
 #: ckanext/switzerland/helpers/frontend_helpers.py:129
+msgid "Biennial_deprecated, please change!"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:130
+msgid "Triennial_deprecated, please change!"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:153
+msgid "Open use"
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:157
+msgid "Open use. Must provide the source."
+msgstr ""
+
+#: ckanext/switzerland/helpers/frontend_helpers.py:161
 msgid "Open use. Use for commercial purposes requires permission of the data owner."
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:133
+#: ckanext/switzerland/helpers/frontend_helpers.py:165
 msgid ""
 "Open use. Must provide the source. Use for commercial purposes requires "
 "permission of the data owner."
 msgstr ""
 
-#: ckanext/switzerland/helpers/frontend_helpers.py:137
+#: ckanext/switzerland/helpers/frontend_helpers.py:169
 msgid "Closed data"
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:54
-#: ckanext/switzerland/helpers/validators.py:144
-#: ckanext/switzerland/helpers/validators.py:194
+#: ckanext/switzerland/helpers/validators.py:66
+#: ckanext/switzerland/helpers/validators.py:152
+#: ckanext/switzerland/helpers/validators.py:202
 #, python-format
 msgid "Expecting list of strings, got \"%s\""
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:207
+#: ckanext/switzerland/helpers/validators.py:215
 #, python-format
 msgid "invalid language \"%s\""
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:225
+#: ckanext/switzerland/helpers/validators.py:233
 msgid "Identifier of the dataset is missing."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:230
+#: ckanext/switzerland/helpers/validators.py:238
 msgid ""
 "Identifier must be of the form <id>@<slug> where slug is the url of the "
 "organization."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:242
+#: ckanext/switzerland/helpers/validators.py:250
 msgid ""
 "The identifier \"{}\" does not end with the organisation slug \"{}\" of the "
 "organization it belongs to."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:246
+#: ckanext/switzerland/helpers/validators.py:254
 msgid "The selected organization was not found."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:256
+#: ckanext/switzerland/helpers/validators.py:264
 msgid "Identifier is already in use, it must be unique."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:292
+#: ckanext/switzerland/helpers/validators.py:300
 msgid "A value is required in at least one language"
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:389
+#: ckanext/switzerland/helpers/validators.py:426
 msgid "{} can not be chosen since it is a {}."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:397
+#: ckanext/switzerland/helpers/validators.py:434
 msgid "Dataset {} could not be found ."
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:423
+#: ckanext/switzerland/helpers/validators.py:463
 msgid "A valid temporal must have both start and end date"
 msgstr ""
 
-#: ckanext/switzerland/helpers/validators.py:428
-#, python-format
-msgid "Expecting DD.MM.YYYY, got \"%s\""
-msgstr ""
-
-#: ckanext/switzerland/helpers/validators.py:492
+#: ckanext/switzerland/helpers/validators.py:535
 #, python-format
 msgid "unexpected choice \"%s\""
 msgstr ""
@@ -1076,19 +1144,19 @@ msgstr ""
 msgid "Save Category"
 msgstr ""
 
-#: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:19
+#: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:18
 msgid "Identifier"
 msgstr ""
 
-#: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:35
+#: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:34
 msgid "Metadata Access"
 msgstr ""
 
-#: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:38
+#: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:37
 msgid "API (JSON)"
 msgstr ""
 
-#: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:41
+#: ckanext/switzerland/templates/scheming/package/snippets/additional_info.html:40
 msgid "Download XML"
 msgstr ""
 
