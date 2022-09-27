@@ -12,7 +12,7 @@ __location__ = os.path.realpath(os.path.join(
 )
 
 LINKED_DATA_FORMATS = [
-    'JSONLD',
+    'JSON-LD',
     'N3',
     'RDF N-Triples',
     'RDF Turtle',
