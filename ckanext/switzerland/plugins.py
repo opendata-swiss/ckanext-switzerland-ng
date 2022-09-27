@@ -12,6 +12,7 @@ import ckanext.switzerland.helpers.plugin_utils as ogdch_plugin_utils
 import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
+import ckanext.switzerland.views as views
 import ckan.plugins as plugins
 from ckan.lib.plugins import DefaultTranslation
 import ckanext.xloader.interfaces as ix
@@ -594,3 +595,12 @@ class OgdchShowcasePlugin(ShowcasePlugin):
             "groups": toolkit._("Categories"),
             "showcase_type": toolkit._("Type of content")
         })
+
+
+class OgdchFeedPlugin(plugins.SingletonPlugin):
+    plugins.implements(plugins.IBlueprint)
+
+    # IBlueprint
+
+    def get_blueprint(self):
+        return views.get_blueprints()
