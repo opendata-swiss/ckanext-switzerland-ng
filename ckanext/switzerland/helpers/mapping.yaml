@@ -32,7 +32,7 @@ INTERLIS:
   - 'interlis'
 JSON:
   - 'json'
-JSONLD:
+JSON-LD:
   - 'ld+json'
   - 'jsonld'
 KML:
