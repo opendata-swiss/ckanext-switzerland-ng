@@ -94,12 +94,12 @@ prepare_resource_data = [
          'download_url': 'http://download.url',
          'media_type': 'application/ld+json',
          'format': None
-     }, 'JSONLD'),
+     }, 'JSON-LD'),
     ({
          'download_url': 'http://download.url',
          'media_type': None,
          'format': 'jsonld'
-     }, 'JSONLD'),
+     }, 'JSON-LD'),
     ({
          'download_url': 'http://download.url/foo',
          'media_type': 'text/n3',
@@ -257,7 +257,7 @@ prepare_formats_data = [
     {
         'resources': [{'media_type': 'ld+json'}, {'media_type': 'n3'}, {'media_type': 'n-triples'}, {'media_type': 'turtle'}, {'media_type': 'rdf+xml'}, {'media_type': 'sparql-query'}],
         'linked_data_only': True,
-        'expected_formats': ['N3', 'SPARQL', 'JSONLD', 'RDF XML', 'RDF N-Triples', 'RDF Turtle']
+        'expected_formats': ['N3', 'SPARQL', 'JSON-LD', 'RDF XML', 'RDF N-Triples', 'RDF Turtle']
     },
 ]
 
