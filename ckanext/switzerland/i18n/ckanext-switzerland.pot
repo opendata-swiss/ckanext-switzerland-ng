@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-switzerland 0.0.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-31 09:21+0000\n"
+"POT-Creation-Date: 2022-10-03 13:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -804,16 +804,16 @@ msgstr ""
 #: ckanext/switzerland/templates/group/index.html:18
 #: ckanext/switzerland/templates/organization/bulk_process.html:27
 #: ckanext/switzerland/templates/organization/index.html:10
+#: ckanext/switzerland/templates/package/search.html:15
 #: ckanext/switzerland/templates/showcase/manage_datasets.html:17
-#: ckanext/switzerland/templates/snippets/search_box.html:36
 msgid "Name Ascending"
 msgstr ""
 
 #: ckanext/switzerland/templates/group/index.html:18
 #: ckanext/switzerland/templates/organization/bulk_process.html:28
 #: ckanext/switzerland/templates/organization/index.html:10
+#: ckanext/switzerland/templates/package/search.html:16
 #: ckanext/switzerland/templates/showcase/manage_datasets.html:18
-#: ckanext/switzerland/templates/snippets/search_box.html:37
 msgid "Name Descending"
 msgstr ""
 
@@ -993,7 +993,6 @@ msgstr ""
 
 #: ckanext/switzerland/templates/organization/bulk_process.html:29
 #: ckanext/switzerland/templates/showcase/manage_datasets.html:19
-#: ckanext/switzerland/templates/snippets/search_box.html:38
 msgid "Last Modified"
 msgstr ""
 
@@ -1051,9 +1050,9 @@ msgid "Activity Stream"
 msgstr ""
 
 #: ckanext/switzerland/templates/organization/snippets/organization_search_form.html:15
-#: ckanext/switzerland/templates/snippets/search_form.html:27
-#: ckanext/switzerland/templates/snippets/search_form.html:29
-#: ckanext/switzerland/templates/snippets/search_form.html:31
+#: ckanext/switzerland/templates/snippets/search_form.html:32
+#: ckanext/switzerland/templates/snippets/search_form.html:34
+#: ckanext/switzerland/templates/snippets/search_form.html:36
 msgid "Reset search"
 msgstr ""
 
@@ -1078,6 +1077,24 @@ msgstr ""
 msgid ""
 " You're currently viewing an old version of this dataset. To see the current "
 "version, click <a href=\"%(url)s\">here</a>. "
+msgstr ""
+
+#: ckanext/switzerland/templates/package/search.html:12
+#: ckanext/switzerland/templates/showcase/manage_datasets.html:16
+msgid "Relevance"
+msgstr ""
+
+#: ckanext/switzerland/templates/package/search.html:13
+msgid "Data Last Modified"
+msgstr ""
+
+#: ckanext/switzerland/templates/package/search.html:14
+msgid "Metadata Last Modified"
+msgstr ""
+
+#: ckanext/switzerland/templates/package/search.html:17
+#: ckanext/switzerland/templates/showcase/manage_datasets.html:20
+msgid "Popular"
 msgstr ""
 
 #: ckanext/switzerland/templates/package/snippets/additional_info.html:4
@@ -1168,16 +1185,6 @@ msgstr ""
 msgid ""
 "Here you can choose one or more categories to which the data set relates. "
 "Defining a category increases the findability of the data."
-msgstr ""
-
-#: ckanext/switzerland/templates/showcase/manage_datasets.html:16
-#: ckanext/switzerland/templates/snippets/search_box.html:35
-msgid "Relevance"
-msgstr ""
-
-#: ckanext/switzerland/templates/showcase/manage_datasets.html:20
-#: ckanext/switzerland/templates/snippets/search_box.html:39
-msgid "Popular"
 msgstr ""
 
 #: ckanext/switzerland/templates/showcase/manage_datasets.html:28
@@ -1276,23 +1283,7 @@ msgstr ""
 msgid "This dataset has no description"
 msgstr ""
 
-#: ckanext/switzerland/templates/snippets/search_box.html:24
-msgid "Search Filter"
-msgstr ""
-
-#: ckanext/switzerland/templates/snippets/search_box.html:42
-msgid "Order by"
-msgstr ""
-
-#: ckanext/switzerland/templates/snippets/search_box.html:55
-msgid "Please try another search."
-msgstr ""
-
-#: ckanext/switzerland/templates/snippets/search_box.html:59
-msgid "There was an error while searching. Please try again."
-msgstr ""
-
-#: ckanext/switzerland/templates/snippets/search_form.html:16
+#: ckanext/switzerland/templates/snippets/search_form.html:17
 msgid "Search datasets..."
 msgstr ""
 
