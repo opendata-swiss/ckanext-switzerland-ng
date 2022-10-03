@@ -12,6 +12,7 @@ import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
 import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
 import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
+import ckanext.switzerland.helpers.date_helpers as ogdch_date_utils
 from datetime import datetime
 
 log = logging.getLogger(__name__)
@@ -81,6 +82,7 @@ def _is_dataset_package_type(pkg_dict):
 
 def ogdch_prepare_search_data_for_index(search_data):  # noqa
     """prepares the data for indexing"""
+    log.error("NOW INDEXING")
     if not _is_dataset_package_type(search_data):
         return search_data
 
@@ -104,6 +106,10 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
         resources=validated_dict[u'resources']
     )
     search_data['res_rights'] = [ogdch_term_utils.simplify_terms_of_use(r['rights']) for r in validated_dict[u'resources'] if 'rights' in r.keys()]  # noqa
+    search_data['res_latest_issued'] = ogdch_date_utils.get_latest_isodate([(r['issued']) for r in validated_dict[u'resources'] if 'issued' in r.keys()])  # noqa
+    search_data['res_latest_modified'] = ogdch_date_utils.get_latest_isodate([(r['modified']) for r in validated_dict[u'resources'] if 'modified' in r.keys()])  # noqa
+    log.error(search_data['res_latest_issued'])
+    log.error(search_data['res_latest_modified'])
     search_data['linked_data'] = ogdch_format_utils.prepare_formats_for_index(
         resources=validated_dict[u'resources'],
         linked_data_only=True
