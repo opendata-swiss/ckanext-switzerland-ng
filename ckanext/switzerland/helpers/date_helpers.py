@@ -132,8 +132,8 @@ def get_latest_isodate(resource_dates):
         return ''
     isodates = [transform_any_date_to_isodate(date_field)
                 for date_field in resource_dates]
-    latest_isoodate = max(isodates)
-    return latest_isoodate
+    latest_isodate = max(isodates)
+    return latest_isodate
 
 
 def correct_invalid_empty_date(value):
