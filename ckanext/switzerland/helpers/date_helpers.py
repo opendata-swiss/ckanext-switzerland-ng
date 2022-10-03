@@ -106,6 +106,36 @@ def display_if_datetime(value):
         return None
 
 
+def transform_any_date_to_isodate(date_field):
+    """transform any stored date format into an isodate:
+    considered are the ogdch_date_format, timestamps
+    and isodates.
+    """
+    isodate_field = store_if_ogdch_date(date_field)
+    if isodate_field:
+        return isodate_field
+    isodate_field = store_if_isodate(date_field)
+    if isodate_field:
+        return isodate_field
+    isodate_field = store_if_timestamp(date_field)
+    if isodate_field:
+        return isodate_field
+
+
+def get_latest_isodate(resource_dates):
+    """return the latest date of a list of resource dates:
+    the dates are all transformed into isodates,
+    then a stringcomparison will bring back the
+    latest of those dates
+    """
+    if not resource_dates:
+        return ''
+    isodates = [transform_any_date_to_isodate(date_field)
+                for date_field in resource_dates]
+    latest_isodate = max(isodates)
+    return latest_isodate
+
+
 def correct_invalid_empty_date(value):
     """date values stored in postgres as not set"""
     if value == INVALID_EMPTY_DATE:
