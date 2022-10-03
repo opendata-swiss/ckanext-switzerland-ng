@@ -281,6 +281,8 @@ schema. In this case the version should be set to the next CKAN version number.
     <field name="res_rights" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="res_url" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="res_type" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="res_latest_issued" type="date" indexed="true" stored="true" multiValued="false"/>
+    <field name="res_latest_modified" type="date" indexed="true" stored="true" multiValued="false"/>
 
     <!--  Similar to res_format, but containing only Linked Data formats, so we can facet on them  -->
     <field name="linked_data" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -305,6 +307,8 @@ schema. In this case the version should be set to the next CKAN version number.
 
     <field name="metadata_created" type="date" indexed="true" stored="true" multiValued="false"/>
     <field name="metadata_modified" type="date" indexed="true" stored="true" multiValued="false"/>
+    <field name="issued" type="date" indexed="true" stored="true" multiValued="false"/>
+    <field name="modified" type="date" indexed="true" stored="true" multiValued="false"/>
 
     <field name="indexed_ts" type="date" indexed="true" stored="true" default="NOW" multiValued="false"/>
 
