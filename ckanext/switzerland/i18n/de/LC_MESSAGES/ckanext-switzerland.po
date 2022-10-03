@@ -855,3 +855,11 @@ msgid ""
 "homepage."
 msgstr "Mit dieser Einstellung kann ein vordefiniertes Layout für die "
 "Starseite gewähtl werden."
+
+#: ckanext/switzerland/templates/package/search.html:13
+msgid "Data Last Modified"
+msgstr "Daten zuletzt geändert"
+
+#: ckanext/switzerland/templates/package/search.html:14
+msgid "Metadata Last Modified"
+msgstr "Metadaten zuletzt geändert"
