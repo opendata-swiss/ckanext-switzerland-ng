@@ -82,7 +82,6 @@ def _is_dataset_package_type(pkg_dict):
 
 def ogdch_prepare_search_data_for_index(search_data):  # noqa
     """prepares the data for indexing"""
-    log.error("NOW INDEXING")
     if not _is_dataset_package_type(search_data):
         return search_data
 
@@ -112,8 +111,6 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
     search_data['res_latest_modified'] = ogdch_date_utils.get_latest_isodate(
         [(r['modified']) for r in validated_dict[u'resources'] if 'modified' in r.keys()]
     )
-    log.error(search_data['res_latest_issued'])
-    log.error(search_data['res_latest_modified'])
     search_data['linked_data'] = ogdch_format_utils.prepare_formats_for_index(
         resources=validated_dict[u'resources'],
         linked_data_only=True
