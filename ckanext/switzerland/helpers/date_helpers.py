@@ -107,6 +107,10 @@ def display_if_datetime(value):
 
 
 def transform_any_date_to_isodate(date_field):
+    """transform any stored date format into an isodate:
+    considered are the ogdch_date_format, timestamps
+    and isodates.
+    """
     isodate_field = store_if_ogdch_date(date_field)
     if isodate_field:
         return isodate_field
@@ -119,7 +123,11 @@ def transform_any_date_to_isodate(date_field):
 
 
 def get_latest_isodate(resource_dates):
-    """return the latest date of a list of isodates"""
+    """return the latest date of a list of resource dates:
+    the dates are all transformed into isodates,
+    then a stringcomparison will bring back the
+    latest of those dates
+    """
     if not resource_dates:
         return ''
     isodates = [transform_any_date_to_isodate(date_field) for date_field in resource_dates]
