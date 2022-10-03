@@ -130,7 +130,8 @@ def get_latest_isodate(resource_dates):
     """
     if not resource_dates:
         return ''
-    isodates = [transform_any_date_to_isodate(date_field) for date_field in resource_dates]
+    isodates = [transform_any_date_to_isodate(date_field)
+                for date_field in resource_dates]
     latest_isoodate = max(isodates)
     return latest_isoodate
 
