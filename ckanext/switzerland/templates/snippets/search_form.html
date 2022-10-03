@@ -11,18 +11,23 @@
 
 #}
 
+{% ckan_extends %}
 {% import 'macros/form.html' as form %}
 
 {% set placeholder = placeholder if placeholder else _('Search datasets...') %}
 
-<form {% if form_id %}id="{{ form_id }}" {% endif %}class="search-form{% if no_bottom_border %} no-bottom-border{% endif %}" method="get" data-module="select-switch">
-
 {% block search_input %}
-  <div class="form-group has-feedback">
-    <input id="ogdch_search" type="search" class="form-control input-lg" name="q" value="{{ query }}" autocomplete="off" placeholder="{{ placeholder }}"/>
-    <i class="fa fa-search form-control-feedback" aria-hidden="true"></i>
-  </div>
-  <div class="reset-search">
+<div class="input-group search-input-group">
+  <input aria-label="{% block header_site_search_label %}{{ placeholder }}{% endblock %}" id="ogdch_search" type="search" class="form-control input-lg" name="q" value="{{ query }}" autocomplete="off" placeholder="{{ placeholder }}">
+  {% block search_input_button %}
+  <span class="input-group-btn">
+        <button class="btn btn-default btn-lg" type="submit" value="search">
+          <i class="fa fa-search"></i>
+        </button>
+      </span>
+  {% endblock %}
+</div>
+  <div class="reset-search" style="display: inline-block;">
     {% if c.group_dict.name %}
       <a href="{{ h.url_for(controller=c.controller, action=c.action, id=c.group_dict.name) }}"><i class="fa fa-times-circle" aria-hidden="true"></i> {{ _('Reset search') }}</a>
     {% elif c.dataset_type == 'harvest' %}
@@ -33,10 +38,3 @@
   </div>
 {% endblock %}
 
-{% block search_search_fields %}
-  {% if fields -%}
-    <span>{{ form.hidden_from_list(fields=fields) }}</span>
-  {%- endif %}
-{% endblock %}
-
-</form>

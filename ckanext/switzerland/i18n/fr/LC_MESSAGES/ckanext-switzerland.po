@@ -761,3 +761,12 @@ msgstr "Pas de catégories"
 #: ckanext/switzerland/templates/user/snippets/login_form.html:21
 msgid "Login functions only with username, not e-mail address."
 msgstr "La connexion fonctionne uniquement avec le nom d'utilisateur, pas avec l'adresse e-mail."
+
+
+#: ckanext/switzerland/templates/package/search.html:13
+msgid "Data Last Modified"
+msgstr "Dernière modification des données"
+
+#: ckanext/switzerland/templates/package/search.html:14
+msgid "Metadata Last Modified"
+msgstr "Dernière modification des métadonnées"
