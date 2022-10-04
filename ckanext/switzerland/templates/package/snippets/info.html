@@ -6,10 +6,6 @@
 #}
 
 {% block nums %}
-  {% if c.user %}
-    {# Followers count #}
-    {{ super() }}
-  {% endif %}
 {% endblock %}
 {% block follow_button %}
   {% if c.user %}
