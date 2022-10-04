@@ -600,5 +600,6 @@ class OgdchShowcasePlugin(ShowcasePlugin):
 
         return OrderedDict({
             "groups": toolkit._("Categories"),
-            "showcase_type": toolkit._("Type of content")
+            "showcase_type": toolkit._("Type of content"),
+            "private": toolkit._("Draft")
         })
