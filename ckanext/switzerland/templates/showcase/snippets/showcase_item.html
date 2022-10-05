@@ -5,7 +5,7 @@
     {% if package.private == 'True' %}
     <span class="dataset-private label label-inverse">
       <i class="fa fa-lock icon-lock"></i>
-      {{ _('Private') }}
+      {{ _('Draft') }}
     </span>
     {% endif %}
     {{ h.link_to(title|truncate(truncate_title),
