@@ -509,7 +509,7 @@ class OgdchShowcasePlugin(ShowcasePlugin):
                 ],
                 "private": [
                     toolkit.get_validator("ignore_missing"),
-                    toolkit.get_validator("unicode_safe"),
+                    toolkit.get_validator("boolean_validator"),
                 ],
                 "groups": {
                     "id": [
@@ -554,7 +554,7 @@ class OgdchShowcasePlugin(ShowcasePlugin):
                 ],
                 "private": [
                     toolkit.get_validator("ignore_missing"),
-                    toolkit.get_validator("unicode_safe"),
+                    toolkit.get_validator("boolean_validator"),
                 ],
                 "groups": {
                     "id": [
