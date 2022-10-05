@@ -1,0 +1,14 @@
+{% ckan_extends %}
+
+{% block title %}
+  <h3 class="media-heading">
+    {% if package.private %}
+    <span class="dataset-private label label-inverse">
+      <i class="fa fa-lock icon-lock"></i>
+      {{ _('Draft') }}
+    </span>
+    {% endif %}
+    {{ h.link_to(title|truncate(truncate_title),
+       h.url_for(controller='ckanext.showcase.controller:ShowcaseController', action='read', id=package.name, qualified=true)) }}
+  </h3>
+{% endblock %}

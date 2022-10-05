@@ -507,6 +507,10 @@ class OgdchShowcasePlugin(ShowcasePlugin):
                     toolkit.get_validator("ignore_missing"),
                     toolkit.get_converter("convert_to_extras"),
                 ],
+                "private": [
+                    toolkit.get_validator("ignore_missing"),
+                    toolkit.get_validator("boolean_validator"),
+                ],
                 "groups": {
                     "id": [
                         toolkit.get_validator("ignore_missing"),
@@ -547,6 +551,10 @@ class OgdchShowcasePlugin(ShowcasePlugin):
                 "showcase_type": [
                     toolkit.get_converter("convert_from_extras"),
                     toolkit.get_validator("ignore_missing"),
+                ],
+                "private": [
+                    toolkit.get_validator("ignore_missing"),
+                    toolkit.get_validator("boolean_validator"),
                 ],
                 "groups": {
                     "id": [
@@ -592,5 +600,6 @@ class OgdchShowcasePlugin(ShowcasePlugin):
 
         return OrderedDict({
             "groups": toolkit._("Categories"),
-            "showcase_type": toolkit._("Type of content")
+            "showcase_type": toolkit._("Type of content"),
+            "private": toolkit._("Draft")
         })
