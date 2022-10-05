@@ -2,7 +2,7 @@
 
 {% block title %}
   <h3 class="media-heading">
-    {% if package.private == 'True' %}
+    {% if package.private %}
     <span class="dataset-private label label-inverse">
       <i class="fa fa-lock icon-lock"></i>
       {{ _('Draft') }}
