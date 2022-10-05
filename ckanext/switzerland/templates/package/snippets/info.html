@@ -1,0 +1,24 @@
+{% ckan_extends %}
+{#
+    Package sidebar
+
+    pkg    - The package dict that owns the resources.
+#}
+
+{% block nums %}
+{% endblock %}
+{% block follow_button %}
+  {% resource 'subscribe/subscribe.css' %}
+  <div class="nums">
+    {% import 'macros/form.html' as form %}
+    <!-- {{ form.errors(error_summary) }} -->
+    <label class="control-label" for="subscribe-email">{{ _('Sign up for email updates') }}</label>
+    <form method='post' action="{{ h.url_for('/subscribe/signup') }}" id="subscribe-form" enctype="multipart/form-data" class="form-inline">
+      <!-- (Bootstrap 3) <div class="form-group input-group-sm"> -->
+        <input id="subscribe-email" type="email" name="email" class="form-control input-small" value="" placeholder="" />
+        <input id="subscribe-dataset" type="hidden" name="dataset" value="{{ pkg.name }}"` />
+      <!-- </div> -->
+      <button type="submit" class="btn btn-default" name="save">{{ _('Submit') }}</button>
+    </form>
+  </div>
+{% endblock %}
