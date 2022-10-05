@@ -509,11 +509,11 @@ class OgdchShowcasePlugin(ShowcasePlugin):
                 ],
                 "author_twitter": [
                     toolkit.get_validator("ignore_missing"),
-                    toolkit.get_validator("unicode_safe"),
+                    toolkit.get_validator("convert_to_extras"),
                 ],
                 "author_github": [
                     toolkit.get_validator("ignore_missing"),
-                    toolkit.get_validator("unicode_safe"),
+                    toolkit.get_validator("convert_to_extras"),
                 ],
                 "groups": {
                     "id": [
@@ -557,12 +557,12 @@ class OgdchShowcasePlugin(ShowcasePlugin):
                     toolkit.get_validator("ignore_missing"),
                 ],
                 "author_twitter": [
-                    toolkit.get_validator("unicode_safe"),
+                    toolkit.get_validator("convert_from_extras"),
                     toolkit.get_validator("ignore_missing"),
                 ],
                 "author_github": [
                     toolkit.get_validator("ignore_missing"),
-                    toolkit.get_validator("unicode_safe"),
+                    toolkit.get_validator("convert_from_extras"),
                 ],
                 "groups": {
                     "id": [
