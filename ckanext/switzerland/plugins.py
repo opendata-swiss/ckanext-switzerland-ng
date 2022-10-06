@@ -507,6 +507,14 @@ class OgdchShowcasePlugin(ShowcasePlugin):
                     toolkit.get_validator("ignore_missing"),
                     toolkit.get_converter("convert_to_extras"),
                 ],
+                "author": [
+                    toolkit.get_validator("convert_to_extras"),
+                    toolkit.get_validator("not_empty"),
+                ],
+                "author_email": [
+                    toolkit.get_validator("convert_to_extras"),
+                    toolkit.get_validator("not_empty"),
+                ],
                 "author_twitter": [
                     toolkit.get_validator("ignore_missing"),
                     toolkit.get_validator("convert_to_extras"),
@@ -555,6 +563,14 @@ class OgdchShowcasePlugin(ShowcasePlugin):
                 "showcase_type": [
                     toolkit.get_converter("convert_from_extras"),
                     toolkit.get_validator("ignore_missing"),
+                ],
+                "author": [
+                    toolkit.get_validator("convert_from_extras"),
+                    toolkit.get_validator("not_empty"),
+                ],
+                "author_email": [
+                    toolkit.get_validator("convert_from_extras"),
+                    toolkit.get_validator("not_empty"),
                 ],
                 "author_twitter": [
                     toolkit.get_validator("convert_from_extras"),
