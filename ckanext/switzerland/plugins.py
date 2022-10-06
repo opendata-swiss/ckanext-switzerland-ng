@@ -511,6 +511,22 @@ class OgdchShowcasePlugin(ShowcasePlugin):
                     toolkit.get_validator("ignore_missing"),
                     toolkit.get_validator("boolean_validator"),
                 ],
+                "author": [
+                    toolkit.get_validator("convert_to_extras"),
+                    toolkit.get_validator("not_empty"),
+                ],
+                "author_email": [
+                    toolkit.get_validator("convert_to_extras"),
+                    toolkit.get_validator("not_empty"),
+                ],
+                "author_twitter": [
+                    toolkit.get_validator("ignore_missing"),
+                    toolkit.get_validator("convert_to_extras"),
+                ],
+                "author_github": [
+                    toolkit.get_validator("ignore_missing"),
+                    toolkit.get_validator("convert_to_extras"),
+                ],
                 "groups": {
                     "id": [
                         toolkit.get_validator("ignore_missing"),
@@ -555,6 +571,22 @@ class OgdchShowcasePlugin(ShowcasePlugin):
                 "private": [
                     toolkit.get_validator("ignore_missing"),
                     toolkit.get_validator("boolean_validator"),
+                ],
+                "author": [
+                    toolkit.get_validator("convert_from_extras"),
+                    toolkit.get_validator("not_empty"),
+                ],
+                "author_email": [
+                    toolkit.get_validator("convert_from_extras"),
+                    toolkit.get_validator("not_empty"),
+                ],
+                "author_twitter": [
+                    toolkit.get_validator("convert_from_extras"),
+                    toolkit.get_validator("ignore_missing"),
+                ],
+                "author_github": [
+                    toolkit.get_validator("convert_from_extras"),
+                    toolkit.get_validator("ignore_missing"),
                 ],
                 "groups": {
                     "id": [
