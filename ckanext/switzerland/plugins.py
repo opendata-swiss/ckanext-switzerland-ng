@@ -3,6 +3,7 @@
 from ckan.common import OrderedDict
 from ckan.model import Session, Package, PACKAGE_NAME_MAX_LENGTH
 from ckanext.showcase.plugin import ShowcasePlugin
+from ckanext.subscribe.plugin import SubscribePlugin
 import ckanext.switzerland.helpers.validators as ogdch_validators
 from ckanext.switzerland import logic as ogdch_logic
 import ckanext.switzerland.helpers.frontend_helpers as ogdch_frontend_helpers
@@ -643,3 +644,20 @@ class OgdchShowcasePlugin(ShowcasePlugin):
             "showcase_type": toolkit._("Type of content"),
             "private": toolkit._("Draft")
         })
+
+
+class OgdchSubscribePlugin(SubscribePlugin):
+
+    # ISubscribe
+    def get_email_vars(self, code, subscription=None, email=None,
+                       email_vars=None):
+        email_vars = super(OgdchSubscribePlugin, self).get_email_vars(
+            code, subscription, email, email_vars)
+        email_vars.update(
+            unsubscribe_all_link='http://example.org',
+            manage_link='http://example.org',
+            object_link='http://example.org',
+            unsubscribe_link='http://example.org',
+        )
+
+        return email_vars
