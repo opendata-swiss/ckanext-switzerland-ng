@@ -20,6 +20,17 @@ Example:
             {% if pkg.author %}
                 <span class="smallest">{{_('Submitted by')}}</span>
                 <p>{{ pkg.author }}</p>
+                {% if pkg.author_twitter %}
+                    <a href="{{ pkg.author_twitter}}" target="_blank">
+                          <i class="fa fa-external-link"></i> {{pkg.author_twitter}}
+                    </a>
+                {% endif %}
+                <br>
+                {% if pkg.author_github %}
+                    <a href="{{ pkg.author_github}}" target="_blank">
+                          <i class="fa fa-external-link "></i> {{pkg.author_github}}
+                    </a>
+                {% endif %}
             {% endif %}
             {% if pkg.url %}
               <div class="info">
