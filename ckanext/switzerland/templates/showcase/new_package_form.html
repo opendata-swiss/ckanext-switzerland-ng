@@ -71,3 +71,20 @@
 
     {{ form.image_upload(data, errors, is_upload_enabled=h.uploads_enabled(), is_url=is_url, is_upload=is_upload) }}
 {% endblock %}
+
+{% block metadata_fields %}
+    {% block package_metadata_fields_url %}
+      {{ form.input('url', label=_('External link'), id='field-url', placeholder=_('http://www.example.com'), value=data.url, error=errors.url, classes=['control-medium']) }}
+    {% endblock %}
+
+    {% block package_metadata_author %}
+      {{ form.input('author', label=_('Submitted By'), id='field-author', placeholder=_('Joe Bloggs (your name will be publicly published)'), type="text", value=data.author, error=errors.author, is_required=true, classes=['control-medium']) }}
+
+      {{ form.input('author_email', label=_('Submitter Email'), id='field-author-email', placeholder=_('joe@example.com (your email will NOT be publicly published)'), type="email", value=data.author_email, error=errors.author_email, is_required=true, classes=['control-medium']) }}
+
+      {{ form.input('author_twitter', label=_('Submitter Twitter'), id='field-author-twitter', placeholder=_('https://twitter.com/joe (your twitter handle will be publicly published)'), type="url", value=data.author_twitter, error=errors.author_twitter, classes=['control-medium']) }}
+
+      {{ form.input('author_github', label=_('Submitter GitHub'), id='field-author-github', placeholder=_('https://github.com/joe (your gitub handle will be publicly published)'), type="url", value=data.author_github, error=errors.author_github,  classes=['control-medium']) }}
+
+    {% endblock %}
+{% endblock %}
