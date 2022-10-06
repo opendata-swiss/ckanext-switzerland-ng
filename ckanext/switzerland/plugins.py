@@ -577,8 +577,8 @@ class OgdchShowcasePlugin(ShowcasePlugin):
                     toolkit.get_validator("ignore_missing"),
                 ],
                 "author_github": [
-                    toolkit.get_validator("ignore_missing"),
                     toolkit.get_validator("convert_from_extras"),
+                    toolkit.get_validator("ignore_missing"),
                 ],
                 "groups": {
                     "id": [
