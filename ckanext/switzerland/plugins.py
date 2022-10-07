@@ -506,7 +506,6 @@ class OgdchShowcasePlugin(ShowcasePlugin):
         if response:
             return 'showcase/new.html'
 
-
     def _modify_package_schema(self, schema):
         schema.update(
             {

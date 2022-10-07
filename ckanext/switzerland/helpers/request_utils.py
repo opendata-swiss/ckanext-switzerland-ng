@@ -6,6 +6,7 @@ from backoff import on_exception, expo
 
 FIVE_MINUTES = 300
 
+
 def get_content_headers(url):
     response = requests.head(url)
     return response
