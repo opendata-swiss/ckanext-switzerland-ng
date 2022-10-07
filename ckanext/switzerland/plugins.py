@@ -500,6 +500,12 @@ class OgdchShowcasePlugin(ShowcasePlugin):
 
     # IDatasetForm
 
+    def new_template(self):
+        base_url = toolkit.request.url
+        response = ogdch_request_utils.set_call_api_limit(base_url)
+        if response:
+            return 'showcase/new.html'
+
     def _modify_package_schema(self, schema):
         schema.update(
             {

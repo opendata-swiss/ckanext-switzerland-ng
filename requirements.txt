@@ -9,3 +9,5 @@ requests[security]==2.25.1
 urllib3[secure]==1.26.5
 isodate==0.6.1
 rdflib==5.0.0
+ratelimit==2.2.1
+backoff==1.11.1
