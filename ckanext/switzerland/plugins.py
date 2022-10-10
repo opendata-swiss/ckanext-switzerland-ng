@@ -651,20 +651,26 @@ class OgdchSubscribePlugin(SubscribePlugin):
     # ISubscribe
     def get_email_vars(self, code, subscription=None, email=None,
                        email_vars=None):
+        links = [
+            'unsubscribe_all_link',
+            'manage_link',
+            'object_link',
+            'unsubscribe_link',
+        ]
         email_vars = super(OgdchSubscribePlugin, self).get_email_vars(
             code, subscription, email, email_vars)
-        email_vars.update(
-            unsubscribe_all_link='http://example.org',
-            manage_link='http://example.org',
-            object_link='http://example.org',
-            unsubscribe_link='http://example.org',
-        )
+
+        for link in links:
+            if email_vars.get(link):
+                email_vars[link] = email_vars[link].replace(
+                    toolkit.config.get('ckan.site_url'),
+                    toolkit.config.get('ckanext.switzerland.frontend_url')
+                )
 
         return email_vars
 
     def get_footer_contents(self, email_vars, subscription=None,
                             plain_text_footer=None, html_footer=None):
-
         html_lines = []
         if subscription:
             html_lines.append(
