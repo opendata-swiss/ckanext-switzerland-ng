@@ -682,13 +682,14 @@ class OgdchSubscribePlugin(SubscribePlugin):
         html_lines.append(
             '<a href="https://opendata.swiss">'
             '<img src="https://opendata.swiss/images/logo_horizontal.png" '
-            'alt="opendata.swiss" width="420" height="220" />'
+            'alt="opendata.swiss" width="420" height="220"'
+            'style="max-width: 100%; height: auto;" />'
             '</a>'
         )
         html_lines.append(
             '<a href="https://twitter.com/opendataswiss">'
-            '<img style="color: #fff; background-color: #009688; padding: 70px 0; border: 0;"'
-            ' src="https://opendata.swiss/images/twitter.svg" alt="Twitter" width="420" height="220" />'
+            '<img style="color: #fff; background-color: #009688; border: 0;" '
+            'src="https://opendata.swiss/images/twitter.svg" alt="Twitter" />'
             '</a>'
         )
         if subscription:
@@ -701,8 +702,8 @@ class OgdchSubscribePlugin(SubscribePlugin):
                 '<a href="{manage_link}">Mein Abonnement verwalten</a>'
             )
         html_footer = '\n'.join(
-            '<p style="font-size:10px;line-height:200%;text-align:center;'
-            'color:#9EA3A8=;padding-top:0px">{line}</p>'.format(line=line)
+            '<p style="font-size:10px;line-height:200%; font-family: sans;'
+            'color:#9EA3A8;padding-top:0px">{line}</p>'.format(line=line)
             for line in html_lines).format(**email_vars)
 
         plain_text_footer = '''
