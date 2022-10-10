@@ -28,6 +28,12 @@ Example:
   {% set text_query_none = _('No organizations found') %}
   {% set text_no_query = ungettext('{number} organization found', '{number} organizations found', count) %}
   {% set text_no_query_none = _('No organizations found') %}
+
+{% elif type == 'harvest' %}
+  {% set text_query = ungettext('{number} harvesters found', '{number} harvesters found', count) %}
+  {% set text_query_none = _('No harvesters found') %}
+  {% set text_no_query = ungettext('{number} harvesters found', '{number} harvesters found', count) %}
+  {% set text_no_query_none = _('No harvesters found') %}
 {%- endif -%}
 
 {% if query %}
