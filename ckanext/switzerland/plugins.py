@@ -724,3 +724,41 @@ Mein Abonnement verwalten: {manage_link}
         plain_text_footer = plain_text_footer.format(**email_vars)
         log.warning(type(plain_text_footer))
         return plain_text_footer, html_footer
+
+    def get_manage_email_contents(self, email_vars, subject=None,
+                                  plain_text_body=None, html_body=None):
+        subject, plain_text_body, html_body = \
+            super(OgdchSubscribePlugin, self).get_manage_email_contents(
+                email_vars, subject, plain_text_body, html_body)
+
+        return subject.decode('utf-8'), plain_text_body.decode('utf-8'), \
+            html_body.decode('utf-8')
+
+    def get_subscription_confirmation_email_contents(self, email_vars,
+                                                     subject=None,
+                                                     plain_text_body=None,
+                                                     html_body=None):
+        subject, plain_text_body, html_body = \
+            super(OgdchSubscribePlugin, self).get_subscription_confirmation_email_contents(  # noqa
+                email_vars, subject, plain_text_body, html_body)
+
+        return subject.decode('utf-8'), plain_text_body.decode('utf-8'), \
+            html_body.decode('utf-8')
+
+    def get_notification_email_contents(self, email_vars, subject=None,
+                                        plain_text_body=None, html_body=None):
+        subject, plain_text_body, html_body = \
+            super(OgdchSubscribePlugin, self).get_notification_email_contents(
+                email_vars, subject, plain_text_body, html_body)
+
+        return subject.decode('utf-8'), plain_text_body.decode('utf-8'), \
+            html_body.decode('utf-8')
+
+    def get_verification_email_contents(self, subscription, subject=None,
+                                        plain_text_body=None, html_body=None):
+        subject, plain_text_body, html_body = \
+            super(OgdchSubscribePlugin, self).get_verification_email_contents(
+                subscription, subject, plain_text_body, html_body)
+
+        return subject.decode('utf-8'), plain_text_body.decode('utf-8'), \
+            html_body.decode('utf-8')
