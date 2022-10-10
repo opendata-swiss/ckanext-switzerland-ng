@@ -661,3 +661,41 @@ class OgdchSubscribePlugin(SubscribePlugin):
         )
 
         return email_vars
+
+    def get_footer_contents(self, email_vars, subscription=None,
+                            plain_text_footer=None, html_footer=None):
+
+        html_lines = []
+        if subscription:
+            html_lines.append(
+                'To stop receiving emails of this type: '
+                '<a href="{unsubscribe_link}">'
+                'unsubscribe from {object_type} "{object_title}"</a>'
+            )
+        else:
+            html_lines.append(
+                'To stop receiving all subscription emails from {site_title}: '
+                '<a href="{unsubscribe_all_link}">'
+                'unsubscribe all</a>'
+            )
+        html_lines.append('<a href="{manage_link}">Manage settings</a>')
+        html_footer = '\n'.join(
+            '<p style="font-size:10px;line-height:200%;text-align:center;'
+            'color:#9EA3A8=;padding-top:0px">{line}</p>'.format(line=line)
+            for line in html_lines).format(**email_vars)
+
+        plain_text_footer = ''
+        if subscription:
+            plain_text_footer += '''
+    You can unsubscribe from notifications emails for {object_type}: "{object_title}" by going to {unsubscribe_link}.
+    '''.format(**email_vars)
+        else:
+            plain_text_footer += (
+                'To stop receiving all subscription emails from {site_title}: '
+                '<a href="{unsubscribe_all_link}">'
+                'unsubscribe all</a>'
+            ).format(**email_vars)
+        plain_text_footer += '''
+    Manage your settings at {manage_link}.
+    '''.format(**email_vars)
+        return plain_text_footer, html_footer
