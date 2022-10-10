@@ -667,6 +667,11 @@ class OgdchSubscribePlugin(SubscribePlugin):
                     toolkit.config.get('ckanext.switzerland.frontend_url')
                 )
 
+        for lang in ogdch_localize_utils.LANGUAGES:
+            email_vars['object_title_{}'.format(lang)] = \
+                ogdch_localize_utils.get_localized_value_from_json(
+                email_vars.get('object_title'), lang)
+
         return email_vars
 
     def get_footer_contents(self, email_vars, subscription=None,
