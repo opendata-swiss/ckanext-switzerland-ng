@@ -299,6 +299,30 @@ def ogdch_showcase_search(context, data_dict):
 
 
 @side_effect_free
+def ogdch_showcase_submit(context, data_dict):
+    '''
+    Custom logic to create a showcase. Showcases can be submitted
+    from the frontend and should be created in one step along with
+    all the datasets that are attached to the showcase.
+    '''
+    try:
+        showcase = tk.get_action('ckanext_showcase_create')(
+            context, data_dict
+        )
+        package_association_data_dict = {'showcase_id': showcase['id']}
+        datasets = data_dict.get('datasets')
+        if datasets:
+            for package_id in datasets:
+                package_association_data_dict['package_id'] = package_id
+                tk.get_action('ckanext_showcase_package_association_create')(
+                    context, package_association_data_dict
+                )
+        return showcase
+    except ValidationError:
+        raise
+
+
+@side_effect_free
 def ogdch_harvest_monitor(context, data_dict):
     """Returns the status of the fetch and gather processes.
 
