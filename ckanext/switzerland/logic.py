@@ -298,7 +298,6 @@ def ogdch_showcase_search(context, data_dict):
         raise NotFound
 
 
-@side_effect_free
 def ogdch_showcase_submit(context, data_dict):
     '''
     Custom logic to create a showcase. Showcases can be submitted
