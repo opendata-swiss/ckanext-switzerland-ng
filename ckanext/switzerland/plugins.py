@@ -660,17 +660,15 @@ class OgdchSubscribePlugin(SubscribePlugin):
         email_vars = super(OgdchSubscribePlugin, self).get_email_vars(
             code, subscription, email, email_vars)
 
-        for link in links:
-            if email_vars.get(link):
-                email_vars[link] = email_vars[link].replace(
-                    toolkit.config.get('ckan.site_url'),
-                    toolkit.config.get('ckanext.switzerland.frontend_url')
-                )
+        ogdch_plugin_utils.ogdch_transform_links(email_vars, links)
 
         for lang in ogdch_localize_utils.LANGUAGES:
             email_vars['object_title_{}'.format(lang)] = \
                 ogdch_localize_utils.get_localized_value_from_json(
                 email_vars.get('object_title'), lang)
+
+        email_vars = {k: unicode(v)
+                      for k, v in email_vars.items()}
 
         return email_vars
 
@@ -678,40 +676,40 @@ class OgdchSubscribePlugin(SubscribePlugin):
                             plain_text_footer=None, html_footer=None):
         html_lines = []
         html_lines.append(
-            'Geschäftsstelle Open Government Data</br>'
-            'Bundesamt für Statistik BFS</br>'
-            'Espace de l\'Europe 10</br>'
-            'CH-2010 Neuchâtel</br>'
-            '<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a></br>'
+            u'Geschäftsstelle Open Government Data</br>'
+            u'Bundesamt für Statistik BFS</br>'
+            u'Espace de l\'Europe 10</br>'
+            u'CH-2010 Neuchâtel</br>'
+            u'<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a></br>'
         )
         html_lines.append(
-            '<a href="https://opendata.swiss">'
-            '<img src="https://opendata.swiss/images/logo_horizontal.png" '
-            'alt="opendata.swiss" width="420" height="220"'
-            'style="max-width: 100%; height: auto;" />'
-            '</a>'
+            u'<a href="https://opendata.swiss">'
+            u'<img src="https://opendata.swiss/images/logo_horizontal.png" '
+            u'alt="opendata.swiss" width="420" height="220"'
+            u'style="max-width: 100%; height: auto;" />'
+            u'</a>'
         )
         html_lines.append(
-            '<a href="https://twitter.com/opendataswiss">'
-            '<img style="color: #fff; background-color: #009688; border: 0;" '
-            'src="https://opendata.swiss/images/twitter.svg" alt="Twitter" />'
-            '</a>'
+            u'<a href="https://twitter.com/opendataswiss">'
+            u'<img style="color: #fff; background-color: #009688; border: 0;" '
+            u'src="https://opendata.swiss/images/twitter.svg" alt="Twitter" />'
+            u'</a>'
         )
         if subscription:
             html_lines.append(
-                '<a href="{unsubscribe_link}">Abonnement löschen</a> | '
-                '<a href="{manage_link}">Mein Abonnement verwalten</a>'
+                u'<a href="{unsubscribe_link}">Abonnement löschen</a> | '
+                u'<a href="{manage_link}">Mein Abonnement verwalten</a>'
             )
         else:
             html_lines.append(
-                '<a href="{manage_link}">Mein Abonnement verwalten</a>'
+                u'<a href="{manage_link}">Mein Abonnement verwalten</a>'
             )
         html_footer = '\n'.join(
-            '<p style="font-size:10px;line-height:200%; font-family: sans;'
-            'color:#9EA3A8;padding-top:0px">{line}</p>'.format(line=line)
+            u'<p style="font-size:10px;line-height:200%; font-family: sans;'
+            u'color:#9EA3A8;padding-top:0px">{line}</p>'.format(line=line)
             for line in html_lines).format(**email_vars)
 
-        plain_text_footer = '''
+        plain_text_footer = u'''
 Geschäftsstelle Open Government Data
 Bundesamt für Statistik BFS
 Espace de l'Europe 10
@@ -719,16 +717,15 @@ CH-2010 Neuchâtel
 www.bfs.admin.ch/ogd
 '''
         if subscription:
-            plain_text_footer += '''
+            plain_text_footer += u'''
 Abonnement löschen: {unsubscribe_link}
 Mein Abonnement verwalten: {manage_link}
 '''
         else:
-            plain_text_footer += '''
+            plain_text_footer += u'''
 Mein Abonnement verwalten: {manage_link}
 '''
-        plain_text_footer = plain_text_footer.format(**email_vars)
-        log.warning(type(plain_text_footer))
+        # plain_text_footer = plain_text_footer.format(**email_vars)
         return plain_text_footer, html_footer
 
     def get_manage_email_contents(self, email_vars, subject=None,
@@ -760,11 +757,59 @@ Mein Abonnement verwalten: {manage_link}
         return subject.decode('utf-8'), plain_text_body.decode('utf-8'), \
             html_body.decode('utf-8')
 
-    def get_verification_email_contents(self, subscription, subject=None,
+    def get_verification_email_contents(self, email_vars, subject=None,
                                         plain_text_body=None, html_body=None):
-        subject, plain_text_body, html_body = \
-            super(OgdchSubscribePlugin, self).get_verification_email_contents(
-                subscription, subject, plain_text_body, html_body)
+        # These two links are added to the email_vars dict in
+        # ckanext-subscribe, separately from the other email_vars. We have to
+        # make sure they're unicode strings and point to the frontend.
+        ogdch_plugin_utils.ogdch_transform_links(
+            email_vars, ['verification_link', 'manage_link'])
 
-        return subject.decode('utf-8'), plain_text_body.decode('utf-8'), \
-            html_body.decode('utf-8')
+        subject = u'Bestätigungsmail – Abonnement Datensatz - {site_title}'.\
+            format(**email_vars)
+        # Make sure subject is only one line
+        subject = subject.split('\n')[0]
+
+        html_body = u'''
+<p>Guten Tag</p>
+
+<p>Sie haben via opendata.swiss die automatische Benachrichtigung über die
+Aktualisierungen des folgenden Datensatzes abonniert:</p>
+
+<ul><li><a href="{object_link}">{object_title_de}</a></li></ul>
+
+<p>Bitte bestätigen Sie das Abonnement, indem Sie auf den folgenden Link
+klicken: <a href="{verification_link}">{verification_link}</a></p>
+
+<p>Wenn Sie kein Abonnement gemacht haben, ignorieren Sie bitte dieses
+E-Mail.</p>
+
+<p>Freundliche Grüsse</br>
+Team Geschäftsstelle OGD</p>
+
+--
+{html_footer}
+'''.format(**email_vars)
+
+        plain_text_body = u'''
+Guten Tag
+
+Sie haben via opendata.swiss die automatische Benachrichtigung über die
+Aktualisierungen des folgenden Datensatzes abonniert:
+
+{object_title_de}: {object_link}
+
+Bitte bestätigen Sie das Abonnement, indem Sie auf den folgenden Link
+klicken: {verification_link}
+
+Wenn Sie kein Abonnement gemacht haben, ignorieren Sie bitte dieses
+E-Mail.
+
+Freundliche Grüsse
+Team Geschäftsstelle OGD
+
+--
+{plain_text_footer}
+'''.format(**email_vars)
+
+        return subject, plain_text_body, html_body
