@@ -127,6 +127,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_add_users_to_groups': ogdch_logic.ogdch_add_users_to_groups,
             'user_create': ogdch_logic.ogdch_user_create,
             'ogdch_harvest_monitor': ogdch_logic.ogdch_harvest_monitor,
+            'ogdch_showcase_submit': ogdch_logic.ogdch_showcase_submit,
         }
 
     # ITemplateHelpers
