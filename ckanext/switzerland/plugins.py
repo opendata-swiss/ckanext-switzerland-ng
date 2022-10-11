@@ -801,12 +801,67 @@ Team Geschäftsstelle OGD
 
     def get_notification_email_contents(self, email_vars, subject=None,
                                         plain_text_body=None, html_body=None):
-        subject, plain_text_body, html_body = \
-            super(OgdchSubscribePlugin, self).get_notification_email_contents(
-                email_vars, subject, plain_text_body, html_body)
+        # email_vars['notifications'] is a list of dicts of variables, one for
+        # each notification in the email.
+        # See ckanext.subscribe.notification_email.get_notification_email_vars
+        # for the full structure. Our email text only includes links to the
+        # datasets that have been updated, so we can ignore the activity
+        # links.
+        for notification in email_vars.get('notifications'):
+            ogdch_plugin_utils.ogdch_transform_links(
+                notification, ['object_link'])
 
-        return subject.decode('utf-8'), plain_text_body.decode('utf-8'), \
-            html_body.decode('utf-8')
+            for lang in ogdch_localize_utils.LANGUAGES:
+                notification['object_title_{}'.format(lang)] = \
+                    ogdch_localize_utils.get_localized_value_from_json(
+                        notification.get('object_title'), lang)
+
+        subject = u'Update notification – Aktualisierter Datensatz auf {site_title}'\
+            .format(**email_vars)  # noqa
+        # Make sure subject is only one line
+        subject = subject.split('\n')[0]
+
+        html_body = u'''
+<p>Guten Tag</p>
+
+<p>Folgender Datensatz wurde aktualisiert:</p>
+
+<ul>'''
+        for notification in email_vars.get('notifications'):
+            html_body += u'''
+    <li>
+      <a href="{object_link}">"{object_title_de}" ({object_name})</a>
+    </li>'''.format(**notification)
+
+        html_body += u'''
+</ul>
+
+<p>Freundliche Grüsse</br>
+Team Geschäftsstelle OGD</p>
+
+--
+''' + email_vars.get('html_footer', '')
+        html_body = html_body.format(**email_vars)
+
+        plain_text_body = u'''
+Guten Tag
+
+Folgender Datensatz wurde aktualisiert:
+'''
+        for notification in email_vars.get('notifications'):
+            plain_text_body += u'''
+- "{object_title_de}" ({object_name}): {object_link}'''.format(**notification)
+
+        plain_text_body += u'''
+
+Freundliche Grüsse
+Team Geschäftsstelle OGD
+
+--
+''' + email_vars.get('plain_text_footer', '')
+        plain_text_body = plain_text_body.format(**email_vars)
+
+        return subject, plain_text_body, html_body
 
     def get_verification_email_contents(self, email_vars, subject=None,
                                         plain_text_body=None, html_body=None):
