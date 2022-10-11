@@ -707,7 +707,7 @@ class OgdchSubscribePlugin(SubscribePlugin):
         html_footer = '\n'.join(
             u'<p style="font-size:10px;line-height:200%; font-family: sans;'
             u'color:#9EA3A8;padding-top:0px">{line}</p>'.format(line=line)
-            for line in html_lines).format(**email_vars)
+            for line in html_lines)
 
         plain_text_footer = u'''
 Geschäftsstelle Open Government Data
@@ -725,7 +725,7 @@ Mein Abonnement verwalten: {manage_link}
             plain_text_footer += u'''
 Mein Abonnement verwalten: {manage_link}
 '''
-        # plain_text_footer = plain_text_footer.format(**email_vars)
+
         return plain_text_footer, html_footer
 
     def get_manage_email_contents(self, email_vars, subject=None,
@@ -788,8 +788,9 @@ E-Mail.</p>
 Team Geschäftsstelle OGD</p>
 
 --
-{html_footer}
-'''.format(**email_vars)
+'''
+        html_body += email_vars.get('html_footer')
+        html_body = html_body.format(**email_vars)
 
         plain_text_body = u'''
 Guten Tag
@@ -809,7 +810,8 @@ Freundliche Grüsse
 Team Geschäftsstelle OGD
 
 --
-{plain_text_footer}
-'''.format(**email_vars)
+'''
+        plain_text_body += email_vars.get('plain_text_footer')
+        plain_text_body = plain_text_body.format(**email_vars)
 
         return subject, plain_text_body, html_body
