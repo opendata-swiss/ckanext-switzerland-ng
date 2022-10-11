@@ -741,12 +741,42 @@ Mein Abonnement verwalten: {manage_link}
                                                      subject=None,
                                                      plain_text_body=None,
                                                      html_body=None):
-        subject, plain_text_body, html_body = \
-            super(OgdchSubscribePlugin, self).get_subscription_confirmation_email_contents(  # noqa
-                email_vars, subject, plain_text_body, html_body)
+        subject = u'Bestätigung – Abonnement Account verwalten – {site_title}'\
+            .format(**email_vars)
+        # Make sure subject is only one line
+        subject = subject.split('\n')[0]
 
-        return subject.decode('utf-8'), plain_text_body.decode('utf-8'), \
-            html_body.decode('utf-8')
+        html_body = u'''
+<p>Guten Tag</p>
+
+<p>Vielen Dank für Ihre Bestätigung des Datensatz-Abonnements auf
+ opendata.swiss.</p>
+
+<p>Sie können das Abonnement jederzeit widerrufen oder Ihre Einstellungen
+ anpassen.</p>
+
+<p>Freundliche Grüsse</br>
+Team Geschäftsstelle OGD</p>
+
+--
+'''
+        html_body += email_vars.get('html_footer')
+        html_body = html_body.format(**email_vars)
+        plain_text_body = u'''
+Guten Tag
+
+Vielen Dank für Ihre Bestätigung des Datensatz-Abonnements auf opendata.swiss.
+
+Sie können das Abonnement jederzeit widerrufen oder Ihre Einstellungen anpassen.
+
+Freundliche Grüsse
+Team Geschäftsstelle OGD
+
+--
+'''
+        plain_text_body += email_vars.get('plain_text_footer')
+        plain_text_body = plain_text_body.format(**email_vars)
+        return subject, plain_text_body, html_body
 
     def get_notification_email_contents(self, email_vars, subject=None,
                                         plain_text_body=None, html_body=None):
