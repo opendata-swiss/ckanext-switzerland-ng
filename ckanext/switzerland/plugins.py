@@ -781,7 +781,7 @@ Team Geschäftsstelle OGD</p>
 
 --
 '''
-        html_body += email_vars.get('html_footer')
+        html_body += email_vars.get('html_footer', '')
         html_body = html_body.format(**email_vars)
         plain_text_body = u'''
 Guten Tag
@@ -795,7 +795,7 @@ Team Geschäftsstelle OGD
 
 --
 '''
-        plain_text_body += email_vars.get('plain_text_footer')
+        plain_text_body += email_vars.get('plain_text_footer', '')
         plain_text_body = plain_text_body.format(**email_vars)
         return subject, plain_text_body, html_body
 
@@ -840,7 +840,7 @@ Team Geschäftsstelle OGD</p>
 
 --
 '''
-        html_body += email_vars.get('html_footer')
+        html_body += email_vars.get('html_footer', '')
         html_body = html_body.format(**email_vars)
 
         plain_text_body = u'''
@@ -862,7 +862,7 @@ Team Geschäftsstelle OGD
 
 --
 '''
-        plain_text_body += email_vars.get('plain_text_footer')
+        plain_text_body += email_vars.get('plain_text_footer', '')
         plain_text_body = plain_text_body.format(**email_vars)
 
         return subject, plain_text_body, html_body
