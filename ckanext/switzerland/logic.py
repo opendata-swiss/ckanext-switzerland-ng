@@ -10,7 +10,7 @@ import rdflib
 import rdflib.parser
 from rdflib.namespace import Namespace, RDF
 
-from ckan.common import config
+from ckan.common import config, json
 from ckan.plugins.toolkit import get_or_bust, side_effect_free
 from ckan.logic import ActionError, NotFound, ValidationError
 import ckan.plugins.toolkit as tk
@@ -30,6 +30,9 @@ from ckanext.switzerland.helpers.logic_helpers import (
     get_dataset_count, get_org_count, get_showcases_for_dataset,
     map_existing_resources_to_new_dataset)
 from ckan.lib.munge import munge_title_to_name
+from ckanext.subscribe import dictization
+from ckanext.subscribe.utils import get_email_vars
+from ckanext.subscribe.model import Subscription, Frequency
 
 import logging
 
@@ -534,3 +537,43 @@ def ogdch_user_create(context, data_dict):
             .format(user['email'], user['name'], exception))
 
     return user
+
+
+@side_effect_free
+def ogdch_subscribe_manage(context, data_dict):
+    '''Request a code for managing existing subscriptions. Causes a email to be
+    sent, containing a manage link.
+    :returns: json
+    '''
+    
+    #data_dict includes only code {'code': u'mG7iL4VnFrY02IkWcS0YZHkRHZlvxZpW'}
+    #log.info(get_email_vars(code=data_dict['code'])) # to get email
+    
+    data_dict['email'] = "nata@cats.com"
+    email = get_or_bust(data_dict, 'email')
+    model = context['model']
+    
+    subscription_objs = \
+        model.Session.query(Subscription, model.Package, model.Group) \
+            .filter_by(email=email) \
+            .outerjoin(model.Package, Subscription.object_id == model.Package.id) \
+            .outerjoin(model.Group, Subscription.object_id == model.Group.id) \
+            .all()
+    
+    subscriptions = []
+    for subscription_obj, package, group in subscription_objs:
+        subscription = \
+            dictization.dictize_subscription(subscription_obj, context)
+        # add information about dataset
+        subscription['dataset_id'] = package.id
+        subscription['dataset_name'] = package.name
+        
+        subscriptions.append(subscription)
+        
+        
+    return json.dumps(subscriptions)      
+        
+    
+    
+    
+    
