@@ -730,12 +730,33 @@ Mein Abonnement verwalten: {manage_link}
 
     def get_manage_email_contents(self, email_vars, subject=None,
                                   plain_text_body=None, html_body=None):
-        subject, plain_text_body, html_body = \
-            super(OgdchSubscribePlugin, self).get_manage_email_contents(
-                email_vars, subject, plain_text_body, html_body)
+        subject = u'Manage {site_title} subscription'.format(**email_vars)
+        # Make sure subject is only one line
+        subject = subject.split('\n')[0]
 
-        return subject.decode('utf-8'), plain_text_body.decode('utf-8'), \
-            html_body.decode('utf-8')
+        html_body = u'''
+<p>{site_title} subscription options<br/>
+
+<p>To manage subscriptions for {email}, click this link:<br/>
+<a href="{manage_link}">{manage_link}</a></p>
+
+--
+{html_footer}
+'''
+        html_body += email_vars.get('html_footer', '')
+        html_body.format(**email_vars)
+        plain_text_body = u'''
+{site_title} subscription requested:
+
+<p>To manage subscriptions for {email}, click this link:<br/>
+{manage_link}
+
+--
+{plain_text_footer}
+'''
+        plain_text_body += email_vars.get('plain_text_footer', '')
+        plain_text_body = plain_text_body.format(**email_vars)
+        return subject, plain_text_body, html_body
 
     def get_subscription_confirmation_email_contents(self, email_vars,
                                                      subject=None,
