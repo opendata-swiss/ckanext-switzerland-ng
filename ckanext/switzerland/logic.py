@@ -29,6 +29,7 @@ from ckanext.switzerland.helpers.mail_helper import send_registration_email
 from ckanext.switzerland.helpers.logic_helpers import (
     get_dataset_count, get_org_count, get_showcases_for_dataset,
     map_existing_resources_to_new_dataset)
+from ckan.lib.munge import munge_title_to_name
 
 import logging
 
@@ -305,6 +306,10 @@ def ogdch_showcase_submit(context, data_dict):
     all the datasets that are attached to the showcase.
     '''
     try:
+        title = data_dict.get('title')
+        if not title:
+            raise ValidationError("Missing title value")
+        data_dict['name'] = munge_title_to_name(title)
         showcase = tk.get_action('ckanext_showcase_create')(
             context, data_dict
         )
