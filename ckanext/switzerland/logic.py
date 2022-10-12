@@ -31,8 +31,7 @@ from ckanext.switzerland.helpers.logic_helpers import (
     map_existing_resources_to_new_dataset)
 from ckan.lib.munge import munge_title_to_name
 from ckanext.subscribe import dictization
-from ckanext.subscribe.utils import get_email_vars
-from ckanext.subscribe.model import Subscription, Frequency
+from ckanext.subscribe.model import Subscription
 from ckanext.subscribe.email_auth import authenticate_with_code
 
 import logging
