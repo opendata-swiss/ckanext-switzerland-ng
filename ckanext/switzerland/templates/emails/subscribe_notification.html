@@ -1,15 +1,16 @@
+<body style="line-height: 200%; font-family: sans-serif; padding-top: 0">
 <p>Guten Tag</p>
 
 <p>Folgender Datensatz wurde aktualisiert:</p>
 
 <ul>
-    {% for notification in notifications %}
+{% for notification in notifications %}
     <li>
         <a href="{{ notification.object_link }}">
             "{{ notification.object_title_de }}" ({{ notification.object_name }})
         </a>
     </li>
-    {% endfor %}
+{% endfor %}
 </ul>
 
 <p>
@@ -17,7 +18,7 @@
     Team Geschäftsstelle OGD
 </p>
 
-<p style="font-size:10px;line-height:200%; font-family: sans-serif;color:#9EA3A8;padding-top:0px">
+<p>
     Geschäftsstelle Open Government Data<br/>
     Bundesamt für Statistik BFS<br/>
     Espace de l'Europe 10<br/>
@@ -25,13 +26,20 @@
     <a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
 </p>
 
-<p style="font-size:10px;line-height:200%; font-family: sans-serif;color:#9EA3A8;padding-top:0px">
+<p>
     <a href="https://opendata.swiss">
         <img src="https://opendata.swiss/images/logo_horizontal.png" alt="opendata.swiss"
-             width="420" height="220" style="max-width: 100%; height: auto;"/>
+             width="420" style="max-width: 100%; height: auto;"/>
+    </a>
+</p>
+<p>
+    <a href="https://twitter.com/opendataswiss">
+        <img src="https://opendata.swiss/images/twitter.svg" alt="Twitter"
+             style="color: #fff; background-color: #009688; border: 0;"/>
     </a>
 </p>
 
-<p style="font-size:10px;line-height:200%; font-family: sans-serif;color:#9EA3A8;padding-top:0px">
+<p>
     <a href="{{ manage_link }}">Mein Abonnement verwalten</a>
 </p>
+</body>

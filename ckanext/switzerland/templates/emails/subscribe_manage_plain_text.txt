@@ -1,6 +1,6 @@
 Guten Tag
 
-{{ site_title }} subscription requested:
+{{ site_title }} subscription options:
 
 To manage subscriptions for {{ email }}, click this link:
 {{ manage_link }}

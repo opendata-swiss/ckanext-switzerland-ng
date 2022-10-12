@@ -1,12 +1,16 @@
 Guten Tag
 
 Folgender Datensatz wurde aktualisiert:
-
 {% for notification in notifications %}
 - "{{ notification.object_title_de }}": {{ notification.object_link }}
 {% endfor %}
-
 Freundliche Grüsse
 Team Geschäftsstelle OGD
+
+Geschäftsstelle Open Government Data
+Bundesamt für Statistik BFS
+Espace de l'Europe 10
+CH-2010 Neuchâtel
+www.bfs.admin.ch/ogd
 
 Mein Abonnement verwalten: {{ manage_link }}
