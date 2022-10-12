@@ -540,24 +540,23 @@ def ogdch_user_create(context, data_dict):
 
 
 def ogdch_subscribe_manage(context, data_dict):
-    '''Request a code for managing existing subscriptions. Causes a email to be
-    sent, containing a manage link.
+    """Request a code to get information about existing subscriptions.
     :returns: list of dictionaries
-    '''
-    
+    """
+
     data_dict['email'] = authenticate_with_code(data_dict['code'])
     if not data_dict['email']:
         raise Exception("The email is not valid")
-        
+
     email = get_or_bust(data_dict, 'email')
     model = context['model']
     subscription_objs = \
-        model.Session.query(Subscription, model.Package, model.Group) \
-            .filter_by(email=email) \
-            .outerjoin(model.Package, Subscription.object_id == model.Package.id) \
-            .outerjoin(model.Group, Subscription.object_id == model.Group.id) \
-            .all()
-    
+        model.Session.query(Subscription, model.Package, model.Group)\
+        .filter_by(email=email)\
+        .outerjoin(model.Package, Subscription.object_id == model.Package.id)\
+        .outerjoin(model.Group, Subscription.object_id == model.Group.id)\
+        .all()
+
     subscriptions = []
     for subscription_obj, package, group in subscription_objs:
         subscription = \
@@ -565,6 +564,5 @@ def ogdch_subscribe_manage(context, data_dict):
         # add information about dataset
         subscription['object_name'] = package.name
         subscriptions.append(subscription)
-        
-    return subscriptions    
-        
+
+    return subscriptions
