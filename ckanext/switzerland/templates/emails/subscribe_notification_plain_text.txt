@@ -1,0 +1,12 @@
+Guten Tag
+
+Folgender Datensatz wurde aktualisiert:
+
+{% for notification in notifications %}
+- "{{ notification.object_title_de }}": {{ notification.object_link }}
+{% endfor %}
+
+Freundliche Grüsse
+Team Geschäftsstelle OGD
+
+Mein Abonnement verwalten: {{ manage_link }}

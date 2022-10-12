@@ -1,0 +1,17 @@
+Guten Tag
+
+Vielen Dank für Ihre Bestätigung des Datensatz-Abonnements auf opendata.swiss.
+
+Sie können das Abonnement jederzeit widerrufen oder Ihre Einstellungen anpassen.
+
+Freundliche Grüsse
+Team Geschäftsstelle OGD
+
+Geschäftsstelle Open Government Data
+Bundesamt für Statistik BFS
+Espace de l'Europe 10
+CH-2010 Neuchâtel
+www.bfs.admin.ch/ogd
+
+Abonnement löschen: {{ unsubscribe_link }}
+Mein Abonnement verwalten: {{ manage_link }}

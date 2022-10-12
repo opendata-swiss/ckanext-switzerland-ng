@@ -1,6 +1,7 @@
 # coding=UTF-8
 
 from ckan.common import OrderedDict
+from ckan.lib.base import render_jinja2
 from ckan.model import Session, Package, PACKAGE_NAME_MAX_LENGTH
 from ckanext.showcase.plugin import ShowcasePlugin
 from ckanext.subscribe.plugin import SubscribePlugin
@@ -674,88 +675,19 @@ class OgdchSubscribePlugin(SubscribePlugin):
 
     def get_footer_contents(self, email_vars, subscription=None,
                             plain_text_footer=None, html_footer=None):
-        html_lines = []
-        html_lines.append(
-            u'Geschäftsstelle Open Government Data</br>'
-            u'Bundesamt für Statistik BFS</br>'
-            u'Espace de l\'Europe 10</br>'
-            u'CH-2010 Neuchâtel</br>'
-            u'<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a></br>'
-        )
-        html_lines.append(
-            u'<a href="https://opendata.swiss">'
-            u'<img src="https://opendata.swiss/images/logo_horizontal.png" '
-            u'alt="opendata.swiss" width="420" height="220"'
-            u'style="max-width: 100%; height: auto;" />'
-            u'</a>'
-        )
-        html_lines.append(
-            u'<a href="https://twitter.com/opendataswiss">'
-            u'<img style="color: #fff; background-color: #009688; border: 0;" '
-            u'src="https://opendata.swiss/images/twitter.svg" alt="Twitter" />'
-            u'</a>'
-        )
-        if subscription:
-            html_lines.append(
-                u'<a href="{unsubscribe_link}">Abonnement löschen</a> | '
-                u'<a href="{manage_link}">Mein Abonnement verwalten</a>'
-            )
-        else:
-            html_lines.append(
-                u'<a href="{manage_link}">Mein Abonnement verwalten</a>'
-            )
-        html_footer = '\n'.join(
-            u'<p style="font-size:10px;line-height:200%; font-family: sans;'
-            u'color:#9EA3A8;padding-top:0px">{line}</p>'.format(line=line)
-            for line in html_lines)
-
-        plain_text_footer = u'''
-Geschäftsstelle Open Government Data
-Bundesamt für Statistik BFS
-Espace de l'Europe 10
-CH-2010 Neuchâtel
-www.bfs.admin.ch/ogd
-'''
-        if subscription:
-            plain_text_footer += u'''
-Abonnement löschen: {unsubscribe_link}
-Mein Abonnement verwalten: {manage_link}
-'''
-        else:
-            plain_text_footer += u'''
-Mein Abonnement verwalten: {manage_link}
-'''
-
-        return plain_text_footer, html_footer
+        # Because we are sending emails in four languages, the footers are
+        # included in the email templates, not generated separately.
+        return '', ''
 
     def get_manage_email_contents(self, email_vars, subject=None,
                                   plain_text_body=None, html_body=None):
         subject = u'Manage {site_title} subscription'.format(**email_vars)
-        # Make sure subject is only one line
-        subject = subject.split('\n')[0]
 
-        html_body = u'''
-<p>{site_title} subscription options<br/>
+        html_body = render_jinja2(
+            '/emails/subscribe_manage.html', email_vars)
+        plain_text_body = render_jinja2(
+            '/emails/subscribe_manage_plain_text.txt', email_vars)
 
-<p>To manage subscriptions for {email}, click this link:<br/>
-<a href="{manage_link}">{manage_link}</a></p>
-
---
-{html_footer}
-'''
-        html_body += email_vars.get('html_footer', '')
-        html_body.format(**email_vars)
-        plain_text_body = u'''
-{site_title} subscription requested:
-
-<p>To manage subscriptions for {email}, click this link:<br/>
-{manage_link}
-
---
-{plain_text_footer}
-'''
-        plain_text_body += email_vars.get('plain_text_footer', '')
-        plain_text_body = plain_text_body.format(**email_vars)
         return subject, plain_text_body, html_body
 
     def get_subscription_confirmation_email_contents(self, email_vars,
@@ -764,39 +696,12 @@ Mein Abonnement verwalten: {manage_link}
                                                      html_body=None):
         subject = u'Bestätigung – Abonnement Account verwalten – {site_title}'\
             .format(**email_vars)
-        # Make sure subject is only one line
-        subject = subject.split('\n')[0]
 
-        html_body = u'''
-<p>Guten Tag</p>
+        html_body = render_jinja2(
+            '/emails/subscribe_confirmation.html', email_vars)
+        plain_text_body = render_jinja2(
+            '/emails/subscribe_confirmation_plain_text.txt', email_vars)
 
-<p>Vielen Dank für Ihre Bestätigung des Datensatz-Abonnements auf
- opendata.swiss.</p>
-
-<p>Sie können das Abonnement jederzeit widerrufen oder Ihre Einstellungen
- anpassen.</p>
-
-<p>Freundliche Grüsse</br>
-Team Geschäftsstelle OGD</p>
-
---
-'''
-        html_body += email_vars.get('html_footer', '')
-        html_body = html_body.format(**email_vars)
-        plain_text_body = u'''
-Guten Tag
-
-Vielen Dank für Ihre Bestätigung des Datensatz-Abonnements auf opendata.swiss.
-
-Sie können das Abonnement jederzeit widerrufen oder Ihre Einstellungen anpassen.
-
-Freundliche Grüsse
-Team Geschäftsstelle OGD
-
---
-'''
-        plain_text_body += email_vars.get('plain_text_footer', '')
-        plain_text_body = plain_text_body.format(**email_vars)
         return subject, plain_text_body, html_body
 
     def get_notification_email_contents(self, email_vars, subject=None,
@@ -816,50 +721,14 @@ Team Geschäftsstelle OGD
                     ogdch_localize_utils.get_localized_value_from_json(
                         notification.get('object_title'), lang)
 
-        subject = u'Update notification – Aktualisierter Datensatz auf {site_title}'\
-            .format(**email_vars)  # noqa
-        # Make sure subject is only one line
-        subject = subject.split('\n')[0]
+        subject = u'Update notification – ' \
+                  u'Aktualisierter Datensatz auf ' \
+                  u'{site_title}'.format(**email_vars)
 
-        html_body = u'''
-<p>Guten Tag</p>
-
-<p>Folgender Datensatz wurde aktualisiert:</p>
-
-<ul>'''
-        for notification in email_vars.get('notifications'):
-            html_body += u'''
-    <li>
-      <a href="{object_link}">"{object_title_de}" ({object_name})</a>
-    </li>'''.format(**notification)
-
-        html_body += u'''
-</ul>
-
-<p>Freundliche Grüsse</br>
-Team Geschäftsstelle OGD</p>
-
---
-''' + email_vars.get('html_footer', '')
-        html_body = html_body.format(**email_vars)
-
-        plain_text_body = u'''
-Guten Tag
-
-Folgender Datensatz wurde aktualisiert:
-'''
-        for notification in email_vars.get('notifications'):
-            plain_text_body += u'''
-- "{object_title_de}" ({object_name}): {object_link}'''.format(**notification)
-
-        plain_text_body += u'''
-
-Freundliche Grüsse
-Team Geschäftsstelle OGD
-
---
-''' + email_vars.get('plain_text_footer', '')
-        plain_text_body = plain_text_body.format(**email_vars)
+        html_body = render_jinja2(
+            '/emails/subscribe_notification.html', email_vars)
+        plain_text_body = render_jinja2(
+            '/emails/subscribe_notification_plain_text.txt', email_vars)
 
         return subject, plain_text_body, html_body
 
@@ -873,51 +742,10 @@ Team Geschäftsstelle OGD
 
         subject = u'Bestätigungsmail – Abonnement Datensatz - {site_title}'.\
             format(**email_vars)
-        # Make sure subject is only one line
-        subject = subject.split('\n')[0]
 
-        html_body = u'''
-<p>Guten Tag</p>
-
-<p>Sie haben via opendata.swiss die automatische Benachrichtigung über die
-Aktualisierungen des folgenden Datensatzes abonniert:</p>
-
-<ul><li><a href="{object_link}">{object_title_de}</a></li></ul>
-
-<p>Bitte bestätigen Sie das Abonnement, indem Sie auf den folgenden Link
-klicken: <a href="{verification_link}">{verification_link}</a></p>
-
-<p>Wenn Sie kein Abonnement gemacht haben, ignorieren Sie bitte dieses
-E-Mail.</p>
-
-<p>Freundliche Grüsse</br>
-Team Geschäftsstelle OGD</p>
-
---
-'''
-        html_body += email_vars.get('html_footer', '')
-        html_body = html_body.format(**email_vars)
-
-        plain_text_body = u'''
-Guten Tag
-
-Sie haben via opendata.swiss die automatische Benachrichtigung über die
-Aktualisierungen des folgenden Datensatzes abonniert:
-
-{object_title_de}: {object_link}
-
-Bitte bestätigen Sie das Abonnement, indem Sie auf den folgenden Link
-klicken: {verification_link}
-
-Wenn Sie kein Abonnement gemacht haben, ignorieren Sie bitte dieses
-E-Mail.
-
-Freundliche Grüsse
-Team Geschäftsstelle OGD
-
---
-'''
-        plain_text_body += email_vars.get('plain_text_footer', '')
-        plain_text_body = plain_text_body.format(**email_vars)
+        html_body = render_jinja2(
+            '/emails/subscribe_verification.html', email_vars)
+        plain_text_body = render_jinja2(
+            '/emails/subscribe_verification_plain_text.txt', email_vars)
 
         return subject, plain_text_body, html_body

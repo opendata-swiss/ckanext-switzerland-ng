@@ -1,0 +1,23 @@
+Guten Tag
+
+Sie haben via opendata.swiss die automatische Benachrichtigung über die
+Aktualisierungen des folgenden Datensatzes abonniert:
+
+{{ object_title_de }}: {{ object_link }}
+
+Bitte bestätigen Sie das Abonnement, indem Sie auf den folgenden Link
+klicken: {{ verification_link }}
+
+Wenn Sie kein Abonnement gemacht haben, ignorieren Sie bitte dieses
+E-Mail.
+
+Freundliche Grüsse
+Team Geschäftsstelle OGD
+
+Geschäftsstelle Open Government Data
+Bundesamt für Statistik BFS
+Espace de l'Europe 10
+CH-2010 Neuchâtel
+www.bfs.admin.ch/ogd
+
+Mein Abonnement verwalten: {{ manage_link }}

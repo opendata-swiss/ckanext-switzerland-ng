@@ -1,0 +1,17 @@
+Guten Tag
+
+{{ site_title }} subscription requested:
+
+To manage subscriptions for {{ email }}, click this link:
+{{ manage_link }}
+
+Freundliche Grüsse
+Team Geschäftsstelle OGD
+
+Geschäftsstelle Open Government Data
+Bundesamt für Statistik BFS
+Espace de l'Europe 10
+CH-2010 Neuchâtel
+www.bfs.admin.ch/ogd
+
+Mein Abonnement verwalten: {{ manage_link }}
