@@ -30,9 +30,8 @@ from ckanext.switzerland.helpers.logic_helpers import (
     get_dataset_count, get_org_count, get_showcases_for_dataset,
     map_existing_resources_to_new_dataset)
 from ckan.lib.munge import munge_title_to_name
-from ckanext.subscribe import dictization
-from ckanext.subscribe.model import Subscription
 from ckanext.subscribe.email_auth import authenticate_with_code
+from ckanext.subscribe.action import subscribe_list_subscriptions
 
 import logging
 
@@ -543,26 +542,12 @@ def ogdch_subscribe_manage(context, data_dict):
     """Request a code to get information about existing subscriptions.
     :returns: list of dictionaries
     """
-
-    data_dict['email'] = authenticate_with_code(data_dict['code'])
+    try:
+        data_dict['email'] = authenticate_with_code(data_dict['code'])
+    except ValueError:
+        raise ValidationError("Code is not valid")
+        
     if not data_dict['email']:
         raise Exception("The email is not valid")
 
-    email = get_or_bust(data_dict, 'email')
-    model = context['model']
-    subscription_objs = \
-        model.Session.query(Subscription, model.Package, model.Group)\
-        .filter_by(email=email)\
-        .outerjoin(model.Package, Subscription.object_id == model.Package.id)\
-        .outerjoin(model.Group, Subscription.object_id == model.Group.id)\
-        .all()
-
-    subscriptions = []
-    for subscription_obj, package, group in subscription_objs:
-        subscription = \
-            dictization.dictize_subscription(subscription_obj, context)
-        # add information about dataset
-        subscription['object_name'] = package.name
-        subscriptions.append(subscription)
-
-    return subscriptions
+    return subscribe_list_subscriptions(context, data_dict)
