@@ -166,6 +166,8 @@ Aktualisierungen des folgenden Datensatzes abonniert:''', body_plain_text.strip(
 
         self._test_html_footer(body_html, subscription=False, code='')
         self._test_plain_text_footer(body_plain_text, subscription=False, code='')
+        self._test_all_four_languages(body_html, object_title_included=True)
+        self._test_all_four_languages(body_plain_text, object_title_included=True)
 
     def test_get_manage_email_contents(self):
         subscription = factories.Subscription(
@@ -195,6 +197,8 @@ opendata.swiss subscription options:''', body_plain_text.strip())
         self._test_plain_text_footer(
             body_plain_text, subscription=False,
             code=subscription.verification_code)
+        self._test_all_four_languages(body_html, object_title_included=False)
+        self._test_all_four_languages(body_plain_text, object_title_included=False)
 
     def test_get_subscription_confirmation_email_contents(self):
         subscription = factories.Subscription(
@@ -228,6 +232,8 @@ Vielen Dank für Ihre Bestätigung des Datensatz-Abonnements auf opendata.swiss.
             body_html, subscription=True, code=code)
         self._test_plain_text_footer(
             body_plain_text, subscription=True, code=code)
+        self._test_all_four_languages(body_html, object_title_included=False)
+        self._test_all_four_languages(body_plain_text, object_title_included=False)
 
     def test_get_notification_email_contents(self):
         code = 'testcode'
@@ -293,6 +299,8 @@ Vielen Dank für Ihre Bestätigung des Datensatz-Abonnements auf opendata.swiss.
             body_html, subscription=False, code=code)
         self._test_plain_text_footer(
             body_plain_text, subscription=False, code=code)
+        self._test_all_four_languages(body_html, object_title_included=True)
+        self._test_all_four_languages(body_plain_text, object_title_included=True)
 
     def _test_html_footer(self, body_html, subscription=False, code=''):
         assert_in(u'''<p>
@@ -337,3 +345,16 @@ www.bfs.admin.ch/ogd
                                    .format(dataset_id=self.dataset['id']) + footer_link_text
 
         assert_in(footer_link_text, body_plain_text)
+
+    def _test_all_four_languages(self, body, object_title_included=False):
+        if object_title_included:
+            assert_in('DE Test', body)
+            assert_in('EN Test', body)
+            assert_in('FR Test', body)
+            assert_in('IT Test', body)
+
+        # Check that there is a sign-off in each language
+        assert_in(u'Team Geschäftsstelle OGD', body)
+        assert_in(u'Team Open Government Data Office', body)
+        assert_in(u'Votre Team Secrétariat OGD', body)
+        assert_in(u'Team Segreteria OGD', body)
