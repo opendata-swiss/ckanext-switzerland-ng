@@ -137,6 +137,12 @@ python setup.py develop
 pip install -r requirements.txt
 pip install -r dev-requirements.txt
 
+echo "Installing ckanext-subscribe..."
+git clone https://github.com/opendata-swiss/ckanext-subscribe.git
+cd ckanext-subscribe
+python setup.py develop
+cd -
+
 echo "Moving test.ini into a subdir..."
 mkdir subdir
 mv test.ini subdir
