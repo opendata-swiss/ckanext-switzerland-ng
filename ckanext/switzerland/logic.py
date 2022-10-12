@@ -546,7 +546,7 @@ def ogdch_subscribe_manage(context, data_dict):
         data_dict['email'] = authenticate_with_code(data_dict['code'])
     except ValueError:
         raise ValidationError("Code is not valid")
-        
+
     if not data_dict['email']:
         raise Exception("The email is not valid")
 
