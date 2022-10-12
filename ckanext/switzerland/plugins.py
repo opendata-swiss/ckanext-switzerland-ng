@@ -128,6 +128,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'user_create': ogdch_logic.ogdch_user_create,
             'ogdch_harvest_monitor': ogdch_logic.ogdch_harvest_monitor,
             'ogdch_showcase_submit': ogdch_logic.ogdch_showcase_submit,
+            'ogdch_subscribe_manage': ogdch_logic.ogdch_subscribe_manage,
         }
 
     # ITemplateHelpers
