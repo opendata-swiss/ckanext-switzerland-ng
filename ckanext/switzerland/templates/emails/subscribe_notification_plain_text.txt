@@ -14,3 +14,60 @@ CH-2010 Neuchâtel
 www.bfs.admin.ch/ogd
 
 Mein Abonnement verwalten: {{ manage_link }}
+
+--
+
+Bonjour
+
+Le jeu de données auquel vous êtes abonné a été mis à jour.
+{% for notification in notifications %}
+- "{{ notification.object_title_fr }}": {{ notification.object_link }}
+{% endfor %}
+Cordialement,
+Votre Team Secrétariat OGD
+
+Secrétariat Open Government Data
+Office fédéral de la statistique
+Espace de l'Europe 10
+CH-2010 Neuchâtel
+<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
+
+Gérer mes abonnements: {{ manage_link }}
+
+--
+
+Hello
+
+The following dataset has been updated:
+{% for notification in notifications %}
+- "{{ notification.object_title_en }}": {{ notification.object_link }}
+{% endfor %}
+Best regards,
+Team Open Government Data Office
+
+Open Government Data Office
+Federal Statistical Office
+Espace de l'Europe 10
+CH-2010 Neuchâtel
+<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
+
+Manage my subscriptions: {{ manage_link }}
+
+--
+
+Buongiorno,
+
+i seguenti dataset sono stati aggiornati:
+{% for notification in notifications %}
+- "{{ notification.object_title_it }}": {{ notification.object_link }}
+{% endfor %}
+Cordiali saluti
+Team Segreteria OGD
+
+Segreteria Open Government Data
+Ufficio federale di statistica UST
+Espace de l’Europe 10,
+CH-2010 Neuchâtel
+<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
+
+Gestione abbonamento: {{ manage_link }}
