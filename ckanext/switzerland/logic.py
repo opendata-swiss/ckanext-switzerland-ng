@@ -10,7 +10,7 @@ import rdflib
 import rdflib.parser
 from rdflib.namespace import Namespace, RDF
 
-from ckan.common import config, json
+from ckan.common import config
 from ckan.plugins.toolkit import get_or_bust, side_effect_free
 from ckan.logic import ActionError, NotFound, ValidationError
 import ckan.plugins.toolkit as tk
@@ -33,6 +33,7 @@ from ckan.lib.munge import munge_title_to_name
 from ckanext.subscribe import dictization
 from ckanext.subscribe.utils import get_email_vars
 from ckanext.subscribe.model import Subscription, Frequency
+from ckanext.subscribe.email_auth import authenticate_with_code
 
 import logging
 
@@ -543,13 +544,13 @@ def ogdch_user_create(context, data_dict):
 def ogdch_subscribe_manage(context, data_dict):
     '''Request a code for managing existing subscriptions. Causes a email to be
     sent, containing a manage link.
-    :returns: json
+    :returns: list of dictionaries
     '''
     
-    #data_dict includes only code {'code': u'mG7iL4VnFrY02IkWcS0YZHkRHZlvxZpW'}
-    #log.info(get_email_vars(code=data_dict['code'])) # to get email
-    
-    data_dict['email'] = "nata@cats.com"
+    data_dict['email'] = authenticate_with_code(data_dict['code'])
+    if not data_dict['email']:
+        raise Exception("The email is not valid")
+        
     email = get_or_bust(data_dict, 'email')
     model = context['model']
     
@@ -571,7 +572,7 @@ def ogdch_subscribe_manage(context, data_dict):
         subscriptions.append(subscription)
         
         
-    return json.dumps(subscriptions)      
+    return subscriptions    
         
     
     
