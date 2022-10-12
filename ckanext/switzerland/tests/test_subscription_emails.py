@@ -12,6 +12,9 @@ from ckanext.subscribe import model as subscribe_model
 from ckanext.subscribe.email_verification import (
     get_verification_email_vars,
 )
+from ckanext.subscribe.notification_email import (
+    get_notification_email_vars
+)
 from ckanext.subscribe.tests import factories
 from ckanext.switzerland.plugins import OgdchSubscribePlugin
 
@@ -148,20 +151,18 @@ class TestSubscriptionEmails(helpers.FunctionalTestBase):
             subscribe.get_verification_email_contents(email_vars)
 
         assert_equal(subject, u'Bestätigungsmail – Abonnement Datensatz - opendata.swiss')
-        assert body_plain_text.strip().startswith(
-            u'''Guten Tag
+        assert_in(u'''Guten Tag
 
 Sie haben via opendata.swiss die automatische Benachrichtigung über die
-Aktualisierungen des folgenden Datensatzes abonniert:'''), body_plain_text.strip()
-        assert body_html.strip().startswith(
-            u'''<p>Guten Tag</p>
+Aktualisierungen des folgenden Datensatzes abonniert:''', body_plain_text.strip())
+        assert_in(u'''<p>Guten Tag</p>
 
 <p>
     Sie haben via opendata.swiss die automatische Benachrichtigung über die
     Aktualisierungen des folgenden Datensatzes abonniert:
-</p>'''), body_html.strip()
-        assert u'http://test.ckan.net' not in body_html
-        assert u'http://test.ckan.net' not in body_plain_text
+</p>''', body_html.strip())
+        assert_not_in(u'http://test.ckan.net', body_html)
+        assert_not_in(u'http://test.ckan.net', body_plain_text)
 
         self._test_html_footer(body_html, subscription=False, code='')
         self._test_plain_text_footer(body_plain_text, subscription=False, code='')
@@ -180,16 +181,14 @@ Aktualisierungen des folgenden Datensatzes abonniert:'''), body_plain_text.strip
             subscribe.get_manage_email_contents(email_vars)
 
         assert_equal(subject, u'Manage opendata.swiss subscription')
-        assert body_plain_text.strip().startswith(
-            u'''Guten Tag
+        assert_in(u'''Guten Tag
 
-opendata.swiss subscription requested:'''), body_plain_text.strip()
-        assert body_html.strip().startswith(
-            u'''<p>Guten Tag</p>
+opendata.swiss subscription options:''', body_plain_text.strip())
+        assert_in(u'''<p>Guten Tag</p>
 
-<p>{site_title} subscription options<br/>'''), body_html.strip()
-        assert u'http://test.ckan.net' not in body_html
-        assert u'http://test.ckan.net' not in body_plain_text
+<p>opendata.swiss subscription options<br/>''', body_html.strip())
+        assert_not_in(u'http://test.ckan.net', body_html)
+        assert_not_in(u'http://test.ckan.net', body_plain_text)
 
         self._test_html_footer(
             body_html, subscription=False, code=subscription.verification_code)
@@ -197,19 +196,115 @@ opendata.swiss subscription requested:'''), body_plain_text.strip()
             body_plain_text, subscription=False,
             code=subscription.verification_code)
 
-    def _test_html_footer(self, body_html, subscription=False, code=''):
-        assert_in(u'''<p style="font-size:10px;line-height:200%; font-family: sans-serif;color:#9EA3A8;padding-top:0px">
-    Geschäftsstelle Open Government Data<br/>
-    Bundesamt für Statistik BFS<br/>
-    Espace de l'Europe 10<br/>
-    CH-2010 Neuchâtel<br/>
-    <a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
-</p>
+    def test_get_subscription_confirmation_email_contents(self):
+        subscription = factories.Subscription(
+            dataset_id=self.dataset['id'], return_object=True)
+        code = 'testcode'
 
-<p style="font-size:10px;line-height:200%; font-family: sans-serif;color:#9EA3A8;padding-top:0px">
+        subscribe = OgdchSubscribePlugin()
+        email_vars = subscribe.get_email_vars(
+            code=code,
+            subscription=subscription
+        )
+        subject, body_plain_text, body_html = \
+            subscribe.get_subscription_confirmation_email_contents(email_vars)
+
+        assert_equal(
+            subject,
+            u'Bestätigung – Abonnement Account verwalten – opendata.swiss'
+        )
+        assert_in(u'''Guten Tag
+
+Vielen Dank für Ihre Bestätigung des Datensatz-Abonnements auf opendata.swiss.''',
+                  body_plain_text.strip())
+        assert_in(u'''<p>Guten Tag</p>
+
+<p>Vielen Dank für Ihre Bestätigung des Datensatz-Abonnements auf opendata.swiss.</p>''',
+                  body_html.strip())
+        assert_not_in(u'http://test.ckan.net', body_html)
+        assert_not_in(u'http://test.ckan.net', body_plain_text)
+
+        self._test_html_footer(
+            body_html, subscription=True, code=code)
+        self._test_plain_text_footer(
+            body_plain_text, subscription=True, code=code)
+
+    def test_get_notification_email_contents(self):
+        code = 'testcode'
+        email = 'bob@example.com'
+        subscription = factories.Subscription(
+            dataset_id=self.dataset['id'], return_object=False)
+        notifications = [
+            {
+                'subscription': subscription,
+                'activities': [
+                    {
+                        'user_id': 'admin',
+                        'object_id': 'test-object-id',
+                        'revision_id': 'test-revision-id-1',
+                        'activity_type': 'changed package',
+                        'timestamp': '2022-10-12T12:00:00',
+                        'data': {
+                            'package': {
+                                'name': 'test-dataset',
+                                'title': '{"fr": "FR Test", "de": "DE Test", "en": "EN Test", "it": "IT Test"}',
+                            }
+                        }
+                    }
+                ],
+            }
+        ]
+
+        email_vars = get_notification_email_vars(
+            code=code,
+            email=email,
+            notifications=notifications
+        )
+        subscribe = OgdchSubscribePlugin()
+        subject, body_plain_text, body_html = \
+            subscribe.get_notification_email_contents(email_vars)
+
+        assert_equal(
+            subject,
+            u'Update notification – Aktualisierter Datensatz auf opendata.swiss'
+        )
+        assert_in(u'''Folgender Datensatz wurde aktualisiert:
+
+- "DE Test": http://frontend-test.ckan.net/dataset/{dataset_id}
+'''.format(dataset_id=self.dataset['id']),
+                  body_plain_text.strip())
+        assert_in(u'''<p>Folgender Datensatz wurde aktualisiert:</p>
+
+<ul>
+
+    <li>
+        <a href="http://frontend-test.ckan.net/dataset/{dataset_id}">
+            "DE Test" (test-dataset)
+        </a>
+    </li>
+
+</ul>
+'''.format(dataset_id=self.dataset['id']),
+                  body_html.strip())
+        assert_not_in(u'http://test.ckan.net', body_html)
+        assert_not_in(u'http://test.ckan.net', body_plain_text)
+
+        self._test_html_footer(
+            body_html, subscription=False, code=code)
+        self._test_plain_text_footer(
+            body_plain_text, subscription=False, code=code)
+
+    def _test_html_footer(self, body_html, subscription=False, code=''):
+        assert_in(u'''<p>
     <a href="https://opendata.swiss">
         <img src="https://opendata.swiss/images/logo_horizontal.png" alt="opendata.swiss"
-             width="420" height="220" style="max-width: 100%; height: auto;"/>
+             width="420" style="max-width: 100%; height: auto;"/>
+    </a>
+</p>
+<p>
+    <a href="https://twitter.com/opendataswiss">
+        <img src="https://opendata.swiss/images/twitter.svg" alt="Twitter"
+             style="color: #fff; background-color: #009688; border: 0;"/>
     </a>
 </p>''', body_html)
 
