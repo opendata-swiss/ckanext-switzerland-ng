@@ -540,7 +540,6 @@ def ogdch_user_create(context, data_dict):
     return user
 
 
-@side_effect_free
 def ogdch_subscribe_manage(context, data_dict):
     '''Request a code for managing existing subscriptions. Causes a email to be
     sent, containing a manage link.
@@ -553,7 +552,6 @@ def ogdch_subscribe_manage(context, data_dict):
         
     email = get_or_bust(data_dict, 'email')
     model = context['model']
-    
     subscription_objs = \
         model.Session.query(Subscription, model.Package, model.Group) \
             .filter_by(email=email) \
@@ -566,15 +564,8 @@ def ogdch_subscribe_manage(context, data_dict):
         subscription = \
             dictization.dictize_subscription(subscription_obj, context)
         # add information about dataset
-        subscription['dataset_id'] = package.id
-        subscription['dataset_name'] = package.name
-        
+        subscription['object_name'] = package.name
         subscriptions.append(subscription)
-        
         
     return subscriptions    
         
-    
-    
-    
-    
