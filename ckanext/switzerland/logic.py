@@ -30,6 +30,8 @@ from ckanext.switzerland.helpers.logic_helpers import (
     get_dataset_count, get_org_count, get_showcases_for_dataset,
     map_existing_resources_to_new_dataset)
 from ckan.lib.munge import munge_title_to_name
+from ckanext.subscribe.email_auth import authenticate_with_code
+from ckanext.subscribe.action import subscribe_list_subscriptions
 
 import logging
 
@@ -534,3 +536,18 @@ def ogdch_user_create(context, data_dict):
             .format(user['email'], user['name'], exception))
 
     return user
+
+
+def ogdch_subscribe_manage(context, data_dict):
+    """Request a code to get information about existing subscriptions.
+    :returns: list of dictionaries
+    """
+    try:
+        data_dict['email'] = authenticate_with_code(data_dict['code'])
+    except ValueError:
+        raise ValidationError("Code is not valid")
+
+    if not data_dict['email']:
+        raise Exception("The email is not valid")
+
+    return subscribe_list_subscriptions(context, data_dict)
