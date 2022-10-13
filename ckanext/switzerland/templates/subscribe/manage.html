@@ -57,7 +57,7 @@
 
   <form method='post' action="{{ h.url_for(controller='ckanext.subscribe.controller:SubscribeController', action='unsubscribe_all') }}" id="unsubscribe-all" enctype="multipart/form-data" class="form-inline">
     <!-- (Bootstrap 3) <div class="form-group input-group-sm"> -->
-      <input id="unsubscribe-code" type="hidden" name="code" value="{{ code }}" />
+      <input id="unsubscribe-all-code" type="hidden" name="code" value="{{ code }}" />
     <!-- </div> -->
     <button type="submit" class="btn btn-default" name="save">{{ _('Unsubscribe all') }}</button>
   </form>
