@@ -1,9 +1,4 @@
-{% extends "page.html" %}
-
-{% block styles %}
-  {{ super() }}
-  {% resource 'subscribe/subscribe.css' %}
-{% endblock styles %}
+{% ckan_extends %}
 
 {% block primary %}
 <article class="module">
@@ -16,9 +11,10 @@
 {% if subscriptions %}
   <table id="subscriptions">
     {% for subscription in subscriptions %}
+      {% set title = h.get_localized_value_for_display(subscription.object_title) %}
       <tr>
         <td>{{ subscription.object_type |capitalize }}</td>
-        <td><a href="{{ subscription.object_link }}">{{ subscription.object_title }}</a></td>
+        <td><a href="{{ subscription.object_link }}">{{ title }}</a></td>
         <td>
           {% if not subscription.verified %}Unverified{% endif %}
         </td>
@@ -73,5 +69,3 @@
   </div>
 </article>
 {% endblock %}
-
-{% block secondary %}{% endblock %}
