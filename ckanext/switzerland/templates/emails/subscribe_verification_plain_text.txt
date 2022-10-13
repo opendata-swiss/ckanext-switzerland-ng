@@ -20,8 +20,6 @@ Espace de l'Europe 10
 CH-2010 Neuchâtel
 www.bfs.admin.ch/ogd
 
-Mein Abonnement verwalten: {{ manage_link }}
-
 --
 
 Bonjour
@@ -45,8 +43,6 @@ Office fédéral de la statistique
 Espace de l'Europe 10
 CH-2010 Neuchâtel
 <a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
-
-Gérer mes abonnements: {{ manage_link }}
 
 --
 
@@ -72,8 +68,6 @@ Espace de l'Europe 10
 CH-2010 Neuchâtel
 <a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
 
-Manage my subscriptions: {{ manage_link }}
-
 --
 
 Buongiorno,
@@ -97,5 +91,3 @@ Ufficio federale di statistica UST
 Espace de l’Europe 10,
 CH-2010 Neuchâtel
 <a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
-
-Gestione abbonamento: {{ manage_link }}
