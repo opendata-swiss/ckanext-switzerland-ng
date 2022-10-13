@@ -31,7 +31,9 @@ from ckanext.switzerland.helpers.logic_helpers import (
     map_existing_resources_to_new_dataset)
 from ckan.lib.munge import munge_title_to_name
 from ckanext.subscribe.email_auth import authenticate_with_code
-from ckanext.subscribe.action import subscribe_list_subscriptions
+from ckanext.subscribe.action import (subscribe_list_subscriptions,
+                                      subscribe_unsubscribe,
+                                      subscribe_unsubscribe_all)
 
 import logging
 
@@ -538,16 +540,49 @@ def ogdch_user_create(context, data_dict):
     return user
 
 
-def ogdch_subscribe_manage(context, data_dict):
-    """Request a code to get information about existing subscriptions.
-    :returns: list of dictionaries
+def _get_email_from_subscribe_code(code):
+    """Get the email address of a subscription from an auth code.
     """
     try:
-        data_dict['email'] = authenticate_with_code(data_dict['code'])
+        email = authenticate_with_code(code)
     except ValueError:
         raise ValidationError("Code is not valid")
 
-    if not data_dict['email']:
+    if not email:
         raise Exception("The email is not valid")
 
+    return email
+
+
+def ogdch_subscribe_manage(context, data_dict):
+    """Get an email address from a given auth code, and then return
+    information about existing subscriptions for that email address.
+    :returns: list of dictionaries
+    """
+    data_dict['email'] = _get_email_from_subscribe_code(data_dict['code'])
+
     return subscribe_list_subscriptions(context, data_dict)
+
+
+def ogdch_subscribe_unsubscribe(context, data_dict):
+    """Get an email address from a given auth code, and then unsubscribe that
+    email address from notifications for a given dataset.
+
+    :returns: (object_name, object_type) where object_type is: dataset, group
+        or organization (but we are only offering dataset subscriptions on the
+        frontend, so it will be dataset)
+    """
+    data_dict['email'] = _get_email_from_subscribe_code(data_dict['code'])
+
+    return subscribe_unsubscribe(context, data_dict)
+
+
+def ogdch_subscribe_unsubscribe_all(context, data_dict):
+    """Get an email address from a given auth code, and then unsubscribe
+    that email address from all notifications.
+
+    :returns: None
+    """
+    data_dict['email'] = _get_email_from_subscribe_code(data_dict['code'])
+
+    return subscribe_unsubscribe_all(context, data_dict)
