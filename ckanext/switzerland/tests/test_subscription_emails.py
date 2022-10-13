@@ -316,14 +316,13 @@ Vielen Dank für Ihre Bestätigung des Datensatz-Abonnements auf opendata.swiss.
     </a>
 </p>''', body_html)
 
-        if code == '':
-            footer_link_text = u'<a href="http://frontend-test.ckan.net/subscribe/manage">Mein Abonnement verwalten</a>'
-        else:
-            footer_link_text = u'<a href="http://frontend-test.ckan.net/subscribe/manage?code={}">Mein Abonnement verwalten</a>'\
-                .format(code)
+        footer_link_text = u''
         if subscription:
-            footer_link_text = u'<a href="http://frontend-test.ckan.net/subscribe/unsubscribe?code=testcode&amp;dataset={dataset_id}">Abonnement löschen</a> | '\
-                                   .format(dataset_id=self.dataset['id']) + footer_link_text
+            footer_link_text = u'<a href="http://frontend-test.ckan.net/subscribe/unsubscribe?code=testcode&amp;dataset={dataset_id}">Abonnement löschen</a> | ' \
+                .format(dataset_id=self.dataset['id'])
+        if code:
+            footer_link_text += u'<a href="http://frontend-test.ckan.net/subscribe/manage?code={}">Mein Abonnement verwalten</a>'\
+                .format(code)
 
         assert_in(footer_link_text, body_html)
 
@@ -335,14 +334,13 @@ CH-2010 Neuchâtel
 www.bfs.admin.ch/ogd
 ''', body_plain_text)
 
-        if code == '':
-            footer_link_text = u'Mein Abonnement verwalten: http://frontend-test.ckan.net/subscribe/manage'
-        else:
-            footer_link_text = u'Mein Abonnement verwalten: http://frontend-test.ckan.net/subscribe/manage?code={}'\
-                .format(code)
+        footer_link_text = u''
         if subscription:
-            footer_link_text = u'Abonnement löschen: http://frontend-test.ckan.net/subscribe/unsubscribe?code=testcode&amp;dataset={dataset_id}\n'\
-                                   .format(dataset_id=self.dataset['id']) + footer_link_text
+            footer_link_text = u'Abonnement löschen: http://frontend-test.ckan.net/subscribe/unsubscribe?code=testcode&amp;dataset={dataset_id}\n' \
+                                   .format(dataset_id=self.dataset['id'])
+        if code:
+            footer_link_text += u'Mein Abonnement verwalten: http://frontend-test.ckan.net/subscribe/manage?code={}' \
+                .format(code)
 
         assert_in(footer_link_text, body_plain_text)
 
