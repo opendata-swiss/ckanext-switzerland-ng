@@ -131,6 +131,8 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_harvest_monitor': ogdch_logic.ogdch_harvest_monitor,
             'ogdch_showcase_submit': ogdch_logic.ogdch_showcase_submit,
             'ogdch_subscribe_manage': ogdch_logic.ogdch_subscribe_manage,
+            'ogdch_subscribe_unsubscribe': ogdch_logic.ogdch_subscribe_unsubscribe,  # noqa
+            'ogdch_subscribe_unsubscribe_all': ogdch_logic.ogdch_subscribe_unsubscribe_all,  # noqa
         }
 
     # ITemplateHelpers
