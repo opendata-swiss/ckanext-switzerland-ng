@@ -1,0 +1,101 @@
+Guten Tag
+
+Sie haben via opendata.swiss die automatische Benachrichtigung über die
+Aktualisierungen des folgenden Datensatzes abonniert:
+
+{{ object_title_de }}: {{ object_link }}
+
+Bitte bestätigen Sie das Abonnement, indem Sie auf den folgenden Link
+klicken: {{ verification_link }}
+
+Wenn Sie kein Abonnement gemacht haben, ignorieren Sie bitte dieses
+E-Mail.
+
+Freundliche Grüsse
+Team Geschäftsstelle OGD
+
+Geschäftsstelle Open Government Data
+Bundesamt für Statistik BFS
+Espace de l'Europe 10
+CH-2010 Neuchâtel
+www.bfs.admin.ch/ogd
+
+Mein Abonnement verwalten: {{ manage_link }}
+
+--
+
+Bonjour
+
+Vous vous êtes abonnés au jeu de données ci-après d’opendata.swiss afin d’y
+recevoir automatiquement les mises à jour:
+
+{{ object_title_fr }}: {{ object_link }}
+
+Merci de suivre ce lien afin de confirmer cette inscription:
+{{ verification_link }}
+
+Si vous n’êtes pas à l’origine de cette requête ou en cas d’erreur, merci
+d’ignorer ce courriel.
+
+Cordialement,
+Votre Team Secrétariat OGD
+
+Secrétariat Open Government Data
+Office fédéral de la statistique
+Espace de l'Europe 10
+CH-2010 Neuchâtel
+<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
+
+Gérer mes abonnements: {{ manage_link }}
+
+--
+
+Hello
+
+You have subscribed to receive updates on the following dataset from
+opendata.swiss:
+
+{{ object_title_en }}: {{ object_link }}
+
+Please confirm your subscription by following this link:
+{{ verification_link }}
+
+If you have not made any subscription or in case of error: please ignore this
+email.
+
+Best regards,
+Team Open Government Data Office
+
+Open Government Data Office
+Federal Statistical Office
+Espace de l'Europe 10
+CH-2010 Neuchâtel
+<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
+
+Manage my subscriptions: {{ manage_link }}
+
+--
+
+Buongiorno,
+
+tramite opendata.swiss si è abbonato/a alla notifica automatica degli
+aggiornamenti del dataset seguente:
+
+{{ object_title_it }}: {{ object_link }}
+
+La preghiamo di confermare l’abbonamento cliccando sul link seguente:
+{{ verification_link }}
+
+Se non ha richiesto alcun abbonamento, La preghiamo di ignorare questa
+e-mail.
+
+Cordiali saluti
+Team Segreteria OGD
+
+Segreteria Open Government Data
+Ufficio federale di statistica UST
+Espace de l’Europe 10,
+CH-2010 Neuchâtel
+<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
+
+Gestione abbonamento: {{ manage_link }}

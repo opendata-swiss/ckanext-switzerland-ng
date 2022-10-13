@@ -1,0 +1,174 @@
+<body style="line-height: 200%; font-family: sans-serif; padding-top: 0">
+<p>Guten Tag</p>
+
+<p>Folgender Datensatz wurde aktualisiert:</p>
+
+<ul>
+{% for notification in notifications %}
+    <li>
+        <a href="{{ notification.object_link }}">
+            "{{ notification.object_title_de }}" ({{ notification.object_name }})
+        </a>
+    </li>
+{% endfor %}
+</ul>
+
+<p>
+    Freundliche Grüsse<br/>
+    Team Geschäftsstelle OGD
+</p>
+
+<p>
+    Geschäftsstelle Open Government Data<br/>
+    Bundesamt für Statistik BFS<br/>
+    Espace de l'Europe 10<br/>
+    CH-2010 Neuchâtel<br/>
+    <a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
+</p>
+
+<p>
+    <a href="https://opendata.swiss">
+        <img src="https://opendata.swiss/images/logo_horizontal.png" alt="opendata.swiss"
+             width="420" style="max-width: 100%; height: auto;"/>
+    </a>
+</p>
+<p>
+    <a href="https://twitter.com/opendataswiss">
+        <img src="https://opendata.swiss/images/twitter.svg" alt="Twitter"
+             style="color: #fff; background-color: #009688; border: 0;"/>
+    </a>
+</p>
+
+<p>
+    <a href="{{ manage_link }}">Mein Abonnement verwalten</a>
+</p>
+
+--
+
+<p>Bonjour</p>
+
+<p>Le jeu de données auquel vous êtes abonné a été mis à jour.</p>
+
+<ul>
+    {% for notification in notifications %}
+    <li>
+        <a href="{{ notification.object_link }}">
+            "{{ notification.object_title_fr }}" ({{ notification.object_name }})
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+<p>Cordialement,<br/>Votre Team Secrétariat OGD</p>
+
+<p>
+    Secrétariat Open Government Data<br/>
+    Office fédéral de la statistique<br/>
+    Espace de l'Europe 10<br/>
+    CH-2010 Neuchâtel<br/>
+    <a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
+</p>
+
+<p>
+    <a href="https://opendata.swiss">
+        <img src="https://opendata.swiss/images/logo_horizontal.png" alt="opendata.swiss"
+             width="420" style="max-width: 100%; height: auto;"/>
+    </a>
+</p>
+<p>
+    <a href="https://twitter.com/opendataswiss">
+        <img src="https://opendata.swiss/images/twitter.svg" alt="Twitter"
+             style="color: #fff; background-color: #009688; border: 0;"/>
+    </a>
+</p>
+
+<p>
+    <a href="{{ manage_link }}">Gérer mes abonnements</a>
+</p>
+
+--
+
+<p>Hello</p>
+
+<p>The following dataset has been updated:</p>
+
+<ul>
+    {% for notification in notifications %}
+    <li>
+        <a href="{{ notification.object_link }}">
+            "{{ notification.object_title_en }}" ({{ notification.object_name }})
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+<p>Best regards,<br/>Team Open Government Data Office</p>
+
+<p>
+    Open Government Data Office<br/>
+    Federal Statistical Office<br/>
+    Espace de l'Europe 10<br/>
+    CH-2010 Neuchâtel<br/>
+    <a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
+</p>
+
+<p>
+    <a href="https://opendata.swiss">
+        <img src="https://opendata.swiss/images/logo_horizontal.png" alt="opendata.swiss"
+             width="420" style="max-width: 100%; height: auto;"/>
+    </a>
+</p>
+<p>
+    <a href="https://twitter.com/opendataswiss">
+        <img src="https://opendata.swiss/images/twitter.svg" alt="Twitter"
+             style="color: #fff; background-color: #009688; border: 0;"/>
+    </a>
+</p>
+
+<p>
+    <a href="{{ manage_link }}">Manage my subscriptions</a>
+</p>
+
+--
+
+<p>Buongiorno,</p>
+
+<p>i seguenti dataset sono stati aggiornati:</p>
+
+<ul>
+    {% for notification in notifications %}
+    <li>
+        <a href="{{ notification.object_link }}">
+            "{{ notification.object_title_it }}" ({{ notification.object_name }})
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+<p>Cordiali saluti<br/>Team Segreteria OGD</p>
+
+<p>
+    Segreteria Open Government Data<br/>
+    Ufficio federale di statistica UST <br/>
+    Espace de l’Europe 10, <br/>
+    CH-2010 Neuchâtel<br/>
+    <a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
+</p>
+
+<p>
+    <a href="https://opendata.swiss">
+        <img src="https://opendata.swiss/images/logo_horizontal.png" alt="opendata.swiss"
+             width="420" style="max-width: 100%; height: auto;"/>
+    </a>
+</p>
+<p>
+    <a href="https://twitter.com/opendataswiss">
+        <img src="https://opendata.swiss/images/twitter.svg" alt="Twitter"
+             style="color: #fff; background-color: #009688; border: 0;"/>
+    </a>
+</p>
+
+<p>
+    <a href="{{ manage_link }}">Gestione abbonamento</a>
+</p>
+</body>

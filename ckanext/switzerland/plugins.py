@@ -1,8 +1,10 @@
 # coding=UTF-8
 
 from ckan.common import OrderedDict
+from ckan.lib.base import render_jinja2
 from ckan.model import Session, Package, PACKAGE_NAME_MAX_LENGTH
 from ckanext.showcase.plugin import ShowcasePlugin
+from ckanext.subscribe.plugin import SubscribePlugin
 import ckanext.switzerland.helpers.validators as ogdch_validators
 from ckanext.switzerland import logic as ogdch_logic
 import ckanext.switzerland.helpers.frontend_helpers as ogdch_frontend_helpers
@@ -643,3 +645,107 @@ class OgdchShowcasePlugin(ShowcasePlugin):
             "showcase_type": toolkit._("Type of content"),
             "private": toolkit._("Draft")
         })
+
+
+class OgdchSubscribePlugin(SubscribePlugin):
+
+    # ISubscribe
+    def get_email_vars(self, code, subscription=None, email=None,
+                       email_vars=None):
+        links = [
+            'unsubscribe_all_link',
+            'manage_link',
+            'object_link',
+            'unsubscribe_link',
+        ]
+        email_vars = super(OgdchSubscribePlugin, self).get_email_vars(
+            code, subscription, email, email_vars)
+
+        ogdch_plugin_utils.ogdch_transform_links(email_vars, links)
+
+        for lang in ogdch_localize_utils.LANGUAGES:
+            email_vars['object_title_{}'.format(lang)] = \
+                ogdch_localize_utils.get_localized_value_from_json(
+                email_vars.get('object_title'), lang)
+
+        email_vars = {k: unicode(v)
+                      for k, v in email_vars.items()}
+
+        return email_vars
+
+    def get_footer_contents(self, email_vars, subscription=None,
+                            plain_text_footer=None, html_footer=None):
+        # Because we are sending emails in four languages, the footers are
+        # included in the email templates, not generated separately.
+        return '', ''
+
+    def get_manage_email_contents(self, email_vars, subject=None,
+                                  plain_text_body=None, html_body=None):
+        subject = u'Manage {site_title} subscription'.format(**email_vars)
+
+        html_body = render_jinja2(
+            '/emails/subscribe_manage.html', email_vars)
+        plain_text_body = render_jinja2(
+            '/emails/subscribe_manage_plain_text.txt', email_vars)
+
+        return subject, plain_text_body, html_body
+
+    def get_subscription_confirmation_email_contents(self, email_vars,
+                                                     subject=None,
+                                                     plain_text_body=None,
+                                                     html_body=None):
+        subject = u'Bestätigung – Abonnement Account verwalten – {site_title}'\
+            .format(**email_vars)
+
+        html_body = render_jinja2(
+            '/emails/subscribe_confirmation.html', email_vars)
+        plain_text_body = render_jinja2(
+            '/emails/subscribe_confirmation_plain_text.txt', email_vars)
+
+        return subject, plain_text_body, html_body
+
+    def get_notification_email_contents(self, email_vars, subject=None,
+                                        plain_text_body=None, html_body=None):
+        # email_vars['notifications'] is a list of dicts of variables, one for
+        # each notification in the email.
+        # See ckanext.subscribe.notification_email.get_notification_email_vars
+        # for the full structure. Our email text only includes links to the
+        # datasets that have been updated, so we can ignore the activity
+        # links.
+        for notification in email_vars.get('notifications'):
+            ogdch_plugin_utils.ogdch_transform_links(
+                notification, ['object_link'])
+
+            for lang in ogdch_localize_utils.LANGUAGES:
+                notification['object_title_{}'.format(lang)] = \
+                    ogdch_localize_utils.get_localized_value_from_json(
+                        notification.get('object_title'), lang)
+
+        subject = u'Update notification – ' \
+                  u'Aktualisierter Datensatz auf ' \
+                  u'{site_title}'.format(**email_vars)
+
+        html_body = render_jinja2(
+            '/emails/subscribe_notification.html', email_vars)
+        plain_text_body = render_jinja2(
+            '/emails/subscribe_notification_plain_text.txt', email_vars)
+
+        return subject, plain_text_body, html_body
+
+    def get_verification_email_contents(self, email_vars, subject=None,
+                                        plain_text_body=None, html_body=None):
+        # These two links are added to the email_vars dict in
+        # ckanext-subscribe, separately from the other email_vars. We have to
+        # make sure they're unicode strings and point to the frontend.
+        ogdch_plugin_utils.ogdch_transform_links(
+            email_vars, ['verification_link', 'manage_link'])
+
+        subject = u'Bestätigungsmail – Abonnement Datensatz - {site_title}'.\
+            format(**email_vars)
+
+        html_body = render_jinja2(
+            '/emails/subscribe_verification.html', email_vars)
+        plain_text_body = render_jinja2(
+            '/emails/subscribe_verification_plain_text.txt', email_vars)
+
+        return subject, plain_text_body, html_body

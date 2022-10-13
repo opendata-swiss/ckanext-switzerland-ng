@@ -372,3 +372,17 @@ def _transform_publisher(pkg_dict):
     publisher = pkg_dict.get('publisher')
     if publisher and not isinstance(publisher, dict):
         pkg_dict['publisher'] = json.loads(publisher)
+
+
+def ogdch_transform_links(email_vars, link_names):
+    """Take a dict of variables and a list of link keys, and make sure that
+    every link value
+    - is a unicode string
+    - points to the frontend, not CKAN
+    """
+    for link in link_names:
+        if email_vars.get(link):
+            email_vars[link] = unicode(email_vars[link].replace(
+                toolkit.config.get('ckan.site_url'),
+                toolkit.config.get('ckanext.switzerland.frontend_url')
+            ))

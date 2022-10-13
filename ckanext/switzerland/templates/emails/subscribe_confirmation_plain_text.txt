@@ -1,0 +1,77 @@
+Guten Tag
+
+Vielen Dank für Ihre Bestätigung des Datensatz-Abonnements auf opendata.swiss.
+
+Sie können das Abonnement jederzeit widerrufen oder Ihre Einstellungen anpassen.
+
+Freundliche Grüsse
+Team Geschäftsstelle OGD
+
+Geschäftsstelle Open Government Data
+Bundesamt für Statistik BFS
+Espace de l'Europe 10
+CH-2010 Neuchâtel
+www.bfs.admin.ch/ogd
+
+Abonnement löschen: {{ unsubscribe_link }}
+Mein Abonnement verwalten: {{ manage_link }}
+
+--
+
+Bonjour
+
+Merci beaucoup d’avoir confirmé votre inscription à l’abonnement au jeu de données d’opendata.swiss.
+
+Vous pouvez modifier ou annuler votre abonnement à tout moment.
+
+Cordialement,
+Votre Team Secrétariat OGD
+
+Secrétariat Open Government Data
+Office fédéral de la statistique
+Espace de l'Europe 10
+CH-2010 Neuchâtel
+<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
+
+Se désinscrire des mises à jour: {{ unsubscribe_link }}
+Gérer mes abonnements: {{ manage_link }}
+
+--
+
+Hello
+
+Thank you for confirming your subscription on opendata.swiss.
+
+You can manage your settings or unsubscribe at any time.
+
+Best regards,
+Team Open Government Data Office
+
+Open Government Data Office
+Federal Statistical Office
+Espace de l'Europe 10
+CH-2010 Neuchâtel
+<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
+
+Unsubscribe: {{ unsubscribe_link }}
+Manage my subscriptions: {{ manage_link }}
+
+--
+
+Buongiorno,
+
+La ringraziamo per la conferma dell’abbonamento al dataset opendata.swiss.
+
+È possibile disdire l’abbonamento o modificarne le impostazioni in qualsiasi momento.
+
+Cordiali saluti
+Team Segreteria OGD
+
+Segreteria Open Government Data
+Ufficio federale di statistica UST
+Espace de l’Europe 10,
+CH-2010 Neuchâtel
+<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
+
+Disdetta abbonamento: {{ unsubscribe_link }}
+Gestione abbonamento: {{ manage_link }}
