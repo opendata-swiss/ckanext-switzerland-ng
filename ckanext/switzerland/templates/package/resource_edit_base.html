@@ -1,7 +1,7 @@
 {% extends "package/base.html" %}
 
 {% set logged_in = true if c.userobj else false %}
-{% set res = c.resource %}
+{% set res = resource if resource else c.resource %}
 
 {% block breadcrumb_content_selected %}{% endblock %}
 
