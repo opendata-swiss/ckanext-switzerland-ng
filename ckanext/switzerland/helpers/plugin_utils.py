@@ -19,6 +19,12 @@ log = logging.getLogger(__name__)
 
 DATE_FORMAT = toolkit.config.get(
     'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
+DATE_FIELDS_INDEXED_BY_SOLR = [
+    'modified',
+    'issued',
+    'res_latest_modified',
+    'res_latest_issued',
+]
 
 
 class ReindexException(Exception):
@@ -105,11 +111,6 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
         resources=validated_dict[u'resources']
     )
     search_data['res_rights'] = [ogdch_term_utils.simplify_terms_of_use(r['rights']) for r in validated_dict[u'resources'] if 'rights' in r.keys()]  # noqa
-    if search_data.get('issued'):
-        search_data['issued'] = ogdch_date_utils.transform_date_for_solr(search_data['issued'])
-
-    if search_data.get('modified'):
-        search_data['modified'] = ogdch_date_utils.transform_date_for_solr(search_data['modified'])
     search_data['res_latest_issued'] = ogdch_date_utils.get_latest_isodate(
         [(r['issued'])
          for r in validated_dict[u'resources']
@@ -120,8 +121,6 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
          for r in validated_dict[u'resources']
          if 'modified' in r.keys()]
     )
-    search_data['res_latest_issued'] = ogdch_date_utils.transform_date_for_solr(search_data['res_latest_issued'])
-    search_data['res_latest_modified'] = ogdch_date_utils.transform_date_for_solr(search_data['res_latest_modified'])
     search_data['linked_data'] = ogdch_format_utils.prepare_formats_for_index(
         resources=validated_dict[u'resources'],
         linked_data_only=True
@@ -176,13 +175,19 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
     except KeyError:
         pass
 
+    # SOLR can only handle UTC date fields that are isodate in UTC format
+    for date_field in DATE_FIELDS_INDEXED_BY_SOLR:
+        if search_data.get(date_field):
+            search_data[date_field] = ogdch_date_utils.transform_date_for_solr(
+                search_data[date_field]
+            )
+
     # clean terms for suggest context
     search_data = _prepare_suggest_context(
         search_data,
         validated_dict
     )
-    log.error(search_data['issued'])
-    log.error(search_data['modified'])
+
     return search_data
 
 
