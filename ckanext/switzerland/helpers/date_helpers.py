@@ -151,9 +151,20 @@ class OGDCHDateValidationException(Exception):
 
 
 def transform_date_for_solr(date_field):
-    """transform datefields for SOLR indexing
-    the timezone information is ignored and the date is stored in SOLR as UTC date.
-    Since all our datetimes are from the same timezone, this approach is preferred."""
+    """Since Solr can only handle dates as isodates with UTC
+    all isodates that are indexed by Solr are transformed in the
+    following way:
+
+    - timezone information is ignored
+    - Z is added at the end of the isodate
+
+    Example:
+    an isodate such as 2022-10-25T15:30:10.330000+02:00 that
+    comes in through harvesting is transformed into
+    2022-10-25T15:30:10.33Z ignoring the timezone information, but it
+    will still be stored in the original isoformat with timezone
+    information in postgres
+    """
     try:
         datetime_without_tz = parse(date_field, ignoretz=True)
         isodate_without_tz = isodate.datetime_isoformat(datetime_without_tz)
