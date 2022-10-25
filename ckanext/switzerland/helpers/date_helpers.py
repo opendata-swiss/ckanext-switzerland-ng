@@ -1,4 +1,5 @@
 from datetime import datetime
+from dateutil.parser import parse
 import logging
 import isodate
 import ckan.plugins.toolkit as tk
@@ -147,3 +148,16 @@ def correct_invalid_empty_date(value):
 
 class OGDCHDateValidationException(Exception):
     pass
+
+
+def transform_date_for_solr(date_field):
+    """transform datefields for SOLR indexing
+    the timezone information is ignored and the date is stored in SOLR as UTC date.
+    Since all our datetimes are from the same timezone, this approach is preferred."""
+    try:
+        datetime_without_tz = parse(date_field, ignoretz=True)
+        isodate_without_tz = isodate.datetime_isoformat(datetime_without_tz)
+        return isodate_without_tz + 'Z'
+    except Exception as e:
+        log.error("Exception {} occured on date transformation of {}".format(e, date_field))
+        return None
