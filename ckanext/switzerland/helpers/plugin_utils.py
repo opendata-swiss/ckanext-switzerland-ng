@@ -19,6 +19,12 @@ log = logging.getLogger(__name__)
 
 DATE_FORMAT = toolkit.config.get(
     'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
+DATE_FIELDS_INDEXED_BY_SOLR = [
+    'modified',
+    'issued',
+    'res_latest_modified',
+    'res_latest_issued',
+]
 
 
 class ReindexException(Exception):
@@ -168,6 +174,13 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
 
     except KeyError:
         pass
+
+    # SOLR can only handle UTC date fields that are isodate in UTC format
+    for date_field in DATE_FIELDS_INDEXED_BY_SOLR:
+        if search_data.get(date_field):
+            search_data[date_field] = ogdch_date_utils.transform_date_for_solr(
+                search_data[date_field]
+            )
 
     # clean terms for suggest context
     search_data = _prepare_suggest_context(
