@@ -25,7 +25,9 @@ from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester
 from ckanext.harvest.model import HarvestJob
 from ckanext.harvest.logic.dictization import harvest_job_dictize
 from ckanext.switzerland.helpers.request_utils import get_content_headers
-from ckanext.switzerland.helpers.mail_helper import send_registration_email
+from ckanext.switzerland.helpers.mail_helper import (
+    send_registration_email,
+    send_showcase_email)
 from ckanext.switzerland.helpers.logic_helpers import (
     get_dataset_count, get_org_count, get_showcases_for_dataset,
     map_existing_resources_to_new_dataset)
@@ -542,7 +544,7 @@ def ogdch_user_create(context, data_dict):
 
 def ogdch_showcase_create(context, data_dict):
     '''Custom showcase creation so that a notification
-    can be send when a showcase is created.'''
+    can be sent when a showcase is created.'''
     data_dict['type'] = 'showcase'
 
     upload = uploader.get_uploader('showcase')
@@ -553,6 +555,13 @@ def ogdch_showcase_create(context, data_dict):
     upload.upload(uploader.get_max_image_size())
 
     showcase = tk.get_action('package_create')(context, data_dict)
+    try:
+        send_showcase_email(showcase)
+    except Exception as e:
+        log.error(
+            "Sending a notification when a showcase was created"
+            " received an exception: {}"
+           .format(e))
     return showcase
 
 
