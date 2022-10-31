@@ -540,6 +540,22 @@ def ogdch_user_create(context, data_dict):
     return user
 
 
+def ogdch_showcase_create(context, data_dict):
+    '''Custom showcase creation so that a notification
+    can be send when a showcase is created.'''
+    data_dict['type'] = 'showcase'
+
+    upload = uploader.get_uploader('showcase')
+
+    upload.update_data_dict(data_dict, 'image_url',
+                            'image_upload', 'clear_upload')
+
+    upload.upload(uploader.get_max_image_size())
+
+    showcase = tk.get_action('package_create')(context, data_dict)
+    return showcase
+
+
 def _get_email_from_subscribe_code(code):
     """Get the email address of a subscription from an auth code.
     """

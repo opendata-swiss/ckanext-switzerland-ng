@@ -496,6 +496,7 @@ class OgdchShowcasePlugin(ShowcasePlugin):
     plugins.implements(plugins.IDatasetForm, inherit=True)
     plugins.implements(plugins.ITemplateHelpers, inherit=True)
     plugins.implements(plugins.IFacets, inherit=True)
+    plugins.implements(plugins.IActions, inherit=True)
 
     # IConfigurable
 
@@ -635,6 +636,13 @@ class OgdchShowcasePlugin(ShowcasePlugin):
             ogdch_backend_helpers.group_id_in_groups
 
         return helpers
+
+    # IAction
+    def get_actions(self):
+        """overwrite showcase create logic"""
+        action_functions = super(OgdchShowcasePlugin, self).get_actions()
+        action_functions['ckanext_showcase_create'] = ogdch_logic.ogdch_showcase_create
+        return action_functions
 
     # IFacets
 
