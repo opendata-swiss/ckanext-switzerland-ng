@@ -48,9 +48,6 @@ def send_registration_email(user):
 def send_showcase_email(showcase):
     """send an email when a showcase is created"""
     extra_vars = {
-        'site_title': SITE_TITLE,
-        'showcase_title': showcase.get('title'),
-        'author_email': showcase.get('author_email'),
         'showcase_url': SITE_URL + '/showcase/' + showcase.get('name'),
     }
     mailer.mail_recipient(

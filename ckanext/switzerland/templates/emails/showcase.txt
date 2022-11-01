@@ -1,9 +1,3 @@
-Liebes Portalteam von opendata.swiss,
+Hello OGD Office
 
-Auf {{ site_title }} gibt es einen neuen
-Showcase "{{ showcase_title }}".
-
-Dies hier ist der Link zum Showcase {{ showcase_url }}.
-Der Showcase wurde von {{ author_email }} eingereicht.
-
-Bitte den Showcase prüfen und gegebenfalls freischalten.
+You have received a new Showcase: {{ showcase_url }}.

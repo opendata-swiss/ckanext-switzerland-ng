@@ -1,1 +1,1 @@
-Neuer Showcase "{{ showcase_title }}" auf {{ site_title }}
+Notification - new Showcase
