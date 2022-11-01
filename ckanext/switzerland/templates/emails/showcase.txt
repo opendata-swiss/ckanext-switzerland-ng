@@ -1,0 +1,3 @@
+Hello OGD Office
+
+You have received a new Showcase: {{ showcase_url }}.

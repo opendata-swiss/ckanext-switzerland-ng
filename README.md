@@ -66,6 +66,10 @@ This extension uses the following config options (.ini file)
     piwik.site_id = 1
     piwik.url = piwik.opendata.swiss
 
+    # Name and Email Address for notifications about new showcases
+    ckanext.switzerland.showcase_admin_email =
+    ckanext.switzerland.showcase_admin_name =
+
 ## Development Installation
 
 To install ckanext-switzerland for development, activate your CKAN virtualenv and
