@@ -150,7 +150,7 @@ class TestSubscriptionEmails(helpers.FunctionalTestBase):
         subject, body_plain_text, body_html = \
             subscribe.get_verification_email_contents(email_vars)
 
-        assert_equal(subject, u'Bestätigungsmail – Abonnement Datensatz - opendata.swiss')
+        assert_equal(subject, u'Best\xe4tigungsmail \u2013 Confirmation - E-mail di conferma - Confirmation')
         assert_in(u'''Guten Tag
 
 Sie haben via opendata.swiss die automatische Benachrichtigung über die
@@ -215,7 +215,7 @@ opendata.swiss subscription options:''', body_plain_text.strip())
 
         assert_equal(
             subject,
-            u'Bestätigung – Abonnement Account verwalten – opendata.swiss'
+            u'Best\xe4tigungsmail \u2013 Confirmation - E-mail di conferma - Confirmation'
         )
         assert_in(u'''Guten Tag
 
@@ -272,7 +272,7 @@ Vielen Dank für Ihre Bestätigung des Datensatz-Abonnements auf opendata.swiss.
 
         assert_equal(
             subject,
-            u'Update notification – Aktualisierter Datensatz auf opendata.swiss'
+            u'Update notification \u2013 updated dataset opendata.swiss'
         )
         assert_in(u'''Folgender Datensatz wurde aktualisiert:
 
