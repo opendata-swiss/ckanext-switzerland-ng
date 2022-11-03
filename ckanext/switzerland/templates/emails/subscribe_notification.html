@@ -3,20 +3,23 @@
 
 <p>Guten Tag</p>
 
-<p>Folgender Datensatz wurde aktualisiert:</p>
+{% if notifications|length == 1 %}
+    <p>Es gibt eine Änderung im Datensatz {{ notifications[0].object_title_de }}. Um die Änderung zu sehen, klicken Sie bitte
+        auf folgenden Link: <a href="{{ notifications[0].object_link }}">{{ notifications[0].object_link }}</a></p>
+{% else %}
+    <p>Es wurden Änderungen an den folgenden Datensätzen vorgenommen: {{ notifications.join(', ', attribute='object_title_de') }}.</p>
 
-<ul>
-{% for notification in notifications %}
-    <li>
-        <a href="{{ notification.object_link }}">
-            "{{ notification.object_title_de }}" ({{ notification.object_name }})
-        </a>
-    </li>
-{% endfor %}
-</ul>
+    <p>Um die Änderung zu sehen, klicken Sie bitte auf die folgenden Links:
+        {% for notification in notifications %}<a href="{{ notification.object_link }}">{{ notification.object_link }}</a>{% if not loop.last %}, {% endif %}{% endfor %}.</p>
+{% endif %}
 
 <p>
-    Freundliche Grüsse<br/>
+    Falls Sie diese Benachrichtigungen nicht mehr erhalten möchten, können Sie Ihr Abo jederzeit beenden:
+    <a href="{{ manage_link }}">{{ manage_link }}</a>
+</p>
+
+<p>
+    Viele Grüsse<br/>
     Team Geschäftsstelle OGD
 </p>
 
@@ -47,21 +50,27 @@
 
 --
 
-<p>Bonjour</p>
+<p>Bonjour,</p>
 
-<p>Le jeu de données auquel vous êtes abonné a été mis à jour.</p>
+{% if notifications|length == 1 %}
+    <p>Des changements ont été apportés au jeu de données {{ notifications[0].object_title_fr }}. Pour les voir, veuillez
+        cliquer sur le lien suivant: <a href="{{ notifications[0].object_link }}">{{ notifications[0].object_link }}</a></p>
+{% else %}
+    <p>Des changements ont été apportés aux jeux de données {{ notifications.join(', ', attribute='object_title_fr') }}.</p>
 
-<ul>
-    {% for notification in notifications %}
-    <li>
-        <a href="{{ notification.object_link }}">
-            "{{ notification.object_title_fr }}" ({{ notification.object_name }})
-        </a>
-    </li>
-    {% endfor %}
-</ul>
+    <p>Pour les voir, veuillez cliquer sur les liens suivants :
+        {% for notification in notifications %}<a href="{{ notification.object_link }}">{{ notification.object_link }}</a>{% if not loop.last %}, {% endif %}{% endfor %}.</p>
+{% endif %}
 
-<p>Cordialement,<br/>Votre Team Secrétariat OGD</p>
+<p>
+    Si vous ne souhaitez plus recevoir ces notifications, vous pouvez vous désabonner à tout moment:
+    <a href="{{ manage_link }}">{{ manage_link }}</a>
+</p>
+
+<p>
+    Cordialement,<br/>
+    L'équipe du secrétariat OGD
+</p>
 
 <p>
     Secrétariat Open Government Data<br/>
@@ -90,19 +99,74 @@
 
 --
 
-<p>Hello</p>
+<p>Buongiorno,</p>
 
-<p>The following dataset has been updated:</p>
+{% if notifications|length == 1 %}
+    <p>il dataset {{ notifications[0].object_title_it }} è stato modificato. Per vedere la modifica, clicchi sul link
+        seguente: <a href="{{ notifications[0].object_link }}">{{ notifications[0].object_link }}</a></p>
+{% else %}
+    <p>i dataset {{ notifications.join(', ', attribute='object_title_fr') }} sono stati modificati.</p>
 
-<ul>
-    {% for notification in notifications %}
-    <li>
-        <a href="{{ notification.object_link }}">
-            "{{ notification.object_title_en }}" ({{ notification.object_name }})
-        </a>
-    </li>
-    {% endfor %}
-</ul>
+    <p>Per vedere le modifiche, clicchi sui link seguenti:
+        {% for notification in notifications %}<a href="{{ notification.object_link }}">{{ notification.object_link }}</a>{% if not loop.last %}, {% endif %}{% endfor %}.</p>
+{% endif %}
+
+<p>
+    Se non desidera più ricevere queste notifiche, può disdire l’abbonamento in qualsiasi momento:
+    <a href="{{ manage_link }}">{{ manage_link }}</a>
+</p>
+
+<p>
+    Cordiali saluti<br/>
+    Team Segreteria OGD</p>
+
+<p>
+    Segreteria Open Government Data<br/>
+    Ufficio federale di statistica UST <br/>
+    Espace de l’Europe 10, <br/>
+    CH-2010 Neuchâtel<br/>
+    <a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
+</p>
+
+<p>
+    <a href="https://opendata.swiss">
+        <img src="https://opendata.swiss/images/logo_horizontal.png" alt="opendata.swiss"
+             width="420" style="max-width: 100%; height: auto;"/>
+    </a>
+</p>
+<p>
+    <a href="https://twitter.com/opendataswiss">
+        <img src="https://opendata.swiss/images/twitter.svg" alt="Twitter"
+             style="color: #fff; background-color: #009688; border: 0;"/>
+    </a>
+</p>
+
+<p>
+    <a href="{{ manage_link }}">Gestione abbonamento</a>
+</p>
+
+---
+
+<p>Dear Sir/Madam,</p>
+
+{% if notifications|length == 1 %}
+    <p>
+        There has been a change to the dataset {{ notifications[0].object_title_it }}. To see the change, please click on
+        the following link: <a href="{{ notifications[0].object_link }}">{{ notifications[0].object_link }}</a>
+    </p>
+{% else %}
+    <p>There have been changes to the datasets {{ notifications.join(', ', attribute='object_title_fr') }}.</p>
+
+    <p>
+        To see the changes, please click on the following links:
+        {% for notification in notifications %}<a href="{{ notification.object_link }}">{{ notification.object_link }}</a>{% if not loop.last %}, {% endif %}{% endfor %}.
+    </p>
+{% endif %}
+
+<p>
+    Should you no longer wish to receive these notifications, you may cancel your subscription at any time:
+    <a href="{{ manage_link }}">{{ manage_link }}</a>
+</p>
 
 <p>Best regards,<br/>Team Open Government Data Office</p>
 
@@ -129,48 +193,5 @@
 
 <p>
     <a href="{{ manage_link }}">Manage my subscriptions</a>
-</p>
-
---
-
-<p>Buongiorno,</p>
-
-<p>i seguenti dataset sono stati aggiornati:</p>
-
-<ul>
-    {% for notification in notifications %}
-    <li>
-        <a href="{{ notification.object_link }}">
-            "{{ notification.object_title_it }}" ({{ notification.object_name }})
-        </a>
-    </li>
-    {% endfor %}
-</ul>
-
-<p>Cordiali saluti<br/>Team Segreteria OGD</p>
-
-<p>
-    Segreteria Open Government Data<br/>
-    Ufficio federale di statistica UST <br/>
-    Espace de l’Europe 10, <br/>
-    CH-2010 Neuchâtel<br/>
-    <a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
-</p>
-
-<p>
-    <a href="https://opendata.swiss">
-        <img src="https://opendata.swiss/images/logo_horizontal.png" alt="opendata.swiss"
-             width="420" style="max-width: 100%; height: auto;"/>
-    </a>
-</p>
-<p>
-    <a href="https://twitter.com/opendataswiss">
-        <img src="https://opendata.swiss/images/twitter.svg" alt="Twitter"
-             style="color: #fff; background-color: #009688; border: 0;"/>
-    </a>
-</p>
-
-<p>
-    <a href="{{ manage_link }}">Gestione abbonamento</a>
 </p>
 </body>
