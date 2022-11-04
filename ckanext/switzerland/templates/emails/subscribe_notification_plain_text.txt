@@ -1,10 +1,22 @@
-Guten Tag
+French, Italian and English below
 
-Folgender Datensatz wurde aktualisiert:
-{% for notification in notifications %}
-- "{{ notification.object_title_de }}": {{ notification.object_link }}
-{% endfor %}
-Freundliche Grüsse
+Guten Tag,
+
+{% if notifications|length == 1 %}
+    Es gibt eine Änderung im Datensatz {{ notifications[0].object_title_de }}. Um die Änderung zu sehen, klicken Sie bitte
+    auf folgenden Link: {{ notifications[0].object_link }}
+{% else %}
+    Es wurden Änderungen an den folgenden Datensätzen vorgenommen: {{ notifications.join(', ', attribute='object_title_de') }}.
+    Um die Änderung zu sehen, klicken Sie bitte auf die folgenden Links:
+    {% for notification in notifications %}{{ notification.object_link }}
+    {% if not loop.last %}, {% endif %}
+    {% endfor %}.
+{% endif %}
+
+Falls Sie diese Benachrichtigungen nicht mehr erhalten möchten, können Sie Ihr Abo jederzeit beenden:
+{{ manage_link }}
+
+Viele Grüsse,
 Team Geschäftsstelle OGD
 
 Geschäftsstelle Open Government Data
@@ -17,57 +29,78 @@ Mein Abonnement verwalten: {{ manage_link }}
 
 --
 
-Bonjour
+Bonjour,
 
-Le jeu de données auquel vous êtes abonné a été mis à jour.
-{% for notification in notifications %}
-- "{{ notification.object_title_fr }}": {{ notification.object_link }}
-{% endfor %}
+{% if notifications|length == 1 %}
+    <p>Des changements ont été apportés au jeu de données {{ notifications[0].object_title_fr }}. Pour les voir, veuillez
+        cliquer sur le lien suivant: <a href="{{ notifications[0].object_link }}">{{ notifications[0].object_link }}</a></p>
+{% else %}
+    <p>Des changements ont été apportés aux jeux de données {{ notifications.join(', ', attribute='object_title_fr') }}.</p>
+
+    <p>Pour les voir, veuillez cliquer sur les liens suivants :
+        {% for notification in notifications %}<a href="{{ notification.object_link }}">{{ notification.object_link }}</a>{% if not loop.last %}, {% endif %}{% endfor %}.</p>
+{% endif %}
+
+Si vous ne souhaitez plus recevoir ces notifications, vous pouvez vous désabonner à tout moment:
+{{ manage_link }}
+
 Cordialement,
-Votre Team Secrétariat OGD
+L'équipe du secrétariat OGD
 
 Secrétariat Open Government Data
 Office fédéral de la statistique
 Espace de l'Europe 10
 CH-2010 Neuchâtel
-<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
+www.bfs.admin.ch/ogd
 
 Gérer mes abonnements: {{ manage_link }}
 
 --
 
-Hello
-
-The following dataset has been updated:
-{% for notification in notifications %}
-- "{{ notification.object_title_en }}": {{ notification.object_link }}
-{% endfor %}
-Best regards,
-Team Open Government Data Office
-
-Open Government Data Office
-Federal Statistical Office
-Espace de l'Europe 10
-CH-2010 Neuchâtel
-<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
-
-Manage my subscriptions: {{ manage_link }}
-
---
-
 Buongiorno,
 
-i seguenti dataset sono stati aggiornati:
-{% for notification in notifications %}
-- "{{ notification.object_title_it }}": {{ notification.object_link }}
-{% endfor %}
-Cordiali saluti
+{% if notifications|length == 1 %}
+    il dataset {{ notifications[0].object_title_it }} è stato modificato. Per vedere la modifica, clicchi sul link
+    seguente: {{ notifications[0].object_link }}
+{% else %}
+    i dataset {{ notifications.join(', ', attribute='object_title_fr') }} sono stati modificati.
+
+    Per vedere le modifiche, clicchi sui link seguenti:
+    {% for notification in notifications %} {{ notification.object_link }} {% if not loop.last %}, {% endif %}{% endfor %}.
+{% endif %}
+
+Cordiali saluti,
 Team Segreteria OGD
 
 Segreteria Open Government Data
 Ufficio federale di statistica UST
 Espace de l’Europe 10,
 CH-2010 Neuchâtel
-<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
+www.bfs.admin.ch/ogd
 
 Gestione abbonamento: {{ manage_link }}
+
+--
+
+Dear Sir/Madam,
+
+{% if notifications|length == 1 %}
+    There has been a change to the dataset {{ notifications[0].object_title_it }}. To see the change, please click on
+    the following link: {{ notifications[0].object_link }}
+{% else %}
+    There have been changes to the datasets {{ notifications.join(', ', attribute='object_title_fr') }}.
+
+    To see the changes, please click on the following links:
+    {% for notification in notifications %} {{ notification.object_link }} {% if not loop.last %}, {% endif %}{% endfor %}.
+{% endif %}
+
+Best regards,
+The OGD office team
+
+Open Government Data Office
+Federal Statistical Office
+Espace de l'Europe 10
+CH-2010 Neuchâtel
+www.bfs.admin.ch/ogd
+
+Manage my subscriptions: {{ manage_link }}

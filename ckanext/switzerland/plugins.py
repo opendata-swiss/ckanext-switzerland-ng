@@ -705,8 +705,8 @@ class OgdchSubscribePlugin(SubscribePlugin):
                                                      subject=None,
                                                      plain_text_body=None,
                                                      html_body=None):
-        subject = u'Bestätigung – Abonnement Account verwalten – {site_title}'\
-            .format(**email_vars)
+        subject = u'Bestätigungsmail – Confirmation - E-mail di conferma - ' \
+                  u'Confirmation'.format(**email_vars)
 
         html_body = render_jinja2(
             '/emails/subscribe_confirmation.html', email_vars)
@@ -733,7 +733,7 @@ class OgdchSubscribePlugin(SubscribePlugin):
                         notification.get('object_title'), lang)
 
         subject = u'Update notification – ' \
-                  u'Aktualisierter Datensatz auf ' \
+                  u'updated dataset ' \
                   u'{site_title}'.format(**email_vars)
 
         html_body = render_jinja2(
@@ -751,8 +751,8 @@ class OgdchSubscribePlugin(SubscribePlugin):
         ogdch_plugin_utils.ogdch_transform_links(
             email_vars, ['verification_link', 'manage_link'])
 
-        subject = u'Bestätigungsmail – Abonnement Datensatz - {site_title}'.\
-            format(**email_vars)
+        subject = u'Bestätigungsmail – Confirmation - E-mail di conferma - ' \
+                  u'Confirmation'.format(**email_vars)
 
         html_body = render_jinja2(
             '/emails/subscribe_verification.html', email_vars)

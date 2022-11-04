@@ -1,10 +1,13 @@
-Guten Tag
+French, Italian and English below
 
-Vielen Dank für Ihre Bestätigung des Datensatz-Abonnements auf opendata.swiss.
+Vielen Dank.
 
-Sie können das Abonnement jederzeit widerrufen oder Ihre Einstellungen anpassen.
+Sie haben Ihre E-Mail-Adresse erfolgreich bestätigt. Von nun an werden Sie über Änderungen des Datensatzes
+benachrichtigt (Änderungsdatum des Datensatzes, Änderungsdatum der Ressource, Zugangs-URL, Download-URL).
 
-Freundliche Grüsse
+Sie können Ihr Abo jederzeit anpassen {{ manage_link }} und beenden {{ unsubscribe_link }}.
+
+Freundliche Grüsse,
 Team Geschäftsstelle OGD
 
 Geschäftsstelle Open Government Data
@@ -18,60 +21,65 @@ Mein Abonnement verwalten: {{ manage_link }}
 
 --
 
-Bonjour
+Merci.
 
-Merci beaucoup d’avoir confirmé votre inscription à l’abonnement au jeu de données d’opendata.swiss.
+Nous vous remercions d'avoir confirmé votre adresse e-mail. Tout changement relatif aux jeux de données vous sera
+désormais notifié (date de modification des jeux des données, date de modification de la ressource, URL d'accès,
+URL de téléchargement).
 
-Vous pouvez modifier ou annuler votre abonnement à tout moment.
+Vous pouvez modifier {{ manage_link }} et mettre fin {{ unsubscribe_link }} à votre abonnement à tout moment.
 
 Cordialement,
-Votre Team Secrétariat OGD
+L'équipe du secrétariat OGD
 
 Secrétariat Open Government Data
 Office fédéral de la statistique
 Espace de l'Europe 10
 CH-2010 Neuchâtel
-<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
+www.bfs.admin.ch/ogd
 
 Se désinscrire des mises à jour: {{ unsubscribe_link }}
 Gérer mes abonnements: {{ manage_link }}
 
 --
 
-Hello
+Grazie,
 
-Thank you for confirming your subscription on opendata.swiss.
+per aver confermato l’indirizzo e-mail. D’ora in poi La informeremo ogni volta che il dataset sarà modificato (data
+di modifica del dataset, data di modifica della risorsa, URL di accesso, URL di download).
 
-You can manage your settings or unsubscribe at any time.
+Può disdire l’abbonamento {{ unsubscribe_link }} o modificarne {{ manage_link }}
 
-Best regards,
-Team Open Government Data Office
-
-Open Government Data Office
-Federal Statistical Office
-Espace de l'Europe 10
-CH-2010 Neuchâtel
-<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
-
-Unsubscribe: {{ unsubscribe_link }}
-Manage my subscriptions: {{ manage_link }}
-
---
-
-Buongiorno,
-
-La ringraziamo per la conferma dell’abbonamento al dataset opendata.swiss.
-
-È possibile disdire l’abbonamento o modificarne le impostazioni in qualsiasi momento.
-
-Cordiali saluti
+Cordiali saluti,
 Team Segreteria OGD
 
 Segreteria Open Government Data
 Ufficio federale di statistica UST
 Espace de l’Europe 10,
 CH-2010 Neuchâtel
-<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
+www.bfs.admin.ch/ogd
 
 Disdetta abbonamento: {{ unsubscribe_link }}
 Gestione abbonamento: {{ manage_link }}
+
+--
+
+Thank you.
+
+You have successfully confirmed your email address. From now on, you will be notified of changes to the dataset
+(dataset modification date, resource modification date, access URL, download URL).
+
+You can make changes to {{ unsubscribe_link }} and cancel {{ manage_link }} your subscription at any time.
+
+Best regards,
+The OGD office team
+
+Open Government Data Office
+Federal Statistical Office
+Espace de l'Europe 10
+CH-2010 Neuchâtel
+www.bfs.admin.ch/ogd
+
+Unsubscribe: {{ unsubscribe_link }}
+Manage my subscriptions: {{ manage_link }}
+

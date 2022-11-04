@@ -150,17 +150,10 @@ class TestSubscriptionEmails(helpers.FunctionalTestBase):
         subject, body_plain_text, body_html = \
             subscribe.get_verification_email_contents(email_vars)
 
-        assert_equal(subject, u'Bestätigungsmail – Abonnement Datensatz - opendata.swiss')
-        assert_in(u'''Guten Tag
-
-Sie haben via opendata.swiss die automatische Benachrichtigung über die
-Aktualisierungen des folgenden Datensatzes abonniert:''', body_plain_text.strip())
-        assert_in(u'''<p>Guten Tag</p>
-
-<p>
-    Sie haben via opendata.swiss die automatische Benachrichtigung über die
-    Aktualisierungen des folgenden Datensatzes abonniert:
-</p>''', body_html.strip())
+        assert_equal(subject, u'Best\xe4tigungsmail \u2013 Confirmation - E-mail di conferma - Confirmation')
+        assert_in(u'''Vielen Dank, dass Sie sich für den Datensatz''', body_plain_text.strip())
+        assert_in(u'''Vielen Dank, dass Sie sich f\xfcr den Datensatz''',
+                  body_html.strip())
         assert_not_in(u'http://test.ckan.net', body_html)
         assert_not_in(u'http://test.ckan.net', body_plain_text)
 
@@ -183,12 +176,9 @@ Aktualisierungen des folgenden Datensatzes abonniert:''', body_plain_text.strip(
             subscribe.get_manage_email_contents(email_vars)
 
         assert_equal(subject, u'Manage opendata.swiss subscription')
-        assert_in(u'''Guten Tag
-
-opendata.swiss subscription options:''', body_plain_text.strip())
-        assert_in(u'''<p>Guten Tag</p>
-
-<p>opendata.swiss subscription options<br/>''', body_html.strip())
+        assert_in(u'''To manage subscriptions for''', body_plain_text.strip())
+        assert_in(u'''<p>
+    To manage subscriptions for''', body_html.strip())
         assert_not_in(u'http://test.ckan.net', body_html)
         assert_not_in(u'http://test.ckan.net', body_plain_text)
 
@@ -215,15 +205,12 @@ opendata.swiss subscription options:''', body_plain_text.strip())
 
         assert_equal(
             subject,
-            u'Bestätigung – Abonnement Account verwalten – opendata.swiss'
+            u'Best\xe4tigungsmail \u2013 Confirmation - E-mail di conferma - Confirmation'
         )
-        assert_in(u'''Guten Tag
-
-Vielen Dank für Ihre Bestätigung des Datensatz-Abonnements auf opendata.swiss.''',
+        assert_in(u'''Sie haben Ihre E-Mail-Adresse erfolgreich bestätigt.''',
                   body_plain_text.strip())
-        assert_in(u'''<p>Guten Tag</p>
-
-<p>Vielen Dank für Ihre Bestätigung des Datensatz-Abonnements auf opendata.swiss.</p>''',
+        assert_in(u'''<p>
+    Sie haben Ihre E-Mail-Adresse erfolgreich bestätigt. ''',
                   body_html.strip())
         assert_not_in(u'http://test.ckan.net', body_html)
         assert_not_in(u'http://test.ckan.net', body_plain_text)
@@ -272,26 +259,18 @@ Vielen Dank für Ihre Bestätigung des Datensatz-Abonnements auf opendata.swiss.
 
         assert_equal(
             subject,
-            u'Update notification – Aktualisierter Datensatz auf opendata.swiss'
+            u'Update notification \u2013 updated dataset opendata.swiss'
         )
-        assert_in(u'''Folgender Datensatz wurde aktualisiert:
-
-- "DE Test": http://frontend-test.ckan.net/dataset/{dataset_id}
-'''.format(dataset_id=self.dataset['id']),
+        assert_in(u'Es gibt eine \xc4nderung im Datensatz DE Test. Um die \xc4nderung zu sehen, klicken Sie bitte',
                   body_plain_text.strip())
-        assert_in(u'''<p>Folgender Datensatz wurde aktualisiert:</p>
-
-<ul>
-
-    <li>
-        <a href="http://frontend-test.ckan.net/dataset/{dataset_id}">
-            "DE Test" (test-dataset)
-        </a>
-    </li>
-
-</ul>
-'''.format(dataset_id=self.dataset['id']),
+        assert_in(u'Es gibt eine \xc4nderung im Datensatz DE Test. Um die \xc4nderung zu sehen, klicken Sie bitte',
                   body_html.strip())
+        assert_in(u'http://frontend-test.ckan.net/dataset/{dataset_id}'.format(dataset_id=self.dataset['id']),
+                  body_plain_text.strip())
+        assert_in(u'<a href="http://frontend-test.ckan.net/dataset/{dataset_id}">http://frontend-test.ckan.net/dataset/{dataset_id}</a>'
+                  .format(dataset_id=self.dataset['id']),
+                  body_html.strip())
+
         assert_not_in(u'http://test.ckan.net', body_html)
         assert_not_in(u'http://test.ckan.net', body_plain_text)
 
@@ -346,13 +325,13 @@ www.bfs.admin.ch/ogd
 
     def _test_all_four_languages(self, body, object_title_included=False):
         if object_title_included:
-            assert_in('DE Test', body)
-            assert_in('EN Test', body)
-            assert_in('FR Test', body)
-            assert_in('IT Test', body)
+            assert_in(u'Geschäftsstelle Open Government Data', body)
+            assert_in(u'Open Government Data Office', body)
+            assert_in(u'Secrétariat Open Government Data', body)
+            assert_in(u'Segreteria Open Government Data', body)
 
         # Check that there is a sign-off in each language
         assert_in(u'Team Geschäftsstelle OGD', body)
-        assert_in(u'Team Open Government Data Office', body)
-        assert_in(u'Votre Team Secrétariat OGD', body)
+        assert_in(u'The OGD office team', body)
+        assert_in(u"L'équipe du secrétariat OGD", body)
         assert_in(u'Team Segreteria OGD', body)

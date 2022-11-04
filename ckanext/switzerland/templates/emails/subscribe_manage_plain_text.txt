@@ -1,11 +1,13 @@
-Guten Tag
+French, Italian and English below
+
+Guten Tag,
 
 {{ site_title }} subscription options:
 
 To manage subscriptions for {{ email }}, click this link:
 {{ manage_link }}
 
-Freundliche Grüsse
+Viele Grüsse,
 Team Geschäftsstelle OGD
 
 Geschäftsstelle Open Government Data
@@ -26,7 +28,7 @@ To manage subscriptions for {{ email }}, click this link:
 {{ manage_link }}
 
 Cordialement,
-Votre Team Secrétariat OGD
+L'équipe du secrétariat OGD
 
 Secrétariat Open Government Data
 Office fédéral de la statistique
@@ -38,26 +40,6 @@ Gérer mes abonnements: {{ manage_link }}
 
 --
 
-Hello
-
-{{ site_title }} subscription options:
-
-To manage subscriptions for {{ email }}, click this link:
-{{ manage_link }}
-
-Best regards,
-Team Open Government Data Office
-
-Open Government Data Office
-Federal Statistical Office
-Espace de l'Europe 10
-CH-2010 Neuchâtel
-<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
-
-Manage my subscriptions: {{ manage_link }}
-
---
-
 Buongiorno,
 
 {{ site_title }} subscription options:
@@ -65,7 +47,7 @@ Buongiorno,
 To manage subscriptions for {{ email }}, click this link:
 {{ manage_link }}
 
-Cordiali saluti
+Cordiali saluti,
 Team Segreteria OGD
 
 Segreteria Open Government Data
@@ -75,3 +57,23 @@ CH-2010 Neuchâtel
 <a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
 
 Gestione abbonamento: {{ manage_link }}
+
+--
+
+Hello
+
+{{ site_title }} subscription options:
+
+To manage subscriptions for {{ email }}, click this link:
+{{ manage_link }}
+
+Best regards,
+The OGD office team
+
+Open Government Data Office
+Federal Statistical Office
+Espace de l'Europe 10
+CH-2010 Neuchâtel
+www.bfs.admin.ch/ogd
+
+Manage my subscriptions: {{ manage_link }}
