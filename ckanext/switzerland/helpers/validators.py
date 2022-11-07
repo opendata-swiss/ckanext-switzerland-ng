@@ -111,7 +111,7 @@ def ogdch_date_output(value):
         if display_value:
             return display_value
     raise ogdch_date_helpers.OGDCHDateValidationException(
-        "Unknown date format detected"
+        "Unknown date format detected "
         "in ogdch_date_output : '{}'"
         .format(value)
     )
