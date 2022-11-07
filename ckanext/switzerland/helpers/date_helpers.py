@@ -6,6 +6,7 @@ import ckan.plugins.toolkit as tk
 
 DATE_FORMAT = tk.config.get(
     'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
+ALLOWED_DATE_FORMATS = ['%d.%m.%y']
 
 log = logging.getLogger(__name__)
 
@@ -55,6 +56,18 @@ def store_if_datetime(value):
     try:
         if isinstance(value, datetime):
             return value.isoformat()
+    except Exception:
+        return None
+
+
+def store_if_other_allowed_formats(value):
+    """timestamps will be transformed
+    into isodates and stored that way."""
+    try:
+        for date_format in ALLOWED_DATE_FORMATS:
+            dt = datetime.datetime.strptime(value, date_format)
+            if isinstance(dt, datetime):
+                return dt.isoformat()
     except Exception:
         return None
 
@@ -120,6 +133,9 @@ def transform_any_date_to_isodate(date_field):
         return isodate_field
     isodate_field = store_if_timestamp(date_field)
     if isodate_field:
+        return isodate_field
+    if isodate_field:
+        isodate_field = store_if_other_allowed_formats(date_field)
         return isodate_field
 
 
