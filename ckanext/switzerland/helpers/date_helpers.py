@@ -150,7 +150,7 @@ class OGDCHDateValidationException(Exception):
     pass
 
 
-def transform_date_for_solr(date_field):
+def transform_date_for_solr(date):
     """Since Solr can only handle dates as isodates with UTC
     all isodates that are indexed by Solr are transformed in the
     following way:
@@ -165,11 +165,17 @@ def transform_date_for_solr(date_field):
     will still be stored in the original isoformat with timezone
     information in postgres
     """
+    # Necessary as we still have some badly-formatted dates in the database:
+    # some are the string 'False', and some are timestamps.
+    if date in ACCEPTED_EMPTY_DATE_VALUES:
+        return VALID_EMPTY_DATE
+    date = transform_any_date_to_isodate(date)
+
     try:
-        datetime_without_tz = parse(date_field, ignoretz=True)
+        datetime_without_tz = parse(date, ignoretz=True)
         isodate_without_tz = isodate.datetime_isoformat(datetime_without_tz)
         return isodate_without_tz + 'Z'
     except Exception as e:
         log.error("Exception {} occured on date transformation of {}"
-                  .format(e, date_field))
+                  .format(e, date))
         return None
