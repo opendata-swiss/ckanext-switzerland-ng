@@ -120,6 +120,19 @@ def display_if_datetime(value):
         return None
 
 
+def display_if_other_formats(value):
+    """dates/datetime values with other formats will be displayed in
+    ckanext.switzerland.date_picker_format
+    """
+    try:
+        for date_format in ALLOWED_DATE_FORMATS:
+            dt = datetime.strptime(value, date_format)
+            if isinstance(dt, datetime):
+                return value
+    except Exception:
+        return None
+
+
 def transform_any_date_to_isodate(date_field):
     """transform any stored date format into an isodate:
     considered are the ogdch_date_format, timestamps
