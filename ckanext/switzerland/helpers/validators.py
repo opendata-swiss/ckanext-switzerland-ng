@@ -31,6 +31,7 @@ storage_date_helpers = [
     ogdch_date_helpers.store_if_ogdch_date,
     ogdch_date_helpers.store_if_timestamp,
     ogdch_date_helpers.store_if_datetime,
+    ogdch_date_helpers.store_if_other_formats,
 ]
 
 display_date_helpers = [
@@ -38,6 +39,7 @@ display_date_helpers = [
     ogdch_date_helpers.display_if_ogdch_date,
     ogdch_date_helpers.display_if_timestamp,
     ogdch_date_helpers.display_if_datetime,
+    ogdch_date_helpers.display_if_other_formats,
 ]
 
 
@@ -96,7 +98,7 @@ def ogdch_date_validator(value):
         if storage_date:
             return storage_date
     raise ogdch_date_helpers.OGDCHDateValidationException(
-        "Unknown date format detected"
+        "Unknown date format detected "
         "in ogdch_date_validator : '{}'"
         .format(value)
     )
