@@ -128,7 +128,7 @@ def display_if_other_formats(value):
         for date_format in ALLOWED_DATE_FORMATS:
             dt = datetime.strptime(value, date_format)
             if isinstance(dt, datetime):
-                return value
+                return isodate.strftime(dt, DATE_FORMAT)
     except Exception:
         return None
 
