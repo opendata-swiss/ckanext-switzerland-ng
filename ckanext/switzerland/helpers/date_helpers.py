@@ -60,7 +60,7 @@ def store_if_datetime(value):
         return None
 
 
-def store_if_other_allowed_formats(value):
+def store_if_other_formats(value):
     """timestamps will be transformed
     into isodates and stored that way."""
     try:
@@ -134,7 +134,7 @@ def transform_any_date_to_isodate(date_field):
     isodate_field = store_if_timestamp(date_field)
     if isodate_field:
         return isodate_field
-    isodate_field = store_if_other_allowed_formats(date_field)
+    isodate_field = store_if_other_formats(date_field)
     if isodate_field:
         return isodate_field
 
