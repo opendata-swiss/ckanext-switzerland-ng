@@ -98,7 +98,7 @@ def ogdch_date_validator(value):
         if storage_date:
             return storage_date
     raise ogdch_date_helpers.OGDCHDateValidationException(
-        "Unknown date format detected"
+        "Unknown date format detected "
         "in ogdch_date_validator : '{}'"
         .format(value)
     )
