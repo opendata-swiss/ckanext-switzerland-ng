@@ -9,6 +9,8 @@ import uuid
 import rdflib
 import rdflib.parser
 from rdflib.namespace import Namespace, RDF
+from ratelimit import limits, RateLimitException
+from backoff import on_exception, expo
 
 from ckan.common import config
 from ckan.plugins.toolkit import get_or_bust, side_effect_free
@@ -48,6 +50,7 @@ HARVEST_DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S.%f"
 HARVEST_STATUS_RUNNING = "Running"
 
 DCAT = Namespace("http://www.w3.org/ns/dcat#")
+FIVE_MINUTES = 300
 
 
 @side_effect_free
@@ -305,6 +308,8 @@ def ogdch_showcase_search(context, data_dict):
         raise NotFound
 
 
+@on_exception(expo, RateLimitException, max_tries=8)
+@limits(calls=2, period=FIVE_MINUTES)
 def ogdch_showcase_submit(context, data_dict):
     '''
     Custom logic to create a showcase. Showcases can be submitted
