@@ -308,7 +308,6 @@ def ogdch_showcase_search(context, data_dict):
         raise NotFound
 
 
-@on_exception(expo, RateLimitException, max_tries=8)
 @limits(calls=2, period=FIVE_MINUTES)
 def ogdch_showcase_submit(context, data_dict):
     '''
