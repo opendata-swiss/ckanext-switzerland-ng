@@ -10,7 +10,6 @@ import rdflib
 import rdflib.parser
 from rdflib.namespace import Namespace, RDF
 from ratelimit import limits, RateLimitException
-from backoff import on_exception, expo
 
 from ckan.common import config
 from ckan.plugins.toolkit import get_or_bust, side_effect_free
