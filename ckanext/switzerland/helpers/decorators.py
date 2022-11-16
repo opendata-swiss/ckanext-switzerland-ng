@@ -1,4 +1,3 @@
-import time
 from datetime import datetime, timedelta
 import functools
 from ckan.common import config
@@ -27,7 +26,9 @@ def ratelimit(func):
         for (m, t) in api_calls_per_time_and_email:
             if (t + limit_timedelta < now):
                 api_calls_per_time_and_email.remove((m, t))
-        if len([(m, t) for (m, t) in api_calls_per_time_and_email if m == author_email]) > limit_call_count:
+        if len([(m, t)
+                for (m, t) in api_calls_per_time_and_email
+                if m == author_email]) > limit_call_count:
             log.error("rate limit exceeded for {}".format(author_email))
             context['ratelimit_exceeded'] = True
         return func(context, data_dict)
@@ -38,11 +39,22 @@ def ratelimit(func):
 
 def _get_limits_from_config():
     try:
-        limit_timedelta = timedelta(seconds=int(config.get('ckanext.switzerland.api_limit_interval_in_seconds', 300)))
+        limit_timedelta = timedelta(
+            seconds=int(
+                config.get(
+                    'ckanext.switzerland.api_limit_interval_in_seconds',
+                    300)
+            )
+        )
     except (ValueError, TypeError):
         limit_timedelta = timedelta(minutes=5)
     try:
-        limit_call_count = int(config.get('ckanext.switzerland.api_limit_calls_per_interval', 2))
+        limit_call_count = int(
+            config.get(
+                'ckanext.switzerland.api_limit_calls_per_interval',
+                2
+            )
+        )
     except ValueError:
         limit_call_count = 2
     return limit_timedelta, limit_call_count
