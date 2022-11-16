@@ -29,6 +29,7 @@ from ckanext.switzerland.helpers.request_utils import get_content_headers
 from ckanext.switzerland.helpers.mail_helper import (
     send_registration_email,
     send_showcase_email)
+from ckanext.switzerland.helpers.decorators import ratelimit
 from ckanext.switzerland.helpers.logic_helpers import (
     get_dataset_count, get_org_count, get_showcases_for_dataset,
     map_existing_resources_to_new_dataset)
@@ -307,13 +308,15 @@ def ogdch_showcase_search(context, data_dict):
         raise NotFound
 
 
-@limits(calls=2, period=FIVE_MINUTES)
+@ratelimit
 def ogdch_showcase_submit(context, data_dict):
     '''
     Custom logic to create a showcase. Showcases can be submitted
     from the frontend and should be created in one step along with
     all the datasets that are attached to the showcase.
     '''
+    if context.get('ratelimit_exceeded'):
+        raise ValidationError("ratelimt exceeded")
     try:
         title = data_dict.get('title')
         if not title:
