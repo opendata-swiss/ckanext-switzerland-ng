@@ -105,3 +105,4 @@ $ curl {ckan_url}/api/3/action/ogdch_add_users_to_groups?user_id=greta.mayer
 # add all users that are not admins as members to all specific groups:
 $ curl {ckan_url}/api/3/action/ogdch_add_users_to_groups
 ```
+
