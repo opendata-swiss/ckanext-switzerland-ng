@@ -19,22 +19,54 @@ def ratelimit(func):
     @functools.wraps(func)
     def inner(context, data_dict):
         author_email = data_dict.get('author_email')
-        if not author_email:
-            raise ValueError("Email is missing")
-        now = datetime.now()
-        api_calls_per_time_and_email.append((author_email, datetime.now()))
-        for (m, t) in api_calls_per_time_and_email:
-            if (t + limit_timedelta < now):
-                api_calls_per_time_and_email.remove((m, t))
-        if len([(m, t)
-                for (m, t) in api_calls_per_time_and_email
-                if m == author_email]) > limit_call_count:
-            log.error("rate limit exceeded for {}".format(author_email))
-            context['ratelimit_exceeded'] = True
+        if author_email:
+            _add_new_call_and_remove_old_calls(
+                api_calls_per_time_and_email,
+                author_email,
+                limit_timedelta
+            )
+            if _rate_limit_for_author_email_exceeded(
+                api_calls_per_time_and_email,
+                author_email,
+                limit_call_count
+            ):
+                log.debug("Rate limit exceeded for {}".format(author_email))
+                context['ratelimit_exceeded'] = True
         return func(context, data_dict)
     limit_timedelta, limit_call_count = _get_limits_from_config()
     api_calls_per_time_and_email = []
     return inner
+
+
+def _add_new_call_and_remove_old_calls(api_calls_per_time_and_email,
+                                       author_email,
+                                       limit_timedelta):
+    """
+    Adds the new call for author_email and remove calls that are
+    outside the considered timedelta to the list of api calls
+    """
+    now = datetime.now()
+    this_call_tuple = (author_email, datetime.now())
+    api_calls_per_time_and_email.append(this_call_tuple)
+    for (m, t) in api_calls_per_time_and_email:
+        tuple_expired = t + limit_timedelta < now
+        if tuple_expired:
+            api_calls_per_time_and_email.remove((m, t))
+
+
+def _rate_limit_for_author_email_exceeded(api_calls_per_time_and_email,
+                                          author_email,
+                                          limit_call_count):
+    """
+    Checks whether the call limit for author_email is exceeded
+    """
+    calls_with_same_email_as_author_email = \
+        [(m, t)
+         for (m, t) in api_calls_per_time_and_email
+         if m == author_email]
+    if len(calls_with_same_email_as_author_email) > limit_call_count:
+        return True
+    return False
 
 
 def _get_limits_from_config():

@@ -9,11 +9,11 @@ from ckan.logic import ValidationError
 
 class TestApiLimit(TestCase):
     def test_api_limit(self):
-        """test that the api limit prevents successive calling with the same email"""
+        """Test that the api limit prevents successive calling with the same email"""
         @ratelimit
         def api_call(context, data_dict):
             if context.get('ratelimit_exceeded'):
-                raise ValidationError("ratelimit exceeded")
+                raise ValidationError("Rate limit exceeded")
             return True
 
         _, limit_call_count = _get_limits_from_config()

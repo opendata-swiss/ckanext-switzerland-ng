@@ -314,8 +314,11 @@ def ogdch_showcase_submit(context, data_dict):
     from the frontend and should be created in one step along with
     all the datasets that are attached to the showcase.
     '''
+    author_email = data_dict.get('author_email')
+    if not author_email:
+        raise ValidationError("Missing author_email")
     if context.get('ratelimit_exceeded'):
-        raise ValidationError("ratelimt exceeded")
+        raise ValidationError("Ratelimt for {} exceeded".format(author_email))
     try:
         title = data_dict.get('title')
         if not title:
