@@ -293,14 +293,21 @@ def ogdch_showcase_search(context, data_dict):
     the number of datasets in each showcase in the output.
     '''
     user = tk.get_action('get_site_user')({'ignore_auth': True}, {})
-    context.update({'user': user['name'], 'for_view': True})
+    context.update({'user': user['name']})
 
-    if data_dict['fq']:
+    if data_dict.get('fq'):
         data_dict['fq'] += ' dataset_type:showcase'
     else:
         data_dict.update({'fq': 'dataset_type:showcase'})
 
     result = tk.get_action('package_search')(context, data_dict)
+    for showcase in result.get('results', []):
+        try:
+            details = tk.get_action('package_show')(context, {'id': showcase.get('name')})
+            showcase['num_datasets'] = details.get('num_datasets')
+        except Exception as e:
+            log.error("Error occured for package_show at {}: {}"
+                      .format(showcase, e))
     if result:
         return result
     else:
