@@ -303,7 +303,9 @@ def ogdch_showcase_search(context, data_dict):
     result = tk.get_action('package_search')(context, data_dict)
     for showcase in result.get('results', []):
         try:
-            details = tk.get_action('package_show')(context, {'id': showcase.get('name')})
+            details = tk.get_action('package_show')(
+                context, {'id': showcase.get('name')}
+            )
             showcase['num_datasets'] = details.get('num_datasets')
         except Exception as e:
             log.error("Error occured for package_show at {}: {}"
