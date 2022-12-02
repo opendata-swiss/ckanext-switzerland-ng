@@ -28,7 +28,7 @@ from ckanext.switzerland.helpers.request_utils import get_content_headers
 from ckanext.switzerland.helpers.mail_helper import (
     send_registration_email,
     send_showcase_email)
-from ckanext.switzerland.helpers.decorators import ratelimit
+from ckanext.switzerland.helpers.decorators import ratelimit, get_limits_from_config
 from ckanext.switzerland.helpers.logic_helpers import (
     get_dataset_count, get_org_count, get_showcases_for_dataset,
     map_existing_resources_to_new_dataset)
@@ -318,7 +318,14 @@ def ogdch_showcase_submit(context, data_dict):
     if not author_email:
         raise ValidationError("Missing author_email")
     if context.get('ratelimit_exceeded'):
-        raise ValidationError("Rate limt for {} exceeded".format(author_email))
+        raise ValidationError(
+            "Rate limit of {} calls per {} exceeded: for {} there were {} calls in that time intervall"
+            .format(
+                context['limit_call_count'],
+                context['limit_timedelta'],
+                author_email,
+                context['count_of_calls_per_email'])
+            )
     try:
         title = data_dict.get('title')
         if not title:
