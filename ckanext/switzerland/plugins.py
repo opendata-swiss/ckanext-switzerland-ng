@@ -758,13 +758,15 @@ class OgdchSubscribePlugin(SubscribePlugin):
 
     def get_activities(self, include_activity_from,
                        objects_subscribed_to_keys):
-        import pdb; pdb.set_trace()
         try:
             harvest_user = toolkit.get_action('user_show')({}, {'id': ogdch_validators.HARVEST_USER})
             harvest_user_id = harvest_user['id']
         except NotFound:
             raise
-        activities = Session\
-        .query(Activity).filter(Activity.timestamp > include_activity_from).filter(Activity.object_id.in_(objects_subscribed_to_keys)).filter(Activity.user_id != harvest_user_id).all()
-        log.error(activities)
+        activities = \
+            Session\
+            .query(Activity)\
+            .filter(Activity.timestamp > include_activity_from)\
+            .filter(Activity.object_id.in_(objects_subscribed_to_keys))\
+            .filter(Activity.user_id != harvest_user_id).all()
         return activities
