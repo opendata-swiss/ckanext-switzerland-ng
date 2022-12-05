@@ -318,7 +318,15 @@ def ogdch_showcase_submit(context, data_dict):
     if not author_email:
         raise ValidationError("Missing author_email")
     if context.get('ratelimit_exceeded'):
-        raise ValidationError("Rate limt for {} exceeded".format(author_email))
+        raise ValidationError(
+            "Rate limit of {} calls per {} exceeded: "
+            "for {} there were {} calls in that time intervall"
+            .format(
+                context['limit_call_count'],
+                context['limit_timedelta'],
+                author_email,
+                context['count_of_calls_per_email'])
+            )
     try:
         title = data_dict.get('title')
         if not title:
