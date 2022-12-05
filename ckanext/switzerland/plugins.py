@@ -2,7 +2,8 @@
 
 from ckan.common import OrderedDict
 from ckan.lib.base import render_jinja2
-from ckan.model import Session, Package, PACKAGE_NAME_MAX_LENGTH
+from ckan.logic import NotFound
+from ckan.model import Session, Package, PACKAGE_NAME_MAX_LENGTH, Activity
 from ckanext.showcase.plugin import ShowcasePlugin
 from ckanext.subscribe.plugin import SubscribePlugin
 import ckanext.switzerland.helpers.validators as ogdch_validators
@@ -754,3 +755,21 @@ class OgdchSubscribePlugin(SubscribePlugin):
             '/emails/subscribe_verification_plain_text.txt', email_vars)
 
         return subject, plain_text_body, html_body
+
+    def get_activities(self, include_activity_from,
+                       objects_subscribed_to_keys):
+        try:
+            harvest_user = toolkit.get_action('user_show')(
+                {},
+                {'id': ogdch_validators.HARVEST_USER}
+            )
+            harvest_user_id = harvest_user['id']
+        except NotFound:
+            raise
+        activities = \
+            Session\
+            .query(Activity)\
+            .filter(Activity.timestamp > include_activity_from)\
+            .filter(Activity.object_id.in_(objects_subscribed_to_keys))\
+            .filter(Activity.user_id != harvest_user_id).all()
+        return activities
