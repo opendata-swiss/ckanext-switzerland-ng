@@ -6,7 +6,7 @@ Guten Tag,
     Es gibt eine Änderung im Datensatz {{ notifications[0].object_title_de }}. Um die Änderung zu sehen, klicken Sie bitte
     auf folgenden Link: {{ notifications[0].object_link }}
 {% else %}
-    Es wurden Änderungen an den folgenden Datensätzen vorgenommen: {{ notifications.join(', ', attribute='object_title_de') }}.
+    Es wurden Änderungen an den folgenden Datensätzen vorgenommen: {{ notifications | join(', ', attribute='object_title_de') }}.
     Um die Änderung zu sehen, klicken Sie bitte auf die folgenden Links:
     {% for notification in notifications %}{{ notification.object_link }}
     {% if not loop.last %}, {% endif %}
@@ -35,7 +35,7 @@ Bonjour,
     <p>Des changements ont été apportés au jeu de données {{ notifications[0].object_title_fr }}. Pour les voir, veuillez
         cliquer sur le lien suivant: <a href="{{ notifications[0].object_link }}">{{ notifications[0].object_link }}</a></p>
 {% else %}
-    <p>Des changements ont été apportés aux jeux de données {{ notifications.join(', ', attribute='object_title_fr') }}.</p>
+    <p>Des changements ont été apportés aux jeux de données {{ notifications | join(', ', attribute='object_title_fr') }}.</p>
 
     <p>Pour les voir, veuillez cliquer sur les liens suivants :
         {% for notification in notifications %}<a href="{{ notification.object_link }}">{{ notification.object_link }}</a>{% if not loop.last %}, {% endif %}{% endfor %}.</p>
@@ -63,7 +63,7 @@ Buongiorno,
     il dataset {{ notifications[0].object_title_it }} è stato modificato. Per vedere la modifica, clicchi sul link
     seguente: {{ notifications[0].object_link }}
 {% else %}
-    i dataset {{ notifications.join(', ', attribute='object_title_fr') }} sono stati modificati.
+    i dataset {{ notifications | join(', ', attribute='object_title_fr') }} sono stati modificati.
 
     Per vedere le modifiche, clicchi sui link seguenti:
     {% for notification in notifications %} {{ notification.object_link }} {% if not loop.last %}, {% endif %}{% endfor %}.
@@ -88,7 +88,7 @@ Dear Sir/Madam,
     There has been a change to the dataset {{ notifications[0].object_title_it }}. To see the change, please click on
     the following link: {{ notifications[0].object_link }}
 {% else %}
-    There have been changes to the datasets {{ notifications.join(', ', attribute='object_title_fr') }}.
+    There have been changes to the datasets {{ notifications | join(', ', attribute='object_title_fr') }}.
 
     To see the changes, please click on the following links:
     {% for notification in notifications %} {{ notification.object_link }} {% if not loop.last %}, {% endif %}{% endfor %}.
