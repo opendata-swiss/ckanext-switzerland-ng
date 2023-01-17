@@ -50,34 +50,6 @@ def _prepare_suggest_context(search_data, pkg_dict):
     return search_data
 
 
-def map_ckan_default_fields(pkg_dict):  # noqa
-    pkg_dict['display_name'] = pkg_dict['title']
-
-    if pkg_dict.get('maintainer') is None:
-        try:
-            pkg_dict['maintainer'] = pkg_dict['contact_points'][0]['name']  # noqa
-        except (KeyError, IndexError):
-            pass
-
-    if pkg_dict.get('maintainer_email') is None:
-        try:
-            pkg_dict['maintainer_email'] = pkg_dict['contact_points'][0]['email']  # noqa
-        except (KeyError, IndexError):
-            pass
-
-    if pkg_dict.get('author') is None:
-        try:
-            pkg_dict['author'] = pkg_dict['publisher']['name']  # noqa
-        except KeyError:
-            pass
-
-    if pkg_dict.get('resources') is not None:
-        for resource in pkg_dict['resources']:
-            resource['name'] = resource['title']
-
-    return pkg_dict
-
-
 def _is_dataset_package_type(pkg_dict):
     """determines whether a packages is a dataset"""
     try:
