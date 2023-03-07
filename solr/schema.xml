@@ -409,7 +409,6 @@ schema. In this case the version should be set to the next CKAN version number.
 <copyField source="maintainer" dest="text"/>
 <copyField source="author" dest="text"/>
 <copyField source="publisher" dest="text"/>
-<copyField source="contact_points" dest="text"/>
 
 <!-- language-specific text fields -->
 <copyField source="title_en" dest="text_en"/>
@@ -455,7 +454,6 @@ schema. In this case the version should be set to the next CKAN version number.
 <copyField source="organization_en" dest="suggest_en"/>
 <copyField source="author" dest="suggest_en"/>
 <copyField source="maintainer" dest="suggest_en"/>
-<copyField source="contact_points" dest="suggest_en"/>
 <copyField source="identifier" dest="suggest_en"/>
 <copyField source="res_name_en" dest="suggest_en"/>
 <copyField source="res_format" dest="suggest_en"/>
@@ -466,7 +464,6 @@ schema. In this case the version should be set to the next CKAN version number.
 <copyField source="organization_fr" dest="suggest_fr"/>
 <copyField source="author" dest="suggest_fr"/>
 <copyField source="maintainer" dest="suggest_fr"/>
-<copyField source="contact_points" dest="suggest_fr"/>
 <copyField source="identifier" dest="suggest_fr"/>
 <copyField source="res_name_fr" dest="suggest_fr"/>
 <copyField source="res_format" dest="suggest_fr"/>
@@ -477,7 +474,6 @@ schema. In this case the version should be set to the next CKAN version number.
 <copyField source="organization_de" dest="suggest_de"/>
 <copyField source="author" dest="suggest_de"/>
 <copyField source="maintainer" dest="suggest_de"/>
-<copyField source="contact_points" dest="suggest_de"/>
 <copyField source="identifier" dest="suggest_de"/>
 <copyField source="res_name_de" dest="suggest_de"/>
 <copyField source="res_format" dest="suggest_de"/>
@@ -488,7 +484,6 @@ schema. In this case the version should be set to the next CKAN version number.
 <copyField source="organization_it" dest="suggest_it"/>
 <copyField source="author" dest="suggest_it"/>
 <copyField source="maintainer" dest="suggest_it"/>
-<copyField source="contact_points" dest="suggest_it"/>
 <copyField source="identifier" dest="suggest_it"/>
 <copyField source="res_name_it" dest="suggest_it"/>
 <copyField source="res_format" dest="suggest_it"/>
