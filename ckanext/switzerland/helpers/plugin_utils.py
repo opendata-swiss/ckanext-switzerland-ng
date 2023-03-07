@@ -106,16 +106,7 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
     if 'publisher' in validated_dict:
         _prepare_publisher_for_search(validated_dict['publisher'],
                                       validated_dict['name'])
-
-    # TODO: Remove the try-except-block.
-    # This fixes the index while we have 'wrong' relations on
-    # datasets harvested with an old version of ckanext-geocat
-    try:
-        search_data['see_alsos'] = [d['dataset_identifier'] for d in validated_dict.get('see_alsos', [])]  # noqa
-    except TypeError:
-        search_data['see_alsos'] = [d for d in
-                                    validated_dict.get('see_alsos',
-                                                       [])]
+    search_data['see_alsos'] = [d['dataset_identifier'] for d in validated_dict.get('see_alsos', [])]  # noqa
 
     # make sure we're not dealing with NoneType
     if search_data['metadata_created'] is None:
