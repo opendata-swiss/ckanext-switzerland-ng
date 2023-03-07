@@ -50,34 +50,6 @@ def _prepare_suggest_context(search_data, pkg_dict):
     return search_data
 
 
-def map_ckan_default_fields(pkg_dict):  # noqa
-    pkg_dict['display_name'] = pkg_dict['title']
-
-    if pkg_dict.get('maintainer') is None:
-        try:
-            pkg_dict['maintainer'] = pkg_dict['contact_points'][0]['name']  # noqa
-        except (KeyError, IndexError):
-            pass
-
-    if pkg_dict.get('maintainer_email') is None:
-        try:
-            pkg_dict['maintainer_email'] = pkg_dict['contact_points'][0]['email']  # noqa
-        except (KeyError, IndexError):
-            pass
-
-    if pkg_dict.get('author') is None:
-        try:
-            pkg_dict['author'] = pkg_dict['publisher']['name']  # noqa
-        except KeyError:
-            pass
-
-    if pkg_dict.get('resources') is not None:
-        for resource in pkg_dict['resources']:
-            resource['name'] = resource['title']
-
-    return pkg_dict
-
-
 def _is_dataset_package_type(pkg_dict):
     """determines whether a packages is a dataset"""
     try:
@@ -134,16 +106,7 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
     if 'publisher' in validated_dict:
         _prepare_publisher_for_search(validated_dict['publisher'],
                                       validated_dict['name'])
-
-    # TODO: Remove the try-except-block.
-    # This fixes the index while we have 'wrong' relations on
-    # datasets harvested with an old version of ckanext-geocat
-    try:
-        search_data['see_alsos'] = [d['dataset_identifier'] for d in validated_dict.get('see_alsos', [])]  # noqa
-    except TypeError:
-        search_data['see_alsos'] = [d for d in
-                                    validated_dict.get('see_alsos',
-                                                       [])]
+    search_data['see_alsos'] = [d['dataset_identifier'] for d in validated_dict.get('see_alsos', [])]  # noqa
 
     # make sure we're not dealing with NoneType
     if search_data['metadata_created'] is None:
