@@ -756,3 +756,7 @@ msgstr "Data ultima modifica dei dati"
 #: ckanext/switzerland/templates/package/search.html:14
 msgid "Metadata Last Modified"
 msgstr "Data ultima modifica dei metadati"
+
+#: ckanext/switzerland/templates/package/snippets/info.html:25
+msgid "See related papers"
+msgstr ""

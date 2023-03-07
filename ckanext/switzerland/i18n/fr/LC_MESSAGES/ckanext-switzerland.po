@@ -770,3 +770,7 @@ msgstr "Dernière modification des données"
 #: ckanext/switzerland/templates/package/search.html:14
 msgid "Metadata Last Modified"
 msgstr "Dernière modification des métadonnées"
+
+#: ckanext/switzerland/templates/package/snippets/info.html:25
+msgid "See related papers"
+msgstr ""
