@@ -131,7 +131,6 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
         search_data['political_level'] = validated_dict[u'organization'][u'political_level']  # noqa
 
     search_data['identifier'] = validated_dict.get('identifier')
-    search_data['contact_points'] = [c['name'] for c in validated_dict.get('contact_points', [])]  # noqa
     if 'publisher' in validated_dict:
         _prepare_publisher_for_search(validated_dict['publisher'],
                                       validated_dict['name'])
