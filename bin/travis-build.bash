@@ -134,7 +134,7 @@ pip install -r requirements.txt
 cd -
 
 echo "Installing ckanext-showcase..."
-git clone https://github.com/ckan/ckanext-showcase
+git clone --depth 1 --branch v1.5.2 https://github.com/ckan/ckanext-showcase
 cd ckanext-showcase
 python setup.py develop
 cd -
