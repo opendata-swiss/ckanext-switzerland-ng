@@ -570,7 +570,12 @@
         "fr": "Couverture",
         "it": "Copertura"
       },
-      "form_snippet": null
+      "fieldgroup": {
+        "en": "Coverage",
+        "de": "Abdeckung",
+        "fr": "Couverture",
+        "it": "Copertura"
+      }
     },
     {
       "field_name": "see_alsos",
