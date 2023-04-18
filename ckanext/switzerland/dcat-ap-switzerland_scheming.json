@@ -914,7 +914,6 @@
     },
     {
       "field_name": "coverage",
-      "form_snippet": null,
       "label": {
         "en": "Coverage",
         "de": "Abdeckung",
