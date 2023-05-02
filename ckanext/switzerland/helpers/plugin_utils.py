@@ -1,7 +1,6 @@
 """
 helpers of the plugins.py
 """
-import isodate
 import json
 import re
 import logging
@@ -13,7 +12,6 @@ import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
 import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
 import ckanext.switzerland.helpers.date_helpers as ogdch_date_utils
-from datetime import datetime
 
 log = logging.getLogger(__name__)
 
@@ -230,7 +228,6 @@ def ogdch_prepare_pkg_dict_for_api(pkg_dict):
         )
 
     if ogdch_request_utils.request_is_api_request():
-        _transform_package_dates(pkg_dict)
         _transform_publisher(pkg_dict)
     return pkg_dict
 
@@ -286,61 +283,6 @@ def ogdch_adjust_search_params(search_params):
     search_params['q'] = re.sub(r":\s", " ", q)
 
     return search_params
-
-
-def _transform_package_dates(pkg_dict):
-    if pkg_dict.get('issued'):
-        pkg_dict['issued'] = _transform_datetime_to_isoformat(
-            pkg_dict['issued'])
-    if pkg_dict.get('modified'):
-        pkg_dict['modified'] = _transform_datetime_to_isoformat(
-            pkg_dict['modified'])
-    for temporal in pkg_dict.get('temporals', []):
-        if temporal.get('start_date'):
-            temporal['start_date'] = _transform_datetime_to_isoformat(
-                temporal['start_date'])
-        if temporal.get('end_date'):
-            temporal['end_date'] = _transform_datetime_to_isoformat(
-                temporal['end_date'])
-    for resource in pkg_dict.get('resources', []):
-        if resource.get('issued'):
-            resource['issued'] = _transform_datetime_to_isoformat(
-                resource['issued'])
-        if resource.get('modified'):
-            resource['modified'] = _transform_datetime_to_isoformat(
-                resource['modified'])
-
-
-def _transform_datetime_to_isoformat(value):  # noqa
-    """Transform dates in ckanext.switzerland.date_picker_format to isodates.
-    If dates are already in isoformat, just return them.
-    If dataformat is not correct that indicates that dates were not migrated
-    and will just pass and continue reindexing.
-    """
-    try:
-        dt = datetime.strptime(value, DATE_FORMAT)
-        if isinstance(dt, datetime):
-            return dt.isoformat()
-    except (TypeError, ValueError):
-        pass
-
-    try:
-        dt = isodate.parse_datetime(value)
-        if isinstance(dt, datetime):
-            return value
-    except isodate.ISO8601Error:
-        return ""
-    except AttributeError:
-        log.info("getting AttributeError")
-        pass
-
-    try:
-        dt = datetime.fromtimestamp(value).isoformat()
-        if isinstance(dt, datetime):
-            return dt
-    except:
-        log.info("unix_timestamp to isoformat does not work")
-        pass
 
 
 def _transform_publisher(pkg_dict):
