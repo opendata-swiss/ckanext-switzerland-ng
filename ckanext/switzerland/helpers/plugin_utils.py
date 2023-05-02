@@ -15,8 +15,6 @@ import ckanext.switzerland.helpers.date_helpers as ogdch_date_utils
 
 log = logging.getLogger(__name__)
 
-DATE_FORMAT = toolkit.config.get(
-    'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
 DATE_FIELDS_INDEXED_BY_SOLR = [
     'modified',
     'issued',
