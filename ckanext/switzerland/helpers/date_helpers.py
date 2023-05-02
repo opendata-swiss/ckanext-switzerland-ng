@@ -63,13 +63,15 @@ def store_if_datetime(value):
 def store_if_other_formats(value):
     """timestamps will be transformed
     into isodates and stored that way."""
-    try:
-        for date_format in ALLOWED_DATE_FORMATS:
-            dt = datetime.datetime.strptime(value, date_format)
+    for date_format in ALLOWED_DATE_FORMATS:
+        try:
+            dt = datetime.strptime(value, date_format)
             if isinstance(dt, datetime):
                 return dt.isoformat()
-    except Exception:
-        return None
+        except Exception:
+            pass
+
+    return None
 
 
 def display_if_isodate(value):
