@@ -36,7 +36,7 @@ storage_date_helpers = [
 
 display_date_helpers = [
     ogdch_date_helpers.display_if_isodate,
-    ogdch_date_helpers.display_if_ogdch_date,
+    ogdch_date_helpers.display_if_date_picker_date,
     ogdch_date_helpers.display_if_timestamp,
     ogdch_date_helpers.display_if_datetime,
     ogdch_date_helpers.display_if_other_formats,

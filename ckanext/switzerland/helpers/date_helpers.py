@@ -87,7 +87,7 @@ def display_if_isodate(value):
         return None
 
 
-def display_if_ogdch_date(value):
+def display_if_date_picker_date(value):
     """If the value is in ckanext.switzerland.date_picker_format, return it
     as an isoformat date.
     """
