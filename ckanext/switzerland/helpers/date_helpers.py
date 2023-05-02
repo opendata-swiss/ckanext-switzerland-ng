@@ -76,62 +76,58 @@ def store_if_other_formats(value):
 
 
 def display_if_isodate(value):
-    """isodate values will be displayed in
-    ckanext.switzerland.date_picker_format
+    """If the value is already in isoformat, return it as-is.
     """
     try:
         dt = isodate.parse_datetime(value)
-        if isinstance(dt, datetime):
-            return isodate.strftime(dt, DATE_FORMAT)
-    except Exception:
-        return None
-
-
-def display_if_ogdch_date(value):
-    """since the display date format is
-    the ckanext.switzerland.date_picker_format the value will
-    be checked whether it is in this format. If so it
-    will be returned as is."""
-    try:
-        dt = datetime.strptime(value, DATE_FORMAT)
         if isinstance(dt, datetime):
             return value
     except Exception:
         return None
 
 
+def display_if_ogdch_date(value):
+    """If the value is in ckanext.switzerland.date_picker_format, return it
+    as an isoformat date.
+    """
+    try:
+        dt = datetime.strptime(value, DATE_FORMAT)
+        if isinstance(dt, datetime):
+            return dt.isoformat()
+    except Exception:
+        return None
+
+
 def display_if_timestamp(value):
-    """timestamps will be displayed in
-    ckanext.switzerland.date_picker_format
+    """If the value is a POSIX timestamp, return it as an isoformat date.
     """
     try:
         dt = datetime.fromtimestamp(int(value))
         if isinstance(dt, datetime):
-            return isodate.strftime(dt, DATE_FORMAT)
+            return dt.isoformat()
     except Exception:
         return None
 
 
 def display_if_datetime(value):
-    """datetime values will be displayed in
-    ckanext.switzerland.date_picker_format
+    """If the value is in a datetime object, return it as an isoformat date.
     """
     try:
         if isinstance(value, datetime):
-            return isodate.strftime(value, DATE_FORMAT)
+            return value.isoformat()
     except Exception:
         return None
 
 
 def display_if_other_formats(value):
-    """dates/datetime values with other formats will be displayed in
-    ckanext.switzerland.date_picker_format
+    """If the value is another recognised date format, return it as an
+    isoformat date.
     """
     try:
         for date_format in ALLOWED_DATE_FORMATS:
             dt = datetime.strptime(value, date_format)
             if isinstance(dt, datetime):
-                return isodate.strftime(dt, DATE_FORMAT)
+                return dt.isoformat()
     except Exception:
         return None
 
