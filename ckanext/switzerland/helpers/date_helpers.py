@@ -134,9 +134,7 @@ def display_if_other_formats(value):
 
 
 def transform_any_date_to_isodate(date_field):
-    """transform any stored date format into an isodate:
-    considered are the ogdch_date_format, timestamps
-    and isodates.
+    """Transform any stored date format into an isodate.
     """
     isodate_field = store_if_date_picker_date(date_field)
     if isodate_field:
