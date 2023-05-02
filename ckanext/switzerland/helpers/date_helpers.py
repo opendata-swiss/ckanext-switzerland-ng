@@ -3,7 +3,7 @@ import logging
 import isodate
 import ckan.plugins.toolkit as tk
 from ckan.lib.formatters import localised_nice_date
-from dateutil.parser import parse, ParserError
+from dateutil.parser import parse
 
 DATE_FORMAT = tk.config.get(
     'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
