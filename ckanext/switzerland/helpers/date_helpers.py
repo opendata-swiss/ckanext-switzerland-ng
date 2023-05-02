@@ -5,7 +5,7 @@ import ckan.plugins.toolkit as tk
 from ckan.lib.formatters import localised_nice_date
 from dateutil.parser import parse
 
-DATE_FORMAT = tk.config.get(
+DATE_PICKER_FORMAT = tk.config.get(
     'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
 ALLOWED_DATE_FORMATS = ['%d.%m.%y']
 
@@ -33,7 +33,7 @@ def store_if_ogdch_date(value):
     """date in the ckanext.switzerland.date_picker_format will be transformed
     into isodates and stored that way."""
     try:
-        dt = datetime.strptime(value, DATE_FORMAT)
+        dt = datetime.strptime(value, DATE_PICKER_FORMAT)
         if isinstance(dt, datetime):
             return dt.isoformat()
     except Exception:
@@ -91,7 +91,7 @@ def display_if_ogdch_date(value):
     as an isoformat date.
     """
     try:
-        dt = datetime.strptime(value, DATE_FORMAT)
+        dt = datetime.strptime(value, DATE_PICKER_FORMAT)
         if isinstance(dt, datetime):
             return dt.isoformat()
     except Exception:
@@ -228,6 +228,6 @@ def get_datepicker_format(value):
     try:
         dt = isodate.parse_datetime(value)
         if isinstance(dt, datetime):
-            return isodate.strftime(dt, DATE_FORMAT)
+            return isodate.strftime(dt, DATE_PICKER_FORMAT)
     except Exception:
         return ""
