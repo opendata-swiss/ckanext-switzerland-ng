@@ -210,8 +210,8 @@ def transform_date_for_solr(date):
 
 
 def get_localized_date(value):
-    """
-    Take an isoformat date and return a localized date, e.g. '24. Juni 2020'.
+    """Take an isoformat date and return a localized date, e.g.
+    '24. Juni 2020'.
     """
     try:
         dt = isodate.parse_datetime(value)
@@ -219,3 +219,15 @@ def get_localized_date(value):
             return localised_nice_date(dt, show_date=True, with_hours=False)
     except Exception:
         return None
+
+
+def get_datepicker_format(value):
+    """Take an isoformat date and return a date in the datepicker format, e.g.
+    '24.06.2020'.
+    """
+    try:
+        dt = isodate.parse_datetime(value)
+        if isinstance(dt, datetime):
+            return isodate.strftime(dt, DATE_FORMAT)
+    except Exception:
+        return ""
