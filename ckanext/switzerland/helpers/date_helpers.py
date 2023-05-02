@@ -29,7 +29,7 @@ def store_if_isodate(value):
         return None
 
 
-def store_if_ogdch_date(value):
+def store_if_date_picker_date(value):
     """date in the ckanext.switzerland.date_picker_format will be transformed
     into isodates and stored that way."""
     try:
@@ -137,7 +137,7 @@ def transform_any_date_to_isodate(date_field):
     considered are the ogdch_date_format, timestamps
     and isodates.
     """
-    isodate_field = store_if_ogdch_date(date_field)
+    isodate_field = store_if_date_picker_date(date_field)
     if isodate_field:
         return isodate_field
     isodate_field = store_if_isodate(date_field)
