@@ -1,8 +1,9 @@
 from datetime import datetime
-from dateutil.parser import parse
 import logging
 import isodate
 import ckan.plugins.toolkit as tk
+from ckan.lib.formatters import localised_nice_date
+from dateutil.parser import parse, ParserError
 
 DATE_FORMAT = tk.config.get(
     'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
@@ -209,4 +210,16 @@ def transform_date_for_solr(date):
     except Exception as e:
         log.error("Exception {} occured on date transformation of {}"
                   .format(e, date))
+        return None
+
+
+def get_localized_date(value):
+    """
+    Take an isoformat date and return a localized date, e.g. '24. Juni 2020'.
+    """
+    try:
+        dt = isodate.parse_datetime(value)
+        if isinstance(dt, datetime):
+            return localised_nice_date(dt, show_date=True, with_hours=False)
+    except Exception:
         return None

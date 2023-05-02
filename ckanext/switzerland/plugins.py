@@ -8,6 +8,7 @@ from ckanext.showcase.plugin import ShowcasePlugin
 from ckanext.subscribe.plugin import SubscribePlugin
 import ckanext.switzerland.helpers.validators as ogdch_validators
 from ckanext.switzerland import logic as ogdch_logic
+import ckanext.switzerland.helpers.date_helpers as ogdch_date_helpers
 import ckanext.switzerland.helpers.frontend_helpers as ogdch_frontend_helpers
 import ckanext.switzerland.helpers.backend_helpers as ogdch_backend_helpers
 import ckanext.switzerland.helpers.dataset_form_helpers as ogdch_dataset_form_helpers  # noqa
@@ -160,7 +161,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_group_tree': ogdch_frontend_helpers.ogdch_group_tree,
             'get_terms_of_use_url': ogdch_frontend_helpers.get_terms_of_use_url, # noqa
             'get_localized_newsletter_url': ogdch_frontend_helpers.get_localized_newsletter_url, # noqa
-            'get_localized_date': ogdch_frontend_helpers.get_localized_date,
+            'get_localized_date': ogdch_date_helpers.get_localized_date,
             'ogdch_template_helper_get_active_class': ogdch_backend_helpers.ogdch_template_helper_get_active_class, # noqa
             'ogdch_get_organization_field_list': ogdch_backend_helpers.ogdch_get_organization_field_list, # noqa
             'ogdch_get_political_level_field_list': ogdch_backend_helpers.ogdch_get_political_level_field_list, # noqa
