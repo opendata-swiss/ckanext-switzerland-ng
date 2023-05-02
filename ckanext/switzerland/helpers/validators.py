@@ -1,21 +1,21 @@
-from ckan.plugins.toolkit import missing, _
+import json
+import logging
+import re
+
 import ckan.lib.navl.dictization_functions as df
 import ckan.plugins.toolkit as tk
+from ckan.lib.munge import munge_tag
+from ckan.logic import NotFound, get_action
+from ckan.plugins.toolkit import _, missing
+
 import ckanext.switzerland.helpers.date_helpers as ogdch_date_helpers
 from ckanext.fluent.helpers import fluent_form_languages
 from ckanext.scheming.helpers import scheming_field_choices
-from ckanext.scheming.validation import scheming_validator, register_validator
-from ckanext.switzerland.helpers.localize_utils import parse_json
+from ckanext.scheming.validation import register_validator, scheming_validator
 from ckanext.switzerland.helpers.dataset_form_helpers import (
-    get_relations_from_form,
-    get_see_alsos_from_form,
-    get_temporals_from_form,
-    get_contact_points_from_form)
-from ckan.lib.munge import munge_tag
-from ckan.logic import NotFound, get_action
-import json
-import re
-import logging
+    get_contact_points_from_form, get_relations_from_form,
+    get_see_alsos_from_form, get_temporals_from_form)
+from ckanext.switzerland.helpers.localize_utils import parse_json
 
 log = logging.getLogger(__name__)
 

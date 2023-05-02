@@ -1,11 +1,13 @@
 # encoding: utf-8
 
-from nose.tools import assert_equals, assert_raises
-from dateutil.parser import parse
 from datetime import datetime
 
-from ckan.plugins.toolkit import get_validator, Invalid
-from ckanext.switzerland.helpers.date_helpers import OGDCHDateValidationException
+from ckan.plugins.toolkit import Invalid, get_validator
+from dateutil.parser import parse
+from nose.tools import assert_equals, assert_raises
+
+from ckanext.switzerland.helpers.date_helpers import \
+    OGDCHDateValidationException
 
 
 class TestOgdchDateStorageValidator(object):

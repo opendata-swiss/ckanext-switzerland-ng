@@ -1,7 +1,8 @@
-from datetime import datetime
 import logging
-import isodate
+from datetime import datetime
+
 import ckan.plugins.toolkit as tk
+import isodate
 from ckan.lib.formatters import localised_nice_date
 from dateutil.parser import parse
 

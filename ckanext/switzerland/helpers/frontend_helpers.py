@@ -2,20 +2,21 @@
 helpers belong in this file if they
 are used in frontend templates
 """
-from collections import OrderedDict
-import ckan.plugins.toolkit as tk
-import ckan.logic as logic
 import json
-from ckan.common import _
-from babel import numbers
+import logging
+from collections import OrderedDict
 
-from ckan.lib.helpers import lang, url_for, localised_number
 import ckan.lib.i18n as i18n
-from ckanext.hierarchy.helpers import group_tree
+import ckan.logic as logic
+import ckan.plugins.toolkit as tk
+from babel import numbers
+from ckan.common import _
+from ckan.lib.helpers import lang, localised_number, url_for
+
 import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
 import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
+from ckanext.hierarchy.helpers import group_tree
 
-import logging
 log = logging.getLogger(__name__)
 
 # these bookmarks can be used in the wordpress page

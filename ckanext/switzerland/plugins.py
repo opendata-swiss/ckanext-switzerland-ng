@@ -1,28 +1,31 @@
 # coding=UTF-8
 
+import collections
+import logging
+import os
+
+import ckan.plugins as plugins
+import ckan.plugins.toolkit as toolkit
 from ckan.common import OrderedDict
 from ckan.lib.base import render_jinja2
+from ckan.lib.plugins import DefaultTranslation
 from ckan.logic import NotFound
-from ckan.model import Session, Package, PACKAGE_NAME_MAX_LENGTH, Activity
-from ckanext.showcase.plugin import ShowcasePlugin
-from ckanext.subscribe.plugin import SubscribePlugin
-import ckanext.switzerland.helpers.validators as ogdch_validators
-from ckanext.switzerland import logic as ogdch_logic
-import ckanext.switzerland.helpers.date_helpers as ogdch_date_helpers
-import ckanext.switzerland.helpers.frontend_helpers as ogdch_frontend_helpers
+from ckan.model import PACKAGE_NAME_MAX_LENGTH, Activity, Package, Session
+
 import ckanext.switzerland.helpers.backend_helpers as ogdch_backend_helpers
 import ckanext.switzerland.helpers.dataset_form_helpers as ogdch_dataset_form_helpers  # noqa
+import ckanext.switzerland.helpers.date_helpers as ogdch_date_helpers
+import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
+import ckanext.switzerland.helpers.frontend_helpers as ogdch_frontend_helpers
+import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 import ckanext.switzerland.helpers.plugin_utils as ogdch_plugin_utils
 import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
-import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
-import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
-import ckan.plugins as plugins
-from ckan.lib.plugins import DefaultTranslation
+import ckanext.switzerland.helpers.validators as ogdch_validators
 import ckanext.xloader.interfaces as ix
-import ckan.plugins.toolkit as toolkit
-import collections
-import os
-import logging
+from ckanext.showcase.plugin import ShowcasePlugin
+from ckanext.subscribe.plugin import SubscribePlugin
+from ckanext.switzerland import logic as ogdch_logic
+
 log = logging.getLogger(__name__)
 
 __location__ = os.path.realpath(os.path.join(

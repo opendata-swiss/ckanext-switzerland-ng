@@ -2,16 +2,18 @@
 helpers of the plugins.py
 """
 import json
-import re
 import logging
-from ckan import logic
+import re
+
 import ckan.plugins.toolkit as toolkit
+from ckan import logic
 from ckan.lib.munge import munge_title_to_name
-import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
-import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
-import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
-import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
+
 import ckanext.switzerland.helpers.date_helpers as ogdch_date_utils
+import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
+import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
+import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
+import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 
 log = logging.getLogger(__name__)
 
