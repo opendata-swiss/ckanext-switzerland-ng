@@ -99,6 +99,8 @@ cd -
 echo "Installing ckanext-dcat and its requirements..."
 git clone https://github.com/ckan/ckanext-dcat
 cd ckanext-dcat
+# Last commit before support for Python 2 was dropped
+git checkout 0c26bed5b7a3a7fca8e7b78e338aace096e0ebf6
 python setup.py develop
 pip install -r requirements-py2-py36.txt
 pip install -r dev-requirements-py2.txt
