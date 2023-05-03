@@ -165,7 +165,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'get_terms_of_use_url': ogdch_frontend_helpers.get_terms_of_use_url, # noqa
             'get_localized_newsletter_url': ogdch_frontend_helpers.get_localized_newsletter_url, # noqa
             'get_localized_date': ogdch_date_helpers.get_localized_date,
-            'get_datepicker_format': ogdch_date_helpers.get_datepicker_format,
+            'get_date_picker_format': ogdch_date_helpers.get_date_picker_format,
             'ogdch_template_helper_get_active_class': ogdch_backend_helpers.ogdch_template_helper_get_active_class, # noqa
             'ogdch_get_organization_field_list': ogdch_backend_helpers.ogdch_get_organization_field_list, # noqa
             'ogdch_get_political_level_field_list': ogdch_backend_helpers.ogdch_get_political_level_field_list, # noqa

@@ -220,9 +220,9 @@ def get_localized_date(value):
         return None
 
 
-def get_datepicker_format(value):
-    """Take an isoformat date and return a date in the datepicker format, e.g.
-    '24.06.2020'.
+def get_date_picker_format(value):
+    """Take an isoformat date and return a date in the date-picker format,
+     e.g. '24.06.2020'.
     """
     try:
         dt = isodate.parse_datetime(value)
