@@ -150,18 +150,18 @@ def display_if_other_formats(value):
     """If the value is another recognised date format, return it as an
     isoformat date.
     """
-    try:
-        for date_format in ALLOWED_DATE_FORMATS:
+    for date_format in ALLOWED_DATE_FORMATS:
+        try:
             dt = datetime.strptime(value, date_format)
             if isinstance(dt, datetime):
                 return dt.isoformat()
-    except Exception:
-        log.debug(
-            "Datetime {} does not match the format {}".format(
-                value, date_format
+        except Exception:
+            log.debug(
+                "Datetime {} does not match the format {}".format(
+                    value, date_format
+                )
             )
-        )
-        return None
+    return None
 
 
 def transform_any_date_to_isodate(date_field):
