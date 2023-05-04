@@ -217,7 +217,7 @@ def get_localized_date(value):
         if isinstance(dt, datetime):
             return localised_nice_date(dt, show_date=True, with_hours=False)
     except Exception:
-        return None
+        return ""
 
 
 def get_date_picker_format(value):
