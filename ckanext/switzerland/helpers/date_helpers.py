@@ -1,10 +1,12 @@
-from datetime import datetime
-from dateutil.parser import parse
 import logging
-import isodate
-import ckan.plugins.toolkit as tk
+from datetime import datetime
 
-DATE_FORMAT = tk.config.get(
+import ckan.plugins.toolkit as tk
+import isodate
+from ckan.lib.formatters import localised_nice_date
+from dateutil.parser import parse
+
+DATE_PICKER_FORMAT = tk.config.get(
     'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
 ALLOWED_DATE_FORMATS = ['%d.%m.%y']
 
@@ -25,17 +27,26 @@ def store_if_isodate(value):
         if isinstance(dt, datetime):
             return value
     except Exception:
+        log.debug(
+            "Datetime {} is not an isoformat date".format(value)
+        )
+
         return None
 
 
-def store_if_ogdch_date(value):
+def store_if_date_picker_date(value):
     """date in the ckanext.switzerland.date_picker_format will be transformed
     into isodates and stored that way."""
     try:
-        dt = datetime.strptime(value, DATE_FORMAT)
+        dt = datetime.strptime(value, DATE_PICKER_FORMAT)
         if isinstance(dt, datetime):
             return dt.isoformat()
     except Exception:
+        log.debug(
+            "Datetime {} does not match the format {}".format(
+                value, DATE_PICKER_FORMAT
+            )
+        )
         return None
 
 
@@ -47,6 +58,7 @@ def store_if_timestamp(value):
         if isinstance(dt, datetime):
             return dt.isoformat()
     except Exception:
+        log.debug("Datetime {} is not a POSIX timestamp".format(value))
         return None
 
 
@@ -57,6 +69,7 @@ def store_if_datetime(value):
         if isinstance(value, datetime):
             return value.isoformat()
     except Exception:
+        log.debug("Datetime {} is not a datetime object".format(value))
         return None
 
 
@@ -69,78 +82,92 @@ def store_if_other_formats(value):
             if isinstance(dt, datetime):
                 return dt.isoformat()
         except Exception:
+            log.debug(
+                "Datetime {} does not match the format {}".format(
+                    value, date_format
+                )
+            )
             pass
 
     return None
 
 
 def display_if_isodate(value):
-    """isodate values will be displayed in
-    ckanext.switzerland.date_picker_format
+    """If the value is already in isoformat, return it as-is.
     """
     try:
         dt = isodate.parse_datetime(value)
         if isinstance(dt, datetime):
-            return isodate.strftime(dt, DATE_FORMAT)
+            return value
     except Exception:
+        log.debug(
+            "Datetime {} is not an isoformat date".format(value)
+        )
         return None
 
 
-def display_if_ogdch_date(value):
-    """since the display date format is
-    the ckanext.switzerland.date_picker_format the value will
-    be checked whether it is in this format. If so it
-    will be returned as is."""
+def display_if_date_picker_date(value):
+    """If the value is in ckanext.switzerland.date_picker_format, return it
+    as an isoformat date.
+    """
     try:
-        dt = datetime.strptime(value, DATE_FORMAT)
+        dt = datetime.strptime(value, DATE_PICKER_FORMAT)
         if isinstance(dt, datetime):
-            return value
+            return dt.isoformat()
     except Exception:
+        log.debug(
+            "Datetime {} does not match the format {}".format(
+                value, DATE_PICKER_FORMAT
+            )
+        )
         return None
 
 
 def display_if_timestamp(value):
-    """timestamps will be displayed in
-    ckanext.switzerland.date_picker_format
+    """If the value is a POSIX timestamp, return it as an isoformat date.
     """
     try:
         dt = datetime.fromtimestamp(int(value))
         if isinstance(dt, datetime):
-            return isodate.strftime(dt, DATE_FORMAT)
+            return dt.isoformat()
     except Exception:
+        log.debug("Datetime {} is not a POSIX timestamp".format(value))
         return None
 
 
 def display_if_datetime(value):
-    """datetime values will be displayed in
-    ckanext.switzerland.date_picker_format
+    """If the value is in a datetime object, return it as an isoformat date.
     """
     try:
         if isinstance(value, datetime):
-            return isodate.strftime(value, DATE_FORMAT)
+            return value.isoformat()
     except Exception:
+        log.debug("Datetime {} is not a datetime object".format(value))
         return None
 
 
 def display_if_other_formats(value):
-    """dates/datetime values with other formats will be displayed in
-    ckanext.switzerland.date_picker_format
+    """If the value is another recognised date format, return it as an
+    isoformat date.
     """
-    try:
-        for date_format in ALLOWED_DATE_FORMATS:
+    for date_format in ALLOWED_DATE_FORMATS:
+        try:
             dt = datetime.strptime(value, date_format)
             if isinstance(dt, datetime):
-                return isodate.strftime(dt, DATE_FORMAT)
-    except Exception:
-        return None
+                return dt.isoformat()
+        except Exception:
+            log.debug(
+                "Datetime {} does not match the format {}".format(
+                    value, date_format
+                )
+            )
+    return None
 
 
 def transform_any_date_to_isodate(date_field):
-    """transform any stored date format into an isodate:
-    considered are the ogdch_date_format, timestamps
-    and isodates.
+    """Transform any stored date format into an isodate.
     """
-    isodate_field = store_if_ogdch_date(date_field)
+    isodate_field = store_if_date_picker_date(date_field)
     if isodate_field:
         return isodate_field
     isodate_field = store_if_isodate(date_field)
@@ -210,3 +237,35 @@ def transform_date_for_solr(date):
         log.error("Exception {} occured on date transformation of {}"
                   .format(e, date))
         return None
+
+
+def get_localized_date(value):
+    """Take an isoformat date and return a localized date, e.g.
+    '24. Juni 2020'.
+    """
+    try:
+        dt = isodate.parse_datetime(value)
+        if isinstance(dt, datetime):
+            return localised_nice_date(dt, show_date=True, with_hours=False)
+    except Exception:
+        log.debug(
+            "Error parsing datetime {} as isodate and "
+            "returning localized date".format(value)
+        )
+        return ""
+
+
+def get_date_picker_format(value):
+    """Take an isoformat date and return a date in the date-picker format,
+     e.g. '24.06.2020'.
+    """
+    try:
+        dt = isodate.parse_datetime(value)
+        if isinstance(dt, datetime):
+            return isodate.strftime(dt, DATE_PICKER_FORMAT)
+    except Exception:
+        log.debug(
+            "Error parsing datetime {} as isodate and "
+            "converting to format {}".format(value, DATE_PICKER_FORMAT)
+        )
+        return ""

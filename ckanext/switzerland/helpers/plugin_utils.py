@@ -1,24 +1,22 @@
 """
 helpers of the plugins.py
 """
-import isodate
 import json
-import re
 import logging
+import re
+
+import ckan.plugins.toolkit as tk
 from ckan import logic
-import ckan.plugins.toolkit as toolkit
 from ckan.lib.munge import munge_title_to_name
-import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
-import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
-import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
-import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
+
 import ckanext.switzerland.helpers.date_helpers as ogdch_date_utils
-from datetime import datetime
+import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
+import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
+import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
+import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 
 log = logging.getLogger(__name__)
 
-DATE_FORMAT = toolkit.config.get(
-    'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
 DATE_FIELDS_INDEXED_BY_SOLR = [
     'modified',
     'issued',
@@ -230,7 +228,6 @@ def ogdch_prepare_pkg_dict_for_api(pkg_dict):
         )
 
     if ogdch_request_utils.request_is_api_request():
-        _transform_package_dates(pkg_dict)
         _transform_publisher(pkg_dict)
     return pkg_dict
 
@@ -241,19 +238,19 @@ def ogdch_adjust_search_params(search_params):
     borrowed from ckanext-multilingual (core extension)"""
     lang_set = ogdch_loc_utils.get_language_priorities()
     try:
-        current_lang = toolkit.request.environ['CKAN_LANG']
+        current_lang = tk.request.environ['CKAN_LANG']
     except TypeError as err:
         if err.message == ('No object (name: request) has been registered '
                            'for this thread'):
             # This happens when this code gets called as part of a paster
             # command rather then as part of an HTTP request.
-            current_lang = toolkit.config.get('ckan.locale_default')
+            current_lang = tk.config.get('ckan.locale_default')
         else:
             raise
 
     # fallback to default locale if locale not in suported langs
     if current_lang not in lang_set:
-        current_lang = toolkit.config.get('ckan.locale_default', 'en')
+        current_lang = tk.config.get('ckan.locale_default', 'en')
     # treat current lang differenly so remove from set
     lang_set.remove(current_lang)
 
@@ -288,61 +285,6 @@ def ogdch_adjust_search_params(search_params):
     return search_params
 
 
-def _transform_package_dates(pkg_dict):
-    if pkg_dict.get('issued'):
-        pkg_dict['issued'] = _transform_datetime_to_isoformat(
-            pkg_dict['issued'])
-    if pkg_dict.get('modified'):
-        pkg_dict['modified'] = _transform_datetime_to_isoformat(
-            pkg_dict['modified'])
-    for temporal in pkg_dict.get('temporals', []):
-        if temporal.get('start_date'):
-            temporal['start_date'] = _transform_datetime_to_isoformat(
-                temporal['start_date'])
-        if temporal.get('end_date'):
-            temporal['end_date'] = _transform_datetime_to_isoformat(
-                temporal['end_date'])
-    for resource in pkg_dict.get('resources', []):
-        if resource.get('issued'):
-            resource['issued'] = _transform_datetime_to_isoformat(
-                resource['issued'])
-        if resource.get('modified'):
-            resource['modified'] = _transform_datetime_to_isoformat(
-                resource['modified'])
-
-
-def _transform_datetime_to_isoformat(value):  # noqa
-    """Transform dates in ckanext.switzerland.date_picker_format to isodates.
-    If dates are already in isoformat, just return them.
-    If dataformat is not correct that indicates that dates were not migrated
-    and will just pass and continue reindexing.
-    """
-    try:
-        dt = datetime.strptime(value, DATE_FORMAT)
-        if isinstance(dt, datetime):
-            return dt.isoformat()
-    except (TypeError, ValueError):
-        pass
-
-    try:
-        dt = isodate.parse_datetime(value)
-        if isinstance(dt, datetime):
-            return value
-    except isodate.ISO8601Error:
-        return ""
-    except AttributeError:
-        log.info("getting AttributeError")
-        pass
-
-    try:
-        dt = datetime.fromtimestamp(value).isoformat()
-        if isinstance(dt, datetime):
-            return dt
-    except:
-        log.info("unix_timestamp to isoformat does not work")
-        pass
-
-
 def _transform_publisher(pkg_dict):
     publisher = pkg_dict.get('publisher')
     if publisher and not isinstance(publisher, dict):
@@ -358,6 +300,6 @@ def ogdch_transform_links(email_vars, link_names):
     for link in link_names:
         if email_vars.get(link):
             email_vars[link] = unicode(email_vars[link].replace(
-                toolkit.config.get('ckan.site_url'),
-                toolkit.config.get('ckanext.switzerland.frontend_url')
+                tk.config.get('ckan.site_url'),
+                tk.config.get('ckanext.switzerland.frontend_url')
             ))

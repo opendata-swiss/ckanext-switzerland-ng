@@ -266,7 +266,7 @@ def get_see_alsos_from_form(data):
 
 def ogdch_date_form_helper(date_value):
     """
-    Transform isodate or posix date into the format used by the datepicker.
+    Transform isodate or posix date into the format used by the date picker.
     Sometimes the package field `modified` has the string value 'False' or is
     empty. In these cases, an empty string is returned.
     """
