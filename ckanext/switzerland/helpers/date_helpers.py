@@ -27,6 +27,10 @@ def store_if_isodate(value):
         if isinstance(dt, datetime):
             return value
     except Exception:
+        log.debug(
+            "Datetime {} is not an isoformat date".format(value)
+        )
+
         return None
 
 
@@ -38,6 +42,11 @@ def store_if_date_picker_date(value):
         if isinstance(dt, datetime):
             return dt.isoformat()
     except Exception:
+        log.debug(
+            "Datetime {} does not match the format {}".format(
+                value, DATE_PICKER_FORMAT
+            )
+        )
         return None
 
 
@@ -49,6 +58,7 @@ def store_if_timestamp(value):
         if isinstance(dt, datetime):
             return dt.isoformat()
     except Exception:
+        log.debug("Datetime {} is not a POSIX timestamp".format(value))
         return None
 
 
@@ -59,6 +69,7 @@ def store_if_datetime(value):
         if isinstance(value, datetime):
             return value.isoformat()
     except Exception:
+        log.debug("Datetime {} is not a datetime object".format(value))
         return None
 
 
@@ -71,6 +82,11 @@ def store_if_other_formats(value):
             if isinstance(dt, datetime):
                 return dt.isoformat()
         except Exception:
+            log.debug(
+                "Datetime {} does not match the format {}".format(
+                    value, date_format
+                )
+            )
             pass
 
     return None
@@ -84,6 +100,9 @@ def display_if_isodate(value):
         if isinstance(dt, datetime):
             return value
     except Exception:
+        log.debug(
+            "Datetime {} is not an isoformat date".format(value)
+        )
         return None
 
 
@@ -96,6 +115,11 @@ def display_if_date_picker_date(value):
         if isinstance(dt, datetime):
             return dt.isoformat()
     except Exception:
+        log.debug(
+            "Datetime {} does not match the format {}".format(
+                value, DATE_PICKER_FORMAT
+            )
+        )
         return None
 
 
@@ -107,6 +131,7 @@ def display_if_timestamp(value):
         if isinstance(dt, datetime):
             return dt.isoformat()
     except Exception:
+        log.debug("Datetime {} is not a POSIX timestamp".format(value))
         return None
 
 
@@ -117,6 +142,7 @@ def display_if_datetime(value):
         if isinstance(value, datetime):
             return value.isoformat()
     except Exception:
+        log.debug("Datetime {} is not a datetime object".format(value))
         return None
 
 
@@ -130,6 +156,11 @@ def display_if_other_formats(value):
             if isinstance(dt, datetime):
                 return dt.isoformat()
     except Exception:
+        log.debug(
+            "Datetime {} does not match the format {}".format(
+                value, date_format
+            )
+        )
         return None
 
 
@@ -217,6 +248,10 @@ def get_localized_date(value):
         if isinstance(dt, datetime):
             return localised_nice_date(dt, show_date=True, with_hours=False)
     except Exception:
+        log.debug(
+            "Error parsing datetime {} as isodate and "
+            "returning localized date".format(value)
+        )
         return ""
 
 
@@ -229,4 +264,8 @@ def get_date_picker_format(value):
         if isinstance(dt, datetime):
             return isodate.strftime(dt, DATE_PICKER_FORMAT)
     except Exception:
+        log.debug(
+            "Error parsing datetime {} as isodate and "
+            "converting to format {}".format(value, DATE_PICKER_FORMAT)
+        )
         return ""
