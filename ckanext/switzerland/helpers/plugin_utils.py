@@ -5,7 +5,7 @@ import json
 import logging
 import re
 
-import ckan.plugins.toolkit as toolkit
+import ckan.plugins.toolkit as tk
 from ckan import logic
 from ckan.lib.munge import munge_title_to_name
 
@@ -238,19 +238,19 @@ def ogdch_adjust_search_params(search_params):
     borrowed from ckanext-multilingual (core extension)"""
     lang_set = ogdch_loc_utils.get_language_priorities()
     try:
-        current_lang = toolkit.request.environ['CKAN_LANG']
+        current_lang = tk.request.environ['CKAN_LANG']
     except TypeError as err:
         if err.message == ('No object (name: request) has been registered '
                            'for this thread'):
             # This happens when this code gets called as part of a paster
             # command rather then as part of an HTTP request.
-            current_lang = toolkit.config.get('ckan.locale_default')
+            current_lang = tk.config.get('ckan.locale_default')
         else:
             raise
 
     # fallback to default locale if locale not in suported langs
     if current_lang not in lang_set:
-        current_lang = toolkit.config.get('ckan.locale_default', 'en')
+        current_lang = tk.config.get('ckan.locale_default', 'en')
     # treat current lang differenly so remove from set
     lang_set.remove(current_lang)
 
@@ -300,6 +300,6 @@ def ogdch_transform_links(email_vars, link_names):
     for link in link_names:
         if email_vars.get(link):
             email_vars[link] = unicode(email_vars[link].replace(
-                toolkit.config.get('ckan.site_url'),
-                toolkit.config.get('ckanext.switzerland.frontend_url')
+                tk.config.get('ckan.site_url'),
+                tk.config.get('ckanext.switzerland.frontend_url')
             ))

@@ -5,7 +5,7 @@ import logging
 import os
 
 import ckan.plugins as plugins
-import ckan.plugins.toolkit as toolkit
+import ckan.plugins.toolkit as tk
 from ckan.common import OrderedDict
 from ckan.lib.base import render_jinja2
 from ckan.lib.plugins import DefaultTranslation
@@ -51,9 +51,9 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
     # IConfigurer
 
     def update_config(self, config_):
-        toolkit.add_template_directory(config_, 'templates')
-        toolkit.add_public_directory(config_, 'public')
-        toolkit.add_resource('fanstatic', 'switzerland')
+        tk.add_template_directory(config_, 'templates')
+        tk.add_public_directory(config_, 'public')
+        tk.add_resource('fanstatic', 'switzerland')
 
     # IValidators
 
@@ -78,7 +78,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
     # IFacets
 
     def dataset_facets(self, facets_dict, package_type):
-        lang_code = toolkit.request.environ['CKAN_LANG']
+        lang_code = tk.request.environ['CKAN_LANG']
         facets_dict = collections.OrderedDict()
         facets_dict['linked_data'] = plugins.toolkit._('Linked Data')
         facets_dict['private'] = plugins.toolkit._('Draft')
@@ -91,7 +91,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         return facets_dict
 
     def group_facets(self, facets_dict, group_type, package_type):
-        lang_code = toolkit.request.environ['CKAN_LANG']
+        lang_code = tk.request.environ['CKAN_LANG']
         # the IFacets implementation of CKAN 2.4 is broken,
         # clear the dict instead and change the passed in argument
         facets_dict.clear()
@@ -105,7 +105,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     def organization_facets(self, facets_dict, organization_type,
                             package_type):
-        lang_code = toolkit.request.environ['CKAN_LANG']
+        lang_code = tk.request.environ['CKAN_LANG']
         # the IFacets implementation of CKAN 2.4 is broken,
         # clear the dict instead and change the passed in argument
         facets_dict.clear()
@@ -401,7 +401,7 @@ class OgdchPackagePlugin(plugins.SingletonPlugin):
 
     def after_upload(self, context, resource_dict, dataset_dict):
         # create resource views after a successful upload to the DataStore
-        toolkit.get_action('resource_create_default_resource_views')(
+        tk.get_action('resource_create_default_resource_views')(
             context,
             {
                 'resource': resource_dict,
@@ -509,45 +509,45 @@ class OgdchShowcasePlugin(ShowcasePlugin):
         schema.update(
             {
                 "showcase_type": [
-                    toolkit.get_validator("ignore_missing"),
-                    toolkit.get_converter("convert_to_extras"),
+                    tk.get_validator("ignore_missing"),
+                    tk.get_converter("convert_to_extras"),
                 ],
                 "private": [
-                    toolkit.get_validator("ignore_missing"),
-                    toolkit.get_validator("boolean_validator"),
+                    tk.get_validator("ignore_missing"),
+                    tk.get_validator("boolean_validator"),
                 ],
                 "author": [
-                    toolkit.get_validator("convert_to_extras"),
-                    toolkit.get_validator("not_empty"),
+                    tk.get_validator("convert_to_extras"),
+                    tk.get_validator("not_empty"),
                 ],
                 "author_email": [
-                    toolkit.get_validator("convert_to_extras"),
-                    toolkit.get_validator("not_empty"),
+                    tk.get_validator("convert_to_extras"),
+                    tk.get_validator("not_empty"),
                 ],
                 "author_twitter": [
-                    toolkit.get_validator("ignore_missing"),
-                    toolkit.get_validator("convert_to_extras"),
+                    tk.get_validator("ignore_missing"),
+                    tk.get_validator("convert_to_extras"),
                 ],
                 "author_github": [
-                    toolkit.get_validator("ignore_missing"),
-                    toolkit.get_validator("convert_to_extras"),
+                    tk.get_validator("ignore_missing"),
+                    tk.get_validator("convert_to_extras"),
                 ],
                 "groups": {
                     "id": [
-                        toolkit.get_validator("ignore_missing"),
-                        toolkit.get_validator("unicode_safe"),
+                        tk.get_validator("ignore_missing"),
+                        tk.get_validator("unicode_safe"),
                     ],
                     "name": [
-                        toolkit.get_validator("ignore_missing"),
-                        toolkit.get_validator("unicode_safe"),
+                        tk.get_validator("ignore_missing"),
+                        tk.get_validator("unicode_safe"),
                     ],
                     "title": [
-                        toolkit.get_validator("ignore_missing"),
-                        toolkit.get_validator("unicode_safe"),
+                        tk.get_validator("ignore_missing"),
+                        tk.get_validator("unicode_safe"),
                     ],
                     "display_name": [
-                        toolkit.get_validator("ignore_missing"),
-                        toolkit.get_validator("unicode_safe"),
+                        tk.get_validator("ignore_missing"),
+                        tk.get_validator("unicode_safe"),
                     ],
                 }
             }
@@ -568,47 +568,47 @@ class OgdchShowcasePlugin(ShowcasePlugin):
         schema = super(OgdchShowcasePlugin, self).show_package_schema()
         schema.update(
             {
-                "tracking_summary": [toolkit.get_validator("ignore_missing")],
+                "tracking_summary": [tk.get_validator("ignore_missing")],
                 "showcase_type": [
-                    toolkit.get_converter("convert_from_extras"),
-                    toolkit.get_validator("ignore_missing"),
+                    tk.get_converter("convert_from_extras"),
+                    tk.get_validator("ignore_missing"),
                 ],
                 "private": [
-                    toolkit.get_validator("ignore_missing"),
-                    toolkit.get_validator("boolean_validator"),
+                    tk.get_validator("ignore_missing"),
+                    tk.get_validator("boolean_validator"),
                 ],
                 "author": [
-                    toolkit.get_validator("convert_from_extras"),
-                    toolkit.get_validator("not_empty"),
+                    tk.get_validator("convert_from_extras"),
+                    tk.get_validator("not_empty"),
                 ],
                 "author_email": [
-                    toolkit.get_validator("convert_from_extras"),
-                    toolkit.get_validator("not_empty"),
+                    tk.get_validator("convert_from_extras"),
+                    tk.get_validator("not_empty"),
                 ],
                 "author_twitter": [
-                    toolkit.get_validator("convert_from_extras"),
-                    toolkit.get_validator("ignore_missing"),
+                    tk.get_validator("convert_from_extras"),
+                    tk.get_validator("ignore_missing"),
                 ],
                 "author_github": [
-                    toolkit.get_validator("convert_from_extras"),
-                    toolkit.get_validator("ignore_missing"),
+                    tk.get_validator("convert_from_extras"),
+                    tk.get_validator("ignore_missing"),
                 ],
                 "groups": {
                     "id": [
-                        toolkit.get_validator("ignore_missing"),
-                        toolkit.get_validator("unicode_safe"),
+                        tk.get_validator("ignore_missing"),
+                        tk.get_validator("unicode_safe"),
                     ],
                     "name": [
-                        toolkit.get_validator("ignore_missing"),
-                        toolkit.get_validator("unicode_safe"),
+                        tk.get_validator("ignore_missing"),
+                        tk.get_validator("unicode_safe"),
                     ],
                     "title": [
-                        toolkit.get_validator("ignore_missing"),
-                        toolkit.get_validator("unicode_safe"),
+                        tk.get_validator("ignore_missing"),
+                        tk.get_validator("unicode_safe"),
                     ],
                     "display_name": [
-                        toolkit.get_validator("ignore_missing"),
-                        toolkit.get_validator("unicode_safe"),
+                        tk.get_validator("ignore_missing"),
+                        tk.get_validator("unicode_safe"),
                     ],
                 }
             }
@@ -644,9 +644,9 @@ class OgdchShowcasePlugin(ShowcasePlugin):
             return facets_dict
 
         return OrderedDict({
-            "groups": toolkit._("Categories"),
-            "showcase_type": toolkit._("Type of content"),
-            "private": toolkit._("Draft")
+            "groups": tk._("Categories"),
+            "showcase_type": tk._("Type of content"),
+            "private": tk._("Draft")
         })
 
 
@@ -756,7 +756,7 @@ class OgdchSubscribePlugin(SubscribePlugin):
     def get_activities(self, include_activity_from,
                        objects_subscribed_to_keys):
         try:
-            harvest_user = toolkit.get_action('user_show')(
+            harvest_user = tk.get_action('user_show')(
                 {},
                 {'id': ogdch_validators.HARVEST_USER}
             )
