@@ -17,81 +17,6 @@ VALID_EMPTY_DATE = ''
 ACCEPTED_EMPTY_DATE_VALUES = [INVALID_EMPTY_DATE, VALID_EMPTY_DATE]
 
 
-def store_if_isodate(value):
-    """as the storage format is isodate, isodate are just
-    stored the way they come in: the function just tests whether
-    the value is an isodate. In that case it is returned the way
-    it is."""
-    try:
-        dt = isodate.parse_datetime(value)
-        if isinstance(dt, datetime):
-            return value
-    except Exception:
-        log.debug(
-            "Datetime {} is not an isoformat date".format(value)
-        )
-
-        return None
-
-
-def store_if_date_picker_date(value):
-    """date in the ckanext.switzerland.date_picker_format will be transformed
-    into isodates and stored that way."""
-    try:
-        dt = datetime.strptime(value, DATE_PICKER_FORMAT)
-        if isinstance(dt, datetime):
-            return dt.isoformat()
-    except Exception:
-        log.debug(
-            "Datetime {} does not match the format {}".format(
-                value, DATE_PICKER_FORMAT
-            )
-        )
-        return None
-
-
-def store_if_timestamp(value):
-    """timestamps will be transformed
-    into isodates and stored that way."""
-    try:
-        dt = datetime.fromtimestamp(int(value))
-        if isinstance(dt, datetime):
-            return dt.isoformat()
-    except Exception:
-        log.debug("Datetime {} is not a POSIX timestamp".format(value))
-        return None
-
-
-def store_if_datetime(value):
-    """datetimes will be transformed
-    into isodates and stored that way."""
-    try:
-        if isinstance(value, datetime):
-            return value.isoformat()
-    except Exception:
-        log.debug("Datetime {} is not a datetime object".format(value))
-        return None
-
-
-def store_if_other_formats(value):
-    """timestamps will be transformed
-    into isodates and stored that way."""
-    for date_format in ALLOWED_DATE_FORMATS:
-        try:
-            dt = datetime.strptime(value, date_format)
-            if isinstance(dt, datetime):
-                return dt.isoformat()
-        except Exception:
-            log.debug(
-                "Datetime {} does not match the format {}".format(
-                    value, date_format
-                )
-            )
-            pass
-
-    return None
-
-
 def display_if_isodate(value):
     """If the value is already in isoformat, return it as-is.
     """
@@ -164,21 +89,22 @@ def display_if_other_formats(value):
     return None
 
 
-def transform_any_date_to_isodate(date_field):
+display_date_helpers = [
+    display_if_isodate,
+    display_if_date_picker_date,
+    display_if_timestamp,
+    display_if_datetime,
+    display_if_other_formats,
+]
+
+
+def transform_any_date_to_isodate(value):
     """Transform any stored date format into an isodate.
     """
-    isodate_field = store_if_date_picker_date(date_field)
-    if isodate_field:
-        return isodate_field
-    isodate_field = store_if_isodate(date_field)
-    if isodate_field:
-        return isodate_field
-    isodate_field = store_if_timestamp(date_field)
-    if isodate_field:
-        return isodate_field
-    isodate_field = store_if_other_formats(date_field)
-    if isodate_field:
-        return isodate_field
+    for date_helper in display_date_helpers:
+        storage_date = date_helper(value)
+        if storage_date:
+            return storage_date
 
 
 def get_latest_isodate(resource_dates):
