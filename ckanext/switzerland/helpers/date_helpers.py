@@ -167,10 +167,10 @@ def display_if_other_formats(value):
 def transform_any_date_to_isodate(date_field):
     """Transform any stored date format into an isodate.
     """
-    isodate_field = store_if_date_picker_date(date_field)
+    isodate_field = store_if_isodate(date_field)
     if isodate_field:
         return isodate_field
-    isodate_field = store_if_isodate(date_field)
+    isodate_field = store_if_date_picker_date(date_field)
     if isodate_field:
         return isodate_field
     isodate_field = store_if_timestamp(date_field)
