@@ -184,6 +184,9 @@ def ogdch_dataset_by_identifier(context, data_dict):
     context.update({'user': user['name']})
     identifier = data_dict.pop('identifier', None)
 
+    if not identifier:
+        raise ValidationError({'identifier': [u'Missing value']})
+
     data_dict['fq'] = 'identifier:%s' % identifier
     result = tk.get_action('package_search')(context, data_dict)
     try:
