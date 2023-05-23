@@ -396,11 +396,11 @@ def _create_or_update_dataset(dataset):
     context.update({'user': user['name']})
 
     harvester = SwissDCATRDFHarvester()
-    name = harvester._gen_new_name(dataset['title'])
+    name = harvester._gen_new_name(dataset.get('title', ''))
 
     package_plugin = lib_plugins.lookup_package_plugin('dataset')
     data_dict = {
-        'identifier': dataset['identifier'],
+        'identifier': dataset.get('identifier', ''),
         'include_private': True,
         'include_drafts': True,
     }
