@@ -455,7 +455,7 @@ def _create_or_update_dataset(dataset):
 
     except Exception as e:
         h.flash_error(
-            'Error importing dataset %s: %r' %
+            'Error importing dataset %s: %s' %
             (dataset.get('name', ''), e))
 
 
