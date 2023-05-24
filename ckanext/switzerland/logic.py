@@ -184,6 +184,9 @@ def ogdch_dataset_by_identifier(context, data_dict):
     context.update({'user': user['name']})
     identifier = data_dict.pop('identifier', None)
 
+    if not identifier:
+        raise ValidationError({'identifier': [u'Missing value']})
+
     data_dict['fq'] = 'identifier:%s' % identifier
     result = tk.get_action('package_search')(context, data_dict)
     try:
@@ -393,11 +396,11 @@ def _create_or_update_dataset(dataset):
     context.update({'user': user['name']})
 
     harvester = SwissDCATRDFHarvester()
-    name = harvester._gen_new_name(dataset['title'])
+    name = harvester._gen_new_name(dataset.get('title', ''))
 
     package_plugin = lib_plugins.lookup_package_plugin('dataset')
     data_dict = {
-        'identifier': dataset['identifier'],
+        'identifier': dataset.get('identifier', ''),
         'include_private': True,
         'include_drafts': True,
     }
@@ -452,7 +455,7 @@ def _create_or_update_dataset(dataset):
 
     except Exception as e:
         h.flash_error(
-            'Error importing dataset %s: %r' %
+            'Error importing dataset %s: %s' %
             (dataset.get('name', ''), e))
 
 
