@@ -11,11 +11,18 @@ import ckan.lib.helpers as h
 import ckan.authz as authz
 import ckan.lib.search as search
 from ckan.lib.base import render
-from ckanext.hierarchy.controller import _children_name_list
 import ckan.controllers.organization as organization
 import ckanext.hierarchy.helpers as hierarchy_helpers
 
 log = logging.getLogger(__name__)
+
+
+def _children_name_list(children):
+    name_list = []
+    for child in children:
+        name = child.get('name', "")
+        name_list += [name] + _children_name_list(child.get('children', []))
+    return name_list
 
 
 class OgdchOrganizationController(organization.OrganizationController):
