@@ -1,0 +1,82 @@
+name: Tests
+on: [push, pull_request]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.6'
+      - name: Install requirements
+        run: pip install flake8 pycodestyle
+      - name: Check syntax
+        run: flake8 --statistics --show-source --exclude ckan ckanext
+
+  test:
+    needs: lint
+    strategy:
+      matrix:
+        ckan-version: [2.8]
+      fail-fast: false
+
+    name: CKAN ${{ matrix.ckan-version }}
+    runs-on: ubuntu-latest
+    container:
+      image: openknowledge/ckan-dev:${{ matrix.ckan-version }}
+    services:
+      solr:
+        image: ckan/ckan-solr:${{ matrix.ckan-version }}
+      postgres:
+        image: ckan/ckan-postgres-dev:${{ matrix.ckan-version }}
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      redis:
+          image: redis:3
+    env:
+      CKAN_SQLALCHEMY_URL: postgresql://ckan_default:pass@postgres/ckan_test
+      CKAN_DATASTORE_WRITE_URL: postgresql://datastore_write:pass@postgres/datastore_test
+      CKAN_DATASTORE_READ_URL: postgresql://datastore_read:pass@postgres/datastore_test
+      CKAN_SOLR_URL: http://solr:8983/solr/ckan
+      CKAN_REDIS_URL: redis://redis:6379/1
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install requirements
+      run: |
+        # Replace default path to CKAN core config file with the one on the container
+        sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' test.ini
+        pip install -e git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming
+        pip install -e git+https://github.com/ckan/ckanext-fluent.git#egg=ckanext-fluent
+        pip install -e git+https://github.com/ckan/ckanext-hierarchy.git#egg=ckanext-hierarchy
+        # Last commit before support for Python 2 was dropped
+        pip install -e git+https://github.com/ckan/ckanext-harvest.git@v1.4.2#egg=ckanext-harvest
+        pip install -r https://raw.githubusercontent.com/ckan/ckanext-harvest/v1.4.2/requirements.txt
+        # Last commit before support for Python 2 was dropped
+        pip install -e git+https://github.com/ckan/ckanext-dcat.git@0c26bed5b7a3a7fca8e7b78e338aace096e0ebf6#egg=ckanext-dcat
+        pip install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/0c26bed5b7a3a7fca8e7b78e338aace096e0ebf6/requirements-py2-py36.txt
+        pip install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/0c26bed5b7a3a7fca8e7b78e338aace096e0ebf6/dev-requirements-py2.txt
+        pip install -e git+https://github.com/opendata-swiss/ckanext-dcatapchharvest.git#egg=ckanext-dcatapchharvest
+        pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-dcatapchharvest/master/requirements.txt
+        pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-dcatapchharvest/master/dev-requirements.txt
+        pip install -e git+https://github.com/opendata-swiss/ckanext-harvester_dashboard.git#egg=ckanext-harvester_dashboard
+        pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-harvester_dashboard/master/requirements.txt
+        pip install -e git+https://github.com/ckan/ckanext-xloader.git#egg=ckanext-xloader
+        pip install -r https://raw.githubusercontent.com/ckan/ckanext-xloader/master/requirements.txt
+        pip install -e git+https://github.com/opendata-swiss/ckanext-subscribe.git#egg=ckanext-subscribe
+        pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-subscribe/master/requirements.txt
+        # Last commit before support for Python 2 was dropped
+        pip install -e git+https://github.com/ckan/ckanext-showcase.git@v1.5.2#egg=ckanext-showcase
+        pip install -r requirements.txt
+        pip install -r dev-requirements.txt
+        pip install -e .
+
+    - name: Setup extension
+      run: |
+        paster --plugin=ckan db init -c test.ini
+        paster --plugin=ckanext-harvest harvester initdb -c test.ini
+    - name: Run tests
+      run: nosetests --ckan --nologcapture --with-pylons=subdir/test.ini --verbose ckanext/switzerland
