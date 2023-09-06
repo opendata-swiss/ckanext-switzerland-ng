@@ -190,7 +190,8 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'organization_link': ogdch_backend_helpers.organization_link,
             'ogdch_localize_activity_item': ogdch_backend_helpers.ogdch_localize_activity_item,  # noqa
             'ogdch_admin_capacity': ogdch_backend_helpers.ogdch_admin_capacity,  # noqa
-            'render_publisher': ogdch_frontend_helpers.render_publisher,  # noqa
+            'render_publisher': ogdch_frontend_helpers.render_publisher,
+            'ogdch_get_switch_connectome_url': ogdch_backend_helpers.ogdch_get_switch_connectome_url,  # noqa
         }
 
     # IRouter

@@ -5,8 +5,9 @@ Helpers belong in this file if they are only
 used in backend templates
 """
 import ast
-import re
 import logging
+import re
+import requests
 from urlparse import urlparse
 from html.parser import HTMLParser
 from ckan import authz
@@ -321,3 +322,30 @@ def ogdch_admin_capacity():
     if CAPACITY_ADMIN in capacities:
         return True
     return False
+
+
+def ogdch_get_switch_connectome_url(identifier):
+    """Construct a url to the SWITCH connectome site using the id of a package
+    on opendata.swiss. The connectome site only uses package ids from the PROD
+    site, which are different from ids on TEST.
+
+    This helper is only needed temporarily for a proof of concept: the
+    connectome website should use dataset identifiers in the future, not ids.
+    """
+    permalink = "%s/api/3/action/ogdch_dataset_by_identifier?identifier=%s" % (
+        tk.config.get("ckanext.switzerland.prod_env_url", ""),
+        identifier,
+    )
+    r = requests.get(permalink)
+
+    if r.status_code == 200 and r.json().get("result"):
+        prod_id = r.json()["result"]["id"]
+
+        return (
+                tk.config.get(
+                    "ckanext.switzerland.switch_connectome_base_url", ""
+                )
+                + prod_id
+        )
+
+    return ""

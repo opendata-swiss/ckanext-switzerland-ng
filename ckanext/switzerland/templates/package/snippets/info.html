@@ -23,9 +23,12 @@
   </div>
   {% for group in pkg.groups %}
     {% if group.name == "energy" %}
-      <div class="nums">
-        <a class="btn btn-default" href="http://example.org">{{ _('See related papers') }}</a>
-      </div>
+      {% set connectome_url = h.ogdch_get_switch_connectome_url(pkg.identifier) %}
+      {% if connectome_url != '' %}
+        <div class="nums">
+          <a class="btn btn-default" href="{{ h.ogdch_get_switch_connectome_url(pkg.identifier) }}">{{ _('See related papers') }}</a>
+        </div>
+      {% endif %}
     {% endif %}
   {% endfor %}
 {% endblock %}
