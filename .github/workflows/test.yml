@@ -3,15 +3,14 @@ on: [push, pull_request]
 jobs:
   lint:
     runs-on: ubuntu-latest
+    container:
+      image: python:2.7.18-buster
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
-        with:
-          python-version: '3.10'
       - name: Install requirements
         run: pip install flake8 pycodestyle
       - name: Check syntax
-        run: flake8 --statistics --show-source --select=E901,E999,F821,F822,F823 --exclude=ckanext/switzerland/tests,setup.py ckanext
+        run: flake8 --statistics --show-source --exclude ckanext/switzerland/tests,setup.py ckanext
 
   test:
     needs: lint
