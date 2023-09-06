@@ -329,8 +329,9 @@ def ogdch_get_switch_connectome_url(identifier):
     on opendata.swiss. The connectome site only uses package ids from the PROD
     site, which are different from ids on TEST.
 
-    This helper is only needed temporarily for a proof of concept: the
-    connectome website should use dataset identifiers in the future, not ids.
+    We only need to make the request to the PROD API temporarily for a proof of
+    concept: the connectome website should use dataset identifiers in the
+    future, not ids.
     """
     permalink = "%s/api/3/action/ogdch_dataset_by_identifier?identifier=%s" % (
         tk.config.get("ckanext.switzerland.prod_env_url", ""),
