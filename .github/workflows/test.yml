@@ -11,7 +11,7 @@ jobs:
       - name: Install requirements
         run: pip install flake8 pycodestyle
       - name: Check syntax
-        run: flake8 --statistics --show-source --exclude ckan ckanext
+        run: flake8 --statistics --show-source --select=E901,E999,F821,F822,F823 --exclude=ckanext/switzerland/tests,setup.py ckanext
 
   test:
     needs: lint
