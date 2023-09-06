@@ -70,6 +70,9 @@ This extension uses the following config options (.ini file)
     ckanext.switzerland.showcase_admin_email =
     ckanext.switzerland.showcase_admin_name =
 
+    # Environment, e.g. local, test, production
+    ckanext.switzerland.env = local
+
     # URL of the CKAN website for the PRODUCTION environment
     ckanext.switzerland.prod_env_url =
 

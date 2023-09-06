@@ -350,3 +350,7 @@ def ogdch_get_switch_connectome_url(identifier):
         )
 
     return ""
+
+
+def ogdch_get_env():
+    return tk.config.get('ckanext.switzerland.env', '')

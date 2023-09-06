@@ -21,14 +21,16 @@
       <button type="submit" class="btn btn-default" name="save">{{ _('Submit') }}</button>
     </form>
   </div>
-  {% for group in pkg.groups %}
-    {% if group.name == "energy" %}
-      {% set connectome_url = h.ogdch_get_switch_connectome_url(pkg.identifier) %}
-      {% if connectome_url != '' %}
-        <div class="nums">
-          <a class="btn btn-default" href="{{ connectome_url }}">{{ _('See related papers') }}</a>
-        </div>
+  {% if h.ogdch_get_env() != 'production' %}
+    {% for group in pkg.groups %}
+      {% if group.name == "energy" %}
+        {% set connectome_url = h.ogdch_get_switch_connectome_url(pkg.identifier) %}
+        {% if connectome_url != '' %}
+          <div class="nums">
+            <a class="btn btn-default" href="{{ connectome_url }}">{{ _('See related papers') }}</a>
+          </div>
+        {% endif %}
       {% endif %}
-    {% endif %}
-  {% endfor %}
+    {% endfor %}
+  {% endif %}
 {% endblock %}

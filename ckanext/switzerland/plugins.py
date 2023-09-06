@@ -192,6 +192,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_admin_capacity': ogdch_backend_helpers.ogdch_admin_capacity,  # noqa
             'render_publisher': ogdch_frontend_helpers.render_publisher,
             'ogdch_get_switch_connectome_url': ogdch_backend_helpers.ogdch_get_switch_connectome_url,  # noqa
+            'ogdch_get_env': ogdch_backend_helpers.ogdch_get_env,
         }
 
     # IRouter
