@@ -28,7 +28,7 @@ log = logging.getLogger(__name__)
 OGDCH_USER_VIEW_CHOICE = 'user_view_choice'
 OGDCH_USER_VIEW_CHOICE_FRONTEND = 'frontend'
 OGDCH_USER_VIEW_CHOICE_BACKEND = 'backend'
-REGEX_LANGUAGE_DICT = '\{[\w\\\d\-\(\)\'\"\:\,\s]*\}'
+REGEX_LANGUAGE_DICT = r'\{[\w\\\d\-\(\)\'\"\:\,\s]*\}'
 CAPACITY_ADMIN = "admin"
 
 showcase_types_mapping = {

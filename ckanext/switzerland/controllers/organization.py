@@ -296,7 +296,7 @@ class OgdchOrganizationController(organization.OrganizationController):
 
         org = tk.get_action('organization_show')({}, {'id': name})
 
-        if tk.request.POST.get('file_upload') is not u'':
+        if tk.request.POST.get('file_upload') != u'':
             data_dict = {
                 'data': dict(tk.request.POST),
                 'organization': org['id'],
