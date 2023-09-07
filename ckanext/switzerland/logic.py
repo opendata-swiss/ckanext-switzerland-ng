@@ -98,19 +98,19 @@ def ogdch_package_show(context, data_dict):  # noqa
                     if related_dataset:
                         item['title'] = related_dataset['title']
                         item['name'] = related_dataset['name']
-                except:
+                except Exception:
                     continue
 
         try:
             showcases = get_showcases_for_dataset(id=id)
             result['showcases'] = showcases
-        except:
+        except Exception:
             pass
 
         try:
             result['terms_of_use'] = tk.get_action('ogdch_dataset_terms_of_use')(  # noqa
                 context, {'id': id})
-        except:
+        except Exception:
             raise "Terms of Use could not be found for dataset {}".format(id)
 
         for resource in result['resources']:
