@@ -48,6 +48,9 @@ jobs:
       run: |
         # Replace default path to CKAN core config file with the one on the container
         sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' test.ini
+        pip install -r requirements.txt
+        pip install -r dev-requirements.txt
+        pip install -e .
         pip install -e git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming
         pip install -e git+https://github.com/ckan/ckanext-fluent.git#egg=ckanext-fluent
         pip install -e git+https://github.com/ckan/ckanext-hierarchy.git#egg=ckanext-hierarchy
@@ -69,9 +72,6 @@ jobs:
         pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-subscribe/master/requirements.txt
         # Last commit before support for Python 2 was dropped
         pip install -e git+https://github.com/ckan/ckanext-showcase.git@v1.5.2#egg=ckanext-showcase
-        pip install -r requirements.txt
-        pip install -r dev-requirements.txt
-        pip install -e .
 
     - name: Setup extension
       run: |
