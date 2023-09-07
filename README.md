@@ -70,6 +70,15 @@ This extension uses the following config options (.ini file)
     ckanext.switzerland.showcase_admin_email =
     ckanext.switzerland.showcase_admin_name =
 
+    # Environment, e.g. local, test, production
+    ckanext.switzerland.env = local
+
+    # URL of the CKAN website for the PRODUCTION environment
+    ckanext.switzerland.prod_env_url =
+
+    # URL to use for constructing the SWITCH connectome url for a dataset
+    ckanext.switzerland.switch_connectome_base_url =
+
 ## Development Installation
 
 To install ckanext-switzerland for development, activate your CKAN virtualenv and
