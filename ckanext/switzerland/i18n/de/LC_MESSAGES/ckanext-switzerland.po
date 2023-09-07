@@ -865,5 +865,5 @@ msgid "Metadata Last Modified"
 msgstr "Metadaten zuletzt geändert"
 
 #: ckanext/switzerland/templates/package/snippets/info.html:25
-msgid "See related papers"
-msgstr ""
+msgid "Research Data Connectome (SWITCH)"
+msgstr "Forschungsdaten-Konnektom (SWITCH)"
