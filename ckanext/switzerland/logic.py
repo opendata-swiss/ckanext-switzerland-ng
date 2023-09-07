@@ -24,6 +24,8 @@ from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
 from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester
 from ckanext.harvest.model import HarvestJob
 from ckanext.harvest.logic.dictization import harvest_job_dictize
+from ckanext.switzerland.helpers.backend_helpers import (
+    ogdch_get_switch_connectome_url)
 from ckanext.switzerland.helpers.request_utils import get_content_headers
 from ckanext.switzerland.helpers.mail_helper import (
     send_registration_email,
@@ -80,9 +82,8 @@ def ogdch_counts(context, data_dict):
 
 @side_effect_free
 def ogdch_package_show(context, data_dict):
-    """
-    custom package_show logic that returns a dataset together
-    with related datasets, showcases and terms of use
+    """Custom package_show logic that returns a dataset together
+    with related datasets, showcases, terms of use and SWITCH Connectome url.
     """
     user = tk.get_action('get_site_user')({'ignore_auth': True}, {})
     context.update({'user': user['name'], 'for_view': True})
@@ -116,6 +117,10 @@ def ogdch_package_show(context, data_dict):
         resource_views = tk.get_action('resource_view_list')(
             context, {'id': resource['id']})
         resource['has_views'] = len(resource_views) > 0
+
+    result['connectome_url'] = ogdch_get_switch_connectome_url(
+        result.get('identifier', '')
+    )
 
     return result
 
