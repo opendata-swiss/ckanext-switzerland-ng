@@ -76,4 +76,4 @@ jobs:
         paster --plugin=ckan db init -c test.ini
         paster --plugin=ckanext-harvest harvester initdb -c test.ini
     - name: Run tests
-      run: nosetests --ckan --nologcapture --with-pylons=subdir/test.ini --verbose ckanext/switzerland
+      run: nosetests --ckan --nologcapture --with-pylons=test.ini --verbose ckanext/switzerland
