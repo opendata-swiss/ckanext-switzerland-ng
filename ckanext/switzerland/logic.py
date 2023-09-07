@@ -107,8 +107,7 @@ def ogdch_package_show(context, data_dict):
                     (item.get('dataset_identifier'), e))
                 continue
 
-    showcases = get_showcases_for_dataset(id=id)
-    result['showcases'] = showcases
+    result['showcases'] = get_showcases_for_dataset(id=id)
 
     result['terms_of_use'] = tk.get_action('ogdch_dataset_terms_of_use')(
         context, {'id': id})
