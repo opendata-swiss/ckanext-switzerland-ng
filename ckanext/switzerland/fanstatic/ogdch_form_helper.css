@@ -32,3 +32,8 @@
 .ogdch-form-field-group {
   margin-bottom: 50px;
 }
+
+.multiple-text-group {
+  list-style-type: none;
+  padding-left: 0;
+}
