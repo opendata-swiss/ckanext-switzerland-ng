@@ -40,8 +40,8 @@
     {% endif %}
 
     <div class="control-medium">
-      <a href="javascript:MultipleText.multiple_add('{{ field.field_name }}');" class="btn btn-link"
-        >{% block add_button_text %}<i class="fa fa-plus" aria-hidden="true"></i> {{ _('Add') }}{% endblock %}</a>
+      <a href="javascript:MultipleText.multiple_add('{{ field.field_name }}');" class="btn btn-default ogdch-btn-add-row"
+        >{% block add_button_text %}{{ h.scheming_language_text(field.add_row) }}{% endblock %}</a>
     </div>
   </fieldset>
 {% endcall %}
