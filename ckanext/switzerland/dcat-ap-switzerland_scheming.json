@@ -616,6 +616,41 @@
       }
     },
     {
+      "field_name": "documentation",
+      "preset": "multiple_text",
+      "display_snippet": "multiple_urls.html",
+      "fieldgroup": {
+        "en": "Documentation",
+        "de": "Dokumentation",
+        "fr": "Documentation",
+        "it": "Documentazione"
+      },
+      "label": {
+        "en": "Documentation",
+        "de": "Dokumentation",
+        "fr": "Documentation",
+        "it": "Documentazione"
+      },
+      "form_placeholder_url": {
+        "en": "Documentation URL",
+        "de": "Dokumentation URL",
+        "fr": "Documentation URL",
+        "it": "URL documentazione"
+      },
+      "add_row": {
+        "en": "Add another documentation URL",
+        "de": "Eine weitere Dokumentations-URL hinzufügen",
+        "fr": "Ajouter une autre documentation URL",
+        "it": "Aggiungere un altro URL documentazione"
+      },
+      "help_text": {
+        "de": "A page or document about this dataset.",
+        "en": "Eine Seite oder ein Dokument zu diesem Datensatz.",
+        "fr": "Une page ou un document sur cet jeu de données.",
+        "it": "Una pagina o un documento su questo set di dati."
+      }
+    },
+    {
       "field_name": "keywords",
       "preset": "ogdch_fluent_tags",
       "fieldgroup": {
