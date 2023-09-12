@@ -841,7 +841,6 @@
       "preset": "select",
       "choices_helper": "ogdch_get_rights_choices",
       "validators": "scheming_required",
-      "required": true,
       "label": {
         "en": "Terms of use",
         "de": "Nutzungsbedingungen",
