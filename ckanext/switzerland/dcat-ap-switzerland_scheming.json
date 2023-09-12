@@ -619,6 +619,7 @@
       "field_name": "documentation",
       "preset": "multiple_text",
       "display_snippet": "multiple_urls.html",
+      "validators": "multiple_text",
       "fieldgroup": {
         "en": "Documentation",
         "de": "Dokumentation",
