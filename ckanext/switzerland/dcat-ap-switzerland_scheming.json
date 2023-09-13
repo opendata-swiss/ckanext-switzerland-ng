@@ -858,6 +858,7 @@
     {
       "field_name": "license",
       "form_snippet": null,
+      "required": true,
       "label": {
         "en": "License",
         "de": "Lizenz",
