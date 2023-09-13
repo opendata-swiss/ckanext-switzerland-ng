@@ -619,7 +619,7 @@
       "field_name": "documentation",
       "preset": "multiple_text",
       "display_snippet": "multiple_urls.html",
-      "validators": "multiple_text",
+      "validators": "multiple_text ogdch_validate_list_of_urls",
       "fieldgroup": {
         "en": "Documentation",
         "de": "Dokumentation",
