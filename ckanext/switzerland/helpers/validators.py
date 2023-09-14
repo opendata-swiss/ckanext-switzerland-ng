@@ -559,6 +559,6 @@ def ogdch_validate_list_of_urls(field, schema):
                     url
                 )
 
-        return json.dumps(value)
+        return value
 
     return validator
