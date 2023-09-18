@@ -1,6 +1,7 @@
 import json
 import logging
 import re
+from urlparse import urlparse
 
 import ckan.lib.navl.dictization_functions as df
 import ckan.plugins.toolkit as tk
@@ -531,3 +532,33 @@ def _jsondata_for_key_is_set(data, key):
         return isinstance(data[key], basestring)
     else:
         return False
+
+
+@scheming_validator
+def ogdch_validate_list_of_urls(field, schema):
+    """Validates each url in a list or string representation of a list.
+    """
+    def validator(value):
+        if value is missing or not value:
+            return value
+        if type(value) == list:
+            urls = value
+        else:
+            try:
+                urls = json.loads(value)
+            except (TypeError, ValueError) as e:
+                raise df.Invalid(
+                    "Error converting %s into a list: %s" % (value, e)
+                )
+
+        for url in urls:
+            result = urlparse(url)
+            if not result.scheme or not result.netloc or result.netloc == '-':
+                raise df.Invalid(
+                    "Provided URL %s does not have a valid schema or netloc" %
+                    url
+                )
+
+        return value
+
+    return validator

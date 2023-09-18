@@ -73,6 +73,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_validate_temporals': ogdch_validators.ogdch_validate_temporals,  # noqa
             'ogdch_fluent_tags': ogdch_validators.ogdch_fluent_tags,
             'ogdch_temp_scheming_choices': ogdch_validators.ogdch_temp_scheming_choices,  # noqa
+            'ogdch_validate_list_of_urls': ogdch_validators.ogdch_validate_list_of_urls,  # noqa
         }
 
     # IFacets
