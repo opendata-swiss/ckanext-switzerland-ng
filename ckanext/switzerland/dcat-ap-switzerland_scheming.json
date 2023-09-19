@@ -892,7 +892,10 @@
     },
     {
       "field_name": "license",
-      "form_snippet": null,
+      "preset": "select",
+      "choices_helper": "ogdch_get_license_choices",
+      "validators": "scheming_required",
+      "required": true,
       "label": {
         "en": "License",
         "de": "Lizenz",
