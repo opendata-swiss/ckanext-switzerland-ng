@@ -60,6 +60,18 @@ def ogdch_get_rights_choices(field):
              'value': 'NonCommercialNotAllowed-CommercialWithPermission-ReferenceRequired'}]  # noqa
 
 
+def ogdch_get_license_choices(field):
+    return [{'label': _('Non-commercial Allowed / Commercial Allowed / Reference Not Required'),  # noqa
+             'value': TERMS_OF_USE_OPEN},
+            {'label': _('Non-commercial Allowed / Commercial With Permission Allowed / Reference Not Required'),  # noqa
+             'value': TERMS_OF_USE_ASK},
+            {'label': _('Non-commercial Allowed / Commercial With Permission Allowed / Reference Required'),  # noqa
+             'value': TERMS_OF_USE_BY_ASK},
+            {'label': _('Non-commercial Allowed / Commercial Allowed / Reference Required'),  # noqa
+             'value': TERMS_OF_USE_BY},
+    ]
+
+
 def ogdch_publisher_form_helper(data):
     """
     fills the publisher form snippet either from a previous form entry

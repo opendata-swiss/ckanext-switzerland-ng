@@ -173,6 +173,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'get_localized_value_for_display': ogdch_frontend_helpers.get_localized_value_for_display,  # noqa
             'ogdch_get_accrual_periodicity_choices': ogdch_dataset_form_helpers.ogdch_get_accrual_periodicity_choices,  # noqa
             'ogdch_get_rights_choices': ogdch_dataset_form_helpers.ogdch_get_rights_choices,  # noqa
+            'ogdch_get_license_choices': ogdch_dataset_form_helpers.ogdch_get_license_choices,  # noqa
             'ogdch_publisher_form_helper': ogdch_dataset_form_helpers.ogdch_publisher_form_helper,  # noqa
             'ogdch_contact_points_form_helper': ogdch_dataset_form_helpers.ogdch_contact_points_form_helper,  # noqa
             'ogdch_relations_form_helper': ogdch_dataset_form_helpers.ogdch_relations_form_helper,  # noqa
