@@ -349,6 +349,7 @@ class OgdchPackagePlugin(plugins.SingletonPlugin):
             ogdch_format_utils.prepare_resource_format(
                 resource=resource)
             for resource in pkg_dict.get('resources')]
+        ogdch_plugin_utils.ogdch_map_resource_docs_to_dataset(pkg_dict)
 
         if ogdch_request_utils.request_is_api_request():
             return pkg_dict
