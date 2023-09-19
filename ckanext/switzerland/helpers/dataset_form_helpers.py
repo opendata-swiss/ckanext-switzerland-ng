@@ -68,8 +68,7 @@ def ogdch_get_license_choices(field):
             {'label': _('Non-commercial Allowed / Commercial With Permission Allowed / Reference Required'),  # noqa
              'value': TERMS_OF_USE_BY_ASK},
             {'label': _('Non-commercial Allowed / Commercial Allowed / Reference Required'),  # noqa
-             'value': TERMS_OF_USE_BY},
-    ]
+             'value': TERMS_OF_USE_BY}]
 
 
 def ogdch_publisher_form_helper(data):
