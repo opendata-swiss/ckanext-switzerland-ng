@@ -541,22 +541,28 @@ def ogdch_validate_list_of_urls(field, schema):
     def validator(value):
         if value is missing or not value:
             return value
+
+        urls = []
         if type(value) == list:
             urls = value
-        else:
+
+        if not urls:
             try:
                 urls = json.loads(value)
-            except (TypeError, ValueError) as e:
-                raise df.Invalid(
-                    "Error converting %s into a list: %s" % (value, e)
-                )
+            except (TypeError, ValueError):
+                pass
+
+        if not urls:
+            urls = [value]
 
         for url in urls:
             result = urlparse(url)
-            if not result.scheme or not result.netloc or result.netloc == '-':
+            invalid = not result.scheme or \
+                result.scheme not in ["http", "https"] or \
+                not result.netloc
+            if invalid:
                 raise df.Invalid(
-                    "Provided URL %s does not have a valid schema or netloc" %
-                    url
+                    "Provided URL %s is not valid" % url
                 )
 
         return value
