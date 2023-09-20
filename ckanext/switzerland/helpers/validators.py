@@ -542,17 +542,17 @@ def ogdch_validate_list_of_urls(field, schema):
         if value is missing or not value:
             return value
 
-        urls = []
+        urls = None
         if type(value) == list:
             urls = value
 
-        if not urls:
+        if urls is None:
             try:
                 urls = json.loads(value)
             except (TypeError, ValueError):
                 pass
 
-        if not urls:
+        if urls is None:
             urls = [value]
 
         for url in urls:
