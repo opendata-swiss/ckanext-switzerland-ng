@@ -568,3 +568,16 @@ def ogdch_validate_list_of_urls(field, schema):
         return value
 
     return validator
+
+
+@scheming_validator
+def ogdch_validate_formfield_list_of_urls(field, schema):
+    def validator(key, data, errors, context):
+        documentation = json.loads(data.get(key, []))
+        results = []
+        for link in documentation:
+            if link:
+                results.append(link)
+        data[key] = json.dumps(results)
+
+    return validator
