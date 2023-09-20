@@ -344,7 +344,7 @@ def _get_publisher_from_form(extras):
 @scheming_validator
 def ogdch_validate_formfield_contact_points(field, schema):
     """This validator is only used for form validation
-    The data is extracted form the publisher form fields and transformed
+    The data is extracted from the publisher form fields and transformed
     into a form that is expected for database storage:
     u'contact_points': [{u'email': u'tischhauser@ak-strategy.ch',
     u'name': u'tischhauser@ak-strategy.ch'}]
