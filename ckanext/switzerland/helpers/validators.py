@@ -536,29 +536,23 @@ def _jsondata_for_key_is_set(data, key):
 
 @scheming_validator
 def ogdch_validate_list_of_urls(field, schema):
-    """Validates each url in a list or string representation of a list.
+    """Validates each url in a list (stored as json).
     """
     def validator(key, data, errors, context):
         # if there was an error before calling our validator
         # don't bother with our validation
         if errors[key]:
             return
+
         value = data[key]
         if value is missing or not value:
             return value
 
-        urls = None
-        if type(value) == list:
-            urls = value
-
-        if urls is None:
-            try:
-                urls = json.loads(value)
-            except (TypeError, ValueError):
-                pass
-
-        if urls is None:
-            urls = [value]
+        try:
+            urls = json.loads(value)
+        except (TypeError, ValueError):
+            errors[key].append("Error parsing string as JSON: '%s'" % value)
+            return value
 
         # Get rid of empty strings
         urls = [url for url in urls if url]
