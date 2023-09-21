@@ -619,7 +619,8 @@
       "field_name": "documentation",
       "preset": "multiple_text",
       "display_snippet": "multiple_urls.html",
-      "validators": "multiple_text ogdch_validate_list_of_urls",
+      "validators": "scheming_required multiple_text ogdch_validate_list_of_urls",
+      "output_validator": "scheming_load_json",
       "fieldgroup": {
         "en": "Documentation",
         "de": "Dokumentation",
@@ -958,7 +959,8 @@
       "field_name": "documentation",
       "preset": "multiple_text",
       "display_snippet": "multiple_urls.html",
-      "validators": "multiple_text ogdch_validate_list_of_urls",
+      "validators": "scheming_required multiple_text ogdch_validate_list_of_urls",
+      "output_validator": "scheming_load_json",
       "fieldgroup": {
         "en": "Documentation",
         "de": "Dokumentation",

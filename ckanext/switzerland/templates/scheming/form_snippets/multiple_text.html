@@ -16,7 +16,7 @@
   </li>
 {% endmacro %}
 
-{%- set values = data.get(field.field_name, []) or ([''] * field.get('form_blanks', 1)) -%}
+{%- set values = h.ogdch_multiple_text_form_helper(data.get(field.field_name, [])) or ([''] * field.get('form_blanks', 1)) -%}
 
 {% call form.input_block(
   'field-' + field.field_name,

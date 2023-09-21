@@ -344,7 +344,7 @@ def _get_publisher_from_form(extras):
 @scheming_validator
 def ogdch_validate_formfield_contact_points(field, schema):
     """This validator is only used for form validation
-    The data is extracted form the publisher form fields and transformed
+    The data is extracted from the publisher form fields and transformed
     into a form that is expected for database storage:
     u'contact_points': [{u'email': u'tischhauser@ak-strategy.ch',
     u'name': u'tischhauser@ak-strategy.ch'}]
@@ -536,29 +536,35 @@ def _jsondata_for_key_is_set(data, key):
 
 @scheming_validator
 def ogdch_validate_list_of_urls(field, schema):
-    """Validates each url in a list or string representation of a list.
+    """Validates each url in a list (stored as json).
     """
-    def validator(value):
+    def validator(key, data, errors, context):
+        # if there was an error before calling our validator
+        # don't bother with our validation
+        if errors[key]:
+            return
+
+        value = data[key]
         if value is missing or not value:
             return value
-        if type(value) == list:
-            urls = value
-        else:
-            try:
-                urls = json.loads(value)
-            except (TypeError, ValueError) as e:
-                raise df.Invalid(
-                    "Error converting %s into a list: %s" % (value, e)
-                )
+
+        try:
+            urls = json.loads(value)
+        except (TypeError, ValueError):
+            errors[key].append("Error parsing string as JSON: '%s'" % value)
+            return value
+
+        # Get rid of empty strings
+        urls = [url for url in urls if url]
 
         for url in urls:
             result = urlparse(url)
-            if not result.scheme or not result.netloc or result.netloc == '-':
-                raise df.Invalid(
-                    "Provided URL %s does not have a valid schema or netloc" %
-                    url
-                )
+            invalid = not result.scheme or \
+                result.scheme not in ["http", "https"] or \
+                not result.netloc
+            if invalid:
+                errors[key].append("Provided URL '%s' is not valid" % url)
 
-        return value
+        data[key] = json.dumps(urls)
 
     return validator

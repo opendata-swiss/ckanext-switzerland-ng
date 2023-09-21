@@ -1,4 +1,6 @@
 # encoding: utf-8
+import json
+
 from ckan.lib.navl.dictization_functions import Invalid
 from ckan.plugins.toolkit import get_validator
 from nose.tools import assert_equals, assert_raises
@@ -13,36 +15,30 @@ class TestOgdchUrlListValidator(object):
             'field', {}
         )
 
-    def test_validate_url_list(self):
-        urls = ["https://example.com/1", "http://example.com/2"]
-        # We pass in dummy values for field and schema here, because we just
-        # want to get the inner validation function, and that does not use
-        # either of these parameters.
-        assert_equals(urls, self.validator(urls))
-
     def test_validate_url_list_string(self):
-        urls = '["https://example.com/1", "http://example.com/2"]'
-        assert_equals(urls, self.validator(urls))
+        value = '["https://example.com/1", "http://example.com/2"]'
+        key = "documentation"
+        data = {
+            key: value,
+        }
+        errors = {
+            key: [],
+        }
+        self.validator(key, data, errors, {})
 
-    def test_validate_single_url(self):
-        url = "http://example.com/foo"
+        assert_equals(value, data[key])
+        assert_equals([], errors[key])
 
-        with assert_raises(Invalid) as cm:
-            self.validator(url)
+    def test_validate_url_list_string_with_invalid_url(self):
+        value = '["http://example.com/foo", "foobar"]'
+        key = "documentation"
+        data = {
+            key: value,
+        }
+        errors = {
+            key: [],
+        }
+        self.validator(key, data, errors, {})
 
-        assert_equals(
-            cm.exception.error,
-            "Error converting http://example.com/foo into a list: "
-            "No JSON object could be decoded"
-        )
-
-    def test_validate_invalid_url(self):
-        urls = ["http://example.com/foo", "foobar"]
-
-        with assert_raises(Invalid) as cm:
-            self.validator(urls)
-
-        assert_equals(
-            cm.exception.error,
-            "Provided URL foobar does not have a valid schema or netloc"
-        )
+        assert_equals(value, data[key])
+        assert_equals([u"Provided URL 'foobar' is not valid"], errors[key])

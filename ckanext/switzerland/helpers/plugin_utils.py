@@ -309,8 +309,10 @@ def ogdch_map_resource_docs_to_dataset(pkg_dict):
     """Add all resource documentation links to the dataset's documentation
     list, and then deduplicate the list.
     """
-    docs = pkg_dict.get("documentation", [])
-    for resource_dict in pkg_dict.get("resources"):
-        docs.extend(resource_dict.get("documentation"))
+    docs = []
+    if pkg_dict.get("documentation"):
+        docs = pkg_dict.get("documentation")
+    for resource_dict in pkg_dict.get("resources", []):
+        docs.extend(resource_dict.get("documentation", []))
 
     pkg_dict["documentation"] = list(set(docs))
