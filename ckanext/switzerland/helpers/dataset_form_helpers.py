@@ -331,3 +331,18 @@ def ogdch_dataset_title_form_helper(data):
 
 def _get_organization_url(organization_name):
     return ORGANIZATION_URI_BASE + organization_name
+
+
+def ogdch_multiple_text_form_helper(value):
+    """Ensures that the value of a multiple text field is a list.
+
+    If an edited dataset has not been saved because of validation errors, we
+    return to the edit page. Unedited fields are filled in with their saved
+    values, while edited fields are filled with the form data we got from the
+    browser. In this case, if the value of an edited multiple text field is a
+    single string, we just get that string, not a list containing the string.
+    This messes up the multiple_text.html form snippet, so let's prevent it.
+    """
+    if not isinstance(value, list):
+        value = [value]
+    return value

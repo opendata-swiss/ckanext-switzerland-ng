@@ -194,6 +194,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'render_publisher': ogdch_frontend_helpers.render_publisher,
             'ogdch_get_switch_connectome_url': ogdch_backend_helpers.ogdch_get_switch_connectome_url,  # noqa
             'ogdch_get_env': ogdch_backend_helpers.ogdch_get_env,
+            'ogdch_multiple_text_form_helper': ogdch_dataset_form_helpers.ogdch_multiple_text_form_helper,  # noqa
         }
 
     # IRouter
