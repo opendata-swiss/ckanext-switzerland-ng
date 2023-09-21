@@ -22,7 +22,6 @@
 
         {%- if field.field_name in unprocessed -%}
           {%- set errors = unprocessed.pop(field.field_name) -%}
-          {{ errors }}
           {%- if 'repeating_subfields' in field %}
             {%- for se in errors -%}
               {%- if se -%}
@@ -56,9 +55,11 @@
               {%- endif -%}
             {%- endfor -%}
           {%- else -%}
-            <li data-field-label="{{ field.field_name }}">{{
-              h.scheming_language_text(field.label) }}:
-              {{ errors[0] }}</li>
+            {%- for error in errors -%}
+              <li data-field-label="{{ field.field_name }}">{{
+                h.scheming_language_text(field.label) }}:
+                {{ error }}</li>
+            {%- endfor -%}
           {%- endif -%}
         {%- endif -%}
       {%- endfor -%}
