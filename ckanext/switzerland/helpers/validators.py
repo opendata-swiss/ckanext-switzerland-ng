@@ -538,7 +538,12 @@ def _jsondata_for_key_is_set(data, key):
 def ogdch_validate_list_of_urls(field, schema):
     """Validates each url in a list or string representation of a list.
     """
-    def validator(value):
+    def validator(key, data, errors, context):
+        # if there was an error before calling our validator
+        # don't bother with our validation
+        if errors[key]:
+            return
+        value = data[key]
         if value is missing or not value:
             return value
 
@@ -564,10 +569,8 @@ def ogdch_validate_list_of_urls(field, schema):
                 result.scheme not in ["http", "https"] or \
                 not result.netloc
             if invalid:
-                raise df.Invalid(
-                    "Provided URL %s is not valid" % url
-                )
+                errors[key].append("Provided URL '%s' is not valid" % url)
 
-        return urls
+        data[key] = json.dumps(urls)
 
     return validator
