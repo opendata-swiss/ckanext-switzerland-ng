@@ -555,6 +555,9 @@ def ogdch_validate_list_of_urls(field, schema):
         if urls is None:
             urls = [value]
 
+        # Get rid of empty strings
+        urls = [url for url in urls if url]
+
         for url in urls:
             result = urlparse(url)
             invalid = not result.scheme or \
@@ -565,19 +568,6 @@ def ogdch_validate_list_of_urls(field, schema):
                     "Provided URL %s is not valid" % url
                 )
 
-        return value
-
-    return validator
-
-
-@scheming_validator
-def ogdch_validate_formfield_list_of_urls(field, schema):
-    def validator(key, data, errors, context):
-        documentation = json.loads(data.get(key, []))
-        results = []
-        for link in documentation:
-            if link:
-                results.append(link)
-        data[key] = json.dumps(results)
+        return urls
 
     return validator
