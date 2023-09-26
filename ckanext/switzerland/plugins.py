@@ -158,6 +158,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'get_terms_of_use_icon': ogdch_frontend_helpers.get_terms_of_use_icon, # noqa
             'get_dataset_terms_of_use': ogdch_frontend_helpers.get_dataset_terms_of_use, # noqa
             'get_dataset_by_identifier': ogdch_frontend_helpers.get_dataset_by_identifier, # noqa
+            'get_dataset_by_permalink': ogdch_frontend_helpers.get_dataset_by_permalink, # noqa
             'get_readable_file_size': ogdch_frontend_helpers.get_readable_file_size, # noqa
             'get_piwik_config': ogdch_frontend_helpers.get_piwik_config,
             'ogdch_localised_number': ogdch_frontend_helpers.ogdch_localised_number, # noqa
