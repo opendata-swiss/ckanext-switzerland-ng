@@ -576,43 +576,13 @@
       "field_name": "see_alsos",
       "validators": "harvest_list_of_dicts ogdch_validate_formfield_see_alsos",
       "output_validators": "multiple_text_output",
-      "form_snippet": "see_alsos.html",
+      "form_snippet": null,
       "display_snippet": "see_alsos.html",
-      "fieldgroup": {
-        "en": "Related datasets",
-        "de": "Verwandte Datensätze",
-        "fr": "Jeux de données relationnels",
-        "it": "Set di dati relativi"
-      },
-      "help_text": {
-        "de": "Unter «Verwandte Datensätze» können Sie aus allen verfügbaren Datasets auf opendata.swiss mit thematischem Bezug zu Ihrem aktuellen Dataset auswählen. Damit signalisieren Sie Datennutzenden, dass weitere Datasets existieren, die sie interessieren könnten.",
-        "en": "Under \"Related datasets\" you can select from all available datasets on opendata.swiss that are thematically related to your current dataset. This way, you signal to data users that other datasets exist that might be of interest to them.",
-        "fr": "Sous \"Jeux de données en relation\", vous pouvez choisir parmi tous les jeux de données disponibles sur opendata.swiss qui sont thématiquement liés à votre jeu de données actuel. De cette façon, vous signalez aux utilisateurs de données qu'il existe d'autres ensembles de données qui pourraient les intéresser.",
-        "it": "Sotto \"Dataset correlati\" potete selezionare tra tutti i set di dati disponibili su opendata.swiss che sono tematicamente correlati al vostro set di dati attuale. In questo modo, si segnalano agli utenti dei dati che esistono altri set di dati che potrebbero essere di loro interesse."
-      },
       "label": {
         "en": "Related datasets",
         "de": "Verwandte Datensätze",
         "fr": "Jeux de données relationnels",
         "it": "Set di dati relativi"
-      },
-      "label_form": {
-        "en": "Name / Slug",
-        "de": "Name / Slug",
-        "fr": "Nom / Slug",
-        "it": "Name / Slug"
-      },
-      "form_placeholder": {
-        "en": "Name / Slug of a dataset",
-        "de": "Name / Slug eines Datasets",
-        "fr": "Name / Slug eines Datasets",
-        "it": "Name / Slug eines Datasets"
-      },
-      "add_row": {
-        "en": "Add another related dataset",
-        "de": "Einen weiteren verwandten Dataset hinzufügen",
-        "fr": "Einen weiteren verwandten Dataset hinzufügen",
-        "it": "Einen weiteren verwandten Dataset hinzufügen"
       }
     },
     {
