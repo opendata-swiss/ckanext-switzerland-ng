@@ -179,7 +179,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_publisher_form_helper': ogdch_dataset_form_helpers.ogdch_publisher_form_helper,  # noqa
             'ogdch_contact_points_form_helper': ogdch_dataset_form_helpers.ogdch_contact_points_form_helper,  # noqa
             'ogdch_relations_form_helper': ogdch_dataset_form_helpers.ogdch_relations_form_helper,  # noqa
-            'ogdch_see_alsos_form_helper': ogdch_dataset_form_helpers.ogdch_see_alsos_form_helper,  # noqa
+            'ogdch_qualified_relations_form_helper': ogdch_dataset_form_helpers.ogdch_qualified_relations_form_helper,  # noqa
             'ogdch_date_form_helper': ogdch_dataset_form_helpers.ogdch_date_form_helper,  # noqa
             'ogdch_temporals_form_helper': ogdch_dataset_form_helpers.ogdch_temporals_form_helper,  # noqa
             'ogdch_dataset_title_form_helper': ogdch_dataset_form_helpers.ogdch_dataset_title_form_helper,  # noqa
