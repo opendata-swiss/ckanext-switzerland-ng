@@ -69,7 +69,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_validate_formfield_publisher': ogdch_validators.ogdch_validate_formfield_publisher,  # noqa
             'ogdch_validate_formfield_contact_points': ogdch_validators.ogdch_validate_formfield_contact_points,  # noqa
             'ogdch_validate_formfield_relations': ogdch_validators.ogdch_validate_formfield_relations,  # noqa
-            'ogdch_validate_formfield_see_alsos': ogdch_validators.ogdch_validate_formfield_see_alsos,  # noqa
+            'ogdch_validate_formfield_qualified_relations': ogdch_validators.ogdch_validate_formfield_qualified_relations,  # noqa
             'ogdch_validate_temporals': ogdch_validators.ogdch_validate_temporals,  # noqa
             'ogdch_fluent_tags': ogdch_validators.ogdch_fluent_tags,
             'ogdch_temp_scheming_choices': ogdch_validators.ogdch_temp_scheming_choices,  # noqa

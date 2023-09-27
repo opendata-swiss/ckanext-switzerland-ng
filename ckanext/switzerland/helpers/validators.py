@@ -388,11 +388,11 @@ def ogdch_validate_formfield_relations(field, schema):
 
 
 @scheming_validator
-def ogdch_validate_formfield_see_alsos(field, schema):
+def ogdch_validate_formfield_qualified_relations(field, schema):
     """This validator is only used for form validation
     The data is extracted from the publisher form fields and transformed
     into a form that is expected for database storage:
-    "see_alsos":
+    "qualified_relations":
     [{"dataset_identifier": "443@statistisches-amt-kanton-zuerich"},
     {"dataset_identifier": "444@statistisches-amt-kanton-zuerich"},
     {"dataset_identifier": "10001@statistisches-amt-kanton-zuerich"}],

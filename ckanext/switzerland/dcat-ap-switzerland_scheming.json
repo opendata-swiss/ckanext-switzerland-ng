@@ -574,23 +574,16 @@
     },
     {
       "field_name": "see_alsos",
-      "validators": "harvest_list_of_dicts ogdch_validate_formfield_see_alsos",
+      "validators": "harvest_list_of_dicts ogdch_validate_formfield_qualified_relations",
       "output_validators": "multiple_text_output",
-      "form_snippet": null,
-      "display_snippet": "see_alsos.html",
-      "label": {
-        "en": "Related datasets",
-        "de": "Verwandte Datensätze",
-        "fr": "Jeux de données relationnels",
-        "it": "Set di dati relativi"
-      }
+      "form_snippet": null
     },
     {
       "field_name": "qualified_relation",
-      "validators": "harvest_list_of_dicts ogdch_validate_formfield_see_alsos",
+      "validators": "harvest_list_of_dicts ogdch_validate_formfield_qualified_relations",
       "output_validators": "multiple_text_output",
-      "form_snippet": "see_alsos.html",
-      "display_snippet": "see_alsos.html",
+      "form_snippet": "qualified_relations.html",
+      "display_snippet": "qualified_relations.html",
       "fieldgroup": {
         "en": "Related datasets",
         "de": "Verwandte Datensätze",
