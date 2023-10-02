@@ -431,7 +431,7 @@ def ogdch_validate_formfield_qualified_relations(field, schema):
                     qualified_relations_validated.append(
                         {
                             'relation': permalink,
-                            'had_role': "related",
+                            'had_role': "http://www.iana.org/assignments/relation/related",  # noqa
                         }
                     )
         if qualified_relations_validated:
