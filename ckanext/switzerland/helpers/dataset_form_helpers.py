@@ -214,7 +214,7 @@ def get_relations_from_form(data):
         for i in range(1, ADDITIONAL_FORM_ROW_LIMIT + 1):
             title = data.get('relation-title-' + str(i), '')
             url = data.get('relation-url-' + str(i), '')
-            if (title or url):
+            if title or url:
                 relations.append(
                     {'title': title,
                      'url': url})
