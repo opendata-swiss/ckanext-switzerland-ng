@@ -10,7 +10,7 @@ import json
 import ckan.plugins.toolkit as tk
 from ckan.common import _
 from ckanext.switzerland.helpers.frontend_helpers import (
-    get_frequency_name, get_dataset_by_permalink)
+    get_frequency_name, get_dataset_by_identifier, get_dataset_by_permalink)
 from ckanext.switzerland.helpers.localize_utils import (
     localize_by_language_order)
 from ckanext.switzerland.helpers.terms_of_use_utils import (
@@ -223,10 +223,13 @@ def get_relations_from_form(data):
 
 
 def ogdch_qualified_relations_form_helper(data):
-    """
-    sets the form field for qualified_relations
+    """Sets the form field for qualified_relations.
     """
     qualified_relations = _get_qualified_relations_from_storage(data)
+    # see_alsos is deprecated and the new field qualified_relations should be
+    # used for related datasets. Existing datasets might still have values for
+    # see_alsos.
+    qualified_relations.extend(_get_see_alsos_from_storage(data))
     if not qualified_relations:
         qualified_relations = get_qualified_relations_from_form(data)
 
@@ -240,14 +243,16 @@ def _get_qualified_relations_from_storage(data):
     """
     data is expected to be stored as:
     "qualified_relations":
-    [{"relation": "https://opendata.swiss/perma/443@statistisches-amt-kanton-zuerich", "had_role": "related"},
-    {"relation": "https://opendata.swiss/perma/444@statistisches-amt-kanton-zuerich", "had_role": "related"}]
+    [{
+        "relation": "https://opendata.swiss/perma/443@statistisches-amt-kanton-zuerich",  # noqa
+        "had_role": "related"
+    }]
     """
-    qualified_relations_storage = data.get('qualified_relations')
+    qualified_relations_storage = data.get('qualified_relation')
     qualified_relations_display = []
     if qualified_relations_storage:
         for qualified_relation in qualified_relations_storage:
-            permalink = qualified_relation['dataset_identifier']
+            permalink = qualified_relation['relation']
             if permalink:
                 try:
                     dataset_from_storage = get_dataset_by_permalink(permalink)
@@ -260,7 +265,38 @@ def _get_qualified_relations_from_storage(data):
                             dataset_from_storage.get('name')
                         )
         return qualified_relations_display
-    return None
+    return []
+
+
+def _get_see_alsos_from_storage(data):
+    """
+    data is expected to be stored as:
+    "see_alsos":
+    [{"dataset_identifier": "443@statistisches-amt-kanton-zuerich"},
+    {"dataset_identifier": "444@statistisches-amt-kanton-zuerich"},
+    {"dataset_identifier": "10001@statistisches-amt-kanton-zuerich"}],
+    """
+    see_alsos_storage = data.get('see_alsos')
+    log.warning(see_alsos_storage)
+    see_alsos_display = []
+    if see_alsos_storage:
+        log.warning(see_alsos_storage)
+        for see_also in see_alsos_storage:
+            identifier = see_also['dataset_identifier']
+            if identifier:
+                try:
+                    dataset_from_storage = get_dataset_by_identifier(
+                        identifier=identifier)
+                except Exception as e:
+                    log.error("Error {} occured while retrieving identifier {}"
+                              .format(e, identifier))
+                else:
+                    if dataset_from_storage:
+                        see_alsos_display.append(
+                            dataset_from_storage.get('name')
+                        )
+        return see_alsos_display
+    return []
 
 
 def get_qualified_relations_from_form(data):

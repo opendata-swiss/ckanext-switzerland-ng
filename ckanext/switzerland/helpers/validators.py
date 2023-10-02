@@ -392,8 +392,10 @@ def ogdch_validate_formfield_qualified_relations(field, schema):
     """This validator is only used for form validation
     The data is extracted from the publisher form fields and transformed
     into a form that is expected for database storage:
-    [{"relation": "https://opendata.swiss/perma/443@statistisches-amt-kanton-zuerich", "had_role": "related"},
-    {"relation": "https://opendata.swiss/perma/444@statistisches-amt-kanton-zuerich", "had_role": "related"}]
+    [{
+        "relation": "https://opendata.swiss/perma/443@statistisches-amt-kanton-zuerich",  # noqa
+        "had_role": "related"
+    }]
 
     This corresponds to the DCAT class dcat:Relationship, which has the
     properties dct:relation and dcat:hadRole.
@@ -402,7 +404,9 @@ def ogdch_validate_formfield_qualified_relations(field, schema):
         extras = data.get(FORM_EXTRAS)
         qualified_relations_validated = []
         if extras:
-            qualified_relations_from_form = get_qualified_relations_from_form(extras)
+            qualified_relations_from_form = get_qualified_relations_from_form(
+                extras
+            )
             if qualified_relations_from_form:
                 context = {}
                 for package_name in qualified_relations_from_form:
@@ -410,26 +414,30 @@ def ogdch_validate_formfield_qualified_relations(field, schema):
                         package = get_action('package_show')(
                             context, {'id': package_name}
                         )
-                        if not package.get('type') == 'dataset':
-                            raise df.Invalid(
-                                _('{} can not be chosen since it is a {}.'
-                                  .format(package_name, package.get('type')))
-                            )
-                        qualified_relations_validated.append(
-                            {
-                                'relation': package.get('identifier'),
-                                'had_role': "http://www.iana.org/assignments/relation/related"
-                            }
-                        )
                     except NotFound:
                         raise df.Invalid(
                             _('Dataset {} could not be found .'
                               .format(package_name))
                         )
+                    if not package.get('type') == 'dataset':
+                        raise df.Invalid(
+                            _('{} can not be chosen since it is a {}.'
+                              .format(package_name, package.get('type')))
+                        )
+                    permalink = "%s/perma/%s" % (
+                        tk.config.get('ckanext.switzerland.frontend_url'),
+                        package.get('identifier')
+                    )
+                    qualified_relations_validated.append(
+                        {
+                            'relation': permalink,
+                            'had_role': "related",
+                        }
+                    )
         if qualified_relations_validated:
             data[key] = json.dumps(qualified_relations_validated)
         elif not _jsondata_for_key_is_set(data, key):
-            data[key] = '{}'
+            data[key] = '[]'
 
     return validator
 
