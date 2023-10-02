@@ -248,7 +248,7 @@ def _get_qualified_relations_from_storage(data):
         "had_role": "related"
     }]
     """
-    qualified_relations_storage = data.get('qualified_relation')
+    qualified_relations_storage = data.get('qualified_relations')
     qualified_relations_display = []
     if qualified_relations_storage:
         for qualified_relation in qualified_relations_storage:
