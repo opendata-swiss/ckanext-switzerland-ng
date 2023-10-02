@@ -574,7 +574,7 @@
     },
     {
       "field_name": "see_alsos",
-      "validators": "harvest_list_of_dicts ogdch_validate_formfield_qualified_relations",
+      "validators": "scheming_required harvest_list_of_dicts",
       "output_validators": "multiple_text_output",
       "form_snippet": null
     },
