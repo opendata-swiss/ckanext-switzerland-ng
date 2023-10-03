@@ -895,7 +895,7 @@
       "field_name": "license",
       "preset": "select",
       "choices_helper": "ogdch_get_license_choices",
-      "validators": "scheming_required",
+      "validators": "ogdch_license_required",
       "required": true,
       "label": {
         "en": "License",

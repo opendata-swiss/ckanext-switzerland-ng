@@ -210,6 +210,16 @@ def ogdch_language(field, schema):
 
 
 @scheming_validator
+def ogdch_license_required(field, schema):
+    def validator(key, data, errors, context):
+        value = data[key]
+        if value is missing or value is None:
+            rights = data.get(key[:-1] + ('rights',))
+            data[key] = rights
+    return validator
+
+
+@scheming_validator
 def ogdch_unique_identifier(field, schema):
     def validator(key, data, errors, context):
         identifier = data.get(key[:-1] + ('identifier',))
