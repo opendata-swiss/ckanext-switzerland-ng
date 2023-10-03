@@ -277,10 +277,8 @@ def _get_see_alsos_from_storage(data):
     {"dataset_identifier": "10001@statistisches-amt-kanton-zuerich"}],
     """
     see_alsos_storage = data.get('see_alsos')
-    log.warning(see_alsos_storage)
     see_alsos_display = []
     if see_alsos_storage:
-        log.warning(see_alsos_storage)
         for see_also in see_alsos_storage:
             identifier = see_also['dataset_identifier']
             if identifier:
