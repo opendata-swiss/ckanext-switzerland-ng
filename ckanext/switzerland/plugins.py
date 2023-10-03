@@ -64,6 +64,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'multilingual_text_output': ogdch_validators.multilingual_text_output, # noqa
             'harvest_list_of_dicts': ogdch_validators.harvest_list_of_dicts,
             'ogdch_language': ogdch_validators.ogdch_language,
+            'ogdch_license_required': ogdch_validators.ogdch_license_required,
             'ogdch_unique_identifier': ogdch_validators.ogdch_unique_identifier, # noqa
             'ogdch_required_in_one_language': ogdch_validators.ogdch_required_in_one_language, # noqa
             'ogdch_validate_formfield_publisher': ogdch_validators.ogdch_validate_formfield_publisher,  # noqa
