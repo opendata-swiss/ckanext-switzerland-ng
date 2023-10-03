@@ -125,12 +125,11 @@ def _map_related_datasets(context, result):
             try:
                 related_dataset = tk.get_action('ogdch_dataset_by_identifier')(
                     context, {'identifier': item.get('dataset_identifier')})
-                if related_dataset:
-                    related_datasets.append({
-                        'title': related_dataset['title'],
-                        'name': related_dataset['name'],
-                        'dataset_identifier': related_dataset['identifier'],
-                    })
+                related_datasets.append({
+                    'title': related_dataset['title'],
+                    'name': related_dataset['name'],
+                    'dataset_identifier': related_dataset['identifier'],
+                })
             except (ValidationError, NotFound) as e:
                 log.info(
                     "Error getting related dataset with identifier %s: %s" %
@@ -141,12 +140,11 @@ def _map_related_datasets(context, result):
             try:
                 related_dataset = tk.get_action('ogdch_dataset_by_permalink')(
                     context, {'permalink': item.get('relation')})
-                if related_dataset:
-                    related_datasets.append({
-                        'title': related_dataset['title'],
-                        'name': related_dataset['name'],
-                        'dataset_identifier': related_dataset['identifier'],
-                    })
+                related_datasets.append({
+                    'title': related_dataset['title'],
+                    'name': related_dataset['name'],
+                    'dataset_identifier': related_dataset['identifier'],
+                })
             except (ValidationError, NotFound) as e:
                 log.info(
                     "Error getting related dataset with permalink %s: %s" %
