@@ -93,19 +93,7 @@ def ogdch_package_show(context, data_dict):
     if not result:
         raise NotFound
 
-    if result.get('see_alsos'):
-        for item in result.get('see_alsos'):
-            try:
-                related_dataset = tk.get_action('ogdch_dataset_by_identifier')(
-                    context, {'identifier': item.get('dataset_identifier')})
-                if related_dataset:
-                    item['title'] = related_dataset['title']
-                    item['name'] = related_dataset['name']
-            except (ValidationError, NotFound) as e:
-                log.info(
-                    "Error getting related dataset with identifier %s: %s" %
-                    (item.get('dataset_identifier'), e))
-                continue
+    _map_related_datasets(context, result)
 
     result['showcases'] = get_showcases_for_dataset(id=id)
 
@@ -122,6 +110,50 @@ def ogdch_package_show(context, data_dict):
     )
 
     return result
+
+
+def _map_related_datasets(context, result):
+    """Collate related datasets from both the see_alsos field and the
+    qualified_relations field, and get their name and title for display.
+
+    See_alsos is deprecated since DCAT-AP CH v2, and qualified_relations
+    replaces it, but older datasets will still have values for see_alsos.
+    """
+    related_datasets = []
+    if result.get('see_alsos'):
+        for item in result.get('see_alsos'):
+            try:
+                related_dataset = tk.get_action('ogdch_dataset_by_identifier')(
+                    context, {'identifier': item.get('dataset_identifier')})
+                if related_dataset:
+                    related_datasets.append({
+                        'title': related_dataset['title'],
+                        'name': related_dataset['name'],
+                        'dataset_identifier': related_dataset['identifier'],
+                    })
+            except (ValidationError, NotFound) as e:
+                log.info(
+                    "Error getting related dataset with identifier %s: %s" %
+                    (item.get('dataset_identifier'), e))
+                continue
+    if result.get('qualified_relations'):
+        for item in result.get('qualified_relations'):
+            try:
+                related_dataset = tk.get_action('ogdch_dataset_by_permalink')(
+                    context, {'permalink': item.get('relation')})
+                if related_dataset:
+                    related_datasets.append({
+                        'title': related_dataset['title'],
+                        'name': related_dataset['name'],
+                        'dataset_identifier': related_dataset['identifier'],
+                    })
+            except (ValidationError, NotFound) as e:
+                log.info(
+                    "Error getting related dataset with permalink %s: %s" %
+                    (item.get('relation'), e))
+                continue
+
+    result['related_datasets'] = related_datasets
 
 
 @side_effect_free
