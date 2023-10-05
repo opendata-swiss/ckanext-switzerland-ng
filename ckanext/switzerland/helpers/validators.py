@@ -67,6 +67,8 @@ def multilingual_text_output(value):
     Return stored json representation as a multilingual dict, if
     value is already a dict just pass it through.
     """
+    if isinstance(value, int):
+        return str(value)
     if isinstance(value, dict):
         return value
     return parse_json(value)
