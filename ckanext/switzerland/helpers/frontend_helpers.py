@@ -197,6 +197,13 @@ def get_dataset_by_identifier(identifier):
         return None
 
 
+def get_dataset_by_permalink(permalink):
+    parts = permalink.split('/perma/')
+    if len(parts) == 2:
+        return get_dataset_by_identifier(parts[1])
+    return None
+
+
 def get_readable_file_size(num, suffix='B'):
     if not num:
         return False

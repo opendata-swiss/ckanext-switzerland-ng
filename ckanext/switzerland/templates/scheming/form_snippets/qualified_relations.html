@@ -1,28 +1,28 @@
 {% import 'macros/form.html' as form %}
 
-{% set see_alsos_rows = h.ogdch_see_alsos_form_helper(data) %}
+{% set qualified_relations_rows = h.ogdch_qualified_relations_form_helper(data) %}
 {%- set attrs = {
     'data-module': 'autocomplete',
     'data-module-source': '/api/2/util/dataset/autocomplete?incomplete=?'} -%}
 
-{%- for row in see_alsos_rows -%}
+{%- for row in qualified_relations_rows -%}
   {% call form.input(
-    'see-also-' + row.index,
-    id='field-see-also-' + row.index,
+    'qualified-relation-' + row.index,
+    id='field-qualified-relation-' + row.index,
     label=h.scheming_language_text(field.label_form),
     placeholder=h.scheming_language_text(field.form_placeholder),
     value=row.data,
     attrs=attrs,
-    error=errors['seel_alsos'],
+    error=errors['qualified_relations'],
     classes=['control-full', row.css_class]
     ) %}
   {% endcall %}
   <h1 class="hidden-dataset-name">{{ row.data.name }}</h1>
 {%- endfor -%}
 {%- snippet 'scheming/form_snippets/help_text.html', field=field -%}
-<a data-module="ogdch_see_alsos_add_rows"
-      id="ogdch_see_alsos_add_row"
+<a data-module="ogdch_qualified_relations_add_rows"
+      id="ogdch_qualified_relations_add_row"
       class="btn btn-default ogdch-btn-add-row"
-      href="#ogdch_see_alsos_pagemark">
+      href="#ogdch_qualified_relations_pagemark">
   {{ h.scheming_language_text(field.add_row) }}
 </a>

@@ -15,7 +15,7 @@ from ckanext.scheming.helpers import scheming_field_choices
 from ckanext.scheming.validation import register_validator, scheming_validator
 from ckanext.switzerland.helpers.dataset_form_helpers import (
     get_contact_points_from_form, get_relations_from_form,
-    get_see_alsos_from_form, get_temporals_from_form)
+    get_qualified_relations_from_form, get_temporals_from_form)
 from ckanext.switzerland.helpers.localize_utils import parse_json
 
 log = logging.getLogger(__name__)
@@ -398,42 +398,56 @@ def ogdch_validate_formfield_relations(field, schema):
 
 
 @scheming_validator
-def ogdch_validate_formfield_see_alsos(field, schema):
+def ogdch_validate_formfield_qualified_relations(field, schema):
     """This validator is only used for form validation
     The data is extracted from the publisher form fields and transformed
     into a form that is expected for database storage:
-    "see_alsos":
-    [{"dataset_identifier": "443@statistisches-amt-kanton-zuerich"},
-    {"dataset_identifier": "444@statistisches-amt-kanton-zuerich"},
-    {"dataset_identifier": "10001@statistisches-amt-kanton-zuerich"}],
+    [{
+        "relation": "https://opendata.swiss/perma/443@statistisches-amt-kanton-zuerich",  # noqa
+        "had_role": "related"
+    }]
+
+    This corresponds to the DCAT class dcat:Relationship, which has the
+    properties dct:relation and dcat:hadRole.
     """
     def validator(key, data, errors, context):
         extras = data.get(FORM_EXTRAS)
-        see_alsos_validated = []
+        qualified_relations_validated = []
         if extras:
-            see_alsos_from_form = get_see_alsos_from_form(extras)
-            if see_alsos_from_form:
+            qualified_relations_from_form = get_qualified_relations_from_form(
+                extras
+            )
+            if qualified_relations_from_form:
                 context = {}
-                for package_name in see_alsos_from_form:
+                for package_name in qualified_relations_from_form:
                     try:
-                        package = get_action('package_show')(context, {'id': package_name})  # noqa
-                        if not package.get('type') == 'dataset':
-                            raise df.Invalid(
-                                _('{} can not be chosen since it is a {}.'
-                                  .format(package_name, package.get('type')))
-                            )
-                        see_alsos_validated.append(
-                            {'dataset_identifier': package.get('identifier')}
+                        package = get_action('package_show')(
+                            context, {'id': package_name}
                         )
                     except NotFound:
                         raise df.Invalid(
                             _('Dataset {} could not be found .'
                               .format(package_name))
                         )
-        if see_alsos_validated:
-            data[key] = json.dumps(see_alsos_validated)
+                    if not package.get('type') == 'dataset':
+                        raise df.Invalid(
+                            _('{} can not be chosen since it is a {}.'
+                              .format(package_name, package.get('type')))
+                        )
+                    permalink = "%s/perma/%s" % (
+                        tk.config.get('ckanext.switzerland.frontend_url'),
+                        package.get('identifier')
+                    )
+                    qualified_relations_validated.append(
+                        {
+                            'relation': permalink,
+                            'had_role': "http://www.iana.org/assignments/relation/related",  # noqa
+                        }
+                    )
+        if qualified_relations_validated:
+            data[key] = json.dumps(qualified_relations_validated)
         elif not _jsondata_for_key_is_set(data, key):
-            data[key] = '{}'
+            data[key] = '[]'
 
     return validator
 

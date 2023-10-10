@@ -10,7 +10,7 @@ import json
 import ckan.plugins.toolkit as tk
 from ckan.common import _
 from ckanext.switzerland.helpers.frontend_helpers import (
-    get_frequency_name, get_dataset_by_identifier)
+    get_frequency_name, get_dataset_by_identifier, get_dataset_by_permalink)
 from ckanext.switzerland.helpers.localize_utils import (
     localize_by_language_order)
 from ckanext.switzerland.helpers.terms_of_use_utils import (
@@ -214,7 +214,7 @@ def get_relations_from_form(data):
         for i in range(1, ADDITIONAL_FORM_ROW_LIMIT + 1):
             title = data.get('relation-title-' + str(i), '')
             url = data.get('relation-url-' + str(i), '')
-            if (title or url):
+            if title or url:
                 relations.append(
                     {'title': title,
                      'url': url})
@@ -222,18 +222,50 @@ def get_relations_from_form(data):
     return None
 
 
-def ogdch_see_alsos_form_helper(data):
+def ogdch_qualified_relations_form_helper(data):
+    """Sets the form field for qualified_relations.
     """
-    sets the form field for see_alsos
-    """
-    see_alsos = _get_see_alsos_from_storage(data)
-    if not see_alsos:
-        see_alsos = get_see_alsos_from_form(data)
+    qualified_relations = _get_qualified_relations_from_storage(data)
+    # see_alsos is deprecated and the new field qualified_relations should be
+    # used for related datasets. Existing datasets might still have values for
+    # see_alsos.
+    qualified_relations.extend(_get_see_alsos_from_storage(data))
+    if not qualified_relations:
+        qualified_relations = get_qualified_relations_from_form(data)
 
     rows = _build_rows_form_field(
         data_empty='',
-        data_list=see_alsos)
+        data_list=qualified_relations)
     return rows
+
+
+def _get_qualified_relations_from_storage(data):
+    """
+    data is expected to be stored as:
+    "qualified_relations":
+    [{
+        "relation": "https://opendata.swiss/perma/443@statistisches-amt-kanton-zuerich",  # noqa
+        "had_role": "related"
+    }]
+    """
+    qualified_relations_storage = data.get('qualified_relations')
+    qualified_relations_display = []
+    if qualified_relations_storage:
+        for qualified_relation in qualified_relations_storage:
+            permalink = qualified_relation['relation']
+            if permalink:
+                try:
+                    dataset_from_storage = get_dataset_by_permalink(permalink)
+                except Exception as e:
+                    log.error("Error {} occured while retrieving dataset with "
+                              "permalink {}".format(e, permalink))
+                else:
+                    if dataset_from_storage:
+                        qualified_relations_display.append(
+                            dataset_from_storage.get('name')
+                        )
+        return qualified_relations_display
+    return []
 
 
 def _get_see_alsos_from_storage(data):
@@ -262,16 +294,16 @@ def _get_see_alsos_from_storage(data):
                             dataset_from_storage.get('name')
                         )
         return see_alsos_display
-    return None
+    return []
 
 
-def get_see_alsos_from_form(data):
+def get_qualified_relations_from_form(data):
     if isinstance(data, dict):
-        see_alsos = [value.strip()
-                     for key, value in data.items()
-                     if key.startswith('see-also-')
-                     if value.strip() != '']
-        return see_alsos
+        qualified_relations = [value.strip()
+                               for key, value in data.items()
+                               if key.startswith('qualified-relation-')
+                               if value.strip() != '']
+        return qualified_relations
     return None
 
 

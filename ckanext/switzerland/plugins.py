@@ -70,7 +70,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_validate_formfield_publisher': ogdch_validators.ogdch_validate_formfield_publisher,  # noqa
             'ogdch_validate_formfield_contact_points': ogdch_validators.ogdch_validate_formfield_contact_points,  # noqa
             'ogdch_validate_formfield_relations': ogdch_validators.ogdch_validate_formfield_relations,  # noqa
-            'ogdch_validate_formfield_see_alsos': ogdch_validators.ogdch_validate_formfield_see_alsos,  # noqa
+            'ogdch_validate_formfield_qualified_relations': ogdch_validators.ogdch_validate_formfield_qualified_relations,  # noqa
             'ogdch_validate_temporals': ogdch_validators.ogdch_validate_temporals,  # noqa
             'ogdch_fluent_tags': ogdch_validators.ogdch_fluent_tags,
             'ogdch_temp_scheming_choices': ogdch_validators.ogdch_temp_scheming_choices,  # noqa
@@ -159,6 +159,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'get_terms_of_use_icon': ogdch_frontend_helpers.get_terms_of_use_icon, # noqa
             'get_dataset_terms_of_use': ogdch_frontend_helpers.get_dataset_terms_of_use, # noqa
             'get_dataset_by_identifier': ogdch_frontend_helpers.get_dataset_by_identifier, # noqa
+            'get_dataset_by_permalink': ogdch_frontend_helpers.get_dataset_by_permalink, # noqa
             'get_readable_file_size': ogdch_frontend_helpers.get_readable_file_size, # noqa
             'get_piwik_config': ogdch_frontend_helpers.get_piwik_config,
             'ogdch_localised_number': ogdch_frontend_helpers.ogdch_localised_number, # noqa
@@ -179,7 +180,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_publisher_form_helper': ogdch_dataset_form_helpers.ogdch_publisher_form_helper,  # noqa
             'ogdch_contact_points_form_helper': ogdch_dataset_form_helpers.ogdch_contact_points_form_helper,  # noqa
             'ogdch_relations_form_helper': ogdch_dataset_form_helpers.ogdch_relations_form_helper,  # noqa
-            'ogdch_see_alsos_form_helper': ogdch_dataset_form_helpers.ogdch_see_alsos_form_helper,  # noqa
+            'ogdch_qualified_relations_form_helper': ogdch_dataset_form_helpers.ogdch_qualified_relations_form_helper,  # noqa
             'ogdch_date_form_helper': ogdch_dataset_form_helpers.ogdch_date_form_helper,  # noqa
             'ogdch_temporals_form_helper': ogdch_dataset_form_helpers.ogdch_temporals_form_helper,  # noqa
             'ogdch_dataset_title_form_helper': ogdch_dataset_form_helpers.ogdch_dataset_title_form_helper,  # noqa
