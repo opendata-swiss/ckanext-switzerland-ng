@@ -226,6 +226,14 @@ def ogdch_dataset_by_identifier(context, data_dict):
         raise NotFound
 
 
+def ogdch_dataset_by_permalink(context, data_dict):
+    permalink = data_dict.pop('permalink', None)
+    parts = permalink.split('/perma/')
+    if len(parts) == 2:
+        return ogdch_dataset_by_identifier(context, {'identifier': parts[1]})
+    return None
+
+
 @side_effect_free
 def ogdch_autosuggest(context, data_dict):
     q = get_or_bust(data_dict, 'q')

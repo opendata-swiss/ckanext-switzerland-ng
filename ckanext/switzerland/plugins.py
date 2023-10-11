@@ -128,6 +128,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_counts': ogdch_logic.ogdch_counts,
             'ogdch_dataset_terms_of_use': ogdch_logic.ogdch_dataset_terms_of_use, # noqa
             'ogdch_dataset_by_identifier': ogdch_logic.ogdch_dataset_by_identifier, # noqa
+            'ogdch_dataset_by_permalink': ogdch_logic.ogdch_dataset_by_permalink, # noqa
             'ogdch_content_headers': ogdch_logic.ogdch_content_headers,
             'ogdch_autosuggest': ogdch_logic.ogdch_autosuggest,
             'ogdch_package_show': ogdch_logic.ogdch_package_show,
