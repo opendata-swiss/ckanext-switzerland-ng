@@ -149,6 +149,9 @@ def _map_related_datasets(context, result):
                 log.info(
                     "Error getting related dataset with permalink %s: %s" %
                     (item.get('relation'), e))
+                related_datasets.append({
+                    'dataset_identifier': item.get('relation'),
+                })
                 continue
 
     result['related_datasets'] = related_datasets
@@ -231,7 +234,8 @@ def ogdch_dataset_by_permalink(context, data_dict):
     parts = permalink.split('/perma/')
     if len(parts) == 2:
         return ogdch_dataset_by_identifier(context, {'identifier': parts[1]})
-    return None
+
+    raise NotFound
 
 
 @side_effect_free
