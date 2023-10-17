@@ -32,6 +32,7 @@ organizations = [{'children': [],
 
 organization_title = u'{"fr": "Swisstopo FR", "de": "Swisstopo DE", "en": "Swisstopo EN", "it": "Swisstopo IT"}'  # noqa
 
+
 class TestHelpers(unittest.TestCase):
     def test_get_localized_value_from_dict(self):
         lang_dict = {
@@ -55,18 +56,21 @@ class TestHelpers(unittest.TestCase):
         self.assertEquals(lang_dict['de'], result)
 
     def test_parse_json_error_and_default_value(self):
-        """if an error occurs the value should be returned as is"""
+        """if an error occurs the default value should be returned"""
         value = u"{Hallo"
         default_value = "Hello world"
         self.assertEqual(ogdch_localize_utils.parse_json(value, default_value=default_value), default_value)
 
     def test_parse_json_with_error(self):
-        """if an error occurs the default value should be returned"""
+        """if an error occurs the value should be returned as is"""
         value = u"{Hallo"
         self.assertEqual(ogdch_localize_utils.parse_json(value), value)
 
     def test_parse_json_without_error(self):
-        """if an error occurs the default value should be returned"""
         value = '{"de": "Hallo", "it": "okay"}'
         value_as_dict = {"de": "Hallo", "it":"okay"}
         self.assertEqual(ogdch_localize_utils.parse_json(value), value_as_dict)
+
+    def test_parse_json_with_int_value(self):
+        value = 6
+        self.assertEqual(ogdch_localize_utils.parse_json(value), str(value))
