@@ -21,18 +21,20 @@ def get_language_priorities():
 
 
 def parse_json(value, default_value=None):
+    """If the value is a json string, return a dict.
+    Otherwise, return the value.
+    """
     try:
-        return json.loads(value)
+        json_value = json.loads(value)
+        if isinstance(json_value, int):
+            # If the value is a string with a number, e.g. "5", json.loads will
+            # convert it into an int, but we want the original string.
+            return value
+        return json_value
     except (ValueError, TypeError, AttributeError):
         if default_value is not None:
             return default_value
 
-        # The json may already have been parsed and we have the value for the
-        # language already.
-        if isinstance(value, int):
-            # If the value is a number, it has been converted into an int - but
-            # we want a string here.
-            return str(value)
         return value
 
 
