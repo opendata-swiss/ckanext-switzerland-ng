@@ -63,8 +63,7 @@ def multiple_text(field, schema):
 
 
 def multilingual_text_output(value):
-    """
-    Return stored json representation as a multilingual dict, if
+    """Return stored json representation as a multilingual dict. If
     value is already a dict just pass it through.
     """
     if isinstance(value, dict):
