@@ -71,6 +71,6 @@ class TestHelpers(unittest.TestCase):
         value_as_dict = {"de": "Hallo", "it":"okay"}
         self.assertEqual(ogdch_localize_utils.parse_json(value), value_as_dict)
 
-    def test_parse_json_with_int_value(self):
-        value = 6
-        self.assertEqual(ogdch_localize_utils.parse_json(value), str(value))
+    def test_parse_json_number_string(self):
+        value = "6"
+        self.assertEqual(ogdch_localize_utils.parse_json(value), value)
