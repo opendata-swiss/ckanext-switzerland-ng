@@ -16,6 +16,7 @@ from ckanext.scheming.validation import register_validator, scheming_validator
 from ckanext.switzerland.helpers.dataset_form_helpers import (
     get_contact_points_from_form, get_relations_from_form,
     get_qualified_relations_from_form, get_temporals_from_form)
+from ckanext.switzerland.helpers.frontend_helpers import get_permalink
 from ckanext.switzerland.helpers.localize_utils import parse_json
 
 log = logging.getLogger(__name__)
@@ -433,10 +434,7 @@ def ogdch_validate_formfield_qualified_relations(field, schema):
                             _('{} can not be chosen since it is a {}.'
                               .format(package_name, package.get('type')))
                         )
-                    permalink = "%s/perma/%s" % (
-                        tk.config.get('ckanext.switzerland.frontend_url'),
-                        package.get('identifier')
-                    )
+                    permalink = get_permalink(package.get('identifier'))
                     qualified_relations_validated.append(
                         {
                             'relation': permalink,
