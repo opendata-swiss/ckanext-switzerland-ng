@@ -127,7 +127,7 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
                     validated_dict['description'], lang_code)
             search_data['keywords_' + lang_code] = \
                 ogdch_loc_utils.get_localized_value_from_dict(
-                   validated_dict['keywords'], lang_code)
+                    validated_dict['keywords'], lang_code)
             search_data['organization_' + lang_code] = \
                 ogdch_loc_utils.get_localized_value_from_dict(
                     validated_dict['organization']['title'], lang_code)
