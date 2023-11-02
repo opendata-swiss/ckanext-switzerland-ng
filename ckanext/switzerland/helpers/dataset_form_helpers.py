@@ -245,7 +245,7 @@ def _get_qualified_relations_from_storage(data):
     "qualified_relations":
     [{
         "relation": "https://opendata.swiss/perma/443@statistisches-amt-kanton-zuerich",  # noqa
-        "had_role": "related"
+        "had_role": "http://www.iana.org/assignments/relation/related"
     }]
     """
     qualified_relations_storage = data.get('qualified_relations')

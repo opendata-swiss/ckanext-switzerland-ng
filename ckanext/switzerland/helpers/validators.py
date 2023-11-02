@@ -403,7 +403,7 @@ def ogdch_validate_formfield_qualified_relations(field, schema):
     into a form that is expected for database storage:
     [{
         "relation": "https://opendata.swiss/perma/443@statistisches-amt-kanton-zuerich",  # noqa
-        "had_role": "related"
+        "had_role": "http://www.iana.org/assignments/relation/related"
     }]
 
     This corresponds to the DCAT class dcat:Relationship, which has the
