@@ -149,7 +149,7 @@ def harvest_list_of_dicts(field, schema):
             del data_dict[key[0]]
             data[HARVEST_JUNK] = df.flatten_dict(data_dict)
         except KeyError:
-            pass
+            data[key] = json.dumps([])
 
     return validator
 
