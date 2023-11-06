@@ -89,4 +89,4 @@ class TestOgdchUriValidator(object):
     def test_json_parsing_error(self):
         data = {"my_uri": "http://www.example.com"}
         with assert_raises(Invalid):
-            self.validator("my_uri", data, {}, None
+            self.validator("my_uri", data, {}, None)

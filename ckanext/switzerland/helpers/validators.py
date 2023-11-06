@@ -2,7 +2,6 @@ import json
 import logging
 import re
 from urlparse import urlparse
-import urllib2
 
 import ckan.lib.navl.dictization_functions as df
 import ckan.plugins.toolkit as tk
@@ -614,7 +613,8 @@ def ogdch_validate_uri(field, schema):
                 if uri_pattern.match(value):
                     return True
                 else:
-                    log.info(_('Value "%s" does not match the URI pattern') % value)
+                    log.info(_('Value "%s" does not match the URI pattern')
+                             % value)
                     return False
             else:
                 log.info(_('Key "%s" not found in JSON data') % key)
