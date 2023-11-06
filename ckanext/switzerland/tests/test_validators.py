@@ -46,9 +46,10 @@ class TestOgdchUrlListValidator(object):
 
 class TestOgdchUriValidator(object):
     def setUp(self):
-        self.validator = get_validator("ogdch_validate_uri",
-                                       {'field': None, 'schema': {}})
-
+        self.validator = get_validator("ogdch_validate_uri")(
+            'field', {}
+        )
+        
     # positive tests
     def test_valid_http_uri(self):
         data = {"my_uri": "http://www.example.com"}
