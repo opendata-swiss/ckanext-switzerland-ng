@@ -998,6 +998,43 @@
         "fr": "Une page ou un document sur cette ressource.",
         "it": "Una pagina o un documento su questa risorsa."
       }
+    },
+    {
+      "field_name": "access_services",
+      "preset": "multiple_text",
+      "display_snippet": "multiple_urls.html",
+      "validators": "scheming_required multiple_text ogdch_validate_list_of_urls",
+      "output_validator": "scheming_load_json",
+      "fieldgroup": {
+        "en": "Access service",
+        "de": "Zugangsservice",
+        "fr": "Service d'accès",
+        "it": "Servizio di accesso"
+      },
+      "label": {
+        "en": "Access service",
+        "de": "Zugangsservice",
+        "fr": "Service d'accès",
+        "it": "Servizio di accesso"
+      },
+      "form_placeholder_url": {
+        "en": "Access service URL",
+        "de": "Zugangsservice-URL",
+        "fr": "URL du service d'accès",
+        "it": "URL del servizio di accesso"
+      },
+      "add_row": {
+        "en": "Add another documentation URL",
+        "de": "Eine weitere Zugangsservice-URL hinzufügen",
+        "fr": "Ajouter une autre URL de service d'accès",
+        "it": "Aggiungi un altro URL del servizio di accesso"
+      },
+      "help_text": {
+        "de": "A data service that gives access to this resource.",
+        "en": "Ein Datendienst, der Zugriff auf diese Ressource ermöglicht.",
+        "fr": "Un service de données qui donne accès à cette ressource.",
+        "it": "Un servizio dati che dà accesso a questa risorsa."
+      }
     }
   ]
 }
