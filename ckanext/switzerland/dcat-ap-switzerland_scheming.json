@@ -232,6 +232,24 @@
       }
     },
     {
+      "field_name": "conforms_to",
+      "display_snippet": "multiple_urls.html",
+      "validators": "scheming_required ogdch_validate_url multiple_text ogdch_validate_list_of_urls",
+      "output_validator": "multiple_text_output",
+      "label": {
+        "en": "Conformity",
+        "de": "Konformität",
+        "fr": "Conformité",
+        "it": "Conformità"
+      },
+      "help_text": {
+        "en": "Implementing rule (eg. INSPIRE) or other specification URLs e.g: https://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0.",
+        "de": "Umsetzungsregel (z.B. INSPIRE) oder andere Spezifikations-URLs z.B: https://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0.",
+        "fr": "Règle de mise en œuvre (par exemple INSPIRE) ou d'autres URL de spécifications, par exemple: https://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0.",
+        "it": "Regola di implementazione (ad esempio INSPIRE) o altre URL di specifiche, ad esempio: https://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0."
+      }
+    },
+    {
       "field_name": "accrual_periodicity",
       "preset": "select",
       "display_snippet": "periodicity.html",
