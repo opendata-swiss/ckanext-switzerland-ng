@@ -234,7 +234,7 @@
     {
       "field_name": "conforms_to",
       "display_snippet": "multiple_urls.html",
-      "validators": "scheming_required ogdch_validate_url multiple_text ogdch_validate_list_of_urls",
+      "validators": "scheming_required ogdch_validate_uri multiple_text",
       "output_validator": "multiple_text_output",
       "label": {
         "en": "Conformity",

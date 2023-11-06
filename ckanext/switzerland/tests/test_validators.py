@@ -44,27 +44,49 @@ class TestOgdchUrlListValidator(object):
         assert_equals([u"Provided URL 'foobar' is not valid"], errors[key])
 
 
-class TestOgdchUrlValidator(object):
+class TestOgdchUriValidator(object):
     def setUp(self):
-        self.validator = get_validator("ogdch_validate_url",
+        self.validator = get_validator("ogdch_validate_uri",
                                        {'field': None, 'schema': {}})
 
-    def test_valid_http_url(self):
-        data = {"my_url": "http://www.example.com"}
-        result = self.validator("my_url", data, {}, None)
+    # positive tests
+    def test_valid_http_uri(self):
+        data = {"my_uri": "http://www.example.com"}
+        result = self.validator("my_uri", data, {}, None)
         assert_true(result)
 
-    def test_valid_https_url(self):
-        data = {"my_url": "https://www.example.com"}
-        result = self.validator("my_url", data, {}, None)
+    def test_valid_https_uri(self):
+        data = {"my_uri": "https://www.example.com"}
+        result = self.validator("my_uri", data, {}, None)
         assert_true(result)
 
-    def test_invalid_url(self):
-        data = {"my_url": "not_a_url"}
-        result = self.validator("my_url", data, {}, None)
+    def test_valid_generic_uri(self):
+        data = {"my_uri": "ftp://example.com"}
+        result = self.validator("my_uri", data, {}, None)
+        assert_true(result)
+
+    # negative tests
+    def test_invalid_uri(self):
+        data = {"my_uri": "not_a_uri"}
+        with assert_raises(Invalid):
+            self.validator("my_uri", data, {}, None)
+
+    def test_uri_not_accessible(self):
+        data = {"my_uri": "ftp://nonexistenturl12345.com"}
+        result = self.validator("my_uri", data, {}, None)
         assert_false(result)
 
-    def test_url_not_accessible(self):
-        data = {"my_url": "http://nonexistenturl12345.com"}
-        result = self.validator("my_url", data, {}, None)
+    def test_missing_uri(self):
+        data = {"my_uri": ""}
+        result = self.validator("my_uri", data, {}, None)
         assert_false(result)
+
+    def test_missing_key(self):
+        data = {}
+        result = self.validator("my_uri", data, {}, None)
+        assert_false(result)
+
+    def test_json_parsing_error(self):
+        data = {"my_uri": "http://www.example.com"}
+        with assert_raises(Invalid):
+            self.validator("my_uri", data, {}, None

@@ -593,8 +593,8 @@ def ogdch_validate_list_of_urls(field, schema):
 
 
 @scheming_validator
-def ogdch_validate_url(field, schema):
-    """Validates that given value is an url.
+def ogdch_validate_uri(field, schema):
+    """Validates that given value is an URI.
     """
     def validator(key, data, errors, context):
         # if there was an error before calling our validator
@@ -602,8 +602,8 @@ def ogdch_validate_url(field, schema):
         if errors[key]:
             return
 
-        # regular expression pattern to match both HTTP and HTTPS URLs
-        url_pattern = re.compile(r'https?://\S+')
+        # regular expression pattern to match a generic URI
+        uri_pattern = re.compile(r'^[a-zA-Z][a-zA-Z0-9+.-]*:.*')
 
         try:
             if key in data:
@@ -611,16 +611,10 @@ def ogdch_validate_url(field, schema):
                 if value is missing or not value:
                     return value
 
-                if url_pattern.match(value):
-                    # check if the URL is accessible
-                    try:
-                        response = urllib2.urlopen(value)
-                        return True
-                    except urllib2.URLError:
-                        log.info(_('Provided URL "%s" is not accessible') % value)
-                        return False
+                if uri_pattern.match(value):
+                    return True
                 else:
-                    log.info(_('Value "%s" does not match the URL pattern') % value)
+                    log.info(_('Value "%s" does not match the URI pattern') % value)
                     return False
             else:
                 log.info(_('Key "%s" not found in JSON data') % key)
