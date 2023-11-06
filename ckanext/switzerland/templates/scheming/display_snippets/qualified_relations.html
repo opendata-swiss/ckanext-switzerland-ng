@@ -1,4 +1,5 @@
 {%- set qualified_relations = data[field.field_name] -%}
+{%- set see_alsos = data["see_alsos"] -%}
 <ul>
 {% for qualified_relation in qualified_relations %}
   {% if qualified_relation and qualified_relation.relation %}
@@ -7,6 +8,16 @@
       <li>{{ h.link_to(related_dataset.title, h.url_for('dataset_read', id=related_dataset.name)) }}</li>
     {% else %}
       <li><a href="{{ qualified_relation.relation }}">{{ qualified_relation.relation }}</a></li>
+    {% endif %}
+  {% endif %}
+{% endfor %}
+{% for see_also in see_alsos %}
+  {% if see_also and see_also.dataset_identifier %}
+    {% set related_dataset = h.get_dataset_by_identifier(see_also.dataset_identifier) %}
+    {% if related_dataset %}
+      <li>{{ h.link_to(related_dataset.title, h.url_for('dataset_read', id=related_dataset.name)) }}</li>
+    {% else %}
+      <li><a href="{{ see_also.relation }}">{{ see_also.dataset_identifier }}</a></li>
     {% endif %}
   {% endif %}
 {% endfor %}
