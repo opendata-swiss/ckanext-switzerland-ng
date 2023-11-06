@@ -3,7 +3,7 @@ import json
 
 from ckan.lib.navl.dictization_functions import Invalid
 from ckan.plugins.toolkit import get_validator
-from nose.tools import assert_equals, assert_raises
+from nose.tools import assert_equals, assert_raises, assert_true, assert_false
 
 
 class TestOgdchUrlListValidator(object):
@@ -42,3 +42,29 @@ class TestOgdchUrlListValidator(object):
 
         assert_equals(value, data[key])
         assert_equals([u"Provided URL 'foobar' is not valid"], errors[key])
+
+
+class TestOgdchUrlValidator(object):
+    def setUp(self):
+        self.validator = get_validator("ogdch_validate_url",
+                                       {'field': None, 'schema': {}})
+
+    def test_valid_http_url(self):
+        data = {"my_url": "http://www.example.com"}
+        result = self.validator("my_url", data, {}, None)
+        assert_true(result)
+
+    def test_valid_https_url(self):
+        data = {"my_url": "https://www.example.com"}
+        result = self.validator("my_url", data, {}, None)
+        assert_true(result)
+
+    def test_invalid_url(self):
+        data = {"my_url": "not_a_url"}
+        result = self.validator("my_url", data, {}, None)
+        assert_false(result)
+
+    def test_url_not_accessible(self):
+        data = {"my_url": "http://nonexistenturl12345.com"}
+        result = self.validator("my_url", data, {}, None)
+        assert_false(result)

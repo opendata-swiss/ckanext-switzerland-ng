@@ -2,6 +2,7 @@ import json
 import logging
 import re
 from urlparse import urlparse
+import urllib2
 
 import ckan.lib.navl.dictization_functions as df
 import ckan.plugins.toolkit as tk
@@ -587,5 +588,45 @@ def ogdch_validate_list_of_urls(field, schema):
                 errors[key].append("Provided URL '%s' is not valid" % url)
 
         data[key] = json.dumps(urls)
+
+    return validator
+
+
+@scheming_validator
+def ogdch_validate_url(field, schema):
+    """Validates that given value is an url.
+    """
+    def validator(key, data, errors, context):
+        # if there was an error before calling our validator
+        # don't bother with our validation
+        if errors[key]:
+            return
+
+        # regular expression pattern to match both HTTP and HTTPS URLs
+        url_pattern = re.compile(r'https?://\S+')
+
+        try:
+            if key in data:
+                value = data[key]
+                if value is missing or not value:
+                    return value
+
+                if url_pattern.match(value):
+                    # check if the URL is accessible
+                    try:
+                        response = urllib2.urlopen(value)
+                        return True
+                    except urllib2.URLError:
+                        log.info(_('Provided URL "%s" is not accessible') % value)
+                        return False
+                else:
+                    log.info(_('Value "%s" does not match the URL pattern') % value)
+                    return False
+            else:
+                log.info(_('Key "%s" not found in JSON data') % key)
+                return False
+        except (json.JSONDecodeError, TypeError, ValueError):
+            errors[key].append("JSON parsing error: '%s'" % value)
+            return value
 
     return validator
