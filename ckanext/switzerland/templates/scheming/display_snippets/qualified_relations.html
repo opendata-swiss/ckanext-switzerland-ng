@@ -17,7 +17,7 @@
     {% if related_dataset %}
       <li>{{ h.link_to(related_dataset.title, h.url_for('dataset_read', id=related_dataset.name)) }}</li>
     {% else %}
-      <li><a href="{{ see_also.relation }}">{{ see_also.dataset_identifier }}</a></li>
+      <li>{{ see_also.dataset_identifier }}</li>
     {% endif %}
   {% endif %}
 {% endfor %}
