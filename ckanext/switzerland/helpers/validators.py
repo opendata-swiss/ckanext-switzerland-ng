@@ -592,8 +592,8 @@ def ogdch_validate_list_of_urls(field, schema):
 
 
 @scheming_validator
-def ogdch_validate_uri(field, schema):
-    """Validates that given value is an URI.
+def ogdch_validate_list_of_uris(field, schema):
+    """Validates each URI in a list (stored as JSON).
     """
     def validator(key, data, errors, context):
         # if there was an error before calling our validator
@@ -601,26 +601,25 @@ def ogdch_validate_uri(field, schema):
         if errors[key]:
             return
 
-        # regular expression pattern to match a generic URI
-        uri_pattern = re.compile(r'^[a-zA-Z][a-zA-Z0-9+.-]*:.*')
+        value = data[key]
+        if value is missing or not value:
+            return value
 
         try:
-            if key in data:
-                value = data[key]
-                if value is missing or not value:
-                    return value
-
-                if uri_pattern.match(value):
-                    return True
-                else:
-                    log.info(_('Value "%s" does not match the URI pattern')
-                             % value)
-                    return False
-            else:
-                log.info(_('Key "%s" not found in JSON data') % key)
-                return False
-        except (json.JSONDecodeError, TypeError, ValueError):
-            errors[key].append("JSON parsing error: '%s'" % value)
+            uris = json.loads(value)
+        except (TypeError, ValueError):
+            errors[key].append("Error parsing string as JSON: '%s'" % value)
             return value
+
+        # Get rid of empty strings
+        uris = [uri for uri in uris if uri]
+
+        for uri in uris:
+            result = urlparse(uri)
+            invalid = not result.scheme or not result.netloc
+            if invalid:
+                errors[key].append("Provided URI '%s' is not valid" % uri)
+
+        data[key] = json.dumps(uris)
 
     return validator

@@ -3,7 +3,7 @@ import json
 
 from ckan.lib.navl.dictization_functions import Invalid
 from ckan.plugins.toolkit import get_validator
-from nose.tools import assert_equals, assert_raises, assert_true, assert_false
+from nose.tools import assert_equals, assert_raises
 
 
 class TestOgdchUrlListValidator(object):
@@ -44,50 +44,55 @@ class TestOgdchUrlListValidator(object):
         assert_equals([u"Provided URL 'foobar' is not valid"], errors[key])
 
 
-class TestOgdchUriValidator(object):
+class TestOgdchUriListValidator(object):
     def setUp(self):
-        self.validator = get_validator("ogdch_validate_uri")(
+        self.validator = get_validator("ogdch_validate_list_of_uris")(
             'field', {}
         )
-        
+
     # positive tests
-    def test_valid_http_uri(self):
-        data = {"my_uri": "http://www.example.com"}
-        result = self.validator("my_uri", data, {}, None)
-        assert_true(result)
+    def test_validate_uri_list_string(self):
+        value = '["http://example.com/1", "https://example.com/2", "ftp://example.com"]'
+        key = "conforms_to"
+        data = {
+            key: value,
+        }
+        errors = {
+            key: [],
+        }
+        self.validator(key, data, errors, {})
 
-    def test_valid_https_uri(self):
-        data = {"my_uri": "https://www.example.com"}
-        result = self.validator("my_uri", data, {}, None)
-        assert_true(result)
-
-    def test_valid_generic_uri(self):
-        data = {"my_uri": "ftp://example.com"}
-        result = self.validator("my_uri", data, {}, None)
-        assert_true(result)
+        assert_equals(value, data[key])
+        assert_equals([], errors[key])
 
     # negative tests
-    def test_invalid_uri(self):
-        data = {"my_uri": "not_a_uri"}
-        with assert_raises(Invalid):
-            self.validator("my_uri", data, {}, None)
+    def test_invalid_uri_list_string(self):
+        value = '["invaliduri", "ftp://example.com"]'
+        key = "conforms_to"
+        data = {
+            key: value,
+        }
+        errors = {
+            key: [],
+        }
+        self.validator(key, data, errors, {})
 
-    def test_uri_not_accessible(self):
-        data = {"my_uri": "ftp://nonexistenturl12345.com"}
-        result = self.validator("my_uri", data, {}, None)
-        assert_false(result)
+        assert_equals([], data[key])
+        assert "invaliduri" in errors[key][0]
+        assert "ftp://example.com" in errors[key][1]
 
-    def test_missing_uri(self):
-        data = {"my_uri": ""}
-        result = self.validator("my_uri", data, {}, None)
-        assert_false(result)
+    def test_empty_uri_list_string(self):
+        value = '["", ""]'
+        key = "conforms_to"
+        data = {
+            key: value,
+        }
+        errors = {
+            key: [],
+        }
+        self.validator(key, data, errors, {})
 
-    def test_missing_key(self):
-        data = {}
-        result = self.validator("my_uri", data, {}, None)
-        assert_false(result)
+        assert_equals('[]', data[key])
+        assert_equals([], errors[key])
 
-    def test_json_parsing_error(self):
-        data = {"my_uri": "http://www.example.com"}
-        with assert_raises(Invalid):
-            self.validator("my_uri", data, {}, None)
+
