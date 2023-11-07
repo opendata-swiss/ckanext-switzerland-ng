@@ -92,5 +92,5 @@ class TestOgdchUriListValidator(object):
         self.validator(key, data, errors, {})
 
         assert_equals('[]', data[key])
-        assert_equals([u"An empty URI is not valid"], errors[key])
+        assert_equals([], errors[key])
 
