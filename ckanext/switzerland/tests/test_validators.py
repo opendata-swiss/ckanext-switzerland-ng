@@ -77,9 +77,8 @@ class TestOgdchUriListValidator(object):
         }
         self.validator(key, data, errors, {})
 
-        assert_equals([], data[key])
-        assert "invaliduri" in errors[key][0]
-        assert "ftp://example.com" in errors[key][1]
+        assert_equals(value, data[key])
+        assert_equals([u"Provided URI 'invaliduri' is not valid"], errors[key])
 
     def test_empty_uri_list_string(self):
         value = '["", ""]'
@@ -93,6 +92,5 @@ class TestOgdchUriListValidator(object):
         self.validator(key, data, errors, {})
 
         assert_equals('[]', data[key])
-        assert_equals([], errors[key])
-
+        assert_equals([u"An empty URI is not valid"], errors[key])
 
