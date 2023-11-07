@@ -250,16 +250,16 @@
         "it": "Conformità"
       },
       "form_placeholder_url": {
-        "en": "Url",
-        "de": "Url",
-        "fr": "Url",
-        "it": "Url"
+        "en": "URI",
+        "de": "URI",
+        "fr": "URI",
+        "it": "URI"
       },
       "add_row": {
-        "en": "Add another conformity URL",
-        "de": "Eine weitere Konformität-URL hinzufügen",
-        "fr": "Ajouter une autre conformité URL",
-        "it": "Aggiungere un altro URL conformità"
+        "en": "Add another conformity URI",
+        "de": "Eine weitere Konformität-URI hinzufügen",
+        "fr": "Ajouter une autre conformité URI",
+        "it": "Aggiungere un altro URI conformità"
       },
       "help_text": {
         "en": "Implementing rule (eg. INSPIRE) or other specification URLs e.g: https://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0.",
