@@ -1,6 +1,10 @@
 {%- set values = data[field.field_name] -%}
-<ul>
-    {%- for url in values -%}
-    <li><a href="{{ url }}">{{ url }}</a></li>
-    {%- endfor -%}
-</ul>
+{% if values %}
+    <ul>
+        {%- for url in values -%}
+        <li><a href="{{ url }}">{{ url }}</a></li>
+        {%- endfor -%}
+    </ul>
+{% else %}
+-
+{% endif %}
