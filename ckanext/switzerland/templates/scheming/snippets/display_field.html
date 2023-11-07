@@ -16,12 +16,10 @@
   {%- set display_snippet = 'scheming/display_snippets/' + display_snippet -%}
 {%- endif -%}
 
-{%- if field.field_name in data -%}
-  {%- snippet display_snippet,
-    field=field,
-    data=data,
-    errors=errors,
-    entity_type=entity_type,
-    object_type=object_type
-  -%}
-{%- endif -%}
+{%- snippet display_snippet,
+  field=field,
+  data=data,
+  errors=errors,
+  entity_type=entity_type,
+  object_type=object_type
+-%}
