@@ -589,3 +589,37 @@ def ogdch_validate_list_of_urls(field, schema):
         data[key] = json.dumps(urls)
 
     return validator
+
+
+@scheming_validator
+def ogdch_validate_list_of_uris(field, schema):
+    """Validates each URI in a list (stored as JSON).
+    """
+    def validator(key, data, errors, context):
+        # if there was an error before calling our validator
+        # don't bother with our validation
+        if errors[key]:
+            return
+
+        value = data[key]
+        if value is missing or not value:
+            return value
+
+        try:
+            uris = json.loads(value)
+        except (TypeError, ValueError):
+            errors[key].append("Error parsing string as JSON: '%s'" % value)
+            return value
+
+        # Get rid of empty strings
+        uris = [uri for uri in uris if uri]
+
+        for uri in uris:
+            result = urlparse(uri)
+            invalid = not result.scheme or not result.netloc
+            if invalid:
+                errors[key].append("Provided URI '%s' is not valid" % uri)
+
+        data[key] = json.dumps(uris)
+
+    return validator

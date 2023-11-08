@@ -42,3 +42,55 @@ class TestOgdchUrlListValidator(object):
 
         assert_equals(value, data[key])
         assert_equals([u"Provided URL 'foobar' is not valid"], errors[key])
+
+
+class TestOgdchUriListValidator(object):
+    def setUp(self):
+        self.validator = get_validator("ogdch_validate_list_of_uris")(
+            'field', {}
+        )
+
+    # positive tests
+    def test_validate_uri_list_string(self):
+        value = '["http://example.com/1", "https://example.com/2", "ftp://example.com"]'
+        key = "conforms_to"
+        data = {
+            key: value,
+        }
+        errors = {
+            key: [],
+        }
+        self.validator(key, data, errors, {})
+
+        assert_equals(value, data[key])
+        assert_equals([], errors[key])
+
+    # negative tests
+    def test_invalid_uri_list_string(self):
+        value = '["invaliduri", "ftp://example.com"]'
+        key = "conforms_to"
+        data = {
+            key: value,
+        }
+        errors = {
+            key: [],
+        }
+        self.validator(key, data, errors, {})
+
+        assert_equals(value, data[key])
+        assert_equals([u"Provided URI 'invaliduri' is not valid"], errors[key])
+
+    def test_empty_uri_list_string(self):
+        value = '["", ""]'
+        key = "conforms_to"
+        data = {
+            key: value,
+        }
+        errors = {
+            key: [],
+        }
+        self.validator(key, data, errors, {})
+
+        assert_equals('[]', data[key])
+        assert_equals([], errors[key])
+
