@@ -1024,7 +1024,7 @@
         "it": "URL del servizio di accesso"
       },
       "add_row": {
-        "en": "Add another documentation URL",
+        "en": "Add another access service URL",
         "de": "Eine weitere Zugangsservice-URL hinzufügen",
         "fr": "Ajouter une autre URL de service d'accès",
         "it": "Aggiungi un altro URL del servizio di accesso"
