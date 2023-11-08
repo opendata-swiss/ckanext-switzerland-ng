@@ -238,28 +238,28 @@
       "validators": "scheming_required multiple_text ogdch_validate_list_of_uris",
       "output_validator": "scheming_load_json",
       "fieldgroup": {
-        "en": "Conformity",
+        "en": "Conformance",
         "de": "Konformität",
         "fr": "Conformité",
         "it": "Conformità"
       },
       "label": {
-        "en": "Conformity",
-        "de": "Konformität",
-        "fr": "Conformité",
-        "it": "Conformità"
+        "en": "Conforms to",
+        "de": "Entspricht",
+        "fr": "Conforme à",
+        "it": "Conforme a"
       },
       "form_placeholder_url": {
-        "en": "URI",
-        "de": "URI",
-        "fr": "URI",
-        "it": "URI"
+        "en": "Specification URI",
+        "de": "Spezifikations-URI",
+        "fr": "URI de spécification",
+        "it": "URI di specifica"
       },
       "add_row": {
-        "en": "Add another conformity URI",
-        "de": "Eine weitere Konformität-URI hinzufügen",
-        "fr": "Ajouter une autre conformité URI",
-        "it": "Aggiungere un altro URI conformità"
+        "en": "Add another specification URI",
+        "de": "Weitere Spezifikations-URI hinzufügen",
+        "fr": "Ajouter une autre URI de spécification",
+        "it": "Aggiungi un'altra URI di specifica"
       },
       "help_text": {
         "en": "Implementing rule (eg. INSPIRE) or other specification URLs e.g: https://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0.",
