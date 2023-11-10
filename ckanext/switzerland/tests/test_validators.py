@@ -1,6 +1,5 @@
 # encoding: utf-8
-import json
-
+from ckan.logic.validators import missing
 from ckan.plugins.toolkit import get_validator
 from nose.tools import assert_equals
 
@@ -95,9 +94,6 @@ class TestOgdchUriListValidator(object):
 
 
 class TestOgdchLicenseRequiredValidator(object):
-    license_key = (u'resources', 0, u'license')
-    rights_key = (u'resources', 0, u'rights')
-
     def setup(self):
         self.validator = get_validator('ogdch_license_required')(
             'field', {}
@@ -118,7 +114,7 @@ class TestOgdchLicenseRequiredValidator(object):
         assert_equals([], errors[key])
 
     def test_validate_rights(self):
-        value = None
+        value = missing
         key = (u'resources', 0, u'license')
         rights_value = 'NonCommercialAllowed-CommercialAllowed-ReferenceRequired'
         rights_key = (u'resources', 0, u'rights')
@@ -157,9 +153,9 @@ class TestOgdchLicenseRequiredValidator(object):
         assert_equals([], errors[key])
 
     def test_validate_neither_licence_nor_rights(self):
-        value = None
+        value = missing
         key = (u'resources', 0, u'license')
-        rights_value = None
+        rights_value = missing
         rights_key = (u'resources', 0, u'rights')
         data = {
             key: value,
