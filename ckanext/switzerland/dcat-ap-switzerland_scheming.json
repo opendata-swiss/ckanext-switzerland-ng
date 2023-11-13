@@ -1072,6 +1072,23 @@
         "fr": "Un service de données qui donne accès à cette ressource.",
         "it": "Un servizio dati che dà accesso a questa risorsa."
       }
+    },
+    {
+      "field_name": "temporal_resolution",
+      "display_snippet": "text.html",
+      "validators": "scheming_required ogdch_validate_duration_type",
+      "label": {
+        "en": "Temporal Resolution",
+        "de": "Zeitliche Auflösung",
+        "fr": "Résolution temporelle",
+        "it": "Risoluzione Temporale"
+      },
+      "help_text": {
+        "de": "This property refers to the minimum time period resolvable in the Dataset distribution.",
+        "en": "Diese Eigenschaft bezieht sich auf den minimal auflösbaren Zeitraum in der Verteilung des Datensatzes.",
+        "fr": "Cette propriété se réfère à la période minimale résoluble dans la distribution du jeu de données.",
+        "it": "Questa proprietà si riferisce al periodo temporale minimo risolvibile nella distribuzione del dataset."
+      }
     }
   ]
 }
