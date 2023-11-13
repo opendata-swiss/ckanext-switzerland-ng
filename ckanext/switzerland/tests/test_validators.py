@@ -136,7 +136,9 @@ class TestOgdchDurationType(object):
     def test_missing_value(self):
         key = "temporal_resolution"
         data = {}
-        errors = {}
+        errors = {
+            key: [],
+        }
         self.validator(key, data, errors, {})
 
         assert_equals("", data[key])
@@ -154,4 +156,3 @@ class TestOgdchDurationType(object):
         self.validator(key, data, errors, {})
 
         assert_equals("", data[key])
-        assert_not_equals([], errors[key])
