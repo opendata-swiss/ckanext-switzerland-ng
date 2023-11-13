@@ -139,6 +139,8 @@ class TestOgdchDurationType(object):
         errors = {
             key: [],
         }
+        data[key] = {}
+        
         self.validator(key, data, errors, {})
 
         assert_equals("", data[key])
