@@ -3,7 +3,7 @@ import json
 
 from ckan.lib.navl.dictization_functions import Invalid
 from ckan.plugins.toolkit import get_validator
-from nose.tools import assert_equals, assert_raises
+from nose.tools import assert_equals, assert_raises, assert_not_in, assert_not_equals
 
 
 class TestOgdchUrlListValidator(object):
@@ -140,6 +140,7 @@ class TestOgdchDurationType(object):
         self.validator(key, data, errors, {})
 
         assert_equals("", data[key])
+        assert_not_in(key, data)
 
     def test_invalid_duration(self):
         value = "InvalidDuration"
@@ -153,3 +154,4 @@ class TestOgdchDurationType(object):
         self.validator(key, data, errors, {})
 
         assert_equals("", data[key])
+        assert_not_equals([], errors[key])
