@@ -623,3 +623,32 @@ def ogdch_validate_list_of_uris(field, schema):
         data[key] = json.dumps(uris)
 
     return validator
+
+
+@scheming_validator
+def ogdch_validate_duration_type(field, schema):
+    """Validates that value is of type XSD.duration.
+    """
+    def validator(key, data, errors, context):
+        # if there was an error before calling our validator
+        # don't bother with our validation
+        if errors[key]:
+            return
+
+        value = data[key]
+
+        if value is missing or not value:
+            data[key] = ""
+            return
+
+        duration_pattern = \
+            re.compile(r'^P(\d+Y)?(\d+M)?(\d+D)?(T(\d+H)?(\d+M)?(\d+(\.\d+)?S)?)?$')
+        if duration_pattern.match(value):
+            data[key] = value
+            return
+        else:
+            log.debug("Invalid value for XSD.duration: '%s',"
+                                      " importing an empty string." % value)
+            data[key] = ""
+            return
+    return validator
