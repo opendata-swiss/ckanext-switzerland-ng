@@ -142,7 +142,7 @@ class TestOgdchDurationType(object):
         self.validator(key, data, errors, {})
 
         assert_equals("", data[key])
-        assert_not_in(key, data)
+        assert_equals([], errors[key])
 
     def test_invalid_duration(self):
         value = "InvalidDuration"
@@ -156,3 +156,5 @@ class TestOgdchDurationType(object):
         self.validator(key, data, errors, {})
 
         assert_equals("", data[key])
+        assert_equals([], errors[key])
+        
