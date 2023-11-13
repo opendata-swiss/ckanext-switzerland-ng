@@ -94,3 +94,62 @@ class TestOgdchUriListValidator(object):
         assert_equals('[]', data[key])
         assert_equals([], errors[key])
 
+
+class TestOgdchDurationType(object):
+    def setup(self):
+        # We pass in dummy values for field and schema here, because we just
+        # want to get the inner validation function, and that does not use
+        # either of these parameters.
+        self.validator = get_validator("ogdch_validate_duration_type")(
+            'field', {}
+        )
+
+    # positive tests
+    def test_valid_duration(self):
+        value = "P1Y2M3DT4H5M6S"
+        key = "temporal_resolution"
+        data = {
+            key: value,
+        }
+        errors = {
+            key: [],
+        }
+        self.validator(key, data, errors, {})
+
+        assert_equals(value, data[key])
+        assert_equals([], errors[key])
+
+    # negative tests
+    def test_empty_value(self):
+        key = "temporal_resolution"
+        data = {
+            key: "",
+        }
+        errors = {
+            key: [],
+        }
+        self.validator(key, data, errors, {})
+
+        assert_equals("", data[key])
+        assert_equals([], errors[key])
+
+    def test_missing_value(self):
+        key = "temporal_resolution"
+        data = {}
+        errors = {}
+        self.validator(key, data, errors, {})
+
+        assert_equals("", data[key])
+
+    def test_invalid_duration(self):
+        value = "InvalidDuration"
+        key = "temporal_resolution"
+        data = {
+            key: value,
+        }
+        errors = {
+            key: [],
+        }
+        self.validator(key, data, errors, {})
+
+        assert_equals("", data[key])
