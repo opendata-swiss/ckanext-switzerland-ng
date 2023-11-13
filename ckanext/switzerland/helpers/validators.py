@@ -641,14 +641,12 @@ def ogdch_validate_duration_type(field, schema):
             data[key] = ""
             return
 
-        duration_pattern = \
-            re.compile(r'^P(\d+Y)?(\d+M)?(\d+D)?(T(\d+H)?(\d+M)?(\d+(\.\d+)?S)?)?$')
+        duration_pattern = re.compile(r'^P(\d+Y)?(\d+M)?(\d+D)?(T(\d+H)?(\d+M)?(\d+(\.\d+)?S)?)?$')  # noqa
         if duration_pattern.match(value):
             data[key] = value
             return
         else:
-            log.debug("Invalid value for XSD.duration: '%s',"
-                                      " importing an empty string." % value)
+            log.debug("Invalid value for XSD.duration: '%s'" % value)
             data[key] = ""
             return
     return validator
