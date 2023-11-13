@@ -220,7 +220,8 @@ def ogdch_license_required(field, schema):
         rights = data.get(key[:-1] + ('rights',))
         if rights not in (missing, None):
             log.debug(
-                "No license for resource %s, using rights instead" % resource_id
+                "No license for resource %s, using rights instead" %
+                resource_id
             )
             data[key] = rights
             return
