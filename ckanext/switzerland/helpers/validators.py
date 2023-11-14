@@ -212,10 +212,26 @@ def ogdch_language(field, schema):
 @scheming_validator
 def ogdch_license_required(field, schema):
     def validator(key, data, errors, context):
-        value = data[key]
-        if value is missing or value is None:
-            rights = data.get(key[:-1] + ('rights',))
+        resource_id = data.get(key[:-1] + ('id',))
+        license = data[key]
+        if license not in (missing, None):
+            data[key] = license
+            return
+
+        rights = data.get(key[:-1] + ('rights',))
+        if rights not in (missing, None):
+            log.debug(
+                "No license for resource %s, using rights instead" %
+                resource_id
+            )
             data[key] = rights
+            return
+
+        log.debug("Resource % has neither license nor rights")
+        errors[key].append(
+            "Distributions must have either 'rights' or 'license'"
+        )
+        data[key] = ''
     return validator
 
 
