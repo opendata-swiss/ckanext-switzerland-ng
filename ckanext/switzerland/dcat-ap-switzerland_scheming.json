@@ -239,13 +239,13 @@
       "output_validator": "scheming_load_json",
       "fieldgroup": {
         "en": "Conformance",
-        "de": "Konformität",
+        "de": "Konform mit dem Standard",
         "fr": "Conformité",
         "it": "Conformità"
       },
       "label": {
         "en": "Conforms to",
-        "de": "Entspricht",
+        "de": "Konform mit ",
         "fr": "Conforme à",
         "it": "Conforme a"
       },
@@ -262,10 +262,10 @@
         "it": "Aggiungi un'altra URI di specifica"
       },
       "help_text": {
-        "en": "Implementing rule (eg. INSPIRE) or other specification URLs e.g: https://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0.",
-        "de": "Umsetzungsregel (z.B. INSPIRE) oder andere Spezifikations-URLs z.B: https://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0.",
-        "fr": "Règle de mise en œuvre (par exemple INSPIRE) ou d'autres URL de spécifications, par exemple: https://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0.",
-        "it": "Regola di implementazione (ad esempio INSPIRE) o altre URL di specifiche, ad esempio: https://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0."
+        "en": "Implementing rule (eg. INSPIRE) or other specification URLs e.g: https://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0. Models, schemas, ontologies, views or profiles with which the dataset conforms can be specified here.",
+        "de": "Implementierungsregel  (z.B. INSPIRE) oder oder andere Spezifikations-URLs z.B: https://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0. Hier können Modelle, Schemen, Ontologien, Ansichten oder Profile angegeben werden, mit denen der Datensatz konform ist.",
+        "fr": "Règle de mise en œuvre (par exemple INSPIRE) ou d'autres URL de spécifications, par exemple: https://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0. Il est possible d'indiquer ici les modèles, schémas, ontologies, vues ou profils avec lesquels le jeu de données correspond.",
+        "it": "Regola di implementazione (ad esempio INSPIRE) o altre URL di specifiche, ad esempio: https://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0. Qui è possibile specificare i modelli, gli schemi, le ontologie, le viste o i profili a cui corrisponde il set di dati."
       }
     },
     {
