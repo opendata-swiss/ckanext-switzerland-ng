@@ -1072,6 +1072,17 @@
         "fr": "Un service de données qui donne accès à cette ressource.",
         "it": "Un servizio dati che dà accesso a questa risorsa."
       }
+    },
+    {
+      "field_name": "temporal_resolution",
+      "display_snippet": "text.html",
+      "validators": "scheming_required ogdch_validate_duration_type",
+      "label": {
+        "en": "Temporal Resolution",
+        "de": "Zeitliche Auflösung",
+        "fr": "Résolution temporelle",
+        "it": "Risoluzione Temporale"
+      }
     }
   ]
 }
