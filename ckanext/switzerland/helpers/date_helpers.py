@@ -170,7 +170,7 @@ def get_localized_date(value):
     '24. Juni 2020'.
     """
     try:
-        dt = isodate.parse_datetime(value)
+        dt = isodate.parse_datetime(str(value))
         if isinstance(dt, datetime):
             return localised_nice_date(dt, show_date=True, with_hours=False)
     except Exception:
