@@ -16,6 +16,7 @@ from ckanext.scheming.validation import register_validator, scheming_validator
 from ckanext.switzerland.helpers.dataset_form_helpers import (
     get_contact_points_from_form, get_relations_from_form,
     get_qualified_relations_from_form, get_temporals_from_form)
+from ckanext.switzerland.helpers.frontend_helpers import get_permalink
 from ckanext.switzerland.helpers.localize_utils import parse_json
 
 log = logging.getLogger(__name__)
@@ -148,7 +149,7 @@ def harvest_list_of_dicts(field, schema):
             del data_dict[key[0]]
             data[HARVEST_JUNK] = df.flatten_dict(data_dict)
         except KeyError:
-            pass
+            data[key] = json.dumps([])
 
     return validator
 
@@ -419,7 +420,7 @@ def ogdch_validate_formfield_qualified_relations(field, schema):
     into a form that is expected for database storage:
     [{
         "relation": "https://opendata.swiss/perma/443@statistisches-amt-kanton-zuerich",  # noqa
-        "had_role": "related"
+        "had_role": "http://www.iana.org/assignments/relation/related"
     }]
 
     This corresponds to the DCAT class dcat:Relationship, which has the
@@ -449,10 +450,7 @@ def ogdch_validate_formfield_qualified_relations(field, schema):
                             _('{} can not be chosen since it is a {}.'
                               .format(package_name, package.get('type')))
                         )
-                    permalink = "%s/perma/%s" % (
-                        tk.config.get('ckanext.switzerland.frontend_url'),
-                        package.get('identifier')
-                    )
+                    permalink = get_permalink(package.get('identifier'))
                     qualified_relations_validated.append(
                         {
                             'relation': permalink,
@@ -606,4 +604,65 @@ def ogdch_validate_list_of_urls(field, schema):
 
         data[key] = json.dumps(urls)
 
+    return validator
+
+
+@scheming_validator
+def ogdch_validate_list_of_uris(field, schema):
+    """Validates each URI in a list (stored as JSON).
+    """
+    def validator(key, data, errors, context):
+        # if there was an error before calling our validator
+        # don't bother with our validation
+        if errors[key]:
+            return
+
+        value = data[key]
+        if value is missing or not value:
+            return value
+
+        try:
+            uris = json.loads(value)
+        except (TypeError, ValueError):
+            errors[key].append("Error parsing string as JSON: '%s'" % value)
+            return value
+
+        # Get rid of empty strings
+        uris = [uri for uri in uris if uri]
+
+        for uri in uris:
+            result = urlparse(uri)
+            invalid = not result.scheme or not result.netloc
+            if invalid:
+                errors[key].append("Provided URI '%s' is not valid" % uri)
+
+        data[key] = json.dumps(uris)
+
+    return validator
+
+
+@scheming_validator
+def ogdch_validate_duration_type(field, schema):
+    """Validates that value is of type XSD.duration.
+    """
+    def validator(key, data, errors, context):
+        # if there was an error before calling our validator
+        # don't bother with our validation
+        if errors[key]:
+            return
+
+        value = data[key]
+
+        if value is missing or not value:
+            data[key] = ""
+            return
+
+        duration_pattern = re.compile(r'^P(\d+Y)?(\d+M)?(\d+D)?(T(\d+H)?(\d+M)?(\d+(\.\d+)?S)?)?$')  # noqa
+        if duration_pattern.match(value):
+            data[key] = value
+            return
+        else:
+            log.debug("Invalid value for XSD.duration: '%s'" % value)
+            data[key] = ""
+            return
     return validator

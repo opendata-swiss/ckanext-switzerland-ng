@@ -350,3 +350,12 @@ def render_publisher(publisher_value):
         return publisher_value
     else:
         return publisher
+
+
+def get_permalink(identifier):
+    """Given the identifier of a dataset, construct its permalink.
+    """
+    return "%s/perma/%s" % (
+        tk.config.get('ckanext.switzerland.frontend_url', ''),
+        identifier
+    )

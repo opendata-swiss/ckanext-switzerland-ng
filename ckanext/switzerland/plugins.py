@@ -75,6 +75,8 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_fluent_tags': ogdch_validators.ogdch_fluent_tags,
             'ogdch_temp_scheming_choices': ogdch_validators.ogdch_temp_scheming_choices,  # noqa
             'ogdch_validate_list_of_urls': ogdch_validators.ogdch_validate_list_of_urls,  # noqa
+            'ogdch_validate_list_of_uris': ogdch_validators.ogdch_validate_list_of_uris,  # noqa
+            'ogdch_validate_duration_type': ogdch_validators.ogdch_validate_duration_type,  # noqa
         }
 
     # IFacets
