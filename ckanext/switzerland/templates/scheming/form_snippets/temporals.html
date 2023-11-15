@@ -8,7 +8,7 @@
         'temporal-start-date-' + row.index,
         id='field-temporal-start-date-' + row.index,
         label=h.scheming_language_text(field.label_start_date),
-        value=row.data.start_date,
+        value=h.get_date_picker_format(row.data.start_date),
         language=h.lang(),
         error=errors['temporals'],
         classes=['control-medium', row.css_class]
@@ -18,7 +18,7 @@
         'temporal-end-date-' + row.index,
         id='field-temporal-end-date-' + row.index,
         label=h.scheming_language_text(field.label_end_date),
-        value=row.data.end_date,
+        value=h.get_date_picker_format(row.data.end_date),
         language=h.lang(),
         error=errors['temporals'],
         classes=['control-medium', row.css_class]
