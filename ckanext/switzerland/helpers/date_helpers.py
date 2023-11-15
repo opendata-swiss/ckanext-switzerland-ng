@@ -4,7 +4,7 @@ from datetime import datetime
 import ckan.plugins.toolkit as tk
 import isodate
 from ckan.lib.formatters import localised_nice_date
-from dateutil.parser import parse
+from dateutil.parser import parse, ParserError
 
 DATE_PICKER_FORMAT = tk.config.get(
     'ckanext.switzerland.date_picker_format', '%d.%m.%Y')
@@ -170,13 +170,13 @@ def get_localized_date(value):
     '24. Juni 2020'.
     """
     try:
-        dt = isodate.parse_datetime(value)
+        dt = isodate.parse_datetime(str(value))
         if isinstance(dt, datetime):
             return localised_nice_date(dt, show_date=True, with_hours=False)
-    except Exception:
+    except (TypeError, ParserError) as e:
         log.debug(
             "Error parsing datetime {} as isodate and "
-            "returning localized date".format(value)
+            "returning localized date: {}".format(value, e)
         )
         return ""
 
@@ -189,9 +189,9 @@ def get_date_picker_format(value):
         dt = isodate.parse_datetime(value)
         if isinstance(dt, datetime):
             return isodate.strftime(dt, DATE_PICKER_FORMAT)
-    except Exception:
+    except (TypeError, ParserError) as e:
         log.debug(
             "Error parsing datetime {} as isodate and "
-            "converting to format {}".format(value, DATE_PICKER_FORMAT)
+            "converting to format {}: {}".format(value, DATE_PICKER_FORMAT, e)
         )
         return ""
