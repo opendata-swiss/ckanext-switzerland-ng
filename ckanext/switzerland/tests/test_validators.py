@@ -237,4 +237,3 @@ class TestOgdchDurationType(object):
 
         assert_equals("", data[key])
         assert_equals([], errors[key])
-        
