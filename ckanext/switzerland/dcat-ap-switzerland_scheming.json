@@ -238,15 +238,15 @@
       "validators": "scheming_required multiple_text ogdch_validate_list_of_uris",
       "output_validator": "scheming_load_json",
       "fieldgroup": {
-        "en": "Conformance",
-        "de": "Konform mit dem Standard",
-        "fr": "Conformité",
-        "it": "Conformità"
+        "en": "Conforms to",
+        "de": "Konform mit",
+        "fr": "Correspond à",
+        "it": "Conforme a"
       },
       "label": {
         "en": "Conforms to",
-        "de": "Konform mit ",
-        "fr": "Conforme à",
+        "de": "Konform mit",
+        "fr": "Correspond à",
         "it": "Conforme a"
       },
       "form_placeholder_url": {
