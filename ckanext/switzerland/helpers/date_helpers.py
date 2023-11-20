@@ -173,7 +173,7 @@ def get_localized_date(value):
         dt = isodate.parse_datetime(str(value))
         if isinstance(dt, datetime):
             return localised_nice_date(dt, show_date=True, with_hours=False)
-    except (TypeError, ParserError) as e:
+    except (TypeError, ParserError, ValueError) as e:
         log.debug(
             "Error parsing datetime {} as isodate and "
             "returning localized date: {}".format(value, e)
@@ -189,7 +189,7 @@ def get_date_picker_format(value):
         dt = isodate.parse_datetime(value)
         if isinstance(dt, datetime):
             return isodate.strftime(dt, DATE_PICKER_FORMAT)
-    except (TypeError, ParserError) as e:
+    except (TypeError, ParserError, ValueError) as e:
         log.debug(
             "Error parsing datetime {} as isodate and "
             "converting to format {}: {}".format(value, DATE_PICKER_FORMAT, e)
