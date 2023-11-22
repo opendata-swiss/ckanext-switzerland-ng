@@ -41,7 +41,7 @@ class TestOgdchUrlListValidator(object):
         assert_equals(value, data[key])
         assert_equals([u"Provided URL 'foobar' is not valid"], errors[key])
 
-
+        
 class TestOgdchUriListValidator(object):
     def setUp(self):
         self.validator = get_validator("ogdch_validate_list_of_uris")(
