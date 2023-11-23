@@ -477,7 +477,7 @@ def ogdch_validate_temporals(field, schema):
             data[key] = '[]'
         else:
             temporals = []
-            if not data.get(key):
+            if not parse_json(data.get(key)):
                 extras = data.get(FORM_EXTRAS)
                 if extras:
                     temporals = get_temporals_from_form(extras)
