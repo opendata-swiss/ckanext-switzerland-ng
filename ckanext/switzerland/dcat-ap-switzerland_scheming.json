@@ -1067,8 +1067,8 @@
         "it": "Aggiungi un altro URL del servizio di accesso"
       },
       "help_text": {
-        "de": "A data service that gives access to this resource.",
-        "en": "Ein Datendienst, der Zugriff auf diese Ressource ermöglicht.",
+        "en": "A data service that gives access to this resource.",
+        "de": "Ein Datendienst, der Zugriff auf diese Ressource ermöglicht.",
         "fr": "Un service de données qui donne accès à cette ressource.",
         "it": "Un servizio dati che dà accesso a questa risorsa."
       }
@@ -1082,6 +1082,12 @@
         "de": "Zeitliche Auflösung",
         "fr": "Résolution temporelle",
         "it": "Risoluzione Temporale"
+      },
+      "help_text": {
+        "en": "This property refers to the smallest time period resolvable in the dataset distribution. It is indicated as a Duration according to ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations), for example, \"P1M\" stands for a one-month duration, and \"PT1M\" stands for a one-minute duration.",
+        "de": "Diese Eigenschaft bezieht sich auf den kleinsten in der Dataset-Distribution auflösbaren Zeitraum. Er wird als Duration gemäss ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations) angegeben, z.B. \"P1M\" steht für eine einmonatige Dauer und \"PT1M\" für eine einminütige Dauer.",
+        "fr": "Cette propriété fait référence à la plus petite période de temps résoluble dans la distribution des données. Elle est indiquée sous forme de Durée selon la norme ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations), par exemple, \"P1M\" représente une durée d'un mois et \"PT1M\" une durée d'une minute.",
+        "it": "Questa proprietà si riferisce al più piccolo intervallo di tempo risolvibile nella distribuzione del dataset. Viene indicato come Durata secondo la norma ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations), ad esempio, \"P1M\" rappresenta una durata di un mese e \"PT1M\" una durata di un minuto."
       }
     }
   ]
