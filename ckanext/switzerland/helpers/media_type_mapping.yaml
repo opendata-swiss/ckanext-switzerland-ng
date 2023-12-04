@@ -1,0 +1,118 @@
+API:
+  - 'api'
+  - 'rest'
+  - 'rest api'
+CSV:
+  - 'csv'
+  - 'text (.csv)'
+  - 'comma ...'
+  - 'text (.csv), comma separated'
+DXF:
+  - 'dxf'
+  - 'dxf (.dxf)'
+ESRI ASCII Grid:
+  - 'esri ascii grid (.grd/.asc)'
+  - 'esri arcinfo ascii grid'
+  - '.asc)'
+GDB:
+  - 'esri file geodatabase'
+  - 'filegeodatabase'
+  - 'gdb'
+  - 'FileGDB'
+GeoJSON:
+  - 'geojson'
+GeoTIFF:
+  - 'geotiff'
+GPKG:
+  - 'gpkg'
+  - 'geopackage (ogc)'
+HTML:
+  - 'html'
+INTERLIS:
+  - 'interlis'
+JSON:
+  - 'json'
+JSON-LD:
+  - 'ld+json'
+  - 'jsonld'
+KML:
+  - 'kml'
+  - 'vnd.google-earth.kml+xml'
+KMZ:
+  - 'kmz'
+LAZ:
+  - 'laz (.laz)'
+MULTIFORMAT:
+  - 'multiformat'
+  - 'multi'
+N3:
+  - 'n3'
+ODS:
+  - 'ods'
+  - 'vnd.oas...'
+  - 'vnd.oasis.opendocument.spreadsheet'
+PC-AXIS:
+  - 'pc-axis file'
+PDF:
+  - 'pdf'
+PNG:
+  - 'png'
+RDF N-Triples:
+  - 'n-triples'
+  - 'nt'
+  - 'rdf_n_triples'
+RDF Turtle:
+  - 'rdf_turtle'
+  - 'ttl'
+  - 'turtle'
+RDF XML:
+  - 'rdf'
+  - 'rdf+xml'
+SHP:
+  - 'esri shapefile'
+  - 'esri shapefile (.shp)'
+  - 'esri geodatabase (....'
+  - 'esri arcinfo ascii ...'
+  - 'esri personal geodatabase (.mdb)'
+  - 'shape'
+  - 'shapefile'
+  - 'shp'
+SPARQL:
+  - 'rq'
+  - 'sparqlq'
+  - 'sparql-query'
+  - 'sparql-...'
+TXT:
+  - 'text'
+  - 'txt'
+  - 'text (.txt)'
+  - 'plain'
+TIFF:
+  - 'tiff'
+TSV:
+  - 'text/tab-separated-values'
+  - 'tab-separated-values'
+WCS:
+  - 'wcs'
+WFS:
+  - 'wfs'
+WMS:
+  - 'wms'
+WORLDFILE:
+  - 'geotiff/worldfile (.tif/.tfw)'
+  - 'jpeg/worldfile (.jpg/.jgw)'
+  - '.jgw)'
+  - '.tfw)'
+WMTS:
+  - 'wmts'
+XLS:
+  - 'xls'
+  - 'xlsx'
+  - 'vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  - 'vnd.ms-excel'
+XML:
+  - 'xml'
+YAML:
+  - 'yaml'
+ZIP:
+  - 'zip'

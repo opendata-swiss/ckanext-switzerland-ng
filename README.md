@@ -92,7 +92,7 @@ do:
 
 ## Update Format-Mapping
 
-To update the Format-Mapping edit the [mapping.yaml](/ckanext/switzerland/helpers/mapping.yaml), following the [YAML-Syntax](http://docs.ansible.com/ansible/latest/YAMLSyntax.html). You can check if your changes are valid by pasting the contents of the required changes into a Syntax-Checker, e.g. [YAML Syntax-Checker](http://www.yamllint.com/).
+To update the Format-Mapping edit the [format-mapping.yaml](/ckanext/switzerland/helpers/format_mapping.yaml), following the [YAML-Syntax](http://docs.ansible.com/ansible/latest/YAMLSyntax.html). You can check if your changes are valid by pasting the contents of the required changes into a Syntax-Checker, e.g. [YAML Syntax-Checker](http://www.yamllint.com/).
 Submit a Pull-Request following our [Contribution-Guidelines](CONTRIBUTING.md).
 
 ## Add users as members to groups
