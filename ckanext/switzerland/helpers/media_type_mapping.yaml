@@ -3,6 +3,9 @@ application/geo+json:
 application/geopackage+sqlite3:
   - 'geopackage (ogc)'
   - 'gpkg'
+application/gml+xml:
+  - 'gml'
+  - 'CityGML'
 application/json:
   - 'json'
 application/n-triples:
@@ -14,11 +17,13 @@ application/pdf:
 application/rdf+xml:
   - 'rdf'
   - 'rdf+xml'
+  - 'rdf xml'
 application/sparql-query:
   - 'rq'
   - 'sparql-...'
   - 'sparql-query'
   - 'sparqlq'
+  - 'sparql'
 application/vnd.api+json:
   - 'api'
   - 'rest api'
@@ -26,6 +31,8 @@ application/vnd.api+json:
 application/vnd.dxf:
   - 'dxf (.dxf)'
   - 'dxf'
+application/vnd.efi.img:
+  - 'img'
 application/vnd.google-earth.kml+xml:
   - 'kml'
   - 'vnd.google-earth.kml+xml'
@@ -76,7 +83,9 @@ text/plain:
 text/tab-separated-values:
   - 'tab-separated-values'
   - 'text/tab-separated-values'
+  - 'tsv'
 text/turtle:
   - 'rdf_turtle'
   - 'ttl'
   - 'turtle'
+  - 'rdf turtle'
