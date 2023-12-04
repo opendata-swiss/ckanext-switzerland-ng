@@ -107,18 +107,19 @@ def get_resource_format(media_type, format, download_url):
 
 def get_iana_media_type(media_type):
     """Get a value for media_type that belongs to the IANA Media Types
-    vocabulary, if there is one. Otherwise, return the media_type as it is.
+    vocabulary, if there is one
     """
     if not media_type:
         return ""
 
-    iana_media_type = _map_to_valid_media_type(
-        _get_cleaned_format_or_media_type(media_type)
-    )
-    if iana_media_type:
-        return iana_media_type
+    cleaned_media_type = _get_cleaned_format_or_media_type(media_type)
+    if cleaned_media_type in media_type_mapping.keys():
+        return cleaned_media_type
 
-    return media_type
+    if cleaned_media_type in reverse_media_type_mapping.keys():
+        return reverse_media_type_mapping[cleaned_media_type]
+
+    return ""
 
 
 def prepare_formats_for_index(resources, linked_data_only=False):
@@ -154,22 +155,6 @@ def _map_to_valid_format(format, try_to_clean=False):
         cleaned_format = _get_cleaned_format_or_media_type(format)
         if cleaned_format in reverse_format_mapping.keys():
             return reverse_format_mapping[cleaned_format]
-    return ""
-
-
-def _map_to_valid_media_type(media_type, try_to_clean=False):
-    """Check whether the media_type is in the mapping, either as a key or as a
-    value, or if it can be derived after cleaning the input media_type string
-    """
-    if media_type in media_type_mapping.keys():
-        return media_type
-
-    if media_type in reverse_media_type_mapping.keys():
-        return reverse_media_type_mapping[media_type]
-    if try_to_clean:
-        cleaned_media_type = _get_cleaned_format_or_media_type(media_type)
-        if cleaned_media_type in reverse_media_type_mapping.keys():
-            return reverse_media_type_mapping[cleaned_media_type]
     return ""
 
 
