@@ -1,74 +1,51 @@
-API:
+application/vnd.api+json:
   - 'api'
   - 'rest'
   - 'rest api'
-CSV:
+text/csv:
   - 'csv'
   - 'text (.csv)'
   - 'comma ...'
   - 'text (.csv), comma separated'
-DXF:
+application/vnd.dxf:
   - 'dxf'
   - 'dxf (.dxf)'
-ESRI ASCII Grid:
-  - 'esri ascii grid (.grd/.asc)'
-  - 'esri arcinfo ascii grid'
-  - '.asc)'
-GDB:
-  - 'esri file geodatabase'
-  - 'filegeodatabase'
-  - 'gdb'
-  - 'FileGDB'
-GeoJSON:
+application/geo+json:
   - 'geojson'
-GeoTIFF:
-  - 'geotiff'
-GPKG:
+application/vnd.gentoo.gpkg:
   - 'gpkg'
   - 'geopackage (ogc)'
-HTML:
+text/html:
   - 'html'
-INTERLIS:
-  - 'interlis'
-JSON:
+application/json:
   - 'json'
-JSON-LD:
-  - 'ld+json'
-  - 'jsonld'
-KML:
+application/vnd.google-earth.kml+xml:
   - 'kml'
   - 'vnd.google-earth.kml+xml'
-KMZ:
+application/vnd.google-earth.kmz:
   - 'kmz'
-LAZ:
-  - 'laz (.laz)'
-MULTIFORMAT:
-  - 'multiformat'
-  - 'multi'
-N3:
+text/n3:
   - 'n3'
-ODS:
+application/vnd.oasis.opendocument.spreadsheet:
   - 'ods'
   - 'vnd.oas...'
   - 'vnd.oasis.opendocument.spreadsheet'
-PC-AXIS:
-  - 'pc-axis file'
-PDF:
+application/pdf:
   - 'pdf'
-PNG:
+image/png:
   - 'png'
-RDF N-Triples:
+application/n-triples:
   - 'n-triples'
   - 'nt'
   - 'rdf_n_triples'
-RDF Turtle:
+text/turtle:
   - 'rdf_turtle'
   - 'ttl'
   - 'turtle'
-RDF XML:
+application/rdf+xml:
   - 'rdf'
   - 'rdf+xml'
-SHP:
+application/vnd.shp:
   - 'esri shapefile'
   - 'esri shapefile (.shp)'
   - 'esri geodatabase (....'
@@ -77,42 +54,29 @@ SHP:
   - 'shape'
   - 'shapefile'
   - 'shp'
-SPARQL:
+application/sparql-query:
   - 'rq'
   - 'sparqlq'
   - 'sparql-query'
   - 'sparql-...'
-TXT:
+text/plain:
   - 'text'
   - 'txt'
   - 'text (.txt)'
   - 'plain'
-TIFF:
+image/tiff:
   - 'tiff'
-TSV:
+text/tab-separated-values:
   - 'text/tab-separated-values'
   - 'tab-separated-values'
-WCS:
-  - 'wcs'
-WFS:
-  - 'wfs'
-WMS:
-  - 'wms'
-WORLDFILE:
-  - 'geotiff/worldfile (.tif/.tfw)'
-  - 'jpeg/worldfile (.jpg/.jgw)'
-  - '.jgw)'
-  - '.tfw)'
-WMTS:
-  - 'wmts'
-XLS:
+application/vnd.ms-excel:
   - 'xls'
   - 'xlsx'
   - 'vnd.openxmlformats-officedocument.spreadsheetml.sheet'
   - 'vnd.ms-excel'
-XML:
+application/xml:
   - 'xml'
-YAML:
+application/yaml:
   - 'yaml'
-ZIP:
+application/zip:
   - 'zip'
