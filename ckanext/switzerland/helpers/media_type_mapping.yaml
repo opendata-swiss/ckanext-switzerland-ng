@@ -1,82 +1,82 @@
-application/vnd.api+json:
-  - 'api'
-  - 'rest'
-  - 'rest api'
-text/csv:
-  - 'csv'
-  - 'text (.csv)'
-  - 'comma ...'
-  - 'text (.csv), comma separated'
-application/vnd.dxf:
-  - 'dxf'
-  - 'dxf (.dxf)'
 application/geo+json:
   - 'geojson'
 application/geopackage+sqlite3:
-  - 'gpkg'
   - 'geopackage (ogc)'
-text/html:
-  - 'html'
+  - 'gpkg'
 application/json:
   - 'json'
+application/n-triples:
+  - 'n-triples'
+  - 'nt'
+  - 'rdf_n_triples'
+application/pdf:
+  - 'pdf'
+application/rdf+xml:
+  - 'rdf'
+  - 'rdf+xml'
+application/sparql-query:
+  - 'rq'
+  - 'sparql-...'
+  - 'sparql-query'
+  - 'sparqlq'
+application/vnd.api+json:
+  - 'api'
+  - 'rest api'
+  - 'rest'
+application/vnd.dxf:
+  - 'dxf (.dxf)'
+  - 'dxf'
 application/vnd.google-earth.kml+xml:
   - 'kml'
   - 'vnd.google-earth.kml+xml'
 application/vnd.google-earth.kmz:
   - 'kmz'
-text/n3:
-  - 'n3'
+application/vnd.ms-excel:
+  - 'vnd.ms-excel'
+  - 'vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  - 'xls'
+  - 'xlsx'
 application/vnd.oasis.opendocument.spreadsheet:
   - 'ods'
   - 'vnd.oas...'
   - 'vnd.oasis.opendocument.spreadsheet'
-application/pdf:
-  - 'pdf'
-image/png:
-  - 'png'
-application/n-triples:
-  - 'n-triples'
-  - 'nt'
-  - 'rdf_n_triples'
-text/turtle:
-  - 'rdf_turtle'
-  - 'ttl'
-  - 'turtle'
-application/rdf+xml:
-  - 'rdf'
-  - 'rdf+xml'
 application/vnd.shp:
-  - 'esri shapefile'
-  - 'esri shapefile (.shp)'
-  - 'esri geodatabase (....'
   - 'esri arcinfo ascii ...'
+  - 'esri geodatabase (....'
   - 'esri personal geodatabase (.mdb)'
+  - 'esri shapefile (.shp)'
+  - 'esri shapefile'
   - 'shape'
   - 'shapefile'
   - 'shp'
-application/sparql-query:
-  - 'rq'
-  - 'sparqlq'
-  - 'sparql-query'
-  - 'sparql-...'
-text/plain:
-  - 'text'
-  - 'txt'
-  - 'text (.txt)'
-  - 'plain'
-image/tiff:
-  - 'tiff'
-text/tab-separated-values:
-  - 'text/tab-separated-values'
-  - 'tab-separated-values'
-application/vnd.ms-excel:
-  - 'xls'
-  - 'xlsx'
-  - 'vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-  - 'vnd.ms-excel'
 application/xml:
   - 'xml'
 application/yaml:
   - 'yaml'
 application/zip:
   - 'zip'
+image/png:
+  - 'png'
+image/tiff:
+  - 'tiff'
+text/csv:
+  - 'comma ...'
+  - 'csv'
+  - 'text (.csv), comma separated'
+  - 'text (.csv)'
+text/html:
+  - 'html'
+text/n3:
+  - 'n3'
+text/plain:
+  - 'plain'
+  - 'text (.txt)'
+  - 'text'
+  - 'txt'
+text/tab-separated-values:
+  - 'tab-separated-values'
+  - 'text/tab-separated-values'
+text/turtle:
+  - 'rdf_turtle'
+  - 'ttl'
+  - 'turtle'
