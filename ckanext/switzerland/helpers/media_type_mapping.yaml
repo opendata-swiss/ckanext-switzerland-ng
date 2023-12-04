@@ -12,7 +12,7 @@ application/vnd.dxf:
   - 'dxf (.dxf)'
 application/geo+json:
   - 'geojson'
-application/vnd.gentoo.gpkg:
+application/geopackage+sqlite3:
   - 'gpkg'
   - 'geopackage (ogc)'
 text/html:
