@@ -76,6 +76,7 @@ SHP:
   - 'esri personal geodatabase (.mdb)'
   - 'shape'
   - 'shapefile'
+  - 'shp'
 SPARQL:
   - 'rq'
   - 'sparqlq'

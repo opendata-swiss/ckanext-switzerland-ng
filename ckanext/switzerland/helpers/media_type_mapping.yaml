@@ -1,0 +1,91 @@
+application/geo+json:
+  - 'geojson'
+application/geopackage+sqlite3:
+  - 'geopackage (ogc)'
+  - 'gpkg'
+application/gml+xml:
+  - 'gml'
+  - 'CityGML'
+application/json:
+  - 'json'
+application/n-triples:
+  - 'n-triples'
+  - 'nt'
+  - 'rdf_n_triples'
+application/pdf:
+  - 'pdf'
+application/rdf+xml:
+  - 'rdf'
+  - 'rdf+xml'
+  - 'rdf xml'
+application/sparql-query:
+  - 'rq'
+  - 'sparql-...'
+  - 'sparql-query'
+  - 'sparqlq'
+  - 'sparql'
+application/vnd.api+json:
+  - 'api'
+  - 'rest api'
+  - 'rest'
+application/vnd.dxf:
+  - 'dxf (.dxf)'
+  - 'dxf'
+application/vnd.efi.img:
+  - 'img'
+application/vnd.google-earth.kml+xml:
+  - 'kml'
+  - 'vnd.google-earth.kml+xml'
+application/vnd.google-earth.kmz:
+  - 'kmz'
+application/vnd.ms-excel:
+  - 'vnd.ms-excel'
+  - 'vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+  - 'xls'
+  - 'xlsx'
+application/vnd.oasis.opendocument.spreadsheet:
+  - 'ods'
+  - 'vnd.oas...'
+  - 'vnd.oasis.opendocument.spreadsheet'
+application/vnd.shp:
+  - 'esri arcinfo ascii ...'
+  - 'esri geodatabase (....'
+  - 'esri personal geodatabase (.mdb)'
+  - 'esri shapefile (.shp)'
+  - 'esri shapefile'
+  - 'shape'
+  - 'shapefile'
+  - 'shp'
+application/xml:
+  - 'xml'
+application/yaml:
+  - 'yaml'
+application/zip:
+  - 'zip'
+image/png:
+  - 'png'
+image/tiff:
+  - 'tiff'
+text/csv:
+  - 'comma ...'
+  - 'csv'
+  - 'text (.csv), comma separated'
+  - 'text (.csv)'
+text/html:
+  - 'html'
+text/n3:
+  - 'n3'
+text/plain:
+  - 'plain'
+  - 'text (.txt)'
+  - 'text'
+  - 'txt'
+text/tab-separated-values:
+  - 'tab-separated-values'
+  - 'text/tab-separated-values'
+  - 'tsv'
+text/turtle:
+  - 'rdf_turtle'
+  - 'ttl'
+  - 'turtle'
+  - 'rdf turtle'
