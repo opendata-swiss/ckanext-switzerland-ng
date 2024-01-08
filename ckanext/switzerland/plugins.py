@@ -243,6 +243,11 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
                     controller='ckanext.switzerland.controllers.organization:OgdchOrganizationController', # noqa
                     action='xml_upload')
 
+        # custom subscribe route
+        map.connect('signup', '/subscribe/signup',
+                    controller='ckanext.switzerland.controllers.subscribe:OgdchSubscribeController',  # noqa
+                    action='validate_and_signup')
+
         return map
 
 
