@@ -49,6 +49,7 @@ jobs:
       run: |
         # Replace default path to CKAN core config file with the one on the container
         sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' test.ini
+        python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install -r dev-requirements.txt
         pip install -e .
@@ -65,8 +66,9 @@ jobs:
         pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-dcatapchharvest/master/requirements.txt
         pip install -e git+https://github.com/opendata-swiss/ckanext-harvester_dashboard.git#egg=ckanext-harvester_dashboard
         pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-harvester_dashboard/master/requirements.txt
-        pip install -e git+https://github.com/ckan/ckanext-xloader.git#egg=ckanext-xloader
-        pip install -r https://raw.githubusercontent.com/ckan/ckanext-xloader/master/requirements.txt
+        # Last commit before support for Python 2 was dropped
+        pip install -e git+https://github.com/ckan/ckanext-xloader.git@16b84175005435d579607638dfe2056dda61af70#egg=ckanext-xloader
+        pip install -r https://raw.githubusercontent.com/ckan/ckanext-xloader/16b84175005435d579607638dfe2056dda61af70/requirements.txt
         pip install -e git+https://github.com/opendata-swiss/ckanext-subscribe.git#egg=ckanext-subscribe
         pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-subscribe/master/requirements.txt
         # Last commit before support for Python 2 was dropped
