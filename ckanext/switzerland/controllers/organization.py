@@ -116,7 +116,7 @@ class OgdchOrganizationController(organization.OrganizationController):
             if (c.group and c.group.id in user_member_of_orgs):
                 context['ignore_capacity_check'] = True
             else:
-                fq += ' capacity:"public"'
+                fq += ' AND capacity:"public"'
 
             facets = OrderedDict()
 

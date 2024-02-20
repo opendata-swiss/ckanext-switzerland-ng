@@ -276,11 +276,14 @@ def ogdch_adjust_search_params(search_params):
     '''
     fq = search_params.get('fq', '')
     if 'dataset_type:' not in fq:
-        search_params.update({'fq': "%s +dataset_type:dataset" % fq})
+        # search_params.update({'fq': "%s +dataset_type:dataset" % fq})
+        search_params.update({'fq': " AND ".join(["+dataset_type:dataset", fq])})
 
     # remove colon followed by a space from q to avoid false negatives
     q = search_params.get('q', '')
     search_params['q'] = re.sub(r":\s", " ", q)
+
+    log.warning(search_params)
 
     return search_params
 
