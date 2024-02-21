@@ -154,9 +154,9 @@ class OgdchOrganizationController(organization.OrganizationController):
             )
 
             if not children:
-                fq += ' organization:"%s"' % c.group_dict.get('name')
+                fq += ' AND organization:"%s"' % c.group_dict.get('name')
             else:
-                fq += ' organization:("%s"' % c.group_dict.get('name')
+                fq += ' AND organization:("%s"' % c.group_dict.get('name')
                 for name in children:
                     if name:
                         fq += ' OR "%s"' % name
