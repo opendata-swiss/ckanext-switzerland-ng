@@ -330,7 +330,7 @@ def ogdch_get_switch_connectome_url(identifier):
     """
     return (
             tk.config.get("ckanext.switzerland.switch_connectome_base_url", "")
-            + quote(identifier)
+            + quote(identifier.encode("utf-8"))
     )
 
 
