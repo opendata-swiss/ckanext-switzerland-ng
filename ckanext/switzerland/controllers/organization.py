@@ -106,7 +106,7 @@ class OgdchOrganizationController(organization.OrganizationController):
                         and len(value) and not param.startswith('_'):
                     if not param.startswith('ext_'):
                         c.fields.append((param, value))
-                        fq += ' %s: "%s"' % (param, value)
+                        fq += ' +%s:"%s"' % (param, value)
                     else:
                         search_extras[param] = value
 
@@ -116,9 +116,7 @@ class OgdchOrganizationController(organization.OrganizationController):
             if (c.group and c.group.id in user_member_of_orgs):
                 context['ignore_capacity_check'] = True
             else:
-                if fq:
-                    fq += ' AND '
-                fq += 'capacity:"public"'
+                fq += ' +capacity:"public"'
 
             facets = OrderedDict()
 
@@ -155,12 +153,10 @@ class OgdchOrganizationController(organization.OrganizationController):
                 ).get('children', [])
             )
 
-            if fq:
-                fq += ' AND '
             if not children:
-                fq += 'organization:"%s"' % c.group_dict.get('name')
+                fq += ' +organization:"%s"' % c.group_dict.get('name')
             else:
-                fq += 'organization:("%s"' % c.group_dict.get('name')
+                fq += ' +organization:("%s"' % c.group_dict.get('name')
                 for name in children:
                     if name:
                         fq += ' OR "%s"' % name
