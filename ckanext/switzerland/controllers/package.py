@@ -13,7 +13,7 @@ import ckan.lib.helpers as h
 import ckan.model as model
 import ckan.plugins as p
 
-from ckan.common import OrderedDict, _, request, c, response
+from ckan.common import OrderedDict, _, request, c
 
 log = logging.getLogger(__name__)
 
@@ -222,8 +222,12 @@ class OgdchPackageController(package.PackageController):
         c.search_facets_limits = {}
         for facet in c.search_facets.keys():
             try:
-                limit = int(request.params.get('_%s_limit' % facet,
-                                               int(config.get('search.facets.default', 10))))
+                limit = int(
+                    request.params.get(
+                        '_%s_limit' % facet,
+                        int(config.get('search.facets.default', 10))
+                    )
+                )
             except ValueError:
                 abort(400, _('Parameter "{parameter_name}" is not '
                              'an integer').format(
