@@ -275,15 +275,14 @@ def ogdch_adjust_search_params(search_params):
     TODO: fix issue https://github.com/ckan/ckan/issues/2803 in CKAN core
     '''
     fq = search_params.get('fq', '')
-    if 'dataset_type:' not in fq:
-        # search_params.update({'fq': "%s +dataset_type:dataset" % fq})
-        search_params.update({'fq': " AND ".join(["+dataset_type:dataset", fq])})
+    if fq and 'dataset_type:' not in fq:
+        search_params['fq'] += " AND +dataset_type:dataset"
+    else:
+        search_params['fq'] = "+dataset_type:dataset"
 
     # remove colon followed by a space from q to avoid false negatives
     q = search_params.get('q', '')
     search_params['q'] = re.sub(r":\s", " ", q)
-
-    log.warning(search_params)
 
     return search_params
 
