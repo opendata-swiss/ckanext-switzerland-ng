@@ -344,7 +344,7 @@ def ogdch_showcase_search(context, data_dict):
     if data_dict.get('fq'):
         data_dict['fq'] += ' AND dataset_type:showcase'
     else:
-        data_dict.update({'fq': 'dataset_type:showcase'})
+        data_dict['fq'] = 'dataset_type:showcase'
 
     result = tk.get_action('package_search')(context, data_dict)
     if result:
