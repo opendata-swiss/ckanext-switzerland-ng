@@ -116,7 +116,9 @@ class OgdchOrganizationController(organization.OrganizationController):
             if (c.group and c.group.id in user_member_of_orgs):
                 context['ignore_capacity_check'] = True
             else:
-                fq += ' AND capacity:"public"'
+                if fq:
+                    fq += ' AND '
+                fq += 'capacity:"public"'
 
             facets = OrderedDict()
 
@@ -153,10 +155,12 @@ class OgdchOrganizationController(organization.OrganizationController):
                 ).get('children', [])
             )
 
+            if fq:
+                fq += ' AND '
             if not children:
-                fq += ' AND organization:"%s"' % c.group_dict.get('name')
+                fq += 'organization:"%s"' % c.group_dict.get('name')
             else:
-                fq += ' AND organization:("%s"' % c.group_dict.get('name')
+                fq += 'organization:("%s"' % c.group_dict.get('name')
                 for name in children:
                     if name:
                         fq += ' OR "%s"' % name
