@@ -243,6 +243,11 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
                     controller='ckanext.switzerland.controllers.organization:OgdchOrganizationController', # noqa
                     action='xml_upload')
 
+        # package routes
+        map.connect('search', '/dataset',
+                    controller='ckanext.switzerland.controllers.package:OgdchPackageController',  # noqa
+                    action='search', highlight_actions='index search')
+
         return map
 
 
