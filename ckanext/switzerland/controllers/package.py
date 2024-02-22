@@ -5,8 +5,8 @@ from urllib import urlencode
 
 from ckan.common import config
 from paste.deploy.converters import asbool
-from six import string_types
 
+import ckan.controllers.package as package
 import ckan.logic as logic
 import ckan.lib.base as base
 import ckan.lib.helpers as h
@@ -14,7 +14,6 @@ import ckan.model as model
 import ckan.plugins as p
 
 from ckan.common import OrderedDict, _, request, c, response
-from ckan.controllers.package import search_url
 
 log = logging.getLogger(__name__)
 
@@ -27,13 +26,17 @@ check_access = logic.check_access
 get_action = logic.get_action
 
 
-def _encode_params(params):
-    return [(k, v.encode('utf-8') if isinstance(v, string_types) else str(v))
-            for k, v in params]
-
-
-class PackageController(base.BaseController):
+class OgdchPackageController(package.PackageController):
     def search(self):
+        """This controller replaces the PackageController from CKAN.
+        It ensures that the filter queries (fq) are passed to Solr with the
+        + operator, to make them mandatory. Otherwise, they are treated as
+        optional, since we set the solrQueryParser defaultOperator to OR.
+
+        Unfortunately there are no clean extension points in the
+        PackageController, so that the search() method
+        had to be overridden completely.
+        """
         from ckan.lib.search import SearchError, SearchQueryError
 
         package_type = self._guess_package_type()
@@ -88,7 +91,7 @@ class PackageController(base.BaseController):
             if fields:
                 sort_string = ', '.join('%s %s' % f for f in fields)
                 params.append(('sort', sort_string))
-            return search_url(params, package_type)
+            return package.search_url(params, package_type)
 
         c.sort_by = _sort_by
         if not sort_by:
@@ -100,9 +103,9 @@ class PackageController(base.BaseController):
         def pager_url(q=None, page=None):
             params = list(params_nopage)
             params.append(('page', page))
-            return search_url(params, package_type)
+            return package.search_url(params, package_type)
 
-        c.search_url_params = urlencode(_encode_params(params_nopage))
+        c.search_url_params = urlencode(package._encode_params(params_nopage))
 
         try:
             c.fields = []
