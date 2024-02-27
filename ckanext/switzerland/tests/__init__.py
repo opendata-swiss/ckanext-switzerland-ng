@@ -4,6 +4,10 @@ from ckan.tests import helpers
 
 
 class OgdchFunctionalTestBase(helpers.FunctionalTestBase):
+    org = None
+    dataset_dict = None
+    dataset = None
+
     @classmethod
     def teardown_class(cls):
         super(OgdchFunctionalTestBase, cls).teardown_class()
