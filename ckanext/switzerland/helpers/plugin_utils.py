@@ -297,6 +297,7 @@ def ogdch_adjust_search_params(search_params):
     else:
         # For fielded queries, use the Extended DisMax Query Parser.
         search_params['defType'] = 'edismax'
+        search_params['mm'] = '1'
 
     return search_params
 
