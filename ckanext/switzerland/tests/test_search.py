@@ -77,14 +77,14 @@ class TestSearch(OgdchFunctionalTestBase):
         results = tk.get_action("package_search")({}, {"q": ""})
 
         # We expect to get all datasets.
-        assert results["count"] == 4
+        assert_equal(results["count"], 4)
 
     def test_simple_query(self):
         results = tk.get_action("package_search")({}, {"q": "bamboo"})
 
-        assert results["count"] == 2
+        assert_equal(results["count"], 2)
         names = [r["name"] for r in results["results"]]
-        assert sorted(names) == ["dataset3", "dataset4"]
+        assert_equal(sorted(names), ["dataset3", "dataset4"])
 
     def test_simple_query_with_two_clauses(self):
         results = tk.get_action("package_search")({}, {"q": "bamboo frog"})
@@ -92,30 +92,30 @@ class TestSearch(OgdchFunctionalTestBase):
         # We expect to get datasets that match 'bamboo' OR 'frog'.
         # Simple queries are handled by the DisMax Query Parser, which treats
         # search terms as optional if they don't have a + or - in front.
-        assert results["count"] == 3
+        assert_equal(results["count"], 3)
 
         names = [r["name"] for r in results["results"]]
-        assert sorted(names) == ["dataset2", "dataset3", "dataset4"]
+        assert_equal(sorted(names), ["dataset2", "dataset3", "dataset4"])
 
     def test_simple_query_with_two_clauses_using_and(self):
         results = tk.get_action("package_search")({}, {"q": "bamboo AND frog"})
 
         # We expect to get datasets that match 'bamboo' AND 'frog'.
         # The DisMax Query Parser can handle boolean logic.
-        assert results["count"] == 1
+        assert_equal(results["count"], 1)
 
         names = [r["name"] for r in results["results"]]
-        assert sorted(names) == ["dataset4"]
+        assert_equal(sorted(names), ["dataset4"])
 
     def test_simple_query_with_two_clauses_using_or(self):
         results = tk.get_action("package_search")({}, {"q": "bamboo frog"})
 
         # We expect to get datasets that match 'bamboo' OR 'frog'.
         # The DisMax Query Parser can handle boolean logic.
-        assert results["count"] == 3
+        assert_equal(results["count"], 3)
 
         names = [r["name"] for r in results["results"]]
-        assert sorted(names) == ["dataset2", "dataset3", "dataset4"]
+        assert_equal(sorted(names), ["dataset2", "dataset3", "dataset4"])
 
     def test_field_query_with_two_clauses(self):
         results = tk.get_action("package_search")(
@@ -126,10 +126,10 @@ class TestSearch(OgdchFunctionalTestBase):
         # 'description:bamboo' AND 'description:frog'.
         # Fielded queries are handled by the eDisMax Query Parser, which has a
         # default search operator of AND.
-        assert results["count"] == 1
+        assert_equal(results["count"], 1)
 
         names = [r["name"] for r in results["results"]]
-        assert sorted(names) == ["dataset4"]
+        assert_equal(sorted(names), ["dataset4"])
 
     def test_field_query_with_two_clauses_using_and(self):
         results = tk.get_action("package_search")(
@@ -138,10 +138,10 @@ class TestSearch(OgdchFunctionalTestBase):
 
         # We expect to get datasets that match
         # 'description:bamboo' AND 'description:frog'.
-        assert results["count"] == 1
+        assert_equal(results["count"], 1)
 
         names = [r["name"] for r in results["results"]]
-        assert sorted(names) == ["dataset4"]
+        assert_equal(sorted(names), ["dataset4"])
 
     def test_field_query_with_two_clauses_using_or(self):
         results = tk.get_action("package_search")(
@@ -150,10 +150,10 @@ class TestSearch(OgdchFunctionalTestBase):
 
         # We expect to get datasets that match
         # 'description:bamboo' OR 'description:frog'.
-        assert results["count"] == 3
+        assert_equal(results["count"], 3)
 
         names = [r["name"] for r in results["results"]]
-        assert sorted(names) == ["dataset2", "dataset3", "dataset4"]
+        assert_equal(sorted(names), ["dataset2", "dataset3", "dataset4"])
 
     def test_plus_filters_work_with_simple_search(self):
         results = tk.get_action("package_search")(
@@ -162,8 +162,8 @@ class TestSearch(OgdchFunctionalTestBase):
 
         # We expect to get datasets that match
         # (bamboo OR frog) AND keywords_fr:tag-fr
-        assert results["count"] == 1
-        assert results["results"][0]["name"] == "dataset3"
+        assert_equal(results["count"], 1)
+        assert_equal(results["results"][0]["name"], "dataset3")
 
     def test_minus_filters_work_with_simple_search(self):
         results = tk.get_action("package_search")(
@@ -172,10 +172,10 @@ class TestSearch(OgdchFunctionalTestBase):
 
         # We expect to get datasets that match
         # (bamboo OR frog) AND NOT keywords_fr:tag-fr
-        assert results["count"] == 2
+        assert_equal(results["count"], 2)
 
         names = [r["name"] for r in results["results"]]
-        assert sorted(names) == ["dataset2", "dataset4"]
+        assert_equal(sorted(names), ["dataset2", "dataset4"])
 
     def test_plus_filters_work_with_fielded_search(self):
         results = tk.get_action("package_search")(
@@ -188,8 +188,8 @@ class TestSearch(OgdchFunctionalTestBase):
 
         # We expect to get datasets that match
         # (bamboo OR frog) AND keywords_fr:tag-fr
-        assert results["count"] == 1
-        assert results["results"][0]["name"] == "dataset3"
+        assert_equal(results["count"], 1)
+        assert_equal(results["results"][0]["name"], "dataset3")
 
     def test_minus_filters_work_with_fielded_search(self):
         results = tk.get_action("package_search")(
@@ -202,7 +202,7 @@ class TestSearch(OgdchFunctionalTestBase):
 
         # We expect to get datasets that match
         # (bamboo OR frog) AND NOT keywords_fr:tag-fr
-        assert results["count"] == 2
+        assert_equal(results["count"], 2)
 
         names = [r["name"] for r in results["results"]]
-        assert sorted(names) == ["dataset2", "dataset4"]
+        assert_equal(sorted(names), ["dataset2", "dataset4"])
