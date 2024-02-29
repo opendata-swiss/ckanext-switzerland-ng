@@ -242,7 +242,6 @@ class TestOgdchDurationType(object):
 
 
 class TestOgdchUniqueIdentifierValidator(OgdchFunctionalTestBase):
-    # This
     validator = None
 
     def setup(self):
