@@ -21,8 +21,7 @@ import ckan.lib.uploader as uploader
 from ckan.logic import check_access
 from ckan.logic.action.create import user_create as core_user_create
 from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
-from ckanext.dcatapchharvest.harvesters_i14y import SwissDCATI14YRDFHarvester
-from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester
+from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester, SwissDCATI14YRDFHarvester
 from ckanext.harvest.model import HarvestJob
 from ckanext.harvest.logic.dictization import harvest_job_dictize
 from ckanext.switzerland.helpers.backend_helpers import (
