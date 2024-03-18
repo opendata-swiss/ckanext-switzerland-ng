@@ -42,6 +42,9 @@ pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-switzerl
 echo "Replace default path to CKAN core config file with the one on the container"
 sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' "$WORKDIR"/test.ini
 
+echo "Replace default database url with the one for the postgres service"
+sed -i -e 's/sqlalchemy.url = .*/sqlalchemy.url = postgresql:\/\/ckan_default:pass@postgres\/ckan_test/' "$WORKDIR"/test.ini
+
 echo "Remove plugins from CKAN config"
 paster --plugin=ckan config-tool "$WORKDIR"/test.ini "ckan.plugins = "
 
