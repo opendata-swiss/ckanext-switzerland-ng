@@ -73,8 +73,6 @@ jobs:
         docker start test_ckan
     - name: Install requirements and set up database
       run: |
-        docker ps
-        docker exec test_ckan ckan config search --with-current sqlalchemy.url
         docker exec test_ckan $WORKDIR/bin/install_test_requirements.sh ${{ matrix.ckan-version }}
     - name: Run tests
       run: | 
