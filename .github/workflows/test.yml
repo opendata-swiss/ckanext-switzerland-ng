@@ -21,20 +21,18 @@ jobs:
 
     name: CKAN ${{ matrix.ckan-version }}
     runs-on: ubuntu-latest
-    container:
-      image: openknowledge/ckan-dev:${{ matrix.ckan-version }}
     services:
-      solr:
-        image: ckan/ckan-solr:${{ matrix.ckan-version }}
       postgres:
         image: ckan/ckan-postgres-dev:${{ matrix.ckan-version }}
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
       redis:
-          image: redis:3
+        image: redis:3
     env:
       CKAN_SQLALCHEMY_URL: postgresql://ckan_default:pass@postgres/ckan_test
       CKAN_DATASTORE_WRITE_URL: postgresql://datastore_write:pass@postgres/datastore_test
@@ -42,41 +40,41 @@ jobs:
       CKAN_SOLR_URL: http://solr:8983/solr/ckan
       CKAN_REDIS_URL: redis://redis:6379/1
       CKAN_SITE_URL: http://test.ckan.net
+      WORKDIR: /__w/ckanext-switzerland-ng/ckanext-switzerland-ng
+      SOLR_CONFIG_CKAN_DIR: /opt/solr/server/solr/ckan/conf
 
     steps:
     - uses: actions/checkout@v3
-    - name: Install requirements
+    - name: Create solr container
       run: |
-        # Replace default path to CKAN core config file with the one on the container
-        sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' test.ini
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install -r dev-requirements.txt
-        pip install -e .
-        pip install -e git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming
-        pip install -e git+https://github.com/ckan/ckanext-fluent.git#egg=ckanext-fluent
-        pip install -e git+https://github.com/ckan/ckanext-hierarchy.git#egg=ckanext-hierarchy
-        # Last commit before support for Python 2 was dropped
-        pip install -e git+https://github.com/ckan/ckanext-harvest.git@v1.4.2#egg=ckanext-harvest
-        pip install -r https://raw.githubusercontent.com/ckan/ckanext-harvest/v1.4.2/requirements.txt
-        # Last commit before support for Python 2 was dropped
-        pip install -e git+https://github.com/ckan/ckanext-dcat.git@0c26bed5b7a3a7fca8e7b78e338aace096e0ebf6#egg=ckanext-dcat
-        pip install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/0c26bed5b7a3a7fca8e7b78e338aace096e0ebf6/requirements-py2.txt
-        pip install -e git+https://github.com/opendata-swiss/ckanext-dcatapchharvest.git#egg=ckanext-dcatapchharvest
-        pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-dcatapchharvest/master/requirements.txt
-        pip install -e git+https://github.com/opendata-swiss/ckanext-harvester_dashboard.git#egg=ckanext-harvester_dashboard
-        pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-harvester_dashboard/master/requirements.txt
-        # Last commit before support for Python 2 was dropped
-        pip install -e git+https://github.com/ckan/ckanext-xloader.git@16b84175005435d579607638dfe2056dda61af70#egg=ckanext-xloader
-        pip install -r https://raw.githubusercontent.com/ckan/ckanext-xloader/16b84175005435d579607638dfe2056dda61af70/requirements.txt
-        pip install -e git+https://github.com/opendata-swiss/ckanext-subscribe.git#egg=ckanext-subscribe
-        pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-subscribe/master/requirements.txt
-        # Last commit before support for Python 2 was dropped
-        pip install -e git+https://github.com/ckan/ckanext-showcase.git@v1.5.2#egg=ckanext-showcase
-
-    - name: Setup extension
+        docker create --name test_solr --network ${{ job.container.network }} --network-alias solr \
+          --workdir $WORKDIR --publish 8983:8983 \
+          -e SOLR_HEAP=1024m -e GITHUB_ACTIONS=true -e CI=true \
+          -v "${{ github.workspace }}/solr/schema.xml":"$SOLR_CONFIG_CKAN_DIR/schema.xml" \
+          -v "${{ github.workspace }}/solr/english_stop.txt":"$SOLR_CONFIG_CKAN_DIR/english_stop.txt" \
+          -v "${{ github.workspace }}/solr/fr_elision.txt":"$SOLR_CONFIG_CKAN_DIR/fr_elision.txt" \
+          -v "${{ github.workspace }}/solr/french_stop.txt":"$SOLR_CONFIG_CKAN_DIR/french_stop.txt" \
+          -v "${{ github.workspace }}/solr/german_dictionary.txt":"$SOLR_CONFIG_CKAN_DIR/german_dictionary.txt" \
+          -v "${{ github.workspace }}/solr/german_stop.txt":"$SOLR_CONFIG_CKAN_DIR/german_stop.txt" \
+          -v "${{ github.workspace }}/solr/italian_stop.txt":"$SOLR_CONFIG_CKAN_DIR/italian_stop.txt" \
+          -v "${{ github.workspace }}/solr/solrconfig.xml":"$SOLR_CONFIG_CKAN_DIR/solrconfig.xml" \
+          ckan/ckan-solr:${{ matrix.ckan-version }}
+        docker start test_solr
+    - name: Create ckan container
       run: |
-        paster --plugin=ckan db init -c test.ini
-        paster --plugin=ckanext-harvest harvester initdb -c test.ini
+        docker create --name test_ckan --network ${{ job.container.network }} --network-alias ckan \
+          -e "HOME=/github/home" -e GITHUB_ACTIONS=true -e CI=true -e CKAN_SITE_URL=http://test.ckan.net \
+          -v "/var/run/docker.sock":"/var/run/docker.sock" \
+          -v "/home/runner/work":"/__w" -v "/home/runner/work/_temp":"/__w/_temp" \
+          -v "/home/runner/work/_actions":"/__w/_actions" -v "/opt/hostedtoolcache":"/__t" \
+          -v "/home/runner/work/_temp/_github_home":"/github/home" \
+          -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" \
+          --entrypoint "tail" openknowledge/ckan-dev:${{ matrix.ckan-version }} "-f" "/dev/null"
+        docker start test_ckan
+    - name: Install requirements and set up database
+      run: |
+        docker exec test_ckan $WORKDIR/bin/install_test_requirements.sh ${{ matrix.ckan-version }}
     - name: Run tests
-      run: nosetests --ckan --nologcapture --with-pylons=test.ini --verbose ckanext/switzerland
+      run: | 
+        docker exec test_ckan nosetests --ckan --with-pylons=$WORKDIR/test.ini \
+          --with-coverage --cover-package=ckanext.switzerland --cover-inclusive --cover-erase --cover-tests $WORKDIR/ckanext/switzerland
