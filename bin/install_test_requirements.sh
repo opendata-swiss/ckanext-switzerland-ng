@@ -45,6 +45,8 @@ sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/'
 echo "Remove plugins from CKAN config"
 paster --plugin=ckan config-tool "$WORKDIR"/test.ini "ckan.plugins = "
 
+docker ps
+
 echo "Init db"
 paster --plugin=ckan db init -c "$WORKDIR"/test.ini
 
