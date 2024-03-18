@@ -42,8 +42,14 @@ pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-switzerl
 echo "Replace default path to CKAN core config file with the one on the container"
 sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' "$WORKDIR"/test.ini
 
-echo "Init db and enable required plugins"
+echo "Remove plugins from CKAN config"
 paster --plugin=ckan config-tool "$WORKDIR"/test.ini "ckan.plugins = "
+
+echo "Init db"
 paster --plugin=ckan db init -c "$WORKDIR"/test.ini
+
+echo "Init harvester db"
 paster --plugin=ckanext-harvest harvester initdb -c "$WORKDIR"/test.ini
+
+echo "Re-enable plugins in CKAN config"
 paster --plugin=ckan config-tool "$WORKDIR"/test.ini "ckan.plugins = ogdch ogdch_pkg ogdch_res ogdch_group ogdch_org ogdch_subscribe scheming_datasets scheming_groups scheming_organizations fluent hierarchy_display harvester_dashboard"
