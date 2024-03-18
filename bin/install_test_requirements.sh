@@ -4,12 +4,12 @@ WORKDIR=/__w/ckanext-switzerland-ng/ckanext-switzerland-ng
 
 pip install --upgrade pip
 
-# Install ckanext-switzerland-ng
+echo "Install ckanext-switzerland-ng"
 pip install -r "$WORKDIR"/requirements.txt
 pip install -r "$WORKDIR"/dev-requirements.txt
 pip install -e "$WORKDIR"/
 
-# Install ckanext dependencies
+echo "Install ckanext dependencies"
 pip install -e git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming
 pip install -e git+https://github.com/ckan/ckanext-fluent.git#egg=ckanext-fluent
 pip install -e git+https://github.com/ckan/ckanext-hierarchy.git#egg=ckanext-hierarchy
@@ -39,10 +39,10 @@ pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-subscrib
 pip install -e git+https://github.com/opendata-swiss/ckanext-switzerland-ng.git#egg=ckanext-switzerland-ng
 pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-switzerland-ng/master/requirements.txt
 
-# Replace default path to CKAN core config file with the one on the container
+echo "Replace default path to CKAN core config file with the one on the container"
 sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' "$WORKDIR"/test.ini
 
-# Init db and enable required plugins
+echo "Init db and enable required plugins"
 paster --plugin=ckan config-tool "$WORKDIR"/test.ini "ckan.plugins = "
 paster --plugin=ckan db init -c "$WORKDIR"/test.ini
 paster --plugin=ckanext-harvest harvester initdb -c "$WORKDIR"/test.ini
