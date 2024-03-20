@@ -47,7 +47,6 @@ jobs:
     - uses: actions/checkout@v3
     - name: Create solr container
       run: |
-        ls -lah
         docker create --name test_solr --network ${{ job.container.network }} --network-alias solr \
           --workdir $WORKDIR --publish 8983:8983 \
           -e SOLR_HEAP=1024m -e GITHUB_ACTIONS=true -e CI=true \
@@ -77,5 +76,4 @@ jobs:
         docker exec test_ckan $WORKDIR/bin/install_test_requirements.sh ${{ matrix.ckan-version }}
     - name: Run tests
       run: | 
-        docker exec test_ckan nosetests --ckan --with-pylons=$WORKDIR/test.ini \
-          --with-coverage --cover-package=ckanext.switzerland --cover-inclusive --cover-erase --cover-tests $WORKDIR/ckanext/switzerland
+        docker exec test_ckan nosetests --ckan --with-pylons=$WORKDIR/test.ini $WORKDIR/ckanext/switzerland
