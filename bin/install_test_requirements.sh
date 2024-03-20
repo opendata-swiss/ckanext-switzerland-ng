@@ -55,4 +55,4 @@ echo "Init harvester db"
 paster --plugin=ckanext-harvest harvester initdb -c "$WORKDIR"/test.ini
 
 echo "Re-enable plugins in CKAN config"
-paster --plugin=ckan config-tool "$WORKDIR"/test.ini "ckan.plugins = envvars ogdch ogdch_pkg ogdch_res ogdch_group ogdch_org ogdch_subscribe scheming_datasets scheming_groups scheming_organizations fluent hierarchy_display harvester_dashboard"
+paster --plugin=ckan config-tool "$WORKDIR"/test.ini "ckan.plugins = ogdch ogdch_pkg ogdch_res ogdch_group ogdch_org ogdch_subscribe scheming_datasets scheming_groups scheming_organizations fluent hierarchy_display harvester_dashboard"
