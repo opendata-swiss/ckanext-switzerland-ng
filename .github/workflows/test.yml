@@ -77,4 +77,5 @@ jobs:
     - name: Run tests
       run: | 
         docker exec test_ckan nosetests --ckan --with-pylons=$WORKDIR/test.ini \
-          --with-coverage --cover-package=ckanext.switzerland --cover-erase --cover-tests $WORKDIR/ckanext/switzerland
+          --with-coverage --cover-package=ckanext.switzerland --cover-inclusive --cover-erase --cover-tests \
+          $WORKDIR/ckanext/switzerland
