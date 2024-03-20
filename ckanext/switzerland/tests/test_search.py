@@ -4,6 +4,7 @@ import ckan.model as model
 import ckan.plugins.toolkit as tk
 import nose
 
+from ckan.common import config
 from ckanext.switzerland.tests import OgdchFunctionalTestBase
 
 assert_equal = nose.tools.assert_equal
@@ -22,6 +23,7 @@ class TestSearch(OgdchFunctionalTestBase):
         }
 
     def setup(self):
+        print(config)
         # This creates an org and a dataset in the database.
         super(TestSearch, self).setup()
 
