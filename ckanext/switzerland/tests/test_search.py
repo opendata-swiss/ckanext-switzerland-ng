@@ -23,7 +23,6 @@ class TestSearch(OgdchFunctionalTestBase):
         }
 
     def setup(self):
-        print(config)
         # This creates an org and a dataset in the database.
         super(TestSearch, self).setup()
 
