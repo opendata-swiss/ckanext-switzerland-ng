@@ -2,13 +2,7 @@
 
 from nose.tools import assert_equal, assert_in, assert_not_in
 
-import ckan.plugins.toolkit as tk
-import ckan.model as model
-
 from ckan import plugins as p
-from ckan.tests import helpers
-
-from ckanext.subscribe import model as subscribe_model
 from ckanext.subscribe.email_verification import (
     get_verification_email_vars,
 )
@@ -17,77 +11,12 @@ from ckanext.subscribe.notification_email import (
 )
 from ckanext.subscribe.tests import factories
 from ckanext.switzerland.plugins import OgdchSubscribePlugin
+from ckanext.switzerland.tests import OgdchFunctionalTestBase
 
 config = p.toolkit.config
 
 
-class TestSubscriptionEmails(helpers.FunctionalTestBase):
-
-    @classmethod
-    def teardown_class(cls):
-        super(TestSubscriptionEmails, cls).teardown_class()
-        helpers.reset_db()
-
-    def setup(self):
-        super(TestSubscriptionEmails, self).setup()
-        subscribe_model.setup()
-        user = tk.get_action('get_site_user')({'ignore_auth': True})['name']
-        context = {'model': model, 'session': model.Session,
-                   'user': user, 'ignore_auth': True}
-        # create an org
-        self.org = {
-            'name': 'test-org',
-            'title': {
-                'de': 'Test Org DE',
-                'fr': 'Test Org FR',
-                'it': 'Test Org IT',
-                'en': 'Test Org EN',
-            },
-            'political_level': 'confederation'
-        }
-        tk.get_action('organization_create')(context, self.org)
-
-        # create a valid DCAT-AP Switzerland compliant dataset
-        self.dataset_dict = {
-            'coverage': '',
-            'issued': '08.09.2015',
-            'contact_points': [{'email': 'pierre@bar.ch', 'name': 'Pierre'}],
-            'keywords': {
-                'fr': [],
-                'de': [],
-                'en': [],
-                'it': []
-            },
-            'spatial': '',
-            'publisher': {'name': 'Bundesarchiv', 'url':'https//opendata.swiss/organization/bundesarchiv'},
-            'description': {
-                'fr': 'Description FR',
-                'de': 'Beschreibung DE',
-                'en': 'Description EN',
-                'it': 'Description IT'
-            },
-            'title': {
-                'fr': 'FR Test',
-                'de': 'DE Test',
-                'en': 'EN Test',
-                'it': 'IT Test'
-            },
-            'language': [
-                'en',
-                'de'
-            ],
-            'name': 'test-dataset',
-            'relations': [],
-            'see_alsos': [],
-            'temporals': [],
-            'accrual_periodicity': 'http://publications.europa.eu/resource/authority/frequency/IRREG',
-            'modified': '09.09.2015',
-            'url': 'http://some_url',
-            'owner_org': 'test-org',
-            'identifier': 'test1@test-org'
-        }
-        self.dataset = tk.get_action('package_create')(context, self.dataset_dict)
-
+class TestSubscriptionEmails(OgdchFunctionalTestBase):
     def test_get_email_vars_with_subscription(self):
         subscription = factories.Subscription(
             dataset_id=self.dataset['id'], return_object=True)

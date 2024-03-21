@@ -258,7 +258,9 @@ class OgdchGroupPlugin(plugins.SingletonPlugin):
         group_show). It is called in the course of our ogdch_package_show API,
         and in that case, the data is not localized.
         """
-        grp_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=grp_dict) # noqa
+        grp_dict = ogdch_localize_utils.parse_json_attributes(
+            ckan_dict=grp_dict
+        )
         grp_dict['display_name'] = grp_dict['title']
 
         if ogdch_request_utils.request_is_api_request():
@@ -318,7 +320,9 @@ class OgdchResourcePlugin(plugins.SingletonPlugin):
         resource_show). It is called in the course of our ogdch_package_show
         API, and in that case, the data is not localized.
         """
-        res_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=res_dict) # noqa
+        res_dict = ogdch_localize_utils.parse_json_attributes(
+            ckan_dict=res_dict
+        )
         res_dict['display_name'] = res_dict['title']
         res_dict = ogdch_format_utils.prepare_resource_format(
             resource=res_dict)
@@ -363,7 +367,9 @@ class OgdchPackagePlugin(plugins.SingletonPlugin):
 
         request_lang = ogdch_request_utils.get_request_language()
 
-        pkg_dict = ogdch_localize_utils.localize_ckan_sub_dict(pkg_dict, request_lang) # noqa
+        pkg_dict = ogdch_localize_utils.localize_ckan_sub_dict(
+            pkg_dict, request_lang
+        )
         pkg_dict['resources'] = [
             ogdch_localize_utils.localize_ckan_sub_dict(
                 ckan_dict=resource,
@@ -389,14 +395,14 @@ class OgdchPackagePlugin(plugins.SingletonPlugin):
         and there we need all languages.
         -> find a solution to _prepare_package_json() in an API call.
         """
-        pkg_dict = ogdch_plugin_utils.ogdch_prepare_pkg_dict_for_api(pkg_dict) # noqa
+        pkg_dict = ogdch_plugin_utils.ogdch_prepare_pkg_dict_for_api(pkg_dict)
         return pkg_dict
 
     def before_index(self, search_data):
         """
         Search data before index
         """
-        search_data = ogdch_plugin_utils.ogdch_prepare_search_data_for_index( # noqa
+        search_data = ogdch_plugin_utils.ogdch_prepare_search_data_for_index(
             search_data=search_data
         )
         return search_data
@@ -405,7 +411,9 @@ class OgdchPackagePlugin(plugins.SingletonPlugin):
         """
         Adjust search parameters
         """
-        search_params = ogdch_plugin_utils.ogdch_adjust_search_params(search_params) # noqa
+        search_params = ogdch_plugin_utils.ogdch_adjust_search_params(
+            search_params
+        )
         return search_params
 
     # IXloader

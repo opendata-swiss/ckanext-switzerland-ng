@@ -282,6 +282,23 @@ def ogdch_adjust_search_params(search_params):
     q = search_params.get('q', '')
     search_params['q'] = re.sub(r":\s", " ", q)
 
+    if q == '':
+        # Use the standard Lucene Query Parser when searching for all
+        # datasets. (DisMax Query Parser does not work for this empty query.)
+        search_params['defType'] = 'lucene'
+    elif ':' not in q:
+        # Tell Solr we want to use the DisMax query parser, with a minimum
+        # match of 1 - that means only one of the clauses in the query has
+        # to match for a dataset to be returned (equivalent to searching with
+        # the OR operator). This gives more results in a basic search than the
+        # standard Lucene Query Parser.
+        search_params['defType'] = 'dismax'
+        search_params['mm'] = '1'
+    else:
+        # For fielded queries, use the Extended DisMax Query Parser.
+        search_params['defType'] = 'edismax'
+        search_params['mm'] = '1'
+
     return search_params
 
 
