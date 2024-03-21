@@ -795,7 +795,7 @@ class OgdchMiddlewarePlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IMiddleware)
 
     def make_middleware(self, app, config):
-        log.warning("making middleware")
+
         @app.after_request
         def my_after_request(response):
             log.warning("in after-request")
