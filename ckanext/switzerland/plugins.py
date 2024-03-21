@@ -789,3 +789,21 @@ class OgdchSubscribePlugin(SubscribePlugin):
             .filter(Activity.object_id.in_(objects_subscribed_to_keys))\
             .filter(Activity.user_id != harvest_user_id).all()
         return activities
+
+
+class OgdchMiddlewarePlugin(plugins.SingletonPlugin):
+    plugins.implements(plugins.IMiddleware)
+
+    def make_middleware(self, app, config):
+        log.warning("making middleware")
+        @app.after_request
+        def my_after_request(response):
+            log.warning("in after-request")
+            response.headers["X-Robots-Tag"] = "noindex, nofollow"
+            log.warning(response.headers)
+            return response
+
+        return app
+
+    def make_error_log_middleware(self, app, config):
+        return app
