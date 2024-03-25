@@ -86,6 +86,7 @@ setup(
         ogdch_showcase=ckanext.switzerland.plugins:OgdchShowcasePlugin
         ogdch_archive=ckanext.switzerland.plugins:OgdchArchivePlugin
         ogdch_subscribe=ckanext.switzerland.plugins:OgdchSubscribePlugin
+        ogdch_middleware=ckanext.switzerland.plugins:OgdchMiddlewarePlugin
 
         [babel.extractors]
                 ckan = ckan.lib.extract:extract_ckan
