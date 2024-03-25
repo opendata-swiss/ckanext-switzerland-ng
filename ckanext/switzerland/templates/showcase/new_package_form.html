@@ -8,8 +8,8 @@
     {% endblock %}
 
     {% block package_basic_fields_url %}
-      {% set prefix = h.url_for(controller='ckanext.showcase.controller:ShowcaseController', action='read', id='') %}
-      {% set domain = h.url_for(controller='ckanext.showcase.controller:ShowcaseController', action='read', id='', qualified=true) %}
+      {% set prefix = h.url_for('showcase_read', id='') %}
+      {% set domain = h.url_for('showcase_read', id='', qualified=true) %}
       {% set domain = domain|replace("http://", "")|replace("https://", "") %}
       {% set attrs = {'data-module': 'slug-preview-slug', 'data-module-prefix': domain, 'data-module-placeholder': '<showcase>'} %}
 

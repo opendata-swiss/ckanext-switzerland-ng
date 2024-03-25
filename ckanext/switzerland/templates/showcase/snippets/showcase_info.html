@@ -77,7 +77,7 @@ Example:
       {% if pkg.showcase_type %}
         {% set label_truncated = h.get_showcase_type_name(pkg.showcase_type, h.lang()) %}
         <ul class="nav nav-simple">
-          <li class="nav-item">{{ h.link_to(label_truncated, h.url_for('ckanext_showcase_index', showcase_type=pkg.showcase_type)) }}</li>
+          <li class="nav-item">{{ h.link_to(label_truncated, h.url_for('showcase_index', showcase_type=pkg.showcase_type)) }}</li>
         </ul>
       {% endif %}
     </section>
