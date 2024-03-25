@@ -25,6 +25,7 @@ import ckanext.xloader.interfaces as ix
 from ckanext.showcase.plugin import ShowcasePlugin
 from ckanext.subscribe.plugin import SubscribePlugin
 from ckanext.switzerland import logic as ogdch_logic
+from ckanext.switzerland.middleware import RobotsHeaderMiddleware
 
 log = logging.getLogger(__name__)
 
@@ -795,13 +796,7 @@ class OgdchMiddlewarePlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IMiddleware)
 
     def make_middleware(self, app, config):
-
-        @app.after_request
-        def my_after_request(response):
-            log.warning("in after-request")
-            response.headers["X-Robots-Tag"] = "noindex, nofollow"
-            log.warning(response.headers)
-            return response
+        app = RobotsHeaderMiddleware(app)
 
         return app
 
