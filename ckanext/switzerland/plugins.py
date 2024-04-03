@@ -25,6 +25,7 @@ import ckanext.xloader.interfaces as ix
 from ckanext.showcase.plugin import ShowcasePlugin
 from ckanext.subscribe.plugin import SubscribePlugin
 from ckanext.switzerland import logic as ogdch_logic
+from ckanext.switzerland.middleware import RobotsHeaderMiddleware
 
 log = logging.getLogger(__name__)
 
@@ -789,3 +790,15 @@ class OgdchSubscribePlugin(SubscribePlugin):
             .filter(Activity.object_id.in_(objects_subscribed_to_keys))\
             .filter(Activity.user_id != harvest_user_id).all()
         return activities
+
+
+class OgdchMiddlewarePlugin(plugins.SingletonPlugin):
+    plugins.implements(plugins.IMiddleware)
+
+    def make_middleware(self, app, config):
+        app = RobotsHeaderMiddleware(app)
+
+        return app
+
+    def make_error_log_middleware(self, app, config):
+        return app
