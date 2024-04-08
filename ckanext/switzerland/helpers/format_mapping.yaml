@@ -14,6 +14,8 @@ ESRI ASCII Grid:
   - 'esri ascii grid (.grd/.asc)'
   - 'esri arcinfo ascii grid'
   - '.asc)'
+  - 'grid_ascii'
+  - 'esri_ascii_grid'
 GDB:
   - 'esri file geodatabase'
   - 'filegeodatabase'
@@ -35,6 +37,7 @@ JSON:
 JSON-LD:
   - 'ld+json'
   - 'jsonld'
+  - 'json_ld'
 KML:
   - 'kml'
   - 'vnd.google-earth.kml+xml'
@@ -68,6 +71,7 @@ RDF Turtle:
 RDF XML:
   - 'rdf'
   - 'rdf+xml'
+  - 'rdf_xml'
 SHP:
   - 'esri shapefile'
   - 'esri shapefile (.shp)'
@@ -94,17 +98,22 @@ TSV:
   - 'tab-separated-values'
 WCS:
   - 'wcs'
+  - 'wcs_srvc'
 WFS:
   - 'wfs'
+  - 'wfs_srvc'
 WMS:
   - 'wms'
+  - 'wms_srvc'
 WORLDFILE:
   - 'geotiff/worldfile (.tif/.tfw)'
   - 'jpeg/worldfile (.jpg/.jgw)'
   - '.jgw)'
   - '.tfw)'
+  - 'world'
 WMTS:
   - 'wmts'
+  - 'wmts_srvc'
 XLS:
   - 'xls'
   - 'xlsx'
