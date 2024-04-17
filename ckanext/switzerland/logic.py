@@ -14,6 +14,7 @@ import rdflib.parser
 from rdflib.namespace import Namespace, RDF
 
 from ckan.common import config
+from ckan.lib import mailer
 from ckan.plugins.toolkit import get_or_bust, side_effect_free
 from ckan.logic import ActionError, NotFound, ValidationError, NotAuthorized
 import ckan.plugins.toolkit as tk
@@ -670,6 +671,9 @@ def ogdch_force_reset_passwords(context, data_dict):
     except NotAuthorized as e:
         raise NotAuthorized('Unauthorized to reset passwords.')
 
+    auth_user = context.get("auth_user_obj")
+    log.warning(auth_user)
+
     # Allow specifying single user or all users
     username = data_dict.get("user")
     # If resetting passwords for multiple users, use limit and offset to
@@ -678,30 +682,55 @@ def ogdch_force_reset_passwords(context, data_dict):
     offset = int(data_dict.get("offset", 0))
 
     if username:
-        users = [tk.get_action('user_show')(context, {"id": username})]
+        usernames = [username]
     else:
-        users = tk.get_action('user_list')(context, {})[offset:offset + limit]
+        usernames = tk.get_action('user_list')(
+            context, {"all_fields": False})[offset:offset + limit]
 
     # First, reset password to a random new value that won't be transmitted
-    for user in users:
-        password = _generate_password(user)
+    results = {
+        "success_users": [],
+        "errors": {},
+    }
+    for name in usernames:
+        if name == auth_user.name:
+            results["errors"][name] = \
+                "Not resetting password for the signed-in user {}".format(name)
+            continue
+        user_dict = tk.get_action('user_show')(context, {"id": name})
+        user_obj = context.get("user_obj")
+        password = _generate_password(user_dict)
 
-        user["password"] = password
+        log.info(u'Resetting password for user: {}'.format(user_dict["name"]))
+        user_dict["password"] = password
         try:
-            result = tk.get_action('user_update')(
+            tk.get_action('user_update')(
                 context,
-                user
+                user_dict
             )
-            log.warning(result)
-        except Exception as e:
-            log.warning(e)
+        except ValidationError as e:
+            results["errors"][name] = str(e)
+            continue
 
-    # Then trigger reset email
-    pass
+        # Then trigger reset email
+        log.info(u'Emailing reset link to user: {}'.format(user_dict["name"]))
+        try:
+            mailer.send_reset_link(user_obj)
+        except mailer.MailerException as e:
+            # SMTP is not configured correctly or the server is
+            # temporarily unavailable
+            results["errors"][name] = str(e)
+            continue
+
+        results["success_users"].append(name)
+
+    return results
 
 
 def _generate_password(user):
-    log.warning(user)
+    """Generate a password that fits our requirements. Code adapted from ckan
+    user_invite action.
+    """
     password_length = get_password_length(user["name"])
     while True:
         password = ''.join(random.SystemRandom().choice(
@@ -717,5 +746,4 @@ def _generate_password(user):
         )
         if not errors:
             break
-        print errors
     return password
