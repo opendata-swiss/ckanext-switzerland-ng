@@ -145,6 +145,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_subscribe_manage': ogdch_logic.ogdch_subscribe_manage,
             'ogdch_subscribe_unsubscribe': ogdch_logic.ogdch_subscribe_unsubscribe,  # noqa
             'ogdch_subscribe_unsubscribe_all': ogdch_logic.ogdch_subscribe_unsubscribe_all,  # noqa
+            'ogdch_force_reset_passwords': ogdch_logic.ogdch_force_reset_passwords,  # noqa
         }
 
     # ITemplateHelpers
