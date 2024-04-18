@@ -91,7 +91,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         facets_dict['keywords_' + lang_code] = plugins.toolkit._('Keywords')
         facets_dict['organization'] = plugins.toolkit._('Organizations')
         facets_dict['political_level'] = plugins.toolkit._('Political levels')
-        facets_dict['res_rights'] = plugins.toolkit._('Terms of use')
+        facets_dict['res_license'] = plugins.toolkit._('Terms of use')
         facets_dict['res_format'] = plugins.toolkit._('Formats')
         return facets_dict
 
@@ -104,7 +104,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         facets_dict['keywords_' + lang_code] = plugins.toolkit._('Keywords')
         facets_dict['organization'] = plugins.toolkit._('Organizations')
         facets_dict['political_level'] = plugins.toolkit._('Political levels')
-        facets_dict['res_rights'] = plugins.toolkit._('Terms of use')
+        facets_dict['res_license'] = plugins.toolkit._('Terms of use')
         facets_dict['res_format'] = plugins.toolkit._('Formats')
         return facets_dict
 
@@ -117,7 +117,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         facets_dict['private'] = plugins.toolkit._('Draft')
         facets_dict['groups'] = plugins.toolkit._('Categories')
         facets_dict['keywords_' + lang_code] = plugins.toolkit._('Keywords')
-        facets_dict['res_rights'] = plugins.toolkit._('Terms of use')
+        facets_dict['res_license'] = plugins.toolkit._('Terms of use')
         facets_dict['res_format'] = plugins.toolkit._('Formats')
         return facets_dict
 
@@ -179,7 +179,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'get_localized_value_from_json': ogdch_localize_utils.get_localized_value_from_json, # noqa
             'get_localized_value_for_display': ogdch_frontend_helpers.get_localized_value_for_display,  # noqa
             'ogdch_get_accrual_periodicity_choices': ogdch_dataset_form_helpers.ogdch_get_accrual_periodicity_choices,  # noqa
-            'ogdch_get_rights_choices': ogdch_dataset_form_helpers.ogdch_get_rights_choices,  # noqa
             'ogdch_get_license_choices': ogdch_dataset_form_helpers.ogdch_get_license_choices,  # noqa
             'ogdch_publisher_form_helper': ogdch_dataset_form_helpers.ogdch_publisher_form_helper,  # noqa
             'ogdch_contact_points_form_helper': ogdch_dataset_form_helpers.ogdch_contact_points_form_helper,  # noqa
