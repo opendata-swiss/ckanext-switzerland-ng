@@ -205,7 +205,6 @@ def ogdch_dataset_terms_of_use(context, data_dict):
                 continue
             if terms.index(res['license']) > terms.index(least_open):
                 least_open = res['license']
-    log.info("HEREREEEESS")
     if least_open is None:
         least_open = 'ClosedData'
 
