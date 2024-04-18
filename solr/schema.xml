@@ -278,7 +278,7 @@ schema. In this case the version should be set to the next CKAN version number.
     <field name="res_description_de" type="text_de" indexed="true" stored="true" multiValued="true"/>
     <field name="res_description_it" type="text_it" indexed="true" stored="true" multiValued="true"/>
     <field name="res_format" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="res_rights" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="res_license" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="res_url" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="res_type" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="res_latest_issued" type="date" indexed="true" stored="true" multiValued="false"/>
@@ -331,7 +331,7 @@ schema. In this case the version should be set to the next CKAN version number.
     <field name="suggest_groups" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="suggest_tags" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="suggest_organization" type="string" indexed="true" stored="true" multiValued="false"/>
-    <field name="suggest_res_rights" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="suggest_res_license" type="string" indexed="true" stored="true" multiValued="true"/>
     <field name="suggest_res_format" type="string" indexed="true" stored="true" multiValued="true"/>
 
     <!-- Multilingual -->
@@ -445,7 +445,7 @@ schema. In this case the version should be set to the next CKAN version number.
 <copyField source="suggest_tags" dest="suggest_context"/>
 <copyField source="suggest_organization" dest="suggest_context"/>
 <copyField source="political_level" dest="suggest_context"/>
-<copyField source="suggest_res_rights" dest="suggest_context"/>
+<copyField source="suggest_res_license" dest="suggest_context"/>
 <copyField source="suggest_res_format" dest="suggest_context"/>
 
 <copyField source="title_en" dest="suggest_en"/>
