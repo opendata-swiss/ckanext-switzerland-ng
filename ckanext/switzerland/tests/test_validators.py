@@ -170,7 +170,7 @@ class TestOgdchLicenseRequiredValidator(object):
 
         assert_equals('', data[key])
         assert_equals(
-            ["Distributions must have either 'rights' or 'license'"],
+            ["Distributions must have 'license' property"],
             errors[key]
         )
 

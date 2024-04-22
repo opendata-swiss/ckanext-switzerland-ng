@@ -42,7 +42,7 @@ def _prepare_suggest_context(search_data, pkg_dict):
     search_data['suggest_tags'].extend([clean_suggestion(t) for t in search_data.get('keywords_it', [])])  # noqa
     search_data['suggest_tags'].extend([clean_suggestion(t) for t in search_data.get('keywords_en', [])])  # noqa
 
-    search_data['suggest_res_rights'] = [clean_suggestion(t) for t in search_data['res_rights']]  # noqa
+    search_data['suggest_res_license'] = [clean_suggestion(t) for t in search_data['res_license']]  # noqa
     search_data['suggest_res_format'] = [clean_suggestion(t) for t in search_data['res_format']]  # noqa
 
     return search_data
@@ -80,7 +80,11 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
     search_data['res_format'] = ogdch_format_utils.prepare_formats_for_index(
         resources=validated_dict[u'resources']
     )
-    search_data['res_rights'] = [ogdch_term_utils.simplify_terms_of_use(r['rights']) for r in validated_dict[u'resources'] if 'rights' in r.keys()]  # noqa
+    search_data['res_license'] = [
+        ogdch_term_utils.simplify_terms_of_use(r['license'])
+        for r in validated_dict[u'resources']
+        if 'license' in r.keys()
+    ]
     search_data['res_latest_issued'] = ogdch_date_utils.get_latest_isodate(
         [(r['issued'])
          for r in validated_dict[u'resources']

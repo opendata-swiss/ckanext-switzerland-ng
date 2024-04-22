@@ -230,7 +230,7 @@ def ogdch_license_required(field, schema):
 
         log.debug("Resource % has neither license nor rights")
         errors[key].append(
-            "Distributions must have either 'rights' or 'license'"
+            "Distributions must have 'license' property"
         )
         data[key] = ''
     return validator

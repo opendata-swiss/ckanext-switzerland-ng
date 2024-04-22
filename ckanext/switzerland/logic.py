@@ -177,8 +177,10 @@ def ogdch_dataset_terms_of_use(context, data_dict):
     Returns the terms of use for the requested dataset.
 
     By definition the terms of use of a dataset corresponds
-    to the least open rights statement of all distributions of
-    the dataset
+    to the least open license statement of all distributions of
+    the dataset.
+    Important : The property dct:license is now required
+    for the terms of use instead of dct:rights
     '''
     terms = [
         'NonCommercialAllowed-CommercialAllowed-ReferenceNotRequired',
@@ -194,21 +196,20 @@ def ogdch_dataset_terms_of_use(context, data_dict):
 
     least_open = None
     for res in pkg['resources']:
-        if 'rights' in res:
-            if res['rights'] not in terms:
+        if 'license' in res:
+            if res['license'] not in terms:
                 least_open = 'ClosedData'
                 break
             if least_open is None:
-                least_open = res['rights']
+                least_open = res['license']
                 continue
-            if terms.index(res['rights']) > terms.index(least_open):
-                least_open = res['rights']
-
+            if terms.index(res['license']) > terms.index(least_open):
+                least_open = res['license']
     if least_open is None:
         least_open = 'ClosedData'
 
     return {
-        'dataset_rights': least_open
+        'dataset_license': least_open
     }
 
 

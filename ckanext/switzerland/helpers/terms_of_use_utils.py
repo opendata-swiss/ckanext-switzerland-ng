@@ -19,4 +19,4 @@ def simplify_terms_of_use(term_id):
 
     if term_id in terms:
         return term_id
-    return 'ClosedData'
+    return TERMS_OF_USE_CLOSED
