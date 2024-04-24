@@ -123,6 +123,13 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
             search_data['title_' + lang_code] = \
                 ogdch_loc_utils.get_localized_value_from_dict(
                     validated_dict['title'], lang_code)
+
+            # Logs for debugging indexing errors
+            log.info(validated_dict['name'])
+            log.info(validated_dict['title'])
+            log.info(ogdch_loc_utils.get_localized_value_from_dict(
+                validated_dict['title'], lang_code))
+
             search_data['title_string_' + lang_code] = munge_title_to_name(
                 ogdch_loc_utils.get_localized_value_from_dict(
                     validated_dict['title'], lang_code))
