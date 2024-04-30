@@ -219,7 +219,7 @@ class TestSubscriptionEmails(OgdchFunctionalTestBase):
 </p>
 <p>
     <a href="https://twitter.com/opendataswiss">
-        <img src="https://opendata.swiss/images/twitter.svg" alt="Twitter"
+        <img src="https://opendata.swiss/images/x.svg" alt="X"
              style="color: #fff; background-color: #009688; border: 0;"/>
     </a>
 </p>''', body_html)
