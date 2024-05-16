@@ -34,7 +34,7 @@ Secrétariat Open Government Data
 Office fédéral de la statistique
 Espace de l'Europe 10
 CH-2010 Neuchâtel
-<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
+www.bfs.admin.ch/ogd
 
 Gérer mes abonnements: {{ manage_link }}
 
@@ -54,7 +54,7 @@ Segreteria Open Government Data
 Ufficio federale di statistica UST
 Espace de l’Europe 10,
 CH-2010 Neuchâtel
-<a href="www.bfs.admin.ch/ogd">www.bfs.admin.ch/ogd</a>
+www.bfs.admin.ch/ogd
 
 Gestione abbonamento: {{ manage_link }}
 
