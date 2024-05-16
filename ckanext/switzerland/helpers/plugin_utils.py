@@ -108,7 +108,16 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
     if 'publisher' in validated_dict:
         _prepare_publisher_for_search(validated_dict['publisher'],
                                       validated_dict['name'])
-    search_data['see_alsos'] = [d['dataset_identifier'] for d in validated_dict.get('see_alsos', [])]  # noqa
+    try:
+        search_data['see_alsos'] = [
+            d['dataset_identifier'] for d in validated_dict.get('see_alsos', [])
+        ]
+    except TypeError as e:
+        log.warning(
+            "Got error {} while indexing dataset {} with data {}".format(
+                e.message, validated_dict['name'], validated_dict
+            )
+        )
 
     # make sure we're not dealing with NoneType
     if search_data['metadata_created'] is None:
