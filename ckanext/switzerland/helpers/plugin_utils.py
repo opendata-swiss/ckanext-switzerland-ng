@@ -110,7 +110,9 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
                                       validated_dict['name'])
     try:
         search_data['see_alsos'] = [
-            d['dataset_identifier'] for d in validated_dict.get('see_alsos', [])
+            d['dataset_identifier'] for d in validated_dict.get(
+                'see_alsos', []
+            )
         ]
     except TypeError as e:
         log.warning(
