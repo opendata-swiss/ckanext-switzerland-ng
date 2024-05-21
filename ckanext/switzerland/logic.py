@@ -34,6 +34,8 @@ from ckanext.switzerland.helpers.decorators import ratelimit
 from ckanext.switzerland.helpers.logic_helpers import (
     get_dataset_count, get_org_count, get_showcases_for_dataset,
     map_existing_resources_to_new_dataset)
+from ckanext.switzerland.helpers.terms_of_use_utils import (
+    get_dataset_terms_of_use)
 from ckan.lib.munge import munge_title_to_name
 from ckanext.subscribe.email_auth import authenticate_with_code
 from ckanext.subscribe.action import (subscribe_list_subscriptions,
@@ -182,46 +184,13 @@ def ogdch_dataset_terms_of_use(context, data_dict):
     Important : The property dct:license is now required
     for the terms of use instead of dct:rights
     '''
-    terms = [
-        'NonCommercialAllowed-CommercialAllowed-ReferenceNotRequired',
-        'NonCommercialAllowed-CommercialAllowed-ReferenceRequired',
-        'NonCommercialAllowed-CommercialWithPermission-ReferenceNotRequired',
-        'NonCommercialAllowed-CommercialWithPermission-ReferenceRequired',
-        'ClosedData',
-    ]
     user = tk.get_action('get_site_user')({'ignore_auth': True}, {})
     req_context = {'user': user['name']}
     pkg_id = get_or_bust(data_dict, 'id')
     pkg = tk.get_action('package_show')(req_context, {'id': pkg_id})
 
-    least_open = None
-
-    for resource in pkg['resources']:
-        if least_open == 'ClosedData':
-            break
-
-        if resource.get('license') not in terms and \
-                resource.get('rights') not in terms:
-            least_open = 'ClosedData'
-            break
-
-        for field_name in ['license', 'rights']:
-            if resource.get(field_name) in terms:
-                if least_open is None:
-                    least_open = resource.get(field_name)
-                    continue
-
-                if terms.index(resource.get(field_name)) > \
-                        terms.index(least_open):
-                    least_open = resource.get(field_name)
-                    continue
-
-                # if the resource license is in terms, we don't need to look at
-                # resource rights
-                continue
-
     return {
-        'dataset_license': least_open
+        'dataset_license': get_dataset_terms_of_use(pkg),
     }
 
 
