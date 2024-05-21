@@ -20,6 +20,7 @@ import ckanext.switzerland.helpers.frontend_helpers as ogdch_frontend_helpers
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 import ckanext.switzerland.helpers.plugin_utils as ogdch_plugin_utils
 import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
+import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 import ckanext.switzerland.helpers.validators as ogdch_validators
 import ckanext.xloader.interfaces as ix
 from ckanext.showcase.plugin import ShowcasePlugin
@@ -161,7 +162,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'get_frequency_name': ogdch_frontend_helpers.get_frequency_name,
             'get_political_level': ogdch_frontend_helpers.get_political_level,
             'get_terms_of_use_icon': ogdch_frontend_helpers.get_terms_of_use_icon, # noqa
-            'get_dataset_terms_of_use': ogdch_frontend_helpers.get_dataset_terms_of_use, # noqa
+            'get_dataset_terms_of_use': ogdch_term_utils.get_dataset_terms_of_use, # noqa
             'get_dataset_by_identifier': ogdch_frontend_helpers.get_dataset_by_identifier, # noqa
             'get_dataset_by_permalink': ogdch_frontend_helpers.get_dataset_by_permalink, # noqa
             'get_readable_file_size': ogdch_frontend_helpers.get_readable_file_size, # noqa
