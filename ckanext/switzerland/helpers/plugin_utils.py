@@ -81,9 +81,8 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
         resources=validated_dict[u'resources']
     )
     search_data['res_license'] = [
-        ogdch_term_utils.simplify_terms_of_use(r['license'])
+        ogdch_term_utils.get_resource_terms_of_use(r)
         for r in validated_dict[u'resources']
-        if 'license' in r.keys()
     ]
     search_data['res_latest_issued'] = ogdch_date_utils.get_latest_isodate(
         [(r['issued'])

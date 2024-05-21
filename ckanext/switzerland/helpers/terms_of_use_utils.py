@@ -22,6 +22,16 @@ def simplify_terms_of_use(term_id):
     return TERMS_OF_USE_CLOSED
 
 
+def get_resource_terms_of_use(resource):
+    if resource.get("license") in OPEN_TERMS:
+        return resource.get("license")
+
+    if resource.get("rights") in OPEN_TERMS:
+        return resource.get("rights")
+
+    return TERMS_OF_USE_CLOSED
+
+
 def get_dataset_terms_of_use(dataset):
     least_open = None
 
