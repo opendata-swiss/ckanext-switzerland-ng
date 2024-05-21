@@ -6,12 +6,34 @@ import unittest
 
 
 class TestHelpers(unittest.TestCase):
-    def test_simplify_terms_of_use_open(self):
+    def test_get_resource_terms_of_use_with_license(self):
         term_id = 'NonCommercialAllowed-CommercialAllowed-ReferenceRequired'
-        result = ogdch_term_utils.simplify_terms_of_use(term_id)
+        resource = {
+            "license": term_id
+        }
+        result = ogdch_term_utils.get_resource_terms_of_use(resource)
         self.assertEquals(term_id, result)
 
-    def test_simplify_terms_of_use_closed(self):
+    def test_get_resource_terms_of_use_with_rights(self):
+        term_id = 'NonCommercialAllowed-CommercialAllowed-ReferenceRequired'
+        resource = {
+            "rights": term_id
+        }
+        result = ogdch_term_utils.get_resource_terms_of_use(resource)
+        self.assertEquals(term_id, result)
+
+    def test_get_resource_terms_of_use_with_license_and_rights(self):
+        license_term_id = 'NonCommercialAllowed-CommercialAllowed-ReferenceRequired'
+        rights_term_id = 'NonCommercialAllowed-CommercialWithPermission-ReferenceNotRequired'
+        resource = {
+            "license": license_term_id,
+            "rights": rights_term_id
+        }
+        result = ogdch_term_utils.get_resource_terms_of_use(resource)
+        self.assertEquals(license_term_id, result)
+
+    def test_get_resource_terms_of_use_closed(self):
         term_id = 'NonCommercialNotAllowed-CommercialAllowed-ReferenceNotRequired'  # noqa
-        result = ogdch_term_utils.simplify_terms_of_use(term_id)
+        resource = {}
+        result = ogdch_term_utils.get_resource_terms_of_use(resource)
         self.assertEquals('ClosedData', result)
