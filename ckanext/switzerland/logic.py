@@ -195,18 +195,30 @@ def ogdch_dataset_terms_of_use(context, data_dict):
     pkg = tk.get_action('package_show')(req_context, {'id': pkg_id})
 
     least_open = None
-    for res in pkg['resources']:
-        if 'license' in res:
-            if res['license'] not in terms:
-                least_open = 'ClosedData'
-                break
-            if least_open is None:
-                least_open = res['license']
+
+    for resource in pkg['resources']:
+        if least_open == 'ClosedData':
+            break
+
+        if resource.get('license') not in terms and \
+                resource.get('rights') not in terms:
+            least_open = 'ClosedData'
+            break
+
+        for field_name in ['license', 'rights']:
+            if resource.get(field_name) in terms:
+                if least_open is None:
+                    least_open = resource.get(field_name)
+                    continue
+
+                if terms.index(resource.get(field_name)) > \
+                        terms.index(least_open):
+                    least_open = resource.get(field_name)
+                    continue
+
+                # if the resource license is in terms, we don't need to look at
+                # resource rights
                 continue
-            if terms.index(res['license']) > terms.index(least_open):
-                least_open = res['license']
-    if least_open is None:
-        least_open = 'ClosedData'
 
     return {
         'dataset_license': least_open
