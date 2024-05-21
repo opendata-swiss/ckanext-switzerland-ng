@@ -146,41 +146,6 @@ def get_political_level(political_level):
     return political_levels.get(political_level, political_level)
 
 
-def get_terms_of_use_icon(terms_of_use):
-    term_to_image_mapping = {
-        ogdch_term_utils.TERMS_OF_USE_OPEN: {  # noqa
-            'title': _('Open use'),
-            'icon': 'terms_open',
-        },
-        ogdch_term_utils.TERMS_OF_USE_BY: {  # noqa
-            'title': _('Open use. Must provide the source.'),
-            'icon': 'terms_by',
-        },
-        ogdch_term_utils.TERMS_OF_USE_ASK: {  # noqa
-            'title': _('Open use. Use for commercial purposes requires permission of the data owner.'),  # noqa
-            'icon': 'terms_ask',
-        },
-        ogdch_term_utils.TERMS_OF_USE_BY_ASK: {  # noqa
-            'title': _('Open use. Must provide the source. Use for commercial purposes requires permission of the data owner.'),  # noqa
-            'icon': 'terms_by-ask',
-        },
-        ogdch_term_utils.TERMS_OF_USE_CLOSED: {
-            'title': _('Closed data'),
-            'icon': 'terms_closed',
-        },
-    }
-    term_id = ogdch_term_utils.simplify_terms_of_use(terms_of_use)
-    return term_to_image_mapping.get(term_id, None)
-
-
-def get_terms_of_use_url(terms_of_use):
-    terms_of_use_url = url_for('/terms-of-use')
-    pagemark = mapping_terms_of_use_to_pagemark.get(terms_of_use)
-    if pagemark:
-        terms_of_use_url += pagemark
-    return terms_of_use_url
-
-
 def get_dataset_by_identifier(identifier):
     try:
         return logic.get_action('ogdch_dataset_by_identifier')(

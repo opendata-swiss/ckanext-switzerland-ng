@@ -161,7 +161,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'localize_showcase_facet_title': ogdch_backend_helpers.localize_showcase_facet_title, # noqa
             'get_frequency_name': ogdch_frontend_helpers.get_frequency_name,
             'get_political_level': ogdch_frontend_helpers.get_political_level,
-            'get_terms_of_use_icon': ogdch_frontend_helpers.get_terms_of_use_icon, # noqa
             'get_dataset_terms_of_use': ogdch_term_utils.get_dataset_terms_of_use, # noqa
             'get_dataset_by_identifier': ogdch_frontend_helpers.get_dataset_by_identifier, # noqa
             'get_dataset_by_permalink': ogdch_frontend_helpers.get_dataset_by_permalink, # noqa
@@ -170,7 +169,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_localised_number': ogdch_frontend_helpers.ogdch_localised_number, # noqa
             'ogdch_render_tree': ogdch_frontend_helpers.ogdch_render_tree,
             'ogdch_group_tree': ogdch_frontend_helpers.ogdch_group_tree,
-            'get_terms_of_use_url': ogdch_frontend_helpers.get_terms_of_use_url, # noqa
             'get_localized_newsletter_url': ogdch_frontend_helpers.get_localized_newsletter_url, # noqa
             'get_localized_date': ogdch_date_helpers.get_localized_date,
             'get_date_picker_format': ogdch_date_helpers.get_date_picker_format, # noqa
