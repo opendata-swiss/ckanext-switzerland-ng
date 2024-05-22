@@ -90,10 +90,23 @@ class TestHelpers(object):
             [
                 {
                     "resources": [
+                        {"license": "A very cool open license"},
+                        {"rights": "A very cool set of rights"},
+                    ]
+                },
+                ogdch_term_utils.TERMS_OF_USE_CLOSED
+            ],
+            [
+                {
+                    "resources": [
                         {
                             "license": "A very cool open license",
                             "rights": ogdch_term_utils.TERMS_OF_USE_BY
-                        }
+                        },
+                        {
+                            "license": ogdch_term_utils.TERMS_OF_USE_OPEN,
+                            "rights": "A very cool set of rights",
+                        },
                     ]
                 },
                 ogdch_term_utils.TERMS_OF_USE_BY
@@ -102,8 +115,23 @@ class TestHelpers(object):
                 {
                     "resources": [
                         {
+                            # If a resource's license is in the open terms,
+                            # we ignore the resource's rights statement.
                             "license": ogdch_term_utils.TERMS_OF_USE_OPEN,
-                            "rights": ogdch_term_utils.TERMS_OF_USE_BY
+                            "rights": "Rights statement not in OPEN_TERMS"
+                        }
+                    ]
+                },
+                ogdch_term_utils.TERMS_OF_USE_OPEN
+            ],
+            [
+                {
+                    "resources": [
+                        {
+                            # If a resource's license is not in the open terms,
+                            # we check the resource's rights statement.
+                            "license": "License not in OPEN_TERMS",
+                            "rights": ogdch_term_utils.TERMS_OF_USE_OPEN,
                         }
                     ]
                 },
