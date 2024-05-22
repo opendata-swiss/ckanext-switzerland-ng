@@ -44,16 +44,16 @@ def get_dataset_terms_of_use(dataset):
             if resource.get(field_name) in OPEN_TERMS:
                 if least_open is None:
                     least_open = resource.get(field_name)
-                    continue
+                    break
 
                 if OPEN_TERMS.index(
                     resource.get(field_name)
                 ) > OPEN_TERMS.index(least_open):
                     least_open = resource.get(field_name)
-                    continue
+                    break
 
                 # if the resource license is in OPEN_TERMS, we don't need to
                 # look at the resource rights
-                continue
+                break
 
     return least_open
