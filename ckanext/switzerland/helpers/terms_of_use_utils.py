@@ -30,9 +30,6 @@ def get_dataset_terms_of_use(dataset):
     least_open = None
 
     for resource in dataset["resources"]:
-        if least_open == TERMS_OF_USE_CLOSED:
-            break
-
         if (
             resource.get("license") not in OPEN_TERMS
             and resource.get("rights") not in OPEN_TERMS
