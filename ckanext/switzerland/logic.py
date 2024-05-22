@@ -34,6 +34,8 @@ from ckanext.switzerland.helpers.decorators import ratelimit
 from ckanext.switzerland.helpers.logic_helpers import (
     get_dataset_count, get_org_count, get_showcases_for_dataset,
     map_existing_resources_to_new_dataset)
+from ckanext.switzerland.helpers.terms_of_use_utils import (
+    get_dataset_terms_of_use)
 from ckan.lib.munge import munge_title_to_name
 from ckanext.subscribe.email_auth import authenticate_with_code
 from ckanext.subscribe.action import (subscribe_list_subscriptions,
@@ -182,34 +184,13 @@ def ogdch_dataset_terms_of_use(context, data_dict):
     Important : The property dct:license is now required
     for the terms of use instead of dct:rights
     '''
-    terms = [
-        'NonCommercialAllowed-CommercialAllowed-ReferenceNotRequired',
-        'NonCommercialAllowed-CommercialAllowed-ReferenceRequired',
-        'NonCommercialAllowed-CommercialWithPermission-ReferenceNotRequired',
-        'NonCommercialAllowed-CommercialWithPermission-ReferenceRequired',
-        'ClosedData',
-    ]
     user = tk.get_action('get_site_user')({'ignore_auth': True}, {})
     req_context = {'user': user['name']}
     pkg_id = get_or_bust(data_dict, 'id')
     pkg = tk.get_action('package_show')(req_context, {'id': pkg_id})
 
-    least_open = None
-    for res in pkg['resources']:
-        if 'license' in res:
-            if res['license'] not in terms:
-                least_open = 'ClosedData'
-                break
-            if least_open is None:
-                least_open = res['license']
-                continue
-            if terms.index(res['license']) > terms.index(least_open):
-                least_open = res['license']
-    if least_open is None:
-        least_open = 'ClosedData'
-
     return {
-        'dataset_license': least_open
+        'dataset_license': get_dataset_terms_of_use(pkg),
     }
 
 
