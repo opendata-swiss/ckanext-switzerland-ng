@@ -22,7 +22,7 @@ from ckan.logic import check_access
 from ckan.logic.action.create import user_create as core_user_create
 from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
 from ckanext.dcatapchharvest.harvesters import (
-    SwissDCATRDFHarvester, 
+    SwissDCATRDFHarvester,
     SwissDCATI14YRDFHarvester)
 from ckanext.harvest.model import HarvestJob
 from ckanext.harvest.logic.dictization import harvest_job_dictize
