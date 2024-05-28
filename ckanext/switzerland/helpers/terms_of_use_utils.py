@@ -8,15 +8,49 @@ TERMS_OF_USE_ASK = 'NonCommercialAllowed-CommercialWithPermission-ReferenceNotRe
 TERMS_OF_USE_BY_ASK = 'NonCommercialAllowed-CommercialWithPermission-ReferenceRequired' # noqa
 TERMS_OF_USE_CLOSED = 'ClosedData'
 
+OPEN_TERMS = [
+    TERMS_OF_USE_OPEN,
+    TERMS_OF_USE_BY,
+    TERMS_OF_USE_ASK,
+    TERMS_OF_USE_BY_ASK,
+]
 
-def simplify_terms_of_use(term_id):
-    terms = [
-        TERMS_OF_USE_OPEN,
-        TERMS_OF_USE_BY,
-        TERMS_OF_USE_ASK,
-        TERMS_OF_USE_BY_ASK,
-    ]
 
-    if term_id in terms:
-        return term_id
-    return 'ClosedData'
+def get_resource_terms_of_use(resource):
+    if resource.get("license") in OPEN_TERMS:
+        return resource.get("license")
+
+    if resource.get("rights") in OPEN_TERMS:
+        return resource.get("rights")
+
+    return TERMS_OF_USE_CLOSED
+
+
+def get_dataset_terms_of_use(dataset):
+    least_open = None
+
+    for resource in dataset["resources"]:
+        if (
+            resource.get("license") not in OPEN_TERMS
+            and resource.get("rights") not in OPEN_TERMS
+        ):
+            least_open = TERMS_OF_USE_CLOSED
+            break
+
+        for field_name in ["license", "rights"]:
+            if resource.get(field_name) in OPEN_TERMS:
+                if least_open is None:
+                    least_open = resource.get(field_name)
+                    break
+
+                if OPEN_TERMS.index(
+                    resource.get(field_name)
+                ) > OPEN_TERMS.index(least_open):
+                    least_open = resource.get(field_name)
+                    break
+
+                # if the resource license is in OPEN_TERMS, we don't need to
+                # look at the resource rights
+                break
+
+    return least_open

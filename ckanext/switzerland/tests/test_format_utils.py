@@ -101,6 +101,11 @@ prepare_resource_data = [
          'format': 'jsonld'
      }, 'JSON-LD'),
     ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'json_ld'
+     }, 'JSON-LD'),
+    ({
          'download_url': 'http://download.url/foo',
          'media_type': 'text/n3',
          'format': None
@@ -124,6 +129,11 @@ prepare_resource_data = [
          'download_url': 'http://download.url',
          'media_type': None,
          'format': 'rdf'
+     }, 'RDF XML'),
+    ({
+         'download_url': 'http://download.url',
+         'media_type': None,
+         'format': 'rdf_xml'
      }, 'RDF XML'),
     ({
          'download_url': 'http://download.url/foo.rdf',
@@ -225,6 +235,26 @@ prepare_resource_data = [
          'media_type': None,
          'format': 'esri shapefile'
      }, 'SHP'),
+    ({
+         'download_url': 'http://download.url/file.asc',
+         'media_type': None,
+         'format': 'grid_ascii'
+     }, 'ESRI ASCII Grid'),
+    ({
+         'download_url': 'http://download.url/file.asc',
+         'media_type': 'text/plain',
+         'format': 'grid_ascii'
+     }, 'TXT'),
+    ({
+         'download_url': 'http://download.url/file',
+         'media_type': None,
+         'format': 'world'
+     }, 'WORLDFILE'),
+    ({
+         'download_url': 'http://download.url/file',
+         'media_type': None,
+         'format': 'wmts_srvc'
+     }, 'WMTS'),
 ]
 
 

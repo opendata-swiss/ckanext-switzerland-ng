@@ -1,85 +1,17 @@
 import nose
 
 from ckan.lib.helpers import url_for
-import ckan.plugins.toolkit as tk
-import ckan.model as model
-
-from ckan.tests import helpers
+from ckanext.switzerland.tests import OgdchFunctionalTestBase
 
 assert_equal = nose.tools.assert_equal
 assert_true = nose.tools.assert_true
 
 
-class TestController(helpers.FunctionalTestBase):
-
-    @classmethod
-    def teardown_class(cls):
-        super(TestController, cls).teardown_class()
-        helpers.reset_db()
-
-    def setup(self):
-        super(TestController, self).setup()
-        user = tk.get_action('get_site_user')({'ignore_auth': True})['name']
-        context = {'model': model, 'session': model.Session,
-                   'user': user, 'ignore_auth': True}
-        # create an org
-        self.org = {
-            'name': 'test-org',
-            'title': {
-                'de': 'Test Org DE',
-                'fr': 'Test Org FR',
-                'it': 'Test Org IT',
-                'en': 'Test Org EN',
-            },
-            'political_level': 'confederation'
-        }
-        tk.get_action('organization_create')(context, self.org)
-
-        # create a valid DCAT-AP Switzerland compliant dataset
-        self.dataset = {
-            'coverage': '',
-            'issued': '08.09.2015',
-            'contact_points': [{'email': 'pierre@bar.ch', 'name': 'Pierre'}],
-            'keywords': {
-                'fr': [],
-                'de': [],
-                'en': [],
-                'it': []
-            },
-            'spatial': '',
-            'publisher': {'name': 'Bundesarchiv', 'url':'https//opendata.swiss/organization/bundesarchiv'},
-            'description': {
-                'fr': 'Description FR',
-                'de': 'Beschreibung DE',
-                'en': 'Description EN',
-                'it': 'Description IT'
-            },
-            'title': {
-                'fr': 'FR Test',
-                'de': 'DE Test',
-                'en': 'EN Test',
-                'it': 'IT Test'
-            },
-            'language': [
-                'en',
-                'de'
-            ],
-            'name': 'test-dataset',
-            'relations': [],
-            'see_alsos': [],
-            'temporals': [],
-            'accrual_periodicity': 'http://publications.europa.eu/resource/authority/frequency/IRREG',
-            'modified': '09.09.2015',
-            'url': 'http://some_url',
-            'owner_org': 'test-org',
-            'identifier': 'test@test-org'
-        }
-        tk.get_action('package_create')(context, self.dataset)
-
+class TestController(OgdchFunctionalTestBase):
     def test_valid_redirect(self):
         app = self._get_test_app()
 
-        url = url_for('perma_redirect', id=self.dataset['identifier'])
+        url = url_for('perma_redirect', id=self.dataset_dict['identifier'])
         assert_equal(url, '/perma/test%40test-org')
 
         response = app.get(url)

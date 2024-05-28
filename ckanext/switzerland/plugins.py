@@ -19,11 +19,13 @@ import ckanext.switzerland.helpers.frontend_helpers as ogdch_frontend_helpers
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 import ckanext.switzerland.helpers.plugin_utils as ogdch_plugin_utils
 import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
+import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 import ckanext.switzerland.helpers.validators as ogdch_validators
 import ckanext.xloader.interfaces as ix
 from ckanext.showcase.plugin import ShowcasePlugin
 from ckanext.subscribe.plugin import SubscribePlugin
 from ckanext.switzerland import logic as ogdch_logic
+from ckanext.switzerland.middleware import RobotsHeaderMiddleware
 
 log = logging.getLogger(__name__)
 
@@ -89,7 +91,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         facets_dict['keywords_' + lang_code] = plugins.toolkit._('Keywords')
         facets_dict['organization'] = plugins.toolkit._('Organizations')
         facets_dict['political_level'] = plugins.toolkit._('Political levels')
-        facets_dict['res_rights'] = plugins.toolkit._('Terms of use')
+        facets_dict['res_license'] = plugins.toolkit._('Terms of use')
         facets_dict['res_format'] = plugins.toolkit._('Formats')
         return facets_dict
 
@@ -102,7 +104,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         facets_dict['keywords_' + lang_code] = plugins.toolkit._('Keywords')
         facets_dict['organization'] = plugins.toolkit._('Organizations')
         facets_dict['political_level'] = plugins.toolkit._('Political levels')
-        facets_dict['res_rights'] = plugins.toolkit._('Terms of use')
+        facets_dict['res_license'] = plugins.toolkit._('Terms of use')
         facets_dict['res_format'] = plugins.toolkit._('Formats')
         return facets_dict
 
@@ -115,7 +117,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         facets_dict['private'] = plugins.toolkit._('Draft')
         facets_dict['groups'] = plugins.toolkit._('Categories')
         facets_dict['keywords_' + lang_code] = plugins.toolkit._('Keywords')
-        facets_dict['res_rights'] = plugins.toolkit._('Terms of use')
+        facets_dict['res_license'] = plugins.toolkit._('Terms of use')
         facets_dict['res_format'] = plugins.toolkit._('Formats')
         return facets_dict
 
@@ -158,8 +160,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'localize_showcase_facet_title': ogdch_backend_helpers.localize_showcase_facet_title, # noqa
             'get_frequency_name': ogdch_frontend_helpers.get_frequency_name,
             'get_political_level': ogdch_frontend_helpers.get_political_level,
-            'get_terms_of_use_icon': ogdch_frontend_helpers.get_terms_of_use_icon, # noqa
-            'get_dataset_terms_of_use': ogdch_frontend_helpers.get_dataset_terms_of_use, # noqa
+            'get_dataset_terms_of_use': ogdch_term_utils.get_dataset_terms_of_use, # noqa
             'get_dataset_by_identifier': ogdch_frontend_helpers.get_dataset_by_identifier, # noqa
             'get_dataset_by_permalink': ogdch_frontend_helpers.get_dataset_by_permalink, # noqa
             'get_readable_file_size': ogdch_frontend_helpers.get_readable_file_size, # noqa
@@ -167,7 +168,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_localised_number': ogdch_frontend_helpers.ogdch_localised_number, # noqa
             'ogdch_render_tree': ogdch_frontend_helpers.ogdch_render_tree,
             'ogdch_group_tree': ogdch_frontend_helpers.ogdch_group_tree,
-            'get_terms_of_use_url': ogdch_frontend_helpers.get_terms_of_use_url, # noqa
             'get_localized_newsletter_url': ogdch_frontend_helpers.get_localized_newsletter_url, # noqa
             'get_localized_date': ogdch_date_helpers.get_localized_date,
             'get_date_picker_format': ogdch_date_helpers.get_date_picker_format, # noqa
@@ -177,7 +177,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'get_localized_value_from_json': ogdch_localize_utils.get_localized_value_from_json, # noqa
             'get_localized_value_for_display': ogdch_frontend_helpers.get_localized_value_for_display,  # noqa
             'ogdch_get_accrual_periodicity_choices': ogdch_dataset_form_helpers.ogdch_get_accrual_periodicity_choices,  # noqa
-            'ogdch_get_rights_choices': ogdch_dataset_form_helpers.ogdch_get_rights_choices,  # noqa
             'ogdch_get_license_choices': ogdch_dataset_form_helpers.ogdch_get_license_choices,  # noqa
             'ogdch_publisher_form_helper': ogdch_dataset_form_helpers.ogdch_publisher_form_helper,  # noqa
             'ogdch_contact_points_form_helper': ogdch_dataset_form_helpers.ogdch_contact_points_form_helper,  # noqa
@@ -257,7 +256,9 @@ class OgdchGroupPlugin(plugins.SingletonPlugin):
         group_show). It is called in the course of our ogdch_package_show API,
         and in that case, the data is not localized.
         """
-        grp_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=grp_dict) # noqa
+        grp_dict = ogdch_localize_utils.parse_json_attributes(
+            ckan_dict=grp_dict
+        )
         grp_dict['display_name'] = grp_dict['title']
 
         if ogdch_request_utils.request_is_api_request():
@@ -317,7 +318,9 @@ class OgdchResourcePlugin(plugins.SingletonPlugin):
         resource_show). It is called in the course of our ogdch_package_show
         API, and in that case, the data is not localized.
         """
-        res_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=res_dict) # noqa
+        res_dict = ogdch_localize_utils.parse_json_attributes(
+            ckan_dict=res_dict
+        )
         res_dict['display_name'] = res_dict['title']
         res_dict = ogdch_format_utils.prepare_resource_format(
             resource=res_dict)
@@ -362,7 +365,9 @@ class OgdchPackagePlugin(plugins.SingletonPlugin):
 
         request_lang = ogdch_request_utils.get_request_language()
 
-        pkg_dict = ogdch_localize_utils.localize_ckan_sub_dict(pkg_dict, request_lang) # noqa
+        pkg_dict = ogdch_localize_utils.localize_ckan_sub_dict(
+            pkg_dict, request_lang
+        )
         pkg_dict['resources'] = [
             ogdch_localize_utils.localize_ckan_sub_dict(
                 ckan_dict=resource,
@@ -388,14 +393,14 @@ class OgdchPackagePlugin(plugins.SingletonPlugin):
         and there we need all languages.
         -> find a solution to _prepare_package_json() in an API call.
         """
-        pkg_dict = ogdch_plugin_utils.ogdch_prepare_pkg_dict_for_api(pkg_dict) # noqa
+        pkg_dict = ogdch_plugin_utils.ogdch_prepare_pkg_dict_for_api(pkg_dict)
         return pkg_dict
 
     def before_index(self, search_data):
         """
         Search data before index
         """
-        search_data = ogdch_plugin_utils.ogdch_prepare_search_data_for_index( # noqa
+        search_data = ogdch_plugin_utils.ogdch_prepare_search_data_for_index(
             search_data=search_data
         )
         return search_data
@@ -404,7 +409,9 @@ class OgdchPackagePlugin(plugins.SingletonPlugin):
         """
         Adjust search parameters
         """
-        search_params = ogdch_plugin_utils.ogdch_adjust_search_params(search_params) # noqa
+        search_params = ogdch_plugin_utils.ogdch_adjust_search_params(
+            search_params
+        )
         return search_params
 
     # IXloader
@@ -780,3 +787,15 @@ class OgdchSubscribePlugin(SubscribePlugin):
             .filter(Activity.object_id.in_(objects_subscribed_to_keys))\
             .filter(Activity.user_id != harvest_user_id).all()
         return activities
+
+
+class OgdchMiddlewarePlugin(plugins.SingletonPlugin):
+    plugins.implements(plugins.IMiddleware)
+
+    def make_middleware(self, app, config):
+        app = RobotsHeaderMiddleware(app)
+
+        return app
+
+    def make_error_log_middleware(self, app, config):
+        return app

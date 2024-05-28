@@ -1,7 +1,9 @@
 # encoding: utf-8
 from ckan.logic.validators import missing
+from ckan.lib.navl.dictization_functions import Invalid
 from ckan.plugins.toolkit import get_validator
-from nose.tools import assert_equals
+from ckanext.switzerland.tests import OgdchFunctionalTestBase
+from nose.tools import assert_equals, assert_raises_regexp
 
 
 class TestOgdchUrlListValidator(object):
@@ -41,7 +43,7 @@ class TestOgdchUrlListValidator(object):
         assert_equals(value, data[key])
         assert_equals([u"Provided URL 'foobar' is not valid"], errors[key])
 
-        
+
 class TestOgdchUriListValidator(object):
     def setUp(self):
         self.validator = get_validator("ogdch_validate_list_of_uris")(
@@ -168,11 +170,11 @@ class TestOgdchLicenseRequiredValidator(object):
 
         assert_equals('', data[key])
         assert_equals(
-            ["Distributions must have either 'rights' or 'license'"],
+            ["Distributions must have 'license' property"],
             errors[key]
         )
-        
-        
+
+
 class TestOgdchDurationType(object):
     def setup(self):
         # We pass in dummy values for field and schema here, because we just
@@ -237,3 +239,112 @@ class TestOgdchDurationType(object):
 
         assert_equals("", data[key])
         assert_equals([], errors[key])
+
+
+class TestOgdchUniqueIdentifierValidator(OgdchFunctionalTestBase):
+    validator = None
+
+    def setup(self):
+        # This creates an org and a dataset in the database.
+        super(TestOgdchUniqueIdentifierValidator, self).setup()
+
+        # We pass in dummy values for field and schema here, because we just
+        # want to get the inner validation function, and that does not use
+        # either of these parameters.
+        self.validator = get_validator("ogdch_unique_identifier")(
+            "field", {}
+        )
+
+    def test_unique_identifier(self):
+        value = "really_unique_identifier@test-org"
+        key = ('identifier',)
+        data = {
+            key: value,
+            ("owner_org",): "test-org",
+        }
+        errors = {
+            key: [],
+        }
+        self.validator(key, data, errors, {})
+
+    def test_non_unique_identifier(self):
+        value = "test@test-org"
+        key = ('identifier',)
+        data = {
+            key: value,
+            ("owner_org",): "test-org",
+        }
+        errors = {
+            key: [],
+        }
+        with assert_raises_regexp(
+                Invalid,
+                "Identifier is already in use, it must be unique."
+        ):
+            self.validator(key, data, errors, {})
+
+    def test_missing_identifier(self):
+        value = "identifier@test-org"
+        key = ('identifier',)
+        data = {
+            ("owner_org",): "test-org",
+        }
+        errors = {
+            key: [],
+        }
+        with assert_raises_regexp(
+                Invalid,
+                "Identifier of the dataset is missing."
+        ):
+            self.validator(key, data, errors, {})
+
+    def test_malformed_identifier(self):
+        value = "identifier at test-org"
+        key = ('identifier',)
+        data = {
+            key: value,
+            ("owner_org",): "test-org",
+        }
+        errors = {
+            key: [],
+        }
+        with assert_raises_regexp(
+                Invalid,
+                "Identifier must be of the form <id>@<slug>"
+        ):
+            self.validator(key, data, errors, {})
+
+    def test_mismatched_org(self):
+        value = "identifier@my-org"
+        key = ('identifier',)
+        data = {
+            key: value,
+            ("owner_org",): "test-org",
+        }
+        errors = {
+            key: [],
+        }
+        with assert_raises_regexp(
+                Invalid,
+                "The identifier \"identifier@my-org\" does not end with the "
+                "organisation slug \"test-org\""
+        ):
+            self.validator(key, data, errors, {})
+
+    def test_nonexistent_org(self):
+        value = "identifier@my-org"
+        key = ('identifier',)
+        data = {
+            key: value,
+            ("owner_org",): "my-org",
+        }
+        errors = {
+            key: [],
+        }
+        with assert_raises_regexp(
+                Invalid,
+                "The selected organization was not found."
+        ):
+            self.validator(key, data, errors, {})
+
+

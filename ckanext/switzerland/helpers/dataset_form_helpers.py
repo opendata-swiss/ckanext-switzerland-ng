@@ -33,33 +33,6 @@ def ogdch_get_accrual_periodicity_choices(field):
     return map
 
 
-def ogdch_get_rights_choices(field):
-    return [{'label': _('* Non-commercial Allowed / Commercial Allowed / Reference Not Required'),  # noqa
-             'value': TERMS_OF_USE_OPEN},
-            {'label': _('* Non-commercial Allowed / Commercial With Permission Allowed / Reference Not Required'),  # noqa
-             'value': TERMS_OF_USE_ASK},
-            {'label': _('* Non-commercial Allowed / Commercial With Permission Allowed / Reference Required'),  # noqa
-             'value': TERMS_OF_USE_BY_ASK},
-            {'label': _('* Non-commercial Allowed / Commercial Allowed / Reference Required'),  # noqa
-             'value': TERMS_OF_USE_BY},
-            {'label':_('Non-commercial Allowed / Commercial Not Allowed / Reference Not Required'),  # noqa
-             'value': 'NonCommercialAllowed-CommercialNotAllowed-ReferenceNotRequired'},  # noqa
-            {'label':_('Non-commercial Allowed / Commercial Not Allowed / Reference Required'),  # noqa
-             'value': 'NonCommercialAllowed-CommercialNotAllowed-ReferenceRequired'},  # noqa
-            {'label': _('Non-commercial Not Allowed / Commercial Not Allowed / Reference Not Required'),  # noqa
-             'value': 'NonCommercialNotAllowed-CommercialNotAllowed-ReferenceNotRequired'},  # noqa
-            {'label': _('Non-commercial Not Allowed / Commercial Not Allowed / Reference Required'),  # noqa
-             'value': 'NonCommercialNotAllowed-CommercialNotAllowed-ReferenceRequired'},  # noqa
-            {'label': _('Non-commercial Not Allowed / Commercial Allowed / Reference Not Required'),  # noqa
-             'value': 'NonCommercialNotAllowed-CommercialAllowed-ReferenceNotRequired'},  # noqa
-            {'label': _('Non-commercial Not Allowed / Commercial Allowed / Reference Required'),  # noqa
-             'value': 'NonCommercialNotAllowed-CommercialAllowed-ReferenceRequired'},  # noqa
-            {'label': _('Non-commercial Not Allowed / Commercial With Permission Allowed / Reference Not Required'),  # noqa
-             'value': 'NonCommercialNotAllowed-CommercialWithPermission-ReferenceNotRequired'},  # noqa
-            {'label': _('Non-commercial Not Allowed / Commercial With Permission Allowed / Reference Required'),  # noqa
-             'value': 'NonCommercialNotAllowed-CommercialWithPermission-ReferenceRequired'}]  # noqa
-
-
 def ogdch_get_license_choices(field):
     return [{'label': _('Non-commercial Allowed / Commercial Allowed / Reference Not Required'),  # noqa
              'value': TERMS_OF_USE_OPEN},

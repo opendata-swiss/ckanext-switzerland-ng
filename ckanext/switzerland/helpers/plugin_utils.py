@@ -41,7 +41,7 @@ def _prepare_suggest_context(search_data, pkg_dict):
     search_data['suggest_tags'].extend([clean_suggestion(t) for t in search_data.get('keywords_it', [])])  # noqa
     search_data['suggest_tags'].extend([clean_suggestion(t) for t in search_data.get('keywords_en', [])])  # noqa
 
-    search_data['suggest_res_rights'] = [clean_suggestion(t) for t in search_data['res_rights']]  # noqa
+    search_data['suggest_res_license'] = [clean_suggestion(t) for t in search_data['res_license']]  # noqa
     search_data['suggest_res_format'] = [clean_suggestion(t) for t in search_data['res_format']]  # noqa
 
     return search_data
@@ -79,7 +79,10 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
     search_data['res_format'] = ogdch_format_utils.prepare_formats_for_index(
         resources=validated_dict[u'resources']
     )
-    search_data['res_rights'] = [ogdch_term_utils.simplify_terms_of_use(r['rights']) for r in validated_dict[u'resources'] if 'rights' in r.keys()]  # noqa
+    search_data['res_license'] = [
+        ogdch_term_utils.get_resource_terms_of_use(r)
+        for r in validated_dict[u'resources']
+    ]
     search_data['res_latest_issued'] = ogdch_date_utils.get_latest_isodate(
         [(r['issued'])
          for r in validated_dict[u'resources']
@@ -280,6 +283,23 @@ def ogdch_adjust_search_params(search_params):
     # remove colon followed by a space from q to avoid false negatives
     q = search_params.get('q', '')
     search_params['q'] = re.sub(r":\s", " ", q)
+
+    if q == '':
+        # Use the standard Lucene Query Parser when searching for all
+        # datasets. (DisMax Query Parser does not work for this empty query.)
+        search_params['defType'] = 'lucene'
+    elif ':' not in q:
+        # Tell Solr we want to use the DisMax query parser, with a minimum
+        # match of 1 - that means only one of the clauses in the query has
+        # to match for a dataset to be returned (equivalent to searching with
+        # the OR operator). This gives more results in a basic search than the
+        # standard Lucene Query Parser.
+        search_params['defType'] = 'dismax'
+        search_params['mm'] = '1'
+    else:
+        # For fielded queries, use the Extended DisMax Query Parser.
+        search_params['defType'] = 'edismax'
+        search_params['mm'] = '1'
 
     return search_params
 
