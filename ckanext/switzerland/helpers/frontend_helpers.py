@@ -7,7 +7,6 @@ import logging
 from collections import OrderedDict
 
 import ckan.lib.i18n as i18n
-import ckan.logic as logic
 import ckan.plugins.toolkit as tk
 from babel import numbers
 from ckan.common import _
@@ -43,12 +42,12 @@ def get_localized_org(org_id=None, include_datasets=False):
     if not org_id or org_id is None:
         return {}
     try:
-        return logic.get_action('organization_show')(
+        return tk.get_action('organization_show')(
             {'for_view': True},
             {'id': org_id, 'include_datasets': include_datasets}
         )
-    except (logic.NotFound, logic.ValidationError,
-            logic.NotAuthorized, AttributeError):
+    except (tk.NotFound, tk.ValidationError,
+            tk.NotAuthorized, AttributeError):
         return {}
 
 
@@ -182,18 +181,18 @@ def get_terms_of_use_url(terms_of_use):
 
 
 def get_dataset_terms_of_use(pkg):
-    rights = logic.get_action('ogdch_dataset_terms_of_use')(
+    rights = tk.get_action('ogdch_dataset_terms_of_use')(
         {}, {'id': pkg['id']})
     return rights['dataset_rights']
 
 
 def get_dataset_by_identifier(identifier):
     try:
-        return logic.get_action('ogdch_dataset_by_identifier')(
+        return tk.get_action('ogdch_dataset_by_identifier')(
             {'for_view': True},
             {'identifier': identifier}
         )
-    except logic.NotFound:
+    except tk.NotFound:
         return None
 
 

@@ -17,7 +17,6 @@ from ckan.lib.helpers import dataset_display_name as dataset_display_name_orig
 from ckan.lib.helpers import organization_link as organization_link_orig
 
 import ckan.lib.i18n as i18n
-import ckan.logic as logic
 import ckan.plugins.toolkit as tk
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 from ckanext.switzerland.helpers.frontend_helpers import get_localized_value_for_display  # noqa
@@ -194,7 +193,7 @@ def ogdch_resource_display_name(res):
     resource_display_name = get_localized_value_for_display(res.get('name'))
     if not resource_display_name:
         try:
-            pkg = logic.get_action('package_show')(
+            pkg = tk.get_action('package_show')(
                 {}, {'id': res['package_id']}
             )
             resource_display_name = get_localized_value_for_display(
@@ -202,8 +201,8 @@ def ogdch_resource_display_name(res):
             )
             if not resource_display_name:
                 return pkg['name']
-        except (logic.NotFound, logic.ValidationError,
-                logic.NotAuthorized, AttributeError):
+        except (tk.NotFound, tk.ValidationError,
+                tk.NotAuthorized, AttributeError):
             return ""
     return resource_display_name
 
@@ -284,7 +283,7 @@ def ogdch_get_top_level_organisations():
 def ogdch_user_datasets():
     context = {u'for_view': True, u'user': g.user, u'auth_user_obj': g.userobj}
     data_dict = {u'user_obj': g.userobj, u'include_datasets': True}
-    user_dict = logic.get_action(u'user_show')(context, data_dict)
+    user_dict = tk.get_action(u'user_show')(context, data_dict)
 
     return user_dict['datasets']
 
