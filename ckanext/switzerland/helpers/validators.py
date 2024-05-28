@@ -262,7 +262,7 @@ def ogdch_unique_identifier(field, schema):
                         'The identifier "{}" does not end with the organisation slug "{}" of the organization it belongs to.'  # noqa
                         .format(identifier, dataset_organization['name']))  # noqa
                 )
-        except tk.NotFound:
+        except tk.ObjectNotFound:
             raise df.Invalid(
                 _('The selected organization was not found.')  # noqa
             )
@@ -270,17 +270,12 @@ def ogdch_unique_identifier(field, schema):
         try:
             dataset_for_identifier = \
                 tk.get_action('ogdch_dataset_by_identifier')(
-                    {}, {'identifier': identifier}
-            )
-            print("dataset_id")
-            print(dataset_id)
-            print("dataset_for_identifier id")
-            print(dataset_for_identifier['id'])
+                    {}, {'identifier': identifier})
             if dataset_id != dataset_for_identifier['id']:
                 raise df.Invalid(
                     _('Identifier is already in use, it must be unique.')
                 )
-        except tk.NotFound:
+        except tk.ObjectNotFound:
             pass
 
         data[key] = identifier
@@ -444,7 +439,7 @@ def ogdch_validate_formfield_qualified_relations(field, schema):
                         package = tk.get_action('package_show')(
                             context, {'id': package_name}
                         )
-                    except tk.NotFound:
+                    except tk.ObjectNotFound:
                         raise df.Invalid(
                             _('Dataset {} could not be found .'
                               .format(package_name))

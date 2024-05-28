@@ -46,7 +46,7 @@ def get_localized_org(org_id=None, include_datasets=False):
             {'for_view': True},
             {'id': org_id, 'include_datasets': include_datasets}
         )
-    except (tk.NotFound, tk.ValidationError,
+    except (tk.ObjectNotFound, tk.ValidationError,
             tk.NotAuthorized, AttributeError):
         return {}
 
@@ -192,7 +192,7 @@ def get_dataset_by_identifier(identifier):
             {'for_view': True},
             {'identifier': identifier}
         )
-    except tk.NotFound:
+    except tk.ObjectNotFound:
         return None
 
 

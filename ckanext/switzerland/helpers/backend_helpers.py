@@ -201,7 +201,7 @@ def ogdch_resource_display_name(res):
             )
             if not resource_display_name:
                 return pkg['name']
-        except (tk.NotFound, tk.ValidationError,
+        except (tk.ObjectNotFound, tk.ValidationError,
                 tk.NotAuthorized, AttributeError):
             return ""
     return resource_display_name
