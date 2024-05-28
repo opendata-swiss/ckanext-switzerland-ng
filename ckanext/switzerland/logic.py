@@ -21,9 +21,7 @@ import ckan.lib.uploader as uploader
 from ckan.logic import check_access
 from ckan.logic.action.create import user_create as core_user_create
 from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
-from ckanext.dcatapchharvest.harvesters import (
-    SwissDCATRDFHarvester,
-    SwissDCATI14YRDFHarvester)
+from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester
 from ckanext.harvest.model import HarvestJob
 from ckanext.harvest.logic.dictization import harvest_job_dictize
 from ckanext.switzerland.helpers.backend_helpers import (
@@ -440,12 +438,7 @@ def _create_or_update_dataset(dataset):
     user = tk.get_action('get_site_user')({'ignore_auth': True}, {})
     context.update({'user': user['name']})
 
-    # Check if SwissDCATRDFHarvester is available
-    try:
-        harvester = SwissDCATRDFHarvester()
-    except ImportError:
-        # If not available, use SwissDCATI14YRDFHarvester
-        harvester = SwissDCATI14YRDFHarvester()
+    harvester = SwissDCATRDFHarvester()
 
     name = harvester._gen_new_name(dataset.get('title', ''))
 
