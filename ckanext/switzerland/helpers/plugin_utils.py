@@ -116,22 +116,14 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
         search_data['metadata_modified'] = ''
 
     try:
-        # index language-specific values (or fallback)
+        # index language-specific values (or it's fallback)
         for lang_code in ogdch_loc_utils.get_language_priorities():
             search_data['title_' + lang_code] = \
                 ogdch_loc_utils.get_localized_value_from_dict(
                     validated_dict['title'], lang_code)
-            title = ogdch_loc_utils.get_localized_value_from_dict(
-                validated_dict['title'], lang_code)
-            if not isinstance(title, unicode) and not isinstance(title, str):
-                title = ''
-                log.info(
-                    "Dataset {} has an unexpected title type: {}".format(
-                        search_data["name"], validated_dict['title']
-                    )
-                )
             search_data['title_string_' + lang_code] = munge_title_to_name(
-                title)
+                ogdch_loc_utils.get_localized_value_from_dict(
+                    validated_dict['title'], lang_code))
             search_data['description_' + lang_code] = \
                 ogdch_loc_utils.get_localized_value_from_dict(
                     validated_dict['description'], lang_code)
