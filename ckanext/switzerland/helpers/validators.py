@@ -6,7 +6,6 @@ from urlparse import urlparse
 import ckan.lib.navl.dictization_functions as df
 import ckan.plugins.toolkit as tk
 from ckan.lib.munge import munge_tag
-from ckan.logic import NotFound, get_action
 from ckan.plugins.toolkit import _, missing
 
 import ckanext.switzerland.helpers.date_helpers as ogdch_date_helpers
@@ -253,7 +252,7 @@ def ogdch_unique_identifier(field, schema):
             )
         identifier_org_slug = identifier_parts[1]
         try:
-            dataset_organization = get_action('organization_show')(
+            dataset_organization = tk.get_action('organization_show')(
                 {},
                 {'id': dataset_owner_org}
             )
@@ -263,21 +262,20 @@ def ogdch_unique_identifier(field, schema):
                         'The identifier "{}" does not end with the organisation slug "{}" of the organization it belongs to.'  # noqa
                         .format(identifier, dataset_organization['name']))  # noqa
                 )
-        except NotFound:
+        except tk.ObjectNotFound:
             raise df.Invalid(
                 _('The selected organization was not found.')  # noqa
             )
 
         try:
-            dataset_for_identifier = get_action('ogdch_dataset_by_identifier')(
-                {},
-                {'identifier': identifier}
-            )
+            dataset_for_identifier = \
+                tk.get_action('ogdch_dataset_by_identifier')(
+                    {}, {'identifier': identifier})
             if dataset_id != dataset_for_identifier['id']:
                 raise df.Invalid(
                     _('Identifier is already in use, it must be unique.')
                 )
-        except NotFound:
+        except tk.ObjectNotFound:
             pass
 
         data[key] = identifier
@@ -438,10 +436,10 @@ def ogdch_validate_formfield_qualified_relations(field, schema):
                 context = {}
                 for package_name in qualified_relations_from_form:
                     try:
-                        package = get_action('package_show')(
+                        package = tk.get_action('package_show')(
                             context, {'id': package_name}
                         )
-                    except NotFound:
+                    except tk.ObjectNotFound:
                         raise df.Invalid(
                             _('Dataset {} could not be found .'
                               .format(package_name))
