@@ -3,7 +3,6 @@ helpers belong in this file if they
 are used in frontend templates
 """
 import json
-import os
 import logging
 from collections import OrderedDict
 
@@ -12,7 +11,6 @@ import ckan.logic as logic
 import ckan.plugins.toolkit as tk
 from babel import numbers
 from ckan.common import _
-from ckan.common import config
 from ckan.lib.helpers import lang, localised_number
 
 import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
