@@ -16,6 +16,9 @@
     <form method='post' action="{{ h.url_for('/subscribe/signup') }}" id="subscribe-form" enctype="multipart/form-data" class="form-inline">
       <!-- (Bootstrap 3) <div class="form-group input-group-sm"> -->
         <input id="subscribe-email" type="email" name="email" class="form-control input-small" value="" placeholder="" />
+        <!-- reCAPTCHA  -->
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <div class="g-recaptcha" data-sitekey={{ h.get_recaptcha_publickey() }}></div>
         <input id="subscribe-dataset" type="hidden" name="dataset" value="{{ pkg.name }}"` />
       <!-- </div> -->
       <button type="submit" class="btn btn-default" name="save">{{ _('Submit') }}</button>

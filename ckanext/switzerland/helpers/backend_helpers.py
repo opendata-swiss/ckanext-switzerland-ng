@@ -7,14 +7,17 @@ used in backend templates
 import ast
 import logging
 import re
+import os
 from urllib import quote
 from urlparse import urlparse
 from html.parser import HTMLParser
 from ckan import authz
 from ckan.common import _, g, c
+from ckan.common import config
 from ckan.lib.helpers import _link_to, lang, url_for
 from ckan.lib.helpers import dataset_display_name as dataset_display_name_orig
 from ckan.lib.helpers import organization_link as organization_link_orig
+from ckan.lib.app_globals import set_app_global
 
 import ckan.lib.i18n as i18n
 import ckan.logic as logic
@@ -336,3 +339,9 @@ def ogdch_get_switch_connectome_url(identifier):
 
 def ogdch_get_env():
     return tk.config.get('ckanext.switzerland.env', '')
+
+
+def get_recaptcha_privatkey():
+    """Get reCaptcha privat key.
+    """
+    return tk.config.get('ckan.recaptcha.privatkey')
