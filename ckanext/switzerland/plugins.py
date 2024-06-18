@@ -200,8 +200,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             'ogdch_get_switch_connectome_url': ogdch_backend_helpers.ogdch_get_switch_connectome_url,  # noqa
             'ogdch_get_env': ogdch_backend_helpers.ogdch_get_env,
             'ogdch_multiple_text_form_helper': ogdch_dataset_form_helpers.ogdch_multiple_text_form_helper,  # noqa
-            'get_recaptcha_publickey': ogdch_frontend_helpers.get_recaptcha_publickey,  # noqa
-            'apply_recaptcha': ogdch_frontend_helpers.apply_recaptcha,
         }
 
     # IRouter
