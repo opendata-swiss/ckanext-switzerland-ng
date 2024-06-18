@@ -331,4 +331,3 @@ def apply_recaptcha():
     apply_recaptcha = tk.asbool(
         tk.config.get('ckanext.subscribe.apply_recaptcha', True))
     return apply_recaptcha
-
