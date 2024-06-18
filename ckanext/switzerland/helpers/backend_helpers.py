@@ -336,9 +336,3 @@ def ogdch_get_switch_connectome_url(identifier):
 
 def ogdch_get_env():
     return tk.config.get('ckanext.switzerland.env', '')
-
-
-def get_recaptcha_privatkey():
-    """Get reCaptcha privat key.
-    """
-    return tk.config.get('ckan.recaptcha.privatkey')
