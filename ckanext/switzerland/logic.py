@@ -684,6 +684,8 @@ def ogdch_force_reset_passwords(context, data_dict):
     :param offset:  when ``limit`` is given, the offset to start resetting user
                     passwords from (optional)
     :type limit:    int
+    :param notify:  whether to email the user(s) a password-reset link
+    :type notify    bool
 
     :return: a dictionary containing a list of usernames whose passwords were
              successfully reset and any errors encountered
@@ -703,6 +705,7 @@ def ogdch_force_reset_passwords(context, data_dict):
     # ensure we won't try to reset everyone and timeout
     limit = int(data_dict.get("limit", 10))
     offset = int(data_dict.get("offset", 0))
+    notify = tk.asbool(data_dict.get("notify", True))
 
     if username:
         usernames = [username]
@@ -710,7 +713,6 @@ def ogdch_force_reset_passwords(context, data_dict):
         usernames = tk.get_action('user_list')(
             context, {"all_fields": False})[offset:offset + limit]
 
-    # First, reset password to a random new value that won't be transmitted
     results = {
         "success_users": [],
         "errors": {},
@@ -724,6 +726,7 @@ def ogdch_force_reset_passwords(context, data_dict):
         user_obj = context.get("user_obj")
         password = _generate_password(user_dict)
 
+        # First, reset password to a random new value that won't be transmitted
         log.info(u'Resetting password for user: {}'.format(user_dict["name"]))
         user_dict["password"] = password
         try:
@@ -736,14 +739,15 @@ def ogdch_force_reset_passwords(context, data_dict):
             continue
 
         # Then trigger reset email
-        log.info(u'Emailing reset link to user: {}'.format(user_dict["name"]))
-        try:
-            mailer.send_reset_link(user_obj)
-        except mailer.MailerException as e:
-            # SMTP is not configured correctly or the server is
-            # temporarily unavailable
-            results["errors"][name] = str(e)
-            continue
+        if notify:
+            log.info(u'Emailing reset link to user: {}'.format(user_dict["name"]))
+            try:
+                mailer.send_reset_link(user_obj)
+            except mailer.MailerException as e:
+                # SMTP is not configured correctly or the server is
+                # temporarily unavailable
+                results["errors"][name] = str(e)
+                continue
 
         results["success_users"].append(name)
 
