@@ -2,11 +2,24 @@ import ckan.model as model
 import ckan.plugins.toolkit as tk
 from ckan.tests import helpers
 
+import logging
+log = logging.getLogger(__name__)
+
 
 class OgdchFunctionalTestBase(helpers.FunctionalTestBase):
     org = None
     dataset_dict = None
     dataset = None
+
+    def _get_context(self):
+        # We need a fresh context every time we create a dataset
+        user = tk.get_action("get_site_user")({"ignore_auth": True})["name"]
+        return {
+            "model": model,
+            "session": model.Session,
+            "user": user,
+            "ignore_auth": True,
+        }
 
     @classmethod
     def teardown_class(cls):
@@ -15,9 +28,7 @@ class OgdchFunctionalTestBase(helpers.FunctionalTestBase):
 
     def setup(self):
         super(OgdchFunctionalTestBase, self).setup()
-        user = tk.get_action('get_site_user')({'ignore_auth': True})['name']
-        context = {'model': model, 'session': model.Session,
-                   'user': user, 'ignore_auth': True}
+
         # create an org
         self.org = {
             'name': 'test-org',
@@ -29,7 +40,7 @@ class OgdchFunctionalTestBase(helpers.FunctionalTestBase):
             },
             'political_level': 'confederation'
         }
-        tk.get_action('organization_create')(context, self.org)
+        tk.get_action('organization_create')(self._get_context(), self.org)
 
         # create a valid DCAT-AP Switzerland compliant dataset
         self.dataset_dict = {
@@ -70,4 +81,4 @@ class OgdchFunctionalTestBase(helpers.FunctionalTestBase):
             'owner_org': 'test-org',
             'identifier': 'test@test-org'
         }
-        self.dataset = tk.get_action('package_create')(context, self.dataset_dict)
+        self.dataset = tk.get_action('package_create')(self._get_context(), self.dataset_dict)
