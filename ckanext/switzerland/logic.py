@@ -666,20 +666,21 @@ def ogdch_subscribe_unsubscribe_all(context, data_dict):
 # TODO: remove @side_effect_free so that this action only works with POST.
 @side_effect_free
 def ogdch_force_reset_passwords(context, data_dict):
-    """Reset the password of a single user, or of all users, to a random value that
-    fulfills our password requirements. The new password is not communicated to the
-    users. If resetting all users, limit and offset values are used so that the action
-    won't timeout trying to update every user in one call.
+    """Reset the password of a single user, or of all users, to a random value
+    that fulfills our password requirements. The new password is not
+    communicated to the users. If resetting all users, limit and offset values
+    are used so that the action won't timeout trying to update every user in
+    one call.
 
-    Optionally, email the user(s) a link to reset their passwords again to a value of
-    their choosing.
+    Optionally, email the user(s) a link to reset their passwords again to a
+    value of their choosing.
 
     data_dict params:
 
     :param user:    a single username to reset the password for (optional)
     :param limit:   if given, the list of users will be broken into pages of
-                    at most ``limit`` users per page and only one page will have their
-                    passwords reset at a time (optional)
+                    at most ``limit`` users per page and only one page will
+                    have their passwords reset at a time (optional)
     :type limit:    int
     :param offset:  when ``limit`` is given, the offset to start resetting user
                     passwords from (optional)
@@ -740,7 +741,9 @@ def ogdch_force_reset_passwords(context, data_dict):
 
         # Then trigger reset email
         if notify:
-            log.info(u'Emailing reset link to user: {}'.format(user_dict["name"]))
+            log.info(
+                u'Emailing reset link to user: {}'.format(user_dict["name"])
+            )
             try:
                 mailer.send_reset_link(user_obj)
             except mailer.MailerException as e:
