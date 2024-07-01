@@ -663,8 +663,6 @@ def ogdch_subscribe_unsubscribe_all(context, data_dict):
     return subscribe_unsubscribe_all(context, data_dict)
 
 
-# TODO: remove @side_effect_free so that this action only works with POST.
-@side_effect_free
 def ogdch_force_reset_passwords(context, data_dict):
     """Reset the password of a single user, or of all users, to a random value
     that fulfills our password requirements. The new password is not
