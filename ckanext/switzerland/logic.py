@@ -694,11 +694,8 @@ def ogdch_force_reset_passwords(context, data_dict):
     """
     try:
         check_access('user_delete', context)
-    except NotAuthorized as e:
+    except NotAuthorized:
         raise NotAuthorized('Unauthorized to reset passwords.')
-
-    auth_user = context.get("auth_user_obj")
-    log.warning(auth_user)
 
     # Allow specifying single user or all users
     username = data_dict.get("user")
@@ -719,42 +716,54 @@ def ogdch_force_reset_passwords(context, data_dict):
         "errors": {},
     }
     for name in usernames:
-        if name == auth_user.name:
-            results["errors"][name] = \
-                "Not resetting password for the signed-in user {}".format(name)
-            continue
-        user_dict = tk.get_action('user_show')(context, {"id": name})
-        user_obj = context.get("user_obj")
-        password = _generate_password(user_dict)
-
-        # First, reset password to a random new value that won't be transmitted
-        log.info(u'Resetting password for user: {}'.format(user_dict["name"]))
-        user_dict["password"] = password
-        try:
-            tk.get_action('user_update')(
-                context,
-                user_dict
-            )
-        except ValidationError as e:
-            results["errors"][name] = str(e)
-            continue
-
-        # Then trigger reset email
-        if notify:
-            log.info(
-                u'Emailing reset link to user: {}'.format(user_dict["name"])
-            )
-            try:
-                mailer.send_reset_link(user_obj)
-            except mailer.MailerException as e:
-                # SMTP is not configured correctly or the server is
-                # temporarily unavailable
-                results["errors"][name] = str(e)
-                continue
-
-        results["success_users"].append(name)
+        success, error = _reset_password(name, context, notify)
+        if success:
+            results["success_users"].append(name)
+        else:
+            results["errors"][name] = error
 
     return results
+
+
+def _reset_password(username, context, notify):
+    """Reset a user's password to a random value and, optionally, send them
+    a link to reset the password again to a value of their choosing.
+    """
+    auth_user = context.get("auth_user_obj")
+    if username == auth_user.name:
+        return False, \
+               "Not resetting password for the signed-in user {}".format(
+                   username
+               )
+
+    user_dict = tk.get_action('user_show')(context, {"id": username})
+    user_obj = context.get("user_obj")
+    password = _generate_password(user_dict)
+
+    # First, reset password to a random new value that won't be transmitted
+    log.info(u'Resetting password for user: {}'.format(user_dict["name"]))
+    user_dict["password"] = password
+    try:
+        tk.get_action('user_update')(
+            context,
+            user_dict
+        )
+    except ValidationError as e:
+        return False, str(e)
+
+    # Then trigger reset email
+    if notify:
+        log.info(
+            u'Emailing reset link to user: {}'.format(user_dict["name"])
+        )
+        try:
+            mailer.send_reset_link(user_obj)
+        except mailer.MailerException as e:
+            # SMTP is not configured correctly or the server is
+            # temporarily unavailable
+            return False, str(e)
+
+    return True, None
 
 
 def _generate_password(user):
