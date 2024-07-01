@@ -17,6 +17,8 @@ log = logging.getLogger(__name__)
 
 
 class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
+    site_user = ""
+
     @classmethod
     def setup_class(cls):
         super(TestForceResetPasswords, cls).setup_class()
@@ -29,6 +31,8 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
 
     def setup(self):
         super(TestForceResetPasswords, self).setup()
+        self.site_user = self._get_context()["user"]
+
         for n in range(3):
             user = {
                 "name": "user{}".format(str(n)),
@@ -49,7 +53,7 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
         )
 
         initial_other_user_passwords = {}
-        for user in ["user1", "user2", "default"]:
+        for user in ["user1", "user2", self.site_user]:
             initial_other_user_passwords[user] = tk.get_action("user_show")(
                 self._get_context(),
                 {"id": user, "include_password_hash": True}
@@ -66,7 +70,7 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
             {"id": "user1", "include_password_hash": True}
         )
         other_user_passwords_after_reset = {}
-        for user in ["user1", "user2", "default"]:
+        for user in ["user1", "user2", self.site_user]:
             other_user_passwords_after_reset[user] = tk.get_action("user_show")(
                 self._get_context(),
                 {"id": user, "include_password_hash": True}
@@ -120,8 +124,8 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
             )["password_hash"]
 
         assert_equal(
-            initial_user_passwords["default"],
-            user_passwords_after_update["default"],
+            initial_user_passwords[self.site_user],
+            user_passwords_after_update[self.site_user],
             "The user at position 0 in the list should not have been updated",
         )
         assert_not_equal(
@@ -143,8 +147,9 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
     def test_own_password_is_not_reset_single_user_password(self):
         context = self._get_context()
         context["ignore_auth"] = False
+
         result = tk.get_action("ogdch_force_reset_passwords")(
-            context, {"user": "default"}
+            context, {"user": self.site_user}
         )
 
         assert_equal(
@@ -153,8 +158,8 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
             "Should not reset password for the user we are using to call the action"
         )
         assert_equal(
-            "Not resetting password for the signed-in user default",
-            result["errors"]["default"],
+            "Not resetting password for the signed-in user {}".format(self.site_user),
+            result["errors"][self.site_user],
             "Expected error when resetting password for the user we are using to call the action"
         )
 
@@ -172,8 +177,8 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
             "Password should have been reset for the user we are not using to call the action"
         )
         assert_equal(
-            {"default": "Not resetting password for the signed-in user default"},
-            result["errors"],
+            "Not resetting password for the signed-in user {}".format(self.site_user),
+            result["errors"][self.site_user],
             "Expected error when resetting password for the user we are using to call the action"
         )
 
