@@ -79,3 +79,13 @@ jobs:
         docker exec test_ckan nosetests --ckan --with-pylons=$WORKDIR/test.ini \
           --with-coverage --cover-package=ckanext.switzerland --cover-inclusive --cover-erase --cover-tests \
           $WORKDIR/ckanext/switzerland
+    - name: Coveralls
+      run: |
+        # Upgrade certi to fix SSL error due to the version installed in CKAN-2.8 image 
+        pip install --upgrade certifi
+        # Run coveralls command with retry logic to handle potential transient issues
+        for attempt in 1 2 3; do
+          coveralls && break
+          echo "Attempt $attempt: Failed to submit coverage, retrying in 10 seconds..."
+          sleep 10
+        done
