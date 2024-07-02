@@ -18,8 +18,13 @@ config = p.toolkit.config
 
 class TestSubscriptionEmails(OgdchFunctionalTestBase):
     def test_get_email_vars_with_subscription(self):
+        # Create a subscription with a valid reCAPTCHA response
         subscription = factories.Subscription(
-            dataset_id=self.dataset['id'], return_object=True)
+            dataset_id=self.dataset['id'],
+            email='bob@example.com',
+            g_recaptcha_response='valid-recaptcha-response',
+            return_object=True
+        )
 
         subscribe = OgdchSubscribePlugin()
         email_vars = subscribe.get_email_vars(
@@ -45,6 +50,7 @@ class TestSubscriptionEmails(OgdchFunctionalTestBase):
         assert_equal(email_vars['unsubscribe_link'],
                      'http://frontend-test.ckan.net/subscribe/unsubscribe?code=testcode&dataset={}'
                      .format(self.dataset['id']))
+        assert_equal(subscription.g_recaptcha_response, 'valid-recaptcha-response')
 
     def test_get_email_vars_with_email(self):
         subscribe = OgdchSubscribePlugin()
