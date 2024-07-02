@@ -12,16 +12,6 @@ assert_true = nose.tools.assert_true
 
 
 class TestSearch(OgdchFunctionalTestBase):
-    def _get_context(self):
-        # We need a fresh context every time we create a dataset
-        user = tk.get_action("get_site_user")({"ignore_auth": True})["name"]
-        return {
-            "model": model,
-            "session": model.Session,
-            "user": user,
-            "ignore_auth": True,
-        }
-
     def setup(self):
         # This creates an org and a dataset in the database.
         super(TestSearch, self).setup()

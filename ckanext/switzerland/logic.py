@@ -1,6 +1,9 @@
 from collections import OrderedDict
 import datetime
 import os.path
+import string
+import random
+
 import pysolr
 import re
 from unidecode import unidecode
@@ -11,8 +14,9 @@ import rdflib.parser
 from rdflib.namespace import Namespace, RDF
 
 from ckan.common import config
+from ckan.lib import mailer
 from ckan.plugins.toolkit import get_or_bust, side_effect_free
-from ckan.logic import ActionError, NotFound, ValidationError
+from ckan.logic import ActionError, NotFound, ValidationError, NotAuthorized
 import ckan.plugins.toolkit as tk
 import ckan.lib.helpers as h
 from ckan.lib.search.common import make_connection
@@ -24,6 +28,8 @@ from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
 from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester
 from ckanext.harvest.model import HarvestJob
 from ckanext.harvest.logic.dictization import harvest_job_dictize
+from ckanext.password_policy.helpers import (
+    custom_password_check, get_password_length)
 from ckanext.switzerland.helpers.backend_helpers import (
     ogdch_get_switch_connectome_url)
 from ckanext.switzerland.helpers.request_utils import get_content_headers
@@ -655,3 +661,126 @@ def ogdch_subscribe_unsubscribe_all(context, data_dict):
     data_dict['email'] = _get_email_from_subscribe_code(data_dict['code'])
 
     return subscribe_unsubscribe_all(context, data_dict)
+
+
+def ogdch_force_reset_passwords(context, data_dict):
+    """Reset the password of a single user, or of all users, to a random value
+    that fulfills our password requirements. The new password is not
+    communicated to the users. If resetting all users, limit and offset values
+    are used so that the action won't timeout trying to update every user in
+    one call.
+
+    Optionally, email the user(s) a link to reset their passwords again to a
+    value of their choosing.
+
+    data_dict params:
+
+    :param user:    a single username to reset the password for (optional)
+    :param limit:   if given, the list of users will be broken into pages of
+                    at most ``limit`` users per page and only one page will
+                    have their passwords reset at a time (optional)
+    :type limit:    int
+    :param offset:  when ``limit`` is given, the offset to start resetting user
+                    passwords from (optional)
+    :type limit:    int
+    :param notify:  whether to email the user(s) a password-reset link
+    :type notify    bool
+
+    :return: a dictionary containing a list of usernames whose passwords were
+             successfully reset and any errors encountered
+    :rtype: dict
+    """
+    try:
+        check_access('user_delete', context)
+    except NotAuthorized:
+        raise NotAuthorized('Unauthorized to reset passwords.')
+
+    # Allow specifying single user or all users
+    username = data_dict.get("user")
+    # If resetting passwords for multiple users, use limit and offset to
+    # ensure we won't try to reset everyone and timeout
+    limit = int(data_dict.get("limit", 10))
+    offset = int(data_dict.get("offset", 0))
+    notify = tk.asbool(data_dict.get("notify", True))
+
+    if username:
+        usernames = [username]
+    else:
+        usernames = tk.get_action('user_list')(
+            context, {"all_fields": False})[offset:offset + limit]
+
+    results = {
+        "success_users": [],
+        "errors": {},
+    }
+    for name in usernames:
+        success, error = _reset_password(name, context, notify)
+        if success:
+            results["success_users"].append(name)
+        else:
+            results["errors"][name] = error
+
+    return results
+
+
+def _reset_password(username, context, notify):
+    """Reset a user's password to a random value and, optionally, send them
+    a link to reset the password again to a value of their choosing.
+    """
+    auth_user = context.get("auth_user_obj")
+    if username == auth_user.name:
+        return False, \
+               "Not resetting password for the signed-in user {}".format(
+                   username
+               )
+
+    user_dict = tk.get_action('user_show')(context, {"id": username})
+    user_obj = context.get("user_obj")
+    password = _generate_password(user_dict)
+
+    # First, reset password to a random new value that won't be transmitted
+    log.info(u'Resetting password for user: {}'.format(user_dict["name"]))
+    user_dict["password"] = password
+    try:
+        tk.get_action('user_update')(
+            context,
+            user_dict
+        )
+    except ValidationError as e:
+        return False, str(e)
+
+    # Then trigger reset email
+    if notify:
+        log.info(
+            u'Emailing reset link to user: {}'.format(user_dict["name"])
+        )
+        try:
+            mailer.send_reset_link(user_obj)
+        except mailer.MailerException as e:
+            # SMTP is not configured correctly or the server is
+            # temporarily unavailable
+            return False, str(e)
+
+    return True, None
+
+
+def _generate_password(user):
+    """Generate a password that fits our requirements. Code adapted from ckan
+    user_invite action.
+    """
+    password_length = get_password_length(user["name"])
+    while True:
+        password = ''.join(random.SystemRandom().choice(
+            string.ascii_lowercase + string.ascii_uppercase + string.digits
+            + string.punctuation)
+                           for _ in range(password_length))
+        # Occasionally it won't meet the constraints, so check
+        errors = {}
+        custom_password_check(
+            password=password,
+            username=user["name"],
+            fullname=user["fullname"]
+        )
+        if not errors:
+            break
+    return password
