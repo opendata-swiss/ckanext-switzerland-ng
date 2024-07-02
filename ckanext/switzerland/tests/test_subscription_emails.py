@@ -2,6 +2,8 @@
 
 from nose.tools import assert_equal, assert_in, assert_not_in
 
+import ckan.plugins.toolkit as tk
+import mock
 from ckan import plugins as p
 from ckanext.subscribe.email_verification import (
     get_verification_email_vars,
@@ -17,7 +19,17 @@ config = p.toolkit.config
 
 
 class TestSubscriptionEmails(OgdchFunctionalTestBase):
-    def test_get_email_vars_with_subscription(self):
+    def setup(self):
+        tk.config["ckanext.subscribe.apply_recaptcha"] = "true"
+
+    def teardown(self):
+        tk.config["ckanext.subscribe.apply_recaptcha"] = "false"
+
+    @mock.patch("ckanext.subscribe.action._verify_recaptcha")
+    def test_get_email_vars_with_subscription(self, mock_verify_recaptcha):
+        # Mocking the reCAPTCHA verification to return True
+        mock_verify_recaptcha.return_value = True
+
         # Create a subscription with a valid reCAPTCHA response
         subscription = factories.Subscription(
             dataset_id=self.dataset['id'],
