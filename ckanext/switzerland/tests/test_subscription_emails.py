@@ -25,11 +25,14 @@ class TestSubscriptionEmails(OgdchFunctionalTestBase):
     def teardown(self):
         tk.config["ckanext.subscribe.apply_recaptcha"] = "false"
 
+    @mock.patch("requests.post")
     @mock.patch("ckanext.subscribe.action._verify_recaptcha")
-    def test_get_email_vars_with_subscription(self, mock_verify_recaptcha):
+    def test_get_email_vars_with_subscription(self, mock_verify_recaptcha, mock_post):
         # Mocking the reCAPTCHA verification to return True
         mock_verify_recaptcha.return_value = True
-
+        mock_post.return_value = mock.Mock(
+            status_code=200, json=lambda: {"success": True}
+        )
         # Create a subscription with a valid reCAPTCHA response
         subscription = factories.Subscription(
             dataset_id=self.dataset['id'],
