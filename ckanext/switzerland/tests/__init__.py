@@ -69,6 +69,5 @@ class OgdchFunctionalTestBase(helpers.FunctionalTestBase):
             'url': 'http://some_url',
             'owner_org': 'test-org',
             'identifier': 'test@test-org',
-            'g_recaptcha_response': 'valid-recaptcha-response',
         }
         self.dataset = tk.get_action('package_create')(context, self.dataset_dict)
