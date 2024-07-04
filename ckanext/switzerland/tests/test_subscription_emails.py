@@ -20,13 +20,6 @@ config = p.toolkit.config
 
 
 class TestSubscriptionEmails(OgdchFunctionalTestBase):
-    def setup(self):
-        tk.config["ckanext.subscribe.apply_recaptcha"] = "true"
-        # Ensure the database is reset before each test
-        helpers.reset_db()
-
-    def teardown(self):
-        tk.config["ckanext.subscribe.apply_recaptcha"] = "false"
 
     # Mock the _verify_recaptcha function
     @mock.patch("requests.post")
@@ -41,13 +34,11 @@ class TestSubscriptionEmails(OgdchFunctionalTestBase):
             status_code=200, json=lambda: {"success": True}
         )
 
-        dataset = factories.Dataset()
-
         # Create a subscription with a valid reCAPTCHA response
         subscription = factories.Subscription(
-            dataset_id=dataset['id'],
+            dataset_id=self.dataset['id'],
             email='bob@example.com',
-            g_recaptcha_response='valid-recaptcha-response',
+            g_recaptcha_response=self.dataset['g_recaptcha_response'],
             return_object=True
         )
 
