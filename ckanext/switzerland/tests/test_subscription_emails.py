@@ -5,6 +5,7 @@ from nose.tools import assert_equal, assert_in, assert_not_in
 import ckan.plugins.toolkit as tk
 import mock
 from ckan import plugins as p
+from ckan.tests import helpers
 from ckanext.subscribe.email_verification import (
     get_verification_email_vars,
 )
@@ -21,21 +22,30 @@ config = p.toolkit.config
 class TestSubscriptionEmails(OgdchFunctionalTestBase):
     def setup(self):
         tk.config["ckanext.subscribe.apply_recaptcha"] = "true"
+        # Ensure the database is reset before each test
+        helpers.reset_db()
 
     def teardown(self):
         tk.config["ckanext.subscribe.apply_recaptcha"] = "false"
 
+    # Mock the _verify_recaptcha function
     @mock.patch("requests.post")
+    @mock.patch("ckanext.subscribe.email_verification.send_request_email")
     @mock.patch("ckanext.subscribe.action._verify_recaptcha")
-    def test_get_email_vars_with_subscription(self, mock_verify_recaptcha, mock_post):
+    def test_get_email_vars_with_subscription(
+        self, mock_verify_recaptcha, send_request_email, mock_post
+    ):
         # Mocking the reCAPTCHA verification to return True
         mock_verify_recaptcha.return_value = True
         mock_post.return_value = mock.Mock(
             status_code=200, json=lambda: {"success": True}
         )
+
+        dataset = factories.Dataset()
+
         # Create a subscription with a valid reCAPTCHA response
         subscription = factories.Subscription(
-            dataset_id=self.dataset['id'],
+            dataset_id=dataset['id'],
             email='bob@example.com',
             g_recaptcha_response='valid-recaptcha-response',
             return_object=True
