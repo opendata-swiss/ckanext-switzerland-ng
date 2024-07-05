@@ -8,6 +8,24 @@
 {% block nums %}
 {% endblock %}
 {% block follow_button %}
+  {% resource 'subscribe/subscribe.css' %}
+  <div class="nums">
+    {% import 'macros/form.html' as form %}
+    <!-- {{ form.errors(error_summary) }} -->
+    <label class="control-label" for="subscribe-email">{{ _('Sign up for email updates') }}</label>
+    <form method='post' action="{{ h.url_for('/subscribe/signup') }}" id="subscribe-form" enctype="multipart/form-data" class="form-inline">
+      <!-- (Bootstrap 3) <div class="form-group input-group-sm"> -->
+        <input id="subscribe-email" type="email" name="email" class="form-control input-small" value="" placeholder="" />
+        {% if h.apply_recaptcha() %}
+            <!-- reCAPTCHA  -->
+            <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+            <div class="g-recaptcha" data-sitekey={{ h.get_recaptcha_publickey() }} style="transform:scale(0.85);transform-origin:0"></div>
+        {% endif %}
+        <input id="subscribe-dataset" type="hidden" name="dataset" value="{{ pkg.name }}"` />
+      <!-- </div> -->
+      <button type="submit" class="btn btn-default" name="save">{{ _('Submit') }}</button>
+    </form>
+  </div>
   {% if h.ogdch_get_env() != 'production' %}
     {% for group in pkg.groups %}
       {% if group.name == "ener" %}
