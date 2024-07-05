@@ -34,8 +34,8 @@ pip install -e git+https://github.com/opendata-swiss/ckanext-dcatapchharvest.git
 pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-dcatapchharvest/master/requirements.txt
 pip install -e git+https://github.com/opendata-swiss/ckanext-harvester_dashboard.git#egg=ckanext-harvester_dashboard
 pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-harvester_dashboard/master/requirements.txt
-pip install -e git+https://github.com/opendata-swiss/ckanext-subscribe.git#egg=ckanext-subscribe
-pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-subscribe/master/requirements.txt
+pip install -e git+https://github.com/bellisk/ckanext-subscribe.git#egg=ckanext-subscribe
+pip install -r https://raw.githubusercontent.com/bellisk/ckanext-subscribe/master/requirements.txt
 pip install -e git+https://github.com/opendata-swiss/ckanext-password-policy.git#egg=ckanext-password-policy
 pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-password-policy/master/requirements.txt
 
