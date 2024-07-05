@@ -6,7 +6,6 @@ import logging
 import re
 
 import ckan.plugins.toolkit as tk
-from ckan import logic
 from ckan.lib.munge import munge_title_to_name
 
 import ckanext.switzerland.helpers.date_helpers as ogdch_date_utils
@@ -229,7 +228,7 @@ def ogdch_prepare_pkg_dict_for_api(pkg_dict):
     # load organization from API to get all fields defined in schema
     # by default, CKAN loads organizations only from the database
     if pkg_dict['owner_org'] is not None:
-        pkg_dict['organization'] = logic.get_action('organization_show')(
+        pkg_dict['organization'] = tk.get_action('organization_show')(
             {},
             {
                 'id': pkg_dict['owner_org'],

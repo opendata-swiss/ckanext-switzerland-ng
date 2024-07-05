@@ -9,7 +9,6 @@ import ckan.plugins.toolkit as tk
 from ckan.common import OrderedDict
 from ckan.lib.base import render_jinja2
 from ckan.lib.plugins import DefaultTranslation
-from ckan.logic import NotFound
 from ckan.model import PACKAGE_NAME_MAX_LENGTH, Activity, Package, Session
 
 import ckanext.switzerland.helpers.backend_helpers as ogdch_backend_helpers
@@ -780,7 +779,7 @@ class OgdchSubscribePlugin(SubscribePlugin):
                 {'id': ogdch_validators.HARVEST_USER}
             )
             harvest_user_id = harvest_user['id']
-        except NotFound:
+        except tk.ObjectNotFound:
             raise
         activities = \
             Session\
