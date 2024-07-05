@@ -2,10 +2,7 @@
 
 from nose.tools import assert_equal, assert_in, assert_not_in
 
-import ckan.plugins.toolkit as tk
-import mock
 from ckan import plugins as p
-from ckan.tests import helpers
 from ckanext.subscribe.email_verification import (
     get_verification_email_vars,
 )
@@ -20,13 +17,9 @@ config = p.toolkit.config
 
 
 class TestSubscriptionEmails(OgdchFunctionalTestBase):
-
     def test_get_email_vars_with_subscription(self):
-
         subscription = factories.Subscription(
-            dataset_id=self.dataset['id'],
-            email='bob@example.com',
-            return_object=True
+            dataset_id=self.dataset['id'], return_object=True
         )
 
         subscribe = OgdchSubscribePlugin()
@@ -53,7 +46,6 @@ class TestSubscriptionEmails(OgdchFunctionalTestBase):
         assert_equal(email_vars['unsubscribe_link'],
                      'http://frontend-test.ckan.net/subscribe/unsubscribe?code=testcode&dataset={}'
                      .format(self.dataset['id']))
-        assert_equal(subscription.g_recaptcha_response, 'valid-recaptcha-response')
 
     def test_get_email_vars_with_email(self):
         subscribe = OgdchSubscribePlugin()

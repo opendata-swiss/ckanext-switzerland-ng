@@ -68,6 +68,6 @@ class OgdchFunctionalTestBase(helpers.FunctionalTestBase):
             'modified': '09.09.2015',
             'url': 'http://some_url',
             'owner_org': 'test-org',
-            'identifier': 'test@test-org',
+            'identifier': 'test@test-org'
         }
         self.dataset = tk.get_action('package_create')(context, self.dataset_dict)
