@@ -17,6 +17,7 @@ ESRI ASCII Grid:
   - 'grid_ascii'
   - 'esri_ascii_grid'
 GDB:
+  - 'esri file geodatabase filegdb (gdb)'
   - 'esri file geodatabase'
   - 'filegeodatabase'
   - 'gdb'
@@ -28,6 +29,7 @@ GeoTIFF:
 GPKG:
   - 'gpkg'
   - 'geopackage (ogc)'
+  - 'ogc geopackage (gpkg)'
 HTML:
   - 'html'
 INTERLIS:
@@ -75,6 +77,7 @@ RDF XML:
 SHP:
   - 'esri shapefile'
   - 'esri shapefile (.shp)'
+  - 'esri shapefile (shp)'
   - 'esri geodatabase (....'
   - 'esri arcinfo ascii ...'
   - 'esri personal geodatabase (.mdb)'
