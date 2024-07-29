@@ -3,49 +3,79 @@ API:
   - 'rest'
   - 'rest api'
 CSV:
-  - 'csv'
-  - 'text (.csv)'
   - 'comma ...'
+  - 'comma separated text (.csv)'
+  - 'csv'
+  - 'kommaseparierte textdatei (*.csv)'
+  - 'text (.csv)'
   - 'text (.csv), comma separated'
+  - 'text (.csv), semicolon separated'
+  - 'text, comma separated (csv)'
+  - 'text, semicolon separated (csv)'
 DXF:
-  - 'dxf'
   - 'dxf (.dxf)'
+  - 'dxf'
 ESRI ASCII Grid:
-  - 'esri ascii grid (.grd/.asc)'
-  - 'esri arcinfo ascii grid'
   - '.asc)'
-  - 'grid_ascii'
+  - 'esri arcinfo ascii grid (asc)'
+  - 'esri arcinfo ascii grid'
+  - 'esri ascii grid (.grd/.asc)'
+  - 'esri ascii grid'
   - 'esri_ascii_grid'
+  - 'grid_ascii'
 GDB:
+  - 'esri enterprise geodatabase'
+  - 'esri file geodatabase (.gdb)'
   - 'esri file geodatabase filegdb (gdb)'
   - 'esri file geodatabase'
+  - 'esri file-geodatabase'
+  - 'esri geodatabase (.gdb)'
+  - 'filegdb'
   - 'filegeodatabase'
   - 'gdb'
-  - 'FileGDB'
 GeoJSON:
+  - 'geojson (geojson)'
   - 'geojson'
 GeoTIFF:
+  - 'geo-tiff'
+  - 'geotiff (geotiff)'
   - 'geotiff'
 GPKG:
-  - 'gpkg'
+  - 'geopackage (.gpkg)'
+  - 'geopackage (gpkg)'
   - 'geopackage (ogc)'
+  - 'gpkg'
+  - 'ogc geopackage (.gpkg)'
   - 'ogc geopackage (gpkg)'
 HTML:
   - 'html'
 INTERLIS:
+  - '.itf)'
+  - '.xtf)'
+  - 'interlis 1 (dm01avsh48)'
+  - 'interlis 1 (itf)'
+  - 'interlis 1'
+  - 'interlis 2 (xtf)'
+  - 'interlis 2'
+  - 'interlis 2'
   - 'interlis'
+  - 'interlis2'
 JSON:
+  - 'javascript object notation (json)'
   - 'json'
 JSON-LD:
-  - 'ld+json'
-  - 'jsonld'
   - 'json_ld'
+  - 'jsonld'
+  - 'ld+json'
 KML:
+  - 'google keyhole markup language (kml)'
   - 'kml'
   - 'vnd.google-earth.kml+xml'
 KMZ:
+  - 'google kmz (kmz)'
   - 'kmz'
 LAZ:
+  - 'laz'
   - 'laz (.laz)'
 MULTIFORMAT:
   - 'multiformat'
@@ -60,6 +90,7 @@ PC-AXIS:
   - 'pc-axis file'
 PDF:
   - 'pdf'
+  - 'portable document format (pdf)'
 PNG:
   - 'png'
 RDF N-Triples:
@@ -74,6 +105,7 @@ RDF XML:
   - 'rdf'
   - 'rdf+xml'
   - 'rdf_xml'
+  - 'ressource description framework (rdf)'
 SHP:
   - 'esri shapefile'
   - 'esri shapefile (.shp)'
@@ -81,47 +113,61 @@ SHP:
   - 'esri geodatabase (....'
   - 'esri arcinfo ascii ...'
   - 'esri personal geodatabase (.mdb)'
+  - 'esri personal geodatabase (mdb)'
   - 'shape'
   - 'shapefile'
   - 'shp'
 SPARQL:
   - 'rq'
-  - 'sparqlq'
-  - 'sparql-query'
   - 'sparql-...'
+  - 'sparql-query'
+  - 'sparqlq'
 TXT:
+  - 'plain'
+  - 'text (.txt)'
+  - 'text (txt)'
   - 'text'
   - 'txt'
-  - 'text (.txt)'
-  - 'plain'
 TIFF:
+  - 'tagged image file format (.tif)'
+  - 'tagged image file format (tiff) compressed lzw'
+  - 'tagged image file format (tiff)'
+  - 'tif'
   - 'tiff'
 TSV:
-  - 'text/tab-separated-values'
   - 'tab-separated-values'
+  - 'text/tab-separated-values'
 WCS:
   - 'wcs'
   - 'wcs_srvc'
 WFS:
+  - 'ogc web feature service (wfs)'
+  - 'ogc wfs (web feature service)'
+  - 'wfs dienst'
   - 'wfs'
   - 'wfs_srvc'
 WMS:
+  - 'ogc web map service (wms)'
+  - 'ogc wms (web map service)'
+  - 'ogc:wms'
+  - 'wms dienst'
   - 'wms'
   - 'wms_srvc'
 WORLDFILE:
-  - 'geotiff/worldfile (.tif/.tfw)'
-  - 'jpeg/worldfile (.jpg/.jgw)'
   - '.jgw)'
   - '.tfw)'
+  - 'geotiff/worldfile (.tif/.tfw)'
+  - 'jpeg/worldfile (.jpg/.jgw)'
   - 'world'
 WMTS:
   - 'wmts'
   - 'wmts_srvc'
 XLS:
+  - 'microsoft excel (xls)'
+  - 'vnd.ms-excel'
+  - 'vnd.openxmlformats-officedocument.spreadsheetml.sheet'
   - 'xls'
   - 'xlsx'
-  - 'vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-  - 'vnd.ms-excel'
 XML:
   - 'xml'
 YAML:
