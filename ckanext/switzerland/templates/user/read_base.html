@@ -9,6 +9,11 @@
 {% endblock %}
 
 {% block user_info %}
+{% if h.user_locked_out(user.name) %}
+  {% set login_status = 'locked out' %}
+{% else %}
+  {% set login_status = 'login enabled' %}
+{% endif %}
 <div class="info">
   <dl>
     {% if user.name.startswith('http://') or user.name.startswith('https://') %}
@@ -31,7 +36,7 @@
   </dl>
   <dl>
     <dt>{{ _('State') }}</dt>
-    <dd>{{ _(user.state) }}</dd>
+    <dd>{{ _(user.state) }}, {{ _(login_status) }}</dd>
   </dl>
   {% if is_myself %}
     <dl>
