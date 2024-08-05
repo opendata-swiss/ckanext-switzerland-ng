@@ -84,6 +84,8 @@ MULTIFORMAT:
   - 'multi'
 N3:
   - 'n3'
+OCTET:
+  - 'octet-stream'
 ODS:
   - 'ods'
   - 'vnd.oas...'
