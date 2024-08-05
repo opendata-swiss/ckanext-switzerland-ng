@@ -12,9 +12,15 @@ CSV:
   - 'text (.csv), semicolon separated'
   - 'text, comma separated (csv)'
   - 'text, semicolon separated (csv)'
+DGN:
+  - 'dgn'
+DWG:
+  - 'dwg'
 DXF:
   - 'dxf (.dxf)'
   - 'dxf'
+ECW:
+  - 'ecw'
 ESRI ASCII Grid:
   - '.asc)'
   - 'esri arcinfo ascii grid (asc)'
@@ -41,6 +47,9 @@ GeoTIFF:
   - 'geo-tiff'
   - 'geotiff (geotiff)'
   - 'geotiff'
+GML:
+  - 'gml'
+  - 'gml+xml'
 GPKG:
   - 'geopackage (.gpkg)'
   - 'geopackage (gpkg)'
@@ -48,6 +57,9 @@ GPKG:
   - 'gpkg'
   - 'ogc geopackage (.gpkg)'
   - 'ogc geopackage (gpkg)'
+GPX:
+  - 'gpx'
+  - 'gpx+xml'
 HTML:
   - 'html'
 INTERLIS:
@@ -76,6 +88,8 @@ KML:
 KMZ:
   - 'google kmz (kmz)'
   - 'kmz'
+LAS:
+  - 'las'
 LAZ:
   - 'laz'
   - 'laz (.laz)'
@@ -90,6 +104,8 @@ ODS:
   - 'ods'
   - 'vnd.oas...'
   - 'vnd.oasis.opendocument.spreadsheet'
+PARQUET:
+  - 'parquet'
 PC-AXIS:
   - 'pc-axis file'
 PDF:
