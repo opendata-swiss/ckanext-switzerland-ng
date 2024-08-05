@@ -170,6 +170,7 @@ WMS:
   - 'ogc web map service (wms)'
   - 'ogc wms (web map service)'
   - 'ogc:wms'
+  - 'vnd.ogc.wms_xml'
   - 'wms dienst'
   - 'wms'
   - 'wms_srvc'
