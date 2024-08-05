@@ -37,6 +37,7 @@ GeoJSON:
   - 'geojson (geojson)'
   - 'geojson'
 GeoTIFF:
+  - 'cloud optimized geotiff'
   - 'geo-tiff'
   - 'geotiff (geotiff)'
   - 'geotiff'
@@ -63,6 +64,7 @@ INTERLIS:
 JSON:
   - 'javascript object notation (json)'
   - 'json'
+  - 'json (json)'
 JSON-LD:
   - 'json_ld'
   - 'jsonld'
