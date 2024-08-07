@@ -12,9 +12,15 @@ CSV:
   - 'text (.csv), semicolon separated'
   - 'text, comma separated (csv)'
   - 'text, semicolon separated (csv)'
+DGN:
+  - 'dgn'
+DWG:
+  - 'dwg'
 DXF:
   - 'dxf (.dxf)'
   - 'dxf'
+ECW:
+  - 'ecw'
 ESRI ASCII Grid:
   - '.asc)'
   - 'esri arcinfo ascii grid (asc)'
@@ -37,9 +43,13 @@ GeoJSON:
   - 'geojson (geojson)'
   - 'geojson'
 GeoTIFF:
+  - 'cloud optimized geotiff'
   - 'geo-tiff'
   - 'geotiff (geotiff)'
   - 'geotiff'
+GML:
+  - 'gml'
+  - 'gml+xml'
 GPKG:
   - 'geopackage (.gpkg)'
   - 'geopackage (gpkg)'
@@ -47,6 +57,9 @@ GPKG:
   - 'gpkg'
   - 'ogc geopackage (.gpkg)'
   - 'ogc geopackage (gpkg)'
+GPX:
+  - 'gpx'
+  - 'gpx+xml'
 HTML:
   - 'html'
 INTERLIS:
@@ -63,6 +76,7 @@ INTERLIS:
 JSON:
   - 'javascript object notation (json)'
   - 'json'
+  - 'json (json)'
 JSON-LD:
   - 'json_ld'
   - 'jsonld'
@@ -74,6 +88,8 @@ KML:
 KMZ:
   - 'google kmz (kmz)'
   - 'kmz'
+LAS:
+  - 'las'
 LAZ:
   - 'laz'
   - 'laz (.laz)'
@@ -82,10 +98,14 @@ MULTIFORMAT:
   - 'multi'
 N3:
   - 'n3'
+OCTET:
+  - 'octet-stream'
 ODS:
   - 'ods'
   - 'vnd.oas...'
   - 'vnd.oasis.opendocument.spreadsheet'
+PARQUET:
+  - 'parquet'
 PC-AXIS:
   - 'pc-axis file'
 PDF:
@@ -150,6 +170,7 @@ WMS:
   - 'ogc web map service (wms)'
   - 'ogc wms (web map service)'
   - 'ogc:wms'
+  - 'vnd.ogc.wms_xml'
   - 'wms dienst'
   - 'wms'
   - 'wms_srvc'
