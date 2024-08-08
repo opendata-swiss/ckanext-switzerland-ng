@@ -7,7 +7,7 @@ import unittest
 
 class TestHelpers(object):
     def test_get_resource_terms_of_use_with_license(self):
-        term_id = 'NonCommercialAllowed-CommercialAllowed-ReferenceRequired'
+        term_id = 'https://opendata.swiss/terms-of-use#terms_by'
         resource = {
             "license": term_id
         }
@@ -15,7 +15,7 @@ class TestHelpers(object):
         assert_equals(term_id, result)
 
     def test_get_resource_terms_of_use_with_rights(self):
-        term_id = 'NonCommercialAllowed-CommercialAllowed-ReferenceRequired'
+        term_id = 'https://opendata.swiss/terms-of-use#terms_by'
         resource = {
             "rights": term_id
         }
@@ -23,8 +23,8 @@ class TestHelpers(object):
         assert_equals(term_id, result)
 
     def test_get_resource_terms_of_use_with_license_and_rights(self):
-        license_term_id = 'NonCommercialAllowed-CommercialAllowed-ReferenceRequired'  # noqa
-        rights_term_id = 'NonCommercialAllowed-CommercialWithPermission-ReferenceNotRequired'  # noqa
+        license_term_id = 'https://opendata.swiss/terms-of-use#terms_by'  # noqa
+        rights_term_id = 'https://opendata.swiss/terms-of-use#terms_ask'  # noqa
         resource = {
             "license": license_term_id,
             "rights": rights_term_id
