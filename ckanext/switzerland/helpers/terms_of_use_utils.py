@@ -2,7 +2,7 @@
 import logging
 log = logging.getLogger(__name__)
 
-TERMS_OF_USE_OPEN = 'https://opendata.swiss/terms-of-use/#terms_open'
+TERMS_OF_USE_OPEN = 'https://opendata.swiss/terms-of-use#terms_open'
 TERMS_OF_USE_BY = 'https://opendata.swiss/terms-of-use#terms_by'
 TERMS_OF_USE_ASK = 'https://opendata.swiss/terms-of-use#terms_ask'
 TERMS_OF_USE_BY_ASK = 'https://opendata.swiss/terms-of-use#terms_by_ask'
