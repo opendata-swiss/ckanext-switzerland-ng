@@ -322,20 +322,32 @@ def ogdch_validate_formfield_publisher(field, schema):
     """This validator is only used for form validation
     The data is extracted from the publisher form fields and transformed
     into a form that is expected for database storage:
-    '{"name": "Publisher Name", "url": "Publisher URL"}'
+    '{"name": {"de": "German Name", "en": "English Name", "fr": "French Name",
+    "it": "Italian Name"}, "url": "Publisher URL"}'
     """
     def validator(key, data, errors, context):
         if not data.get(key):
             extras = data.get(FORM_EXTRAS)
-            output = {'url': '', 'name': ''}
+            output = {'url': '',
+                      'name': {'de': '', 'en': '', 'fr': '', 'it': ''}}
             if extras:
                 publisher = _get_publisher_from_form(extras)
                 if publisher:
                     output = publisher
+                    output['name'] = {
+                        'de': extras.get('publisher-name-de', ''),
+                        'en': extras.get('publisher-name-en', ''),
+                        'fr': extras.get('publisher-name-fr', ''),
+                        'it': extras.get('publisher-name-it', ''),
+                    }
                     if 'publisher-url' in extras:
                         del extras['publisher-url']
-                    if 'publisher-name' in extras:
-                        del extras['publisher-name']
+                    if any(key.startswith('publisher-name-') for key in
+                           extras.keys()):
+                        for lang in ['de', 'en', 'fr', 'it']:
+                            lang_key = 'publisher-name-{}'.format(lang)
+                            if lang_key in extras:
+                                del extras[lang_key]
             data[key] = json.dumps(output)
         elif isinstance(data.get(key), dict):
             data[key] = json.dumps(data.get(key))

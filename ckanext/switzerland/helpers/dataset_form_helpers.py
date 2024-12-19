@@ -49,22 +49,43 @@ def ogdch_publisher_form_helper(data):
     fills the publisher form snippet either from a previous form entry
     or from the db
     """
-    publisher_form_name = data.get('publisher-name')
+
+    # check for form inputs first
+    publisher_form_name = {
+        'fr': data.get('publisher-name-fr', ''),
+        'en': data.get('publisher-name-en', ''),
+        'de': data.get('publisher-name-de', ''),
+        'it': data.get('publisher-name-it', ''),
+    }
     publisher_form_url = data.get('publisher-url')
-    publisher_in_form = publisher_form_url or publisher_form_name
-    if publisher_in_form:
+
+    if publisher_form_url or any(publisher_form_name.values()):
         return {'name': publisher_form_name,
                 'url': publisher_form_url}
 
+    # check for publisher from db
     publisher_stored = data.get('publisher')
     if publisher_stored:
-        return json.loads(publisher_stored)
+        # handle stored publisher data (both as dict or string)
+        if isinstance(publisher_stored, dict):
+            name = publisher_stored.get('name', {})
+            log.info("publisher_stored ins")
+            log.info(name)
+            return {'name': name, 'url': publisher_stored.get('url', '')}
+        elif isinstance(publisher_stored, str):
+            try:
+                parsed = json.loads(publisher_stored)
+                name = parsed.get('name', '')
+                return {'name':  {'de': name}, 'url': parsed.get('url', '')}
+            except (ValueError, TypeError):
+                log.error('Failed to parse stored publisher JSON')
+                return {'name': {'de': ''}, 'url': ''}
 
     publisher_deprecated = _convert_from_publisher_deprecated(data)
     if publisher_deprecated:
         return publisher_deprecated
 
-    return {'name': '', 'url': ''}
+    return {'name': {'de': ''}, 'url': ''}
 
 
 def _convert_from_publisher_deprecated(data):
