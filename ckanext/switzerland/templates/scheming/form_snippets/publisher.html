@@ -1,15 +1,22 @@
 {% import 'macros/form.html' as form %}
 {% set publisher = h.ogdch_publisher_form_helper(data) %}
-{% call form.input(
-  'publisher-name',
-  id='field-publisher-name',
-  label=h.scheming_language_text(field.label_name),
-  placeholder=h.scheming_language_text(field.form_placeholder_name),
-  value=publisher.name,
-  error=errors['publisher-name'],
-  classes=['control-full']
-  ) %}
-{% endcall %}
+
+{# Input for publisher names in multiple languages #}
+{% for lang in ['fr', 'de', 'it', 'en'] %}
+  {% set name_value = publisher.name.get(lang, '') if publisher.name is mapping else '' %}
+  {% call form.input(
+    'publisher-name-' ~ lang,
+    id='field-publisher-name-' ~ lang,
+    label=h.scheming_language_text(field.label_name) ~ ' (' ~ lang ~ ')',
+    placeholder=h.scheming_language_text(field.form_placeholder_name) ~ ' (' ~ lang ~ ')',
+    value=name_value,
+    error=errors['publisher-name-' ~ lang],
+    classes=['control-full']
+    ) %}
+  {% endcall %}
+{% endfor %}
+
+{# Input for publisher URL #}
 {% call form.input(
   'publisher-url',
   id='field-publisher-url',
@@ -20,4 +27,5 @@
   classes=['control-full']
   ) %}
 {% endcall %}
+
 {%- snippet 'scheming/form_snippets/help_text.html', field=field -%}
