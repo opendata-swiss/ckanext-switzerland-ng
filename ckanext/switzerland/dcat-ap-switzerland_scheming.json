@@ -327,12 +327,19 @@
       "validators": "ogdch_validate_formfield_publisher",
       "display_snippet": "publisher.html",
       "form_snippet": "publisher.html",
+      "preset": "multilingual_text_full",
       "mark_required": true,
       "section_title": {
         "en": "Publisher Information",
         "de": "Publisher-Informationen",
         "fr": "Informations relatives à l’éditeur",
         "it": "Dataset Information"
+      },
+      "fieldgroup": {
+        "en": "Publisher",
+        "de": "Publisher",
+        "fr": "Publisher",
+        "it": "Publisher"
       },
       "name": {
         "en": "Name",
