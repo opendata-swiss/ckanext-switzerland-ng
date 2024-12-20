@@ -73,16 +73,18 @@ def ogdch_publisher_form_helper(data):
             try:
                 parsed = json.loads(publisher_stored)
                 name = parsed.get('name', '')
-                return {'name':  {'de': name}, 'url': parsed.get('url', '')}
+                return {'name':  {'de': name, 'en': '', 'fr': '', 'it': ''},
+                        'url': parsed.get('url', '')}
             except (ValueError, TypeError):
                 log.error('Failed to parse stored publisher JSON')
-                return {'name': {'de': ''}, 'url': ''}
+                return {'name': {'de': '', 'en': '', 'fr': '', 'it': ''},
+                        'url': ''}
 
     publisher_deprecated = _convert_from_publisher_deprecated(data)
     if publisher_deprecated:
         return publisher_deprecated
 
-    return {'name': {'de': ''}, 'url': ''}
+    return {'name': {'de': '', 'en': '', 'fr': '', 'it': ''}, 'url': ''}
 
 
 def _convert_from_publisher_deprecated(data):
