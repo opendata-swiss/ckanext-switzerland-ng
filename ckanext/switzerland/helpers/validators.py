@@ -16,7 +16,7 @@ from ckanext.switzerland.helpers.dataset_form_helpers import (
     get_contact_points_from_form, get_relations_from_form,
     get_qualified_relations_from_form, get_temporals_from_form)
 from ckanext.switzerland.helpers.frontend_helpers import get_permalink
-from ckanext.switzerland.helpers.localize_utils import parse_json
+from ckanext.switzerland.helpers.localize_utils import parse_json, LANGUAGES
 
 log = logging.getLogger(__name__)
 
@@ -344,7 +344,7 @@ def ogdch_validate_formfield_publisher(field, schema):
                         del extras['publisher-url']
                     if any(key.startswith('publisher-name-') for key in
                            extras.keys()):
-                        for lang in ['de', 'en', 'fr', 'it']:
+                        for lang in LANGUAGES:
                             lang_key = 'publisher-name-{}'.format(lang)
                             if lang_key in extras:
                                 del extras[lang_key]
