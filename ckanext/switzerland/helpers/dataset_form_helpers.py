@@ -69,8 +69,6 @@ def ogdch_publisher_form_helper(data):
         # handle stored publisher data (both as dict or string)
         if isinstance(publisher_stored, dict):
             name = publisher_stored.get('name', {})
-            log.info("publisher_stored ins")
-            log.info(name)
             return {'name': name, 'url': publisher_stored.get('url', '')}
         elif isinstance(publisher_stored, str):
             try:
