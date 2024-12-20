@@ -326,6 +326,11 @@ def ogdch_validate_formfield_publisher(field, schema):
     "it": "Italian Name"}, "url": "Publisher URL"}'
     """
     def validator(key, data, errors, context):
+        # the value is already a dict
+        if isinstance(data.get(key), dict):
+            data[key] = json.dumps(data.get(key))
+            return  # exit early since this case is handled
+        # the key is missing
         if not data.get(key):
             extras = data.get(FORM_EXTRAS)
             output = {'url': '',
