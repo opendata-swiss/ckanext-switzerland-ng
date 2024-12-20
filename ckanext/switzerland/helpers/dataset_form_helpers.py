@@ -21,7 +21,6 @@ from dateutil.parser import parse
 ADDITIONAL_FORM_ROW_LIMIT = 10
 HIDE_ROW_CSS_CLASS = 'ogdch-hide-row'
 SHOW_ROW_CSS_CLASS = 'ogdch-show-row'
-PUBLISHER_EMPTY = {'name': '', 'url': ''}
 ORGANIZATION_URI_BASE = 'https://opendata.swiss/organization/'
 
 log = logging.getLogger(__name__)
