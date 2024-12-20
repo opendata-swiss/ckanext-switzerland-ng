@@ -335,12 +335,6 @@
         "fr": "Informations relatives à l’éditeur",
         "it": "Dataset Information"
       },
-      "fieldgroup": {
-        "en": "Publisher",
-        "de": "Publisher",
-        "fr": "Publisher",
-        "it": "Publisher"
-      },
       "name": {
         "en": "Name",
         "de": "Name",
