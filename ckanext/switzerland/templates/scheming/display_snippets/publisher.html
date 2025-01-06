@@ -1,6 +1,13 @@
 {%- set publisher = h.render_publisher(data[field.field_name]) -%}
 {% if publisher %}
-  <a href="{{ publisher.url }}" target="_blank" class="break-word">{{ publisher.name }}</a>
+  {%- set current_lang = h.lang() -%}  {# Get the current CKAN language #}
+  {%- set fallback_lang = 'de' -%}     {# Default fallback language #}
+  {% if publisher.name is string %}
+    <a href="{{ publisher.url }}" target="_blank" class="break-word">{{ publisher.name }}</a>
+  {% else %}
+    {%- set publisher_name = publisher.name.get(current_lang) or publisher.name.get(fallback_lang) -%}
+    <a href="{{ publisher.url }}" target="_blank" class="break-word">{{ publisher_name }}</a>
+  {% endif %}
 {% else %}
-  -
+  <p>Publisher information not available.</p>
 {% endif %}
