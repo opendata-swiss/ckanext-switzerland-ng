@@ -777,20 +777,16 @@ class OgdchSubscribePlugin(SubscribePlugin):
     def get_activities(self, include_activity_from,
                        objects_subscribed_to_keys):
         no_notification_users = [HARVEST_USER, MIGRATION_USER]
-        no_notification_ids = []
+        query = Session \
+            .query(Activity) \
+            .filter(Activity.timestamp > include_activity_from) \
+            .filter(Activity.object_id.in_(objects_subscribed_to_keys))
         try:
             for username in no_notification_users:
                 user = tk.get_action('user_show')({}, {'id': username})
-                no_notification_ids.append(user['id'])
+                query = query.filter(Activity.user_id != user["id"])
         except tk.ObjectNotFound:
             raise
-        query = \
-            Session\
-            .query(Activity)\
-            .filter(Activity.timestamp > include_activity_from)\
-            .filter(Activity.object_id.in_(objects_subscribed_to_keys))
-        for user_id in no_notification_ids:
-            query = query.filter(Activity.user_id != user_id)
         activities = query.all()
         return activities
 
