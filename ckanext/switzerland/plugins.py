@@ -784,12 +784,14 @@ class OgdchSubscribePlugin(SubscribePlugin):
                 no_notification_ids.append(user['id'])
         except tk.ObjectNotFound:
             raise
-        activities = \
+        query = \
             Session\
             .query(Activity)\
             .filter(Activity.timestamp > include_activity_from)\
-            .filter(Activity.object_id.in_(objects_subscribed_to_keys))\
-            .filter(Activity.user_id.not_in(no_notification_ids)).all()
+            .filter(Activity.object_id.in_(objects_subscribed_to_keys))
+        for user_id in no_notification_ids:
+            query = query.filter(Activity.user_id != user_id)
+        activities = query.all()
         return activities
 
 
