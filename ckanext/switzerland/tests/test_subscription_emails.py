@@ -281,16 +281,14 @@ www.bfs.admin.ch/ogd
             user=migration,
             user_id=migration['id'],
             object_id=self.dataset['id'],
-            activity_type='changed package',
-            return_object=True
+            activity_type='changed package'
         )
         harvest = ckan_factories.User(name='harvest', sysadmin=True)
         factories.Activity(
             user=harvest,
             user_id=harvest['id'],
             object_id=self.dataset['id'],
-            activity_type='changed package',
-            return_object=True
+            activity_type='changed package'
         )
 
         now = datetime.datetime.now()
