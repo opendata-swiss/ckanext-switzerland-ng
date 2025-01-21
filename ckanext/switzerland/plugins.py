@@ -27,6 +27,8 @@ from ckanext.subscribe.plugin import SubscribePlugin
 from ckanext.switzerland import logic as ogdch_logic
 from ckanext.switzerland.middleware import RobotsHeaderMiddleware
 
+HARVEST_USER = 'harvest'
+
 log = logging.getLogger(__name__)
 
 __location__ = os.path.realpath(os.path.join(
@@ -773,10 +775,11 @@ class OgdchSubscribePlugin(SubscribePlugin):
 
     def get_activities(self, include_activity_from,
                        objects_subscribed_to_keys):
+
         try:
             harvest_user = tk.get_action('user_show')(
                 {},
-                {'id': ogdch_validators.HARVEST_USER}
+                {'id': HARVEST_USER}
             )
             harvest_user_id = harvest_user['id']
         except tk.ObjectNotFound:

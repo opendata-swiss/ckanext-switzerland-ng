@@ -22,7 +22,6 @@ log = logging.getLogger(__name__)
 
 HARVEST_JUNK = ('__junk',)
 FORM_EXTRAS = ('__extras',)
-HARVEST_USER = 'harvest'
 DATE_FORMAT_PATTERN = re.compile('[0-9]{2}.[0-9]{2}.[0-9]{4}')
 
 OneOf = tk.get_validator('OneOf')
