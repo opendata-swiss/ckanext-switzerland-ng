@@ -1,7 +1,9 @@
 # encoding: utf-8
+import datetime
 
 from nose.tools import assert_equal, assert_in, assert_not_in
 
+import ckan.tests.factories as ckan_factories
 from ckan import plugins as p
 from ckanext.subscribe.email_verification import (
     get_verification_email_vars,
@@ -264,3 +266,43 @@ www.bfs.admin.ch/ogd
         assert_in(u'The OGD office team', body)
         assert_in(u"L'équipe du secrétariat OGD", body)
         assert_in(u'Team Segreteria OGD', body)
+
+    def test_get_activities(self):
+        '''Test that we don't get activities from the migration and harvest
+        users.
+        '''
+        normal_activity = factories.Activity(
+            object_id=self.dataset['id'],
+            activity_type='changed package',
+            return_object=True
+        )
+        migration = ckan_factories.User(name='migration', sysadmin=True)
+        factories.Activity(
+            user=migration,
+            user_id=migration['id'],
+            object_id=self.dataset['id'],
+            activity_type='changed package'
+        )
+        harvest = ckan_factories.User(name='harvest', sysadmin=True)
+        factories.Activity(
+            user=harvest,
+            user_id=harvest['id'],
+            object_id=self.dataset['id'],
+            activity_type='changed package'
+        )
+
+        now = datetime.datetime.now()
+        day = datetime.timedelta(days=1)
+        include_activity_from = now - day
+
+        subscribe = OgdchSubscribePlugin()
+        activities = subscribe.get_activities(
+            include_activity_from=include_activity_from,
+            objects_subscribed_to_keys=[self.dataset['id']]
+        )
+
+        # One 'new package' activity, and one 'changed package' activity
+        assert(len(activities) == 2)
+        assert(activities[0].activity_type == 'new package')
+        assert(activities[1].user_id == normal_activity.user_id)
+        assert(activities[1].activity_type == 'changed package')

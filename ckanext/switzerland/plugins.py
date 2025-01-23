@@ -27,6 +27,9 @@ from ckanext.subscribe.plugin import SubscribePlugin
 from ckanext.switzerland import logic as ogdch_logic
 from ckanext.switzerland.middleware import RobotsHeaderMiddleware
 
+HARVEST_USER = 'harvest'
+MIGRATION_USER = 'migration'
+
 log = logging.getLogger(__name__)
 
 __location__ = os.path.realpath(os.path.join(
@@ -773,20 +776,18 @@ class OgdchSubscribePlugin(SubscribePlugin):
 
     def get_activities(self, include_activity_from,
                        objects_subscribed_to_keys):
+        no_notification_users = [HARVEST_USER, MIGRATION_USER]
+        query = Session \
+            .query(Activity) \
+            .filter(Activity.timestamp > include_activity_from) \
+            .filter(Activity.object_id.in_(objects_subscribed_to_keys))
         try:
-            harvest_user = tk.get_action('user_show')(
-                {},
-                {'id': ogdch_validators.HARVEST_USER}
-            )
-            harvest_user_id = harvest_user['id']
+            for username in no_notification_users:
+                user = tk.get_action('user_show')({}, {'id': username})
+                query = query.filter(Activity.user_id != user["id"])
         except tk.ObjectNotFound:
             raise
-        activities = \
-            Session\
-            .query(Activity)\
-            .filter(Activity.timestamp > include_activity_from)\
-            .filter(Activity.object_id.in_(objects_subscribed_to_keys))\
-            .filter(Activity.user_id != harvest_user_id).all()
+        activities = query.all()
         return activities
 
 
