@@ -64,7 +64,13 @@ def ogdch_publisher_form_helper(data):
 
     # check for publisher from db
     publisher_stored = data.get('publisher')
-    if publisher_stored:
+    if isinstance(publisher_stored, (str, unicode)):
+        try:
+            publisher_stored = json.loads(publisher_stored)
+        except json.JSONDecodeError:
+            log.warning('Invalid JSON in publisher: %s' % publisher_stored)
+
+    if isinstance(publisher_stored, dict):
         publisher_name = publisher_stored.get('name')
         # handle stored publisher data (both as dict or string)
         if isinstance(publisher_name, dict):
