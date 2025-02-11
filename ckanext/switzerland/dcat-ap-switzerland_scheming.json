@@ -505,16 +505,16 @@
       "preset": "url",
       "mark_required": true,
       "label": {
-        "en": "Url",
-        "de": "Url",
-        "fr": "Url",
-        "it": "Url"
+        "en": "URL",
+        "de": "URL",
+        "fr": "URL",
+        "it": "URL"
       },
       "form_placeholder": {
-        "en": "Url",
-        "de": "Url",
-        "fr": "Url",
-        "it": "Url"
+        "en": "URL",
+        "de": "URL",
+        "fr": "URL",
+        "it": "URL"
       },
       "fieldgroup": {
         "en": "Landing page",
@@ -560,10 +560,10 @@
         "it": "Text"
       },
       "label_url": {
-        "en": "Url",
-        "de": "Url",
-        "fr": "Url",
-        "it": "Url"
+        "en": "URL",
+        "de": "URL",
+        "fr": "URL",
+        "it": "URL"
       },
       "form_placeholder_text": {
         "en": "Text",
@@ -572,10 +572,10 @@
         "it": "Text"
       },
       "form_placeholder_url": {
-        "en": "Url",
-        "de": "Url",
-        "fr": "Url",
-        "it": "Url"
+        "en": "URL",
+        "de": "URL",
+        "fr": "URL",
+        "it": "URL"
       },
       "add_row": {
         "en": "Add another relation",
