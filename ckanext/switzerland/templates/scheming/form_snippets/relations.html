@@ -1,19 +1,17 @@
 {% import 'macros/form.html' as form %}
 
 {% set relations_rows = h.ogdch_relations_form_helper(data) %}
-{%- for index in range(relations_rows | length) -%}
-  {% set row = relations_rows[index] %}
-  <h4 class="relation-label {{row.css_class}}">{{h.scheming_language_text(field.label) ~ ' ' ~ index}}</h4>
+{%- for row in relations_rows -%}
+  <h4 class="relation-label {{row.css_class}}">{{h.scheming_language_text(field.label) ~ ' ' ~ row.index}}</h4>
 
   {% for lang in h.fluent_form_languages(field, entity_type, object_type, schema) %}
     {% call form.input(
-      'relation-title-' ~ row.index ~ '-' ~ lang,
-      id='field-relation-title-' ~ row.index ~ '-' ~ lang,
+      'relation-label-' ~ row.index ~ '-' ~ lang,
+      id='field-relation-label-' ~ row.index ~ '-' ~ lang,
       label=lang.upper() ~ ' ' ~ h.scheming_language_text(field.label_text, lang),
       placeholder=h.scheming_language_text(field.form_placeholder_text, lang),
-      value=data[field.field_name ~ '-' ~ lang]
-        or data.get(field.field_name, {})[lang],
-      error=errors[field.field_name ~ '-' ~ lang],
+      value=row.data.label[lang],
+      error=errors['relations'],
       classes=['control-medium', row.css_class]
       ) %}
     {% endcall %}

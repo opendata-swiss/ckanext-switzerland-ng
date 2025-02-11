@@ -12,7 +12,7 @@ from ckan.common import _
 from ckanext.switzerland.helpers.frontend_helpers import (
     get_frequency_name, get_dataset_by_identifier, get_dataset_by_permalink)
 from ckanext.switzerland.helpers.localize_utils import (
-    localize_by_language_order)
+    LANGUAGES, localize_by_language_order)
 from ckanext.switzerland.helpers.terms_of_use_utils import (
     TERMS_OF_USE_BY_ASK, TERMS_OF_USE_OPEN, TERMS_OF_USE_BY, TERMS_OF_USE_ASK)
 from dateutil.parser import parse
@@ -114,9 +114,10 @@ def _convert_from_publisher_deprecated(data):
 
 
 def _build_rows_form_field(data_empty, data_list=None):
-    """builds a rows form field
+    """Builds a rows form field.
+
     - gets a list of data to fill in the form
-    - the form is build with that data
+    - the form is built with that data
     - rows that are empty are set to hidden
     - when there is no data the first row is displayed
     """
@@ -177,17 +178,18 @@ def get_contact_points_from_form(data):
 
 
 def ogdch_relations_form_helper(data):
-    """
-    sets the form field for relations
+    """Sets up the form field for relations.
     "relations": [
-    {"label": "legal_basis", "url": "https://www.admin.ch/#a20"},
-    {"label": "legal_basis", "url": "https://www.admin.ch/#a21"}]
+        {"label": {"de: "text", "fr": "text", "it": "text", "en": "text"},
+         "url": "https://www.admin.ch/#a20"},
+        ...
+    ]
     """
     relations = _get_relations_from_storage(data)
     if not relations:
         relations = get_relations_from_form(data)
 
-    data_empty = {'title': '', 'url': ''}
+    data_empty = {'label': {'de': '', 'en': '', 'fr': '', 'it': ''}, 'url': ''}
     rows = _build_rows_form_field(
         data_empty=data_empty,
         data_list=relations)
@@ -195,28 +197,45 @@ def ogdch_relations_form_helper(data):
 
 
 def _get_relations_from_storage(data):
-    """
-    data is expected to be stored as:
+    """Relations data is expected to be stored as:
     "relations": [
-    {"label": "legal_basis", "url": "https://www.admin.ch/#a20"},
-    {"label": "legal_basis", "url": "https://www.admin.ch/#a21"}]
+        {"label": {"de: "text", "fr": "text", "it": "text", "en": "text"},
+         "url": "https://www.admin.ch/#a20"},
+        ...
+    ]
     """
     relations = data.get('relations')
+    result = []
     if relations:
-        return [{"title": relation["label"], "url": relation["url"]}
-                for relation in relations]
-    return None
+        for relation in relations:
+            if isinstance(relation['label'], dict):
+                result.append(relation)
+            else:
+                result.append(
+                    {
+                        'label': {
+                            'de': relation['label'],
+                            'fr': relation['label'],
+                            'it': relation['label'],
+                            'en': relation['label']
+                        },
+                        'url': relation['url']
+                    })
+    return result
 
 
 def get_relations_from_form(data):
     if isinstance(data, dict):
         relations = []
         for i in range(1, ADDITIONAL_FORM_ROW_LIMIT + 1):
-            title = data.get('relation-title-' + str(i), '')
+            label = {
+                lang: data.get('relation-label-{}-{}'.format(str(i), lang), '')
+                for lang in LANGUAGES
+            }
             url = data.get('relation-url-' + str(i), '')
-            if title or url:
+            if any(label.values()) or url:
                 relations.append(
-                    {'title': title,
+                    {'label': label,
                      'url': url})
         return relations
     return None
