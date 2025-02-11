@@ -1,20 +1,27 @@
 {% import 'macros/form.html' as form %}
 
 {% set relations_rows = h.ogdch_relations_form_helper(data) %}
-{%- for row in relations_rows -%}
+{%- for index in range(relations_rows | length) -%}
+  {% set row = relations_rows[index] %}
+  <h4 class="relation-label {{row.css_class}}">{{h.scheming_language_text(field.label) ~ ' ' ~ index}}</h4>
+
+  {% for lang in h.fluent_form_languages(field, entity_type, object_type, schema) %}
+    {% call form.input(
+      'relation-title-' ~ row.index ~ '-' ~ lang,
+      id='field-relation-title-' ~ row.index ~ '-' ~ lang,
+      label=lang.upper() ~ ' ' ~ h.scheming_language_text(field.label_text, lang),
+      placeholder=h.scheming_language_text(field.form_placeholder_text, lang),
+      value=data[field.field_name ~ '-' ~ lang]
+        or data.get(field.field_name, {})[lang],
+      error=errors[field.field_name ~ '-' ~ lang],
+      classes=['control-medium', row.css_class]
+      ) %}
+    {% endcall %}
+  {% endfor %}
+
   {% call form.input(
-    'relation-title-' + row.index,
-    id='field-relation-title-' + row.index,
-    label=h.scheming_language_text(field.label_text),
-    placeholder=h.scheming_language_text(field.form_placeholder_text),
-    value=row.data.title,
-    error=errors['relations'],
-    classes=['control-medium', row.css_class]
-    ) %}
-  {% endcall %}
-  {% call form.input(
-    'relation-url-' + row.index,
-    id='field-relation-url-' + row.index,
+    'relation-url-' ~ row.index,
+    id='field-relation-url-' ~ row.index,
     label=h.scheming_language_text(field.label_url),
     type="url",
     placeholder=h.scheming_language_text(field.form_placeholder_url),
