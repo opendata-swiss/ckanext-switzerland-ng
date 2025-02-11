@@ -1,13 +1,18 @@
 {%- set relations = data[field.field_name] -%}
 
 {% if relations %}
+  {%- set current_lang = h.lang() -%}  {# Get the current CKAN language #}
+  {%- set fallback_lang = 'de' -%}     {# Default fallback language #}
   {% set relations_length = relations|length %}
 
   {% if relations_length == 1 %}
-    {% if relations[0].label == 'legal_basis' %}
-      {% set relation_label = _('Legal basis') %}
-    {% else %}
+    {% if relations[0].label is string %}
       {% set relation_label = relations[0].label %}
+    {% else %}
+      {% set relation_label = relations[0].label.get(current_lang) or relations[0].label.get(fallback_lang) %}
+    {% endif %}
+    {% if relation_label == 'legal_basis' %}
+      {% set relation_label = _('Legal basis') %}
     {% endif %}
     {% if relations[0].url %}
       <a href="{{ relations[0].url }}" target="_blank">{{ relation_label }}</a>
@@ -17,10 +22,13 @@
   {% elif relations_length > 1 %}
     <ul>
       {% for relation in relations %}
-        {% if relation.label == 'legal_basis' %}
-          {% set relation_label = _('Legal basis') %}
-        {% else %}
+        {% if relation.label is string %}
           {% set relation_label = relation.label %}
+        {% else %}
+          {% set relation_label = relation.label.get(current_lang) or relation.label.get(fallback_lang) %}
+        {% endif %}
+        {% if relation_label == 'legal_basis' %}
+          {% set relation_label = _('Legal basis') %}
         {% endif %}
         <li>
           {% if relation.url %}
