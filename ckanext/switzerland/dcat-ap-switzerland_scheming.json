@@ -505,16 +505,16 @@
       "preset": "url",
       "mark_required": true,
       "label": {
-        "en": "Url",
-        "de": "Url",
-        "fr": "Url",
-        "it": "Url"
+        "en": "URL",
+        "de": "URL",
+        "fr": "URL",
+        "it": "URL"
       },
       "form_placeholder": {
-        "en": "Url",
-        "de": "Url",
-        "fr": "Url",
-        "it": "Url"
+        "en": "URL",
+        "de": "URL",
+        "fr": "URL",
+        "it": "URL"
       },
       "fieldgroup": {
         "en": "Landing page",
@@ -548,10 +548,10 @@
         "it": "Beziehungen"
       },
       "label": {
-        "en": "Relations",
-        "de": "Beziehungen",
+        "en": "Relation",
+        "de": "Beziehung",
         "fr": "Relation",
-        "it": "Beziehungen"
+        "it": "Relazione"
       },
       "label_text": {
         "en": "Text",
@@ -560,10 +560,10 @@
         "it": "Text"
       },
       "label_url": {
-        "en": "Url",
-        "de": "Url",
-        "fr": "Url",
-        "it": "Url"
+        "en": "URL",
+        "de": "URL",
+        "fr": "URL",
+        "it": "URL"
       },
       "form_placeholder_text": {
         "en": "Text",
@@ -572,16 +572,16 @@
         "it": "Text"
       },
       "form_placeholder_url": {
-        "en": "Url",
-        "de": "Url",
-        "fr": "Url",
-        "it": "Url"
+        "en": "URL",
+        "de": "URL",
+        "fr": "URL",
+        "it": "URL"
       },
       "add_row": {
         "en": "Add another relation",
         "de": "Eine weitere Beziehung anfügen",
-        "fr": "Eine weitere Beziehung anfügen",
-        "it": "Eine weitere Beziehung anfügen"
+        "fr": "Ajouter une autre relation",
+        "it": "Aggiungi un'altra relazione"
       },
       "help_text": {
         "de": "Wichtig: Mittels dieses Felds soll auch eine Information zur gesetzlichen Grundlage veröffentlicht werden. Geben Sie bitte dazu «legal_basis» ein und erfassen einen Link auf die gesetzliche Grundlage, welche die Publikation dieses Datasets vorsieht.",

@@ -2,13 +2,13 @@
 {% set publisher = h.ogdch_publisher_form_helper(data) %}
 
 {# Input for publisher names in multiple languages #}
-{% for lang in ['fr', 'de', 'it', 'en'] %}
+{% for lang in h.fluent_form_languages(field, entity_type, object_type, schema) %}
   {% set name_value = publisher.name.get(lang, '') if publisher.name is mapping else '' %}
   {% call form.input(
     'publisher-name-' ~ lang,
     id='field-publisher-name-' ~ lang,
-    label=h.scheming_language_text(field.label_name) ~ ' (' ~ lang ~ ')',
-    placeholder=h.scheming_language_text(field.form_placeholder_name) ~ ' (' ~ lang ~ ')',
+    label=lang.upper() ~ ' ' + h.scheming_language_text(field.label_name),
+    placeholder=lang.upper() ~ ' ' + h.scheming_language_text(field.form_placeholder_name),
     value=name_value,
     error=errors['publisher-name-' ~ lang],
     classes=['control-full']

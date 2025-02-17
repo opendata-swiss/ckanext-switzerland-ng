@@ -404,11 +404,13 @@ def ogdch_validate_formfield_contact_points(field, schema):
 @scheming_validator
 def ogdch_validate_formfield_relations(field, schema):
     """This validator is only used for form validation
-    The data is extracted form the publisher form fields and transformed
+    The data is extracted from the publisher form fields and transformed
     into a form that is expected for database storage:
     "relations": [
-    {"label": "legal_basis", "url": "https://www.admin.ch/#a20"},
-    {"label": "legal_basis", "url": "https://www.admin.ch/#a21"}]
+        {"label": {"de: "text", "fr": "text", "it": "text", "en": "text"},
+         "url": "https://www.admin.ch/#a20"},
+        ...
+    ]
     """
     def validator(key, data, errors, context):
 
@@ -416,9 +418,7 @@ def ogdch_validate_formfield_relations(field, schema):
         if extras:
             relations = get_relations_from_form(extras)
             if relations:
-                output = [{'label': relation['title'], 'url': relation['url']}
-                          for relation in relations]
-                data[key] = json.dumps(output)
+                data[key] = json.dumps(relations)
             elif not _jsondata_for_key_is_set(data, key):
                 data[key] = '{}'
 
