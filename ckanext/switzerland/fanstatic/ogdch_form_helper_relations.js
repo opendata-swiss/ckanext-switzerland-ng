@@ -9,7 +9,7 @@ ckan.module('ogdch_relations_add_rows', function ($) {
         firstHiddenRows.addClass('ogdch-show-row');
         var firstHiddenLabel = $('.relation-label.ogdch-hide-row')
             .slice(0, 1);
-        firstHiddenLabel.addClass('ogdch-show-row')
+        firstHiddenLabel.addClass('ogdch-show-row');
         $('.ogdch-show-row').removeClass('ogdch-hide-row');
         $( "#field-relation-title-1" ).focus();
       });
