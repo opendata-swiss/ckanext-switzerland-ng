@@ -1,0 +1,34 @@
+Hello,
+We inform you that the dataset "{{ notifications[0].object_title_en }}" you subscribed to has been removed from our portal by the data provider.
+If you have any questions or need assistance finding similar datasets, please feel free to contact [Kontaktstelle des Datensatzes] or explore our portal for alternative datasets.
+Thank you for using opendata.swiss.
+Best regards,
+Team OGD Office
+
+Guten Tag
+wir informieren Sie darüber, dass der Datensatz «{{ notifications[0].object_title_de }}», den Sie abonniert haben, vom Datenanbieter aus unserem Portal entfernt wurde.
+Wenn Sie Fragen haben oder Hilfe bei der Suche nach ähnlichen Datensätzen benötigen, können Sie sich gerne an [Kontaktstelle des Datensatzes] wenden oder in unserem Portal nach alternativen Datensätze suchen.
+Vielen Dank, dass Sie opendata.swiss nutzen.
+Freundliche Grüsse
+
+Die Geschäftsstelle OGD
+
+Bonjour
+Nous vous informons que le jeu de données « {{ notifications[0].object_title_fr }} » auquel vous vous êtes abonné-e a été retiré de notre portail par le fournisseur de données.
+Si vous avez des questions ou besoin d'aide pour trouver des jeux de données similaires, n'hésitez pas à contacter [le point de contact du jeu de données] ou à rechercher des jeux de données alternatifs sur notre portail.
+Nous vous remercions d'utiliser opendata.swiss.
+Cordialement,
+Le Secrétariat OGD
+
+Buongiorno,
+La informiamo che il dataset "{{ notifications[0].object_title_it }} " a cui si è iscritto/inscritta è stato rimosso dal nostro portale dal fornitore di dati.
+Se ha domande o bisogno di assistenza per trovare set di dati simili, non esiti a contattare [Kontaktstelle des Datensatzes] o a esplorare il nostro portale per trovare set di dati alternativi.
+Grazie per aver utilizzato opendata.swiss.
+Cordiali saluti,
+La Segreteria OGD
+---
+Open Government Data Office
+Federal Statistical Office
+Espace de l'Europe 10
+CH-2010 Neuchâtel
+www.bfs.admin.ch/ogd
