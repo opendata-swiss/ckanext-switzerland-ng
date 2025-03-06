@@ -554,10 +554,10 @@
         "it": "Relazione"
       },
       "label_text": {
-        "en": "Text",
-        "de": "Text",
-        "fr": "Text",
-        "it": "Text"
+        "en": "Label",
+        "de": "Label",
+        "fr": "Label",
+        "it": "Label"
       },
       "label_url": {
         "en": "URL",
@@ -566,10 +566,10 @@
         "it": "URL"
       },
       "form_placeholder_text": {
-        "en": "Text",
-        "de": "Text",
-        "fr": "Text",
-        "it": "Text"
+        "en": "Label",
+        "de": "Label",
+        "fr": "Label",
+        "it": "Label"
       },
       "form_placeholder_url": {
         "en": "URL",
