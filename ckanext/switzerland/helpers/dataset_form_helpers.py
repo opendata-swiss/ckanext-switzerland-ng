@@ -215,9 +215,9 @@ def _get_relations_from_storage(data):
                     {
                         'label': {
                             'de': relation['label'],
-                            'fr': relation['label'],
-                            'it': relation['label'],
-                            'en': relation['label']
+                            'en': '',
+                            'fr': '',
+                            'it': ''
                         },
                         'url': relation['url']
                     })
