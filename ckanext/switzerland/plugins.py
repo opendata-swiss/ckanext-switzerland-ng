@@ -728,8 +728,9 @@ class OgdchSubscribePlugin(SubscribePlugin):
 
         return subject, plain_text_body, html_body
 
-    def get_notification_email_contents(self, email_vars, type="notification", subject=None,
-                                        plain_text_body=None, html_body=None):
+    def get_notification_email_contents(self, email_vars, type="notification",
+                                        subject=None, plain_text_body=None,
+                                        html_body=None):
         # email_vars['notifications'] is a list of dicts of variables, one for
         # each notification in the email.
         # See ckanext.subscribe.notification_email.get_notification_email_vars
