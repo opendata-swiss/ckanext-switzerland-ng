@@ -217,6 +217,125 @@ class TestSubscriptionEmails(OgdchFunctionalTestBase):
         self._test_all_four_languages(body_html, object_title_included=True)
         self._test_all_four_languages(body_plain_text, object_title_included=True)
 
+
+    @patch('ckanext.switzerland.helpers.backend_helpers.get_contact_point_for_dataset')
+    def test_get_deletion_email_contents(self, mock_get_contact_point):
+        contact_points = [
+            {u'name': u'Open-Data-Plattform', u'email': u'contact@odp.ch'}
+        ]
+        mock_get_contact_point.return_value = contact_points
+        code = 'testcode'
+        email = 'bob@example.com'
+        subscription = factories.Subscription(
+            dataset_id=self.dataset['id'], return_object=False)
+        notifications = [
+            {
+                'subscription': subscription,
+                'activities': [
+                    {
+                        'user_id': 'admin',
+                        'object_id': 'test-object-id',
+                        'revision_id': 'test-revision-id-1',
+                        'activity_type': 'deleted package',
+                        'timestamp': '2022-10-12T12:00:00',
+                        'data': {
+                            'package': {
+                                'name': 'test-dataset',
+                                'title': '{"fr": "FR Test", "de": "DE Test", "en": "EN Test", "it": "IT Test"}',
+                            }
+                        }
+                    }
+                ],
+            }
+        ]
+
+        email_vars = get_notification_email_vars(
+            code=code,
+            email=email,
+            notifications=notifications
+        )
+        subscribe = OgdchSubscribePlugin()
+        subject, body_plain_text, body_html = \
+            subscribe.get_notification_email_contents(email_vars, type="deletion")
+
+        assert_equal(
+            subject,
+            u'Delete notification \u2013 deleted dataset opendata.swiss'
+        )
+        assert_in(u'Hello,\nWe inform you that the dataset "EN Test" you subscribed to has been removed from our portal by the data provider.',
+                  body_plain_text.strip())
+        assert_in(u'<p>Hello,</p>\n\n<p>We inform you that the dataset "<b>EN Test</b>" you subscribed to has been removed from our portal',
+                  body_html.strip())
+        assert_in(contact_points[0].get('name'),
+                  body_plain_text.strip())
+        assert_in(contact_points[0].get('email'),
+                  body_plain_text.strip())
+        assert_in(u'<a href="mailto:{contact_email}">{contact_name}</a>'
+                  .format(contact_email=contact_points[0].get('email'), contact_name=contact_points[0].get('name')),
+                  body_html.strip())
+
+        assert_not_in(u'http://test.ckan.net', body_html)
+        assert_not_in(u'http://test.ckan.net', body_plain_text)
+
+    @patch('ckanext.switzerland.helpers.backend_helpers.get_contact_point_for_dataset')
+    def test_get_deletion_email_contents(self, mock_get_contact_point):
+        contact_point = [
+            {u'name': u'Open-Data-Plattform', u'email': u'contact@odp.ch'}
+        ]
+        mock_get_contact_point.return_value = contact_point
+        code = 'testcode'
+        email = 'bob@example.com'
+        subscription = factories.Subscription(
+            dataset_id=self.dataset['id'], return_object=False)
+        notifications = [
+            {
+                'subscription': subscription,
+                'activities': [
+                    {
+                        'user_id': 'admin',
+                        'object_id': 'test-object-id',
+                        'revision_id': 'test-revision-id-1',
+                        'activity_type': 'deleted package',
+                        'timestamp': '2022-10-12T12:00:00',
+                        'data': {
+                            'package': {
+                                'name': 'test-dataset',
+                                'title': '{"fr": "FR Test", "de": "DE Test", "en": "EN Test", "it": "IT Test"}',
+                            }
+                        }
+                    }
+                ],
+            }
+        ]
+
+        email_vars = get_notification_email_vars(
+            code=code,
+            email=email,
+            notifications=notifications
+        )
+        subscribe = OgdchSubscribePlugin()
+        subject, body_plain_text, body_html = \
+            subscribe.get_notification_email_contents(email_vars, type="deletion")
+
+        assert_equal(
+            subject,
+            u'Delete notification \u2013 deleted dataset opendata.swiss'
+        )
+        assert_in(u'Hello,\nWe inform you that the dataset "EN Test" you subscribed to has been removed from our portal by the data provider.',
+                  body_plain_text.strip())
+        assert_in(u'<p>Hello,</p>\n\n<p>We inform you that the dataset "<b>EN Test</b>" you subscribed to has been removed from our portal',
+                  body_html.strip())
+        assert_in(contact_point[0].get('name'),
+                  body_plain_text.strip())
+        assert_in(contact_point[0].get('email'),
+                  body_plain_text.strip())
+        assert_in(u'<a href="mailto:{contact_email}">{contact_name}</a>'
+                  .format(contact_email=contact_point[0].get('email'), contact_name=contact_point[0].get('name')),
+                  body_html.strip())
+
+        assert_not_in(u'http://test.ckan.net', body_html)
+        assert_not_in(u'http://test.ckan.net', body_plain_text)
+
     def _test_html_footer(self, body_html, subscription=False, code=''):
         assert_in(u'''<p>
     <a href="https://opendata.swiss">
