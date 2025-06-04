@@ -2,6 +2,7 @@
 import datetime
 
 from nose.tools import assert_equal, assert_in, assert_not_in
+from mock import patch
 
 import ckan.tests.factories as ckan_factories
 from ckan import plugins as p
@@ -153,7 +154,11 @@ class TestSubscriptionEmails(OgdchFunctionalTestBase):
         self._test_all_four_languages(body_html, object_title_included=False)
         self._test_all_four_languages(body_plain_text, object_title_included=False)
 
-    def test_get_notification_email_contents(self):
+    @patch('ckanext.switzerland.helpers.backend_helpers.get_contact_point_for_dataset')
+    def test_get_notification_email_contents(self, mock_get_contact_point):
+        mock_get_contact_point.return_value = [
+            {u'name': u'Open-Data-Plattform', u'email': u'contact@odp.ch'}
+        ]
         code = 'testcode'
         email = 'bob@example.com'
         subscription = factories.Subscription(
