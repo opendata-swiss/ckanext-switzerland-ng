@@ -335,3 +335,19 @@ def ogdch_get_switch_connectome_url(identifier):
 
 def ogdch_get_env():
     return tk.config.get('ckanext.switzerland.env', '')
+
+
+def get_contact_point_for_dataset(id):
+    '''
+    Return a list of showcases a dataset is associated with
+    '''
+    user = tk.get_action('get_site_user')({'ignore_auth': True}, {})
+    context = {'user': user['name']}
+
+    try:
+        return tk.get_action('package_show')(
+            context,
+            {'id': id}
+        )['contact_points']
+    except tk.NotFound:
+        return None
