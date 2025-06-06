@@ -63,7 +63,7 @@ Buongiorno,
     il dataset {{ notifications[0].object_title_it }} è stato modificato. Per vedere la modifica, clicchi sul link
     seguente: {{ notifications[0].object_link }}
 {% else %}
-    i dataset {{ notifications | join(', ', attribute='object_title_fr') }} sono stati modificati.
+    i dataset {{ notifications | join(', ', attribute='object_title_it') }} sono stati modificati.
 
     Per vedere le modifiche, clicchi sui link seguenti:
     {% for notification in notifications %} {{ notification.object_link }} {% if not loop.last %}, {% endif %}{% endfor %}.
@@ -85,10 +85,10 @@ Gestione abbonamento: {{ manage_link }}
 Dear Sir/Madam,
 
 {% if notifications|length == 1 %}
-    There has been a change to the dataset {{ notifications[0].object_title_it }}. To see the change, please click on
+    There has been a change to the dataset {{ notifications[0].object_title_en }}. To see the change, please click on
     the following link: {{ notifications[0].object_link }}
 {% else %}
-    There have been changes to the datasets {{ notifications | join(', ', attribute='object_title_fr') }}.
+    There have been changes to the datasets {{ notifications | join(', ', attribute='object_title_en') }}.
 
     To see the changes, please click on the following links:
     {% for notification in notifications %} {{ notification.object_link }} {% if not loop.last %}, {% endif %}{% endfor %}.
