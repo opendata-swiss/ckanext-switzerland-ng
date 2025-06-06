@@ -14,14 +14,14 @@ Freundliche Grüsse
 Die Geschäftsstelle OGD
 
 Bonjour
-Nous vous informons que le jeu de données « {{ notifications[0].object_title_fr }} » auquel vous vous êtes abonné-e a été retiré de notre portail par le fournisseur de données.
+Nous vous informons que le jeu de données «{{ notifications[0].object_title_fr }}» auquel vous vous êtes abonné-e a été retiré de notre portail par le fournisseur de données.
 Si vous avez des questions ou besoin d'aide pour trouver des jeux de données similaires, n'hésitez pas à contacter {{ notifications[0].contact_point_fr[0]['name'] }} ({{ notifications[0].contact_point_fr[0]['email'] }}) ou à rechercher des jeux de données alternatifs sur notre portail.
 Nous vous remercions d'utiliser opendata.swiss.
 Cordialement,
 Le Secrétariat OGD
 
 Buongiorno,
-La informiamo che il dataset "{{ notifications[0].object_title_it }} " a cui si è iscritto/inscritta è stato rimosso dal nostro portale dal fornitore di dati.
+La informiamo che il dataset "{{ notifications[0].object_title_it }}" a cui si è iscritto/inscritta è stato rimosso dal nostro portale dal fornitore di dati.
 Se ha domande o bisogno di assistenza per trovare set di dati simili, non esiti a contattare {{ notifications[0].contact_point_it[0]['name'] }} ({{ notifications[0].contact_point_it[0]['email'] }}) o a esplorare il nostro portale per trovare set di dati alternativi.
 Grazie per aver utilizzato opendata.swiss.
 Cordiali saluti,
