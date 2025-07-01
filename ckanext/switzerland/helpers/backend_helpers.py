@@ -11,7 +11,7 @@ from urllib import quote
 from urlparse import urlparse
 from html.parser import HTMLParser
 from ckan import authz
-from ckan.common import _, g, c
+from collections import _, g, c
 from ckan.lib.helpers import _link_to, lang, url_for
 from ckan.lib.helpers import dataset_display_name as dataset_display_name_orig
 from ckan.lib.helpers import organization_link as organization_link_orig

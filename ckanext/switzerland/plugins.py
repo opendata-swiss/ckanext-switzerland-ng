@@ -6,7 +6,7 @@ import os
 
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as tk
-from ckan.common import OrderedDict
+from collections import OrderedDict
 from ckan.lib.base import render_jinja2
 from ckan.lib.plugins import DefaultTranslation
 from ckan.model import PACKAGE_NAME_MAX_LENGTH, Activity, Package, Session

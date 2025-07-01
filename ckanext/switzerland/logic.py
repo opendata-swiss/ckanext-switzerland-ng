@@ -13,7 +13,7 @@ import rdflib
 import rdflib.parser
 from rdflib.namespace import Namespace, RDF
 
-from ckan.common import config
+from collections import config
 from ckan.lib import mailer
 from ckan.plugins.toolkit import get_or_bust, side_effect_free
 from ckan.logic import ActionError, NotFound, ValidationError, NotAuthorized

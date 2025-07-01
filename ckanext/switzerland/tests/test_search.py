@@ -4,7 +4,7 @@ import ckan.model as model
 import ckan.plugins.toolkit as tk
 import nose
 
-from ckan.common import config
+from collections import config
 from ckanext.switzerland.tests import OgdchFunctionalTestBase
 
 assert_equal = nose.tools.assert_equal

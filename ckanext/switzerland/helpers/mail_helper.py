@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 import logging
-from ckan.common import config
+from collections import config
 from ckan.lib.base import render_jinja2
 import ckan.lib.mailer as mailer
 

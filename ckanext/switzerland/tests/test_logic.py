@@ -4,7 +4,7 @@ import logging
 import nose
 
 import ckan.plugins.toolkit as tk
-from ckan.common import config
+from collections import config
 from ckan.tests.legacy.mock_mail_server import SmtpServerHarness
 from ckanext.switzerland.tests import OgdchFunctionalTestBase
 

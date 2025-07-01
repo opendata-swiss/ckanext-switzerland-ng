@@ -6,7 +6,7 @@ from six import string_types
 import ckan.model as model
 from ckan.logic import get_action
 from ckan.lib.plugins import lookup_group_controller
-from ckan.common import c, config, _, request, OrderedDict
+from collections import c, config, _, request, OrderedDict
 import ckan.lib.helpers as h
 import ckan.authz as authz
 import ckan.lib.search as search
