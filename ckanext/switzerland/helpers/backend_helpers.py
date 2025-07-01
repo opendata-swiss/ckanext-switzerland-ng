@@ -7,7 +7,7 @@ used in backend templates
 import ast
 import logging
 import re
-from urllib import quote
+from urllib.parse import quote
 from urlparse import urlparse
 from html.parser import HTMLParser
 from ckan import authz
