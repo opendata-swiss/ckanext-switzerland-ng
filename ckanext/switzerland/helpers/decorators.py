@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 import functools
-from collections import config
+from ckan.plugins.toolkit import config
 
 import logging
 

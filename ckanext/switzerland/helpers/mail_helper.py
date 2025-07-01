@@ -1,8 +1,7 @@
 # encoding: utf-8
 
 import logging
-from collections import config
-from ckan.plugins.toolkit import render
+from ckan.plugins.toolkit import  config, render
 import ckan.lib.mailer as mailer
 
 log = logging.getLogger(__name__)

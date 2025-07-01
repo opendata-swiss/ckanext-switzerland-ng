@@ -4,7 +4,7 @@ belong in this file
 """
 import yaml
 import os
-import urlparse
+from urllib.parse import urlparse
 
 __location__ = os.path.realpath(os.path.join(
     os.getcwd(),
@@ -36,7 +36,7 @@ def ogdch_get_format_mapping(mapping_type):
         with open(mapping_path, 'r') as mapping_file:
             mapping = yaml.safe_load(mapping_file)
             reverse_mapping = {}
-            for key, format_list in mapping.iteritems():
+            for key, format_list in mapping.items():
                 for format in format_list:
                     reverse_mapping[format] = key
     except (IOError, yaml.YAMLError) as exception:

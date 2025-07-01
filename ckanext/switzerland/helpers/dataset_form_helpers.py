@@ -8,7 +8,7 @@ import datetime
 import logging
 import json
 import ckan.plugins.toolkit as tk
-from collections import _
+from ckan.plugins.toolkit import _
 from ckanext.switzerland.helpers.frontend_helpers import (
     get_frequency_name, get_dataset_by_identifier, get_dataset_by_permalink)
 from ckanext.switzerland.helpers.localize_utils import (

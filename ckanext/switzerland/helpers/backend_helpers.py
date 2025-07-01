@@ -7,11 +7,10 @@ used in backend templates
 import ast
 import logging
 import re
-from urllib.parse import quote
-from urllib.parse import urlparse
+from urllib.parse import urlparse, quote
 from html.parser import HTMLParser
 from ckan import authz
-from collections import _, g, c
+from ckan.plugins.toolkit import c, g, _
 from ckan.lib.helpers import _link_to, lang, url_for
 from ckan.lib.helpers import dataset_display_name as dataset_display_name_orig
 from ckan.lib.helpers import organization_link as organization_link_orig

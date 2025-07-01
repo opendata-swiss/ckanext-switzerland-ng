@@ -1,7 +1,7 @@
 import logging
 from ckan.plugins.toolkit import redirect_to, abort
 from ckan.logic import get_action, NotFound
-from collections import _
+from ckan.plugins.toolkit import _
 from ckan.lib.base import BaseController
 
 log = logging.getLogger(__name__)

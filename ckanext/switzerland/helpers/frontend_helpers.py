@@ -9,7 +9,7 @@ from collections import OrderedDict
 import ckan.lib.i18n as i18n
 import ckan.plugins.toolkit as tk
 from babel import numbers
-from collections import _
+from ckan.plugins.toolkit import _
 from ckan.lib.helpers import lang, localised_number
 
 import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
