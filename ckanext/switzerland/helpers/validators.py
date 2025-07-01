@@ -1,7 +1,7 @@
 import json
 import logging
 import re
-from urlparse import urlparse
+from urllib.parse import urlparse
 
 import ckan.lib.navl.dictization_functions as df
 import ckan.plugins.toolkit as tk

@@ -8,7 +8,7 @@ import ast
 import logging
 import re
 from urllib.parse import quote
-from urlparse import urlparse
+from urllib.parse import urlparse
 from html.parser import HTMLParser
 from ckan import authz
 from collections import _, g, c
