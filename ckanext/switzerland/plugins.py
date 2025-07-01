@@ -1,6 +1,5 @@
 # coding=UTF-8
 
-import collections
 import logging
 import os
 
@@ -87,7 +86,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     def dataset_facets(self, facets_dict, package_type):
         lang_code = tk.request.environ['CKAN_LANG']
-        facets_dict = collections.OrderedDict()
+        facets_dict = OrderedDict()
         facets_dict['linked_data'] = plugins.toolkit._('Linked Data')
         facets_dict['private'] = plugins.toolkit._('Draft')
         facets_dict['groups'] = plugins.toolkit._('Categories')
