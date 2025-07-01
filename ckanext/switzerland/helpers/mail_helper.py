@@ -2,7 +2,7 @@
 
 import logging
 from collections import config
-from ckan.lib.base import render_jinja2
+from ckan.plugins.toolkit import render
 import ckan.lib.mailer as mailer
 
 log = logging.getLogger(__name__)
@@ -17,7 +17,7 @@ def get_registration_body(user):
         'display_name': user.get('display_name', user['name'])
         }
     # NOTE: This template is translated
-    return render_jinja2('emails/registration.txt', extra_vars)
+    return render('emails/registration.txt', extra_vars)
 
 
 def send_registration_email(user):
@@ -26,7 +26,7 @@ def send_registration_email(user):
     extra_vars = {
         'site_title': config.get('ckan.site_title')
     }
-    subject = render_jinja2('emails/registration_subject.txt', extra_vars)
+    subject = render('emails/registration_subject.txt', extra_vars)
 
     # Make sure we only use the first line
     subject = subject.split('\n')[0]
@@ -47,6 +47,6 @@ def send_showcase_email(showcase):
     mailer.mail_recipient(
         config.get('ckanext.switzerland.showcase_admin_name'),
         config.get('ckanext.switzerland.showcase_admin_email'),
-        render_jinja2('emails/showcase_subject.txt', extra_vars),
-        render_jinja2('emails/showcase.txt', extra_vars),
+        render('emails/showcase_subject.txt', extra_vars),
+        render('emails/showcase.txt', extra_vars),
     )

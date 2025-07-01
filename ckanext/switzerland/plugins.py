@@ -6,7 +6,7 @@ import os
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as tk
 from collections import OrderedDict
-from ckan.lib.base import render_jinja2
+from ckan.plugins.toolkit import render
 from ckan.lib.plugins import DefaultTranslation
 from ckan.model import PACKAGE_NAME_MAX_LENGTH, Activity, Package, Session
 
@@ -706,9 +706,9 @@ class OgdchSubscribePlugin(SubscribePlugin):
                                   plain_text_body=None, html_body=None):
         subject = u'Manage {site_title} subscription'.format(**email_vars)
 
-        html_body = render_jinja2(
+        html_body = render(
             '/emails/subscribe_manage.html', email_vars)
-        plain_text_body = render_jinja2(
+        plain_text_body = render(
             '/emails/subscribe_manage_plain_text.txt', email_vars)
 
         return subject, plain_text_body, html_body
@@ -720,9 +720,9 @@ class OgdchSubscribePlugin(SubscribePlugin):
         subject = u'Bestätigungsmail – Confirmation - E-mail di conferma - ' \
                   u'Confirmation'.format(**email_vars)
 
-        html_body = render_jinja2(
+        html_body = render(
             '/emails/subscribe_confirmation.html', email_vars)
-        plain_text_body = render_jinja2(
+        plain_text_body = render(
             '/emails/subscribe_confirmation_plain_text.txt', email_vars)
 
         return subject, plain_text_body, html_body
@@ -757,18 +757,18 @@ class OgdchSubscribePlugin(SubscribePlugin):
                       u'deleted dataset ' \
                       u'{site_title}'.format(**email_vars)
 
-            html_body = render_jinja2(
+            html_body = render(
                 '/emails/subscribe_deletion.html', email_vars)
-            plain_text_body = render_jinja2(
+            plain_text_body = render(
                 '/emails/subscribe_deletion_plain_text.txt', email_vars)
         else:
             subject = u'Update notification – ' \
                       u'updated dataset ' \
                       u'{site_title}'.format(**email_vars)
 
-            html_body = render_jinja2(
+            html_body = render(
                 '/emails/subscribe_notification.html', email_vars)
-            plain_text_body = render_jinja2(
+            plain_text_body = render(
                 '/emails/subscribe_notification_plain_text.txt', email_vars)
 
         return subject, plain_text_body, html_body
@@ -784,9 +784,9 @@ class OgdchSubscribePlugin(SubscribePlugin):
         subject = u'Bestätigungsmail – Confirmation - E-mail di conferma - ' \
                   u'Confirmation'.format(**email_vars)
 
-        html_body = render_jinja2(
+        html_body = render(
             '/emails/subscribe_verification.html', email_vars)
-        plain_text_body = render_jinja2(
+        plain_text_body = render(
             '/emails/subscribe_verification_plain_text.txt', email_vars)
 
         return subject, plain_text_body, html_body
