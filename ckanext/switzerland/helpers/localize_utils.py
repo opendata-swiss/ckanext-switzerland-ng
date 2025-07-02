@@ -101,7 +101,7 @@ def localize_by_language_order(multi_language_field, default=""):
 # single character-representation to make the resulting words sortable
 # See: http://stackoverflow.com/a/518232
 def strip_accents(s):
-    if type(s) != str:
+    if type(s) is not str:
         return s
     return "".join(
         c for c in unicodedata.normalize("NFD", s) if unicodedata.category(c) != "Mn"

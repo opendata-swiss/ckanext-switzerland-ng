@@ -60,7 +60,7 @@ def localize_json_facet_title(facet_item):
         pass
     try:
         lang_dict = json.loads(facet_item["display_name"])
-        if type(lang_dict) == bool:
+        if type(lang_dict) is bool:
             # json.loads converts the string 'false' or 'true' into a boolean
             # value, which is not what we want for a facet title.
             return _(str(lang_dict))

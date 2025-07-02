@@ -472,7 +472,7 @@ def _create_or_update_dataset(dataset):
 
         h.flash_success(success_message)
 
-    except NotFound as e:
+    except NotFound:
         package_schema = package_plugin.create_package_schema()
         context["schema"] = package_schema
 
