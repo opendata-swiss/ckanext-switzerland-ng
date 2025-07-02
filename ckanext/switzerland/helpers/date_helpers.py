@@ -149,7 +149,7 @@ def transform_date_for_solr(date):
     try:
         datetime_without_tz = parse(date, ignoretz=True)
         isodate_without_tz = isodate.datetime_isoformat(datetime_without_tz)
-        return isodate_without_tz + "Z"
+        return f"{isodate_without_tz}Z"
     except Exception as e:
         log.error(f"Exception {e} occured on date transformation of {date}")
         return None

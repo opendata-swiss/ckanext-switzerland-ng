@@ -193,8 +193,8 @@ def get_contact_points_from_form(data):
     if isinstance(data, dict):
         contact_points = []
         for i in range(1, ADDITIONAL_FORM_ROW_LIMIT + 1):
-            name = data.get("contact-point-name-" + str(i), "").strip()
-            email = data.get("contact-point-email-" + str(i), "").strip()
+            name = data.get(f"contact-point-name-{str(i)}", "").strip()
+            email = data.get(f"contact-point-email-{str(i)}", "").strip()
             if name or email:
                 contact_points.append({"name": name, "email": email})
         return contact_points
@@ -255,7 +255,7 @@ def get_relations_from_form(data):
                 lang: data.get(f"relation-label-{str(i)}-{lang}", "")
                 for lang in LANGUAGES
             }
-            url = data.get("relation-url-" + str(i), "")
+            url = data.get(f"relation-url-{str(i)}", "")
             if any(label.values()) or url:
                 relations.append({"label": label, "url": url})
         return relations
@@ -396,8 +396,8 @@ def get_temporals_from_form(data):
     if isinstance(data, dict):
         temporals = []
         for i in range(1, ADDITIONAL_FORM_ROW_LIMIT + 1):
-            start_date = data.get("temporal-start-date-" + str(i), "").strip()
-            end_date = data.get("temporal-end-date-" + str(i), "").strip()
+            start_date = data.get(f"temporal-start-date-{str(i)}", "").strip()
+            end_date = data.get(f"temporal-end-date-{str(i)}", "").strip()
             if start_date or end_date:
                 temporals.append({"start_date": start_date, "end_date": end_date})
         return temporals

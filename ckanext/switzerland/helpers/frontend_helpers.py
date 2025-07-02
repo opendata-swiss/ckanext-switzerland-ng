@@ -366,7 +366,7 @@ def _render_tree(top_nodes):
     html = '<ul id="organizations-list">'
     for node in top_nodes:
         html += _render_tree_node(node)
-    return html + "</ul>"
+    return f"{html}</ul>"
 
 
 def _render_tree_node(node):

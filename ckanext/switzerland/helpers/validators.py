@@ -292,7 +292,7 @@ def ogdch_required_in_one_language(field, schema):
             return
 
         output = {}
-        prefix = key[-1] + "-"
+        prefix = f"{key[-1]}-"
         extras = data.get(key[:-1] + FORM_EXTRAS, {})
         languages = fluent_form_languages(field, schema=schema)
 
@@ -308,7 +308,7 @@ def ogdch_required_in_one_language(field, schema):
 
         if not [lang for lang in languages if output[lang] != ""]:
             for lang in languages:
-                errors[key[:-1] + (key[-1] + "-" + lang,)] = [
+                errors[key[:-1] + (f"{key[-1]}-{lang}",)] = [
                     _("A value is required in at least one language")
                 ]
             return

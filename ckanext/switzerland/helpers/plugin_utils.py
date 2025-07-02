@@ -189,7 +189,7 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
     try:
         # index language-specific values (or fallback)
         for lang_code in ogdch_loc_utils.get_language_priorities():
-            search_data["title_" + lang_code] = (
+            search_data[f"title_{lang_code}"] = (
                 ogdch_loc_utils.get_localized_value_from_dict(
                     validated_dict["title"], lang_code
                 )
@@ -204,18 +204,18 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
                         search_data["name"], validated_dict["title"]
                     )
                 )
-            search_data["title_string_" + lang_code] = munge_title_to_name(title)
-            search_data["description_" + lang_code] = (
+            search_data[f"title_string_{lang_code}"] = munge_title_to_name(title)
+            search_data[f"description_{lang_code}"] = (
                 ogdch_loc_utils.get_localized_value_from_dict(
                     validated_dict["description"], lang_code
                 )
             )
-            search_data["keywords_" + lang_code] = (
+            search_data[f"keywords_{lang_code}"] = (
                 ogdch_loc_utils.get_localized_value_from_dict(
                     validated_dict["keywords"], lang_code
                 )
             )
-            search_data["organization_" + lang_code] = (
+            search_data[f"organization_{lang_code}"] = (
                 ogdch_loc_utils.get_localized_value_from_dict(
                     validated_dict["organization"]["title"], lang_code
                 )

@@ -83,7 +83,7 @@ class OgdchOrganizationController(organization.OrganizationController):
                 (k, v.encode("utf-8") if isinstance(v, str) else str(v))
                 for k, v in params
             ]
-            return url + "?" + urlencode(params)
+            return f"{url}?{urlencode(params)}"
 
         def drill_down_url(**by):
             return h.add_url_param(

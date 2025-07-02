@@ -87,7 +87,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         facets_dict["linked_data"] = plugins.toolkit._("Linked Data")
         facets_dict["private"] = plugins.toolkit._("Draft")
         facets_dict["groups"] = plugins.toolkit._("Categories")
-        facets_dict["keywords_" + lang_code] = plugins.toolkit._("Keywords")
+        facets_dict[f"keywords_{lang_code}"] = plugins.toolkit._("Keywords")
         facets_dict["organization"] = plugins.toolkit._("Organizations")
         facets_dict["political_level"] = plugins.toolkit._("Political levels")
         facets_dict["res_license"] = plugins.toolkit._("Terms of use")
@@ -100,7 +100,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         # clear the dict instead and change the passed in argument
         facets_dict.clear()
         facets_dict["private"] = plugins.toolkit._("Draft")
-        facets_dict["keywords_" + lang_code] = plugins.toolkit._("Keywords")
+        facets_dict[f"keywords_{lang_code}"] = plugins.toolkit._("Keywords")
         facets_dict["organization"] = plugins.toolkit._("Organizations")
         facets_dict["political_level"] = plugins.toolkit._("Political levels")
         facets_dict["res_license"] = plugins.toolkit._("Terms of use")
@@ -114,7 +114,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         facets_dict.clear()
         facets_dict["private"] = plugins.toolkit._("Draft")
         facets_dict["groups"] = plugins.toolkit._("Categories")
-        facets_dict["keywords_" + lang_code] = plugins.toolkit._("Keywords")
+        facets_dict[f"keywords_{lang_code}"] = plugins.toolkit._("Keywords")
         facets_dict["res_license"] = plugins.toolkit._("Terms of use")
         facets_dict["res_format"] = plugins.toolkit._("Formats")
         return facets_dict
