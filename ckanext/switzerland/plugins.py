@@ -477,7 +477,8 @@ class OgdchArchivePlugin(plugins.SingletonPlugin):
                 # deleted not yet archived dataset
                 instance.name = self._ensure_name_is_unique(f"_archived-{dataset_name}")
                 log.info(
-                    f"new name '{instance.name}' retrieved for dataset '{dataset_name}' that was set up for delete"
+                    f"new name '{instance.name}' retrieved for dataset "
+                    f"'{dataset_name}' that was set up for delete"
                 )
 
     @staticmethod

@@ -36,7 +36,8 @@ def ogdch_get_format_mapping(mapping_type):
                     reverse_mapping[format] = key
     except (IOError, yaml.YAMLError) as exception:
         raise FormatMappingNotLoadedError(
-            f"Loading Format-Mapping from Path: ({mapping_path}) failed with Exception: ({exception})"
+            f"Loading Format-Mapping from Path: ({mapping_path}) failed with "
+            f"Exception: ({exception})"
         )
 
     return mapping, reverse_mapping

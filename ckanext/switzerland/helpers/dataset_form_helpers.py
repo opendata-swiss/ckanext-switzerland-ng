@@ -295,7 +295,8 @@ def _get_qualified_relations_from_storage(data):
                     dataset_from_storage = get_dataset_by_permalink(permalink)
                 except Exception as e:
                     log.error(
-                        f"Error {e} occured while retrieving dataset with permalink {permalink}"
+                        f"Error {e} occured while retrieving dataset with permalink "
+                        f"{permalink}"
                     )
                 else:
                     if dataset_from_storage:

@@ -150,7 +150,8 @@ def _map_related_datasets(context, result):
                 )
             except (ValidationError, NotFound) as e:
                 log.info(
-                    f"Error getting related dataset with identifier {item.get('dataset_identifier')}: {e}"
+                    f"Error getting related dataset with identifier "
+                    f"{item.get('dataset_identifier')}: {e}"
                 )
                 continue
     if result.get("qualified_relations"):
@@ -168,7 +169,8 @@ def _map_related_datasets(context, result):
                 )
             except (ValidationError, NotFound) as e:
                 log.info(
-                    f"Error getting related dataset with permalink {item.get('relation')}: {e}"
+                    f"Error getting related dataset with permalink "
+                    f"{item.get('relation')}: {e}"
                 )
                 related_datasets.append(
                     {
@@ -366,7 +368,9 @@ def ogdch_showcase_submit(context, data_dict):
         raise ValidationError("Missing author_email")
     if context.get("ratelimit_exceeded"):
         raise ValidationError(
-            f"Rate limit of {context['limit_call_count']} calls per {context['limit_timedelta']} exceeded: for {author_email} there were {context['count_of_calls_per_email']} calls in that time intervall"
+            f"Rate limit of {context['limit_call_count']} calls per "
+            f"{context['limit_timedelta']} exceeded: for {author_email} there were "
+            f"{context['count_of_calls_per_email']} calls in that time interval"
         )
     try:
         title = data_dict.get("title")
@@ -479,7 +483,8 @@ def _create_or_update_dataset(dataset):
             tk.get_action("package_create")(context, dataset)
         except ValidationError as e:
             h.flash_error(
-                f"Error importing dataset {dataset.get('name', '')}: {e.error_summary!r}"
+                f"Error importing dataset {dataset.get('name', '')}: "
+                f"{e.error_summary!r}"
             )
 
             return
@@ -577,7 +582,10 @@ def ogdch_user_create(context, data_dict):
                 f"An email has been sent to the user {user['name']} at {user['email']}."
             )
         else:
-            message = f"The email could not be sent to {user['email']} for user {user['name']}."
+            message = (
+                f"The email could not be sent to {user['email']} for user "
+                f"{user['name']}."
+            )
             if exception:
                 message += f" An error occured: {exception}"
             h.flash_error(message)
@@ -585,7 +593,8 @@ def ogdch_user_create(context, data_dict):
         # We get this error when creating a user via the command line.
         # Then there is no session, so showing a flash message fails.
         log.warning(
-            f"The email could not be sent to {user['email']} for user {user['name']}. An error occured: {exception}"
+            f"The email could not be sent to {user['email']} for user {user['name']}. "
+            f"An error occured: {exception}"
         )
 
     return user
@@ -607,7 +616,8 @@ def ogdch_showcase_create(context, data_dict):
         send_showcase_email(showcase)
     except Exception as e:
         log.error(
-            f"Sending a notification when a showcase was created received an exception: {e}"
+            f"Sending a notification when a showcase was created received an "
+            f"exception: {e}"
         )
     return showcase
 

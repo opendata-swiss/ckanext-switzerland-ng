@@ -42,7 +42,10 @@ def parse_json(value, default_value=None):
 def lang_to_string(data_dict, attribute):
     """make a long string with all 4 languages of an attribute"""
     value_dict = data_dict.get(attribute, {})
-    return f"{value_dict.get('de', '')} - {value_dict.get('fr', '')} - {value_dict.get('it', '')} - {value_dict.get('en', '')}"
+    return (
+        f"{value_dict.get('de', '')} - {value_dict.get('fr', '')} - "
+        f"{value_dict.get('it', '')} - {value_dict.get('en', '')}"
+    )
 
 
 def localize_ckan_sub_dict(ckan_dict, lang_code):

@@ -111,7 +111,8 @@ def correct_invalid_empty_date(value):
     """date values stored in postgres as not set"""
     if value == INVALID_EMPTY_DATE:
         log.error(
-            f"Invalid date {INVALID_EMPTY_DATE} detected in database.Date was transformed into {VALID_EMPTY_DATE}"
+            f"Invalid date {INVALID_EMPTY_DATE} detected in database. "
+            f"Date was transformed into {VALID_EMPTY_DATE}"
         )
         return VALID_EMPTY_DATE
 
@@ -160,7 +161,8 @@ def get_localized_date(value):
             return localised_nice_date(dt, show_date=True, with_hours=False)
     except (AttributeError, ParserError, TypeError, ValueError) as e:
         log.debug(
-            f"Error parsing datetime {value} as isodate and returning localized date: {e}"
+            f"Error parsing datetime {value} as isodate and returning localized date: "
+            f"{e}"
         )
         return ""
 
@@ -175,6 +177,7 @@ def get_date_picker_format(value):
             return isodate.strftime(dt, DATE_PICKER_FORMAT)
     except (AttributeError, ParserError, TypeError, ValueError) as e:
         log.debug(
-            f"Error parsing datetime {value} as isodate and converting to format {DATE_PICKER_FORMAT}: {e}"
+            f"Error parsing datetime {value} as isodate and converting to format "
+            f"{DATE_PICKER_FORMAT}: {e}"
         )
         return ""
