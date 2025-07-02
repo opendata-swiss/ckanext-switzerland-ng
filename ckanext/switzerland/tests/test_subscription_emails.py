@@ -42,7 +42,7 @@ class TestSubscriptionEmails(OgdchFunctionalTestBase):
         )
         assert_equal(
             email_vars["object_link"],
-            "http://frontend-test.ckan.net/dataset/{}".format(self.dataset["id"]),
+            f"http://frontend-test.ckan.net/dataset/{self.dataset['id']}",
         )
         assert_equal(
             email_vars["unsubscribe_all_link"],
@@ -227,9 +227,7 @@ class TestSubscriptionEmails(OgdchFunctionalTestBase):
             body_html.strip(),
         )
         assert_in(
-            "http://frontend-test.ckan.net/dataset/{dataset_id}".format(
-                dataset_id=self.dataset["id"]
-            ),
+            f"http://frontend-test.ckan.net/dataset/{self.dataset['id']}",
             body_plain_text.strip(),
         )
         assert_in(

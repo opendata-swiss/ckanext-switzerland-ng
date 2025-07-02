@@ -23,7 +23,7 @@ def display_if_isodate(value):
         if isinstance(dt, datetime):
             return value
     except Exception:
-        log.debug("Datetime {} is not an isoformat date".format(value))
+        log.debug(f"Datetime {value} is not an isoformat date")
         return None
 
 
@@ -37,7 +37,7 @@ def display_if_date_picker_date(value):
             return dt.isoformat()
     except Exception:
         log.debug(
-            "Datetime {} does not match the format {}".format(value, DATE_PICKER_FORMAT)
+            f"Datetime {value} does not match the format {DATE_PICKER_FORMAT}"
         )
         return None
 
@@ -49,7 +49,7 @@ def display_if_timestamp(value):
         if isinstance(dt, datetime):
             return dt.isoformat()
     except Exception:
-        log.debug("Datetime {} is not a POSIX timestamp".format(value))
+        log.debug(f"Datetime {value} is not a POSIX timestamp")
         return None
 
 
@@ -59,7 +59,7 @@ def display_if_datetime(value):
         if isinstance(value, datetime):
             return value.isoformat()
     except Exception:
-        log.debug("Datetime {} is not a datetime object".format(value))
+        log.debug(f"Datetime {value} is not a datetime object")
         return None
 
 
@@ -74,7 +74,7 @@ def display_if_other_formats(value):
                 return dt.isoformat()
         except Exception:
             log.debug(
-                "Datetime {} does not match the format {}".format(value, date_format)
+                f"Datetime {value} does not match the format {date_format}"
             )
     return None
 
@@ -151,7 +151,7 @@ def transform_date_for_solr(date):
         isodate_without_tz = isodate.datetime_isoformat(datetime_without_tz)
         return isodate_without_tz + "Z"
     except Exception as e:
-        log.error("Exception {} occured on date transformation of {}".format(e, date))
+        log.error(f"Exception {e} occured on date transformation of {date}")
         return None
 
 

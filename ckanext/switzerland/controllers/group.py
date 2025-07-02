@@ -47,9 +47,9 @@ class OgdchGroupController(group.GroupController):
         q = c.q = request.params.get("q", "")
         # Search within group
         if c.group_dict.get("is_organization"):
-            fq = 'owner_org:"%s"' % c.group_dict.get("id")
+            fq = f"owner_org:\"{c.group_dict.get('id')}\""
         else:
-            fq = 'groups:"%s"' % c.group_dict.get("name")
+            fq = f"groups:\"{c.group_dict.get('name')}\""
 
         c.description_formatted = h.render_markdown(c.group_dict.get("description"))
 
@@ -116,7 +116,7 @@ class OgdchGroupController(group.GroupController):
                 ):
                     if not param.startswith("ext_"):
                         c.fields.append((param, value))
-                        fq += ' %s: "%s"' % (param, value)
+                        fq += f' {param}: "{value}"'
                         if param not in c.fields_grouped:
                             c.fields_grouped[param] = [value]
                         else:
@@ -174,7 +174,7 @@ class OgdchGroupController(group.GroupController):
             for facet in list(c.search_facets.keys()):
                 limit = int(
                     request.params.get(
-                        "_%s_limit" % facet, config.get("search.facets.default", 10)
+                        f"_{facet}_limit", config.get("search.facets.default", 10)
                     )
                 )
                 c.search_facets_limits[facet] = limit

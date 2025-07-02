@@ -245,10 +245,10 @@ def _prepare_publisher_for_search(publisher, dataset_name):
             publisher["name"] = publisher_as_dict.get("name", "")
             publisher["url"] = publisher_as_dict.get("url", "")
     except TypeError:
-        log.error("publisher got a TypeError for {}".format(dataset_name))
+        log.error(f"publisher got a TypeError for {dataset_name}")
         return ""
     except AttributeError:
-        log.error("publisher got an AttributeError for {}".format(dataset_name))
+        log.error(f"publisher got an AttributeError for {dataset_name}")
         return ""
     else:
         return publisher
@@ -344,10 +344,10 @@ def ogdch_adjust_search_params(search_params):
     query_fields = "text"
 
     # weight current lang more highly
-    query_fields += " title_%s^8 text_%s^4" % (current_lang, current_lang)
+    query_fields += f" title_{current_lang}^8 text_{current_lang}^4"
 
     for lang in lang_set:
-        query_fields += " title_%s^2 text_%s" % (lang, lang)
+        query_fields += f" title_{lang}^2 text_{lang}"
 
     search_params["qf"] = query_fields
 
@@ -362,7 +362,7 @@ def ogdch_adjust_search_params(search_params):
     """
     fq = search_params.get("fq", "")
     if "dataset_type:" not in fq:
-        search_params.update({"fq": "%s +dataset_type:dataset" % fq})
+        search_params.update({"fq": f"{fq} +dataset_type:dataset"})
 
     # remove colon followed by a space from q to avoid false negatives
     q = search_params.get("q", "")

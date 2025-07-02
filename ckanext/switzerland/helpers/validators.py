@@ -85,7 +85,7 @@ def ogdch_date_validator(value):
         return display_value
 
     raise ogdch_date_helpers.OGDCHDateValidationException(
-        "Unknown date format detected in ogdch_date_validator : '{}'".format(value)
+        f"Unknown date format detected in ogdch_date_validator : '{value}'"
     )
 
 
@@ -99,7 +99,7 @@ def ogdch_date_output(value):
         return display_value
 
     raise ogdch_date_helpers.OGDCHDateValidationException(
-        "Unknown date format detected in ogdch_date_output : '{}'".format(value)
+        f"Unknown date format detected in ogdch_date_output : '{value}'"
     )
 
 
@@ -227,7 +227,7 @@ def ogdch_license_required(field, schema):
 
         rights = data.get(key[:-1] + ("rights",))
         if rights not in (missing, None):
-            log.debug("No license for resource %s, using rights instead" % resource_id)
+            log.debug(f"No license for resource {resource_id}, using rights instead")
             data[key] = rights
             return
 
@@ -352,7 +352,7 @@ def ogdch_validate_formfield_publisher(field, schema):
                         key.startswith("publisher-name-") for key in list(extras.keys())
                     ):
                         for lang in LANGUAGES:
-                            lang_key = "publisher-name-{}".format(lang)
+                            lang_key = f"publisher-name-{lang}"
                             if lang_key in extras:
                                 del extras[lang_key]
             data[key] = json.dumps(output)
@@ -462,7 +462,7 @@ def ogdch_validate_formfield_qualified_relations(field, schema):
                         )
                     except tk.ObjectNotFound:
                         raise df.Invalid(
-                            _("Dataset {} could not be found .".format(package_name))
+                            _(f"Dataset {package_name} could not be found .")
                         )
                     if not package.get("type") == "dataset":
                         raise df.Invalid(
@@ -612,7 +612,7 @@ def ogdch_validate_list_of_urls(field, schema):
         try:
             urls = json.loads(value)
         except (TypeError, ValueError):
-            errors[key].append("Error parsing string as JSON: '%s'" % value)
+            errors[key].append(f"Error parsing string as JSON: '{value}'")
             return value
 
         # Get rid of empty strings
@@ -626,7 +626,7 @@ def ogdch_validate_list_of_urls(field, schema):
                 or not result.netloc
             )
             if invalid:
-                errors[key].append("Provided URL '%s' is not valid" % url)
+                errors[key].append(f"Provided URL '{url}' is not valid")
 
         data[key] = json.dumps(urls)
 
@@ -650,7 +650,7 @@ def ogdch_validate_list_of_uris(field, schema):
         try:
             uris = json.loads(value)
         except (TypeError, ValueError):
-            errors[key].append("Error parsing string as JSON: '%s'" % value)
+            errors[key].append(f"Error parsing string as JSON: '{value}'")
             return value
 
         # Get rid of empty strings
@@ -660,7 +660,7 @@ def ogdch_validate_list_of_uris(field, schema):
             result = urlparse(uri)
             invalid = not result.scheme or not result.netloc
             if invalid:
-                errors[key].append("Provided URI '%s' is not valid" % uri)
+                errors[key].append(f"Provided URI '{uri}' is not valid")
 
         data[key] = json.dumps(uris)
 
@@ -690,7 +690,7 @@ def ogdch_validate_duration_type(field, schema):
             data[key] = value
             return
         else:
-            log.debug("Invalid value for XSD.duration: '%s'" % value)
+            log.debug(f"Invalid value for XSD.duration: '{value}'")
             data[key] = ""
             return
 

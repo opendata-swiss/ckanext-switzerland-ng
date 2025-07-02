@@ -127,7 +127,7 @@ class OgdchOrganizationController(organization.OrganizationController):
                 ):
                     if not param.startswith("ext_"):
                         c.fields.append((param, value))
-                        fq += ' %s: "%s"' % (param, value)
+                        fq += f' {param}: "{value}"'
                     else:
                         search_extras[param] = value
 
@@ -177,12 +177,12 @@ class OgdchOrganizationController(organization.OrganizationController):
             )
 
             if not children:
-                fq += ' organization:"%s"' % c.group_dict.get("name")
+                fq += f" organization:\"{c.group_dict.get('name')}\""
             else:
-                fq += ' organization:("%s"' % c.group_dict.get("name")
+                fq += f" organization:(\"{c.group_dict.get('name')}\""
                 for name in children:
                     if name:
-                        fq += ' OR "%s"' % name
+                        fq += f' OR "{name}"'
                 fq += ")"
 
             data_dict = {
@@ -214,7 +214,7 @@ class OgdchOrganizationController(organization.OrganizationController):
             for facet in list(c.search_facets.keys()):
                 limit = int(
                     request.params.get(
-                        "_%s_limit" % facet, config.get("search.facets.default", 10)
+                        f"_{facet}_limit", config.get("search.facets.default", 10)
                     )
                 )
                 c.search_facets_limits[facet] = limit

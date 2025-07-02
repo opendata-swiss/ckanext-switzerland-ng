@@ -37,9 +37,7 @@ def send_registration_email(user):
 def send_showcase_email(showcase):
     """send an email when a showcase is created"""
     extra_vars = {
-        "showcase_url": "{}/showcase/{}".format(
-            config.get("ckan.site_url"), showcase.get("name")
-        )
+        "showcase_url": f"{config.get('ckan.site_url')}/showcase/{showcase.get('name')}"
     }
     mailer.mail_recipient(
         config.get("ckanext.switzerland.showcase_admin_name"),

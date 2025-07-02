@@ -226,7 +226,7 @@ def ogdch_dataset_by_identifier(context, data_dict):
     if not identifier:
         raise ValidationError({"identifier": ["Missing value"]})
 
-    data_dict["fq"] = "identifier:%s" % identifier
+    data_dict["fq"] = f"identifier:{identifier}"
     result = tk.get_action("package_search")(context, data_dict)
     try:
         return result["results"][0]
@@ -250,7 +250,7 @@ def ogdch_autosuggest(context, data_dict):
     fq = data_dict.get("fq", "")
 
     if fq:
-        fq = "NOT private AND %s" % fq
+        fq = f"NOT private AND {fq}"
     else:
         fq = "NOT private"
 
@@ -261,12 +261,12 @@ def ogdch_autosuggest(context, data_dict):
     if lang not in ["en", "it", "de", "fr"]:
         raise ValidationError("lang must be one of [en, it, de, fr]")
 
-    handler = "/suggest_%s" % lang
-    suggester = "ckanSuggester_%s" % lang
+    handler = f"/suggest_{lang}"
+    suggester = f"ckanSuggester_{lang}"
 
     solr = make_connection()
     try:
-        log.debug("Loading suggestions for %s (lang: %s, fq: %s)" % (q, lang, fq))
+        log.debug(f"Loading suggestions for {q} (lang: {lang}, fq: {fq})")
         results = solr.search(
             "",
             search_handler=handler,
@@ -284,7 +284,7 @@ def ogdch_autosuggest(context, data_dict):
             m = re.search(re_q, clean_term, re.I)
             if m:
                 replace_text = term[m.start() : m.end()]
-                term = term.replace(replace_text, "<b>%s</b>" % replace_text)
+                term = term.replace(replace_text, f"<b>{replace_text}</b>")
             return term
 
         terms = [
@@ -293,7 +293,7 @@ def ogdch_autosuggest(context, data_dict):
         ]
         return list(set(terms))
     except pysolr.SolrError as e:
-        log.exception("Could not load suggestions from solr: %s" % e)
+        log.exception(f"Could not load suggestions from solr: {e}")
     raise ActionError("Error retrieving suggestions from solr")
 
 
@@ -319,7 +319,7 @@ def ogdch_xml_upload(context, data_dict):
     try:
         data_rdfgraph.parse(full_file_path, "xml")
     except Exception as e:
-        h.flash_error("Error parsing the RDF file during dataset import: {0}".format(e))
+        h.flash_error(f"Error parsing the RDF file during dataset import: {e}")
         os.remove(full_file_path)
         return
 
@@ -466,7 +466,7 @@ def _create_or_update_dataset(dataset):
 
         tk.get_action("package_update")(context, dataset)
 
-        success_message = "Updated dataset %s." % dataset["name"]
+        success_message = f"Updated dataset {dataset['name']}."
         if is_private:
             success_message += " The dataset visibility is private."
 
@@ -494,11 +494,11 @@ def _create_or_update_dataset(dataset):
             return
 
         h.flash_success(
-            "Created dataset %s. The dataset visibility is private." % dataset["name"]
+            f"Created dataset {dataset['name']}. The dataset visibility is private."
         )
 
     except Exception as e:
-        h.flash_error("Error importing dataset %s: %s" % (dataset.get("name", ""), e))
+        h.flash_error(f"Error importing dataset {dataset.get('name', '')}: {e}")
 
 
 @side_effect_free
@@ -520,13 +520,13 @@ def ogdch_add_users_to_groups(context, data_dict={}):
 
     if user_id and group_id:
         _add_member_to_group(user_id, group_id, context)
-        return 'Added user "%s" to "%s".' % (user_id, group_id)
+        return f'Added user "{user_id}" to "{group_id}".'
     elif user_id:
         _add_member_to_groups(user_id, context)
-        return "Added user %s to all available groups." % user_id
+        return f"Added user {user_id} to all available groups."
     elif group_id:
         _add_members_to_group(group_id, context)
-        return "Added all non-admin users as members to group %s." % group_id
+        return f"Added all non-admin users as members to group {group_id}."
     else:
         members = tk.get_action("user_list")(context, {})
         groups = tk.get_action("group_list")(context, {})
@@ -583,16 +583,14 @@ def ogdch_user_create(context, data_dict):
     try:
         if success:
             h.flash_success(
-                "An email has been sent to the user {} at {}.".format(
-                    user["name"], user["email"]
-                )
+                f"An email has been sent to the user {user['name']} at {user['email']}."
             )
         else:
             message = "The email could not be sent to {} for user {}.".format(
                 user["email"], user["name"]
             )
             if exception:
-                message += " An error occured: {}".format(exception)
+                message += f" An error occured: {exception}"
             h.flash_error(message)
     except TypeError:
         # We get this error when creating a user via the command line.
@@ -741,16 +739,14 @@ def _reset_password(username, context, notify):
     """
     auth_user = context.get("auth_user_obj")
     if username == auth_user.name:
-        return False, "Not resetting password for the signed-in user {}".format(
-            username
-        )
+        return False, f"Not resetting password for the signed-in user {username}"
 
     user_dict = tk.get_action("user_show")(context, {"id": username})
     user_obj = context.get("user_obj")
     password = _generate_password(user_dict)
 
     # First, reset password to a random new value that won't be transmitted
-    log.info("Resetting password for user: {}".format(user_dict["name"]))
+    log.info(f"Resetting password for user: {user_dict['name']}")
     user_dict["password"] = password
     try:
         tk.get_action("user_update")(context, user_dict)
@@ -759,7 +755,7 @@ def _reset_password(username, context, notify):
 
     # Then trigger reset email
     if notify:
-        log.info("Emailing reset link to user: {}".format(user_dict["name"]))
+        log.info(f"Emailing reset link to user: {user_dict['name']}")
         try:
             mailer.send_reset_link(user_obj)
         except mailer.MailerException as e:

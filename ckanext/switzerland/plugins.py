@@ -476,7 +476,7 @@ class OgdchArchivePlugin(plugins.SingletonPlugin):
                 # only call this expensive method in case of a newly
                 # deleted not yet archived dataset
                 instance.name = self._ensure_name_is_unique(
-                    "_archived-{0}".format(dataset_name)
+                    f"_archived-{dataset_name}"
                 )
                 log.info(
                     "new name '{}' retrieved for dataset '{}' that was "
@@ -501,7 +501,7 @@ class OgdchArchivePlugin(plugins.SingletonPlugin):
         APPEND_MAX_CHARS = len(str(MAX_NUMBER_APPENDED))
         # Find out which package names have been taken. Restrict it to names
         # derived from the ideal name plus and numbers added
-        like_q = "%s%%" % ideal_name[: PACKAGE_NAME_MAX_LENGTH - APPEND_MAX_CHARS]
+        like_q = f"{ideal_name[:PACKAGE_NAME_MAX_LENGTH - APPEND_MAX_CHARS]}%"
         name_results = (
             Session.query(Package.name).filter(Package.name.ilike(like_q)).all()
         )
@@ -700,7 +700,7 @@ class OgdchSubscribePlugin(SubscribePlugin):
         ogdch_plugin_utils.ogdch_transform_links(email_vars, links)
 
         for lang in ogdch_localize_utils.LANGUAGES:
-            email_vars["object_title_{}".format(lang)] = (
+            email_vars[f"object_title_{lang}"] = (
                 ogdch_localize_utils.get_localized_value_from_json(
                     email_vars.get("object_title"), lang
                 )
@@ -765,12 +765,12 @@ class OgdchSubscribePlugin(SubscribePlugin):
             )
 
             for lang in ogdch_localize_utils.LANGUAGES:
-                notification["object_title_{}".format(lang)] = (
+                notification[f"object_title_{lang}"] = (
                     ogdch_localize_utils.get_localized_value_from_json(
                         notification.get("object_title"), lang
                     )
                 )
-                notification["contact_point_{}".format(lang)] = (
+                notification[f"contact_point_{lang}"] = (
                     ogdch_localize_utils.get_localized_value_from_json(
                         contact_points, lang
                     )

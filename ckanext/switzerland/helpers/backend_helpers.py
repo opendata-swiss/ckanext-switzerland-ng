@@ -81,7 +81,7 @@ def create_showcase_types():
             data = {"name": "showcase_types"}
             vocab = tk.get_action("vocabulary_create")(context, data)
             for tag in list(showcase_types_mapping.keys()):
-                log.info("Adding tag {0} to vocab 'showcase_types'".format(tag))
+                log.info(f"Adding tag {tag} to vocab 'showcase_types'")
                 data = {"name": tag, "vocabulary_id": vocab["id"]}
                 tk.get_action("tag_create")(context, data)
         else:
@@ -92,7 +92,7 @@ def create_showcase_types():
         data = {"name": "showcase_types"}
         vocab = tk.get_action("vocabulary_create")(context, data)
         for tag in list(showcase_types_mapping.keys()):
-            log.info("Adding tag {0} to vocab 'showcase_types'".format(tag))
+            log.info(f"Adding tag {tag} to vocab 'showcase_types'")
             data = {"name": tag, "vocabulary_id": vocab["id"]}
             tk.get_action("tag_create")(context, data)
 

@@ -27,7 +27,7 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
         if smtp_server:
             host, port = smtp_server.split(":")
             port = int(port) + int(str(hashlib.md5(cls.__name__).hexdigest())[0], 16)
-            config["smtp.test_server"] = "%s:%s" % (host, port)
+            config["smtp.test_server"] = f"{host}:{port}"
         SmtpServerHarness.setup_class()
 
     def setup(self):
@@ -36,9 +36,9 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
 
         for n in range(3):
             user = {
-                "name": "user{}".format(str(n)),
-                "email": "user{}@example.org".format(str(n)),
-                "password": "password{}".format(str(n)),
+                "name": f"user{str(n)}",
+                "email": f"user{str(n)}@example.org",
+                "password": f"password{str(n)}",
             }
             tk.get_action("user_create")(self._get_context(), user)
 
@@ -148,7 +148,7 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
             "Should not reset password for the user we are using to call the action",
         )
         assert_equal(
-            "Not resetting password for the signed-in user {}".format(self.site_user),
+            f"Not resetting password for the signed-in user {self.site_user}",
             result["errors"][self.site_user],
             "Expected error when resetting password for the user we are using to call the action",
         )
@@ -167,7 +167,7 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
             "Password should have been reset for the user we are not using to call the action",
         )
         assert_equal(
-            "Not resetting password for the signed-in user {}".format(self.site_user),
+            f"Not resetting password for the signed-in user {self.site_user}",
             result["errors"][self.site_user],
             "Expected error when resetting password for the user we are using to call the action",
         )

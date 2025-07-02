@@ -97,7 +97,7 @@ def ogdch_publisher_form_helper(data):
         try:
             publisher_stored = json.loads(publisher_stored)
         except json.JSONDecodeError:
-            log.warning("Invalid JSON in publisher: %s" % publisher_stored)
+            log.warning(f"Invalid JSON in publisher: {publisher_stored}")
 
     if isinstance(publisher_stored, dict):
         publisher_name = publisher_stored.get("name")
@@ -252,7 +252,7 @@ def get_relations_from_form(data):
         relations = []
         for i in range(1, ADDITIONAL_FORM_ROW_LIMIT + 1):
             label = {
-                lang: data.get("relation-label-{}-{}".format(str(i), lang), "")
+                lang: data.get(f"relation-label-{str(i)}-{lang}", "")
                 for lang in LANGUAGES
             }
             url = data.get("relation-url-" + str(i), "")
@@ -327,9 +327,7 @@ def _get_see_alsos_from_storage(data):
                     )
                 except Exception as e:
                     log.error(
-                        "Error {} occured while retrieving identifier {}".format(
-                            e, identifier
-                        )
+                        f"Error {e} occured while retrieving identifier {identifier}"
                     )
                 else:
                     if dataset_from_storage:

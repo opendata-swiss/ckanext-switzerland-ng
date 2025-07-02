@@ -314,9 +314,9 @@ def get_readable_file_size(num, suffix="B"):
         for unit in ["", "K", "M", "G", "T", "P", "E", "Z"]:
             num = float(num)
             if abs(num) < 1024.0:
-                return "%3.1f%s%s" % (num, unit, suffix)
+                return f"{num:3.1f}{unit}{suffix}"
             num /= 1024.0
-        return "%.1f%s%s" % (num, "Y", suffix)
+        return f"{num:.1f}Y{suffix}"
     except ValueError:
         return False
 
@@ -382,10 +382,7 @@ def _render_tree_node(node):
         for child in node["children"]:
             html += _render_tree_node(child)
         html += "</ul>"
-    html = '<li id="node_%s" class="organization">%s</li>' % (
-        node["name"],
-        html,
-    )
+    html = f"<li id=\"node_{node['name']}\" class=\"organization\">{html}</li>"
     return html
 
 
@@ -475,7 +472,4 @@ def render_publisher(publisher_value):
 
 def get_permalink(identifier):
     """Given the identifier of a dataset, construct its permalink."""
-    return "%s/perma/%s" % (
-        tk.config.get("ckanext.switzerland.frontend_url", ""),
-        identifier,
-    )
+    return f"{tk.config.get('ckanext.switzerland.frontend_url', '')}/perma/{identifier}"

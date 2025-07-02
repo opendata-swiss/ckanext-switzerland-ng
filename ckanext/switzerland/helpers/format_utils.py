@@ -26,7 +26,7 @@ class FormatMappingNotLoadedError(Exception):
 
 def ogdch_get_format_mapping(mapping_type):
     """Read in a format mapping from a yaml file"""
-    mapping_path = os.path.join(__location__, "{}_mapping.yaml".format(mapping_type))
+    mapping_path = os.path.join(__location__, f"{mapping_type}_mapping.yaml")
     try:
         with open(mapping_path, "r") as mapping_file:
             mapping = yaml.safe_load(mapping_file)
