@@ -268,7 +268,7 @@ def ogdch_autosuggest(context, data_dict):
         results = solr.search(
             "",
             search_handler=handler,
-            **{"suggest.q": q, "suggest.count": 10, "suggest.cfq": fq}
+            **{"suggest.q": q, "suggest.count": 10, "suggest.cfq": fq},
         )
         suggestions = list(results.raw_response["suggest"][suggester].values())[0]
 

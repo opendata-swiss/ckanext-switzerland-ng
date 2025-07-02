@@ -36,9 +36,7 @@ def display_if_date_picker_date(value):
         if isinstance(dt, datetime):
             return dt.isoformat()
     except Exception:
-        log.debug(
-            f"Datetime {value} does not match the format {DATE_PICKER_FORMAT}"
-        )
+        log.debug(f"Datetime {value} does not match the format {DATE_PICKER_FORMAT}")
         return None
 
 
@@ -73,9 +71,7 @@ def display_if_other_formats(value):
             if isinstance(dt, datetime):
                 return dt.isoformat()
         except Exception:
-            log.debug(
-                f"Datetime {value} does not match the format {date_format}"
-            )
+            log.debug(f"Datetime {value} does not match the format {date_format}")
     return None
 
 

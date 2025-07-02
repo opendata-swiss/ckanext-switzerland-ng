@@ -475,9 +475,7 @@ class OgdchArchivePlugin(plugins.SingletonPlugin):
             if not dataset_is_already_archived:
                 # only call this expensive method in case of a newly
                 # deleted not yet archived dataset
-                instance.name = self._ensure_name_is_unique(
-                    f"_archived-{dataset_name}"
-                )
+                instance.name = self._ensure_name_is_unique(f"_archived-{dataset_name}")
                 log.info(
                     f"new name '{instance.name}' retrieved for dataset '{dataset_name}' that was set up for delete"
                 )

@@ -176,7 +176,9 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
         assert_equal(email[1], "ckan@localhost")
         assert_equal(email[2], [address])
         assert_in(name, email[3])
-        encoded_subject = f"Subject: =?utf-8?q?{subject.replace(' ', '_').replace('.', '=2E')}"
+        encoded_subject = (
+            f"Subject: =?utf-8?q?{subject.replace(' ', '_').replace('.', '=2E')}"
+        )
         assert_in(encoded_subject, email[3])
 
     def test_sending_reset_link_default(self):
