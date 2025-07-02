@@ -348,7 +348,9 @@ def ogdch_validate_formfield_publisher(field, schema):
                     }
                     if "publisher-url" in extras:
                         del extras["publisher-url"]
-                    if any(key.startswith("publisher-name-") for key in list(extras.keys())):
+                    if any(
+                        key.startswith("publisher-name-") for key in list(extras.keys())
+                    ):
                         for lang in LANGUAGES:
                             lang_key = "publisher-name-{}".format(lang)
                             if lang_key in extras:

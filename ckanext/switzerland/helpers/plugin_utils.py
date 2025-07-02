@@ -142,10 +142,18 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
         for r in validated_dict["resources"]
     ]
     search_data["res_latest_issued"] = ogdch_date_utils.get_latest_isodate(
-        [(r["issued"]) for r in validated_dict["resources"] if "issued" in list(r.keys())]
+        [
+            (r["issued"])
+            for r in validated_dict["resources"]
+            if "issued" in list(r.keys())
+        ]
     )
     search_data["res_latest_modified"] = ogdch_date_utils.get_latest_isodate(
-        [(r["modified"]) for r in validated_dict["resources"] if "modified" in list(r.keys())]
+        [
+            (r["modified"])
+            for r in validated_dict["resources"]
+            if "modified" in list(r.keys())
+        ]
     )
     search_data["linked_data"] = ogdch_format_utils.prepare_formats_for_index(
         resources=validated_dict["resources"], linked_data_only=True
