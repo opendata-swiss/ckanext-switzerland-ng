@@ -72,7 +72,8 @@ def _is_dataset_package_type(pkg_dict):
         return False
 
 
-def ogdch_prepare_search_data_for_index(search_data):
+# TODO: This function is too complex. Refactor it.
+def ogdch_prepare_search_data_for_index(search_data):  # noqa
     """prepares the data for indexing"""
     if not _is_dataset_package_type(search_data):
         return search_data
@@ -253,7 +254,8 @@ def _prepare_publisher_for_search(publisher, dataset_name):
         return publisher
 
 
-def package_map_ckan_default_fields(pkg_dict):
+# TODO: This function is too complex. Refactor it.
+def package_map_ckan_default_fields(pkg_dict):  # noqa
     pkg_dict["display_name"] = pkg_dict["title"]
 
     if pkg_dict.get("maintainer") is None:

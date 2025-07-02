@@ -19,7 +19,7 @@ log = logging.getLogger(__name__)
 
 class OgdchGroupController(group.GroupController):
 
-    def _read(self, id, limit, group_type):
+    def _read(self, id, limit, group_type):  # noqa: 901
         """
         This controller replaces the GroupController controller
         from CKAN. It uses the filter query (fq) parameter to query
@@ -29,6 +29,9 @@ class OgdchGroupController(group.GroupController):
         Unfortunately there are no clean extension points in the
         GroupController, so that the _read() method
         had to be overridden completely.
+
+        This controller is too complex, according to flake8. Marked as noqa for
+        this error, as the code is largely copied from CKAN core.
 
         This is common code used by both read and bulk_process
         """

@@ -30,7 +30,7 @@ def _children_name_list(children):
 
 class OgdchOrganizationController(organization.OrganizationController):
 
-    def _read(self, id, limit, group_type):
+    def _read(self, id, limit, group_type):  # noqa: C901
         """
         This controller replaces the HierarchyOrganizationController controller
         from ckanext-hierarchy. It makes sure, that datasets of
@@ -42,6 +42,9 @@ class OgdchOrganizationController(organization.OrganizationController):
         plugin in the plugin list of the active ini file. Unfortunately
         there are no clean extension points in the OrganizationController,
         so that the _read() method had to be overridden completely.
+
+        This controller is too complex, according to flake8. Marked as noqa for
+        this error, as the code is largely copied from CKAN core.
         """
         c.include_children_selected = False
 
