@@ -479,8 +479,7 @@ class OgdchArchivePlugin(plugins.SingletonPlugin):
                     f"_archived-{dataset_name}"
                 )
                 log.info(
-                    "new name '{}' retrieved for dataset '{}' that was "
-                    "set up for delete".format(instance.name, dataset_name)
+                    f"new name '{instance.name}' retrieved for dataset '{dataset_name}' that was set up for delete"
                 )
 
     @staticmethod

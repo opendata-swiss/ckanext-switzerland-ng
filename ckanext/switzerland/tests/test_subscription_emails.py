@@ -50,9 +50,7 @@ class TestSubscriptionEmails(OgdchFunctionalTestBase):
         )
         assert_equal(
             email_vars["unsubscribe_link"],
-            "http://frontend-test.ckan.net/subscribe/unsubscribe?code=testcode&dataset={}".format(
-                self.dataset["id"]
-            ),
+            f"http://frontend-test.ckan.net/subscribe/unsubscribe?code=testcode&dataset={self.dataset['id']}",
         )
 
     def test_get_email_vars_with_email(self):
@@ -297,10 +295,7 @@ class TestSubscriptionEmails(OgdchFunctionalTestBase):
         assert_in(contact_points[0].get("name"), body_plain_text.strip())
         assert_in(contact_points[0].get("email"), body_plain_text.strip())
         assert_in(
-            '<a href="mailto:{contact_email}">{contact_name}</a>'.format(
-                contact_email=contact_points[0].get("email"),
-                contact_name=contact_points[0].get("name"),
-            ),
+            f"<a href=\"mailto:{contact_points[0].get('email')}\">{contact_points[0].get('name')}</a>",
             body_html.strip(),
         )
 
@@ -326,13 +321,9 @@ class TestSubscriptionEmails(OgdchFunctionalTestBase):
 
         footer_link_text = ""
         if subscription:
-            footer_link_text = '<a href="http://frontend-test.ckan.net/subscribe/unsubscribe?code=testcode&amp;dataset={dataset_id}">Abonnement löschen</a> | '.format(
-                dataset_id=self.dataset["id"]
-            )
+            footer_link_text = f"<a href=\"http://frontend-test.ckan.net/subscribe/unsubscribe?code=testcode&amp;dataset={self.dataset['id']}\">Abonnement löschen</a> | "
         if code:
-            footer_link_text += '<a href="http://frontend-test.ckan.net/subscribe/manage?code={}">Mein Abonnement verwalten</a>'.format(
-                code
-            )
+            footer_link_text += f'<a href="http://frontend-test.ckan.net/subscribe/manage?code={code}">Mein Abonnement verwalten</a>'
 
         assert_in(footer_link_text, body_html)
 
@@ -349,13 +340,9 @@ www.bfs.admin.ch/ogd
 
         footer_link_text = ""
         if subscription:
-            footer_link_text = "Abonnement löschen: http://frontend-test.ckan.net/subscribe/unsubscribe?code=testcode&amp;dataset={dataset_id}\n".format(
-                dataset_id=self.dataset["id"]
-            )
+            footer_link_text = f"Abonnement löschen: http://frontend-test.ckan.net/subscribe/unsubscribe?code=testcode&amp;dataset={self.dataset['id']}\n"
         if code:
-            footer_link_text += "Mein Abonnement verwalten: http://frontend-test.ckan.net/subscribe/manage?code={}".format(
-                code
-            )
+            footer_link_text += f"Mein Abonnement verwalten: http://frontend-test.ckan.net/subscribe/manage?code={code}"
 
         assert_in(footer_link_text, body_plain_text)
 

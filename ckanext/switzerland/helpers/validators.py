@@ -261,9 +261,7 @@ def ogdch_unique_identifier(field, schema):
             if dataset_organization["name"] != identifier_org_slug:
                 raise df.Invalid(
                     _(
-                        'The identifier "{}" does not end with the organisation slug "{}" of the organization it belongs to.'.format(
-                            identifier, dataset_organization["name"]
-                        )
+                        f"The identifier \"{identifier}\" does not end with the organisation slug \"{dataset_organization['name']}\" of the organization it belongs to."
                     )
                 )
         except tk.ObjectNotFound:
@@ -467,9 +465,7 @@ def ogdch_validate_formfield_qualified_relations(field, schema):
                     if not package.get("type") == "dataset":
                         raise df.Invalid(
                             _(
-                                "{} can not be chosen since it is a {}.".format(
-                                    package_name, package.get("type")
-                                )
+                                f"{package_name} can not be chosen since it is a {package.get('type')}."
                             )
                         )
                     permalink = get_permalink(package.get("identifier"))

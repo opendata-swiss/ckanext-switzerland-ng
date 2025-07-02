@@ -200,9 +200,7 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
             if not isinstance(title, str) and not isinstance(title, str):
                 title = ""
                 log.info(
-                    "Dataset {} has an unexpected title type: {}".format(
-                        search_data["name"], validated_dict["title"]
-                    )
+                    f"Dataset {search_data['name']} has an unexpected title type: {validated_dict['title']}"
                 )
             search_data[f"title_string_{lang_code}"] = munge_title_to_name(title)
             search_data[f"description_{lang_code}"] = (
