@@ -31,7 +31,7 @@ def ogdch_get_format_mapping(mapping_type):
         with open(mapping_path, "r") as mapping_file:
             mapping = yaml.safe_load(mapping_file)
             reverse_mapping = {}
-            for key, format_list in mapping.items():
+            for key, format_list in list(mapping.items()):
                 for format in format_list:
                     reverse_mapping[format] = key
     except (IOError, yaml.YAMLError) as exception:
@@ -105,10 +105,10 @@ def get_iana_media_type(media_type):
         return ""
 
     cleaned_media_type = _get_cleaned_format_or_media_type(media_type)
-    if cleaned_media_type in media_type_mapping.keys():
+    if cleaned_media_type in list(media_type_mapping.keys()):
         return cleaned_media_type
 
-    if cleaned_media_type in reverse_media_type_mapping.keys():
+    if cleaned_media_type in list(reverse_media_type_mapping.keys()):
         return reverse_media_type_mapping[cleaned_media_type]
 
     return ""
@@ -135,14 +135,14 @@ def _map_to_valid_format(format, try_to_clean=False):
     """Check whether the format is in the format mapping, either as a key or
     as a value, or if it can be derived after cleaning the input format string
     """
-    if format in format_mapping.keys():
+    if format in list(format_mapping.keys()):
         return format
 
-    if format in reverse_format_mapping.keys():
+    if format in list(reverse_format_mapping.keys()):
         return reverse_format_mapping[format]
     if try_to_clean:
         cleaned_format = _get_cleaned_format_or_media_type(format)
-        if cleaned_format in reverse_format_mapping.keys():
+        if cleaned_format in list(reverse_format_mapping.keys()):
             return reverse_format_mapping[cleaned_format]
     return ""
 

@@ -415,7 +415,7 @@ def ogdch_group_tree_selective(organizations, group_tree_list):
 
     selected_names = [o.get("name", None) for o in organizations]
 
-    group_tree_list = filter(group_tree_list, selected_names)
+    group_tree_list = list(filter(group_tree_list, selected_names))
     group_tree_list = get_sorted_orgs_by_translated_title(group_tree_list)
     return group_tree_list
 

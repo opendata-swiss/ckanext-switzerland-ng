@@ -48,7 +48,7 @@ def multiple_text(field, schema):
 
         value = data[key]
         if value is not missing:
-            if isinstance(value, basestring):
+            if isinstance(value, str):
                 value = [value]
             elif not isinstance(value, list):
                 errors[key].append(
@@ -131,7 +131,7 @@ def harvest_list_of_dicts(field, schema):
             data_dict = df.unflatten(data[HARVEST_JUNK])
             value = data_dict[key[0]]
             if value is not missing:
-                if isinstance(value, basestring):
+                if isinstance(value, str):
                     value = [value]
                 elif not isinstance(value, list):
                     errors[key].append(
@@ -181,7 +181,7 @@ def ogdch_language(field, schema):
 
         value = data[key]
         if value is not missing and value is not None:
-            if isinstance(value, basestring):
+            if isinstance(value, str):
                 value = [value]
             elif not isinstance(value, list):
                 errors[key].append(
@@ -348,7 +348,7 @@ def ogdch_validate_formfield_publisher(field, schema):
                     }
                     if "publisher-url" in extras:
                         del extras["publisher-url"]
-                    if any(key.startswith("publisher-name-") for key in extras.keys()):
+                    if any(key.startswith("publisher-name-") for key in list(extras.keys())):
                         for lang in LANGUAGES:
                             lang_key = "publisher-name-{}".format(lang)
                             if lang_key in extras:
@@ -362,7 +362,7 @@ def _get_publisher_from_form(extras):
     if isinstance(extras, dict):
         publisher_fields = [
             (key, value.strip())
-            for key, value in extras.items()
+            for key, value in list(extras.items())
             if key.startswith("publisher-")
             if value.strip() != ""
         ]
@@ -518,7 +518,7 @@ def ogdch_validate_temporals(field, schema):
             cleaned_temporals = []
             for temporal in temporals:
                 cleaned_temporal = {}
-                for k, v in temporal.items():
+                for k, v in list(temporal.items()):
                     cleaned_temporal[k] = ogdch_date_validator(v)
                 cleaned_temporals.append(cleaned_temporal)
 
@@ -552,7 +552,7 @@ def ogdch_fluent_tags(field, schema):
         new_value = {}
         for lang in schema["form_languages"]:
             new_value[lang] = []
-            if lang not in value.keys():
+            if lang not in list(value.keys()):
                 continue
             for keyword in value[lang]:
                 new_value[lang].append(munge_tag(keyword))
@@ -590,7 +590,7 @@ def _jsondata_for_key_is_set(data, key):
     """checks whether a key has already been set in the data: in that case the
     validator function has been replaced by a json string"""
     if key in data:
-        return isinstance(data[key], basestring)
+        return isinstance(data[key], str)
     else:
         return False
 

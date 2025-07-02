@@ -11,7 +11,7 @@ LANGUAGES = {"de", "fr", "it", "en"}
 def parse_json_attributes(ckan_dict):
     """turn attribute values from json
     to python structures"""
-    for key, value in ckan_dict.iteritems():
+    for key, value in ckan_dict.items():
         ckan_dict[key] = parse_json(value)
     return ckan_dict
 
@@ -53,7 +53,7 @@ def lang_to_string(data_dict, attribute):
 def localize_ckan_sub_dict(ckan_dict, lang_code):
     """localize groups orgs and resources"""
     localized_dict = {}
-    for k, v in ckan_dict.items():
+    for k, v in list(ckan_dict.items()):
         py_v = parse_json(v)
         localized_dict[k] = get_localized_value_from_dict(py_v, lang_code)
     return localized_dict
@@ -101,7 +101,7 @@ def localize_by_language_order(multi_language_field, default=""):
 # single character-representation to make the resulting words sortable
 # See: http://stackoverflow.com/a/518232
 def strip_accents(s):
-    if type(s) != unicode:
+    if type(s) != str:
         return s
     return "".join(
         c for c in unicodedata.normalize("NFD", s) if unicodedata.category(c) != "Mn"

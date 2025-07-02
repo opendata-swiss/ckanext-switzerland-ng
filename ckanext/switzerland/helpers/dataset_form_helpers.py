@@ -39,7 +39,7 @@ log = logging.getLogger(__name__)
 def ogdch_get_accrual_periodicity_choices(field):
     map = [
         {"label": label, "value": value}
-        for value, label in get_frequency_name(get_map=True).items()
+        for value, label in list(get_frequency_name(get_map=True).items())
     ]
     return map
 
@@ -93,7 +93,7 @@ def ogdch_publisher_form_helper(data):
 
     # check for publisher from db
     publisher_stored = data.get("publisher")
-    if isinstance(publisher_stored, (str, unicode)):
+    if isinstance(publisher_stored, str):
         try:
             publisher_stored = json.loads(publisher_stored)
         except json.JSONDecodeError:
@@ -104,7 +104,7 @@ def ogdch_publisher_form_helper(data):
         # handle stored publisher data (both as dict or string)
         if isinstance(publisher_name, dict):
             return {"name": publisher_name, "url": publisher_stored.get("url", "")}
-        elif isinstance(publisher_name, (str, unicode)):
+        elif isinstance(publisher_name, str):
             return {
                 "name": {"de": publisher_name, "en": "", "fr": "", "it": ""},
                 "url": publisher_stored.get("url", ""),
@@ -344,7 +344,7 @@ def get_qualified_relations_from_form(data):
     if isinstance(data, dict):
         qualified_relations = [
             value.strip()
-            for key, value in data.items()
+            for key, value in list(data.items())
             if key.startswith("qualified-relation-")
             if value.strip() != ""
         ]

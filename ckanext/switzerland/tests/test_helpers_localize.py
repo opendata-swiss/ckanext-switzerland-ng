@@ -57,7 +57,7 @@ class TestHelpers(unittest.TestCase):
             "en": "EN value",
         }
         result = ogdch_localize_utils.get_localized_value_from_dict(lang_dict, "de")
-        self.assertEquals(lang_dict["de"], result)
+        self.assertEqual(lang_dict["de"], result)
 
     def test_get_localized_value_from_dict_fallback(self):
         lang_dict = {
@@ -68,7 +68,7 @@ class TestHelpers(unittest.TestCase):
         }
         result = ogdch_localize_utils.get_localized_value_from_dict(lang_dict, "en")
         # if en does not exist, fallback to de
-        self.assertEquals(lang_dict["de"], result)
+        self.assertEqual(lang_dict["de"], result)
 
     def test_parse_json_error_and_default_value(self):
         """if an error occurs the default value should be returned"""

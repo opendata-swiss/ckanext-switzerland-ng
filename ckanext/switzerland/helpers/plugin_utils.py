@@ -142,10 +142,10 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
         for r in validated_dict["resources"]
     ]
     search_data["res_latest_issued"] = ogdch_date_utils.get_latest_isodate(
-        [(r["issued"]) for r in validated_dict["resources"] if "issued" in r.keys()]
+        [(r["issued"]) for r in validated_dict["resources"] if "issued" in list(r.keys())]
     )
     search_data["res_latest_modified"] = ogdch_date_utils.get_latest_isodate(
-        [(r["modified"]) for r in validated_dict["resources"] if "modified" in r.keys()]
+        [(r["modified"]) for r in validated_dict["resources"] if "modified" in list(r.keys())]
     )
     search_data["linked_data"] = ogdch_format_utils.prepare_formats_for_index(
         resources=validated_dict["resources"], linked_data_only=True
@@ -188,7 +188,7 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
             title = ogdch_loc_utils.get_localized_value_from_dict(
                 validated_dict["title"], lang_code
             )
-            if not isinstance(title, unicode) and not isinstance(title, str):
+            if not isinstance(title, str) and not isinstance(title, str):
                 title = ""
                 log.info(
                     "Dataset {} has an unexpected title type: {}".format(
@@ -394,7 +394,7 @@ def ogdch_transform_links(email_vars, link_names):
     """
     for link in link_names:
         if email_vars.get(link):
-            email_vars[link] = unicode(
+            email_vars[link] = str(
                 email_vars[link].replace(
                     tk.config.get("ckan.site_url"),
                     tk.config.get("ckanext.switzerland.frontend_url"),

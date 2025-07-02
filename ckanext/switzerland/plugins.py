@@ -710,7 +710,7 @@ class OgdchSubscribePlugin(SubscribePlugin):
                 )
             )
 
-        email_vars = {k: unicode(v) for k, v in email_vars.items()}
+        email_vars = {k: str(v) for k, v in list(email_vars.items())}
 
         return email_vars
 

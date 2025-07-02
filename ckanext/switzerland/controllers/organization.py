@@ -2,7 +2,7 @@
 
 import logging
 from collections import OrderedDict
-from urllib import urlencode
+from urllib.parse import urlencode
 
 import ckan.authz as authz
 import ckan.controllers.organization as organization
@@ -69,7 +69,7 @@ class OgdchOrganizationController(organization.OrganizationController):
         page = h.get_page_number(request.params)
 
         # most search operations should reset the page counter:
-        params_nopage = [(k, v) for k, v in request.params.items() if k != "page"]
+        params_nopage = [(k, v) for k, v in list(request.params.items()) if k != "page"]
         sort_by = request.params.get("sort", None)
 
         def search_url(params):
@@ -77,7 +77,7 @@ class OgdchOrganizationController(organization.OrganizationController):
             action = "bulk_process" if c.action == "bulk_process" else "read"
             url = h.url_for(controller=controller, action=action, id=id)
             params = [
-                (k, v.encode("utf-8") if isinstance(v, basestring) else str(v))
+                (k, v.encode("utf-8") if isinstance(v, str) else str(v))
                 for k, v in params
             ]
             return url + "?" + urlencode(params)
@@ -116,7 +116,7 @@ class OgdchOrganizationController(organization.OrganizationController):
 
             c.fields = []
             search_extras = {}
-            for param, value in request.params.items():
+            for param, value in list(request.params.items()):
                 if (
                     param not in ["q", "page", "sort"]
                     and len(value)
@@ -185,7 +185,7 @@ class OgdchOrganizationController(organization.OrganizationController):
             data_dict = {
                 "q": q,
                 "fq": fq,
-                "facet.field": facets.keys(),
+                "facet.field": list(facets.keys()),
                 "rows": limit,
                 "sort": sort_by,
                 "start": (page - 1) * limit,
@@ -193,7 +193,7 @@ class OgdchOrganizationController(organization.OrganizationController):
                 "include_private": True,
             }
 
-            context_ = dict((k, v) for (k, v) in context.items() if k != "schema")
+            context_ = dict((k, v) for (k, v) in list(context.items()) if k != "schema")
             query = get_action("package_search")(context_, data_dict)
 
             c.page = h.Page(
@@ -208,7 +208,7 @@ class OgdchOrganizationController(organization.OrganizationController):
 
             c.search_facets = query["search_facets"]
             c.search_facets_limits = {}
-            for facet in c.search_facets.keys():
+            for facet in list(c.search_facets.keys()):
                 limit = int(
                     request.params.get(
                         "_%s_limit" % facet, config.get("search.facets.default", 10)

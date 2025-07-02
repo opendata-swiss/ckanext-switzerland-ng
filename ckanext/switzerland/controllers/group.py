@@ -2,7 +2,7 @@
 
 import logging
 from collections import OrderedDict
-from urllib import urlencode
+from urllib.parse import urlencode
 
 import ckan.authz as authz
 import ckan.controllers.group as group
@@ -59,7 +59,7 @@ class OgdchGroupController(group.GroupController):
         page = h.get_page_number(request.params)
 
         # most search operations should reset the page counter:
-        params_nopage = [(k, v) for k, v in request.params.items() if k != "page"]
+        params_nopage = [(k, v) for k, v in list(request.params.items()) if k != "page"]
         sort_by = request.params.get("sort", None)
 
         def search_url(params):
@@ -105,7 +105,7 @@ class OgdchGroupController(group.GroupController):
             c.fields = []
             c.fields_grouped = {}
             search_extras = {}
-            for param, value in request.params.items():
+            for param, value in list(request.params.items()):
                 if (
                     param not in ["q", "page", "sort"]
                     and len(value)
@@ -146,14 +146,14 @@ class OgdchGroupController(group.GroupController):
                 "q": q,
                 "fq": fq,
                 "include_private": True,
-                "facet.field": facets.keys(),
+                "facet.field": list(facets.keys()),
                 "rows": limit,
                 "sort": sort_by,
                 "start": (page - 1) * limit,
                 "extras": search_extras,
             }
 
-            context_ = dict((k, v) for (k, v) in context.items() if k != "schema")
+            context_ = dict((k, v) for (k, v) in list(context.items()) if k != "schema")
             query = get_action("package_search")(context_, data_dict)
 
             c.page = h.Page(
@@ -168,7 +168,7 @@ class OgdchGroupController(group.GroupController):
 
             c.search_facets = query["search_facets"]
             c.search_facets_limits = {}
-            for facet in c.search_facets.keys():
+            for facet in list(c.search_facets.keys()):
                 limit = int(
                     request.params.get(
                         "_%s_limit" % facet, config.get("search.facets.default", 10)

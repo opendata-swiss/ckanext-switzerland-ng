@@ -272,7 +272,7 @@ def ogdch_autosuggest(context, data_dict):
             search_handler=handler,
             **{"suggest.q": q, "suggest.count": 10, "suggest.cfq": fq}
         )
-        suggestions = results.raw_response["suggest"][suggester].values()[0]  # noqa
+        suggestions = list(results.raw_response["suggest"][suggester].values())[0]  # noqa
 
         def highlight(term, q):
             if "<b>" in term:

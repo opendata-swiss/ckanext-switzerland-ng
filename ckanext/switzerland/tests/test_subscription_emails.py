@@ -94,7 +94,7 @@ class TestSubscriptionEmails(OgdchFunctionalTestBase):
 
         assert_equal(
             subject,
-            "Best\xe4tigungsmail \u2013 Confirmation - E-mail di conferma - Confirmation",
+            "Best\xe4tigungsmail \\u2013 Confirmation - E-mail di conferma - Confirmation",
         )
         assert_in(
             """Vielen Dank, dass Sie sich für den Datensatz""", body_plain_text.strip()
@@ -157,7 +157,7 @@ class TestSubscriptionEmails(OgdchFunctionalTestBase):
 
         assert_equal(
             subject,
-            "Best\xe4tigungsmail \u2013 Confirmation - E-mail di conferma - Confirmation",
+            "Best\xe4tigungsmail \\u2013 Confirmation - E-mail di conferma - Confirmation",
         )
         assert_in(
             """Sie haben Ihre E-Mail-Adresse erfolgreich bestätigt.""",
@@ -216,7 +216,7 @@ class TestSubscriptionEmails(OgdchFunctionalTestBase):
         )
 
         assert_equal(
-            subject, "Update notification \u2013 updated dataset opendata.swiss"
+            subject, "Update notification \\u2013 updated dataset opendata.swiss"
         )
         assert_in(
             "Es gibt eine \xc4nderung im Datensatz DE Test. Um die \xc4nderung zu sehen, klicken Sie bitte",
@@ -286,7 +286,7 @@ class TestSubscriptionEmails(OgdchFunctionalTestBase):
         )
 
         assert_equal(
-            subject, "Delete notification \u2013 deleted dataset opendata.swiss"
+            subject, "Delete notification \\u2013 deleted dataset opendata.swiss"
         )
         assert_in(
             'Hello,\nWe inform you that the dataset "EN Test" you subscribed to has been removed from our portal by the data provider.',

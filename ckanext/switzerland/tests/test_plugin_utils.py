@@ -39,8 +39,8 @@ class TestPluginUtils(unittest.TestCase):
 
         # Test all documentation links are mapped onto the dataset and
         # deduplicated.
-        self.assertEquals(len(mapped_pkg["documentation"]), 4)
-        self.assertEquals(
+        self.assertEqual(len(mapped_pkg["documentation"]), 4)
+        self.assertEqual(
             sorted(mapped_pkg["documentation"]),
             [
                 "https://example.com/documentation-dataset-1",
@@ -53,7 +53,7 @@ class TestPluginUtils(unittest.TestCase):
         for mapped_resource in mapped_pkg["resources"]:
             for resource in pkg_dict["resources"]:
                 if mapped_resource["id"] == resource["id"]:
-                    self.assertEquals(
+                    self.assertEqual(
                         sorted(mapped_resource["documentation"]),
                         sorted(resource["documentation"]),
                     )
@@ -72,7 +72,7 @@ class TestPluginUtils(unittest.TestCase):
         mapped_pkg = pkg_dict
         ogdch_plugin_utils.ogdch_map_resource_docs_to_dataset(mapped_pkg)
 
-        self.assertEquals(len(mapped_pkg["documentation"]), 2)
+        self.assertEqual(len(mapped_pkg["documentation"]), 2)
 
     def test_map_dataset_with_no_documentation(self):
         pkg_dict = {
@@ -96,8 +96,8 @@ class TestPluginUtils(unittest.TestCase):
         mapped_pkg = pkg_dict
         ogdch_plugin_utils.ogdch_map_resource_docs_to_dataset(mapped_pkg)
 
-        self.assertEquals(len(mapped_pkg["documentation"]), 3)
-        self.assertEquals(
+        self.assertEqual(len(mapped_pkg["documentation"]), 3)
+        self.assertEqual(
             sorted(mapped_pkg["documentation"]),
             [
                 "https://example.com/documentation-dataset-1",
