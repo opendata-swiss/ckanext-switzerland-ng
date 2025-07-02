@@ -16,7 +16,7 @@ def get_org_count():
 def get_dataset_count(dataset_type="dataset"):
     user = tk.get_action("get_site_user")({"ignore_auth": True}, {})
     req_context = {"user": user["name"]}
-    fq = "".join(["+dataset_type:", dataset_type])
+    fq = f"+dataset_type:{dataset_type}"
     packages = tk.get_action("package_search")(req_context, {"fq": fq})
     return packages["count"]
 
