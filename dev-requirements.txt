@@ -1,8 +1,10 @@
 # This file lists the dependencies of this extension.
 # Install with a command like: pip install -r requirements.txt
+black==25.1.0
 coverage[toml]>=7.5
 factory-boy>=3.2.1
 flake8>=5.0.0
+isort==6.0.1
 pytest>=7.0
 pytest-ckan
 pytest-cov>=4.0.0
