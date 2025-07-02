@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """Tests for helpers.py."""
+import unittest
+
 from nose.tools import *  # noqa
 
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
-import unittest
 
 organizations = [
     {

@@ -7,22 +7,25 @@ used in backend templates
 import ast
 import logging
 import re
-from urllib.parse import urlparse, quote
 from html.parser import HTMLParser
-from ckan import authz
-from ckan.plugins.toolkit import c, g, _
-from ckan.lib.helpers import _link_to, lang, url_for
-from ckan.lib.helpers import dataset_display_name as dataset_display_name_orig
-from ckan.lib.helpers import organization_link as organization_link_orig
+from urllib.parse import quote, urlparse
 
 import ckan.lib.i18n as i18n
 import ckan.plugins.toolkit as tk
+from ckan import authz
+from ckan.lib.helpers import _link_to
+from ckan.lib.helpers import dataset_display_name as dataset_display_name_orig
+from ckan.lib.helpers import lang
+from ckan.lib.helpers import organization_link as organization_link_orig
+from ckan.lib.helpers import url_for
+from ckan.plugins.toolkit import _, c, g
+
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
-from ckanext.switzerland.helpers.frontend_helpers import (
-    get_localized_value_for_display,
-)  # noqa
 from ckanext.harvest.helpers import harvester_types
 from ckanext.hierarchy.helpers import group_tree
+from ckanext.switzerland.helpers.frontend_helpers import (  # noqa
+    get_localized_value_for_display,
+)
 
 log = logging.getLogger(__name__)
 

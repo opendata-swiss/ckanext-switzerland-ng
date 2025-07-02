@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # Tests for plugin_utils.py
 import logging
-
 import unittest
 
 import ckanext.switzerland.helpers.plugin_utils as ogdch_plugin_utils

@@ -1,10 +1,12 @@
 # encoding: utf-8
 
-from nose.tools import assert_equals, assert_raises
-from unittest import TestCase
 from datetime import datetime, timedelta
-from ckanext.switzerland.helpers.decorators import ratelimit, _get_limits_from_config
+from unittest import TestCase
+
 from ckan.logic import ValidationError
+from nose.tools import assert_equals, assert_raises
+
+from ckanext.switzerland.helpers.decorators import _get_limits_from_config, ratelimit
 
 
 class TestApiLimit(TestCase):

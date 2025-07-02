@@ -1,8 +1,10 @@
 """Tests for helpers.format_utils.py."""
 
-import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
-from nose.tools import *  # noqa
 import os
+
+from nose.tools import *  # noqa
+
+import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 

@@ -14,12 +14,12 @@ from ckanext.scheming.helpers import scheming_field_choices
 from ckanext.scheming.validation import register_validator, scheming_validator
 from ckanext.switzerland.helpers.dataset_form_helpers import (
     get_contact_points_from_form,
-    get_relations_from_form,
     get_qualified_relations_from_form,
+    get_relations_from_form,
     get_temporals_from_form,
 )
 from ckanext.switzerland.helpers.frontend_helpers import get_permalink
-from ckanext.switzerland.helpers.localize_utils import parse_json, LANGUAGES
+from ckanext.switzerland.helpers.localize_utils import LANGUAGES, parse_json
 
 log = logging.getLogger(__name__)
 

@@ -1,8 +1,8 @@
+import logging
+
 import ckan.model as model
 import ckan.plugins.toolkit as tk
 from ckan.tests import helpers
-
-import logging
 
 log = logging.getLogger(__name__)
 

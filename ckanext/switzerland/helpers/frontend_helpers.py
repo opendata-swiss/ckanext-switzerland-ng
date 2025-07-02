@@ -10,8 +10,8 @@ from collections import OrderedDict
 import ckan.lib.i18n as i18n
 import ckan.plugins.toolkit as tk
 from babel import numbers
-from ckan.plugins.toolkit import _
 from ckan.lib.helpers import lang, localised_number
+from ckan.plugins.toolkit import _
 
 import ckanext.switzerland.helpers.localize_utils as ogdch_loc_utils
 import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils

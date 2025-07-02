@@ -1,8 +1,8 @@
-from datetime import datetime, timedelta
 import functools
-from ckan.plugins.toolkit import config
-
 import logging
+from datetime import datetime, timedelta
+
+from ckan.plugins.toolkit import config
 
 log = logging.getLogger(__name__)
 

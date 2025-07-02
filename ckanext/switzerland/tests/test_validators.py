@@ -1,9 +1,10 @@
 # encoding: utf-8
-from ckan.logic.validators import missing
 from ckan.lib.navl.dictization_functions import Invalid
+from ckan.logic.validators import missing
 from ckan.plugins.toolkit import get_validator
-from ckanext.switzerland.tests import OgdchFunctionalTestBase
 from nose.tools import assert_equals, assert_raises_regexp
+
+from ckanext.switzerland.tests import OgdchFunctionalTestBase
 
 
 class TestOgdchUrlListValidator(object):

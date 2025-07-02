@@ -5,27 +5,28 @@ Helpers belong in this file if they are
 used for rendering the dataset form
 """
 import datetime
-import logging
 import json
+import logging
+
 import ckan.plugins.toolkit as tk
 from ckan.plugins.toolkit import _
+from dateutil.parser import parse
+
 from ckanext.switzerland.helpers.frontend_helpers import (
-    get_frequency_name,
     get_dataset_by_identifier,
     get_dataset_by_permalink,
+    get_frequency_name,
 )
 from ckanext.switzerland.helpers.localize_utils import (
     LANGUAGES,
     localize_by_language_order,
 )
 from ckanext.switzerland.helpers.terms_of_use_utils import (
+    TERMS_OF_USE_ASK,
+    TERMS_OF_USE_BY,
     TERMS_OF_USE_BY_ASK,
     TERMS_OF_USE_OPEN,
-    TERMS_OF_USE_BY,
-    TERMS_OF_USE_ASK,
 )
-from dateutil.parser import parse
-
 
 ADDITIONAL_FORM_ROW_LIMIT = 10
 HIDE_ROW_CSS_CLASS = "ogdch-hide-row"

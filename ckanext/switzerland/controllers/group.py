@@ -1,17 +1,18 @@
 # encoding: utf-8
 
 import logging
-from urllib import urlencode
-from six import string_types
-import ckan.model as model
-from ckan.logic import get_action
-from ckan.lib.plugins import lookup_group_controller
 from collections import OrderedDict
-from ckan.plugins.toolkit import c, config, _, request
-import ckan.lib.helpers as h
+from urllib import urlencode
+
 import ckan.authz as authz
-import ckan.lib.search as search
 import ckan.controllers.group as group
+import ckan.lib.helpers as h
+import ckan.lib.search as search
+import ckan.model as model
+from ckan.lib.plugins import lookup_group_controller
+from ckan.logic import get_action
+from ckan.plugins.toolkit import _, c, config, request
+from six import string_types
 
 log = logging.getLogger(__name__)
 

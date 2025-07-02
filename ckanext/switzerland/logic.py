@@ -1,39 +1,46 @@
-from collections import OrderedDict
 import datetime
+import logging
 import os.path
-import string
 import random
-
-import pysolr
 import re
-from unidecode import unidecode
+import string
 import uuid
+from collections import OrderedDict
 
-import rdflib
-import rdflib.parser
-from rdflib.namespace import Namespace, RDF
-
-from ckan.lib import mailer
-from ckan.plugins.toolkit import config, get_or_bust, side_effect_free
-from ckan.logic import ActionError, NotFound, ValidationError, NotAuthorized
-import ckan.plugins.toolkit as tk
 import ckan.lib.helpers as h
-from ckan.lib.search.common import make_connection
 import ckan.lib.plugins as lib_plugins
 import ckan.lib.uploader as uploader
-from ckan.logic import check_access
-from ckan.logic.action.create import user_create as core_user_create
-from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
-from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester
-from ckanext.harvest.model import HarvestJob
-from ckanext.harvest.logic.dictization import harvest_job_dictize
-from ckanext.password_policy.helpers import custom_password_check, get_password_length
-from ckanext.switzerland.helpers.backend_helpers import ogdch_get_switch_connectome_url
-from ckanext.switzerland.helpers.request_utils import get_content_headers
-from ckanext.switzerland.helpers.mail_helper import (
-    send_registration_email,
-    send_showcase_email,
+import ckan.plugins.toolkit as tk
+import pysolr
+import rdflib
+import rdflib.parser
+from ckan.lib import mailer
+from ckan.lib.munge import munge_title_to_name
+from ckan.lib.search.common import make_connection
+from ckan.logic import (
+    ActionError,
+    NotAuthorized,
+    NotFound,
+    ValidationError,
+    check_access,
 )
+from ckan.logic.action.create import user_create as core_user_create
+from ckan.plugins.toolkit import config, get_or_bust, side_effect_free
+from rdflib.namespace import RDF, Namespace
+from unidecode import unidecode
+
+from ckanext.dcatapchharvest.harvesters import SwissDCATRDFHarvester
+from ckanext.dcatapchharvest.profiles import SwissDCATAPProfile
+from ckanext.harvest.logic.dictization import harvest_job_dictize
+from ckanext.harvest.model import HarvestJob
+from ckanext.password_policy.helpers import custom_password_check, get_password_length
+from ckanext.subscribe.action import (
+    subscribe_list_subscriptions,
+    subscribe_unsubscribe,
+    subscribe_unsubscribe_all,
+)
+from ckanext.subscribe.email_auth import authenticate_with_code
+from ckanext.switzerland.helpers.backend_helpers import ogdch_get_switch_connectome_url
 from ckanext.switzerland.helpers.decorators import ratelimit
 from ckanext.switzerland.helpers.logic_helpers import (
     get_dataset_count,
@@ -41,16 +48,12 @@ from ckanext.switzerland.helpers.logic_helpers import (
     get_showcases_for_dataset,
     map_existing_resources_to_new_dataset,
 )
-from ckanext.switzerland.helpers.terms_of_use_utils import get_dataset_terms_of_use
-from ckan.lib.munge import munge_title_to_name
-from ckanext.subscribe.email_auth import authenticate_with_code
-from ckanext.subscribe.action import (
-    subscribe_list_subscriptions,
-    subscribe_unsubscribe,
-    subscribe_unsubscribe_all,
+from ckanext.switzerland.helpers.mail_helper import (
+    send_registration_email,
+    send_showcase_email,
 )
-
-import logging
+from ckanext.switzerland.helpers.request_utils import get_content_headers
+from ckanext.switzerland.helpers.terms_of_use_utils import get_dataset_terms_of_use
 
 log = logging.getLogger(__name__)
 

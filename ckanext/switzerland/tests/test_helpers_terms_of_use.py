@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """Tests for terms_of_use_utils.py."""
-from nose.tools import assert_equals
-import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 import unittest
+
+from nose.tools import assert_equals
+
+import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 
 
 class TestHelpers(object):

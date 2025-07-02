@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
-import ckan.plugins.toolkit as tk
-import ckanext.switzerland.helpers.backend_helpers as helpers
 import unittest
+
+import ckan.plugins.toolkit as tk
+
+import ckanext.switzerland.helpers.backend_helpers as helpers
 
 
 class TestBackendHelpers(unittest.TestCase):

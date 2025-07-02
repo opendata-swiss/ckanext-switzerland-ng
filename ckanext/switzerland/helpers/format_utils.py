@@ -3,9 +3,10 @@ helpers for preparing the resource format
 belong in this file
 """
 
-import yaml
 import os
 from urllib.parse import urlparse
+
+import yaml
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 

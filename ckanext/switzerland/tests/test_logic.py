@@ -1,11 +1,12 @@
 # encoding: utf-8
 import hashlib
 import logging
-import nose
 
 import ckan.plugins.toolkit as tk
+import nose
 from ckan.plugins.toolkit import config
 from ckan.tests.legacy.mock_mail_server import SmtpServerHarness
+
 from ckanext.switzerland.tests import OgdchFunctionalTestBase
 
 assert_dict_equal = nose.tools.assert_dict_equal

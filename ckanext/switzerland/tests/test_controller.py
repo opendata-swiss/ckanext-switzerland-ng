@@ -1,6 +1,6 @@
 import nose
-
 from ckan.lib.helpers import url_for
+
 from ckanext.switzerland.tests import OgdchFunctionalTestBase
 
 assert_equal = nose.tools.assert_equal

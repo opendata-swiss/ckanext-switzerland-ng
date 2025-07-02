@@ -1,11 +1,11 @@
 # encoding: utf-8
 import datetime
 
-from nose.tools import assert_equal, assert_in, assert_not_in
-from mock import patch
-
 import ckan.tests.factories as ckan_factories
 from ckan import plugins as p
+from mock import patch
+from nose.tools import assert_equal, assert_in, assert_not_in
+
 from ckanext.subscribe.email_verification import (
     get_verification_email_vars,
 )
