@@ -12,18 +12,18 @@ class TestMiddleware(OgdchFunctionalTestBase):
         response = app.get("/dataset/test-dataset")
 
         assert_equal(response.status_int, 200)
-        assert_equal(response.headers.get('X-Robots-Tag'), "noindex, nofollow")
+        assert_equal(response.headers.get("X-Robots-Tag"), "noindex, nofollow")
 
     def test_response_header_xml(self):
         app = self._get_test_app()
         response = app.get("/dataset/test-dataset.xml")
 
         assert_equal(response.status_int, 200)
-        assert_equal(response.headers.get('X-Robots-Tag'), "noindex, nofollow")
+        assert_equal(response.headers.get("X-Robots-Tag"), "noindex, nofollow")
 
     def test_response_header_json(self):
         app = self._get_test_app()
         response = app.get("/api/3/action/package_show?id=test-dataset")
 
         assert_equal(response.status_int, 200)
-        assert_equal(response.headers.get('X-Robots-Tag'), "noindex, nofollow")
+        assert_equal(response.headers.get("X-Robots-Tag"), "noindex, nofollow")

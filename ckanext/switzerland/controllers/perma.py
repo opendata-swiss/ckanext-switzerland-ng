@@ -18,11 +18,10 @@ class OgdchPermaController(BaseController):
         the corresponding /dataset/{slug} route
         """
         try:
-            dataset = get_action('ogdch_dataset_by_identifier')(
-                {'for_view': True},
-                {'identifier': id}
+            dataset = get_action("ogdch_dataset_by_identifier")(
+                {"for_view": True}, {"identifier": id}
             )
             # redirect to dataset detail page
-            redirect_to('dataset_read', id=dataset['name'])
+            redirect_to("dataset_read", id=dataset["name"])
         except NotFound:
-            abort(404, _('Dataset not found'))
+            abort(404, _("Dataset not found"))

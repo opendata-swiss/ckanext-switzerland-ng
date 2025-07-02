@@ -17,26 +17,26 @@ class TestSearch(OgdchFunctionalTestBase):
 
         # Create some groups
         group1 = {
-            'name': 'group1',
-            'title': {
-                'de': 'Group 1 DE',
-                'fr': 'Group 1 FR',
-                'it': 'Group 1 IT',
-                'en': 'Group 1 EN',
+            "name": "group1",
+            "title": {
+                "de": "Group 1 DE",
+                "fr": "Group 1 FR",
+                "it": "Group 1 IT",
+                "en": "Group 1 EN",
             },
         }
-        tk.get_action('group_create')(self._get_context(), group1)
+        tk.get_action("group_create")(self._get_context(), group1)
 
         group2 = {
-            'name': 'group2',
-            'title': {
-                'de': 'Group 2 DE',
-                'fr': 'Group 2 FR',
-                'it': 'Group 2 IT',
-                'en': 'Group 2 EN',
+            "name": "group2",
+            "title": {
+                "de": "Group 2 DE",
+                "fr": "Group 2 FR",
+                "it": "Group 2 IT",
+                "en": "Group 2 EN",
             },
         }
-        tk.get_action('group_create')(self._get_context(), group2)
+        tk.get_action("group_create")(self._get_context(), group2)
 
         # Add some more datasets
         dataset_dict_2 = copy(self.dataset_dict)

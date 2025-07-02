@@ -7,36 +7,31 @@ import unittest
 
 class TestHelpers(object):
     def test_get_resource_terms_of_use_with_license(self):
-        term_id = 'https://opendata.swiss/terms-of-use#terms_by'
-        resource = {
-            "license": term_id
-        }
+        term_id = "https://opendata.swiss/terms-of-use#terms_by"
+        resource = {"license": term_id}
         result = ogdch_term_utils.get_resource_terms_of_use(resource)
         assert_equals(term_id, result)
 
     def test_get_resource_terms_of_use_with_rights(self):
-        term_id = 'https://opendata.swiss/terms-of-use#terms_by'
-        resource = {
-            "rights": term_id
-        }
+        term_id = "https://opendata.swiss/terms-of-use#terms_by"
+        resource = {"rights": term_id}
         result = ogdch_term_utils.get_resource_terms_of_use(resource)
         assert_equals(term_id, result)
 
     def test_get_resource_terms_of_use_with_license_and_rights(self):
-        license_term_id = 'https://opendata.swiss/terms-of-use#terms_by'  # noqa
-        rights_term_id = 'https://opendata.swiss/terms-of-use#terms_ask'  # noqa
-        resource = {
-            "license": license_term_id,
-            "rights": rights_term_id
-        }
+        license_term_id = "https://opendata.swiss/terms-of-use#terms_by"  # noqa
+        rights_term_id = "https://opendata.swiss/terms-of-use#terms_ask"  # noqa
+        resource = {"license": license_term_id, "rights": rights_term_id}
         result = ogdch_term_utils.get_resource_terms_of_use(resource)
         assert_equals(license_term_id, result)
 
     def test_get_resource_terms_of_use_closed(self):
-        term_id = 'NonCommercialNotAllowed-CommercialAllowed-ReferenceNotRequired'  # noqa
+        term_id = (
+            "NonCommercialNotAllowed-CommercialAllowed-ReferenceNotRequired"  # noqa
+        )
         resource = {}
         result = ogdch_term_utils.get_resource_terms_of_use(resource)
-        assert_equals('ClosedData', result)
+        assert_equals("ClosedData", result)
 
     def test_get_dataset_terms_of_use(self):
         test_data = [
@@ -47,7 +42,7 @@ class TestHelpers(object):
                         {"license": ogdch_term_utils.TERMS_OF_USE_OPEN},
                     ]
                 },
-                ogdch_term_utils.TERMS_OF_USE_BY
+                ogdch_term_utils.TERMS_OF_USE_BY,
             ],
             [
                 {
@@ -56,7 +51,7 @@ class TestHelpers(object):
                         {"rights": ogdch_term_utils.TERMS_OF_USE_BY},
                     ]
                 },
-                ogdch_term_utils.TERMS_OF_USE_BY
+                ogdch_term_utils.TERMS_OF_USE_BY,
             ],
             [
                 {
@@ -65,7 +60,7 @@ class TestHelpers(object):
                         {"license": ogdch_term_utils.TERMS_OF_USE_OPEN},
                     ]
                 },
-                ogdch_term_utils.TERMS_OF_USE_BY
+                ogdch_term_utils.TERMS_OF_USE_BY,
             ],
             [
                 {
@@ -76,7 +71,7 @@ class TestHelpers(object):
                         {"rights": ogdch_term_utils.TERMS_OF_USE_BY_ASK},
                     ]
                 },
-                ogdch_term_utils.TERMS_OF_USE_BY_ASK
+                ogdch_term_utils.TERMS_OF_USE_BY_ASK,
             ],
             [
                 {
@@ -85,7 +80,7 @@ class TestHelpers(object):
                         {"license": ogdch_term_utils.TERMS_OF_USE_ASK},
                     ]
                 },
-                ogdch_term_utils.TERMS_OF_USE_CLOSED
+                ogdch_term_utils.TERMS_OF_USE_CLOSED,
             ],
             [
                 {
@@ -94,14 +89,14 @@ class TestHelpers(object):
                         {"rights": "A very cool set of rights"},
                     ]
                 },
-                ogdch_term_utils.TERMS_OF_USE_CLOSED
+                ogdch_term_utils.TERMS_OF_USE_CLOSED,
             ],
             [
                 {
                     "resources": [
                         {
                             "license": "A very cool open license",
-                            "rights": ogdch_term_utils.TERMS_OF_USE_BY
+                            "rights": ogdch_term_utils.TERMS_OF_USE_BY,
                         },
                         {
                             "license": ogdch_term_utils.TERMS_OF_USE_OPEN,
@@ -109,7 +104,7 @@ class TestHelpers(object):
                         },
                     ]
                 },
-                ogdch_term_utils.TERMS_OF_USE_BY
+                ogdch_term_utils.TERMS_OF_USE_BY,
             ],
             [
                 {
@@ -118,11 +113,11 @@ class TestHelpers(object):
                             # If a resource's license is in the open terms,
                             # we ignore the resource's rights statement.
                             "license": ogdch_term_utils.TERMS_OF_USE_OPEN,
-                            "rights": "Rights statement not in OPEN_TERMS"
+                            "rights": "Rights statement not in OPEN_TERMS",
                         }
                     ]
                 },
-                ogdch_term_utils.TERMS_OF_USE_OPEN
+                ogdch_term_utils.TERMS_OF_USE_OPEN,
             ],
             [
                 {
@@ -135,7 +130,7 @@ class TestHelpers(object):
                         }
                     ]
                 },
-                ogdch_term_utils.TERMS_OF_USE_OPEN
+                ogdch_term_utils.TERMS_OF_USE_OPEN,
             ],
         ]
 
@@ -144,6 +139,5 @@ class TestHelpers(object):
 
     def check_dataset_terms_of_use_are_correct(self, dataset, expected_terms):
         assert_equals(
-            ogdch_term_utils.get_dataset_terms_of_use(dataset),
-            expected_terms
+            ogdch_term_utils.get_dataset_terms_of_use(dataset), expected_terms
         )

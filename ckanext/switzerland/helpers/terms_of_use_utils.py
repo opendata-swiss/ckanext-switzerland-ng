@@ -1,12 +1,14 @@
 """utils for terms of use"""
+
 import logging
+
 log = logging.getLogger(__name__)
 
-TERMS_OF_USE_OPEN = 'https://opendata.swiss/terms-of-use#terms_open'
-TERMS_OF_USE_BY = 'https://opendata.swiss/terms-of-use#terms_by'
-TERMS_OF_USE_ASK = 'https://opendata.swiss/terms-of-use#terms_ask'
-TERMS_OF_USE_BY_ASK = 'https://opendata.swiss/terms-of-use#terms_by_ask'
-TERMS_OF_USE_CLOSED = 'ClosedData'
+TERMS_OF_USE_OPEN = "https://opendata.swiss/terms-of-use#terms_open"
+TERMS_OF_USE_BY = "https://opendata.swiss/terms-of-use#terms_by"
+TERMS_OF_USE_ASK = "https://opendata.swiss/terms-of-use#terms_ask"
+TERMS_OF_USE_BY_ASK = "https://opendata.swiss/terms-of-use#terms_by_ask"
+TERMS_OF_USE_CLOSED = "ClosedData"
 
 OPEN_TERMS = [
     TERMS_OF_USE_OPEN,
@@ -43,9 +45,9 @@ def get_dataset_terms_of_use(dataset):
                     least_open = resource.get(field_name)
                     break
 
-                if OPEN_TERMS.index(
-                    resource.get(field_name)
-                ) > OPEN_TERMS.index(least_open):
+                if OPEN_TERMS.index(resource.get(field_name)) > OPEN_TERMS.index(
+                    least_open
+                ):
                     least_open = resource.get(field_name)
                     break
 
