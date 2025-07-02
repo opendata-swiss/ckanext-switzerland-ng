@@ -86,8 +86,8 @@ def ogdch_counts(context, data_dict):
         group_count[group["name"]] = group["package_count"]
 
     return {
-        "total_dataset_count": get_dataset_count("dataset"),  # noqa
-        "showcase_count": get_dataset_count("showcase"),  # noqa
+        "total_dataset_count": get_dataset_count("dataset"),
+        "showcase_count": get_dataset_count("showcase"),
         "groups": group_count,
         "organization_count": get_org_count(),
     }
@@ -272,9 +272,7 @@ def ogdch_autosuggest(context, data_dict):
             search_handler=handler,
             **{"suggest.q": q, "suggest.count": 10, "suggest.cfq": fq}
         )
-        suggestions = list(results.raw_response["suggest"][suggester].values())[
-            0
-        ]  # noqa
+        suggestions = list(results.raw_response["suggest"][suggester].values())[0]
 
         def highlight(term, q):
             if "<b>" in term:
@@ -292,7 +290,7 @@ def ogdch_autosuggest(context, data_dict):
         terms = [
             highlight(suggestion["term"], q)
             for suggestion in suggestions["suggestions"]
-        ]  # noqa
+        ]
         return list(set(terms))
     except pysolr.SolrError as e:
         log.exception("Could not load suggestions from solr: %s" % e)

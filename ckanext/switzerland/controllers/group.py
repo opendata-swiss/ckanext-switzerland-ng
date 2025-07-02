@@ -19,7 +19,7 @@ log = logging.getLogger(__name__)
 
 class OgdchGroupController(group.GroupController):
 
-    def _read(self, id, limit, group_type):  # noqa
+    def _read(self, id, limit, group_type):
         """
         This controller replaces the GroupController controller
         from CKAN. It uses the filter query (fq) parameter to query

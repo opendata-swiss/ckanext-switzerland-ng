@@ -21,16 +21,14 @@ class TestHelpers(object):
         assert_equals(term_id, result)
 
     def test_get_resource_terms_of_use_with_license_and_rights(self):
-        license_term_id = "https://opendata.swiss/terms-of-use#terms_by"  # noqa
-        rights_term_id = "https://opendata.swiss/terms-of-use#terms_ask"  # noqa
+        license_term_id = "https://opendata.swiss/terms-of-use#terms_by"
+        rights_term_id = "https://opendata.swiss/terms-of-use#terms_ask"
         resource = {"license": license_term_id, "rights": rights_term_id}
         result = ogdch_term_utils.get_resource_terms_of_use(resource)
         assert_equals(license_term_id, result)
 
     def test_get_resource_terms_of_use_closed(self):
-        term_id = (
-            "NonCommercialNotAllowed-CommercialAllowed-ReferenceNotRequired"  # noqa
-        )
+        term_id = "NonCommercialNotAllowed-CommercialAllowed-ReferenceNotRequired"
         resource = {}
         result = ogdch_term_utils.get_resource_terms_of_use(resource)
         assert_equals("ClosedData", result)

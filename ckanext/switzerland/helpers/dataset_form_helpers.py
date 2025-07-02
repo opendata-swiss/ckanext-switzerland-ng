@@ -49,25 +49,25 @@ def ogdch_get_license_choices(field):
         {
             "label": _(
                 "Non-commercial Allowed / Commercial Allowed / Reference Not Required"
-            ),  # noqa
+            ),
             "value": TERMS_OF_USE_OPEN,
         },
         {
             "label": _(
                 "Non-commercial Allowed / Commercial With Permission Allowed / Reference Not Required"
-            ),  # noqa
+            ),
             "value": TERMS_OF_USE_ASK,
         },
         {
             "label": _(
                 "Non-commercial Allowed / Commercial With Permission Allowed / Reference Required"
-            ),  # noqa
+            ),
             "value": TERMS_OF_USE_BY_ASK,
         },
         {
             "label": _(
                 "Non-commercial Allowed / Commercial Allowed / Reference Required"
-            ),  # noqa
+            ),
             "value": TERMS_OF_USE_BY,
         },
     ]
@@ -158,9 +158,7 @@ def _build_rows_form_field(data_empty, data_list=None):
             "data": data_list[i - 1] if i <= len(data_list) else data_empty,
         }
         row["css_class"] = (
-            SHOW_ROW_CSS_CLASS
-            if (i <= number_of_rows_to_show)
-            else HIDE_ROW_CSS_CLASS  # noqa
+            SHOW_ROW_CSS_CLASS if (i <= number_of_rows_to_show) else HIDE_ROW_CSS_CLASS
         )
         rows.append(row)
     return rows
@@ -283,7 +281,7 @@ def _get_qualified_relations_from_storage(data):
     data is expected to be stored as:
     "qualified_relations":
     [{
-        "relation": "https://opendata.swiss/perma/443@statistisches-amt-kanton-zuerich",  # noqa
+        "relation": "https://opendata.swiss/perma/443@statistisches-amt-kanton-zuerich",
         "had_role": "http://www.iana.org/assignments/relation/related"
     }]
     """

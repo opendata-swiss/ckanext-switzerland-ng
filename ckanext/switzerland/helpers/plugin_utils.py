@@ -35,31 +35,31 @@ def _prepare_suggest_context(search_data, pkg_dict):
 
     search_data["suggest_groups"] = [
         clean_suggestion(t["name"]) for t in pkg_dict["groups"]
-    ]  # noqa
+    ]
     search_data["suggest_organization"] = clean_suggestion(
         pkg_dict["organization"]["name"]
-    )  # noqa
+    )
 
     search_data["suggest_tags"] = []
     search_data["suggest_tags"].extend(
         [clean_suggestion(t) for t in search_data.get("keywords_de", [])]
-    )  # noqa
+    )
     search_data["suggest_tags"].extend(
         [clean_suggestion(t) for t in search_data.get("keywords_fr", [])]
-    )  # noqa
+    )
     search_data["suggest_tags"].extend(
         [clean_suggestion(t) for t in search_data.get("keywords_it", [])]
-    )  # noqa
+    )
     search_data["suggest_tags"].extend(
         [clean_suggestion(t) for t in search_data.get("keywords_en", [])]
-    )  # noqa
+    )
 
     search_data["suggest_res_license"] = [
         clean_suggestion(t) for t in search_data["res_license"]
-    ]  # noqa
+    ]
     search_data["suggest_res_format"] = [
         clean_suggestion(t) for t in search_data["res_format"]
-    ]  # noqa
+    ]
 
     return search_data
 
@@ -72,7 +72,7 @@ def _is_dataset_package_type(pkg_dict):
         return False
 
 
-def ogdch_prepare_search_data_for_index(search_data):  # noqa
+def ogdch_prepare_search_data_for_index(search_data):
     """prepares the data for indexing"""
     if not _is_dataset_package_type(search_data):
         return search_data
@@ -81,59 +81,59 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
 
     search_data["res_name"] = [
         ogdch_loc_utils.lang_to_string(r, "title") for r in validated_dict["resources"]
-    ]  # noqa
+    ]
     search_data["res_name_en"] = [
         ogdch_loc_utils.get_localized_value_from_dict(r["title"], "en")
         for r in validated_dict["resources"]
-    ]  # noqa
+    ]
     search_data["res_name_de"] = [
         ogdch_loc_utils.get_localized_value_from_dict(r["title"], "de")
         for r in validated_dict["resources"]
-    ]  # noqa
+    ]
     search_data["res_name_fr"] = [
         ogdch_loc_utils.get_localized_value_from_dict(r["title"], "fr")
         for r in validated_dict["resources"]
-    ]  # noqa
+    ]
     search_data["res_name_it"] = [
         ogdch_loc_utils.get_localized_value_from_dict(r["title"], "it")
         for r in validated_dict["resources"]
-    ]  # noqa
+    ]
     search_data["res_description_en"] = [
         ogdch_loc_utils.get_localized_value_from_dict(r["description"], "en")
         for r in validated_dict["resources"]
-    ]  # noqa
+    ]
     search_data["res_description_de"] = [
         ogdch_loc_utils.get_localized_value_from_dict(r["description"], "de")
         for r in validated_dict["resources"]
-    ]  # noqa
+    ]
     search_data["res_description_fr"] = [
         ogdch_loc_utils.get_localized_value_from_dict(r["description"], "fr")
         for r in validated_dict["resources"]
-    ]  # noqa
+    ]
     search_data["res_description_it"] = [
         ogdch_loc_utils.get_localized_value_from_dict(r["description"], "it")
         for r in validated_dict["resources"]
-    ]  # noqa
+    ]
     search_data["groups_en"] = [
         ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "en")
         for g in validated_dict["groups"]
-    ]  # noqa
+    ]
     search_data["groups_de"] = [
         ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "de")
         for g in validated_dict["groups"]
-    ]  # noqa
+    ]
     search_data["groups_fr"] = [
         ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "fr")
         for g in validated_dict["groups"]
-    ]  # noqa
+    ]
     search_data["groups_it"] = [
         ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "it")
         for g in validated_dict["groups"]
-    ]  # noqa
+    ]
     search_data["res_description"] = [
         ogdch_loc_utils.lang_to_string(r, "description")
         for r in validated_dict["resources"]
-    ]  # noqa
+    ]
     search_data["res_format"] = ogdch_format_utils.prepare_formats_for_index(
         resources=validated_dict["resources"]
     )
@@ -160,14 +160,14 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
     )
     search_data["title_string"] = ogdch_loc_utils.lang_to_string(
         validated_dict, "title"
-    )  # noqa
+    )
     search_data["description"] = ogdch_loc_utils.lang_to_string(
         validated_dict, "description"
-    )  # noqa
+    )
     if "political_level" in validated_dict["organization"]:
         search_data["political_level"] = validated_dict["organization"][
             "political_level"
-        ]  # noqa
+        ]
 
     search_data["identifier"] = validated_dict.get("identifier")
     if "publisher" in validated_dict:
@@ -176,7 +176,7 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
         )
     search_data["see_alsos"] = [
         d["dataset_identifier"] for d in validated_dict.get("see_alsos", [])
-    ]  # noqa
+    ]
 
     # make sure we're not dealing with NoneType
     if search_data["metadata_created"] is None:
@@ -253,7 +253,7 @@ def _prepare_publisher_for_search(publisher, dataset_name):
         return publisher
 
 
-def package_map_ckan_default_fields(pkg_dict):  # noqa
+def package_map_ckan_default_fields(pkg_dict):
     pkg_dict["display_name"] = pkg_dict["title"]
 
     if pkg_dict.get("maintainer") is None:
@@ -264,9 +264,7 @@ def package_map_ckan_default_fields(pkg_dict):  # noqa
 
     if pkg_dict.get("maintainer_email") is None:
         try:
-            pkg_dict["maintainer_email"] = pkg_dict["contact_points"][0][
-                "email"
-            ]  # noqa
+            pkg_dict["maintainer_email"] = pkg_dict["contact_points"][0]["email"]
         except (KeyError, IndexError):
             pass
 

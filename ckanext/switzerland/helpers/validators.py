@@ -203,7 +203,7 @@ def ogdch_language(field, schema):
                         "http://publications.europa.eu/resource/authority/language/"
                     )
                 )
-            ):  # noqa
+            ):
                 selected.add(element)
                 continue
             errors[key].append(_('invalid language "%s"') % element)
@@ -251,7 +251,7 @@ def ogdch_unique_identifier(field, schema):
             raise df.Invalid(
                 _(
                     "Identifier must be of the form <id>@<slug> where slug is the url of the organization."
-                )  # noqa
+                )
             )
         identifier_org_slug = identifier_parts[1]
         try:
@@ -261,13 +261,13 @@ def ogdch_unique_identifier(field, schema):
             if dataset_organization["name"] != identifier_org_slug:
                 raise df.Invalid(
                     _(
-                        'The identifier "{}" does not end with the organisation slug "{}" of the organization it belongs to.'.format(  # noqa
+                        'The identifier "{}" does not end with the organisation slug "{}" of the organization it belongs to.'.format(
                             identifier, dataset_organization["name"]
                         )
-                    )  # noqa
+                    )
                 )
         except tk.ObjectNotFound:
-            raise df.Invalid(_("The selected organization was not found."))  # noqa
+            raise df.Invalid(_("The selected organization was not found."))
 
         try:
             dataset_for_identifier = tk.get_action("ogdch_dataset_by_identifier")(
@@ -440,7 +440,7 @@ def ogdch_validate_formfield_qualified_relations(field, schema):
     The data is extracted from the publisher form fields and transformed
     into a form that is expected for database storage:
     [{
-        "relation": "https://opendata.swiss/perma/443@statistisches-amt-kanton-zuerich",  # noqa
+        "relation": "https://opendata.swiss/perma/443@statistisches-amt-kanton-zuerich",
         "had_role": "http://www.iana.org/assignments/relation/related"
     }]
 
@@ -476,7 +476,7 @@ def ogdch_validate_formfield_qualified_relations(field, schema):
                     qualified_relations_validated.append(
                         {
                             "relation": permalink,
-                            "had_role": "http://www.iana.org/assignments/relation/related",  # noqa
+                            "had_role": "http://www.iana.org/assignments/relation/related",
                         }
                     )
         if qualified_relations_validated:
@@ -507,9 +507,7 @@ def ogdch_validate_temporals(field, schema):
                     for temporal in temporals:
                         if not temporal["start_date"] and temporal["end_date"]:
                             raise df.Invalid(
-                                _(
-                                    "A valid temporal must have both start and end date"
-                                )  # noqa
+                                _("A valid temporal must have both start and end date")
                             )
             else:
                 temporals = data[key]
@@ -687,7 +685,7 @@ def ogdch_validate_duration_type(field, schema):
 
         duration_pattern = re.compile(
             r"^P(\d+Y)?(\d+M)?(\d+D)?(T(\d+H)?(\d+M)?(\d+(\.\d+)?S)?)?$"
-        )  # noqa
+        )
         if duration_pattern.match(value):
             data[key] = value
             return

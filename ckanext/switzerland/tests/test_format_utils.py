@@ -2,7 +2,7 @@
 
 import os
 
-from nose.tools import *  # noqa
+from nose.tools import *
 
 import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
 

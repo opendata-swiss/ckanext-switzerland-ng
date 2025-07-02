@@ -30,7 +30,7 @@ def _children_name_list(children):
 
 class OgdchOrganizationController(organization.OrganizationController):
 
-    def _read(self, id, limit, group_type):  # noqa
+    def _read(self, id, limit, group_type):
         """
         This controller replaces the HierarchyOrganizationController controller
         from ckanext-hierarchy. It makes sure, that datasets of

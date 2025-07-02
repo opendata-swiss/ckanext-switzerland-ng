@@ -11,7 +11,7 @@ from ckan.model import PACKAGE_NAME_MAX_LENGTH, Package, Session
 from ckan.plugins.toolkit import render
 
 import ckanext.switzerland.helpers.backend_helpers as ogdch_backend_helpers
-import ckanext.switzerland.helpers.dataset_form_helpers as ogdch_dataset_form_helpers  # noqa
+import ckanext.switzerland.helpers.dataset_form_helpers as ogdch_dataset_form_helpers
 import ckanext.switzerland.helpers.date_helpers as ogdch_date_helpers
 import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
 import ckanext.switzerland.helpers.frontend_helpers as ogdch_frontend_helpers
@@ -61,22 +61,22 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         return {
             "multiple_text": ogdch_validators.multiple_text,
             "multiple_text_output": ogdch_validators.multiple_text_output,
-            "multilingual_text_output": ogdch_validators.multilingual_text_output,  # noqa
+            "multilingual_text_output": ogdch_validators.multilingual_text_output,
             "harvest_list_of_dicts": ogdch_validators.harvest_list_of_dicts,
             "ogdch_language": ogdch_validators.ogdch_language,
             "ogdch_license_required": ogdch_validators.ogdch_license_required,
-            "ogdch_unique_identifier": ogdch_validators.ogdch_unique_identifier,  # noqa
-            "ogdch_required_in_one_language": ogdch_validators.ogdch_required_in_one_language,  # noqa
-            "ogdch_validate_formfield_publisher": ogdch_validators.ogdch_validate_formfield_publisher,  # noqa
-            "ogdch_validate_formfield_contact_points": ogdch_validators.ogdch_validate_formfield_contact_points,  # noqa
-            "ogdch_validate_formfield_relations": ogdch_validators.ogdch_validate_formfield_relations,  # noqa
-            "ogdch_validate_formfield_qualified_relations": ogdch_validators.ogdch_validate_formfield_qualified_relations,  # noqa
-            "ogdch_validate_temporals": ogdch_validators.ogdch_validate_temporals,  # noqa
+            "ogdch_unique_identifier": ogdch_validators.ogdch_unique_identifier,
+            "ogdch_required_in_one_language": ogdch_validators.ogdch_required_in_one_language,
+            "ogdch_validate_formfield_publisher": ogdch_validators.ogdch_validate_formfield_publisher,
+            "ogdch_validate_formfield_contact_points": ogdch_validators.ogdch_validate_formfield_contact_points,
+            "ogdch_validate_formfield_relations": ogdch_validators.ogdch_validate_formfield_relations,
+            "ogdch_validate_formfield_qualified_relations": ogdch_validators.ogdch_validate_formfield_qualified_relations,
+            "ogdch_validate_temporals": ogdch_validators.ogdch_validate_temporals,
             "ogdch_fluent_tags": ogdch_validators.ogdch_fluent_tags,
-            "ogdch_temp_scheming_choices": ogdch_validators.ogdch_temp_scheming_choices,  # noqa
-            "ogdch_validate_list_of_urls": ogdch_validators.ogdch_validate_list_of_urls,  # noqa
-            "ogdch_validate_list_of_uris": ogdch_validators.ogdch_validate_list_of_uris,  # noqa
-            "ogdch_validate_duration_type": ogdch_validators.ogdch_validate_duration_type,  # noqa
+            "ogdch_temp_scheming_choices": ogdch_validators.ogdch_temp_scheming_choices,
+            "ogdch_validate_list_of_urls": ogdch_validators.ogdch_validate_list_of_urls,
+            "ogdch_validate_list_of_uris": ogdch_validators.ogdch_validate_list_of_uris,
+            "ogdch_validate_duration_type": ogdch_validators.ogdch_validate_duration_type,
         }
 
     # IFacets
@@ -127,9 +127,9 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         """
         return {
             "ogdch_counts": ogdch_logic.ogdch_counts,
-            "ogdch_dataset_terms_of_use": ogdch_logic.ogdch_dataset_terms_of_use,  # noqa
-            "ogdch_dataset_by_identifier": ogdch_logic.ogdch_dataset_by_identifier,  # noqa
-            "ogdch_dataset_by_permalink": ogdch_logic.ogdch_dataset_by_permalink,  # noqa
+            "ogdch_dataset_terms_of_use": ogdch_logic.ogdch_dataset_terms_of_use,
+            "ogdch_dataset_by_identifier": ogdch_logic.ogdch_dataset_by_identifier,
+            "ogdch_dataset_by_permalink": ogdch_logic.ogdch_dataset_by_permalink,
             "ogdch_content_headers": ogdch_logic.ogdch_content_headers,
             "ogdch_autosuggest": ogdch_logic.ogdch_autosuggest,
             "ogdch_package_show": ogdch_logic.ogdch_package_show,
@@ -140,9 +140,9 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             "ogdch_harvest_monitor": ogdch_logic.ogdch_harvest_monitor,
             "ogdch_showcase_submit": ogdch_logic.ogdch_showcase_submit,
             "ogdch_subscribe_manage": ogdch_logic.ogdch_subscribe_manage,
-            "ogdch_subscribe_unsubscribe": ogdch_logic.ogdch_subscribe_unsubscribe,  # noqa
-            "ogdch_subscribe_unsubscribe_all": ogdch_logic.ogdch_subscribe_unsubscribe_all,  # noqa
-            "ogdch_force_reset_passwords": ogdch_logic.ogdch_force_reset_passwords,  # noqa
+            "ogdch_subscribe_unsubscribe": ogdch_logic.ogdch_subscribe_unsubscribe,
+            "ogdch_subscribe_unsubscribe_all": ogdch_logic.ogdch_subscribe_unsubscribe_all,
+            "ogdch_force_reset_passwords": ogdch_logic.ogdch_force_reset_passwords,
         }
 
     # ITemplateHelpers
@@ -154,50 +154,50 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         return {
             "get_group_count": ogdch_frontend_helpers.get_group_count,
             "get_localized_org": ogdch_frontend_helpers.get_localized_org,
-            "localize_json_facet_title": ogdch_frontend_helpers.localize_json_facet_title,  # noqa
-            "localize_harvester_facet_title": ogdch_backend_helpers.localize_harvester_facet_title,  # noqa
-            "localize_showcase_facet_title": ogdch_backend_helpers.localize_showcase_facet_title,  # noqa
+            "localize_json_facet_title": ogdch_frontend_helpers.localize_json_facet_title,
+            "localize_harvester_facet_title": ogdch_backend_helpers.localize_harvester_facet_title,
+            "localize_showcase_facet_title": ogdch_backend_helpers.localize_showcase_facet_title,
             "get_frequency_name": ogdch_frontend_helpers.get_frequency_name,
             "get_political_level": ogdch_frontend_helpers.get_political_level,
-            "get_dataset_terms_of_use": ogdch_term_utils.get_dataset_terms_of_use,  # noqa
-            "get_dataset_by_identifier": ogdch_frontend_helpers.get_dataset_by_identifier,  # noqa
-            "get_dataset_by_permalink": ogdch_frontend_helpers.get_dataset_by_permalink,  # noqa
-            "get_readable_file_size": ogdch_frontend_helpers.get_readable_file_size,  # noqa
+            "get_dataset_terms_of_use": ogdch_term_utils.get_dataset_terms_of_use,
+            "get_dataset_by_identifier": ogdch_frontend_helpers.get_dataset_by_identifier,
+            "get_dataset_by_permalink": ogdch_frontend_helpers.get_dataset_by_permalink,
+            "get_readable_file_size": ogdch_frontend_helpers.get_readable_file_size,
             "get_piwik_config": ogdch_frontend_helpers.get_piwik_config,
-            "ogdch_localised_number": ogdch_frontend_helpers.ogdch_localised_number,  # noqa
+            "ogdch_localised_number": ogdch_frontend_helpers.ogdch_localised_number,
             "ogdch_render_tree": ogdch_frontend_helpers.ogdch_render_tree,
             "ogdch_group_tree": ogdch_frontend_helpers.ogdch_group_tree,
-            "get_localized_newsletter_url": ogdch_frontend_helpers.get_localized_newsletter_url,  # noqa
+            "get_localized_newsletter_url": ogdch_frontend_helpers.get_localized_newsletter_url,
             "get_localized_date": ogdch_date_helpers.get_localized_date,
-            "get_date_picker_format": ogdch_date_helpers.get_date_picker_format,  # noqa
-            "ogdch_template_helper_get_active_class": ogdch_backend_helpers.ogdch_template_helper_get_active_class,  # noqa
-            "ogdch_get_organization_field_list": ogdch_backend_helpers.ogdch_get_organization_field_list,  # noqa
-            "ogdch_get_political_level_field_list": ogdch_backend_helpers.ogdch_get_political_level_field_list,  # noqa
-            "get_localized_value_from_json": ogdch_localize_utils.get_localized_value_from_json,  # noqa
-            "get_localized_value_for_display": ogdch_frontend_helpers.get_localized_value_for_display,  # noqa
-            "ogdch_get_accrual_periodicity_choices": ogdch_dataset_form_helpers.ogdch_get_accrual_periodicity_choices,  # noqa
-            "ogdch_get_license_choices": ogdch_dataset_form_helpers.ogdch_get_license_choices,  # noqa
-            "ogdch_publisher_form_helper": ogdch_dataset_form_helpers.ogdch_publisher_form_helper,  # noqa
-            "ogdch_contact_points_form_helper": ogdch_dataset_form_helpers.ogdch_contact_points_form_helper,  # noqa
-            "ogdch_relations_form_helper": ogdch_dataset_form_helpers.ogdch_relations_form_helper,  # noqa
-            "ogdch_qualified_relations_form_helper": ogdch_dataset_form_helpers.ogdch_qualified_relations_form_helper,  # noqa
-            "ogdch_date_form_helper": ogdch_dataset_form_helpers.ogdch_date_form_helper,  # noqa
-            "ogdch_temporals_form_helper": ogdch_dataset_form_helpers.ogdch_temporals_form_helper,  # noqa
-            "ogdch_dataset_title_form_helper": ogdch_dataset_form_helpers.ogdch_dataset_title_form_helper,  # noqa
-            "ogdch_get_top_level_organisations": ogdch_backend_helpers.ogdch_get_top_level_organisations,  # noqa
+            "get_date_picker_format": ogdch_date_helpers.get_date_picker_format,
+            "ogdch_template_helper_get_active_class": ogdch_backend_helpers.ogdch_template_helper_get_active_class,
+            "ogdch_get_organization_field_list": ogdch_backend_helpers.ogdch_get_organization_field_list,
+            "ogdch_get_political_level_field_list": ogdch_backend_helpers.ogdch_get_political_level_field_list,
+            "get_localized_value_from_json": ogdch_localize_utils.get_localized_value_from_json,
+            "get_localized_value_for_display": ogdch_frontend_helpers.get_localized_value_for_display,
+            "ogdch_get_accrual_periodicity_choices": ogdch_dataset_form_helpers.ogdch_get_accrual_periodicity_choices,
+            "ogdch_get_license_choices": ogdch_dataset_form_helpers.ogdch_get_license_choices,
+            "ogdch_publisher_form_helper": ogdch_dataset_form_helpers.ogdch_publisher_form_helper,
+            "ogdch_contact_points_form_helper": ogdch_dataset_form_helpers.ogdch_contact_points_form_helper,
+            "ogdch_relations_form_helper": ogdch_dataset_form_helpers.ogdch_relations_form_helper,
+            "ogdch_qualified_relations_form_helper": ogdch_dataset_form_helpers.ogdch_qualified_relations_form_helper,
+            "ogdch_date_form_helper": ogdch_dataset_form_helpers.ogdch_date_form_helper,
+            "ogdch_temporals_form_helper": ogdch_dataset_form_helpers.ogdch_temporals_form_helper,
+            "ogdch_dataset_title_form_helper": ogdch_dataset_form_helpers.ogdch_dataset_title_form_helper,
+            "ogdch_get_top_level_organisations": ogdch_backend_helpers.ogdch_get_top_level_organisations,
             "ogdch_user_datasets": ogdch_backend_helpers.ogdch_user_datasets,
             # monkey patch template helpers to return translated names/titles
-            "resource_display_name": ogdch_backend_helpers.ogdch_resource_display_name,  # noqa
+            "resource_display_name": ogdch_backend_helpers.ogdch_resource_display_name,
             "dataset_display_name": ogdch_backend_helpers.dataset_display_name,
             "group_link": ogdch_backend_helpers.group_link,
             "resource_link": ogdch_backend_helpers.resource_link,
             "organization_link": ogdch_backend_helpers.organization_link,
-            "ogdch_localize_activity_item": ogdch_backend_helpers.ogdch_localize_activity_item,  # noqa
-            "ogdch_admin_capacity": ogdch_backend_helpers.ogdch_admin_capacity,  # noqa
+            "ogdch_localize_activity_item": ogdch_backend_helpers.ogdch_localize_activity_item,
+            "ogdch_admin_capacity": ogdch_backend_helpers.ogdch_admin_capacity,
             "render_publisher": ogdch_frontend_helpers.render_publisher,
-            "ogdch_get_switch_connectome_url": ogdch_backend_helpers.ogdch_get_switch_connectome_url,  # noqa
+            "ogdch_get_switch_connectome_url": ogdch_backend_helpers.ogdch_get_switch_connectome_url,
             "ogdch_get_env": ogdch_backend_helpers.ogdch_get_env,
-            "ogdch_multiple_text_form_helper": ogdch_dataset_form_helpers.ogdch_multiple_text_form_helper,  # noqa
+            "ogdch_multiple_text_form_helper": ogdch_dataset_form_helpers.ogdch_multiple_text_form_helper,
         }
 
     # IRouter
@@ -209,7 +209,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         map.connect(
             "perma_redirect",
             "/perma/{id}",
-            controller="ckanext.switzerland.controllers.perma:OgdchPermaController",  # noqa
+            controller="ckanext.switzerland.controllers.perma:OgdchPermaController",
             action="read",
         )
 
@@ -218,17 +218,15 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         map.connect(
             "group_read",
             "/group/{id}",
-            controller="ckanext.switzerland.controllers.group:OgdchGroupController",  # noqa
+            controller="ckanext.switzerland.controllers.group:OgdchGroupController",
             action="read",
         )
-        map.connect(
-            "group_edit", "/group/edit/{id}", controller="group", action="edit"
-        )  # noqa
+        map.connect("group_edit", "/group/edit/{id}", controller="group", action="edit")
 
         map.connect(
             "group_index",
             "/group",
-            controller="ckanext.switzerland.controllers.group:OgdchGroupController",  # noqa
+            controller="ckanext.switzerland.controllers.group:OgdchGroupController",
             action="index",
         )
 
@@ -236,13 +234,13 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         map.connect(
             "organization_index",
             "/organization",
-            controller="ckanext.switzerland.controllers.organization:OgdchOrganizationController",  # noqa
+            controller="ckanext.switzerland.controllers.organization:OgdchOrganizationController",
             action="index",
         )
         map.connect(
             "organization_list",
             "/user/organizations/{id}",
-            controller="ckanext.switzerland.controllers.organization:OgdchOrganizationController",  # noqa
+            controller="ckanext.switzerland.controllers.organization:OgdchOrganizationController",
             action="list_for_user",
         )
         map.connect(
@@ -250,11 +248,11 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             "/organization/new",
             controller="organization",
             action="new",
-        )  # noqa
+        )
         map.connect(
             "organization_read",
             "/organization/{id}",
-            controller="ckanext.switzerland.controllers.organization:OgdchOrganizationController",  # noqa
+            controller="ckanext.switzerland.controllers.organization:OgdchOrganizationController",
             action="read",
         )
         map.connect(
@@ -266,7 +264,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         map.connect(
             "organization_xml_upload",
             "/organization/xml_upload/{name}",
-            controller="ckanext.switzerland.controllers.organization:OgdchOrganizationController",  # noqa
+            controller="ckanext.switzerland.controllers.organization:OgdchOrganizationController",
             action="xml_upload",
         )
 
@@ -401,10 +399,8 @@ class OgdchPackagePlugin(plugins.SingletonPlugin):
             for grp in pkg_dict.get("groups")
         ]
         if pkg_dict.get("organization"):
-            pkg_dict["organization"] = (
-                ogdch_localize_utils.localize_ckan_sub_dict(  # noqa
-                    ckan_dict=pkg_dict["organization"], lang_code=request_lang
-                )
+            pkg_dict["organization"] = ogdch_localize_utils.localize_ckan_sub_dict(
+                ckan_dict=pkg_dict["organization"], lang_code=request_lang
             )
         return pkg_dict
 

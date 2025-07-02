@@ -23,7 +23,7 @@ from ckan.plugins.toolkit import _, c, g
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 from ckanext.harvest.helpers import harvester_types
 from ckanext.hierarchy.helpers import group_tree
-from ckanext.switzerland.helpers.frontend_helpers import (  # noqa
+from ckanext.switzerland.helpers.frontend_helpers import (
     get_localized_value_for_display,
 )
 
@@ -36,12 +36,12 @@ REGEX_LANGUAGE_DICT = r"\{[\w\\\d\-\(\)\'\"\:\,\s]*\}"
 CAPACITY_ADMIN = "admin"
 
 showcase_types_mapping = {
-    "application": '{"fr": "Application", "de": "Applikation", "en": "Application", "it": "Applicazione"}',  # noqa
-    "data_visualization": '{"fr": "Visualisation de donées", "de": "Daten-Visualisierung", "en": "Data visualization", "it": "Visualizzazione di dati"}',  # noqa
-    "event": '{"fr": "Evènement", "de": "Veranstaltung", "en": "Event", "it": "Manifestazione"}',  # noqa
-    "blog_and_media_articles": '{"fr": "Article blogs et médias", "de": "Blog und Medienartikel", "en": "Blog and media article", "it": "Blog/articolo"}',  # noqa
-    "paper": '{"fr": "Article scientifique", "de": "Wissenschaftliche Arbeit", "en": "Paper", "it": "Articolo scientifico"}',  # noqa
-    "best_practice": '{"fr": "Best practice", "de": "Best practice", "en": "Best practice", "it": "Best practice"}',  # noqa
+    "application": '{"fr": "Application", "de": "Applikation", "en": "Application", "it": "Applicazione"}',
+    "data_visualization": '{"fr": "Visualisation de donées", "de": "Daten-Visualisierung", "en": "Data visualization", "it": "Visualizzazione di dati"}',
+    "event": '{"fr": "Evènement", "de": "Veranstaltung", "en": "Event", "it": "Manifestazione"}',
+    "blog_and_media_articles": '{"fr": "Article blogs et médias", "de": "Blog und Medienartikel", "en": "Blog and media article", "it": "Blog/articolo"}',
+    "paper": '{"fr": "Article scientifique", "de": "Wissenschaftliche Arbeit", "en": "Paper", "it": "Articolo scientifico"}',
+    "best_practice": '{"fr": "Best practice", "de": "Best practice", "en": "Best practice", "it": "Best practice"}',
 }
 
 
@@ -158,7 +158,7 @@ def get_localized_group_list(lang_code):
     group_list.sort(
         key=lambda group: ogdch_localize_utils.strip_accents(group["title"].lower()),
         reverse=False,
-    )  # noqa
+    )
     return group_list
 
 
@@ -170,7 +170,7 @@ def ogdch_get_organization_field_list(field):
     return [
         {
             "value": org["name"],
-            "label": ogdch_localize_utils.get_localized_value_from_json(  # noqa
+            "label": ogdch_localize_utils.get_localized_value_from_json(
                 org["title"], i18n.get_lang()
             ),
         }
