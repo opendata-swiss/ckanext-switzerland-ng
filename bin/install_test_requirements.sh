@@ -40,6 +40,10 @@ sed -i -e 's/sqlalchemy.url = .*/sqlalchemy.url = postgresql:\/\/ckan_default:pa
 cat "$WORKDIR"/test.ini
 cat /srv/app/src/ckan/test-core.ini
 
+echo "Get current config options"
+ckan config search --with-current ckan.plugins
+ckan config search --with-current SECRET_KEY
+
 echo "Init db"
 ckan db init -c "$WORKDIR"/test.ini
 
