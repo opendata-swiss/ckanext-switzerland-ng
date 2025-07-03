@@ -71,7 +71,7 @@ jobs:
           -v "/home/runner/work/_actions":"/__w/_actions" -v "/opt/hostedtoolcache":"/__t" \
           -v "/home/runner/work/_temp/_github_home":"/github/home" \
           -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" \
-          --entrypoint "tail" openknowledge/ckan-dev:${{ matrix.ckan-version }} "-f" "/dev/null"
+          --entrypoint "tail" ckan/ckan-dev:${{ matrix.ckan-version }} "-f" "/dev/null"
         docker start test_ckan
     - name: Install requirements and set up database
       run: |
