@@ -19,7 +19,7 @@ jobs:
     needs: lint
     strategy:
       matrix:
-        ckan-version: [2.11]
+        ckan-version: ["2.11"]
       fail-fast: false
 
     name: CKAN ${{ matrix.ckan-version }}
@@ -61,7 +61,7 @@ jobs:
           -v "${{ github.workspace }}/solr/lang/stopwords_en.txt":"$SOLR_CONFIG_CKAN_DIR/lang/stopwords_en.txt" \
           -v "${{ github.workspace }}/solr/lang/stopwords_fr.txt":"$SOLR_CONFIG_CKAN_DIR/lang/stopwords_fr.txt" \
           -v "${{ github.workspace }}/solr/lang/stopwords_it.txt":"$SOLR_CONFIG_CKAN_DIR/lang/stopwords_it.txt" \
-          ckan/ckan-solr:${{ matrix.ckan-version }}
+          ckan/ckan-solr:${{ matrix.ckan-version }}-solr9
         docker start test_solr
     - name: Create ckan container
       run: |
