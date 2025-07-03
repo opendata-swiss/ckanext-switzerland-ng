@@ -23,7 +23,7 @@ setup(
     url="https://github.com/opendata-swiss/ckanext-switzerland-ng",
     # Author details
     author="""Liip AG""",
-    author_email="""jazz@liip.ch""",
+    author_email="""ogdch@liip.ch""",
     # Choose your license
     license="AGPL",
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
