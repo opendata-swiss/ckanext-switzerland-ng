@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 from nose.tools import assert_equals
+
 from ckanext.switzerland.helpers.date_helpers import transform_date_for_solr
 
 

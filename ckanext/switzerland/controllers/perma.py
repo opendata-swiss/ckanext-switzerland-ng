@@ -1,8 +1,8 @@
 import logging
-from ckan.plugins.toolkit import redirect_to, abort
-from ckan.logic import get_action, NotFound
-from ckan.plugins.toolkit import _
+
 from ckan.lib.base import BaseController
+from ckan.logic import NotFound, get_action
+from ckan.plugins.toolkit import _, abort, redirect_to
 
 log = logging.getLogger(__name__)
 
@@ -18,11 +18,10 @@ class OgdchPermaController(BaseController):
         the corresponding /dataset/{slug} route
         """
         try:
-            dataset = get_action('ogdch_dataset_by_identifier')(
-                {'for_view': True},
-                {'identifier': id}
+            dataset = get_action("ogdch_dataset_by_identifier")(
+                {"for_view": True}, {"identifier": id}
             )
             # redirect to dataset detail page
-            redirect_to('dataset_read', id=dataset['name'])
+            redirect_to("dataset_read", id=dataset["name"])
         except NotFound:
-            abort(404, _('Dataset not found'))
+            abort(404, _("Dataset not found"))

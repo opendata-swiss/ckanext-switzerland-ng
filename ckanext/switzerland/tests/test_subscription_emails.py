@@ -1,17 +1,15 @@
 # encoding: utf-8
 import datetime
 
-from nose.tools import assert_equal, assert_in, assert_not_in
-from mock import patch
-
 import ckan.tests.factories as ckan_factories
 from ckan import plugins as p
+from mock import patch
+from nose.tools import assert_equal, assert_in, assert_not_in
+
 from ckanext.subscribe.email_verification import (
     get_verification_email_vars,
 )
-from ckanext.subscribe.notification_email import (
-    get_notification_email_vars
-)
+from ckanext.subscribe.notification_email import get_notification_email_vars
 from ckanext.subscribe.tests import factories
 from ckanext.switzerland.plugins import OgdchSubscribePlugin
 from ckanext.switzerland.tests import OgdchFunctionalTestBase
@@ -22,263 +20,291 @@ config = p.toolkit.config
 class TestSubscriptionEmails(OgdchFunctionalTestBase):
     def test_get_email_vars_with_subscription(self):
         subscription = factories.Subscription(
-            dataset_id=self.dataset['id'], return_object=True)
+            dataset_id=self.dataset["id"], return_object=True
+        )
 
         subscribe = OgdchSubscribePlugin()
         email_vars = subscribe.get_email_vars(
-            code='testcode',
-            subscription=subscription,
-            email=None
+            code="testcode", subscription=subscription, email=None
         )
 
-        assert_equal(email_vars['site_title'], config['ckan.site_title'])
-        assert_equal(email_vars['object_title_de'], 'DE Test')
-        assert_equal(email_vars['object_title_en'], 'EN Test')
-        assert_equal(email_vars['object_title_fr'], 'FR Test')
-        assert_equal(email_vars['object_title_it'], 'IT Test')
-        assert_equal(email_vars['object_type'], 'dataset')
-        assert_equal(email_vars['email'], 'bob@example.com')
+        assert_equal(email_vars["site_title"], config["ckan.site_title"])
+        assert_equal(email_vars["object_title_de"], "DE Test")
+        assert_equal(email_vars["object_title_en"], "EN Test")
+        assert_equal(email_vars["object_title_fr"], "FR Test")
+        assert_equal(email_vars["object_title_it"], "IT Test")
+        assert_equal(email_vars["object_type"], "dataset")
+        assert_equal(email_vars["email"], "bob@example.com")
 
-        assert_equal(email_vars['manage_link'],
-                     'http://frontend-test.ckan.net/subscribe/manage?code=testcode')
-        assert_equal(email_vars['object_link'],
-                     'http://frontend-test.ckan.net/dataset/{}'.format(self.dataset['id']))
-        assert_equal(email_vars['unsubscribe_all_link'],
-                     'http://frontend-test.ckan.net/subscribe/unsubscribe-all?code=testcode')
-        assert_equal(email_vars['unsubscribe_link'],
-                     'http://frontend-test.ckan.net/subscribe/unsubscribe?code=testcode&dataset={}'
-                     .format(self.dataset['id']))
+        assert_equal(
+            email_vars["manage_link"],
+            "http://frontend-test.ckan.net/subscribe/manage?code=testcode",
+        )
+        assert_equal(
+            email_vars["object_link"],
+            f"http://frontend-test.ckan.net/dataset/{self.dataset['id']}",
+        )
+        assert_equal(
+            email_vars["unsubscribe_all_link"],
+            "http://frontend-test.ckan.net/subscribe/unsubscribe-all?code=testcode",
+        )
+        assert_equal(
+            email_vars["unsubscribe_link"],
+            f"http://frontend-test.ckan.net/subscribe/unsubscribe?code=testcode&dataset={self.dataset['id']}",
+        )
 
     def test_get_email_vars_with_email(self):
         subscribe = OgdchSubscribePlugin()
         email_vars = subscribe.get_email_vars(
-            code='testcode',
-            subscription=None,
-            email='bob@example.com'
+            code="testcode", subscription=None, email="bob@example.com"
         )
 
-        assert_equal(email_vars['site_title'], config['ckan.site_title'])
-        assert_equal(email_vars['site_url'], 'http://test.ckan.net')
+        assert_equal(email_vars["site_title"], config["ckan.site_title"])
+        assert_equal(email_vars["site_url"], "http://test.ckan.net")
 
-        assert_equal(email_vars['email'], 'bob@example.com')
-        assert_equal(email_vars['manage_link'],
-                     'http://frontend-test.ckan.net/subscribe/manage?code=testcode')
-        assert_equal(email_vars['unsubscribe_all_link'],
-                     'http://frontend-test.ckan.net/subscribe/unsubscribe-all?code=testcode')
+        assert_equal(email_vars["email"], "bob@example.com")
+        assert_equal(
+            email_vars["manage_link"],
+            "http://frontend-test.ckan.net/subscribe/manage?code=testcode",
+        )
+        assert_equal(
+            email_vars["unsubscribe_all_link"],
+            "http://frontend-test.ckan.net/subscribe/unsubscribe-all?code=testcode",
+        )
 
-        assert_not_in('object_type', email_vars)
-        assert_not_in('object_title', email_vars)
-        assert_not_in('object_name', email_vars)
-        assert_not_in('object_link', email_vars)
-        assert_not_in('unsubscribe_link', email_vars)
+        assert_not_in("object_type", email_vars)
+        assert_not_in("object_title", email_vars)
+        assert_not_in("object_name", email_vars)
+        assert_not_in("object_link", email_vars)
+        assert_not_in("unsubscribe_link", email_vars)
 
     def test_get_verification_email_contents(self):
         subscription = factories.Subscription(
-            dataset_id=self.dataset['id'], return_object=True)
-        subscription.verification_code = 'testcode'
+            dataset_id=self.dataset["id"], return_object=True
+        )
+        subscription.verification_code = "testcode"
 
         subscribe = OgdchSubscribePlugin()
         email_vars = get_verification_email_vars(subscription)
-        subject, body_plain_text, body_html = \
-            subscribe.get_verification_email_contents(email_vars)
+        subject, body_plain_text, body_html = subscribe.get_verification_email_contents(
+            email_vars
+        )
 
-        assert_equal(subject, u'Best\xe4tigungsmail \u2013 Confirmation - E-mail di conferma - Confirmation')
-        assert_in(u'''Vielen Dank, dass Sie sich für den Datensatz''', body_plain_text.strip())
-        assert_in(u'''Vielen Dank, dass Sie sich f\xfcr den Datensatz''',
-                  body_html.strip())
-        assert_not_in(u'http://test.ckan.net', body_html)
-        assert_not_in(u'http://test.ckan.net', body_plain_text)
+        assert_equal(
+            subject,
+            "Best\xe4tigungsmail \\u2013 Confirmation - E-mail di conferma - Confirmation",
+        )
+        assert_in(
+            """Vielen Dank, dass Sie sich für den Datensatz""", body_plain_text.strip()
+        )
+        assert_in(
+            """Vielen Dank, dass Sie sich f\xfcr den Datensatz""", body_html.strip()
+        )
+        assert_not_in("http://test.ckan.net", body_html)
+        assert_not_in("http://test.ckan.net", body_plain_text)
 
-        self._test_html_footer(body_html, subscription=False, code='')
-        self._test_plain_text_footer(body_plain_text, subscription=False, code='')
+        self._test_html_footer(body_html, subscription=False, code="")
+        self._test_plain_text_footer(body_plain_text, subscription=False, code="")
         self._test_all_four_languages(body_html, object_title_included=True)
         self._test_all_four_languages(body_plain_text, object_title_included=True)
 
     def test_get_manage_email_contents(self):
         subscription = factories.Subscription(
-            dataset_id=self.dataset['id'], return_object=True)
-        subscription.verification_code = 'testcode'
+            dataset_id=self.dataset["id"], return_object=True
+        )
+        subscription.verification_code = "testcode"
 
         subscribe = OgdchSubscribePlugin()
         email_vars = subscribe.get_email_vars(
-            code=subscription.verification_code,
-            subscription=subscription
+            code=subscription.verification_code, subscription=subscription
         )
-        subject, body_plain_text, body_html = \
-            subscribe.get_manage_email_contents(email_vars)
+        subject, body_plain_text, body_html = subscribe.get_manage_email_contents(
+            email_vars
+        )
 
-        assert_equal(subject, u'Manage opendata.swiss subscription')
-        assert_in(u'''To manage subscriptions for''', body_plain_text.strip())
-        assert_in(u'''<p>
-    To manage subscriptions for''', body_html.strip())
-        assert_not_in(u'http://test.ckan.net', body_html)
-        assert_not_in(u'http://test.ckan.net', body_plain_text)
+        assert_equal(subject, "Manage opendata.swiss subscription")
+        assert_in("""To manage subscriptions for""", body_plain_text.strip())
+        assert_in(
+            """<p>
+    To manage subscriptions for""",
+            body_html.strip(),
+        )
+        assert_not_in("http://test.ckan.net", body_html)
+        assert_not_in("http://test.ckan.net", body_plain_text)
 
         self._test_html_footer(
-            body_html, subscription=False, code=subscription.verification_code)
+            body_html, subscription=False, code=subscription.verification_code
+        )
         self._test_plain_text_footer(
-            body_plain_text, subscription=False,
-            code=subscription.verification_code)
+            body_plain_text, subscription=False, code=subscription.verification_code
+        )
         self._test_all_four_languages(body_html, object_title_included=False)
         self._test_all_four_languages(body_plain_text, object_title_included=False)
 
     def test_get_subscription_confirmation_email_contents(self):
         subscription = factories.Subscription(
-            dataset_id=self.dataset['id'], return_object=True)
-        code = 'testcode'
+            dataset_id=self.dataset["id"], return_object=True
+        )
+        code = "testcode"
 
         subscribe = OgdchSubscribePlugin()
-        email_vars = subscribe.get_email_vars(
-            code=code,
-            subscription=subscription
-        )
-        subject, body_plain_text, body_html = \
+        email_vars = subscribe.get_email_vars(code=code, subscription=subscription)
+        subject, body_plain_text, body_html = (
             subscribe.get_subscription_confirmation_email_contents(email_vars)
+        )
 
         assert_equal(
             subject,
-            u'Best\xe4tigungsmail \u2013 Confirmation - E-mail di conferma - Confirmation'
+            "Best\xe4tigungsmail \\u2013 Confirmation - E-mail di conferma - Confirmation",
         )
-        assert_in(u'''Sie haben Ihre E-Mail-Adresse erfolgreich bestätigt.''',
-                  body_plain_text.strip())
-        assert_in(u'''<p>
-    Sie haben Ihre E-Mail-Adresse erfolgreich bestätigt. ''',
-                  body_html.strip())
-        assert_not_in(u'http://test.ckan.net', body_html)
-        assert_not_in(u'http://test.ckan.net', body_plain_text)
+        assert_in(
+            """Sie haben Ihre E-Mail-Adresse erfolgreich bestätigt.""",
+            body_plain_text.strip(),
+        )
+        assert_in(
+            """<p>
+    Sie haben Ihre E-Mail-Adresse erfolgreich bestätigt. """,
+            body_html.strip(),
+        )
+        assert_not_in("http://test.ckan.net", body_html)
+        assert_not_in("http://test.ckan.net", body_plain_text)
 
-        self._test_html_footer(
-            body_html, subscription=True, code=code)
-        self._test_plain_text_footer(
-            body_plain_text, subscription=True, code=code)
+        self._test_html_footer(body_html, subscription=True, code=code)
+        self._test_plain_text_footer(body_plain_text, subscription=True, code=code)
         self._test_all_four_languages(body_html, object_title_included=False)
         self._test_all_four_languages(body_plain_text, object_title_included=False)
 
-    @patch('ckanext.switzerland.helpers.backend_helpers.get_contact_point_for_dataset')
+    @patch("ckanext.switzerland.helpers.backend_helpers.get_contact_point_for_dataset")
     def test_get_notification_email_contents(self, mock_get_contact_point):
         mock_get_contact_point.return_value = [
-            {u'name': u'Open-Data-Plattform', u'email': u'contact@odp.ch'}
+            {"name": "Open-Data-Plattform", "email": "contact@odp.ch"}
         ]
-        code = 'testcode'
-        email = 'bob@example.com'
+        code = "testcode"
+        email = "bob@example.com"
         subscription = factories.Subscription(
-            dataset_id=self.dataset['id'], return_object=False)
+            dataset_id=self.dataset["id"], return_object=False
+        )
         notifications = [
             {
-                'subscription': subscription,
-                'activities': [
+                "subscription": subscription,
+                "activities": [
                     {
-                        'user_id': 'admin',
-                        'object_id': 'test-object-id',
-                        'revision_id': 'test-revision-id-1',
-                        'activity_type': 'changed package',
-                        'timestamp': '2022-10-12T12:00:00',
-                        'data': {
-                            'package': {
-                                'name': 'test-dataset',
-                                'title': '{"fr": "FR Test", "de": "DE Test", "en": "EN Test", "it": "IT Test"}',
+                        "user_id": "admin",
+                        "object_id": "test-object-id",
+                        "revision_id": "test-revision-id-1",
+                        "activity_type": "changed package",
+                        "timestamp": "2022-10-12T12:00:00",
+                        "data": {
+                            "package": {
+                                "name": "test-dataset",
+                                "title": '{"fr": "FR Test", "de": "DE Test", "en": "EN Test", "it": "IT Test"}',
                             }
-                        }
+                        },
                     }
                 ],
             }
         ]
 
         email_vars = get_notification_email_vars(
-            code=code,
-            email=email,
-            notifications=notifications
+            code=code, email=email, notifications=notifications
         )
         subscribe = OgdchSubscribePlugin()
-        subject, body_plain_text, body_html = \
-            subscribe.get_notification_email_contents(email_vars)
+        subject, body_plain_text, body_html = subscribe.get_notification_email_contents(
+            email_vars
+        )
 
         assert_equal(
-            subject,
-            u'Update notification \u2013 updated dataset opendata.swiss'
+            subject, "Update notification \\u2013 updated dataset opendata.swiss"
         )
-        assert_in(u'Es gibt eine \xc4nderung im Datensatz DE Test. Um die \xc4nderung zu sehen, klicken Sie bitte',
-                  body_plain_text.strip())
-        assert_in(u'Es gibt eine \xc4nderung im Datensatz DE Test. Um die \xc4nderung zu sehen, klicken Sie bitte',
-                  body_html.strip())
-        assert_in(u'http://frontend-test.ckan.net/dataset/{dataset_id}'.format(dataset_id=self.dataset['id']),
-                  body_plain_text.strip())
-        assert_in(u'<a href="http://frontend-test.ckan.net/dataset/{dataset_id}">http://frontend-test.ckan.net/dataset/{dataset_id}</a>'
-                  .format(dataset_id=self.dataset['id']),
-                  body_html.strip())
+        assert_in(
+            "Es gibt eine \xc4nderung im Datensatz DE Test. Um die \xc4nderung zu sehen, klicken Sie bitte",
+            body_plain_text.strip(),
+        )
+        assert_in(
+            "Es gibt eine \xc4nderung im Datensatz DE Test. Um die \xc4nderung zu sehen, klicken Sie bitte",
+            body_html.strip(),
+        )
+        assert_in(
+            f"http://frontend-test.ckan.net/dataset/{self.dataset['id']}",
+            body_plain_text.strip(),
+        )
+        assert_in(
+            '<a href="http://frontend-test.ckan.net/dataset/{dataset_id}">http://frontend-test.ckan.net/dataset/{dataset_id}</a>'.format(
+                dataset_id=self.dataset["id"]
+            ),
+            body_html.strip(),
+        )
 
-        assert_not_in(u'http://test.ckan.net', body_html)
-        assert_not_in(u'http://test.ckan.net', body_plain_text)
+        assert_not_in("http://test.ckan.net", body_html)
+        assert_not_in("http://test.ckan.net", body_plain_text)
 
-        self._test_html_footer(
-            body_html, subscription=False, code=code)
-        self._test_plain_text_footer(
-            body_plain_text, subscription=False, code=code)
+        self._test_html_footer(body_html, subscription=False, code=code)
+        self._test_plain_text_footer(body_plain_text, subscription=False, code=code)
         self._test_all_four_languages(body_html, object_title_included=True)
         self._test_all_four_languages(body_plain_text, object_title_included=True)
 
-
-    @patch('ckanext.switzerland.helpers.backend_helpers.get_contact_point_for_dataset')
+    @patch("ckanext.switzerland.helpers.backend_helpers.get_contact_point_for_dataset")
     def test_get_deletion_email_contents(self, mock_get_contact_point):
-        contact_points = [
-            {u'name': u'Open-Data-Plattform', u'email': u'contact@odp.ch'}
-        ]
+        contact_points = [{"name": "Open-Data-Plattform", "email": "contact@odp.ch"}]
         mock_get_contact_point.return_value = contact_points
-        code = 'testcode'
-        email = 'bob@example.com'
+        code = "testcode"
+        email = "bob@example.com"
         subscription = factories.Subscription(
-            dataset_id=self.dataset['id'], return_object=False)
+            dataset_id=self.dataset["id"], return_object=False
+        )
         notifications = [
             {
-                'subscription': subscription,
-                'activities': [
+                "subscription": subscription,
+                "activities": [
                     {
-                        'user_id': 'admin',
-                        'object_id': 'test-object-id',
-                        'revision_id': 'test-revision-id-1',
-                        'activity_type': 'deleted package',
-                        'timestamp': '2022-10-12T12:00:00',
-                        'data': {
-                            'package': {
-                                'name': 'test-dataset',
-                                'title': '{"fr": "FR Test", "de": "DE Test", "en": "EN Test", "it": "IT Test"}',
+                        "user_id": "admin",
+                        "object_id": "test-object-id",
+                        "revision_id": "test-revision-id-1",
+                        "activity_type": "deleted package",
+                        "timestamp": "2022-10-12T12:00:00",
+                        "data": {
+                            "package": {
+                                "name": "test-dataset",
+                                "title": '{"fr": "FR Test", "de": "DE Test", "en": "EN Test", "it": "IT Test"}',
                             }
-                        }
+                        },
                     }
                 ],
             }
         ]
 
         email_vars = get_notification_email_vars(
-            code=code,
-            email=email,
-            notifications=notifications
+            code=code, email=email, notifications=notifications
         )
         subscribe = OgdchSubscribePlugin()
-        subject, body_plain_text, body_html = \
-            subscribe.get_notification_email_contents(email_vars, type="deletion")
+        subject, body_plain_text, body_html = subscribe.get_notification_email_contents(
+            email_vars, type="deletion"
+        )
 
         assert_equal(
-            subject,
-            u'Delete notification \u2013 deleted dataset opendata.swiss'
+            subject, "Delete notification \\u2013 deleted dataset opendata.swiss"
         )
-        assert_in(u'Hello,\nWe inform you that the dataset "EN Test" you subscribed to has been removed from our portal by the data provider.',
-                  body_plain_text.strip())
-        assert_in(u'<p>Hello,</p>\n\n<p>We inform you that the dataset "<b>EN Test</b>" you subscribed to has been removed from our portal',
-                  body_html.strip())
-        assert_in(contact_points[0].get('name'),
-                  body_plain_text.strip())
-        assert_in(contact_points[0].get('email'),
-                  body_plain_text.strip())
-        assert_in(u'<a href="mailto:{contact_email}">{contact_name}</a>'
-                  .format(contact_email=contact_points[0].get('email'), contact_name=contact_points[0].get('name')),
-                  body_html.strip())
+        assert_in(
+            'Hello,\nWe inform you that the dataset "EN Test" you subscribed to has been removed from our portal by the data provider.',
+            body_plain_text.strip(),
+        )
+        assert_in(
+            '<p>Hello,</p>\n\n<p>We inform you that the dataset "<b>EN Test</b>" you subscribed to has been removed from our portal',
+            body_html.strip(),
+        )
+        assert_in(contact_points[0].get("name"), body_plain_text.strip())
+        assert_in(contact_points[0].get("email"), body_plain_text.strip())
+        assert_in(
+            f"<a href=\"mailto:{contact_points[0].get('email')}\">{contact_points[0].get('name')}</a>",
+            body_html.strip(),
+        )
 
-        assert_not_in(u'http://test.ckan.net', body_html)
-        assert_not_in(u'http://test.ckan.net', body_plain_text)
+        assert_not_in("http://test.ckan.net", body_html)
+        assert_not_in("http://test.ckan.net", body_plain_text)
 
-    def _test_html_footer(self, body_html, subscription=False, code=''):
-        assert_in(u'''<p>
+    def _test_html_footer(self, body_html, subscription=False, code=""):
+        assert_in(
+            """<p>
     <a href="https://opendata.swiss">
         <img src="https://opendata.swiss/images/logo_horizontal.png" alt="opendata.swiss"
              width="420" style="max-width: 100%; height: auto;"/>
@@ -289,71 +315,72 @@ class TestSubscriptionEmails(OgdchFunctionalTestBase):
         <img src="https://opendata.swiss/images/x.svg" alt="X"
              style="color: #fff; background-color: #009688; border: 0;"/>
     </a>
-</p>''', body_html)
+</p>""",
+            body_html,
+        )
 
-        footer_link_text = u''
+        footer_link_text = ""
         if subscription:
-            footer_link_text = u'<a href="http://frontend-test.ckan.net/subscribe/unsubscribe?code=testcode&amp;dataset={dataset_id}">Abonnement löschen</a> | ' \
-                .format(dataset_id=self.dataset['id'])
+            footer_link_text = f"<a href=\"http://frontend-test.ckan.net/subscribe/unsubscribe?code=testcode&amp;dataset={self.dataset['id']}\">Abonnement löschen</a> | "
         if code:
-            footer_link_text += u'<a href="http://frontend-test.ckan.net/subscribe/manage?code={}">Mein Abonnement verwalten</a>'\
-                .format(code)
+            footer_link_text += f'<a href="http://frontend-test.ckan.net/subscribe/manage?code={code}">Mein Abonnement verwalten</a>'
 
         assert_in(footer_link_text, body_html)
 
-    def _test_plain_text_footer(self, body_plain_text, subscription=False, code=''):
-        assert_in(u'''Geschäftsstelle Open Government Data
+    def _test_plain_text_footer(self, body_plain_text, subscription=False, code=""):
+        assert_in(
+            """Geschäftsstelle Open Government Data
 Bundesamt für Statistik BFS
 Espace de l'Europe 10
 CH-2010 Neuchâtel
 www.bfs.admin.ch/ogd
-''', body_plain_text)
+""",
+            body_plain_text,
+        )
 
-        footer_link_text = u''
+        footer_link_text = ""
         if subscription:
-            footer_link_text = u'Abonnement löschen: http://frontend-test.ckan.net/subscribe/unsubscribe?code=testcode&amp;dataset={dataset_id}\n' \
-                                   .format(dataset_id=self.dataset['id'])
+            footer_link_text = f"Abonnement löschen: http://frontend-test.ckan.net/subscribe/unsubscribe?code=testcode&amp;dataset={self.dataset['id']}\n"
         if code:
-            footer_link_text += u'Mein Abonnement verwalten: http://frontend-test.ckan.net/subscribe/manage?code={}' \
-                .format(code)
+            footer_link_text += f"Mein Abonnement verwalten: http://frontend-test.ckan.net/subscribe/manage?code={code}"
 
         assert_in(footer_link_text, body_plain_text)
 
     def _test_all_four_languages(self, body, object_title_included=False):
         if object_title_included:
-            assert_in(u'Geschäftsstelle Open Government Data', body)
-            assert_in(u'Open Government Data Office', body)
-            assert_in(u'Secrétariat Open Government Data', body)
-            assert_in(u'Segreteria Open Government Data', body)
+            assert_in("Geschäftsstelle Open Government Data", body)
+            assert_in("Open Government Data Office", body)
+            assert_in("Secrétariat Open Government Data", body)
+            assert_in("Segreteria Open Government Data", body)
 
         # Check that there is a sign-off in each language
-        assert_in(u'Team Geschäftsstelle OGD', body)
-        assert_in(u'The OGD office team', body)
-        assert_in(u"L'équipe du secrétariat OGD", body)
-        assert_in(u'Team Segreteria OGD', body)
+        assert_in("Team Geschäftsstelle OGD", body)
+        assert_in("The OGD office team", body)
+        assert_in("L'équipe du secrétariat OGD", body)
+        assert_in("Team Segreteria OGD", body)
 
     def test_get_activities(self):
-        '''Test that we don't get activities from the migration and harvest
+        """Test that we don't get activities from the migration and harvest
         users.
-        '''
+        """
         normal_activity = factories.Activity(
-            object_id=self.dataset['id'],
-            activity_type='changed package',
-            return_object=True
+            object_id=self.dataset["id"],
+            activity_type="changed package",
+            return_object=True,
         )
-        migration = ckan_factories.User(name='migration', sysadmin=True)
+        migration = ckan_factories.User(name="migration", sysadmin=True)
         factories.Activity(
             user=migration,
-            user_id=migration['id'],
-            object_id=self.dataset['id'],
-            activity_type='changed package'
+            user_id=migration["id"],
+            object_id=self.dataset["id"],
+            activity_type="changed package",
         )
-        harvest = ckan_factories.User(name='harvest', sysadmin=True)
+        harvest = ckan_factories.User(name="harvest", sysadmin=True)
         factories.Activity(
             user=harvest,
-            user_id=harvest['id'],
-            object_id=self.dataset['id'],
-            activity_type='changed package'
+            user_id=harvest["id"],
+            object_id=self.dataset["id"],
+            activity_type="changed package",
         )
 
         now = datetime.datetime.now()
@@ -363,11 +390,11 @@ www.bfs.admin.ch/ogd
         subscribe = OgdchSubscribePlugin()
         activities = subscribe.get_activities(
             include_activity_from=include_activity_from,
-            objects_subscribed_to_keys=[self.dataset['id']]
+            objects_subscribed_to_keys=[self.dataset["id"]],
         )
 
         # One 'new package' activity, and one 'changed package' activity
-        assert(len(activities) == 2)
-        assert(activities[0].activity_type == 'new package')
-        assert(activities[1].user_id == normal_activity.user_id)
-        assert(activities[1].activity_type == 'changed package')
+        assert len(activities) == 2
+        assert activities[0].activity_type == "new package"
+        assert activities[1].user_id == normal_activity.user_id
+        assert activities[1].activity_type == "changed package"

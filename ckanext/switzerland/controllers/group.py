@@ -1,24 +1,25 @@
 # encoding: utf-8
 
 import logging
-from urllib import urlencode
-from six import string_types
-import ckan.model as model
-from ckan.logic import get_action
-from ckan.lib.plugins import lookup_group_controller
 from collections import OrderedDict
-from ckan.plugins.toolkit import c, config, _, request
-import ckan.lib.helpers as h
+from urllib.parse import urlencode
+
 import ckan.authz as authz
-import ckan.lib.search as search
 import ckan.controllers.group as group
+import ckan.lib.helpers as h
+import ckan.lib.search as search
+import ckan.model as model
+from ckan.lib.plugins import lookup_group_controller
+from ckan.logic import get_action
+from ckan.plugins.toolkit import _, c, config, request
+from six import string_types
 
 log = logging.getLogger(__name__)
 
 
 class OgdchGroupController(group.GroupController):
 
-    def _read(self, id, limit, group_type):  # noqa
+    def _read(self, id, limit, group_type):  # noqa: 901
         """
         This controller replaces the GroupController controller
         from CKAN. It uses the filter query (fq) parameter to query
@@ -29,24 +30,30 @@ class OgdchGroupController(group.GroupController):
         GroupController, so that the _read() method
         had to be overridden completely.
 
+        This controller is too complex, according to flake8. Marked as noqa for
+        this error, as the code is largely copied from CKAN core.
+
         This is common code used by both read and bulk_process
         """
-        context = {'model': model, 'session': model.Session,
-                   'user': c.user or c.author,
-                   'schema': self._db_to_form_schema(group_type=group_type),
-                   'for_view': True, 'extras_as_string': True}
+        context = {
+            "model": model,
+            "session": model.Session,
+            "user": c.user or c.author,
+            "schema": self._db_to_form_schema(group_type=group_type),
+            "for_view": True,
+            "extras_as_string": True,
+        }
 
-        q = c.q = request.params.get('q', '')
+        q = c.q = request.params.get("q", "")
         # Search within group
-        if c.group_dict.get('is_organization'):
-            fq = 'owner_org:"%s"' % c.group_dict.get('id')
+        if c.group_dict.get("is_organization"):
+            fq = f"owner_org:\"{c.group_dict.get('id')}\""
         else:
-            fq = 'groups:"%s"' % c.group_dict.get('name')
+            fq = f"groups:\"{c.group_dict.get('name')}\""
 
-        c.description_formatted = \
-            h.render_markdown(c.group_dict.get('description'))
+        c.description_formatted = h.render_markdown(c.group_dict.get("description"))
 
-        context['return_query'] = True
+        context["return_query"] = True
 
         # c.group_admins is used by CKAN's legacy (Genshi) templates only,
         # if we drop support for those then we can delete this line.
@@ -55,49 +62,61 @@ class OgdchGroupController(group.GroupController):
         page = h.get_page_number(request.params)
 
         # most search operations should reset the page counter:
-        params_nopage = [(k, v) for k, v in request.params.items()
-                         if k != 'page']
-        sort_by = request.params.get('sort', None)
+        params_nopage = [(k, v) for k, v in list(request.params.items()) if k != "page"]
+        sort_by = request.params.get("sort", None)
 
         def search_url(params):
             controller = lookup_group_controller(group_type)
-            action = 'bulk_process' if c.action == 'bulk_process' else 'read'
+            action = "bulk_process" if c.action == "bulk_process" else "read"
             url = h.url_for(controller=controller, action=action, id=id)
-            params = [(k, v.encode('utf-8') if isinstance(v, string_types)
-                       else str(v)) for k, v in params]
-            return url + u'?' + urlencode(params)
+            params = [
+                (k, v.encode("utf-8") if isinstance(v, string_types) else str(v))
+                for k, v in params
+            ]
+            return f"{url}?{urlencode(params)}"
 
         def drill_down_url(**by):
-            return h.add_url_param(alternative_url=None,
-                                   controller='group', action='read',
-                                   extras=dict(id=c.group_dict.get('name')),
-                                   new_params=by)
+            return h.add_url_param(
+                alternative_url=None,
+                controller="group",
+                action="read",
+                extras=dict(id=c.group_dict.get("name")),
+                new_params=by,
+            )
 
         c.drill_down_url = drill_down_url
 
         def remove_field(key, value=None, replace=None):
             controller = lookup_group_controller(group_type)
-            return h.remove_url_param(key, value=value, replace=replace,
-                                      controller=controller, action='read',
-                                      extras=dict(id=c.group_dict.get('name')))
+            return h.remove_url_param(
+                key,
+                value=value,
+                replace=replace,
+                controller=controller,
+                action="read",
+                extras=dict(id=c.group_dict.get("name")),
+            )
 
         c.remove_field = remove_field
 
         def pager_url(q=None, page=None):
             params = list(params_nopage)
-            params.append(('page', page))
+            params.append(("page", page))
             return search_url(params)
 
         try:
             c.fields = []
             c.fields_grouped = {}
             search_extras = {}
-            for (param, value) in request.params.items():
-                if param not in ['q', 'page', 'sort'] \
-                        and len(value) and not param.startswith('_'):
-                    if not param.startswith('ext_'):
+            for param, value in list(request.params.items()):
+                if (
+                    param not in ["q", "page", "sort"]
+                    and len(value)
+                    and not param.startswith("_")
+                ):
+                    if not param.startswith("ext_"):
                         c.fields.append((param, value))
-                        fq += ' %s: "%s"' % (param, value)
+                        fq += f' {param}: "{value}"'
                         if param not in c.fields_grouped:
                             c.fields_grouped[param] = [value]
                         else:
@@ -107,11 +126,13 @@ class OgdchGroupController(group.GroupController):
 
             facets = OrderedDict()
 
-            default_facet_titles = {'organization': _('Organizations'),
-                                    'groups': _('Groups'),
-                                    'tags': _('Tags'),
-                                    'res_format': _('Formats'),
-                                    'license_id': _('Licenses')}
+            default_facet_titles = {
+                "organization": _("Organizations"),
+                "groups": _("Groups"),
+                "tags": _("Tags"),
+                "res_format": _("Formats"),
+                "license_id": _("Licenses"),
+            }
 
             for facet in h.facets():
                 if facet in default_facet_titles:
@@ -125,50 +146,46 @@ class OgdchGroupController(group.GroupController):
             c.facet_titles = facets
 
             data_dict = {
-                'q': q,
-                'fq': fq,
-                'include_private': True,
-                'facet.field': facets.keys(),
-                'rows': limit,
-                'sort': sort_by,
-                'start': (page - 1) * limit,
-                'extras': search_extras
+                "q": q,
+                "fq": fq,
+                "include_private": True,
+                "facet.field": list(facets.keys()),
+                "rows": limit,
+                "sort": sort_by,
+                "start": (page - 1) * limit,
+                "extras": search_extras,
             }
 
-            context_ = dict((k, v) for (k, v) in context.items()
-                            if k != 'schema')
-            query = get_action('package_search')(context_, data_dict)
+            context_ = dict((k, v) for (k, v) in list(context.items()) if k != "schema")
+            query = get_action("package_search")(context_, data_dict)
 
             c.page = h.Page(
-                collection=query['results'],
+                collection=query["results"],
                 page=page,
                 url=pager_url,
-                item_count=query['count'],
-                items_per_page=limit
+                item_count=query["count"],
+                items_per_page=limit,
             )
 
-            c.group_dict['package_count'] = query['count']
+            c.group_dict["package_count"] = query["count"]
 
-            c.search_facets = query['search_facets']
+            c.search_facets = query["search_facets"]
             c.search_facets_limits = {}
-            for facet in c.search_facets.keys():
-                limit = int(request.params.get('_%s_limit' % facet,
-                                               config.get(
-                                                   'search.facets.default',
-                                                   10)))
+            for facet in list(c.search_facets.keys()):
+                limit = int(
+                    request.params.get(
+                        f"_{facet}_limit", config.get("search.facets.default", 10)
+                    )
+                )
                 c.search_facets_limits[facet] = limit
-            c.page.items = query['results']
+            c.page.items = query["results"]
 
             c.sort_by_selected = sort_by
 
         except search.SearchError as se:
-            log.error('Group search error: %r', se.args)
+            log.error("Group search error: %r", se.args)
             c.query_error = True
             c.search_facets = {}
             c.page = h.Page(collection=[])
 
-        self._setup_template_variables(
-            context,
-            {'id': id},
-            group_type=group_type
-        )
+        self._setup_template_variables(context, {"id": id}, group_type=group_type)

@@ -1,9 +1,10 @@
 # encoding: utf-8
-from ckan.logic.validators import missing
 from ckan.lib.navl.dictization_functions import Invalid
+from ckan.logic.validators import missing
 from ckan.plugins.toolkit import get_validator
-from ckanext.switzerland.tests import OgdchFunctionalTestBase
 from nose.tools import assert_equals, assert_raises_regexp
+
+from ckanext.switzerland.tests import OgdchFunctionalTestBase
 
 
 class TestOgdchUrlListValidator(object):
@@ -11,9 +12,7 @@ class TestOgdchUrlListValidator(object):
         # We pass in dummy values for field and schema here, because we just
         # want to get the inner validation function, and that does not use
         # either of these parameters.
-        self.validator = get_validator("ogdch_validate_list_of_urls")(
-            'field', {}
-        )
+        self.validator = get_validator("ogdch_validate_list_of_urls")("field", {})
 
     def test_validate_url_list_string(self):
         value = '["https://example.com/1", "http://example.com/2"]'
@@ -41,14 +40,12 @@ class TestOgdchUrlListValidator(object):
         self.validator(key, data, errors, {})
 
         assert_equals(value, data[key])
-        assert_equals([u"Provided URL 'foobar' is not valid"], errors[key])
+        assert_equals(["Provided URL 'foobar' is not valid"], errors[key])
 
 
 class TestOgdchUriListValidator(object):
     def setUp(self):
-        self.validator = get_validator("ogdch_validate_list_of_uris")(
-            'field', {}
-        )
+        self.validator = get_validator("ogdch_validate_list_of_uris")("field", {})
 
     # positive tests
     def test_validate_uri_list_string(self):
@@ -78,7 +75,7 @@ class TestOgdchUriListValidator(object):
         self.validator(key, data, errors, {})
 
         assert_equals(value, data[key])
-        assert_equals([u"Provided URI 'invaliduri' is not valid"], errors[key])
+        assert_equals(["Provided URI 'invaliduri' is not valid"], errors[key])
 
     def test_empty_uri_list_string(self):
         value = '["", ""]'
@@ -91,19 +88,17 @@ class TestOgdchUriListValidator(object):
         }
         self.validator(key, data, errors, {})
 
-        assert_equals('[]', data[key])
+        assert_equals("[]", data[key])
         assert_equals([], errors[key])
 
 
 class TestOgdchLicenseRequiredValidator(object):
     def setup(self):
-        self.validator = get_validator('ogdch_license_required')(
-            'field', {}
-        )
+        self.validator = get_validator("ogdch_license_required")("field", {})
 
     def test_validate_license(self):
-        value = 'Creative Commons CC Zero License (cc-zero)'
-        key = (u'resources', 0, u'license')
+        value = "Creative Commons CC Zero License (cc-zero)"
+        key = ("resources", 0, "license")
         data = {
             key: value,
         }
@@ -117,9 +112,9 @@ class TestOgdchLicenseRequiredValidator(object):
 
     def test_validate_rights(self):
         value = missing
-        key = (u'resources', 0, u'license')
-        rights_value = 'NonCommercialAllowed-CommercialAllowed-ReferenceRequired'
-        rights_key = (u'resources', 0, u'rights')
+        key = ("resources", 0, "license")
+        rights_value = "NonCommercialAllowed-CommercialAllowed-ReferenceRequired"
+        rights_key = ("resources", 0, "rights")
 
         data = {
             key: value,
@@ -131,16 +126,15 @@ class TestOgdchLicenseRequiredValidator(object):
         self.validator(key, data, errors, {})
 
         assert_equals(
-            'NonCommercialAllowed-CommercialAllowed-ReferenceRequired',
-            data[key]
+            "NonCommercialAllowed-CommercialAllowed-ReferenceRequired", data[key]
         )
         assert_equals([], errors[key])
 
     def test_validate_both_license_and_rights(self):
-        value = 'Creative Commons CC Zero License (cc-zero)'
-        key = (u'resources', 0, u'license')
-        rights_value = 'NonCommercialAllowed-CommercialAllowed-ReferenceRequired'
-        rights_key = (u'resources', 0, u'rights')
+        value = "Creative Commons CC Zero License (cc-zero)"
+        key = ("resources", 0, "license")
+        rights_value = "NonCommercialAllowed-CommercialAllowed-ReferenceRequired"
+        rights_key = ("resources", 0, "rights")
 
         data = {
             key: value,
@@ -156,9 +150,9 @@ class TestOgdchLicenseRequiredValidator(object):
 
     def test_validate_neither_licence_nor_rights(self):
         value = missing
-        key = (u'resources', 0, u'license')
+        key = ("resources", 0, "license")
         rights_value = missing
-        rights_key = (u'resources', 0, u'rights')
+        rights_key = ("resources", 0, "rights")
         data = {
             key: value,
             rights_key: rights_value,
@@ -168,11 +162,8 @@ class TestOgdchLicenseRequiredValidator(object):
         }
         self.validator(key, data, errors, {})
 
-        assert_equals('', data[key])
-        assert_equals(
-            ["Distributions must have 'license' property"],
-            errors[key]
-        )
+        assert_equals("", data[key])
+        assert_equals(["Distributions must have 'license' property"], errors[key])
 
 
 class TestOgdchDurationType(object):
@@ -180,9 +171,7 @@ class TestOgdchDurationType(object):
         # We pass in dummy values for field and schema here, because we just
         # want to get the inner validation function, and that does not use
         # either of these parameters.
-        self.validator = get_validator("ogdch_validate_duration_type")(
-            'field', {}
-        )
+        self.validator = get_validator("ogdch_validate_duration_type")("field", {})
 
     # positive tests
     def test_valid_duration(self):
@@ -251,13 +240,11 @@ class TestOgdchUniqueIdentifierValidator(OgdchFunctionalTestBase):
         # We pass in dummy values for field and schema here, because we just
         # want to get the inner validation function, and that does not use
         # either of these parameters.
-        self.validator = get_validator("ogdch_unique_identifier")(
-            "field", {}
-        )
+        self.validator = get_validator("ogdch_unique_identifier")("field", {})
 
     def test_unique_identifier(self):
         value = "really_unique_identifier@test-org"
-        key = ('identifier',)
+        key = ("identifier",)
         data = {
             key: value,
             ("owner_org",): "test-org",
@@ -269,7 +256,7 @@ class TestOgdchUniqueIdentifierValidator(OgdchFunctionalTestBase):
 
     def test_non_unique_identifier(self):
         value = "test@test-org"
-        key = ('identifier',)
+        key = ("identifier",)
         data = {
             key: value,
             ("owner_org",): "test-org",
@@ -278,29 +265,25 @@ class TestOgdchUniqueIdentifierValidator(OgdchFunctionalTestBase):
             key: [],
         }
         with assert_raises_regexp(
-                Invalid,
-                "Identifier is already in use, it must be unique."
+            Invalid, "Identifier is already in use, it must be unique."
         ):
             self.validator(key, data, errors, {})
 
     def test_missing_identifier(self):
         value = "identifier@test-org"
-        key = ('identifier',)
+        key = ("identifier",)
         data = {
             ("owner_org",): "test-org",
         }
         errors = {
             key: [],
         }
-        with assert_raises_regexp(
-                Invalid,
-                "Identifier of the dataset is missing."
-        ):
+        with assert_raises_regexp(Invalid, "Identifier of the dataset is missing."):
             self.validator(key, data, errors, {})
 
     def test_malformed_identifier(self):
         value = "identifier at test-org"
-        key = ('identifier',)
+        key = ("identifier",)
         data = {
             key: value,
             ("owner_org",): "test-org",
@@ -309,14 +292,13 @@ class TestOgdchUniqueIdentifierValidator(OgdchFunctionalTestBase):
             key: [],
         }
         with assert_raises_regexp(
-                Invalid,
-                "Identifier must be of the form <id>@<slug>"
+            Invalid, "Identifier must be of the form <id>@<slug>"
         ):
             self.validator(key, data, errors, {})
 
     def test_mismatched_org(self):
         value = "identifier@my-org"
-        key = ('identifier',)
+        key = ("identifier",)
         data = {
             key: value,
             ("owner_org",): "test-org",
@@ -325,15 +307,15 @@ class TestOgdchUniqueIdentifierValidator(OgdchFunctionalTestBase):
             key: [],
         }
         with assert_raises_regexp(
-                Invalid,
-                "The identifier \"identifier@my-org\" does not end with the "
-                "organisation slug \"test-org\""
+            Invalid,
+            'The identifier "identifier@my-org" does not end with the '
+            'organisation slug "test-org"',
         ):
             self.validator(key, data, errors, {})
 
     def test_nonexistent_org(self):
         value = "identifier@my-org"
-        key = ('identifier',)
+        key = ("identifier",)
         data = {
             key: value,
             ("owner_org",): "my-org",
@@ -341,10 +323,5 @@ class TestOgdchUniqueIdentifierValidator(OgdchFunctionalTestBase):
         errors = {
             key: [],
         }
-        with assert_raises_regexp(
-                Invalid,
-                "The selected organization was not found."
-        ):
+        with assert_raises_regexp(Invalid, "The selected organization was not found."):
             self.validator(key, data, errors, {})
-
-
