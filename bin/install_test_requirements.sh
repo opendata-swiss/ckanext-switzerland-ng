@@ -37,14 +37,8 @@ sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/'
 echo "Replace default database url with the one for the postgres service"
 sed -i -e 's/sqlalchemy.url = .*/sqlalchemy.url = postgresql:\/\/ckan_default:pass@postgres\/ckan_test/' "$WORKDIR"/test.ini
 
-echo "Remove plugins from CKAN config"
-paster --plugin=ckan config-tool "$WORKDIR"/test.ini "ckan.plugins = "
-
 echo "Init db"
-paster --plugin=ckan db init -c "$WORKDIR"/test.ini
+ckan db init -c "$WORKDIR"/test.ini
 
-echo "Init harvester db"
-paster --plugin=ckanext-harvest harvester initdb -c "$WORKDIR"/test.ini
-
-echo "Re-enable plugins in CKAN config"
-paster --plugin=ckan config-tool "$WORKDIR"/test.ini "ckan.plugins = ogdch ogdch_pkg ogdch_res ogdch_group ogdch_org ogdch_showcase ogdch_subscribe ogdch_middleware ogdch_dcat scheming_datasets scheming_groups scheming_organizations fluent hierarchy_display harvester_dashboard"
+echo "Apply pending migrations"
+ckan db pending-migrations --apply -c "$WORKDIR"/test.ini
