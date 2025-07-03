@@ -69,7 +69,7 @@ def create_showcase_types():
         log.info("'showcase_types' vocabulary already exists, skipping")
     except TypeError as err:
         if err.message == (
-            "No object (name: translator) has been registered " "for this thread"
+            "No object (name: translator) has been registered for this thread"
         ):
             # This happens because the CKAN core translation function does not
             # yet default to the Flask one, so when this method is called

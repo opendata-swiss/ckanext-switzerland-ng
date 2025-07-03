@@ -389,7 +389,7 @@ def ogdch_group_tree(type_="organization"):
 
 
 def ogdch_group_tree_selective(organizations, group_tree_list):
-    """ "
+    """
     Return a group tree filtered to include the given organizations.
     If a sub-organization should be included, its parent is included too.
     """

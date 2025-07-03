@@ -325,7 +325,7 @@ def ogdch_adjust_search_params(search_params):
         current_lang = tk.request.environ["CKAN_LANG"]
     except TypeError as err:
         if err.message == (
-            "No object (name: request) has been registered " "for this thread"
+            "No object (name: request) has been registered for this thread"
         ):
             # This happens when this code gets called as part of a paster
             # command rather then as part of an HTTP request.
