@@ -75,7 +75,7 @@ jobs:
         docker start test_ckan
     - name: Install requirements and set up database
       run: |
-        docker exec test_ckan -u root $WORKDIR/bin/install_test_requirements.sh ${{ matrix.ckan-version }}
+        docker exec -u root test_ckan $WORKDIR/bin/install_test_requirements.sh ${{ matrix.ckan-version }}
     - name: Run tests
       run: | 
         docker exec test_ckan nosetests --ckan --with-pylons=$WORKDIR/test.ini \
