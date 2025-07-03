@@ -37,6 +37,9 @@ sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/'
 echo "Replace default database url with the one for the postgres service"
 sed -i -e 's/sqlalchemy.url = .*/sqlalchemy.url = postgresql:\/\/ckan_default:pass@postgres\/ckan_test/' "$WORKDIR"/test.ini
 
+cat "$WORKDIR"/test.ini
+cat /srv/app/src/ckan/test-core.ini
+
 echo "Init db"
 ckan db init -c "$WORKDIR"/test.ini
 
