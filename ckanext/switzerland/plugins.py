@@ -53,11 +53,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         tk.add_template_directory(config_, "templates")
         tk.add_public_directory(config_, "public")
         tk.add_resource("fanstatic", "switzerland")
-        # Add the /perma/{id} route to redirect to package_read (dataset page)
-
-        routes = config_.get('routes', [])
-        routes.append(('/perma/{id}', 'package_read'))
-        config_['routes'] = routes
 
     # IValidators
 
