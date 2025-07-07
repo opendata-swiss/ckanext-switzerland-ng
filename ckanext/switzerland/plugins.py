@@ -28,6 +28,7 @@ from ckanext.switzerland.middleware import RobotsHeaderMiddleware
 
 HARVEST_USER = "harvest"
 MIGRATION_USER = "migration"
+PACKAGE_NAME_MAX_LENGTH = 100
 
 log = logging.getLogger(__name__)
 
@@ -442,11 +443,11 @@ class OgdchPackagePlugin(plugins.SingletonPlugin):
 
 
 class OgdchArchivePlugin(plugins.SingletonPlugin):
-    plugins.implements(plugins.IMapper, inherit=True)
+    plugins.implements(plugins.IPackageController, inherit=True)
 
-    # IMapper
+    # IPackageController
 
-    def before_update(self, mapper, connection, instance):
+    def delete(self, entity):
         """
         If a package is being deleted it is saved in the CKAN-trash with
         the prefix "_archived-" so that the slug remains available.
@@ -458,26 +459,23 @@ class OgdchArchivePlugin(plugins.SingletonPlugin):
         datasets that are deleted, but only if they are not already archived.
         In this cases a new name for archiving the dataset is derived.
         """
+        if not isinstance(entity, Package):
+            return
 
-        # check instance: should be deleted dataset
-        instance_is_dataset_setup_for_delete = (
-            instance.__class__ == Package
-            and getattr(instance, "state", None) == "deleted"
-            and getattr(instance, "type", None) == "dataset"
+        if getattr(entity, "state", None) != "deleted":
+            return
+
+        if getattr(entity, "type", None) != "dataset":
+            return
+
+        dataset_name = getattr(entity, "name", "")
+        if dataset_name.startswith("_archived-"):
+            return
+
+        entity.name = self._ensure_name_is_unique(f"_archived-{dataset_name}")
+        log.info(
+            f"Archived dataset name changed to '{entity.name}' (was '{dataset_name}')"
         )
-
-        # proceed further for deleted datasets:
-        if instance_is_dataset_setup_for_delete:
-            dataset_name = getattr(instance, "name", "")
-            dataset_is_already_archived = dataset_name.startswith("_archived-")
-            if not dataset_is_already_archived:
-                # only call this expensive method in case of a newly
-                # deleted not yet archived dataset
-                instance.name = self._ensure_name_is_unique(f"_archived-{dataset_name}")
-                log.info(
-                    f"new name '{instance.name}' retrieved for dataset "
-                    f"'{dataset_name}' that was set up for delete"
-                )
 
     @staticmethod
     def _ensure_name_is_unique(ideal_name):
