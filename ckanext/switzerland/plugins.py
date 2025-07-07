@@ -358,7 +358,6 @@ class OgdchResourcePlugin(plugins.SingletonPlugin):
 class OgdchPackagePlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer, inherit=True)
     plugins.implements(plugins.IPackageController, inherit=True)
-    plugins.implements(plugins.IRoutes, inherit=True)
     plugins.implements(ix.IXloader, inherit=True)
 
     # IPackageController
