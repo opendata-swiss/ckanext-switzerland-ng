@@ -53,9 +53,10 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
     def update_config(self, config_):
         tk.add_template_directory(config_, "templates")
         tk.add_public_directory(config_, "public")
-        tk.add_resource("fanstatic", "switzerland")
+        # Register WebAssets
+        tk.add_resource('public', 'switzerland')
 
-    # IValidators
+        # IValidators
 
     def get_validators(self):
         return {
