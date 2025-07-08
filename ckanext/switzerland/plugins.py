@@ -54,7 +54,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         tk.add_template_directory(config_, "templates")
         tk.add_public_directory(config_, "public")
         # Register WebAssets
-        tk.add_resource('public', 'switzerland')
+        tk.add_resource('assets', 'switzerland')
 
         # IValidators
 
