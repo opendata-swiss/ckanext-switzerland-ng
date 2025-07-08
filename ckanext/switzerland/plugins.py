@@ -517,18 +517,10 @@ class OgdchArchivePlugin(plugins.SingletonPlugin):
 
 
 class OgdchShowcasePlugin(ShowcasePlugin):
-    plugins.implements(plugins.IConfigurable, inherit=True)
     plugins.implements(plugins.IDatasetForm, inherit=True)
     plugins.implements(plugins.ITemplateHelpers, inherit=True)
     plugins.implements(plugins.IFacets, inherit=True)
     plugins.implements(plugins.IActions, inherit=True)
-
-    # IConfigurable
-
-    def configure(self, config):
-        super(OgdchShowcasePlugin, self).configure(config)
-        # create vocabulary if necessary
-        ogdch_backend_helpers.create_showcase_types()
 
     # IDatasetForm
 
