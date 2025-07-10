@@ -16,5 +16,5 @@
     (_('Last Modified'), 'metadata_modified desc')
     ]
   %}
-  {% snippet 'snippets/search_form.html', form_id='group-datasets-search-form', type=dataset_type, query=q, sorting=sorting, sorting_selected=sort_by_selected, count=page.item_count, facets=facets, placeholder=h.humanize_entity_type('package', dataset_type, 'search placeholder') or _('Search datasets...'), show_empty=request.args, fields=fields %}
+  {% snippet 'snippets/search_form.html', form_id='group-datasets-search-form', type=dataset_type, query=q, sorting=sorting, sorting_selected=sort_by_selected, count=page.item_count, facets=facets, placeholder=h.humanize_entity_type('package', dataset_type, 'search placeholder') or _('Search datasets...'), show_empty=request.args, fields=fields, group=group_dict %}
 {% endblock %}
