@@ -34,7 +34,7 @@ class TestController(OgdchFunctionalTestBase):
         app = self._get_test_app()
 
         # no locale, should default to EN
-        url = url_for("organizations_index")
+        url = url_for("organization.index")
         assert url.startswith(
             "/organization"
         ), f"URL {url} does not start with /organization"
@@ -51,7 +51,7 @@ class TestController(OgdchFunctionalTestBase):
         assert "/it/organization/test-org" in response
 
         # locale DE
-        url = url_for("organizations_index", locale="de")
+        url = url_for("organization.index", locale="de")
         assert url.startswith(
             "/de/organization"
         ), f"URL {url} does not start with /de/organization"
@@ -61,7 +61,7 @@ class TestController(OgdchFunctionalTestBase):
         assert "/de/organization/test-org" in response
 
         # locale FR
-        url = url_for("organizations_index", locale="fr")
+        url = url_for("organization.index", locale="fr")
         assert url.startswith(
             "/fr/organization"
         ), f"URL {url} does not start with /fr/organization"

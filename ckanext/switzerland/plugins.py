@@ -223,7 +223,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         map.connect("group_edit", "/group/edit/{id}", controller="group", action="edit")
 
         map.connect(
-            "group_index",
+            "group.index",
             "/group",
             controller="ckanext.switzerland.controllers.group:OgdchGroupController",
             action="index",
