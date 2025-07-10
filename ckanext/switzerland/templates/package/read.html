@@ -3,23 +3,14 @@
 {%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
 
 {% block primary_content_inner %}
+  {{ super() }}
   {% block package_description %}
     {% if pkg.private %}
-      <span class="dataset-private label label-inverse pull-right">
+      <span class="dataset-private badge badge-inverse pull-right">
         <i class="fa fa-lock"></i>
         {{ _('Draft') }}
       </span>
     {% endif %}
-    {% block package_archive_notice %}
-      {% if is_activity_archive %}
-        <div class="alert alert-danger">
-          {% trans url=h.url_for(pkg.type ~ '.read', id=pkg.id) %}
-          You're currently viewing an old version of this dataset. To see the
-          current version, click <a href="{{ url }}">here</a>.
-          {% endtrans %}
-        </div>
-      {% endif %}
-    {% endblock %}
     <h1>
       {% block page_heading %}
         {{ h.dataset_display_name(pkg) }}
@@ -41,7 +32,8 @@
   {% endblock %}
 
   {% block package_resources %}
-    {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=pkg.resources %}
+    {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=pkg.resources,
+      can_edit=h.check_access('package_update', {'id':pkg.id }) %}
   {% endblock %}
 
   {% block package_additional_info %}

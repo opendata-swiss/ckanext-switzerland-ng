@@ -1,26 +1,30 @@
 {% extends "package/read_base.html" %}
 {% import 'macros/form.html' as form %}
 
-{% block primary_content_inner %}
-  <h2 class="hide-heading">{{ _('Categories') }}</h2>
+{% set default_group_type = h.default_group_type('group') %}
 
-  {% if c.group_dropdown %}
+{% block primary_content_inner %}
+  <h2 class="hide-heading">{{ h.humanize_entity_type('group', default_group_type, 'page title') or _('Categories') }}</h2>
+
+  {% if group_dropdown %}
     <form class="add-to-group" method="post">
+      {{ h.csrf_input() }}
       <select id="field-add_group" name="group_added" data-module="autocomplete">
-        {% for option in c.group_dropdown %}
+        {% for option in group_dropdown %}
           <option value="{{ option[0] }}"> {{ option[1] }}</option>
         {% endfor %}
       </select>
-      <button type="submit" class="btn btn-primary" title="{{ _('Associate this category with this dataset') }}">{{ _('Add to category') }}</button>
+      <button type="submit" class="btn btn-primary" aria-label="{{ _('Associate this category with this dataset') }}">{{ h.humanize_entity_type('group', default_group_type, 'add association link') or _('Add to category') }}</button>
     </form>
   {% endif %}
 
-  {% if c.pkg_dict.groups %}
+  {% if pkg_dict.groups %}
     <form method="post">
-      {% snippet 'group/snippets/group_list.html', groups=c.pkg_dict.groups %}
+      {{ h.csrf_input() }}
+      {% snippet 'group/snippets/group_list.html', groups=pkg_dict.groups %}
     </form>
   {% else %}
-    <p class="empty">{{ _('There are no categories associated with this dataset') }}</p>
+    <p class="empty">{{ h.humanize_entity_type('group', default_group_type, 'no associated label') or _('There are no categories associated with this dataset') }}</p>
   {% endif %}
 
 {% endblock %}

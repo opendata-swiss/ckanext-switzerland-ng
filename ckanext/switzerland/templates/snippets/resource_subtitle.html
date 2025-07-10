@@ -1,2 +1,2 @@
-{% if edit %}{{ _('Edit') }} - {% endif %}
-{{ h.get_localized_value_for_display(res['title']) }} - {{ h.get_localized_value_for_display(pkg['title']) }}
+{% if edit %}{{ _('Edit') }} {{ g.template_title_delimiter }} {% endif %}
+{{ h.get_localized_value_for_display(res['title']) }} {{ g.template_title_delimiter }} {{ h.get_localized_value_for_display(pkg['title']) }}
