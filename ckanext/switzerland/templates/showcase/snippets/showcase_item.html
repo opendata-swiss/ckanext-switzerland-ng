@@ -9,6 +9,6 @@
     </span>
     {% endif %}
     {{ h.link_to(title|truncate(truncate_title),
-       h.url_for('showcase_read', id=package.name, qualified=true)) }}
+       h.url_for(showcase_read_route, id=package.name)) }}
   </h3>
 {% endblock %}
