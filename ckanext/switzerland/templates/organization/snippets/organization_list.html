@@ -9,7 +9,7 @@ Example:
 #}
 <div id="publisher-tree" class="empty-search">
   {# we use ogdch_render_tree instead of the organization_tree template to speed up the rendering #}
-  {% if c.q %}
+  {% if q %}
     {{ h.ogdch_render_tree(organizations)|safe }}
   {% else %}
     {{ h.ogdch_render_tree()|safe }}

@@ -7,12 +7,13 @@
 <form {% if form_id %}id="{{ form_id }}" {% endif %}class="search-form{% if no_bottom_border %} no-bottom-border{% endif %}" method="get" data-module="ogdch_organization_filter">
 
 {% block search_input %}
-  <div class="form-group has-feedback">
-    <input id="ogdch_search" type="search" class="form-control input-lg" name="q" value="{{ query }}" autocomplete="off" placeholder="{{ placeholder }}"/>
-    <i class="fa fa-search form-control-feedback" aria-hidden="true"></i>
-  </div>
-  <div class="reset-search">
-    <a href="{{ h.url_for(controller=c.controller, action=c.action) }}"><i class="fa fa-times-circle" aria-hidden="true"></i> {{ _('Reset search') }}</a>
+  <div class="input-group search-input-group">
+    <input id="ogdch_search" type="search" aria-label="{% block header_site_search_label %}{{ placeholder }}{% endblock %}" id="field-giant-search" type="text" class="form-control input-lg" name="q" value="{{ query }}" autocomplete="off" placeholder="{{ placeholder }}">
+    {% block search_input_button %}
+    <button class="btn btn-default btn-lg" type="submit" value="search" aria-label="{{_('Submit')}}">
+      <i class="fa fa-search"></i>
+    </button>
+    {% endblock %}
   </div>
 {% endblock %}
 
