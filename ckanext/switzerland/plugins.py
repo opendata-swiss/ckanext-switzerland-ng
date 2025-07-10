@@ -5,8 +5,9 @@ from collections import OrderedDict
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as tk
 from ckan.lib.plugins import DefaultTranslation
-from ckan.model import PACKAGE_NAME_MAX_LENGTH, Activity, Package, Session
+from ckan.model import PACKAGE_NAME_MAX_LENGTH, Package, Session
 from ckan.plugins.toolkit import render
+from ckanext.activity.model import Activity
 
 import ckanext.switzerland.helpers.backend_helpers as ogdch_backend_helpers
 import ckanext.switzerland.helpers.dataset_form_helpers as ogdch_dataset_form_helpers
@@ -822,7 +823,6 @@ class OgdchSubscribePlugin(SubscribePlugin):
             raise
         activities = query.all()
         return activities
-
 
 
 class OgdchMiddlewarePlugin(plugins.SingletonPlugin):
