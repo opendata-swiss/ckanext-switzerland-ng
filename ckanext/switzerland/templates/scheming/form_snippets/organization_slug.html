@@ -1,8 +1,7 @@
 {% import 'macros/form.html' as form %}
 
-{% set read_endpoint = '.read' if h.ckan_version() > '2.9' else '_read' %}
-{%- set prefix = h.url_for(object_type + read_endpoint, id='') -%}
-{%- set domain = h.url_for(object_type + read_endpoint, id='', qualified=true) -%}
+{%- set prefix = h.url_for(object_type + '.read', id='') -%}
+{%- set domain = h.url_for(object_type + '.read', id='', qualified=true) -%}
 {%- set domain = domain|replace("http://", "")|replace("https://", "") -%}
 {%- set attrs = {
     'data-module-prefix': domain,

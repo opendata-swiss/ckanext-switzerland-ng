@@ -330,4 +330,4 @@ class OgdchOrganizationController(organization.OrganizationController):
         else:
             h.flash_error("Error uploading file: no data received.")
 
-        tk.redirect_to("organization_read", id=name)
+        tk.redirect_to("organization.read", id=name)

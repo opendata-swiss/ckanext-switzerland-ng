@@ -22,6 +22,6 @@ class OgdchPermaController(BaseController):
                 {"for_view": True}, {"identifier": id}
             )
             # redirect to dataset detail page
-            redirect_to("dataset_read", id=dataset["name"])
+            redirect_to("dataset.read", id=dataset["name"])
         except NotFound:
             abort(404, _("Dataset not found"))
