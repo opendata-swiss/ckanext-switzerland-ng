@@ -1,5 +1,5 @@
 switzerland/css/switzerland:
-  output: switzerland/js/switzerland.css
+  output: switzerland/css/switzerland.css
   contents:
     - css/ogdch_file_upload.css
     - css/ogdch_form_helper.css
