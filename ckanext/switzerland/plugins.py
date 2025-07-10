@@ -26,7 +26,6 @@ from ckanext.switzerland.middleware import RobotsHeaderMiddleware
 
 HARVEST_USER = "harvest"
 MIGRATION_USER = "migration"
-PACKAGE_NAME_MAX_LENGTH = 100
 
 log = logging.getLogger(__name__)
 
