@@ -13,6 +13,10 @@ Example:
 #}
 {% set type = group.type or 'group' %}
 {% set url = h.url_for(type ~ '.read', id=group.name) %}
+{% set group = group_dict %}
+{% set schema = h.scheming_get_group_schema(group_type) %}
+{% set display_name = h.scheming_language_text(group['display_name']) or h.scheming_language_text(group['title']) %}
+
 {% block item %}
 <li class="media-item">
   {% block item_inner %}
@@ -20,7 +24,7 @@ Example:
       <img src="{{ group.image_display_url or h.url_for_static('/base/images/placeholder-group.png') }}" alt="{{ group.name }}" class="media-image img-fluid">
     {% endblock %}
     {% block title %}
-      <h2 class="media-heading">{{ group.display_name }}</h2>
+      <h2 class="media-heading">{{ display_name }}</h2>
     {% endblock %}
     {% block description %}
       {% if group.description %}
@@ -48,8 +52,8 @@ Example:
       {% endif %}
     {% endblock %}
     {% block link %}
-    <a href="{{ url }}" title="{{ _('View {name}').format(name=group.display_name) }}" class="media-view">
-      <span>{{ _('View {name}').format(name=group.display_name) }}</span>
+    <a href="{{ url }}" title="{{ _('View {name}').format(name=display_name) }}" class="media-view">
+      <span>{{ _('View {name}').format(name=display_name) }}</span>
     </a>
     {% endblock %}
     {% if group.user_member %}

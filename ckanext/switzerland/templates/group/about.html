@@ -1,16 +1,7 @@
-{% extends "group/read_base.html" %}
+{% ckan_extends %}
 
-{% block subtitle %}{{ _('About') }} {{ g.template_title_delimiter }} {{ super() }}{% endblock %}
+{% set group = group_dict %}
+{% set schema = h.scheming_get_group_schema(group_type) %}
+{% set display_name = h.scheming_language_text(group['display_name']) or h.scheming_language_text(group['title']) %}
 
-{% block primary_content_inner %}
-  <h1>{% block page_heading %}{{ group_dict.display_name }}{% endblock %}</h1>
-  {% block group_description %}
-    {% if group_dict.description %}
-      {{ h.render_markdown(group_dict.description) }}
-  	{% endif %}
-  {% endblock %}
-
-  {% block group_extras %}
-    {% snippet 'snippets/additional_info.html', extras = h.sorted_extras(group_dict.extras) %}
-  {% endblock %}
-{% endblock %}
+{% block page_heading %}{{ display_name }}{% endblock %}

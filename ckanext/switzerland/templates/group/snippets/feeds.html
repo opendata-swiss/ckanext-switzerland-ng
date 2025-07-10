@@ -1,2 +1,5 @@
+{% set group = group_dict %}
+{% set schema = h.scheming_get_group_schema(group_type) %}
+{% set display_name = h.scheming_language_text(group['display_name']) or h.scheming_language_text(group['title']) %}
 {%- set dataset_feed = h.url_for('feeds.group', id=group_dict.name) -%}
-<link rel="alternate" type="application/atom+xml" title="{{ g.site_title }} - {{ _('Datasets in category: {group}').format(group=group_dict.display_name) }}" href="{{ dataset_feed }}" />
+<link rel="alternate" type="application/atom+xml" title="{{ g.site_title }} - {{ _('Datasets in category: {group}').format(group=display_name) }}" href="{{ dataset_feed }}" />
