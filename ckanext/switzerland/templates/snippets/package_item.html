@@ -49,7 +49,7 @@ Example:
           {% if package.groups %}
             <p class="small">
             {% for group in package.groups %}
-              {{ h.get_localized_value_for_display(group['title']) }}{% if not loop.last %}, {% endif %}
+              {{ h.get_localized_value_for_display(group.title) }}{% if not loop.last %}, {% endif %}
             {% endfor %}
             </p>
           {% endif %}

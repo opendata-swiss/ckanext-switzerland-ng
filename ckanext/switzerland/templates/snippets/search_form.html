@@ -28,12 +28,12 @@
     {% endblock %}
   </div>
   <div class="reset-search" style="display: inline-block;">
-    {% if group_dict.name %}
-      <a href="{{ h.url_for(controller=controller, action=action, id=group_dict.name) }}"><i class="fa fa-times-circle" aria-hidden="true"></i> {{ _('Reset search') }}</a>
-    {% elif dataset_type == 'harvest' %}
-      <a href="{{ h.url_for('harvest_search') }}"><i class="fa fa-times-circle" aria-hidden="true"></i> {{ _('Reset search') }}</a>
+    {% if group and group.name %}
+      <a href="{% url_for group.group_type ~ '.read', id=group.name %}"><i class="fa fa-times-circle" aria-hidden="true"></i> {{ _('Reset search') }}</a>
+    {% elif type == 'harvest' %}
+      <a href="{{ h.url_for('harvest.search') }}"><i class="fa fa-times-circle" aria-hidden="true"></i> {{ _('Reset search') }}</a>
     {% else %}
-      <a href="{{ h.url_for(controller=controller, action=action) }}"><i class="fa fa-times-circle" aria-hidden="true"></i> {{ _('Reset search') }}</a>
+      <a href="{% url_for type ~ '.search' %}"><i class="fa fa-times-circle" aria-hidden="true"></i> {{ _('Reset search') }}</a>
     {% endif %}
   </div>
 {% endblock %}

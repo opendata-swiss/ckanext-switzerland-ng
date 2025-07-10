@@ -1,7 +1,7 @@
 {% ckan_extends %}
 
-{% set group = group_dict %}
-{% set schema = h.scheming_get_group_schema(group_type) %}
+{% set type = group.type or 'group' %}
+{% set schema = h.scheming_get_group_schema(type) %}
 {% set title = h.scheming_language_text(group[h.scheming_field_by_name(schema.fields, 'title').field_name]) %}
 
 {% block subtitle %}{{ _('Administrators') }} {{ g.template_title_delimiter }} {{ title }}{% endblock %}

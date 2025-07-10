@@ -1,8 +1,8 @@
 {% ckan_extends %}
 
-{% set group = group_dict %}
-{% set schema = h.scheming_get_group_schema(group_type) %}
-{% set display_name = h.scheming_language_text(group['display_name']) or h.scheming_language_text(group['title']) %}
+{% set type = group.type or 'group' %}
+{% set schema = h.scheming_get_group_schema(type) %}
+{% set display_name = h.scheming_language_text(group.display_name) or h.scheming_language_text(group.title) %}
 {% set dataset_type = h.default_package_type() %}
 
 {% block subtitle %}{{ _('Manage') }} {{ g.template_title_delimiter }} {{ display_name }} {{ g.template_title_delimiter }} {{ h.humanize_entity_type('group', group_type, 'page title') or _('Categories') }}{% endblock %}
