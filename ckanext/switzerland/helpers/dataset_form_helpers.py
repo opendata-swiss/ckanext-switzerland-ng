@@ -1,9 +1,8 @@
-# coding=UTF-8
-
 """
 Helpers belong in this file if they are
 used for rendering the dataset form
 """
+
 import datetime
 import json
 import logging
