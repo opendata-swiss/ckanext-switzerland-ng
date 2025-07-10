@@ -1,5 +1,5 @@
 {% if group_type is not defined %}
-    {% set group_type = c.group_type %}
+    {% set group_type = group_type %}
 {% endif %}
 
 {%- if not group_type -%}
@@ -24,7 +24,7 @@
         {% if action == 'edit' %}
           {% if h.check_access('group_delete', {'id': data.id}) and action=='edit'  %}
             {% set locale = h.dump_json({'content': _('Are you sure you want to delete this Category?')}) %}
-            <a class="btn btn-danger pull-left" href="{% url_for controller='group', action='delete', id=data.id %}" data-module="confirm-action" data-module-i18n="{{ locale }}">{% block delete_button_text %}{{ _('Delete') }}{% endblock %}</a>
+            <a class="btn btn-danger pull-left" href="{% url_for 'group.delete', id=data.id %}" data-module="confirm-action" data-module-i18n="{{ locale }}">{% block delete_button_text %}{{ _('Delete') }}{% endblock %}</a>
           {% endif %}
         {% endif %}
         {% endblock %}

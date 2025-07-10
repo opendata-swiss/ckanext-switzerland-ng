@@ -15,7 +15,7 @@
         <li id="{{org.name}}" class="organization">
           <div class="organization-row">
             {% set org = h.get_localized_org(org.name) %}
-            {% link_for org.title, controller='organization', action='read', id=org.name %}
+            {% link_for org.title, 'organization.read', id=org.name %}
           </div>
         </li>
       {% endfor %}
@@ -25,7 +25,7 @@
     <p class="empty">
       {{ _('You are not a member of any organizations.') }}
       {% if h.check_access('organization_create') %}
-        {% link_for _('Create one now?'), controller='organization', action='new' %}
+        {% link_for _('Create one now?'), 'organization.new' %}
       {% endif %}
     </p>
   {% endif %}

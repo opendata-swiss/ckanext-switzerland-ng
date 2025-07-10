@@ -66,7 +66,7 @@ Example:
         {% for group in pkg.groups %}
           {% set truncate_title = truncate_title or 80 %}
           {% set title = group.title or group.display_name %}
-          <li class="nav-item">{{ h.link_to(h.truncate(title, truncate_title), h.url_for(controller='group', action='read', id=group.name)) }}</li>
+          <li class="nav-item">{{ h.link_to(h.truncate(title, truncate_title), h.url_for('group.read', id=group.name)) }}</li>
         {% endfor %}
         </ul>
       {% endif %}

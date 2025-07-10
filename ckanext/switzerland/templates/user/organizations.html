@@ -15,7 +15,7 @@
           <div class="organization-row">
             {% set org_title = h.get_localized_value_for_display(org.title) %}
             {% set user_role = org.capacity.capitalize() %}
-            {% link_for org_title, controller='organization', action='read', id=org.name %}
+            {% link_for org_title, 'organization.read', id=org.name %}
             ( {{ _( user_role ) }} )
           </div>
         </li>
