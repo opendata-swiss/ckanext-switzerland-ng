@@ -15,7 +15,7 @@
          {{ h.nav_link(_('Harvest Dashboard'), named_route='harvester_dashboard') }}
        </li>
        <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'harvest') }}">
-         {{ h.nav_link(_('Harvest Sources'), named_route='harvest_search') }}
+         {{ h.nav_link(_('Harvest Sources'), named_route='harvest.search') }}
        </li>
      {% endif %}
      <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'dataset') }}">
