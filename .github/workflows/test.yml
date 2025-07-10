@@ -4,8 +4,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
       - name: Install requirements
         run: pip install flake8 pycodestyle black isort
       - name: Check syntax
@@ -47,7 +47,7 @@ jobs:
       SOLR_CONFIG_CKAN_DIR: /opt/solr/server/solr/ckan/conf
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Create solr container
       run: |
         /usr/bin/docker create --name test_solr --network ${{ job.container.network }} --network-alias solr \
