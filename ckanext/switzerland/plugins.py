@@ -5,7 +5,7 @@ from collections import OrderedDict
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as tk
 from ckan.lib.plugins import DefaultTranslation
-from ckan.model import PACKAGE_NAME_MAX_LENGTH, Package, Session
+from ckan.model import PACKAGE_NAME_MAX_LENGTH, Activity, Package, Session
 from ckan.plugins.toolkit import render
 
 import ckanext.switzerland.helpers.backend_helpers as ogdch_backend_helpers
@@ -807,36 +807,22 @@ class OgdchSubscribePlugin(SubscribePlugin):
 
         return subject, plain_text_body, html_body
 
-    def get_activities(self, include_activity_from, objects_subscribed_to_keys):
+    def get_activities(self, include_activity_from,
+                       objects_subscribed_to_keys):
+        no_notification_users = [HARVEST_USER, MIGRATION_USER]
+        query = Session \
+            .query(Activity) \
+            .filter(Activity.timestamp > include_activity_from) \
+            .filter(Activity.object_id.in_(objects_subscribed_to_keys))
         try:
-            # Build a context that bypasses permission checks
-            context = {
-                "model": self.model,
-                "ignore_auth": True,
-            }
-            # Assemble the parameters for activity_list
-            params = {
-                "since": include_activity_from.isoformat(),
-                "object_ids": list(objects_subscribed_to_keys),
-                "limit": 1000,
-            }
-            # Fetch the full list of recent activity items
-            result = tk.get_action("activity_list")(context, params)
-            items = result.get("items", [])
+            for username in no_notification_users:
+                user = tk.get_action('user_show')({}, {'id': username})
+                query = query.filter(Activity.user_id != user["id"])
+        except tk.ObjectNotFound:
+            raise
+        activities = query.all()
+        return activities
 
-            # Filter out any “harvest” or “migration” user entries
-            no_notification_users = {HARVEST_USER, MIGRATION_USER}
-
-            filtered = [
-                a for a in items if a.get("user_id") not in no_notification_users
-            ]
-            return filtered
-        except Exception as e:
-            # Log the error and return an empty list
-            log.exception(
-                f"Error fetching activities since {include_activity_from}: {e}"
-            )
-            return []
 
 
 class OgdchMiddlewarePlugin(plugins.SingletonPlugin):
