@@ -12,7 +12,7 @@ Example:
 {% set schema = h.scheming_get_group_schema('group') %}
 
 {% block group_list %}
-<ul class="list-unstyled">
+<ul class="media-grid" data-module="media-grid">
 	{% block group_list_inner %}
   {% for group in groups %}
     {% snippet "group/snippets/group_item.html", group=group, position=loop.index, schema=schema %}

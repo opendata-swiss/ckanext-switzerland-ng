@@ -19,7 +19,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for row in c.raw_packages_by_week %}
+          {% for row in raw_packages_by_week %}
             <tr>
               <th data-type="date" data-value="{{ row.date.strftime("%s") }}"><time datetime="{{ row.date.isoformat() }}">{{ h.render_datetime(row.date) }}</time></th>
               <td>{{ row.total_packages }}</td>
