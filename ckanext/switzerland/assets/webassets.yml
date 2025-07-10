@@ -1,5 +1,5 @@
 switzerland/css/ogdch_bundle:
-  output: switzerland/css/ogdch_bundle.css
+  output: switzerland/switzerland.css
   contents:
     - css/ogdch_file_upload.css
     - css/ogdch_form_helper.css
@@ -7,7 +7,7 @@ switzerland/css/ogdch_bundle:
     - vendor/bootstrap-datepicker/css/bootstrap-datepicker.css
 
 switzerland/js/ogdch_bundle:
-  output: switzerland/js/ogdch_bundle.js
+  output: switzerland/switzerland.js
   contents:
     - js/ogdch_file_upload.js
     - js/ogdch_form_helper_contact_points.js
