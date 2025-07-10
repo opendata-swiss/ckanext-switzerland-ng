@@ -7,7 +7,6 @@ import ckan.plugins.toolkit as tk
 from ckan.lib.plugins import DefaultTranslation
 from ckan.model import PACKAGE_NAME_MAX_LENGTH, Package, Session
 from ckan.plugins.toolkit import render
-from ckanext.activity.model import Activity
 
 import ckanext.switzerland.helpers.backend_helpers as ogdch_backend_helpers
 import ckanext.switzerland.helpers.dataset_form_helpers as ogdch_dataset_form_helpers
@@ -20,6 +19,7 @@ import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
 import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 import ckanext.switzerland.helpers.validators as ogdch_validators
 import ckanext.xloader.interfaces as ix
+from ckanext.activity.model import Activity
 from ckanext.showcase.plugin import ShowcasePlugin
 from ckanext.subscribe.plugin import SubscribePlugin
 from ckanext.switzerland import logic as ogdch_logic
