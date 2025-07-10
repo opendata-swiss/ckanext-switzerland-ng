@@ -1,7 +1,16 @@
 {% ckan_extends %}
 
-{% block subtitle %}{{ _('Create a Category') }}{% endblock %}
+{% set label = h.humanize_entity_type('group', group_type, 'create title') or _('Create a Category') %}
 
-{% block breadcrumb_link %}{{ h.nav_link(_('Create a Category'), controller='group', action='edit', id=c.group.name) }}{% endblock %}
+{% block subtitle %}{{ label }}{% endblock %}
 
-{% block page_heading %}{{ _('Create a Category') }}{% endblock %}
+{% block breadcrumb_content %}
+  <li>{{ h.nav_link(
+        h.humanize_entity_type('group', group_type, 'breadcrumb') or _('Categories'),
+        named_route=group_type+'.index') }}</li>
+  <li class="active">
+    {{ h.nav_link(
+        label,
+        named_route=group_type~'.new') }}
+  </li>
+{% endblock %}

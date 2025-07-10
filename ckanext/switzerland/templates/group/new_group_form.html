@@ -1,9 +1,9 @@
-{% ckan_extends "group/snippets/group_form.html" %}
+{% ckan_extends %}
 
 {% block save_text %}
   {%- if action == "edit" -%}
-    {{ _('Update Category') }}
+    {{ h.humanize_entity_type('group', group_type, 'update label') or _('Update Category') }}
   {%- else -%}
-    {{ _('Create Category') }}
+    {{ h.humanize_entity_type('group', group_type, 'create label') or _('Create Category') }}
   {%- endif -%}
 {% endblock %}
