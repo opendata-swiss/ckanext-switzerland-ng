@@ -1,38 +1,33 @@
-import nose
+import pytest
 from ckan.lib.helpers import url_for
 
 from ckanext.switzerland.tests import OgdchFunctionalTestBase
 
-assert_equal = nose.tools.assert_equal
-assert_true = nose.tools.assert_true
 
-
-class TestController(OgdchFunctionalTestBase):
-    def test_valid_redirect(self):
-        app = self._get_test_app()
-
-        url = url_for("perma_redirect", id=self.dataset_dict["identifier"])
-        assert_equal(url, "/perma/test%40test-org")
+@pytest.mark.ckan_config(
+    "ckan.plugins", "ogdch ogdch_showcase scheming_datasets fluent hierarchy_display"
+)
+@pytest.mark.usefixtures("with_plugins", "clean_db")
+class TestBlueprints(object):
+    def test_valid_redirect(self, app, dataset):
+        url = url_for("perma.read", id=dataset["identifier"])
+        assert url == "/perma/test@test-org"
 
         response = app.get(url)
-        assert_equal(response.status_int, 302)
-        assert_equal(
-            response.headers.get("Location"),
-            "http://test.ckan.net/dataset/test-dataset",
+        assert response.status_int == 302
+        assert (
+            response.headers.get("Location")
+            == "http://test.ckan.net/dataset/test-dataset"
         )
 
-    def test_invalid_redirect(self):
-        app = self._get_test_app()
-
-        url = url_for("perma_redirect", id="non-existent-id@unknown")
-        assert_equal(url, "/perma/non-existent-id%40unknown")
+    def test_invalid_redirect(self, app):
+        url = url_for("perma.read", id="non-existent-id@unknown")
+        assert url == "/perma/non-existent-id@unknown"
 
         # expect a 404 response
         response = app.get(url, status=404)
 
-    def test_org_list_links(self):
-        app = self._get_test_app()
-
+    def test_org_list_links(self, app, org):
         # no locale, should default to EN
         url = url_for("organization.index")
         assert url.startswith(
