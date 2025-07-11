@@ -23,6 +23,7 @@ from ckanext.activity.model import Activity
 from ckanext.showcase.plugin import ShowcasePlugin
 from ckanext.subscribe.plugin import SubscribePlugin
 from ckanext.switzerland import logic as ogdch_logic
+from ckanext.switzerland.blueprints.perma import perma
 from ckanext.switzerland.middleware import RobotsHeaderMiddleware
 
 HARVEST_USER = "harvest"
@@ -39,6 +40,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.IFacets)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.ITemplateHelpers)
+    plugins.implements(plugins.IBlueprint)
     plugins.implements(plugins.ITranslation)
 
     # ITranslation
@@ -199,18 +201,13 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             "ogdch_multiple_text_form_helper": ogdch_dataset_form_helpers.ogdch_multiple_text_form_helper,
         }
 
-    # IRouter
+    # IBlueprint
+
+    def get_blueprint(self):
+        return [perma]
 
     def before_map(self, map):
         """adding custom routes to the ckan mapping"""
-
-        # create perma-link route
-        map.connect(
-            "perma_redirect",
-            "/perma/{id}",
-            controller="ckanext.switzerland.controllers.perma:OgdchPermaController",
-            action="read",
-        )
 
         # group routes
         map.connect("group_new", "/group/new", controller="group", action="new")

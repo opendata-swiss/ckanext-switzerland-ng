@@ -18,7 +18,7 @@
 {% block package_additional_info %}
   <dt class="dataset-label">{{ _('Identifier') }}</dt>
   <dd class="dataset-details">
-      <a href="{{ h.url_for('perma_redirect', id=pkg_dict.identifier) }}">
+      <a href="{{ h.url_for('perma.read', id=pkg_dict.identifier) }}">
           {{ pkg_dict.identifier }}
       </a>
   </dd>
