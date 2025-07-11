@@ -1,3 +1,4 @@
+{% set group = group_dict %}
 {% set type = group.type or 'group' %}
 {% set schema = h.scheming_get_group_schema(type) %}
 {% set display_name = h.scheming_language_text(group.display_name) or h.scheming_language_text(group.title) %}
