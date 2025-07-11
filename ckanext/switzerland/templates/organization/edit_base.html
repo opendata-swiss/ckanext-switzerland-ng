@@ -1,7 +1,12 @@
 {% ckan_extends %}
 
-{% set schema = h.scheming_get_organization_schema(group_type) %}
-{% set display_name = h.scheming_language_text(group_dict['display_name']) or h.scheming_language_text(group_dict['title']) %}
+<!-- If we don't have a group_dict here, then we are creating a new organization.
+In that case, the organization/new.html template is used and overrides the blocks defined beneath. -->
+{% if group_dict is defined %}
+  {% set type = group_dict.type or 'group' %}
+  {% set schema = h.scheming_get_group_schema(type) %}
+  {% set display_name = h.scheming_language_text(group_dict.display_name) or h.scheming_language_text(group_dict.title) %}
+{% endif %}
 
 {% block subtitle %}{{ display_name }} {{ g.template_title_delimiter }} {{ h.humanize_entity_type('organization', group_type, 'page title') or _('Organizations') }}{% endblock %}
 
