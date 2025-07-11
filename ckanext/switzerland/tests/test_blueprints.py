@@ -1,8 +1,6 @@
 import pytest
 from ckan.lib.helpers import url_for
 
-from ckanext.switzerland.tests import OgdchFunctionalTestBase
-
 
 @pytest.mark.ckan_config(
     "ckan.plugins", "ogdch ogdch_showcase scheming_datasets fluent hierarchy_display"

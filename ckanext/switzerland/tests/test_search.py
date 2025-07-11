@@ -4,17 +4,14 @@ import ckan.model as model
 import ckan.plugins.toolkit as tk
 import nose
 
-from ckanext.switzerland.tests import OgdchFunctionalTestBase
+from ckanext.switzerland.tests.conftest import get_context
 
 assert_equal = nose.tools.assert_equal
 assert_true = nose.tools.assert_true
 
 
-class TestSearch(OgdchFunctionalTestBase):
+class TestSearch(object):
     def setup(self):
-        # This creates an org and a dataset in the database.
-        super(TestSearch, self).setup()
-
         # Create some groups
         group1 = {
             "name": "group1",
@@ -25,7 +22,7 @@ class TestSearch(OgdchFunctionalTestBase):
                 "en": "Group 1 EN",
             },
         }
-        tk.get_action("group_create")(self._get_context(), group1)
+        tk.get_action("group_create")(get_context(), group1)
 
         group2 = {
             "name": "group2",
@@ -36,7 +33,7 @@ class TestSearch(OgdchFunctionalTestBase):
                 "en": "Group 2 EN",
             },
         }
-        tk.get_action("group_create")(self._get_context(), group2)
+        tk.get_action("group_create")(get_context(), group2)
 
         # Add some more datasets
         dataset_dict_2 = copy(self.dataset_dict)
@@ -48,7 +45,7 @@ class TestSearch(OgdchFunctionalTestBase):
             "en": "Frog EN",
             "it": "Frog IT",
         }
-        tk.get_action("package_create")(self._get_context(), dataset_dict_2)
+        tk.get_action("package_create")(get_context(), dataset_dict_2)
 
         dataset_dict_3 = copy(self.dataset_dict)
         dataset_dict_3["name"] = "dataset3"
@@ -61,7 +58,7 @@ class TestSearch(OgdchFunctionalTestBase):
         }
         dataset_dict_3["groups"] = [{"name": "group1"}]
 
-        tk.get_action("package_create")(self._get_context(), dataset_dict_3)
+        tk.get_action("package_create")(get_context(), dataset_dict_3)
 
         dataset_dict_4 = copy(self.dataset_dict)
         dataset_dict_4["name"] = "dataset4"
@@ -74,7 +71,7 @@ class TestSearch(OgdchFunctionalTestBase):
         }
         dataset_dict_4["groups"] = [{"name": "group2"}]
 
-        tk.get_action("package_create")(self._get_context(), dataset_dict_4)
+        tk.get_action("package_create")(get_context(), dataset_dict_4)
 
     def test_empty_query(self):
         results = tk.get_action("package_search")({}, {"q": ""})

@@ -12,12 +12,11 @@ from ckanext.subscribe.email_verification import (
 from ckanext.subscribe.notification_email import get_notification_email_vars
 from ckanext.subscribe.tests import factories
 from ckanext.switzerland.plugins import OgdchSubscribePlugin
-from ckanext.switzerland.tests import OgdchFunctionalTestBase
 
 config = p.toolkit.config
 
 
-class TestSubscriptionEmails(OgdchFunctionalTestBase):
+class TestSubscriptionEmails(object):
     def test_get_email_vars_with_subscription(self):
         subscription = factories.Subscription(
             dataset_id=self.dataset["id"], return_object=True

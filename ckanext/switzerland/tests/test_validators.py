@@ -4,8 +4,6 @@ from ckan.logic.validators import missing
 from ckan.plugins.toolkit import get_validator
 from nose.tools import assert_equals, assert_raises_regexp
 
-from ckanext.switzerland.tests import OgdchFunctionalTestBase
-
 
 class TestOgdchUrlListValidator(object):
     def setup(self):
@@ -230,7 +228,7 @@ class TestOgdchDurationType(object):
         assert_equals([], errors[key])
 
 
-class TestOgdchUniqueIdentifierValidator(OgdchFunctionalTestBase):
+class TestOgdchUniqueIdentifierValidator(object):
     validator = None
 
     def setup(self):

@@ -8,7 +8,7 @@ from ckan.tests import helpers
 log = logging.getLogger(__name__)
 
 
-def _get_context():
+def get_context():
     # We need a fresh context every time we create a dataset
     user = tk.get_action("get_site_user")({"ignore_auth": True})["name"]
     return {
@@ -31,7 +31,7 @@ def org():
         },
         "political_level": "confederation",
     }
-    return tk.get_action("organization_create")(_get_context(), org_dict)
+    return tk.get_action("organization_create")(get_context(), org_dict)
 
 
 @pytest.fixture
@@ -70,4 +70,4 @@ def dataset(org):
         "identifier": "test@test-org",
     }
 
-    return tk.get_action("package_create")(_get_context(), dataset_dict)
+    return tk.get_action("package_create")(get_context(), dataset_dict)

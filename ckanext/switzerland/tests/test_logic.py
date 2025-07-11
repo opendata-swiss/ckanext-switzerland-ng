@@ -7,7 +7,7 @@ import nose
 from ckan.plugins.toolkit import config
 from ckan.tests.legacy.mock_mail_server import SmtpServerHarness
 
-from ckanext.switzerland.tests import OgdchFunctionalTestBase
+from ckanext.switzerland.tests.conftest import get_context
 
 assert_dict_equal = nose.tools.assert_dict_equal
 assert_equal = nose.tools.assert_equal
@@ -17,7 +17,7 @@ assert_not_equal = nose.tools.assert_not_equal
 log = logging.getLogger(__name__)
 
 
-class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
+class TestForceResetPasswords(SmtpServerHarness):
     site_user = ""
 
     @classmethod
@@ -32,7 +32,7 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
 
     def setup(self):
         super(TestForceResetPasswords, self).setup()
-        self.site_user = self._get_context()["user"]
+        self.site_user = get_context()["user"]
 
         for n in range(3):
             user = {
@@ -40,7 +40,7 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
                 "email": f"user{str(n)}@example.org",
                 "password": f"password{str(n)}",
             }
-            tk.get_action("user_create")(self._get_context(), user)
+            tk.get_action("user_create")(get_context(), user)
 
     @classmethod
     def teardown_class(cls):
@@ -49,28 +49,28 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
 
     def test_reset_single_user_password(self):
         initial_user = tk.get_action("user_show")(
-            self._get_context(), {"id": "user0", "include_password_hash": True}
+            get_context(), {"id": "user0", "include_password_hash": True}
         )
 
         initial_other_user_passwords = {}
         for user in ["user1", "user2", self.site_user]:
             initial_other_user_passwords[user] = tk.get_action("user_show")(
-                self._get_context(), {"id": user, "include_password_hash": True}
+                get_context(), {"id": user, "include_password_hash": True}
             )["password_hash"]
 
-        context = self._get_context()
+        context = get_context()
         context["ignore_auth"] = False
         result = tk.get_action("ogdch_force_reset_passwords")(
             context, {"user": "user0"}
         )
 
         updated_user = tk.get_action("user_show")(
-            self._get_context(), {"id": "user1", "include_password_hash": True}
+            get_context(), {"id": "user1", "include_password_hash": True}
         )
         other_user_passwords_after_reset = {}
         for user in ["user1", "user2", self.site_user]:
             other_user_passwords_after_reset[user] = tk.get_action("user_show")(
-                self._get_context(), {"id": user, "include_password_hash": True}
+                get_context(), {"id": user, "include_password_hash": True}
             )["password_hash"]
 
         assert_equal(
@@ -94,14 +94,14 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
 
     def test_reset_multiple_user_passwords(self):
         initial_user_passwords = {}
-        users = tk.get_action("user_list")(self._get_context(), {"all_fields": False})
+        users = tk.get_action("user_list")(get_context(), {"all_fields": False})
         # We have four users: [u'default', u'user0', u'user1', u'user2']
         for user in users:
             initial_user_passwords[user] = tk.get_action("user_show")(
-                self._get_context(), {"id": user, "include_password_hash": True}
+                get_context(), {"id": user, "include_password_hash": True}
             )["password_hash"]
 
-        context = self._get_context()
+        context = get_context()
         context["ignore_auth"] = False
         tk.get_action("ogdch_force_reset_passwords")(
             context, {"limit": "2", "offset": "1"}
@@ -110,7 +110,7 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
         user_passwords_after_update = {}
         for user in users:
             user_passwords_after_update[user] = tk.get_action("user_show")(
-                self._get_context(), {"id": user, "include_password_hash": True}
+                get_context(), {"id": user, "include_password_hash": True}
             )["password_hash"]
 
         assert_equal(
@@ -135,7 +135,7 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
         )
 
     def test_own_password_is_not_reset_single_user_password(self):
-        context = self._get_context()
+        context = get_context()
         context["ignore_auth"] = False
 
         result = tk.get_action("ogdch_force_reset_passwords")(
@@ -154,7 +154,7 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
         )
 
     def test_own_password_is_not_reset_multiple_user_passwords(self):
-        context = self._get_context()
+        context = get_context()
         context["ignore_auth"] = False
         # We have four users: [u'default', u'user0', u'user1', u'user2']
         result = tk.get_action("ogdch_force_reset_passwords")(
@@ -182,7 +182,7 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
         assert_in(encoded_subject, email[3])
 
     def test_sending_reset_link_default(self):
-        context = self._get_context()
+        context = get_context()
         context["ignore_auth"] = False
         tk.get_action("ogdch_force_reset_passwords")(context, {"user": "user0"})
 
@@ -193,7 +193,7 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
         self.clear_smtp_messages()
 
     def test_sending_reset_link_notify_true(self):
-        context = self._get_context()
+        context = get_context()
         context["ignore_auth"] = False
         tk.get_action("ogdch_force_reset_passwords")(
             context, {"user": "user0", "notify": True}
@@ -206,7 +206,7 @@ class TestForceResetPasswords(OgdchFunctionalTestBase, SmtpServerHarness):
         self.clear_smtp_messages()
 
     def test_sending_reset_link_notify_false(self):
-        context = self._get_context()
+        context = get_context()
         context["ignore_auth"] = False
         tk.get_action("ogdch_force_reset_passwords")(
             context, {"user": "user0", "notify": False}
