@@ -1,11 +1,16 @@
 {% ckan_extends %}
 
-{% set organization = organization or group%}
+{% set organization = organization or group %}
 {% set url = h.url_for(organization.type + '.read', id=organization.name, ) %}
 {% set dataset_type = h.default_package_type() %}
 
+{% set type = organization.type or 'group' %}
+{% set schema = h.scheming_get_group_schema(type) %}
+{% set display_name = h.scheming_language_text(organization.display_name) or h.scheming_language_text(organization.title) %}
+{% set description = h.scheming_language_text(organization.description) %}
+
 {% block heading %}
-  <h1 class="heading">{{ organization.title or organization.name }}
+  <h1 class="heading">{{ display_name }}
     {% if organization.state == 'deleted' %}
       [{{ _('Deleted') }}]
     {% endif %}
@@ -13,9 +18,9 @@
 {% endblock %}
 
 {% block description %}
-  {% if organization.description %}
+  {% if description %}
     <p class="description">
-      {{ h.markdown_extract(organization.description, 180) }}
+      {{ h.markdown_extract(description, 180) }}
     </p>
     <p class="read-more">
       {% link_for _('read more'), named_route=organization.type ~ '.about', id=organization.name %}
