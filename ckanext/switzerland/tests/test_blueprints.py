@@ -3,9 +3,10 @@ from ckan.lib.helpers import url_for
 
 
 @pytest.mark.ckan_config(
-    "ckan.plugins", "ogdch ogdch_showcase scheming_datasets fluent hierarchy_display"
+    "ckan.plugins",
+    "ogdch ogdch_pkg ogdch_showcase scheming_datasets fluent hierarchy_display",
 )
-@pytest.mark.usefixtures("with_plugins", "clean_db")
+@pytest.mark.usefixtures("with_plugins", "clean_db", "clean_index")
 class TestBlueprints(object):
     def test_valid_redirect(self, app, dataset):
         url = url_for("perma.read", id=dataset["identifier"])
