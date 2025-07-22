@@ -330,7 +330,7 @@ class OgdchResourcePlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IResourceController, inherit=True)
 
     # IResourceController
-    def before_show(self, res_dict):
+    def before_resource_show(self, res_dict):
         """
         Transform res_dict before view.
 
@@ -359,7 +359,7 @@ class OgdchPackagePlugin(plugins.SingletonPlugin):
 
     # IPackageController
 
-    def before_view(self, pkg_dict):
+    def before_dataset_view(self, pkg_dict):
         """
         Transform pkg_dict before view.
 
@@ -399,7 +399,7 @@ class OgdchPackagePlugin(plugins.SingletonPlugin):
             )
         return pkg_dict
 
-    def after_show(self, context, pkg_dict):
+    def after_dataset_show(self, context, pkg_dict):
         """
         before_view isn't called in API requests -> after_show is
         BUT (!) after_show is also called when packages get indexed
@@ -409,7 +409,7 @@ class OgdchPackagePlugin(plugins.SingletonPlugin):
         pkg_dict = ogdch_plugin_utils.ogdch_prepare_pkg_dict_for_api(pkg_dict)
         return pkg_dict
 
-    def before_index(self, search_data):
+    def before_dataset_index(self, search_data):
         """
         Search data before index
         """
@@ -418,7 +418,7 @@ class OgdchPackagePlugin(plugins.SingletonPlugin):
         )
         return search_data
 
-    def before_search(self, search_params):
+    def before_dataset_search(self, search_params):
         """
         Adjust search parameters
         """
