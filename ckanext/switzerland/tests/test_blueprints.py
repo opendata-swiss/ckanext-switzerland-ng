@@ -4,7 +4,7 @@ from ckan.lib.helpers import url_for
 
 @pytest.mark.ckan_config(
     "ckan.plugins",
-    "ogdch ogdch_pkg ogdch_showcase scheming_datasets fluent hierarchy_display",
+    "ogdch ogdch_pkg ogdch_showcase scheming_datasets fluent hierarchy_display subscribe dcat",
 )
 @pytest.mark.usefixtures("with_plugins", "clean_db", "clean_index")
 class TestBlueprints(object):
@@ -13,10 +13,10 @@ class TestBlueprints(object):
         assert url == "/perma/test@test-org"
 
         response = app.get(url)
-        assert response.status_int == 302
+        assert len(response.history) == 1
+        assert response.history[0].status_code == 302
         assert (
-            response.headers.get("Location")
-            == "http://test.ckan.net/dataset/test-dataset"
+            response.history[0].location == "http://test.ckan.net/dataset/test-dataset"
         )
 
     def test_invalid_redirect(self, app):
