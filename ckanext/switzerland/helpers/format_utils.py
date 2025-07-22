@@ -159,7 +159,7 @@ def _get_cleaned_format_or_media_type(format):
 def _get_format_from_path(download_url):
     """check whether the format can be derived from the file
     extension"""
-    path = urlparse.urlparse(download_url).path
+    path = urlparse(download_url).path
     ext = os.path.splitext(path)[1]
     if ext:
         resource_format = ext.replace(".", "").lower()
