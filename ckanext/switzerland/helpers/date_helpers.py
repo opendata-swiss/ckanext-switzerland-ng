@@ -13,7 +13,7 @@ log = logging.getLogger(__name__)
 
 INVALID_EMPTY_DATE = "False"
 VALID_EMPTY_DATE = ""
-ACCEPTED_EMPTY_DATE_VALUES = [INVALID_EMPTY_DATE, VALID_EMPTY_DATE]
+EMPTY_DATE_VALUES = [INVALID_EMPTY_DATE, VALID_EMPTY_DATE, None]
 
 
 def display_if_isodate(value):
@@ -90,6 +90,9 @@ def transform_any_date_to_isodate(value):
         storage_date = date_helper(value)
         if storage_date:
             return storage_date
+    # If we can't transform the date, return an empty string.
+    # This is better than returning None because we might want to sort the result.
+    return ""
 
 
 def get_latest_isodate(resource_dates):
@@ -99,12 +102,14 @@ def get_latest_isodate(resource_dates):
     latest of those dates
     """
     if not resource_dates:
-        return ""
+        return None
     isodates = [
         transform_any_date_to_isodate(date_field) for date_field in resource_dates
     ]
     latest_isodate = max(isodates)
-    return latest_isodate
+    if latest_isodate != "":
+        return latest_isodate
+    return None
 
 
 def correct_invalid_empty_date(value):
@@ -138,8 +143,8 @@ def transform_date_for_solr(date):
     """
     # Necessary as we still have some badly-formatted dates in the database:
     # some are the string 'False', and some are timestamps.
-    if date in ACCEPTED_EMPTY_DATE_VALUES:
-        return VALID_EMPTY_DATE
+    if date in EMPTY_DATE_VALUES:
+        return None
     date = transform_any_date_to_isodate(date)
 
     try:

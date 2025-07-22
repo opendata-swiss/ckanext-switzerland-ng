@@ -91,7 +91,7 @@ def ogdch_date_validator(value):
 
 @register_validator
 def ogdch_date_output(value):
-    if value in ogdch_date_helpers.ACCEPTED_EMPTY_DATE_VALUES:
+    if value in ogdch_date_helpers.EMPTY_DATE_VALUES:
         return ogdch_date_helpers.VALID_EMPTY_DATE
 
     display_value = ogdch_date_helpers.transform_any_date_to_isodate(value)

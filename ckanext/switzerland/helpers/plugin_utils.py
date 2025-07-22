@@ -225,7 +225,7 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
 
     # SOLR can only handle UTC date fields that are isodate in UTC format
     for date_field in DATE_FIELDS_INDEXED_BY_SOLR:
-        if search_data.get(date_field):
+        if date_field in search_data.keys():
             search_data[date_field] = ogdch_date_utils.transform_date_for_solr(
                 search_data[date_field]
             )
