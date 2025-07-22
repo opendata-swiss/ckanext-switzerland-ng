@@ -9,10 +9,13 @@ def get_content_headers(url):
     return response
 
 
-def get_request_language():
+def get_current_language():
+    """If we are in a request context, get the request language
+    Otherwise, fall back to the default language, or English.
+    """
     try:
         return tk.request.environ["CKAN_LANG"]
-    except TypeError:
+    except (RuntimeError, TypeError):
         return tk.config.get("ckan.locale_default", "en")
 
 
@@ -35,6 +38,6 @@ def request_is_api_request():
             # /api/action, i.e. without a version number. All other API calls
             # should include a version number.
             return True
-    except TypeError:
+    except (RuntimeError, TypeError):
         # we get here if there is no request (i.e. on the command line)
         return False

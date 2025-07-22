@@ -285,7 +285,7 @@ class OgdchGroupPlugin(plugins.SingletonPlugin):
         if ogdch_request_utils.request_is_api_request():
             return grp_dict
 
-        request_lang = ogdch_request_utils.get_request_language()
+        request_lang = ogdch_request_utils.get_current_language()
         grp_dict = ogdch_localize_utils.localize_ckan_sub_dict(
             ckan_dict=grp_dict, lang_code=request_lang
         )
@@ -318,7 +318,7 @@ class OgdchOrganizationPlugin(plugins.SingletonPlugin):
         if ogdch_request_utils.request_is_api_request():
             return org_dict
 
-        request_lang = ogdch_request_utils.get_request_language()
+        request_lang = ogdch_request_utils.get_current_language()
         org_dict = ogdch_localize_utils.localize_ckan_sub_dict(
             ckan_dict=org_dict, lang_code=request_lang
         )
@@ -345,7 +345,7 @@ class OgdchResourcePlugin(plugins.SingletonPlugin):
         if ogdch_request_utils.request_is_api_request():
             return res_dict
 
-        request_lang = ogdch_request_utils.get_request_language()
+        request_lang = ogdch_request_utils.get_current_language()
         res_dict = ogdch_localize_utils.localize_ckan_sub_dict(
             ckan_dict=res_dict, lang_code=request_lang
         )
@@ -378,7 +378,7 @@ class OgdchPackagePlugin(plugins.SingletonPlugin):
         if ogdch_request_utils.request_is_api_request():
             return pkg_dict
 
-        request_lang = ogdch_request_utils.get_request_language()
+        request_lang = ogdch_request_utils.get_current_language()
 
         pkg_dict = ogdch_localize_utils.localize_ckan_sub_dict(pkg_dict, request_lang)
         pkg_dict["resources"] = [

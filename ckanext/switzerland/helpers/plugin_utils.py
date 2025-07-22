@@ -321,17 +321,7 @@ def ogdch_adjust_search_params(search_params):
     results in current language
     borrowed from ckanext-multilingual (core extension)"""
     lang_set = ogdch_loc_utils.get_language_priorities()
-    try:
-        current_lang = tk.request.environ["CKAN_LANG"]
-    except TypeError as err:
-        if err.message == (
-            "No object (name: request) has been registered for this thread"
-        ):
-            # This happens when this code gets called as part of a paster
-            # command rather then as part of an HTTP request.
-            current_lang = tk.config.get("ckan.locale_default")
-        else:
-            raise
+    current_lang = ogdch_request_utils.get_current_language()
 
     # fallback to default locale if locale not in suported langs
     if current_lang not in lang_set:
