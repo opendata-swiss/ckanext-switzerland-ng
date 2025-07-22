@@ -1,9 +1,11 @@
 {% ckan_extends %}
 
+{% set showcase_dataset_showcase_list_route = 'showcase_blueprint.dataset_showcase_list' %}
+
 {% block content_primary_nav %}
   {{ h.build_nav_icon(dataset_type ~ '.read', _('Dataset'),  id=pkg.name, icon='sitemap') }}
   {{ h.build_nav_icon(dataset_type ~ '.groups', h.humanize_entity_type('group', default_group_type, 'content tab') or _('Categories'), id=pkg.name, icon='users') }}
-  {{ h.build_nav_icon('showcase_dataset_showcase_list', _('Showcases'), id=pkg.name) }}
+  {{ h.build_nav_icon(showcase_dataset_showcase_list_route, _('Showcases'), id=pkg.name, icon='trophy') }}
   {% if user %}
     {{ h.build_nav_icon('activity.user_activity', _('Activity Stream'), id=user.name, icon='clock') }}
   {% endif %}
