@@ -22,7 +22,8 @@ pip install -e git+https://github.com/ckan/ckanext-xloader.git#egg=ckanext-xload
 pip install -r https://raw.githubusercontent.com/ckan/ckanext-xloader/master/requirements.txt
 
 # Our ckanexts
-pip install -e git+https://github.com/opendata-swiss/ckanext-dcatapchharvest.git#egg=ckanext-dcatapchharvest
+# TODO: ckanext-dcatapchharvest has a typo that calls its egg "dcataapchharvest". Fix that and then fix it here.
+pip install -e git+https://github.com/opendata-swiss/ckanext-dcatapchharvest.git#egg=ckanext-dcataapchharvest
 pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-dcatapchharvest/master/requirements.txt
 pip install -e git+https://github.com/opendata-swiss/ckanext-harvester_dashboard.git#egg=ckanext-harvester_dashboard
 pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-harvester_dashboard/master/requirements.txt
