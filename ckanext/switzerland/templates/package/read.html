@@ -1,6 +1,4 @@
-{% ckan_extends %}
-
-{%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
+{% extends "package/read_base.html" %}
 
 {% block primary_content_inner %}
   {{ super() }}
