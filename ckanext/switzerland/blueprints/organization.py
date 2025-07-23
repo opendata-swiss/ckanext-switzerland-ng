@@ -63,12 +63,6 @@ def index(group_type: str, is_organization: bool) -> str:
     q = request.args.get("q", "")
     sort_by = request.args.get("sort")
 
-    # TODO: Remove
-    # ckan 2.9: Adding variables that were removed from c object for
-    # compatibility with templates in existing extensions
-    g.q = q
-    g.sort_by_selected = sort_by
-
     extra_vars["q"] = q
     extra_vars["sort_by_selected"] = sort_by
 
@@ -112,11 +106,6 @@ def index(group_type: str, is_organization: bool) -> str:
 
     extra_vars["page"].items = global_results
     extra_vars["group_type"] = group_type
-
-    # TODO: Remove
-    # ckan 2.9: Adding variables that were removed from c object for
-    # compatibility with templates in existing extensions
-    g.page = extra_vars["page"]
     return base.render(_get_group_template("index_template", group_type), extra_vars)
 
 
