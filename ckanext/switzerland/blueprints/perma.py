@@ -1,7 +1,6 @@
 import logging
 
-from ckan.logic import NotFound, get_action
-from ckan.plugins.toolkit import _, abort, redirect_to
+from ckan.plugins.toolkit import _, abort, get_action, redirect_to
 from flask import Blueprint
 
 log = logging.getLogger(__name__)
