@@ -18,7 +18,12 @@ NotFound = logic.NotFound
 NotAuthorized = logic.NotAuthorized
 check_access = logic.check_access
 
-org = Blueprint("ogdch_organization", __name__, url_prefix="/organization")
+org = Blueprint(
+    "ogdch_organization",
+    __name__,
+    url_prefix="/organization",
+    url_defaults={"group_type": "organization", "is_organization": True},
+)
 
 
 def xml_upload(name):
@@ -116,3 +121,4 @@ def index(group_type: str, is_organization: bool) -> str:
 
 
 org.add_url_rule("/xml_upload/<name>", view_func=xml_upload, methods=["POST"])
+org.add_url_rule("/", view_func=index, strict_slashes=False)
