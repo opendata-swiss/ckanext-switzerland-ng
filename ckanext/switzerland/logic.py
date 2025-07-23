@@ -474,7 +474,7 @@ def _create_or_update_dataset(dataset):
 
         # We need to explicitly provide a package ID
         dataset["id"] = str(uuid.uuid4())
-        package_schema["id"] = [str]
+        package_schema["id"] = [tk.get_validator("unicode_safe")]
         dataset["name"] = name
         # Create datasets as private initially
         dataset["private"] = True
