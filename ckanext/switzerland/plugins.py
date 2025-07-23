@@ -25,6 +25,7 @@ from ckanext.subscribe.plugin import SubscribePlugin
 from ckanext.switzerland import logic as ogdch_logic
 from ckanext.switzerland.blueprints.organization import org
 from ckanext.switzerland.blueprints.perma import perma
+from ckanext.switzerland.blueprints.user import user
 from ckanext.switzerland.middleware import RobotsHeaderMiddleware
 
 HARVEST_USER = "harvest"
@@ -205,7 +206,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
     # IBlueprint
 
     def get_blueprint(self):
-        return [org, perma]
+        return [org, perma, user]
 
     def before_map(self, map):
         """adding custom routes to the ckan mapping"""

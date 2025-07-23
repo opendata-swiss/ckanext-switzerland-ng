@@ -3,7 +3,7 @@ from typing import Any
 
 import ckan.lib.base as base
 import ckan.logic as logic
-from ckan.common import _, current_user, g, request
+from ckan.common import _, current_user, request
 from ckan.lib.helpers import Page
 from ckan.lib.helpers import helper_functions as h
 from ckan.plugins.toolkit import get_action, redirect_to, request
