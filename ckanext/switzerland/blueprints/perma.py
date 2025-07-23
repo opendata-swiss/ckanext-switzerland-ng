@@ -1,9 +1,12 @@
 import logging
 
+import ckan.logic as logic
 from ckan.plugins.toolkit import _, abort, get_action, redirect_to
 from flask import Blueprint
 
 log = logging.getLogger(__name__)
+
+NotFound = logic.NotFound
 
 perma = Blueprint("perma", __name__, url_prefix="/perma")
 
