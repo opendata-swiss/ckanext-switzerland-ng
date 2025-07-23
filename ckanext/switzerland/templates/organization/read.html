@@ -16,9 +16,11 @@
         is_upload=False,
         upload_label=_('Add datasets from XML')
       ) }}
-      <button class="btn btn-default" id="dataset-import-button" type="submit">
-        {{ _('Submit') }}
-      </button>
+      <div class="form-actions">
+        <button class="btn btn-primary" id="dataset-import-button" type="submit">
+          {{ _('Submit') }}
+        </button>
+      </div>
     </form>
 
   {% endif %}
