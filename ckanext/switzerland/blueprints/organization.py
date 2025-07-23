@@ -29,7 +29,6 @@ def index(group_type: str, is_organization: bool) -> str:
     """
     extra_vars: dict[str, Any] = {}
     page = h.get_page_number(request.args) or 1
-    items_per_page = config.get('ckan.datasets_per_page')
 
     context: Context = {
         u'user': current_user.name,
@@ -63,12 +62,13 @@ def index(group_type: str, is_organization: bool) -> str:
 
     try:
         data_dict_global_results: dict[str, Any] = {
-            u'all_fields': False,
+            u'all_fields': True,
             u'q': q,
             u'sort': sort_by,
             u'type': group_type or u'group',
             u'include_dataset_count': True,
             u'include_member_count': True,
+            u'include_extras': True,
         }
 
         action_name = 'organization_list' if is_organization else 'group_list'
@@ -85,28 +85,13 @@ def index(group_type: str, is_organization: bool) -> str:
         return base.render(
             _get_group_template(u'index_template', group_type), extra_vars)
 
-    data_dict_page_results: dict[str, Any] = {
-        u'all_fields': True,
-        u'q': q,
-        u'sort': sort_by,
-        u'type': group_type or u'group',
-        u'limit': items_per_page,
-        u'offset': items_per_page * (page - 1),
-        u'include_extras': True,
-        u'include_dataset_count': True,
-        u'include_member_count': True,
-    }
-
-    action_name = 'organization_list' if is_organization else 'group_list'
-    page_results = get_action(action_name)(context, data_dict_page_results)
-
     extra_vars["page"] = Page(
         collection=global_results,
         page=page,
         url=h.pager_url,
-        items_per_page=items_per_page, )
+        items_per_page=len(global_results), )
 
-    extra_vars["page"].items = page_results
+    extra_vars["page"].items = global_results
     extra_vars["group_type"] = group_type
 
     # TODO: Remove
