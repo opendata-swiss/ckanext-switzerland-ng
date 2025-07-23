@@ -44,19 +44,19 @@ def index(group_type: str, is_organization: bool) -> str:
     page = h.get_page_number(request.args) or 1
 
     context: Context = {
-        u'user': current_user.name,
-        u'for_view': True,
-        u'with_private': False,
+        "user": current_user.name,
+        "for_view": True,
+        "with_private": False,
     }
 
     try:
-        action_name = 'organization_list' if is_organization else 'group_list'
+        action_name = "organization_list" if is_organization else "group_list"
         check_access(action_name, context)
     except NotAuthorized:
-        base.abort(403, _(u'Not authorized to see this page'))
+        base.abort(403, _("Not authorized to see this page"))
 
-    q = request.args.get(u'q', u'')
-    sort_by = request.args.get(u'sort')
+    q = request.args.get("q", "")
+    sort_by = request.args.get("sort")
 
     # TODO: Remove
     # ckan 2.9: Adding variables that were removed from c object for
@@ -70,39 +70,40 @@ def index(group_type: str, is_organization: bool) -> str:
     # pass user info to context as needed to view private datasets of
     # orgs correctly
     if current_user.is_authenticated:
-        context['user_id'] = current_user.id
-        context['user_is_admin'] = current_user.sysadmin  # type: ignore
+        context["user_id"] = current_user.id
+        context["user_is_admin"] = current_user.sysadmin  # type: ignore
 
     try:
         data_dict_global_results: dict[str, Any] = {
-            u'all_fields': True,
-            u'q': q,
-            u'sort': sort_by,
-            u'type': group_type or u'group',
-            u'include_dataset_count': True,
-            u'include_member_count': True,
-            u'include_extras': True,
+            "all_fields": True,
+            "q": q,
+            "sort": sort_by,
+            "type": group_type or "group",
+            "include_dataset_count": True,
+            "include_member_count": True,
+            "include_extras": True,
         }
 
-        action_name = 'organization_list' if is_organization else 'group_list'
-        global_results = get_action(action_name)(
-            context, data_dict_global_results)
+        action_name = "organization_list" if is_organization else "group_list"
+        global_results = get_action(action_name)(context, data_dict_global_results)
     except ValidationError as e:
-        if e.error_dict and e.error_dict.get(u'message'):
-            msg: Any = e.error_dict['message']
+        if e.error_dict and e.error_dict.get("message"):
+            msg: Any = e.error_dict["message"]
         else:
             msg = str(e)
         h.flash_error(msg)
         extra_vars["page"] = Page([], 0)
         extra_vars["group_type"] = group_type
         return base.render(
-            _get_group_template(u'index_template', group_type), extra_vars)
+            _get_group_template("index_template", group_type), extra_vars
+        )
 
     extra_vars["page"] = Page(
         collection=global_results,
         page=page,
         url=h.pager_url,
-        items_per_page=len(global_results), )
+        items_per_page=len(global_results),
+    )
 
     extra_vars["page"].items = global_results
     extra_vars["group_type"] = group_type
@@ -111,9 +112,7 @@ def index(group_type: str, is_organization: bool) -> str:
     # ckan 2.9: Adding variables that were removed from c object for
     # compatibility with templates in existing extensions
     g.page = extra_vars["page"]
-    return base.render(
-        _get_group_template(u'index_template', group_type), extra_vars)
-
+    return base.render(_get_group_template("index_template", group_type), extra_vars)
 
 
 org.add_url_rule("/xml_upload/<name>", view_func=xml_upload, methods=["POST"])
