@@ -26,7 +26,7 @@ Example:
           <h3 class="dataset-heading">
             {% block heading_private %}
               {% if package.private %}
-                <span class="label label-default">
+                <span class="badge bg-secondary">
                   <i class="fa fa-lock"></i>
                   {{ _('Draft') }}
                 </span>
@@ -37,9 +37,9 @@ Example:
             {% endblock %}
             {% block heading_meta %}
               {% if package.get('state', '').startswith('draft') %}
-                <span class="label label-default">{{ _('Draft') }}</span>
+                <span class="badge bg-secondary">{{ _('Draft') }}</span>
               {% elif package.get('state', '').startswith('deleted') %}
-                <span class="label label-danger">{{ _('Deleted') }}</span>
+                <span class="badge bg-danger">{{ _('Deleted') }}</span>
               {% endif %}
               {{ h.popular('recent views', package.tracking_summary.recent, min=10) if package.tracking_summary }}
             {% endblock %}
@@ -70,7 +70,7 @@ Example:
                 {% for format in h.dict_list_reduce(package.resources, 'format') %}
                 <li>
                   {% set format_truncated = h.truncate(format, 30) %}
-                  <small><span class="label label-default" title="{{ format }}">{{ format }}</span></small>
+                  <small><span class="badge bg-default" title="{{ format }}">{{ format }}</span></small>
                 </li>
                 {% endfor %}
               {% endblock %}

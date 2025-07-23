@@ -47,7 +47,7 @@ Example:
     {% endblock %}
     {% block capacity %}
       {% if show_capacity and group.capacity %}
-      <p><span class="label label-default">{{ h.roles_translated().get(group.capacity, group.capacity) }}</span></p>
+      <p><span class="badge bg-secondary">{{ h.roles_translated().get(group.capacity, group.capacity) }}</span></p>
       {% endif %}
     {% endblock %}
     {% block link %}
