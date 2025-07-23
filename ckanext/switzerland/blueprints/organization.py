@@ -23,5 +23,99 @@ def xml_upload(name):
 
     return redirect_to("organization.read", id=name)
 
+def index(group_type: str, is_organization: bool) -> str:
+    """Copied from ckan.views.group.index to remove pagination on the organization
+    index page, as it doesn't work well with the ckanext-hierarchy display.
+    """
+    extra_vars: dict[str, Any] = {}
+    page = h.get_page_number(request.args) or 1
+    items_per_page = config.get('ckan.datasets_per_page')
+
+    context: Context = {
+        u'user': current_user.name,
+        u'for_view': True,
+        u'with_private': False,
+    }
+
+    try:
+        action_name = 'organization_list' if is_organization else 'group_list'
+        check_access(action_name, context)
+    except NotAuthorized:
+        base.abort(403, _(u'Not authorized to see this page'))
+
+    q = request.args.get(u'q', u'')
+    sort_by = request.args.get(u'sort')
+
+    # TODO: Remove
+    # ckan 2.9: Adding variables that were removed from c object for
+    # compatibility with templates in existing extensions
+    g.q = q
+    g.sort_by_selected = sort_by
+
+    extra_vars["q"] = q
+    extra_vars["sort_by_selected"] = sort_by
+
+    # pass user info to context as needed to view private datasets of
+    # orgs correctly
+    if current_user.is_authenticated:
+        context['user_id'] = current_user.id
+        context['user_is_admin'] = current_user.sysadmin  # type: ignore
+
+    try:
+        data_dict_global_results: dict[str, Any] = {
+            u'all_fields': False,
+            u'q': q,
+            u'sort': sort_by,
+            u'type': group_type or u'group',
+            u'include_dataset_count': True,
+            u'include_member_count': True,
+        }
+
+        action_name = 'organization_list' if is_organization else 'group_list'
+        global_results = get_action(action_name)(
+            context, data_dict_global_results)
+    except ValidationError as e:
+        if e.error_dict and e.error_dict.get(u'message'):
+            msg: Any = e.error_dict['message']
+        else:
+            msg = str(e)
+        h.flash_error(msg)
+        extra_vars["page"] = Page([], 0)
+        extra_vars["group_type"] = group_type
+        return base.render(
+            _get_group_template(u'index_template', group_type), extra_vars)
+
+    data_dict_page_results: dict[str, Any] = {
+        u'all_fields': True,
+        u'q': q,
+        u'sort': sort_by,
+        u'type': group_type or u'group',
+        u'limit': items_per_page,
+        u'offset': items_per_page * (page - 1),
+        u'include_extras': True,
+        u'include_dataset_count': True,
+        u'include_member_count': True,
+    }
+
+    action_name = 'organization_list' if is_organization else 'group_list'
+    page_results = get_action(action_name)(context, data_dict_page_results)
+
+    extra_vars["page"] = Page(
+        collection=global_results,
+        page=page,
+        url=h.pager_url,
+        items_per_page=items_per_page, )
+
+    extra_vars["page"].items = page_results
+    extra_vars["group_type"] = group_type
+
+    # TODO: Remove
+    # ckan 2.9: Adding variables that were removed from c object for
+    # compatibility with templates in existing extensions
+    g.page = extra_vars["page"]
+    return base.render(
+        _get_group_template(u'index_template', group_type), extra_vars)
+
+
 
 org.add_url_rule("/xml_upload/<name>", view_func=xml_upload, methods=["POST"])
