@@ -23,6 +23,7 @@ from ckanext.activity.model import Activity
 from ckanext.showcase.plugin import ShowcasePlugin
 from ckanext.subscribe.plugin import SubscribePlugin
 from ckanext.switzerland import logic as ogdch_logic
+from ckanext.switzerland.blueprints.organization import org
 from ckanext.switzerland.blueprints.perma import perma
 from ckanext.switzerland.middleware import RobotsHeaderMiddleware
 
@@ -204,7 +205,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
     # IBlueprint
 
     def get_blueprint(self):
-        return [perma]
+        return [org, perma]
 
     def before_map(self, map):
         """adding custom routes to the ckan mapping"""
