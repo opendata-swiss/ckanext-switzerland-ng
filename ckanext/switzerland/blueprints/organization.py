@@ -22,7 +22,6 @@ org = Blueprint(
     "ogdch_organization",
     __name__,
     url_prefix="/organization",
-    url_defaults={"group_type": "organization", "is_organization": True},
 )
 
 
@@ -41,12 +40,14 @@ def xml_upload(name):
     return redirect_to("organization.read", id=name)
 
 
-def index(group_type: str, is_organization: bool) -> str:
+def index() -> str:
     """Copied from ckan.views.group.index to remove pagination on the organization
     index page, as it doesn't work well with the ckanext-hierarchy display.
     """
     extra_vars: dict[str, Any] = {}
     page = h.get_page_number(request.args) or 1
+    group_type = "organization"
+    is_organization = True
 
     context: Context = {
         "user": current_user.name,
