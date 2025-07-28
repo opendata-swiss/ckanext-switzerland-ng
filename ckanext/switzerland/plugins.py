@@ -315,7 +315,7 @@ class OgdchOrganizationPlugin(HierarchyDisplay):
         try:
             if not isinstance(tk.g.fields, list) and not hasattr(tk.g, "fields"):
                 return search_params
-        except (TypeError, AttributeError, RuntimeError) as e:
+        except (TypeError, AttributeError, RuntimeError):
             # it's non-organization controller or CLI call
             return search_params
 
