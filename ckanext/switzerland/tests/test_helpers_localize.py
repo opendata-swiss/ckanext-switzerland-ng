@@ -2,7 +2,6 @@ import unittest
 
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 
-
 organization_title = '{"fr": "Swisstopo FR", "de": "Swisstopo DE", "en": "Swisstopo EN", "it": "Swisstopo IT"}'
 
 

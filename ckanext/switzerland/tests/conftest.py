@@ -71,3 +71,21 @@ def dataset(org):
     }
 
     return tk.get_action("package_create")(get_context(), dataset_dict)
+
+
+@pytest.fixture
+def site_user():
+    return get_context()["user"]
+
+
+@pytest.fixture
+def users():
+    for n in range(3):
+        user = {
+            "name": f"user{str(n)}",
+            "email": f"user{str(n)}@example.org",
+            "password": f"password{str(n)}",
+        }
+        tk.get_action("user_create")(get_context(), user)
+
+    return tk.get_action("user_list")(get_context(), {"all_fields": False})
