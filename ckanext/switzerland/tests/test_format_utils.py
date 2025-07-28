@@ -2,7 +2,7 @@
 
 import os
 
-from nose.tools import *
+import pytest
 
 import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
 
@@ -314,38 +314,34 @@ prepare_resource_data = [
 ]
 
 
-def _check_prepare_resource_format(resource_data, expected_format):
+@pytest.mark.parametrize("resource_data, expected_format", prepare_resource_data)
+def test_prepare_resource_format(resource_data, expected_format):
     cleaned_resource = ogdch_format_utils.prepare_resource_format(resource_data.copy())
     assert expected_format == cleaned_resource["format"]
 
 
-def test_prepare_resource_format():
-    for r in prepare_resource_data:
-        yield _check_prepare_resource_format, r[0], r[1]
-
-
 prepare_formats_data = [
-    {
-        "resources": [{"media_type": "rdf+xml"}, {"media_type": "png"}],
-        "linked_data_only": True,
-        "expected_formats": ["RDF XML"],
-    },
-    {
-        "resources": [{"media_type": "rdf+xml"}, {"media_type": "png"}],
-        "linked_data_only": False,
-        "expected_formats": ["RDF XML", "PNG"],
-    },
-    {
-        "resources": [
+    (
+        [{"media_type": "rdf+xml"}, {"media_type": "png"}],
+        True,
+        ["RDF XML"],
+    ),
+    (
+        [{"media_type": "rdf+xml"}, {"media_type": "png"}],
+        False,
+        ["RDF XML", "PNG"],
+    ),
+    (
+        [
             {"media_type": "rdf+xml"},
             {"media_type": "rdf+xml"},
             {"media_type": "png"},
         ],
-        "linked_data_only": False,
-        "expected_formats": ["RDF XML", "PNG"],
-    },
-    {
-        "resources": [
+        False,
+        ["RDF XML", "PNG"],
+    ),
+    (
+        [
             {"media_type": "ld+json"},
             {"media_type": "n3"},
             {"media_type": "n-triples"},
@@ -353,8 +349,8 @@ prepare_formats_data = [
             {"media_type": "rdf+xml"},
             {"media_type": "sparql-query"},
         ],
-        "linked_data_only": True,
-        "expected_formats": [
+        True,
+        [
             "N3",
             "SPARQL",
             "JSON-LD",
@@ -362,19 +358,15 @@ prepare_formats_data = [
             "RDF N-Triples",
             "RDF Turtle",
         ],
-    },
+    ),
 ]
 
 
-def _check_prepare_formats_for_index(resources, linked_data_only, expected_formats):
+@pytest.mark.parametrize(
+    "resources, linked_data_only, expected_formats", prepare_formats_data
+)
+def test_prepare_formats_for_index(resources, linked_data_only, expected_formats):
     prepared_formats = ogdch_format_utils.prepare_formats_for_index(
         resources, linked_data_only
     )
     assert sorted(prepared_formats) == sorted(expected_formats)
-
-
-def test_prepare_formats_for_index():
-    for i in prepare_formats_data:
-        yield _check_prepare_formats_for_index, i["resources"], i[
-            "linked_data_only"
-        ], i["expected_formats"]

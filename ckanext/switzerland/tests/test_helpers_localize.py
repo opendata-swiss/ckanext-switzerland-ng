@@ -1,49 +1,7 @@
-# -*- coding: utf-8 -*-
-"""Tests for helpers.py."""
 import unittest
-
-from nose.tools import *
 
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 
-organizations = [
-    {
-        "children": [],
-        "highlighted": False,
-        "id": "7dbaad15-597f-499c-9a72-95de38b95cad",
-        "name": "swiss-library",
-        "title": '{"fr": "AAAAA (FR)", "de": "bbbbb (DE)", "en": "ààààà (EN)", "it": "ZZZZZ (IT)"}',
-    },
-    {
-        "children": [],
-        "highlighted": False,
-        "id": "51941490-5ade-4d06-b708-ff04279ce550",
-        "name": "italian-library",
-        "title": '{"fr": "YYYYY (FR)", "de": "ZZZZZ (DE)", "en": "üüüüü (EN)", "it": "AAAAA (IT)"}',
-    },
-    {
-        "children": [
-            {
-                "children": [],
-                "highlighted": False,
-                "id": "589ff525-be2f-4059-bea4-75c92739dfe9",
-                "name": "child-swiss-library",
-                "title": '{"fr": "AAAAA (FR)", "de": "yyyyy (DE)", "en": "zzzzz (EN)", "it": "BBBBB (IT)"}',
-            },
-            {
-                "children": [],
-                "highlighted": False,
-                "id": "2c559631-e174-4e9f-8c2a-940a08371340",
-                "name": "child-italian-library",
-                "title": '{"fr": "YYYYY (FR)", "de": "BBBBB (DE)", "en": "ööööö (EN)", "it": "ZZZZZ (IT)"}',
-            },
-        ],
-        "highlighted": False,
-        "id": "73124d1e-c2aa-4d20-a42d-fa71b8946e93",
-        "name": "swisstopo",
-        "title": '{"fr": "Swisstopo FR", "de": "Swisstopo DE", "en": "ÉÉÉÉÉ (EN)", "it": "Swisstopo IT"}',
-    },
-]
 
 organization_title = '{"fr": "Swisstopo FR", "de": "Swisstopo DE", "en": "Swisstopo EN", "it": "Swisstopo IT"}'
 

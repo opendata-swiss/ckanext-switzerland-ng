@@ -1,10 +1,6 @@
-# encoding: utf-8
-
-from datetime import datetime, timedelta
 from unittest import TestCase
 
 from ckan.logic import ValidationError
-from nose.tools import assert_equals, assert_raises
 
 from ckanext.switzerland.helpers.decorators import _get_limits_from_config, ratelimit
 
@@ -24,6 +20,6 @@ class TestApiLimit(TestCase):
         data_dict = {"author_email": "test@mail.com"}
 
         for i in range(limit_call_count):
-            assert_equals(api_call(context=context, data_dict=data_dict), True)
+            assert api_call(context=context, data_dict=data_dict) is True
         with self.assertRaises(ValidationError):
             api_call(context=context, data_dict=data_dict)

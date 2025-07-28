@@ -1,10 +1,7 @@
-# -*- coding: utf-8 -*-
-"""Tests for helpers.py."""
 import unittest
 from copy import deepcopy
 
 import mock
-from nose.tools import *
 
 import ckanext.switzerland.helpers.frontend_helpers as ogdch_frontend_helpers
 
