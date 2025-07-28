@@ -349,3 +349,10 @@ def get_contact_point_for_dataset(id):
         return tk.get_action("package_show")(context, {"id": id})["contact_points"]
     except tk.NotFound:
         return None
+
+
+def ogdch_is_include_children_selected():
+    """Always include datasets belonging to child organizations when searching in their
+    parent organization.
+    """
+    return True

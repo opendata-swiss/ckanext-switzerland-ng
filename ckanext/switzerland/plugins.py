@@ -20,6 +20,7 @@ import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 import ckanext.switzerland.helpers.validators as ogdch_validators
 import ckanext.xloader.interfaces as ix
 from ckanext.activity.model import Activity
+from ckanext.hierarchy.plugin import HierarchyDisplay
 from ckanext.showcase.plugin import ShowcasePlugin
 from ckanext.subscribe.plugin import SubscribePlugin
 from ckanext.switzerland import logic as ogdch_logic
@@ -302,9 +303,17 @@ class OgdchGroupPlugin(plugins.SingletonPlugin):
         ogdch_logic.ogdch_add_users_to_groups(None, {})
 
 
-class OgdchOrganizationPlugin(plugins.SingletonPlugin):
+class OgdchOrganizationPlugin(HierarchyDisplay):
+    """Implements IOrganizationController to localize organization dictionary in
+    before_view.
+
+    Inherits from HierarchyDisplay plugin to make sure that searches for datasets in an
+    organization always include datasets belonging to its child organizations as well.
+    """
     plugins.implements(plugins.IConfigurer, inherit=True)
     plugins.implements(plugins.IOrganizationController, inherit=True)
+
+    # IOrganizationController
 
     def before_view(self, org_dict):
         """
@@ -325,6 +334,25 @@ class OgdchOrganizationPlugin(plugins.SingletonPlugin):
             ckan_dict=org_dict, lang_code=request_lang
         )
         return org_dict
+
+    # ITemplateHelpers (implemented in parent class HierarchyDisplay)
+
+    def get_helpers(self):
+        helpers = super().get_helpers()
+        helpers["is_include_children_selected"] = (
+            ogdch_backend_helpers.ogdch_is_include_children_selected
+        )
+
+        return helpers
+
+    # IPackageController (implemented in parent class HierarchyDisplay)
+
+    def before_dataset_search(self, search_params):
+        query = search_params.get("q", "")
+        query += ' include_children: "True"'
+        search_params["q"] = query
+
+        return super().before_dataset_search(search_params)
 
 
 class OgdchResourcePlugin(plugins.SingletonPlugin):
