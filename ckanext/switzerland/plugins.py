@@ -209,28 +209,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
     def get_blueprint(self):
         return [org, perma, user]
 
-    def before_map(self, map):
-        """adding custom routes to the ckan mapping"""
-
-        # group routes
-        map.connect("group_new", "/group/new", controller="group", action="new")
-        map.connect(
-            "group_read",
-            "/group/{id}",
-            controller="ckanext.switzerland.controllers.group:OgdchGroupController",
-            action="read",
-        )
-        map.connect("group_edit", "/group/edit/{id}", controller="group", action="edit")
-
-        map.connect(
-            "group.index",
-            "/group",
-            controller="ckanext.switzerland.controllers.group:OgdchGroupController",
-            action="index",
-        )
-
-        return map
-
 
 class OgdchGroupPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IGroupController, inherit=True)
