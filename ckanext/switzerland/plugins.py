@@ -229,44 +229,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             action="index",
         )
 
-        # organization routes
-        map.connect(
-            "organization_index",
-            "/organization",
-            controller="ckanext.switzerland.controllers.organization:OgdchOrganizationController",
-            action="index",
-        )
-        map.connect(
-            "organization_list",
-            "/user/organizations/{id}",
-            controller="ckanext.switzerland.controllers.organization:OgdchOrganizationController",
-            action="list_for_user",
-        )
-        map.connect(
-            "organization_new",
-            "/organization/new",
-            controller="organization",
-            action="new",
-        )
-        map.connect(
-            "organization_read",
-            "/organization/{id}",
-            controller="ckanext.switzerland.controllers.organization:OgdchOrganizationController",
-            action="read",
-        )
-        map.connect(
-            "organization_edit",
-            "/organization/edit/{id}",
-            controller="organization",
-            action="edit",
-        )
-        map.connect(
-            "organization_xml_upload",
-            "/organization/xml_upload/{name}",
-            controller="ckanext.switzerland.controllers.organization:OgdchOrganizationController",
-            action="xml_upload",
-        )
-
         return map
 
 
