@@ -310,6 +310,7 @@ class OgdchOrganizationPlugin(HierarchyDisplay):
     Inherits from HierarchyDisplay plugin to make sure that searches for datasets in an
     organization always include datasets belonging to its child organizations as well.
     """
+
     plugins.implements(plugins.IConfigurer, inherit=True)
     plugins.implements(plugins.IOrganizationController, inherit=True)
 
@@ -348,6 +349,18 @@ class OgdchOrganizationPlugin(HierarchyDisplay):
     # IPackageController (implemented in parent class HierarchyDisplay)
 
     def before_dataset_search(self, search_params):
+        # Check if we're called from the organization controller, as detected
+        # by g being registered for this thread, and the existence of g.fields
+        # values
+        try:
+            if not isinstance(tk.g.fields, list) and not hasattr(tk.g, "fields"):
+                return search_params
+        except (TypeError, AttributeError, RuntimeError) as e:
+            # it's non-organization controller or CLI call
+            return search_params
+
+        # Add special term to the query to tell parent method that we want to include
+        # child organizations in the search
         query = search_params.get("q", "")
         query += ' include_children: "True"'
         search_params["q"] = query
