@@ -59,7 +59,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         # Register WebAssets
         tk.add_resource("assets", "switzerland")
 
-        # IValidators
+    # IValidators
 
     def get_validators(self):
         return {
@@ -271,7 +271,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
 
 class OgdchGroupPlugin(plugins.SingletonPlugin):
-    plugins.implements(plugins.IConfigurer, inherit=True)
     plugins.implements(plugins.IGroupController, inherit=True)
 
     def before_view(self, grp_dict):
@@ -311,7 +310,6 @@ class OgdchOrganizationPlugin(HierarchyDisplay):
     organization always include datasets belonging to its child organizations as well.
     """
 
-    plugins.implements(plugins.IConfigurer, inherit=True)
     plugins.implements(plugins.IOrganizationController, inherit=True)
 
     # IOrganizationController
@@ -369,7 +367,6 @@ class OgdchOrganizationPlugin(HierarchyDisplay):
 
 
 class OgdchResourcePlugin(plugins.SingletonPlugin):
-    plugins.implements(plugins.IConfigurer, inherit=True)
     plugins.implements(plugins.IResourceController, inherit=True)
 
     # IResourceController
@@ -396,7 +393,6 @@ class OgdchResourcePlugin(plugins.SingletonPlugin):
 
 
 class OgdchPackagePlugin(plugins.SingletonPlugin):
-    plugins.implements(plugins.IConfigurer, inherit=True)
     plugins.implements(plugins.IPackageController, inherit=True)
     plugins.implements(ix.IXloader, inherit=True)
 
