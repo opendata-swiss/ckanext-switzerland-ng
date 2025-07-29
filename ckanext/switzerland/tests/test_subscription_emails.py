@@ -1,9 +1,10 @@
 import datetime
+from unittest.mock import patch
 
 import ckan.tests.factories as ckan_factories
 import pytest
 from ckan import plugins as p
-from mock import patch
+from ckan.lib.helpers import url_for
 
 from ckanext.subscribe.email_verification import (
     get_verification_email_vars,
@@ -90,13 +91,13 @@ def _test_html_footer(body_html, dataset_id, subscription=False, code=""):
 
 @pytest.mark.ckan_config(
     "ckan.plugins",
-    "ogdch ogdch_pkg ogdch_subscribe scheming_datasets fluent activity",
+    "ogdch ogdch_pkg ogdch_showcase ogdch_subscribe scheming_datasets fluent activity",
 )
 @pytest.mark.usefixtures(
     "with_plugins", "clean_db_and_migrate_for_ogdch_subscribe", "clean_index"
 )
 class TestSubscriptionEmails(object):
-    def test_get_email_vars_with_subscription(self, dataset):
+    def test_get_email_vars_with_subscription(self, app, dataset):
         subscription = factories.Subscription(
             dataset_id=dataset["id"], return_object=True
         )
@@ -131,7 +132,7 @@ class TestSubscriptionEmails(object):
             f"subscribe/unsubscribe?code=testcode&dataset={dataset['id']}"
         )
 
-    def test_get_email_vars_with_email(self, dataset):
+    def test_get_email_vars_with_email(self, app, dataset):
         subscribe = OgdchSubscribePlugin()
         email_vars = subscribe.get_email_vars(
             code="testcode", subscription=None, email="bob@example.com"
@@ -156,11 +157,14 @@ class TestSubscriptionEmails(object):
         assert "object_link" not in email_vars
         assert "unsubscribe_link" not in email_vars
 
-    def test_get_verification_email_contents(self, dataset):
+    def test_get_verification_email_contents(self, app, dataset, mail_server):
         subscription = factories.Subscription(
             dataset_id=dataset["id"], return_object=True
         )
         subscription.verification_code = "testcode"
+
+        url = url_for("subscribe.signup")
+        resp = app.post(url, data={})
 
         subscribe = OgdchSubscribePlugin()
         email_vars = get_verification_email_vars(subscription)
@@ -189,7 +193,7 @@ class TestSubscriptionEmails(object):
         _test_all_four_languages(body_html, object_title_included=True)
         _test_all_four_languages(body_plain_text, object_title_included=True)
 
-    def test_get_manage_email_contents(self, dataset):
+    def test_get_manage_email_contents(self, app, dataset):
         subscription = factories.Subscription(
             dataset_id=dataset["id"], return_object=True
         )
@@ -228,7 +232,7 @@ class TestSubscriptionEmails(object):
         _test_all_four_languages(body_html, object_title_included=False)
         _test_all_four_languages(body_plain_text, object_title_included=False)
 
-    def test_get_subscription_confirmation_email_contents(self, dataset):
+    def test_get_subscription_confirmation_email_contents(self, app, dataset):
         subscription = factories.Subscription(
             dataset_id=dataset["id"], return_object=True
         )
@@ -264,7 +268,9 @@ class TestSubscriptionEmails(object):
         _test_all_four_languages(body_plain_text, object_title_included=False)
 
     @patch("ckanext.switzerland.helpers.backend_helpers.get_contact_point_for_dataset")
-    def test_get_notification_email_contents(self, dataset, mock_get_contact_point):
+    def test_get_notification_email_contents(
+        self, mock_get_contact_point, app, dataset
+    ):
         mock_get_contact_point.return_value = [
             {"name": "Open-Data-Plattform", "email": "contact@odp.ch"}
         ]
@@ -334,7 +340,7 @@ class TestSubscriptionEmails(object):
         _test_all_four_languages(body_plain_text, object_title_included=True)
 
     @patch("ckanext.switzerland.helpers.backend_helpers.get_contact_point_for_dataset")
-    def test_get_deletion_email_contents(self, dataset, mock_get_contact_point):
+    def test_get_deletion_email_contents(self, mock_get_contact_point, app, dataset):
         contact_points = [{"name": "Open-Data-Plattform", "email": "contact@odp.ch"}]
         mock_get_contact_point.return_value = contact_points
         code = "testcode"
@@ -391,7 +397,7 @@ class TestSubscriptionEmails(object):
         assert "http://test.ckan.net" not in body_html
         assert "http://test.ckan.net" not in body_plain_text
 
-    def test_get_activities(self, dataset):
+    def test_get_activities(self, app, dataset):
         """Test that we don't get activities from the migration and harvest users."""
         normal_activity = factories.Activity(
             object_id=dataset["id"],
