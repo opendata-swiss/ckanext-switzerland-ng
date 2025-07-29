@@ -92,7 +92,9 @@ def _test_html_footer(body_html, dataset_id, subscription=False, code=""):
     "ckan.plugins",
     "ogdch ogdch_pkg ogdch_subscribe scheming_datasets fluent activity",
 )
-@pytest.mark.usefixtures("with_plugins", "clean_db", "clean_index")
+@pytest.mark.usefixtures(
+    "with_plugins", "clean_db_and_migrate_for_ogdch_subscribe", "clean_index"
+)
 class TestSubscriptionEmails(object):
     def test_get_email_vars_with_subscription(self, dataset):
         subscription = factories.Subscription(

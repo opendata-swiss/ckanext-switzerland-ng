@@ -55,6 +55,13 @@ def get_context():
 
 
 @pytest.fixture
+def clean_db_and_migrate_for_ogdch_subscribe(reset_db, migrate_db_for):
+    reset_db()
+    migrate_db_for("ogdch_subscribe")
+    migrate_db_for("activity")
+
+
+@pytest.fixture
 def org():
     org_dict = {
         "name": "test-org",
