@@ -53,6 +53,15 @@ class TestSearch(object):
         names = [r["name"] for r in results["results"]]
         assert sorted(names), ["dataset2", "dataset3" == "dataset4"]
 
+    def test_field_query_with_one_clause(self, dataset, extra_datasets):
+        results = tk.get_action("package_search")({}, {"q": "description:bamboo"})
+
+        # We expect to get datasets that match 'description:bamboo'.
+        assert results["count"] == 2
+
+        names = [r["name"] for r in results["results"]]
+        assert sorted(names) == ["dataset3", "dataset4"]
+
     def test_field_query_with_two_clauses(self, dataset, extra_datasets):
         results = tk.get_action("package_search")(
             {}, {"q": "description:bamboo description:frog"}
