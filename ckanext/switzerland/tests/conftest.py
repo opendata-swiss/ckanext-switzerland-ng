@@ -122,7 +122,8 @@ def groups():
 
 @pytest.fixture
 def extra_datasets(groups):
-    # Add some more datasets
+    extra_datasets = []
+
     dataset_dict_2 = copy(dataset_dict)
     dataset_dict_2["name"] = "dataset2"
     dataset_dict_2["identifier"] = "dataset2@test-org"
@@ -132,7 +133,9 @@ def extra_datasets(groups):
         "en": "Frog EN",
         "it": "Frog IT",
     }
-    tk.get_action("package_create")(get_context(), dataset_dict_2)
+    extra_datasets.append(
+        tk.get_action("package_create")(get_context(), dataset_dict_2)
+    )
 
     dataset_dict_3 = copy(dataset_dict)
     dataset_dict_3["name"] = "dataset3"
@@ -145,7 +148,9 @@ def extra_datasets(groups):
     }
     dataset_dict_3["groups"] = [{"name": "group1"}]
 
-    tk.get_action("package_create")(get_context(), dataset_dict_3)
+    extra_datasets.append(
+        tk.get_action("package_create")(get_context(), dataset_dict_3)
+    )
 
     dataset_dict_4 = copy(dataset_dict)
     dataset_dict_4["name"] = "dataset4"
@@ -158,4 +163,8 @@ def extra_datasets(groups):
     }
     dataset_dict_4["groups"] = [{"name": "group2"}]
 
-    tk.get_action("package_create")(get_context(), dataset_dict_4)
+    extra_datasets.append(
+        tk.get_action("package_create")(get_context(), dataset_dict_4)
+    )
+
+    return extra_datasets
