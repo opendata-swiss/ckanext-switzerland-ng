@@ -1,4 +1,5 @@
 import logging
+from copy import copy
 
 import ckan.model as model
 import ckan.plugins.toolkit as tk
@@ -6,6 +7,40 @@ import pytest
 from ckan.tests import helpers
 
 log = logging.getLogger(__name__)
+
+dataset_dict = {
+    "coverage": "",
+    "issued": "08.09.2015",
+    "contact_points": [{"email": "pierre@bar.ch", "name": "Pierre"}],
+    "keywords": {"fr": [], "de": [], "en": [], "it": []},
+    "spatial": "",
+    "publisher": {
+        "name": "Bundesarchiv",
+        "url": "https//opendata.swiss/organization/bundesarchiv",
+    },
+    "description": {
+        "fr": "Description FR",
+        "de": "Beschreibung DE",
+        "en": "Description EN",
+        "it": "Description IT",
+    },
+    "title": {
+        "fr": "FR Test",
+        "de": "DE Test",
+        "en": "EN Test",
+        "it": "IT Test",
+    },
+    "language": ["en", "de"],
+    "name": "test-dataset",
+    "relations": [],
+    "see_alsos": [],
+    "temporals": [],
+    "accrual_periodicity": "http://publications.europa.eu/resource/authority/frequency/IRREG",
+    "modified": "09.09.2015",
+    "url": "http://some_url",
+    "owner_org": "test-org",
+    "identifier": "test@test-org",
+}
 
 
 def get_context():
@@ -36,40 +71,6 @@ def org():
 
 @pytest.fixture
 def dataset(org):
-    dataset_dict = {
-        "coverage": "",
-        "issued": "08.09.2015",
-        "contact_points": [{"email": "pierre@bar.ch", "name": "Pierre"}],
-        "keywords": {"fr": [], "de": [], "en": [], "it": []},
-        "spatial": "",
-        "publisher": {
-            "name": "Bundesarchiv",
-            "url": "https//opendata.swiss/organization/bundesarchiv",
-        },
-        "description": {
-            "fr": "Description FR",
-            "de": "Beschreibung DE",
-            "en": "Description EN",
-            "it": "Description IT",
-        },
-        "title": {
-            "fr": "FR Test",
-            "de": "DE Test",
-            "en": "EN Test",
-            "it": "IT Test",
-        },
-        "language": ["en", "de"],
-        "name": "test-dataset",
-        "relations": [],
-        "see_alsos": [],
-        "temporals": [],
-        "accrual_periodicity": "http://publications.europa.eu/resource/authority/frequency/IRREG",
-        "modified": "09.09.2015",
-        "url": "http://some_url",
-        "owner_org": "test-org",
-        "identifier": "test@test-org",
-    }
-
     return tk.get_action("package_create")(get_context(), dataset_dict)
 
 
@@ -89,3 +90,72 @@ def users():
         tk.get_action("user_create")(get_context(), user)
 
     return tk.get_action("user_list")(get_context(), {"all_fields": False})
+
+
+@pytest.fixture
+def groups():
+    groups = []
+    group1 = {
+        "name": "group1",
+        "title": {
+            "de": "Group 1 DE",
+            "fr": "Group 1 FR",
+            "it": "Group 1 IT",
+            "en": "Group 1 EN",
+        },
+    }
+    groups.append(tk.get_action("group_create")(get_context(), group1))
+
+    group2 = {
+        "name": "group2",
+        "title": {
+            "de": "Group 2 DE",
+            "fr": "Group 2 FR",
+            "it": "Group 2 IT",
+            "en": "Group 2 EN",
+        },
+    }
+    groups.append(tk.get_action("group_create")(get_context(), group2))
+
+    return groups
+
+
+@pytest.fixture
+def extra_datasets(groups):
+    # Add some more datasets
+    dataset_dict_2 = copy(dataset_dict)
+    dataset_dict_2["name"] = "dataset2"
+    dataset_dict_2["identifier"] = "dataset2@test-org"
+    dataset_dict_2["description"] = {
+        "fr": "Frog FR",
+        "de": "Frog DE",
+        "en": "Frog EN",
+        "it": "Frog IT",
+    }
+    tk.get_action("package_create")(get_context(), dataset_dict_2)
+
+    dataset_dict_3 = copy(dataset_dict)
+    dataset_dict_3["name"] = "dataset3"
+    dataset_dict_3["identifier"] = "dataset3@test-org"
+    dataset_dict_3["description"] = {
+        "fr": "Bamboo FR",
+        "de": "Bamboo DE",
+        "en": "Bamboo EN",
+        "it": "Bamboo IT",
+    }
+    dataset_dict_3["groups"] = [{"name": "group1"}]
+
+    tk.get_action("package_create")(get_context(), dataset_dict_3)
+
+    dataset_dict_4 = copy(dataset_dict)
+    dataset_dict_4["name"] = "dataset4"
+    dataset_dict_4["identifier"] = "dataset4@test-org"
+    dataset_dict_4["description"] = {
+        "fr": "Bamboo Frog FR",
+        "de": "Bamboo Frog DE",
+        "en": "Bamboo Frog EN",
+        "it": "Bamboo Frog IT",
+    }
+    dataset_dict_4["groups"] = [{"name": "group2"}]
+
+    tk.get_action("package_create")(get_context(), dataset_dict_4)

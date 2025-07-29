@@ -1,24 +1,27 @@
-import nose
-
-assert_equal = nose.tools.assert_equal
-assert_true = nose.tools.assert_true
+import pytest
 
 
+@pytest.mark.ckan_config(
+    "ckan.plugins",
+    "ogdch ogdch_pkg ogdch_org ogdch_showcase ogdch_subscribe ogdch_middleware scheming_datasets fluent ogdch_dcat",
+)
+@pytest.mark.ckan_config("ckanext.dcat.rdf.profiles", "swiss_dcat_ap")
+@pytest.mark.usefixtures("with_plugins", "clean_db", "clean_index")
 class TestMiddleware(object):
-    def test_response_header_html(self, app):
+    def test_response_header_html(self, app, dataset):
         response = app.get("/dataset/test-dataset")
 
-        assert_equal(response.status_int, 200)
-        assert_equal(response.headers.get("X-Robots-Tag"), "noindex, nofollow")
+        assert response.status_code == 200
+        assert response.headers.get("X-Robots-Tag") == "noindex, nofollow"
 
-    def test_response_header_xml(self, app):
+    def test_response_header_xml(self, app, dataset):
         response = app.get("/dataset/test-dataset.xml")
 
-        assert_equal(response.status_int, 200)
-        assert_equal(response.headers.get("X-Robots-Tag"), "noindex, nofollow")
+        assert response.status_code == 200
+        assert response.headers.get("X-Robots-Tag"), "noindex == nofollow"
 
-    def test_response_header_json(self, app):
+    def test_response_header_json(self, app, dataset):
         response = app.get("/api/3/action/package_show?id=test-dataset")
 
-        assert_equal(response.status_int, 200)
-        assert_equal(response.headers.get("X-Robots-Tag"), "noindex, nofollow")
+        assert response.status_code == 200
+        assert response.headers.get("X-Robots-Tag"), "noindex == nofollow"

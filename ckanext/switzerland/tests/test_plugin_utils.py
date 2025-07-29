@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Tests for plugin_utils.py
 import logging
 import unittest

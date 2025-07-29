@@ -4,7 +4,7 @@ from ckan.lib.helpers import url_for
 
 @pytest.mark.ckan_config(
     "ckan.plugins",
-    "ogdch ogdch_pkg ogdch_showcase scheming_datasets fluent hierarchy_display subscribe dcat",
+    "ogdch ogdch_pkg ogdch_org ogdch_showcase scheming_datasets fluent subscribe dcat",
 )
 @pytest.mark.usefixtures("with_plugins", "clean_db", "clean_index")
 class TestBlueprints(object):
