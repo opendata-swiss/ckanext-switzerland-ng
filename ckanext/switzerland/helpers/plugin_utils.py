@@ -197,7 +197,7 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa
             title = ogdch_loc_utils.get_localized_value_from_dict(
                 validated_dict["title"], lang_code
             )
-            if not isinstance(title, str) and not isinstance(title, str):
+            if not isinstance(title, str):
                 title = ""
                 log.info(
                     f"Dataset {search_data['name']} has an unexpected title type: "
