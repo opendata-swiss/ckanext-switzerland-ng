@@ -29,8 +29,8 @@ pip install -e git+https://github.com/opendata-swiss/ckanext-harvester_dashboard
 pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-harvester_dashboard/master/requirements.txt
 pip install -e git+https://github.com/bellisk/ckanext-subscribe.git#egg=ckanext-subscribe
 pip install -r https://raw.githubusercontent.com/bellisk/ckanext-subscribe/master/requirements.txt
-pip install -e git+https://github.com/opendata-swiss/ckanext-password-policy.git#egg=ckanext-password-policy
-pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-password-policy/master/requirements.txt
+pip install -e git+https://github.com/opendata-swiss/ckanext-password-policy.git@feat/upgrade_to_py3#egg=ckanext-password-policy
+pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-password-policy/feat/upgrade_to_py3/requirements.txt
 
 echo "Replace default path to CKAN core config file with the one on the container"
 sed -i -e 's/use = config:.*/use = config:\/srv\/app\/src\/ckan\/test-core.ini/' "$WORKDIR"/test.ini
