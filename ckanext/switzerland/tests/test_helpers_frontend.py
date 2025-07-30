@@ -1,7 +1,6 @@
 import unittest
 from copy import deepcopy
-
-import mock
+from unittest.mock import patch
 
 import ckanext.switzerland.helpers.frontend_helpers as ogdch_frontend_helpers
 
@@ -49,7 +48,7 @@ organization_title = '{"fr": "Swisstopo FR", "de": "Swisstopo DE", "en": "Swisst
 
 class TestHelpers(unittest.TestCase):
 
-    @mock.patch("ckan.lib.i18n.get_lang", return_value="fr")
+    @patch("ckan.lib.i18n.get_lang", return_value="fr")
     def test_get_sorted_orgs_by_translated_title_fr(self, mock_get_lang):
         french_organizations = deepcopy(organizations)
         result_orgs = ogdch_frontend_helpers.get_sorted_orgs_by_translated_title(
@@ -68,7 +67,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(0, self.find_position_of_org(result_orgs, "AAAAA (FR)"))
         self.assertEqual(2, self.find_position_of_org(result_orgs, "YYYYY (FR)"))
 
-    @mock.patch("ckan.lib.i18n.get_lang", return_value="it")
+    @patch("ckan.lib.i18n.get_lang", return_value="it")
     def test_get_sorted_orgs_by_translated_title_it(self, mock_get_lang):
         italian_organizations = deepcopy(organizations)
         result_orgs = ogdch_frontend_helpers.get_sorted_orgs_by_translated_title(
@@ -87,7 +86,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(2, self.find_position_of_org(result_orgs, "ZZZZZ (IT)"))
         self.assertEqual(0, self.find_position_of_org(result_orgs, "AAAAA (IT)"))
 
-    @mock.patch("ckan.lib.i18n.get_lang", return_value="de")
+    @patch("ckan.lib.i18n.get_lang", return_value="de")
     def test_get_sorted_orgs_by_translated_title_de(self, mock_get_lang):
         german_organizations = deepcopy(organizations)
         result_orgs = ogdch_frontend_helpers.get_sorted_orgs_by_translated_title(
@@ -106,7 +105,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(0, self.find_position_of_org(result_orgs, "bbbbb (DE)"))
         self.assertEqual(2, self.find_position_of_org(result_orgs, "ZZZZZ (DE)"))
 
-    @mock.patch("ckan.lib.i18n.get_lang", return_value="en")
+    @patch("ckan.lib.i18n.get_lang", return_value="en")
     def test_get_sorted_orgs_by_translated_title_en(self, mock_get_lang):
         english_organizations = deepcopy(organizations)
         result_orgs = ogdch_frontend_helpers.get_sorted_orgs_by_translated_title(
