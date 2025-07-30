@@ -8,6 +8,7 @@ from ckan import plugins as p
 from ckan.lib.helpers import url_for
 from ckan.tests import helpers
 
+from ckanext.subscribe import model as subscribe_model
 from ckanext.subscribe.email_verification import (
     get_verification_email_vars,
 )
@@ -107,12 +108,13 @@ def trigger_notifications(app, sysadmin_headers):
 
 @pytest.mark.ckan_config(
     "ckan.plugins",
-    "ogdch ogdch_pkg ogdch_showcase ogdch_subscribe scheming_datasets fluent activity",
+    "ogdch ogdch_pkg ogdch_org ogdch_showcase ogdch_subscribe ogdch_dcat scheming_datasets fluent activity",
 )
 @pytest.mark.ckan_config("ckan.site_url", "http://test.ckan.net")
 @pytest.mark.ckan_config(
     "ckanext.switzerland.frontend_url", "http://frontend-test.ckan.net"
 )
+@pytest.mark.ckan_config("ckanext.subscribe.apply_recaptcha", False)
 @pytest.mark.usefixtures(
     "with_plugins", "clean_db_and_migrate_for_ogdch_subscribe", "clean_index"
 )
@@ -175,65 +177,96 @@ class TestSubscriptionEmails(object):
         assert "object_link" not in email_vars
         assert "unsubscribe_link" not in email_vars
 
-    def test_get_verification_email_contents(self, app, dataset, mail_server):
-        subscription = factories.Subscription(
-            dataset_id=dataset["id"], return_object=True
-        )
-        subscription.verification_code = "testcode"
+    # Horrible unittest.mock gotcha: these patch decorators have to be listed in the
+    # *opposite* order from the variables in the test-function signature.
+    @patch("ckanext.subscribe.mailer.mail_recipient")
+    @patch("ckanext.subscribe.email_auth.create_code")
+    def test_get_verification_email_contents(
+        self,
+        mock_create_code,
+        mock_mail_recipient,
+        app,
+        dataset,
+    ):
+        mock_create_code.return_value = "testcode"
 
         url = url_for("subscribe.signup")
-        resp = app.post(url, data={})
+        app.post(url, data={"email": "bob@example.com", "dataset": dataset["id"]})
 
-        subscribe = OgdchSubscribePlugin()
-        email_vars = get_verification_email_vars(subscription)
-        subject, body_plain_text, body_html = subscribe.get_verification_email_contents(
-            email_vars
-        )
+        mock_mail_recipient.assert_called_once()
 
+        # Email subject
+        subject = mock_mail_recipient.call_args[1]["subject"]
         assert (
             subject
-            == "Best\xe4tigungsmail \\u2013 Confirmation - E-mail di conferma - Confirmation"
+            == "Best\xe4tigungsmail – Confirmation - E-mail di conferma - Confirmation"
         )
+
+        # Email plain-text body
+        body_plain_text = mock_mail_recipient.call_args[1]["body"]
         assert (
             """Vielen Dank, dass Sie sich für den Datensatz"""
             in body_plain_text.strip()
         )
+        assert "http://test.ckan.net" not in body_plain_text
+        _test_plain_text_footer(
+            body_plain_text, dataset["id"], subscription=False, code=""
+        )
+        _test_all_four_languages(body_plain_text, object_title_included=True)
+
+        # Email HTML body
+        body_html = mock_mail_recipient.call_args[1]["body_html"]
         assert (
             """Vielen Dank, dass Sie sich f\xfcr den Datensatz""" in body_html.strip()
         )
         assert "http://test.ckan.net" not in body_html
-        assert "http://test.ckan.net" not in body_plain_text
 
         _test_html_footer(body_html, dataset["id"], subscription=False, code="")
-        _test_plain_text_footer(
-            body_plain_text, dataset["id"], subscription=False, code=""
-        )
         _test_all_four_languages(body_html, object_title_included=True)
-        _test_all_four_languages(body_plain_text, object_title_included=True)
 
-    def test_get_manage_email_contents(self, app, dataset):
+    @patch("ckanext.subscribe.mailer.mail_recipient")
+    @patch("ckanext.subscribe.email_auth.create_code")
+    def test_get_manage_email_contents(
+        self,
+        mock_create_code,
+        mock_mail_recipient,
+        app,
+        dataset,
+    ):
+        mock_create_code.return_value = "testcode"
         subscription = factories.Subscription(
             dataset_id=dataset["id"], return_object=True
         )
-        subscription.verification_code = "testcode"
 
-        subscribe = OgdchSubscribePlugin()
-        email_vars = subscribe.get_email_vars(
-            code=subscription.verification_code, subscription=subscription
-        )
-        subject, body_plain_text, body_html = subscribe.get_manage_email_contents(
-            email_vars
-        )
+        url = url_for("subscribe.request_manage_code")
+        app.get(url, data={"email": "bob@example.com"})
 
+        mock_mail_recipient.assert_called_once()
+
+        # Email subject
+        subject = mock_mail_recipient.call_args[1]["subject"]
         assert subject == "Manage opendata.swiss subscription"
+
+        # Email plain-text body
+        body_plain_text = mock_mail_recipient.call_args[1]["body"]
         assert """To manage subscriptions for""" in body_plain_text.strip()
+        assert "http://test.ckan.net" not in body_plain_text
+        _test_plain_text_footer(
+            body_plain_text,
+            dataset["id"],
+            subscription=False,
+            code=subscription.verification_code,
+        )
+        _test_all_four_languages(body_plain_text, object_title_included=False)
+
+        # Email HTML body
+        body_html = mock_mail_recipient.call_args[1]["body_html"]
         assert (
             """<p>
     To manage subscriptions for"""
             in body_html.strip()
         )
         assert "http://test.ckan.net" not in body_html
-        assert "http://test.ckan.net" not in body_plain_text
 
         _test_html_footer(
             body_html,
@@ -241,52 +274,64 @@ class TestSubscriptionEmails(object):
             subscription=False,
             code=subscription.verification_code,
         )
-        _test_plain_text_footer(
-            body_plain_text,
-            dataset["id"],
-            subscription=False,
-            code=subscription.verification_code,
-        )
         _test_all_four_languages(body_html, object_title_included=False)
-        _test_all_four_languages(body_plain_text, object_title_included=False)
 
-    def test_get_subscription_confirmation_email_contents(self, app, dataset):
-        subscription = factories.Subscription(
-            dataset_id=dataset["id"], return_object=True
+    @patch("ckanext.subscribe.mailer.mail_recipient")
+    @patch("ckanext.subscribe.email_auth.create_code")
+    def test_get_subscription_confirmation_email_contents(
+        self,
+        mock_create_code,
+        mock_mail_recipient,
+        app,
+        dataset,
+    ):
+        mock_create_code.return_value = "testcode"
+        factories.SubscriptionLowLevel(
+            object_id=dataset["id"],
+            object_type="dataset",
+            email="bob@example.com",
+            frequency=subscribe_model.Frequency.IMMEDIATE.value,
+            verification_code="testcode",
+            verification_code_expires=datetime.datetime.now()
+            + datetime.timedelta(hours=1),
         )
-        code = "testcode"
 
-        subscribe = OgdchSubscribePlugin()
-        email_vars = subscribe.get_email_vars(code=code, subscription=subscription)
-        subject, body_plain_text, body_html = (
-            subscribe.get_subscription_confirmation_email_contents(email_vars)
-        )
+        url = url_for("subscribe.verify_subscription")
+        app.get(url, params={"code": "testcode"})
 
+        mock_mail_recipient.assert_called_once()
+
+        # Email subject
+        subject = mock_mail_recipient.call_args[1]["subject"]
         assert (
             subject
-            == "Best\xe4tigungsmail \\u2013 Confirmation - E-mail di conferma - Confirmation"
+            == "Best\xe4tigungsmail – Confirmation - E-mail di conferma - Confirmation"
         )
+
+        # Email plain-text body
+        body_plain_text = mock_mail_recipient.call_args[1]["body"]
         assert (
             """Sie haben Ihre E-Mail-Adresse erfolgreich bestätigt."""
             in body_plain_text.strip()
         )
+        assert "http://test.ckan.net" not in body_plain_text
+        _test_plain_text_footer(
+            body_plain_text, dataset["id"], subscription=True, code="testcode"
+        )
+        _test_all_four_languages(body_plain_text, object_title_included=False)
+
+        # Email HTML body
+        body_html = mock_mail_recipient.call_args[1]["body_html"]
         assert (
             """<p>
     Sie haben Ihre E-Mail-Adresse erfolgreich bestätigt. """
             in body_html.strip()
         )
         assert "http://test.ckan.net" not in body_html
-        assert "http://test.ckan.net" not in body_plain_text
 
-        _test_html_footer(body_html, dataset["id"], subscription=True, code=code)
-        _test_plain_text_footer(
-            body_plain_text, dataset["id"], subscription=True, code=code
-        )
+        _test_html_footer(body_html, dataset["id"], subscription=True, code="testcode")
         _test_all_four_languages(body_html, object_title_included=False)
-        _test_all_four_languages(body_plain_text, object_title_included=False)
 
-    # Horrible unittest.mock gotcha: these patch decorators have to be listed in the
-    # *opposite* order from the variables in the test-function signature.
     @patch("ckanext.switzerland.helpers.backend_helpers.get_contact_point_for_dataset")
     @patch("ckanext.subscribe.mailer.mail_recipient")
     @patch("ckanext.subscribe.email_auth.create_code")
@@ -354,62 +399,57 @@ class TestSubscriptionEmails(object):
         _test_all_four_languages(body_html, object_title_included=True)
 
     @patch("ckanext.switzerland.helpers.backend_helpers.get_contact_point_for_dataset")
-    def test_get_deletion_email_contents(self, mock_get_contact_point, app, dataset):
+    @patch("ckanext.subscribe.mailer.mail_recipient")
+    @patch("ckanext.subscribe.email_auth.create_code")
+    def test_get_deletion_email_contents(
+        self,
+        mock_create_code,
+        mock_mail_recipient,
+        mock_get_contact_point,
+        app,
+        dataset,
+        sysadmin_headers,
+        no_notification_users,
+    ):
+        mock_create_code.return_value = "testcode"
         contact_points = [{"name": "Open-Data-Plattform", "email": "contact@odp.ch"}]
         mock_get_contact_point.return_value = contact_points
-        code = "testcode"
-        email = "bob@example.com"
-        subscription = factories.Subscription(
-            dataset_id=dataset["id"], return_object=False
-        )
-        notifications = [
-            {
-                "subscription": subscription,
-                "activities": [
-                    {
-                        "user_id": "admin",
-                        "object_id": "test-object-id",
-                        "revision_id": "test-revision-id-1",
-                        "activity_type": "deleted package",
-                        "timestamp": "2022-10-12T12:00:00",
-                        "data": {
-                            "package": {
-                                "name": "test-dataset",
-                                "title": '{"fr": "FR Test", "de": "DE Test", "en": "EN Test", "it": "IT Test"}',
-                            }
-                        },
-                    }
-                ],
-            }
-        ]
 
-        email_vars = get_notification_email_vars(
-            code=code, email=email, notifications=notifications
-        )
-        subscribe = OgdchSubscribePlugin()
-        subject, body_plain_text, body_html = subscribe.get_notification_email_contents(
-            email_vars, type="deletion"
-        )
+        # Delete our dataset to generate a "deleted package" activity
+        p.toolkit.get_action("package_delete")(get_context(), {"id": dataset["id"]})
+        # Create a subscription to our dataset that will get a notification email
+        factories.Subscription(dataset_id=dataset["id"], return_object=True)
 
-        assert subject == "Delete notification \\u2013 deleted dataset opendata.swiss"
+        trigger_notifications(app, sysadmin_headers)
+
+        mock_mail_recipient.assert_called_once()
+
+        # Email subject
+        subject = mock_mail_recipient.call_args[1]["subject"]
+        assert subject == "Delete notification – deleted dataset opendata.swiss"
+
+        # Email plain-text body
+        body_plain_text = mock_mail_recipient.call_args[1]["body"]
         assert (
             'Hello,\nWe inform you that the dataset "EN Test" you subscribed to has '
             "been removed from our portal by the data provider."
             in body_plain_text.strip()
         )
+        assert contact_points[0].get("name") in body_plain_text.strip()
+        assert contact_points[0].get("email") in body_plain_text.strip()
+        assert "http://test.ckan.net" not in body_plain_text
+
+        # Email HTML body
+        body_html = mock_mail_recipient.call_args[1]["body_html"]
         assert (
             '<p>Hello,</p>\n\n<p>We inform you that the dataset "<b>EN Test</b>" you '
             "subscribed to has been removed from our portal" in body_html.strip()
         )
-        assert contact_points[0].get("name") in body_plain_text.strip()
-        assert contact_points[0].get("email") in body_plain_text.strip()
         assert (
             f"<a href=\"mailto:{contact_points[0].get('email')}\">"
             f"{contact_points[0].get('name')}</a>" in body_html.strip()
         )
-
         assert "http://test.ckan.net" not in body_html
-        assert "http://test.ckan.net" not in body_plain_text
 
     def test_get_activities(self, app, dataset):
         """Test that we don't get activities from the migration and harvest users."""
