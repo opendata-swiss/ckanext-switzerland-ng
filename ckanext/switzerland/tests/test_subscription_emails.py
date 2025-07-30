@@ -3,15 +3,19 @@ from unittest.mock import patch
 
 import ckan.tests.factories as ckan_factories
 import pytest
+from ckan import model
 from ckan import plugins as p
 from ckan.lib.helpers import url_for
+from ckan.tests import helpers
 
 from ckanext.subscribe.email_verification import (
     get_verification_email_vars,
 )
+from ckanext.subscribe.notification import dictize_notifications
 from ckanext.subscribe.notification_email import get_notification_email_vars
 from ckanext.subscribe.tests import factories
 from ckanext.switzerland.plugins import OgdchSubscribePlugin
+from ckanext.switzerland.tests.conftest import get_context
 
 config = p.toolkit.config
 
@@ -59,16 +63,16 @@ www.bfs.admin.ch/ogd
 def _test_html_footer(body_html, dataset_id, subscription=False, code=""):
     assert (
         """<p>
-<a href="https://opendata.swiss">
-    <img src="https://opendata.swiss/images/logo_horizontal.png" alt="opendata.swiss"
-         width="420" style="max-width: 100%; height: auto;"/>
-</a>
+    <a href="https://opendata.swiss">
+        <img src="https://opendata.swiss/images/logo_horizontal.png" alt="opendata.swiss"
+             width="420" style="max-width: 100%; height: auto;"/>
+    </a>
 </p>
 <p>
-<a href="https://twitter.com/opendataswiss">
-    <img src="https://opendata.swiss/images/x.svg" alt="X"
-         style="color: #fff; background-color: #009688; border: 0;"/>
-</a>
+    <a href="https://twitter.com/opendataswiss">
+        <img src="https://opendata.swiss/images/x.svg" alt="X"
+             style="color: #fff; background-color: #009688; border: 0;"/>
+    </a>
 </p>"""
         in body_html
     )
@@ -89,9 +93,25 @@ def _test_html_footer(body_html, dataset_id, subscription=False, code=""):
     assert footer_link_text in body_html
 
 
+def trigger_notifications(app, sysadmin_headers):
+    url = url_for(
+        "api.action",
+        logic_function="subscribe_send_any_notifications",
+        ver=3,
+    )
+    app.post(
+        url,
+        headers=sysadmin_headers,
+    )
+
+
 @pytest.mark.ckan_config(
     "ckan.plugins",
     "ogdch ogdch_pkg ogdch_showcase ogdch_subscribe scheming_datasets fluent activity",
+)
+@pytest.mark.ckan_config("ckan.site_url", "http://test.ckan.net")
+@pytest.mark.ckan_config(
+    "ckanext.switzerland.frontend_url", "http://frontend-test.ckan.net"
 )
 @pytest.mark.usefixtures(
     "with_plugins", "clean_db_and_migrate_for_ogdch_subscribe", "clean_index"
@@ -267,59 +287,62 @@ class TestSubscriptionEmails(object):
         _test_all_four_languages(body_html, object_title_included=False)
         _test_all_four_languages(body_plain_text, object_title_included=False)
 
+    # Horrible unittest.mock gotcha: these patch decorators have to be listed in the
+    # *opposite* order from the variables in the test-function signature.
     @patch("ckanext.switzerland.helpers.backend_helpers.get_contact_point_for_dataset")
+    @patch("ckanext.subscribe.mailer.mail_recipient")
+    @patch("ckanext.subscribe.email_auth.create_code")
     def test_get_notification_email_contents(
-        self, mock_get_contact_point, app, dataset
+        self,
+        mock_create_code,
+        mock_mail_recipient,
+        mock_get_contact_point,
+        app,
+        dataset,
+        sysadmin_headers,
+        no_notification_users,
     ):
+        mock_create_code.return_value = "testcode"
         mock_get_contact_point.return_value = [
             {"name": "Open-Data-Plattform", "email": "contact@odp.ch"}
         ]
-        code = "testcode"
-        email = "bob@example.com"
-        subscription = factories.Subscription(
-            dataset_id=dataset["id"], return_object=False
-        )
-        notifications = [
-            {
-                "subscription": subscription,
-                "activities": [
-                    {
-                        "user_id": "admin",
-                        "object_id": "test-object-id",
-                        "revision_id": "test-revision-id-1",
-                        "activity_type": "changed package",
-                        "timestamp": "2022-10-12T12:00:00",
-                        "data": {
-                            "package": {
-                                "name": "test-dataset",
-                                "title": '{"fr": "FR Test", "de": "DE Test", "en": "EN Test", "it": "IT Test"}',
-                            }
-                        },
-                    }
-                ],
-            }
-        ]
 
-        email_vars = get_notification_email_vars(
-            code=code, email=email, notifications=notifications
+        # Change our dataset to generate a "changed package" activity
+        p.toolkit.get_action("package_patch")(
+            get_context(), {"id": dataset["id"], "url": "http://new_url"}
         )
-        subscribe = OgdchSubscribePlugin()
-        subject, body_plain_text, body_html = subscribe.get_notification_email_contents(
-            email_vars
-        )
+        # Create a subscription to our dataset that will get a notification email
+        factories.Subscription(dataset_id=dataset["id"], return_object=True)
 
-        assert subject == "Update notification \\u2013 updated dataset opendata.swiss"
+        trigger_notifications(app, sysadmin_headers)
+
+        mock_mail_recipient.assert_called_once()
+
+        # Email subject
+        subject = mock_mail_recipient.call_args[1]["subject"]
+        assert subject == "Update notification – updated dataset opendata.swiss"
+
+        # Email plain-text body
+        body_plain_text = mock_mail_recipient.call_args[1]["body"]
         assert (
             "Es gibt eine \xc4nderung im Datensatz DE Test. Um die \xc4nderung zu sehen, klicken Sie bitte"
             in body_plain_text.strip()
-        )
-        assert (
-            "Es gibt eine \xc4nderung im Datensatz DE Test. Um die \xc4nderung zu sehen, klicken Sie bitte"
-            in body_html.strip()
         )
         assert (
             f"http://frontend-test.ckan.net/dataset/{dataset['id']}"
             in body_plain_text.strip()
+        )
+        assert "http://test.ckan.net" not in body_plain_text
+        _test_plain_text_footer(
+            body_plain_text, dataset["id"], subscription=False, code="testcode"
+        )
+        _test_all_four_languages(body_plain_text, object_title_included=True)
+
+        # Email HTML body
+        body_html = mock_mail_recipient.call_args[1]["body_html"]
+        assert (
+            "Es gibt eine \xc4nderung im Datensatz DE Test. Um die \xc4nderung zu sehen, klicken Sie bitte"
+            in body_html.strip()
         )
         assert (
             '<a href="http://frontend-test.ckan.net/dataset/{dataset_id}">'
@@ -328,16 +351,9 @@ class TestSubscriptionEmails(object):
             )
             in body_html.strip()
         )
-
         assert "http://test.ckan.net" not in body_html
-        assert "http://test.ckan.net" not in body_plain_text
-
-        _test_html_footer(body_html, dataset["id"], subscription=False, code=code)
-        _test_plain_text_footer(
-            body_plain_text, dataset["id"], subscription=False, code=code
-        )
+        _test_html_footer(body_html, dataset["id"], subscription=False, code="testcode")
         _test_all_four_languages(body_html, object_title_included=True)
-        _test_all_four_languages(body_plain_text, object_title_included=True)
 
     @patch("ckanext.switzerland.helpers.backend_helpers.get_contact_point_for_dataset")
     def test_get_deletion_email_contents(self, mock_get_contact_point, app, dataset):

@@ -4,7 +4,9 @@ from copy import copy
 import ckan.model as model
 import ckan.plugins.toolkit as tk
 import pytest
-from ckan.tests import helpers
+from ckan.tests import factories, helpers
+
+from ckanext.switzerland.plugins import HARVEST_USER, MIGRATION_USER
 
 log = logging.getLogger(__name__)
 
@@ -97,6 +99,33 @@ def users():
         tk.get_action("user_create")(get_context(), user)
 
     return tk.get_action("user_list")(get_context(), {"all_fields": False})
+
+
+@pytest.fixture
+def sysadmin_headers():
+    user = factories.SysadminWithToken()
+    headers = {"Authorization": user["token"]}
+    return headers
+
+
+@pytest.fixture
+def no_notification_users():
+    tk.get_action("user_create")(
+        get_context(),
+        {
+            "name": HARVEST_USER,
+            "email": f"{HARVEST_USER}@example.org",
+            "password": f"password{HARVEST_USER}",
+        },
+    )
+    tk.get_action("user_create")(
+        get_context(),
+        {
+            "name": MIGRATION_USER,
+            "email": f"{MIGRATION_USER}@example.org",
+            "password": f"password{MIGRATION_USER}",
+        },
+    )
 
 
 @pytest.fixture
