@@ -33,6 +33,7 @@ def force_reset_passwords(app, user, data_dict):
 
 
 @pytest.mark.ckan_config("ckan.plugins", "ogdch password_policy")
+@pytest.mark.ckan_config("smtp.mail_from", "ckan@localhost")
 @pytest.mark.usefixtures("with_plugins", "clean_db")
 class TestForceResetPasswords(object):
     def test_reset_single_user_password(self, app, site_user, users):
