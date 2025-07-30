@@ -288,10 +288,9 @@ class OgdchOrganizationPlugin(HierarchyDisplay):
 
     def before_dataset_search(self, search_params):
         # Check if we're called from the organization controller, as detected
-        # by g being registered for this thread, and the existence of g.fields
-        # values
+        # by g being registered for this thread, and the existence of g.group_dict
         try:
-            if not isinstance(tk.g.fields, list) and not hasattr(tk.g, "fields"):
+            if not hasattr(tk.g, "group_dict"):
                 return search_params
         except (TypeError, AttributeError, RuntimeError):
             # it's non-organization controller or CLI call
