@@ -79,5 +79,5 @@ jobs:
         docker exec test_ckan $WORKDIR/bin/install_test_requirements.sh ${{ matrix.ckan-version }}
     - name: Run tests
       run: | 
-        docker exec test_ckan nosetests --ckan --with-pylons=$WORKDIR/test.ini \
-          --cov=ckanext.switzerland --disable-warnings $WORKDIR/ckanext/switzerland/tests
+        docker exec test_ckan pytest --ckan-ini=$WORKDIR/test.ini --cov=ckanext.switzerland \
+          --cov-config=$WORKDIR/.coveragerc --disable-warnings $WORKDIR/ckanext/switzerland/tests
