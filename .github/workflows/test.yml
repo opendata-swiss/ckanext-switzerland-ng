@@ -66,7 +66,7 @@ jobs:
     - name: Create ckan container
       run: |
         /usr/bin/docker create --name test_ckan --network ${{ job.container.network }} --network-alias ckan \
-          -e "HOME=/github/home" -e GITHUB_ACTIONS=true -e CI=true --user root \
+          -e "HOME=/github/home" -e GITHUB_ACTIONS=true -e CI=true -e CKAN_SITE_URL=http://test.ckan.net --user root \
           -v "/var/run/docker.sock":"/var/run/docker.sock" \
           -v "/home/runner/work":"/__w" -v "/home/runner/work/_temp":"/__w/_temp" \
           -v "/home/runner/work/_actions":"/__w/_actions" -v "/opt/hostedtoolcache":"/__t" \
