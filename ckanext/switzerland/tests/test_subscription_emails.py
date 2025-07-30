@@ -422,14 +422,26 @@ class TestSubscriptionEmails(object):
 
         trigger_notifications(app, sysadmin_headers)
 
-        mock_mail_recipient.assert_called_once()
+        # Two emails are sent here, not just one, so we can't do
+        # mock_mail_recipient.assert_called_once().
+        # There is one email for the package being created, and one for it being
+        # deleted. This is an artefact of how factories.Subscription works: it
+        # backdates the subscription's creation date to one hour ago, so both the
+        # 'new package' and 'deleted package' activities are notified about.
+        # In test_get_notification_email_contents above, there is only *one* email sent,
+        # because ckanext-subscribe bundles the 'new package' and 'changed package'
+        # notifications, but it does not bundle the 'deleted package' notification.
+        # TODO: This should be tidied up in ckanext-subscribe. Then this test will need
+        # to be adjusted.
+        mock_mail_recipient.assert_called()
 
         # Email subject
-        subject = mock_mail_recipient.call_args[1]["subject"]
+        mail_recipient_args = mock_mail_recipient.call_args_list[1][1]
+        subject = mail_recipient_args["subject"]
         assert subject == "Delete notification – deleted dataset opendata.swiss"
 
         # Email plain-text body
-        body_plain_text = mock_mail_recipient.call_args[1]["body"]
+        body_plain_text = mail_recipient_args["body"]
         assert (
             'Hello,\nWe inform you that the dataset "EN Test" you subscribed to has '
             "been removed from our portal by the data provider."
@@ -440,7 +452,7 @@ class TestSubscriptionEmails(object):
         assert "http://test.ckan.net" not in body_plain_text
 
         # Email HTML body
-        body_html = mock_mail_recipient.call_args[1]["body_html"]
+        body_html = mail_recipient_args["body_html"]
         assert (
             '<p>Hello,</p>\n\n<p>We inform you that the dataset "<b>EN Test</b>" you '
             "subscribed to has been removed from our portal" in body_html.strip()
