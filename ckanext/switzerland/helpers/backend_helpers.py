@@ -340,7 +340,7 @@ def ogdch_get_env():
 
 def get_contact_point_for_dataset(id):
     """
-    Return a list of showcases a dataset is associated with
+    Return the contact points for a dataset.
     """
     user = tk.get_action("get_site_user")({"ignore_auth": True}, {})
     context = {"user": user["name"]}
