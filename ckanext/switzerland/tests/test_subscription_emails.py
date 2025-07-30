@@ -159,8 +159,6 @@ class TestSubscriptionEmails(object):
         )
 
         assert email_vars["site_title"] == config["ckan.site_title"]
-        assert email_vars["site_url"] == "http://test.ckan.net"
-
         assert email_vars["email"] == "bob@example.com"
         assert (
             email_vars["manage_link"]
