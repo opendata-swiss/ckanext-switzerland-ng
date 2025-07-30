@@ -44,7 +44,8 @@ jobs:
       CKAN_REDIS_URL: redis://redis:6379/1
       CKAN_SITE_URL: http://test.ckan.net
       WORKDIR: /__w/ckanext-switzerland-ng/ckanext-switzerland-ng
-      SOLR_CONFIG_CKAN_DIR: /opt/solr/server/solr/ckan/conf
+      SOLR_CONFIG_DIR: /opt/solr/server/solr/configsets
+      SOLR_CONFIG_CKAN_DIR: /opt/solr/server/solr/configsets/ckan/conf
 
     steps:
     - uses: actions/checkout@v4
@@ -56,11 +57,11 @@ jobs:
           -e GITHUB_ACTIONS=true -e CI=true -v "${{ github.workspace }}/solr/schema.xml":"$SOLR_CONFIG_CKAN_DIR/managed-schema" \
           -v "${{ github.workspace }}/solr/german_dictionary.txt":"$SOLR_CONFIG_CKAN_DIR/german_dictionary.txt" \
           -v "${{ github.workspace }}/solr/solrconfig.xml":"$SOLR_CONFIG_CKAN_DIR/solrconfig.xml" \
-          -v "${{ github.workspace }}/solr/lang/fr_elision.txt":"$SOLR_CONFIG_CKAN_DIR/lang/fr_elision.txt" \
-          -v "${{ github.workspace }}/solr/lang/stopwords_de.txt":"$SOLR_CONFIG_CKAN_DIR/lang/stopwords_de.txt" \
-          -v "${{ github.workspace }}/solr/lang/stopwords_en.txt":"$SOLR_CONFIG_CKAN_DIR/lang/stopwords_en.txt" \
-          -v "${{ github.workspace }}/solr/lang/stopwords_fr.txt":"$SOLR_CONFIG_CKAN_DIR/lang/stopwords_fr.txt" \
-          -v "${{ github.workspace }}/solr/lang/stopwords_it.txt":"$SOLR_CONFIG_CKAN_DIR/lang/stopwords_it.txt" \
+          -v "${{ github.workspace }}/solr/lang/fr_elision.txt":"$SOLR_CONFIG_DIR/ckan/lang/fr_elision.txt" \
+          -v "${{ github.workspace }}/solr/lang/stopwords_de.txt":"$SOLR_CONFIG_DIR/ckan/lang/stopwords_de.txt" \
+          -v "${{ github.workspace }}/solr/lang/stopwords_en.txt":"$SOLR_CONFIG_DIR/ckan/lang/stopwords_en.txt" \
+          -v "${{ github.workspace }}/solr/lang/stopwords_fr.txt":"$SOLR_CONFIG_DIR/ckan/lang/stopwords_fr.txt" \
+          -v "${{ github.workspace }}/solr/lang/stopwords_it.txt":"$SOLR_CONFIG_DIR/ckan/lang/stopwords_it.txt" \
           ckan/ckan-solr:${{ matrix.ckan-version }}-solr9
         docker start test_solr
     - name: Create ckan container
