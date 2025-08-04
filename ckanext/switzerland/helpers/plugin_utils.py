@@ -73,7 +73,7 @@ def _is_dataset_package_type(pkg_dict):
 
 
 # TODO: This function is too complex. Refactor it.
-def ogdch_prepare_search_data_for_index(search_data):  # noqa
+def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
     """prepares the data for indexing"""
     if not _is_dataset_package_type(search_data):
         return search_data
