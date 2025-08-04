@@ -15,7 +15,7 @@ def get_current_language():
     """
     try:
         return tk.request.environ["CKAN_LANG"]
-    except (RuntimeError, TypeError):
+    except (KeyError, RuntimeError, TypeError):
         return tk.config.get("ckan.locale_default", "en")
 
 
