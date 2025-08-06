@@ -589,8 +589,8 @@ def ogdch_user_create(context, data_dict):
             if exception:
                 message += f" An error occured: {exception}"
             h.flash_error(message)
-    except TypeError:
-        # We get this error when creating a user via the command line.
+    except (RuntimeError, TypeError):
+        # We get these errors when creating a user via the command line or in tests.
         # Then there is no session, so showing a flash message fails.
         log.warning(
             f"The email could not be sent to {user['email']} for user {user['name']}. "

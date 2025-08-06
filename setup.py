@@ -37,11 +37,11 @@ setup(
         "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
         # Specify the Python versions you support here.
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
     ],
-    python_requires=">=3.6",
+    python_requires=">=3.8",
     # What does your project relate to?
     keywords="""CKAN schema dcat dcat-ap switzerland""",
     # You can just specify the packages manually here if your project is
