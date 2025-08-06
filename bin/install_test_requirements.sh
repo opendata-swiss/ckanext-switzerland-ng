@@ -40,6 +40,3 @@ sed -i -e 's/sqlalchemy.url = .*/sqlalchemy.url = postgresql:\/\/ckan_default:pa
 
 echo "Init db"
 ckan -c "$WORKDIR"/test.ini db init
-
-echo "Apply pending migrations"
-ckan -c "$WORKDIR"/test.ini db pending-migrations --apply
