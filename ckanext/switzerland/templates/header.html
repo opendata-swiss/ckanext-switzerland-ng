@@ -12,14 +12,14 @@
      {% endif %}
      {% if user %}
        <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'harvest-dashboard') }}">
-<!--    TODO: add back link to harvest dashboard, when ckanext-harvest_dashboard is updated to CKAN 2.11     -->
+         {{ h.nav_link(_('Harvest Dashboard'), named_route='harvester_dashboard.dashboard') }}
        </li>
        <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'harvest') }}">
          {{ h.nav_link(_('Harvest Sources'), named_route='harvest.search') }}
        </li>
      {% endif %}
      <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'dataset') }}">
-         {{ h.nav_link(_('Datasets'), named_route='search') }}
+         {{ h.nav_link(_('Datasets'), named_route='dataset.search') }}
      </li>
      <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'organization') }}">
          {{ h.nav_link(_('Organizations'), named_route='organization.index') }}
