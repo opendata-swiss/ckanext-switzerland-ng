@@ -19,7 +19,7 @@
        </li>
      {% endif %}
      <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'dataset') }}">
-         {{ h.nav_link(_('Datasets'), named_route='search') }}
+         {{ h.nav_link(_('Datasets'), named_route='dataset.search') }}
      </li>
      <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'organization') }}">
          {{ h.nav_link(_('Organizations'), named_route='organization.index') }}
