@@ -16,7 +16,7 @@ pip install -e git+https://github.com/ckan/ckanext-hierarchy.git#egg=ckanext-hie
 pip install -e git+https://github.com/ckan/ckanext-harvest.git#egg=ckanext-harvest
 pip install -r https://raw.githubusercontent.com/ckan/ckanext-harvest/master/requirements.txt
 pip install -e git+https://github.com/ckan/ckanext-dcat.git#egg=ckanext-dcat
-pip install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/master/requirements-py2.txt
+pip install -r https://raw.githubusercontent.com/ckan/ckanext-dcat/master/requirements.txt
 pip install -e git+https://github.com/ckan/ckanext-showcase.git#egg=ckanext-showcase
 pip install -e git+https://github.com/ckan/ckanext-xloader.git#egg=ckanext-xloader
 pip install -r https://raw.githubusercontent.com/ckan/ckanext-xloader/master/requirements.txt
