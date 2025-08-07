@@ -12,6 +12,7 @@ from urllib.parse import quote, urlparse
 import ckan.lib.i18n as i18n
 import ckan.plugins.toolkit as tk
 from ckan import authz
+from ckan import model as model
 from ckan.lib.helpers import _link_to
 from ckan.lib.helpers import dataset_display_name as dataset_display_name_orig
 from ckan.lib.helpers import lang
