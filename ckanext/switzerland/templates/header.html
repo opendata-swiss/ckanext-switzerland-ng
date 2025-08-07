@@ -10,7 +10,7 @@
          </a>
        </li>
      {% endif %}
-     {% if user %}
+     {% if c.user %}
        <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'harvest-dashboard') }}">
          {{ h.nav_link(_('Harvest Dashboard'), named_route='harvester_dashboard.dashboard') }}
        </li>
