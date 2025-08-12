@@ -314,11 +314,12 @@ def ogdch_admin_capacity():
     """tests whether the current user is a sysadmin
     or an organization admin
     """
-    if authz.is_sysadmin(c.user):
+    username = tk.current_user.name
+    if authz.is_sysadmin(username):
         return True
-    context = {"user": c.user, "auth_user_obj": c.userobj}
+    context = {"user": username}
     roles_for_user = tk.get_action("organization_list_for_user")(
-        context, {"id": c.user}
+        context, {"id": username}
     )
     capacities = [role.get("capacity") for role in roles_for_user]
     if CAPACITY_ADMIN in capacities:
