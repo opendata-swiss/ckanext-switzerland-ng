@@ -4,9 +4,9 @@
   {% if harvest_source.organization %}
     {% snippet "snippets/organization_breadcrumb.html", organization=harvest_source.organization %}
     <li>{{ h.nav_link(_('Harvest Sources'), named_route='{0}_search'.format(c.dataset_type)) }}</li>
-    <li>{{ self.breadcrumb_content_root_selected() }}>{{ h.nav_link(harvest_source.title|truncate(10), named_route='{0}.read'.format(c.dataset_type), id=harvest_source.name) }}</li>
+    <li{{ self.breadcrumb_content_root_selected() }}>{{ h.nav_link(harvest_source.title|truncate(10), named_route='{0}.read'.format(c.dataset_type), id=harvest_source.name) }}</li>
   {% else %}
     <li>{{ h.nav_link(_('Harvest Sources'), named_route='{0}_search'.format(c.dataset_type)) }}</li>
-    <li>{{ self.breadcrumb_content_root_selected() }}>{{ h.nav_link(harvest_source.title|truncate(30), named_route='{0}.read'.format(c.dataset_type), id=harvest_source.name) }}</li>
+    <li{{ self.breadcrumb_content_root_selected() }}>{{ h.nav_link(harvest_source.title|truncate(30), named_route='{0}.read'.format(c.dataset_type), id=harvest_source.name) }}</li>
   {% endif %}
 {% endblock %}
