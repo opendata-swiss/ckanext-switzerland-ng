@@ -12,13 +12,12 @@ from urllib.parse import quote, urlparse
 import ckan.lib.i18n as i18n
 import ckan.plugins.toolkit as tk
 from ckan import authz
-from ckan import model as model
 from ckan.lib.helpers import _link_to
 from ckan.lib.helpers import dataset_display_name as dataset_display_name_orig
 from ckan.lib.helpers import lang
 from ckan.lib.helpers import organization_link as organization_link_orig
 from ckan.lib.helpers import url_for
-from ckan.plugins.toolkit import _, c, g
+from ckan.plugins.toolkit import _, g
 
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 from ckanext.harvest.helpers import harvester_types
