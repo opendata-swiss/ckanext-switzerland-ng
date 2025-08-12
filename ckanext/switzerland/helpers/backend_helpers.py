@@ -17,7 +17,7 @@ from ckan.lib.helpers import dataset_display_name as dataset_display_name_orig
 from ckan.lib.helpers import lang
 from ckan.lib.helpers import organization_link as organization_link_orig
 from ckan.lib.helpers import url_for
-from ckan.plugins.toolkit import _, g
+from ckan.plugins.toolkit import _
 
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 from ckanext.harvest.helpers import harvester_types
@@ -285,8 +285,8 @@ def ogdch_get_top_level_organisations():
 
 
 def ogdch_user_datasets():
-    context = {"for_view": True, "user": g.user, "auth_user_obj": g.userobj}
-    data_dict = {"user_obj": g.userobj, "include_datasets": True}
+    context = {"for_view": True, "user": tk.current_user.name}
+    data_dict = {"include_datasets": True}
     user_dict = tk.get_action("user_show")(context, data_dict)
 
     return user_dict["datasets"]
