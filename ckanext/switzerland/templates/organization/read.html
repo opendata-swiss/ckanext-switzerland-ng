@@ -6,8 +6,9 @@
   {% if h.check_access('package_create', {'owner_org': group_dict.id}) %}
     {% snippet 'snippets/add_dataset.html', group=group_dict.id %}
 
-    {% set action = h.url_for('ogdch_organization.xml_upload', name=c.group_dict.name) %}
+    {% set action = h.url_for('ogdch_organization.xml_upload', name=group_dict.name) %}
     <form id="dataset-import" class="form-inline" method="post" action="{{ action }}" enctype="multipart/form-data">
+      {{ h.csrf_input() }}
       {{ form.file_upload(
         {'file_url': ''},
         {'file_url': ''},

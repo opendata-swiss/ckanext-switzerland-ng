@@ -2,11 +2,13 @@
 
 {% block breadcrumb_content %}
   {% if harvest_source.organization %}
+    <!-- Copied from the ckanext-harvest template, which uses the c object for backwards compatibility.
+      TODO: update this to not use the c object any more. -->
     {% snippet "snippets/organization_breadcrumb.html", organization=harvest_source.organization %}
-    <li>{{ h.nav_link(_('Harvest Sources'), named_route='{0}_search'.format(dataset_type)) }}</li>
-    <li{{ self.breadcrumb_content_root_selected() }}>{{ h.nav_link(harvest_source.title|truncate(10), named_route='{0}.read'.format(dataset_type), id=harvest_source.name) }}</li>
+    <li>{{ h.nav_link(_('Harvest Sources'), named_route='{0}_search'.format(c.dataset_type)) }}</li>
+    <li{{ self.breadcrumb_content_root_selected() }}>{{ h.nav_link(harvest_source.title|truncate(10), named_route='{0}.read'.format(c.dataset_type), id=harvest_source.name) }}</li>
   {% else %}
-    <li>{{ h.nav_link(_('Harvest Sources'), named_route='{0}_search'.format(dataset_type)) }}</li>
-    <li{{ self.breadcrumb_content_root_selected() }}>{{ h.nav_link(harvest_source.title|truncate(30), named_route='{0}.read'.format(dataset_type), id=harvest_source.name) }}</li>
+    <li>{{ h.nav_link(_('Harvest Sources'), named_route='{0}_search'.format(c.dataset_type)) }}</li>
+    <li{{ self.breadcrumb_content_root_selected() }}>{{ h.nav_link(harvest_source.title|truncate(30), named_route='{0}.read'.format(c.dataset_type), id=harvest_source.name) }}</li>
   {% endif %}
 {% endblock %}

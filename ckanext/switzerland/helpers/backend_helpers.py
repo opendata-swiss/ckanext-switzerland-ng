@@ -17,7 +17,7 @@ from ckan.lib.helpers import dataset_display_name as dataset_display_name_orig
 from ckan.lib.helpers import lang
 from ckan.lib.helpers import organization_link as organization_link_orig
 from ckan.lib.helpers import url_for
-from ckan.plugins.toolkit import _, c, g
+from ckan.plugins.toolkit import _
 
 import ckanext.switzerland.helpers.localize_utils as ogdch_localize_utils
 from ckanext.harvest.helpers import harvester_types
@@ -285,8 +285,8 @@ def ogdch_get_top_level_organisations():
 
 
 def ogdch_user_datasets():
-    context = {"for_view": True, "user": g.user, "auth_user_obj": g.userobj}
-    data_dict = {"user_obj": g.userobj, "include_datasets": True}
+    context = {"for_view": True, "user": tk.current_user.name}
+    data_dict = {"include_datasets": True}
     user_dict = tk.get_action("user_show")(context, data_dict)
 
     return user_dict["datasets"]
@@ -313,11 +313,12 @@ def ogdch_admin_capacity():
     """tests whether the current user is a sysadmin
     or an organization admin
     """
-    if authz.is_sysadmin(c.user):
+    username = tk.current_user.name
+    if authz.is_sysadmin(username):
         return True
-    context = {"user": c.user, "auth_user_obj": c.userobj}
+    context = {"user": username}
     roles_for_user = tk.get_action("organization_list_for_user")(
-        context, {"id": c.user}
+        context, {"id": username}
     )
     capacities = [role.get("capacity") for role in roles_for_user]
     if CAPACITY_ADMIN in capacities:

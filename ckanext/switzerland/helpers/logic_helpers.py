@@ -28,11 +28,11 @@ def get_showcases_for_dataset(id):
     context = {
         "model": model,
         "session": model.Session,
-        "user": tk.c.user or tk.c.author,
+        "user": tk.g.user or tk.g.author,
         "for_view": True,
-        "auth_user_obj": tk.c.userobj,
+        "auth_user_obj": tk.g.userobj,
     }
-    data_dict = {"package_id": id}
+    data_dict = {"id": id}
 
     try:
         return tk.get_action("ckanext_package_showcase_list")(context, data_dict)
