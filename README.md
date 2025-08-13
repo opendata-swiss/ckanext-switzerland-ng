@@ -54,30 +54,7 @@ To install ckanext-switzerland:
 
 ## Config Settings
 
-This extension uses the following config options (.ini file)
-
-    # the URL of the WordPress AJAX interface
-    ckanext.switzerland.wp_ajax_url = https://opendata.swiss/cms/wp-admin/admin-ajax.php
-
-    # number of harvest jobs to keep per harvest source when cleaning up harvest objects   
-    ckanext.switzerland.number_harvest_jobs_per_source = 2
-
-    # piwik config
-    piwik.site_id = 1
-    piwik.url = piwik.opendata.swiss
-
-    # Name and Email Address for notifications about new showcases
-    ckanext.switzerland.showcase_admin_email =
-    ckanext.switzerland.showcase_admin_name =
-
-    # Environment, e.g. local, test, production
-    ckanext.switzerland.env = local
-
-    # URL of the CKAN website for the PRODUCTION environment
-    ckanext.switzerland.prod_env_url =
-
-    # URL to use for constructing the SWITCH connectome url for a dataset
-    ckanext.switzerland.switch_connectome_base_url =
+See `ckanext/switzerland/config_declaration.yaml`.
 
 ## Development Installation
 
