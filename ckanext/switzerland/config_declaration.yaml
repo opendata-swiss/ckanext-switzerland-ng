@@ -1,0 +1,57 @@
+version: 1
+
+# An array of configuration blocks. Each block has an "annotation", that
+# describes the block, and the list of options. These groups help to separate
+# config options visually, but they have no extra meaning.
+groups:
+  - annotation: OgdchPlugin settings
+    options:
+      - key: ckanext.switzerland.env
+        default: ""
+        description: Environment, e.g. local, test, production
+        required: false
+      - key: ckanext.switzerland.switch_connectome_base_url
+        default: ""
+        description: URL to use for constructing the SWITCH connectome url for a dataset
+        required: false
+      - key: ckanext.switzerland.date_picker_format
+        default: "%d.%m.%Y"
+        description: The format used for dates by the date-picker input on the dataset edit page
+        required: false
+      - key: ckanext.switzerland.send_email_on_user_registration
+        default: true
+        type: bool
+        description: Whether to send an email to newly-created users
+        required: false
+      - key: ckanext.switzerland.api_limit_calls_per_interval
+        default: 2
+        description: |
+          Used in rate limiting, along with 'ckanext.switzerland.api_limit_interval_in_seconds'.
+          The number of calls to the ogdch_showcase_submit endpoint allowed per time interval with the same value for
+          author_email in the POST data dict.
+        required: false
+      - key: ckanext.switzerland.api_limit_interval_in_seconds
+        default: 300
+        description: |
+          Used in rate limiting, along with 'ckanext.switzerland.api_limit_calls_per_interval'.
+          The time interval, in seconds, used to calculate the rate limit for the ogdch_showcase_submit endpoint with
+          the same value for author_email in the POST data dict.
+        required: false
+
+  - annotation: OgdchShowcasePlugin settings
+    options:
+      - key: ckanext.switzerland.showcase_admin_name
+        default: None
+        description: Email recipient name for notifications about new showcases
+        required: false
+      - key: ckanext.switzerland.showcase_admin_email
+        default: None
+        description: Email address for notifications about new showcases
+        required: false
+
+  - annotation: OgdchSubscribePlugin settings
+    options:
+      - key: ckanext.switzerland.frontend_url
+        default: ""
+        description: URL for the frontend application that uses CKAN as a DMS
+        required: false

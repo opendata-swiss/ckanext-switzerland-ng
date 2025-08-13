@@ -37,6 +37,7 @@ log = logging.getLogger(__name__)
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 
+@tk.blanket.config_declarations
 class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IValidators)
@@ -167,7 +168,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             "get_dataset_by_identifier": ogdch_frontend_helpers.get_dataset_by_identifier,
             "get_dataset_by_permalink": ogdch_frontend_helpers.get_dataset_by_permalink,
             "get_readable_file_size": ogdch_frontend_helpers.get_readable_file_size,
-            "get_piwik_config": ogdch_frontend_helpers.get_piwik_config,
             "ogdch_localised_number": ogdch_frontend_helpers.ogdch_localised_number,
             "ogdch_render_tree": ogdch_frontend_helpers.ogdch_render_tree,
             "ogdch_group_tree": ogdch_frontend_helpers.ogdch_group_tree,

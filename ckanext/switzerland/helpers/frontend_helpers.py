@@ -321,22 +321,6 @@ def get_readable_file_size(num, suffix="B"):
         return False
 
 
-def get_piwik_config():
-    return {
-        "url": tk.config.get("piwik.url", False),
-        "site_id": tk.config.get("piwik.site_id", False),
-        "custom_dimension_action_organization_id": tk.config.get(
-            "piwik.custom_dimension_action_organization_id", False
-        ),
-        "custom_dimension_action_dataset_id": tk.config.get(
-            "piwik.custom_dimension_action_dataset_id", False
-        ),
-        "custom_dimension_action_format_id": tk.config.get(
-            "piwik.custom_dimension_action_format_id", False
-        ),
-    }
-
-
 def ogdch_localised_number(number):
     # use swissgerman formatting rules when current language is german
     if i18n.get_lang() == "de":
