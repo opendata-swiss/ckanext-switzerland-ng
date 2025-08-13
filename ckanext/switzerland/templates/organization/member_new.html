@@ -29,6 +29,8 @@
       </div>
     </div>
 
+    <!-- Prevent group admins from changing their own role. This block was copied from the CKAN 2.11.3 template.
+        TODO: update it to not use the c object any more. -->
     {% if user and user.name == c.user and user_role == 'admin' %}
       {% set format_attrs = {'data-module': 'autocomplete', 'disabled': 'disabled'} %}
       {{ form.select('role', label=_('Role'), options=roles, selected=user_role, error='', attrs=format_attrs) }}
