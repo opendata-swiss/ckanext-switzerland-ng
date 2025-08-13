@@ -12,11 +12,11 @@ groups:
         description: URL to use for constructing the SWITCH connectome url for a dataset
         required: false
       - key: ckanext.switzerland.date_picker_format
-        default: %d.%m.%Y
+        default: "%d.%m.%Y"
         description: The format used for dates by the date-picker input on the dataset edit page
         required: false
       - key: ckanext.switzerland.send_email_on_user_registration
-        default: True
+        default: true
         type: bool
         description: Whether to send an email to newly-created users
         required: false
