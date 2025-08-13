@@ -25,8 +25,7 @@ pip install -r https://raw.githubusercontent.com/ckan/ckanext-xloader/master/req
 # TODO: require main branch of all of these once they are updated to Python 3 and CKAN 2.11
 pip install -e git+https://github.com/opendata-swiss/ckanext-dcatapchharvest.git@feat/upgrade_to_py3#egg=ckanext-dcatapchharvest
 pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-dcatapchharvest/feat/upgrade_to_py3/requirements.txt
-pip install -e git+https://github.com/opendata-swiss/ckanext-harvester_dashboard.git#egg=ckanext-harvester_dashboard
-pip install -r https://raw.githubusercontent.com/opendata-swiss/ckanext-harvester_dashboard/master/requirements.txt
+pip install -e git+https://github.com/opendata-swiss/ckanext-harvester_dashboard.git@feat/upgrade_to_py3#egg=ckanext-harvester_dashboard
 pip install -e git+https://github.com/bellisk/ckanext-subscribe.git#egg=ckanext-subscribe
 pip install -r https://raw.githubusercontent.com/bellisk/ckanext-subscribe/master/requirements.txt
 pip install -e git+https://github.com/opendata-swiss/ckanext-password-policy.git@feat/upgrade_to_py3#egg=ckanext-password-policy
