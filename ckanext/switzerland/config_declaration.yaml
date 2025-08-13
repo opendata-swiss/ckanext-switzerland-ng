@@ -1,5 +1,8 @@
 version: 1
 
+# An array of configuration blocks. Each block has an "annotation", that
+# describes the block, and the list of options. These groups help to separate
+# config options visually, but they have no extra meaning.
 groups:
   - annotation: OgdchPlugin settings
     options:
@@ -34,6 +37,7 @@ groups:
           The time interval, in seconds, used to calculate the rate limit for the ogdch_showcase_submit endpoint with
           the same value for author_email in the POST data dict.
         required: false
+
   - annotation: OgdchShowcasePlugin settings
     options:
       - key: ckanext.switzerland.showcase_admin_name
@@ -44,6 +48,7 @@ groups:
         default: None
         description: Email address for notifications about new showcases
         required: false
+
   - annotation: OgdchSubscribePlugin settings
     options:
       - key: ckanext.switzerland.frontend_url
