@@ -490,7 +490,6 @@ class OgdchArchivePlugin(plugins.SingletonPlugin):
             return None
 
 
-@tk.blanket.config_declarations
 class OgdchShowcasePlugin(ShowcasePlugin):
     plugins.implements(plugins.IDatasetForm, inherit=True)
     plugins.implements(plugins.ITemplateHelpers, inherit=True)
@@ -644,7 +643,6 @@ class OgdchShowcasePlugin(ShowcasePlugin):
         )
 
 
-@tk.blanket.config_declarations
 class OgdchSubscribePlugin(SubscribePlugin):
 
     # ISubscribe
