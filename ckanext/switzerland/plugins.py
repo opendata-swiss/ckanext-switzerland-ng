@@ -545,6 +545,10 @@ class OgdchShowcasePlugin(ShowcasePlugin):
                 },
             }
         )
+        # Ensure license is accepted in resource fields
+        resource_fields = schema.get("resource_fields", {})
+        resource_fields["license"] = [tk.get_validator("ignore_missing")]
+        schema["resource_fields"] = resource_fields
         return schema
 
     def create_package_schema(self):
