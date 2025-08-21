@@ -922,7 +922,7 @@
       "field_name": "license",
       "preset": "select",
       "choices_helper": "ogdch_get_license_choices",
-      "validators": "ogdch_license_required",
+      "validators": "ignore_missing ogdch_license_required",
       "required": true,
       "label": {
         "en": "License (Terms of use)",
