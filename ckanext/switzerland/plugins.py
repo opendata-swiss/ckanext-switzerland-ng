@@ -793,7 +793,9 @@ class OgdchSubscribePlugin(SubscribePlugin):
         )
         try:
             for username in no_notification_users:
-                user = tk.get_action("user_show")({}, {"id": username})
+                user = tk.get_action("user_show")(
+                    {"ignore_auth": True}, {"id": username}
+                )
                 query = query.filter(Activity.user_id != user["id"])
         except tk.ObjectNotFound:
             raise
