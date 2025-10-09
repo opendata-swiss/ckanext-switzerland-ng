@@ -105,54 +105,85 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
         for i, r in enumerate(validated_dict.get("resources", [])):
             log.error(f"[INDEX_RES] Resource {i} title: {r.get('title', 'N/A')} (type: {type(r.get('title')).__name__})")
         raise
-    search_data["res_name_en"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["title"], "en")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_name_de"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["title"], "de")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_name_fr"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["title"], "fr")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_name_it"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["title"], "it")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_description_en"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["description"], "en")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_description_de"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["description"], "de")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_description_fr"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["description"], "fr")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_description_it"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["description"], "it")
-        for r in validated_dict["resources"]
-    ]
-    search_data["groups_en"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "en")
-        for g in validated_dict["groups"]
-    ]
-    search_data["groups_de"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "de")
-        for g in validated_dict["groups"]
-    ]
-    search_data["groups_fr"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "fr")
-        for g in validated_dict["groups"]
-    ]
-    search_data["groups_it"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "it")
-        for g in validated_dict["groups"]
-    ]
+    try:
+        log.info(f"[INDEX_RES_LANG] Processing resource language fields for dataset: {dataset_name}")
+        search_data["res_name_en"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(r["title"], "en")
+            for r in validated_dict["resources"]
+        ]
+        search_data["res_name_de"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(r["title"], "de")
+            for r in validated_dict["resources"]
+        ]
+        search_data["res_name_fr"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(r["title"], "fr")
+            for r in validated_dict["resources"]
+        ]
+        search_data["res_name_it"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(r["title"], "it")
+            for r in validated_dict["resources"]
+        ]
+        log.info(f"[INDEX_RES_LANG] Resource name fields completed for dataset: {dataset_name}")
+    except AttributeError as e:
+        log.error(f"[INDEX_RES_LANG] AttributeError in resource name fields: {e}")
+        log.error(f"[INDEX_RES_LANG] Dataset: {dataset_name}")
+        log.error(f"[INDEX_RES_LANG] Full traceback:\n{traceback.format_exc()}")
+        for i, r in enumerate(validated_dict.get("resources", [])):
+            log.error(f"[INDEX_RES_LANG] Resource {i} title type: {type(r.get('title')).__name__}, value: {r.get('title')}")
+        raise
+
+    try:
+        log.info(f"[INDEX_RES_DESC] Processing resource description fields for dataset: {dataset_name}")
+        search_data["res_description_en"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(r["description"], "en")
+            for r in validated_dict["resources"]
+        ]
+        search_data["res_description_de"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(r["description"], "de")
+            for r in validated_dict["resources"]
+        ]
+        search_data["res_description_fr"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(r["description"], "fr")
+            for r in validated_dict["resources"]
+        ]
+        search_data["res_description_it"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(r["description"], "it")
+            for r in validated_dict["resources"]
+        ]
+        log.info(f"[INDEX_RES_DESC] Resource description fields completed for dataset: {dataset_name}")
+    except AttributeError as e:
+        log.error(f"[INDEX_RES_DESC] AttributeError in resource description fields: {e}")
+        log.error(f"[INDEX_RES_DESC] Dataset: {dataset_name}")
+        log.error(f"[INDEX_RES_DESC] Full traceback:\n{traceback.format_exc()}")
+        for i, r in enumerate(validated_dict.get("resources", [])):
+            log.error(f"[INDEX_RES_DESC] Resource {i} description type: {type(r.get('description')).__name__}, value: {r.get('description')}")
+        raise
+    try:
+        log.info(f"[INDEX_GROUPS] Processing group fields for dataset: {dataset_name}")
+        search_data["groups_en"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "en")
+            for g in validated_dict["groups"]
+        ]
+        search_data["groups_de"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "de")
+            for g in validated_dict["groups"]
+        ]
+        search_data["groups_fr"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "fr")
+            for g in validated_dict["groups"]
+        ]
+        search_data["groups_it"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "it")
+            for g in validated_dict["groups"]
+        ]
+        log.info(f"[INDEX_GROUPS] Group fields completed for dataset: {dataset_name}")
+    except AttributeError as e:
+        log.error(f"[INDEX_GROUPS] AttributeError in group fields: {e}")
+        log.error(f"[INDEX_GROUPS] Dataset: {dataset_name}")
+        log.error(f"[INDEX_GROUPS] Full traceback:\n{traceback.format_exc()}")
+        for i, g in enumerate(validated_dict.get("groups", [])):
+            log.error(f"[INDEX_GROUPS] Group {i} display_name type: {type(g.get('display_name')).__name__}, value: {g.get('display_name')}")
+        raise
     search_data["res_description"] = [
         ogdch_loc_utils.lang_to_string(r, "description")
         for r in validated_dict["resources"]
@@ -255,20 +286,31 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
         value = search_data[key]
         log.info(f"[SOLR9_FIX] Processing field '{key}' with type: {type(value).__name__}")
         try:
+            # Only process dict values, skip lists, strings, and other types
             if isinstance(value, dict) and value:
-                log.info(f"[SOLR9_FIX] Field '{key}' is a dict with keys: {list(value.keys())}")
-                # Check if this is a fluent field (all keys are language codes)
-                if all(k in fluent_language_codes for k in value.keys()):
-                    log.info(f"[SOLR9_FIX] Field '{key}' identified as fluent field, flattening...")
-                    # Use the existing localize_by_language_order function
-                    # which handles the priority correctly: de -> fr -> en -> it -> rm
-                    flattened_value = ogdch_loc_utils.localize_by_language_order(value, default="")
-                    log.info(f"[SOLR9_FIX] Field '{key}' flattened to: {flattened_value}")
-                    search_data[key] = flattened_value
-                else:
-                    log.info(f"[SOLR9_FIX] Field '{key}' is a dict but not a fluent field, skipping")
+                try:
+                    dict_keys = list(value.keys())
+                    log.info(f"[SOLR9_FIX] Field '{key}' is a dict with keys: {dict_keys}")
+                    # Check if this is a fluent field (all keys are language codes)
+                    if all(k in fluent_language_codes for k in dict_keys):
+                        log.info(f"[SOLR9_FIX] Field '{key}' identified as fluent field, flattening...")
+                        # Use the existing localize_by_language_order function
+                        # which handles the priority correctly: de -> fr -> en -> it -> rm
+                        flattened_value = ogdch_loc_utils.localize_by_language_order(value, default="")
+                        log.info(f"[SOLR9_FIX] Field '{key}' flattened to: {flattened_value}")
+                        search_data[key] = flattened_value
+                    else:
+                        log.info(f"[SOLR9_FIX] Field '{key}' is a dict but not a fluent field, skipping")
+                except AttributeError as ae:
+                    log.error(f"[SOLR9_FIX] AttributeError accessing keys for field '{key}': {ae}")
+                    log.error(f"[SOLR9_FIX] Value: {value}")
+                    raise
+            elif isinstance(value, (list, tuple)):
+                log.info(f"[SOLR9_FIX] Field '{key}' is a list/tuple with {len(value)} items, skipping")
             elif isinstance(value, str):
                 log.info(f"[SOLR9_FIX] Field '{key}' is already a string, skipping")
+            elif value is None:
+                log.info(f"[SOLR9_FIX] Field '{key}' is None, skipping")
             else:
                 log.info(f"[SOLR9_FIX] Field '{key}' is type {type(value).__name__}, skipping")
         except AttributeError as e:
