@@ -76,26 +76,34 @@ def _is_dataset_package_type(pkg_dict):
 # TODO: This function is too complex. Refactor it.
 def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
     """prepares the data for indexing"""
+    dataset_name = search_data.get('name', 'unknown')
+    log.info(f"[INDEX_START] Starting indexing for dataset: {dataset_name}")
+
     if not _is_dataset_package_type(search_data):
+        log.info(f"[INDEX_START] Dataset {dataset_name} is not a dataset type, skipping")
         return search_data
 
     try:
+        log.info(f"[INDEX_PARSE] Parsing validated_data_dict for dataset: {dataset_name}")
         validated_dict = json.loads(search_data["validated_data_dict"])
+        log.info(f"[INDEX_PARSE] Successfully parsed validated_data_dict for dataset: {dataset_name}")
     except Exception as e:
-        log.error(f"Error parsing validated_data_dict: {e}")
-        log.error(f"Dataset: {search_data.get('name', 'unknown')}")
+        log.error(f"[INDEX_PARSE] Error parsing validated_data_dict: {e}")
+        log.error(f"[INDEX_PARSE] Dataset: {dataset_name}")
         raise
 
     try:
+        log.info(f"[INDEX_RES] Processing resources for dataset: {dataset_name}")
         search_data["res_name"] = [
             ogdch_loc_utils.lang_to_string(r, "title") for r in validated_dict["resources"]
         ]
+        log.info(f"[INDEX_RES] Successfully processed {len(validated_dict['resources'])} resources for dataset: {dataset_name}")
     except AttributeError as e:
-        log.error(f"AttributeError in res_name processing: {e}")
-        log.error(f"Dataset: {search_data.get('name', 'unknown')}")
-        log.error(f"Full traceback:\n{traceback.format_exc()}")
+        log.error(f"[INDEX_RES] AttributeError in res_name processing: {e}")
+        log.error(f"[INDEX_RES] Dataset: {dataset_name}")
+        log.error(f"[INDEX_RES] Full traceback:\n{traceback.format_exc()}")
         for i, r in enumerate(validated_dict.get("resources", [])):
-            log.error(f"Resource {i} title: {r.get('title', 'N/A')} (type: {type(r.get('title')).__name__})")
+            log.error(f"[INDEX_RES] Resource {i} title: {r.get('title', 'N/A')} (type: {type(r.get('title')).__name__})")
         raise
     search_data["res_name_en"] = [
         ogdch_loc_utils.get_localized_value_from_dict(r["title"], "en")
@@ -201,6 +209,7 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
         search_data["metadata_modified"] = ""
 
     try:
+        log.info(f"[INDEX_LANG] Processing language-specific fields for dataset: {dataset_name}")
         # index language-specific values (or fallback)
         for lang_code in ogdch_loc_utils.get_language_priorities():
             search_data[f"title_{lang_code}"] = (
@@ -241,25 +250,37 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
     # that have not been flattened to prevent Solr from interpreting
     # language codes as atomic update operations
     fluent_language_codes = ["de", "fr", "it", "en", "rm"]
+    log.info(f"[SOLR9_FIX] Starting fluent field processing for dataset: {search_data.get('name', 'unknown')}")
     for key in list(search_data.keys()):
         value = search_data[key]
-        log.info(f"Processing field '{key}' with type: {type(value).__name__}")
-        if isinstance(value, dict) and value:
-            log.info(f"Field '{key}' is a dict with keys: {list(value.keys())}")
-            # Check if this is a fluent field (all keys are language codes)
-            if all(k in fluent_language_codes for k in value.keys()):
-                log.info(f"Field '{key}' identified as fluent field, flattening...")
-                # Use the existing localize_by_language_order function
-                # which handles the priority correctly: de -> fr -> en -> it -> rm
-                flattened_value = ogdch_loc_utils.localize_by_language_order(value, default="")
-                log.info(f"Field '{key}' flattened to: {flattened_value}")
-                search_data[key] = flattened_value
+        log.info(f"[SOLR9_FIX] Processing field '{key}' with type: {type(value).__name__}")
+        try:
+            if isinstance(value, dict) and value:
+                log.info(f"[SOLR9_FIX] Field '{key}' is a dict with keys: {list(value.keys())}")
+                # Check if this is a fluent field (all keys are language codes)
+                if all(k in fluent_language_codes for k in value.keys()):
+                    log.info(f"[SOLR9_FIX] Field '{key}' identified as fluent field, flattening...")
+                    # Use the existing localize_by_language_order function
+                    # which handles the priority correctly: de -> fr -> en -> it -> rm
+                    flattened_value = ogdch_loc_utils.localize_by_language_order(value, default="")
+                    log.info(f"[SOLR9_FIX] Field '{key}' flattened to: {flattened_value}")
+                    search_data[key] = flattened_value
+                else:
+                    log.info(f"[SOLR9_FIX] Field '{key}' is a dict but not a fluent field, skipping")
+            elif isinstance(value, str):
+                log.info(f"[SOLR9_FIX] Field '{key}' is already a string, skipping")
             else:
-                log.info(f"Field '{key}' is a dict but not a fluent field, skipping")
-        elif isinstance(value, str):
-            log.info(f"Field '{key}' is already a string, skipping")
-        else:
-            log.info(f"Field '{key}' is type {type(value).__name__}, skipping")
+                log.info(f"[SOLR9_FIX] Field '{key}' is type {type(value).__name__}, skipping")
+        except AttributeError as e:
+            log.error(f"[SOLR9_FIX] AttributeError processing field '{key}': {e}")
+            log.error(f"[SOLR9_FIX] Value type: {type(value)}, Value: {value}")
+            log.error(f"[SOLR9_FIX] Full traceback:\n{traceback.format_exc()}")
+            raise
+        except Exception as e:
+            log.error(f"[SOLR9_FIX] Unexpected error processing field '{key}': {e}")
+            log.error(f"[SOLR9_FIX] Value type: {type(value)}, Value: {value}")
+            log.error(f"[SOLR9_FIX] Full traceback:\n{traceback.format_exc()}")
+            raise
 
     # SOLR can only handle UTC date fields that are isodate in UTC format
     for date_field in DATE_FIELDS_INDEXED_BY_SOLR:
