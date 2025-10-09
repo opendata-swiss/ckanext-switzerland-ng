@@ -223,14 +223,27 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
             "political_level"
         ]
 
+    log.info(f"[INDEX_META] Processing metadata fields for dataset: {dataset_name}")
     search_data["identifier"] = validated_dict.get("identifier")
     if "publisher" in validated_dict:
         _prepare_publisher_for_search(
             validated_dict["publisher"], validated_dict["name"]
         )
-    search_data["see_alsos"] = [
-        d["dataset_identifier"] for d in validated_dict.get("see_alsos", [])
-    ]
+
+    log.info(f"[INDEX_META] Processing see_alsos for dataset: {dataset_name}")
+    try:
+        see_alsos_data = validated_dict.get("see_alsos", [])
+        log.info(f"[INDEX_META] see_alsos type: {type(see_alsos_data).__name__}, value: {see_alsos_data}")
+        search_data["see_alsos"] = [
+            d["dataset_identifier"] for d in see_alsos_data
+        ]
+        log.info(f"[INDEX_META] see_alsos processed successfully")
+    except (AttributeError, TypeError) as e:
+        log.error(f"[INDEX_META] Error processing see_alsos: {e}")
+        log.error(f"[INDEX_META] see_alsos type: {type(see_alsos_data).__name__}")
+        log.error(f"[INDEX_META] see_alsos value: {see_alsos_data}")
+        log.error(f"[INDEX_META] Full traceback:\n{traceback.format_exc()}")
+        raise
 
     # make sure we're not dealing with NoneType
     if search_data["metadata_created"] is None:
@@ -238,6 +251,8 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
 
     if search_data["metadata_modified"] is None:
         search_data["metadata_modified"] = ""
+
+    log.info(f"[INDEX_META] Metadata fields completed for dataset: {dataset_name}")
 
     try:
         log.info(f"[INDEX_LANG] Processing language-specific fields for dataset: {dataset_name}")
