@@ -273,9 +273,17 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
                     validated_dict["organization"]["title"], lang_code
                 )
             )
-
-    except KeyError:
+        log.info(f"[INDEX_LANG] Language-specific fields completed for dataset: {dataset_name}")
+    except KeyError as e:
+        log.error(f"[INDEX_LANG] KeyError in language processing: {e}")
+        log.error(f"[INDEX_LANG] Dataset: {dataset_name}")
+        log.error(f"[INDEX_LANG] Full traceback:\n{traceback.format_exc()}")
         pass
+    except AttributeError as e:
+        log.error(f"[INDEX_LANG] AttributeError in language processing: {e}")
+        log.error(f"[INDEX_LANG] Dataset: {dataset_name}")
+        log.error(f"[INDEX_LANG] Full traceback:\n{traceback.format_exc()}")
+        raise
 
     # Fix for Solr 9.x compatibility: Remove any remaining fluent fields
     # that have not been flattened to prevent Solr from interpreting
