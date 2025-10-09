@@ -5,6 +5,7 @@ helpers of the plugins.py
 import json
 import logging
 import re
+import traceback
 
 import ckan.plugins.toolkit as tk
 from ckan.lib.munge import munge_title_to_name
@@ -78,11 +79,24 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
     if not _is_dataset_package_type(search_data):
         return search_data
 
-    validated_dict = json.loads(search_data["validated_data_dict"])
+    try:
+        validated_dict = json.loads(search_data["validated_data_dict"])
+    except Exception as e:
+        log.error(f"Error parsing validated_data_dict: {e}")
+        log.error(f"Dataset: {search_data.get('name', 'unknown')}")
+        raise
 
-    search_data["res_name"] = [
-        ogdch_loc_utils.lang_to_string(r, "title") for r in validated_dict["resources"]
-    ]
+    try:
+        search_data["res_name"] = [
+            ogdch_loc_utils.lang_to_string(r, "title") for r in validated_dict["resources"]
+        ]
+    except AttributeError as e:
+        log.error(f"AttributeError in res_name processing: {e}")
+        log.error(f"Dataset: {search_data.get('name', 'unknown')}")
+        log.error(f"Full traceback:\n{traceback.format_exc()}")
+        for i, r in enumerate(validated_dict.get("resources", [])):
+            log.error(f"Resource {i} title: {r.get('title', 'N/A')} (type: {type(r.get('title')).__name__})")
+        raise
     search_data["res_name_en"] = [
         ogdch_loc_utils.get_localized_value_from_dict(r["title"], "en")
         for r in validated_dict["resources"]
@@ -223,6 +237,30 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
     except KeyError:
         pass
 
+    # Fix for Solr 9.x compatibility: Remove any remaining fluent fields
+    # that have not been flattened to prevent Solr from interpreting
+    # language codes as atomic update operations
+    fluent_language_codes = ["de", "fr", "it", "en", "rm"]
+    for key in list(search_data.keys()):
+        value = search_data[key]
+        log.info(f"Processing field '{key}' with type: {type(value).__name__}")
+        if isinstance(value, dict) and value:
+            log.info(f"Field '{key}' is a dict with keys: {list(value.keys())}")
+            # Check if this is a fluent field (all keys are language codes)
+            if all(k in fluent_language_codes for k in value.keys()):
+                log.info(f"Field '{key}' identified as fluent field, flattening...")
+                # Use the existing localize_by_language_order function
+                # which handles the priority correctly: de -> fr -> en -> it -> rm
+                flattened_value = ogdch_loc_utils.localize_by_language_order(value, default="")
+                log.info(f"Field '{key}' flattened to: {flattened_value}")
+                search_data[key] = flattened_value
+            else:
+                log.info(f"Field '{key}' is a dict but not a fluent field, skipping")
+        elif isinstance(value, str):
+            log.info(f"Field '{key}' is already a string, skipping")
+        else:
+            log.info(f"Field '{key}' is type {type(value).__name__}, skipping")
+
     # SOLR can only handle UTC date fields that are isodate in UTC format
     for date_field in DATE_FIELDS_INDEXED_BY_SOLR:
         if date_field in search_data.keys():
@@ -360,6 +398,20 @@ def ogdch_adjust_search_params(search_params):
         # For fielded queries, use the Extended DisMax Query Parser.
         search_params["defType"] = "edismax"
         search_params["mm"] = "1"
+
+    # Add facet fields to search params
+    # CKAN only returns facets when facet.field is explicitly provided
+    if "facet.field" not in search_params:
+        search_params["facet.field"] = [
+            "linked_data",
+            "private",
+            "groups",
+            f"keywords_{current_lang}",
+            "organization",
+            "political_level",
+            "res_license",
+            "res_format",
+        ]
 
     return search_params
 
