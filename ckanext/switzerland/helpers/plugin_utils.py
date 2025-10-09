@@ -231,15 +231,19 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
             if "modified" in list(r.keys())
         ]
     )
+    log.info(f"[INDEX_POST_DATE] Processing linked_data for dataset: {dataset_name}")
     search_data["linked_data"] = ogdch_format_utils.prepare_formats_for_index(
         resources=validated_dict["resources"], linked_data_only=True
     )
+    log.info(f"[INDEX_POST_DATE] Processing title_string for dataset: {dataset_name}")
     search_data["title_string"] = ogdch_loc_utils.lang_to_string(
         validated_dict, "title"
     )
+    log.info(f"[INDEX_POST_DATE] Processing description for dataset: {dataset_name}")
     search_data["description"] = ogdch_loc_utils.lang_to_string(
         validated_dict, "description"
     )
+    log.info(f"[INDEX_POST_DATE] Processing political_level for dataset: {dataset_name}")
     if "political_level" in validated_dict["organization"]:
         search_data["political_level"] = validated_dict["organization"][
             "political_level"
