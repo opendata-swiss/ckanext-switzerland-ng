@@ -470,8 +470,10 @@ def ogdch_adjust_search_params(search_params):
     """search in correct language-specific field and boost
     results in current language
     borrowed from ckanext-multilingual (core extension)"""
+    log.warning(f"[FACET_DEBUG] ogdch_adjust_search_params called with params: {search_params}")
     lang_set = ogdch_loc_utils.get_language_priorities()
     current_lang = ogdch_request_utils.get_current_language()
+    log.warning(f"[FACET_DEBUG] Current language: {current_lang}")
 
     # fallback to default locale if locale not in suported langs
     if current_lang not in lang_set:
@@ -514,7 +516,7 @@ def ogdch_adjust_search_params(search_params):
     # Add facet fields to search params
     # CKAN only returns facets when facet.field is explicitly provided
     if "facet.field" not in search_params:
-        search_params["facet.field"] = [
+        facet_fields = [
             "linked_data",
             "private",
             "groups",
@@ -524,7 +526,12 @@ def ogdch_adjust_search_params(search_params):
             "res_license",
             "res_format",
         ]
+        search_params["facet.field"] = facet_fields
+        log.warning(f"[FACET_DEBUG] Added facet.field to search_params: {facet_fields}")
+    else:
+        log.warning(f"[FACET_DEBUG] facet.field already in search_params: {search_params['facet.field']}")
 
+    log.warning(f"[FACET_DEBUG] Final search_params: {search_params}")
     return search_params
 
 
