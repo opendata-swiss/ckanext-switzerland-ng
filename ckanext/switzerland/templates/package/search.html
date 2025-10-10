@@ -1,6 +1,8 @@
 {% ckan_extends %}
 
 {% block form %}
+  {# Debug facets availability #}
+  {% set debug_info = h.debug_facets() %}
   {% set facets = {
     'fields': fields_grouped,
     'search': search_facets,

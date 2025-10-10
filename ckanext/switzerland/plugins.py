@@ -203,6 +203,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             "ogdch_get_switch_connectome_url": ogdch_backend_helpers.ogdch_get_switch_connectome_url,
             "ogdch_get_env": ogdch_backend_helpers.ogdch_get_env,
             "ogdch_multiple_text_form_helper": ogdch_dataset_form_helpers.ogdch_multiple_text_form_helper,
+            "debug_facets": ogdch_frontend_helpers.debug_facets,
         }
 
     # IBlueprint
