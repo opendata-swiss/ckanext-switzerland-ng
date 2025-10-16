@@ -36,7 +36,7 @@ def get_showcases_for_dataset(id):
 
     try:
         return tk.get_action("ckanext_package_showcase_list")(context, data_dict)
-    except tk.NotFound:
+    except tk.ObjectNotFound:
         return None
 
 
