@@ -453,36 +453,3 @@ def render_publisher(publisher_value):
 def get_permalink(identifier):
     """Given the identifier of a dataset, construct its permalink."""
     return f"{tk.config.get('ckanext.switzerland.frontend_url', '')}/perma/{identifier}"
-
-
-def debug_facets():
-    """Debug helper to check what facets are available in template context"""
-    from flask import g
-    import ckan.model as model
-
-    facets_dict = {}
-
-    # Try multiple ways to access facets
-    try:
-        # Method 1: from Flask g object (CKAN 2.11)
-        if hasattr(g, 'search_facets'):
-            facets_dict['g.search_facets'] = g.search_facets
-            log.warning(f"[FACET_DEBUG_TEMPLATE] g.search_facets = {g.search_facets}")
-        else:
-            log.warning("[FACET_DEBUG_TEMPLATE] g.search_facets DOES NOT EXIST")
-
-        # Method 2: from request context
-        if hasattr(g, 'c') and hasattr(g.c, 'search_facets'):
-            facets_dict['g.c.search_facets'] = g.c.search_facets
-            log.warning(f"[FACET_DEBUG_TEMPLATE] g.c.search_facets = {g.c.search_facets}")
-        else:
-            log.warning("[FACET_DEBUG_TEMPLATE] g.c.search_facets DOES NOT EXIST")
-
-        # Method 3: Try to get from model
-        if model.meta.engine:
-            log.warning("[FACET_DEBUG_TEMPLATE] Database connection exists")
-
-    except Exception as e:
-        log.warning(f"[FACET_DEBUG_TEMPLATE] Error checking facets: {e}")
-
-    return facets_dict
