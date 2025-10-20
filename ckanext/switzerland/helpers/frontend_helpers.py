@@ -44,7 +44,12 @@ def get_localized_org(org_id=None, include_datasets=False):
         return {}
     try:
         return tk.get_action("organization_show")(
-            {"for_view": True}, {"id": org_id, "include_datasets": include_datasets}
+            {"for_view": True},
+            {
+                "id": org_id,
+                "include_datasets": include_datasets,
+                "include_groups": False,
+            },
         )
     except (tk.ObjectNotFound, tk.ValidationError, tk.NotAuthorized, AttributeError):
         return {}
