@@ -348,7 +348,7 @@ def get_contact_point_for_dataset(id):
 
     try:
         return tk.get_action("package_show")(context, {"id": id})["contact_points"]
-    except tk.NotFound:
+    except tk.ObjectNotFound:
         return None
 
 
