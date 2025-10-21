@@ -5,6 +5,7 @@ helpers of the plugins.py
 import json
 import logging
 import re
+import traceback
 
 import ckan.plugins.toolkit as tk
 from ckan.lib.munge import munge_title_to_name
@@ -33,26 +34,47 @@ def _prepare_suggest_context(search_data, pkg_dict):
     def clean_suggestion(term):
         return term.replace("-", "")
 
-    search_data["suggest_groups"] = [
-        clean_suggestion(t["name"]) for t in pkg_dict["groups"]
-    ]
-    search_data["suggest_organization"] = clean_suggestion(
-        pkg_dict["organization"]["name"]
-    )
+    dataset_name = search_data.get('name', 'unknown')
+    log.info(f"[SUGGEST] Starting suggest context for dataset: {dataset_name}")
+
+    try:
+        log.info(f"[SUGGEST] Processing suggest_groups")
+        log.info(f"[SUGGEST] pkg_dict['groups'] type: {type(pkg_dict['groups'])}, value: {pkg_dict['groups']}")
+        search_data["suggest_groups"] = [
+            clean_suggestion(t["name"]) for t in pkg_dict["groups"]
+        ]
+        log.info(f"[SUGGEST] suggest_groups completed")
+    except (AttributeError, TypeError, KeyError) as e:
+        log.error(f"[SUGGEST] Error in suggest_groups: {e}")
+        log.error(f"[SUGGEST] Full traceback:\n{traceback.format_exc()}")
+        for i, g in enumerate(pkg_dict.get("groups", [])):
+            log.error(f"[SUGGEST] Group {i} type: {type(g)}, value: {g}")
+        raise
+
+    try:
+        log.info(f"[SUGGEST] Processing suggest_organization")
+        search_data["suggest_organization"] = clean_suggestion(
+            pkg_dict["organization"]["name"]
+        )
+        log.info(f"[SUGGEST] suggest_organization completed")
+    except (AttributeError, TypeError, KeyError) as e:
+        log.error(f"[SUGGEST] Error in suggest_organization: {e}")
+        log.error(f"[SUGGEST] Full traceback:\n{traceback.format_exc()}")
+        raise
 
     search_data["suggest_tags"] = []
-    search_data["suggest_tags"].extend(
-        [clean_suggestion(t) for t in search_data.get("keywords_de", [])]
-    )
-    search_data["suggest_tags"].extend(
-        [clean_suggestion(t) for t in search_data.get("keywords_fr", [])]
-    )
-    search_data["suggest_tags"].extend(
-        [clean_suggestion(t) for t in search_data.get("keywords_it", [])]
-    )
-    search_data["suggest_tags"].extend(
-        [clean_suggestion(t) for t in search_data.get("keywords_en", [])]
-    )
+    for lang_code in ["de", "fr", "it", "en"]:
+        try:
+            keywords = search_data.get(f"keywords_{lang_code}", [])
+            log.info(f"[SUGGEST] keywords_{lang_code} type: {type(keywords)}")
+            if isinstance(keywords, list):
+                search_data["suggest_tags"].extend([clean_suggestion(t) for t in keywords])
+            else:
+                log.warning(f"[SUGGEST] keywords_{lang_code} is not a list, it's {type(keywords)}: {keywords}")
+        except Exception as e:
+            log.error(f"[SUGGEST] Error processing keywords_{lang_code}: {e}")
+            log.error(f"[SUGGEST] Full traceback:\n{traceback.format_exc()}")
+            raise
 
     search_data["suggest_res_license"] = [
         clean_suggestion(t) for t in search_data["res_license"]
@@ -61,6 +83,7 @@ def _prepare_suggest_context(search_data, pkg_dict):
         clean_suggestion(t) for t in search_data["res_format"]
     ]
 
+    log.info(f"[SUGGEST] Completed suggest context for dataset: {dataset_name}")
     return search_data
 
 
@@ -75,62 +98,114 @@ def _is_dataset_package_type(pkg_dict):
 # TODO: This function is too complex. Refactor it.
 def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
     """prepares the data for indexing"""
+    dataset_name = search_data.get('name', 'unknown')
+    log.info(f"[INDEX_START] Starting indexing for dataset: {dataset_name}")
+
     if not _is_dataset_package_type(search_data):
+        log.info(f"[INDEX_START] Dataset {dataset_name} is not a dataset type, skipping")
         return search_data
 
-    validated_dict = json.loads(search_data["validated_data_dict"])
+    try:
+        log.info(f"[INDEX_PARSE] Parsing validated_data_dict for dataset: {dataset_name}")
+        validated_dict = json.loads(search_data["validated_data_dict"])
+        log.info(f"[INDEX_PARSE] Successfully parsed validated_data_dict for dataset: {dataset_name}")
+    except Exception as e:
+        log.error(f"[INDEX_PARSE] Error parsing validated_data_dict: {e}")
+        log.error(f"[INDEX_PARSE] Dataset: {dataset_name}")
+        raise
 
-    search_data["res_name"] = [
-        ogdch_loc_utils.lang_to_string(r, "title") for r in validated_dict["resources"]
-    ]
-    search_data["res_name_en"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["title"], "en")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_name_de"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["title"], "de")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_name_fr"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["title"], "fr")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_name_it"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["title"], "it")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_description_en"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["description"], "en")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_description_de"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["description"], "de")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_description_fr"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["description"], "fr")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_description_it"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["description"], "it")
-        for r in validated_dict["resources"]
-    ]
-    search_data["groups_en"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "en")
-        for g in validated_dict["groups"]
-    ]
-    search_data["groups_de"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "de")
-        for g in validated_dict["groups"]
-    ]
-    search_data["groups_fr"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "fr")
-        for g in validated_dict["groups"]
-    ]
-    search_data["groups_it"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "it")
-        for g in validated_dict["groups"]
-    ]
+    try:
+        log.info(f"[INDEX_RES] Processing resources for dataset: {dataset_name}")
+        search_data["res_name"] = [
+            ogdch_loc_utils.lang_to_string(r, "title") for r in validated_dict["resources"]
+        ]
+        log.info(f"[INDEX_RES] Successfully processed {len(validated_dict['resources'])} resources for dataset: {dataset_name}")
+    except AttributeError as e:
+        log.error(f"[INDEX_RES] AttributeError in res_name processing: {e}")
+        log.error(f"[INDEX_RES] Dataset: {dataset_name}")
+        log.error(f"[INDEX_RES] Full traceback:\n{traceback.format_exc()}")
+        for i, r in enumerate(validated_dict.get("resources", [])):
+            log.error(f"[INDEX_RES] Resource {i} title: {r.get('title', 'N/A')} (type: {type(r.get('title')).__name__})")
+        raise
+    try:
+        log.info(f"[INDEX_RES_LANG] Processing resource language fields for dataset: {dataset_name}")
+        search_data["res_name_en"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(r["title"], "en")
+            for r in validated_dict["resources"]
+        ]
+        search_data["res_name_de"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(r["title"], "de")
+            for r in validated_dict["resources"]
+        ]
+        search_data["res_name_fr"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(r["title"], "fr")
+            for r in validated_dict["resources"]
+        ]
+        search_data["res_name_it"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(r["title"], "it")
+            for r in validated_dict["resources"]
+        ]
+        log.info(f"[INDEX_RES_LANG] Resource name fields completed for dataset: {dataset_name}")
+    except AttributeError as e:
+        log.error(f"[INDEX_RES_LANG] AttributeError in resource name fields: {e}")
+        log.error(f"[INDEX_RES_LANG] Dataset: {dataset_name}")
+        log.error(f"[INDEX_RES_LANG] Full traceback:\n{traceback.format_exc()}")
+        for i, r in enumerate(validated_dict.get("resources", [])):
+            log.error(f"[INDEX_RES_LANG] Resource {i} title type: {type(r.get('title')).__name__}, value: {r.get('title')}")
+        raise
+
+    try:
+        log.info(f"[INDEX_RES_DESC] Processing resource description fields for dataset: {dataset_name}")
+        search_data["res_description_en"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(r["description"], "en")
+            for r in validated_dict["resources"]
+        ]
+        search_data["res_description_de"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(r["description"], "de")
+            for r in validated_dict["resources"]
+        ]
+        search_data["res_description_fr"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(r["description"], "fr")
+            for r in validated_dict["resources"]
+        ]
+        search_data["res_description_it"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(r["description"], "it")
+            for r in validated_dict["resources"]
+        ]
+        log.info(f"[INDEX_RES_DESC] Resource description fields completed for dataset: {dataset_name}")
+    except AttributeError as e:
+        log.error(f"[INDEX_RES_DESC] AttributeError in resource description fields: {e}")
+        log.error(f"[INDEX_RES_DESC] Dataset: {dataset_name}")
+        log.error(f"[INDEX_RES_DESC] Full traceback:\n{traceback.format_exc()}")
+        for i, r in enumerate(validated_dict.get("resources", [])):
+            log.error(f"[INDEX_RES_DESC] Resource {i} description type: {type(r.get('description')).__name__}, value: {r.get('description')}")
+        raise
+    try:
+        log.info(f"[INDEX_GROUPS] Processing group fields for dataset: {dataset_name}")
+        search_data["groups_en"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "en")
+            for g in validated_dict["groups"]
+        ]
+        search_data["groups_de"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "de")
+            for g in validated_dict["groups"]
+        ]
+        search_data["groups_fr"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "fr")
+            for g in validated_dict["groups"]
+        ]
+        search_data["groups_it"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "it")
+            for g in validated_dict["groups"]
+        ]
+        log.info(f"[INDEX_GROUPS] Group fields completed for dataset: {dataset_name}")
+    except AttributeError as e:
+        log.error(f"[INDEX_GROUPS] AttributeError in group fields: {e}")
+        log.error(f"[INDEX_GROUPS] Dataset: {dataset_name}")
+        log.error(f"[INDEX_GROUPS] Full traceback:\n{traceback.format_exc()}")
+        for i, g in enumerate(validated_dict.get("groups", [])):
+            log.error(f"[INDEX_GROUPS] Group {i} display_name type: {type(g.get('display_name')).__name__}, value: {g.get('display_name')}")
+        raise
     search_data["res_description"] = [
         ogdch_loc_utils.lang_to_string(r, "description")
         for r in validated_dict["resources"]
@@ -156,28 +231,45 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
             if "modified" in list(r.keys())
         ]
     )
+    log.info(f"[INDEX_POST_DATE] Processing linked_data for dataset: {dataset_name}")
     search_data["linked_data"] = ogdch_format_utils.prepare_formats_for_index(
         resources=validated_dict["resources"], linked_data_only=True
     )
+    log.info(f"[INDEX_POST_DATE] Processing title_string for dataset: {dataset_name}")
     search_data["title_string"] = ogdch_loc_utils.lang_to_string(
         validated_dict, "title"
     )
+    log.info(f"[INDEX_POST_DATE] Processing description for dataset: {dataset_name}")
     search_data["description"] = ogdch_loc_utils.lang_to_string(
         validated_dict, "description"
     )
+    log.info(f"[INDEX_POST_DATE] Processing political_level for dataset: {dataset_name}")
     if "political_level" in validated_dict["organization"]:
         search_data["political_level"] = validated_dict["organization"][
             "political_level"
         ]
 
+    log.info(f"[INDEX_META] Processing metadata fields for dataset: {dataset_name}")
     search_data["identifier"] = validated_dict.get("identifier")
     if "publisher" in validated_dict:
         _prepare_publisher_for_search(
             validated_dict["publisher"], validated_dict["name"]
         )
-    search_data["see_alsos"] = [
-        d["dataset_identifier"] for d in validated_dict.get("see_alsos", [])
-    ]
+
+    log.info(f"[INDEX_META] Processing see_alsos for dataset: {dataset_name}")
+    try:
+        see_alsos_data = validated_dict.get("see_alsos", [])
+        log.info(f"[INDEX_META] see_alsos type: {type(see_alsos_data).__name__}, value: {see_alsos_data}")
+        search_data["see_alsos"] = [
+            d["dataset_identifier"] for d in see_alsos_data
+        ]
+        log.info(f"[INDEX_META] see_alsos processed successfully")
+    except (AttributeError, TypeError) as e:
+        log.error(f"[INDEX_META] Error processing see_alsos: {e}")
+        log.error(f"[INDEX_META] see_alsos type: {type(see_alsos_data).__name__}")
+        log.error(f"[INDEX_META] see_alsos value: {see_alsos_data}")
+        log.error(f"[INDEX_META] Full traceback:\n{traceback.format_exc()}")
+        raise
 
     # make sure we're not dealing with NoneType
     if search_data["metadata_created"] is None:
@@ -186,7 +278,10 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
     if search_data["metadata_modified"] is None:
         search_data["metadata_modified"] = ""
 
+    log.info(f"[INDEX_META] Metadata fields completed for dataset: {dataset_name}")
+
     try:
+        log.info(f"[INDEX_LANG] Processing language-specific fields for dataset: {dataset_name}")
         # index language-specific values (or fallback)
         for lang_code in ogdch_loc_utils.get_language_priorities():
             search_data[f"title_{lang_code}"] = (
@@ -219,9 +314,64 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
                     validated_dict["organization"]["title"], lang_code
                 )
             )
-
-    except KeyError:
+        log.info(f"[INDEX_LANG] Language-specific fields completed for dataset: {dataset_name}")
+    except KeyError as e:
+        log.error(f"[INDEX_LANG] KeyError in language processing: {e}")
+        log.error(f"[INDEX_LANG] Dataset: {dataset_name}")
+        log.error(f"[INDEX_LANG] Full traceback:\n{traceback.format_exc()}")
         pass
+    except AttributeError as e:
+        log.error(f"[INDEX_LANG] AttributeError in language processing: {e}")
+        log.error(f"[INDEX_LANG] Dataset: {dataset_name}")
+        log.error(f"[INDEX_LANG] Full traceback:\n{traceback.format_exc()}")
+        raise
+
+    # Fix for Solr 9.x compatibility: Remove any remaining fluent fields
+    # that have not been flattened to prevent Solr from interpreting
+    # language codes as atomic update operations
+    fluent_language_codes = ["de", "fr", "it", "en", "rm"]
+    log.info(f"[SOLR9_FIX] Starting fluent field processing for dataset: {search_data.get('name', 'unknown')}")
+    for key in list(search_data.keys()):
+        value = search_data[key]
+        log.info(f"[SOLR9_FIX] Processing field '{key}' with type: {type(value).__name__}")
+        try:
+            # Only process dict values, skip lists, strings, and other types
+            if isinstance(value, dict) and value:
+                try:
+                    dict_keys = list(value.keys())
+                    log.info(f"[SOLR9_FIX] Field '{key}' is a dict with keys: {dict_keys}")
+                    # Check if this is a fluent field (all keys are language codes)
+                    if all(k in fluent_language_codes for k in dict_keys):
+                        log.info(f"[SOLR9_FIX] Field '{key}' identified as fluent field, flattening...")
+                        # Use the existing localize_by_language_order function
+                        # which handles the priority correctly: de -> fr -> en -> it -> rm
+                        flattened_value = ogdch_loc_utils.localize_by_language_order(value, default="")
+                        log.info(f"[SOLR9_FIX] Field '{key}' flattened to: {flattened_value}")
+                        search_data[key] = flattened_value
+                    else:
+                        log.info(f"[SOLR9_FIX] Field '{key}' is a dict but not a fluent field, skipping")
+                except AttributeError as ae:
+                    log.error(f"[SOLR9_FIX] AttributeError accessing keys for field '{key}': {ae}")
+                    log.error(f"[SOLR9_FIX] Value: {value}")
+                    raise
+            elif isinstance(value, (list, tuple)):
+                log.info(f"[SOLR9_FIX] Field '{key}' is a list/tuple with {len(value)} items, skipping")
+            elif isinstance(value, str):
+                log.info(f"[SOLR9_FIX] Field '{key}' is already a string, skipping")
+            elif value is None:
+                log.info(f"[SOLR9_FIX] Field '{key}' is None, skipping")
+            else:
+                log.info(f"[SOLR9_FIX] Field '{key}' is type {type(value).__name__}, skipping")
+        except AttributeError as e:
+            log.error(f"[SOLR9_FIX] AttributeError processing field '{key}': {e}")
+            log.error(f"[SOLR9_FIX] Value type: {type(value)}, Value: {value}")
+            log.error(f"[SOLR9_FIX] Full traceback:\n{traceback.format_exc()}")
+            raise
+        except Exception as e:
+            log.error(f"[SOLR9_FIX] Unexpected error processing field '{key}': {e}")
+            log.error(f"[SOLR9_FIX] Value type: {type(value)}, Value: {value}")
+            log.error(f"[SOLR9_FIX] Full traceback:\n{traceback.format_exc()}")
+            raise
 
     # SOLR can only handle UTC date fields that are isodate in UTC format
     for date_field in DATE_FIELDS_INDEXED_BY_SOLR:
@@ -320,8 +470,10 @@ def ogdch_adjust_search_params(search_params):
     """search in correct language-specific field and boost
     results in current language
     borrowed from ckanext-multilingual (core extension)"""
+    log.warning(f"[FACET_DEBUG] ogdch_adjust_search_params called with params: {search_params}")
     lang_set = ogdch_loc_utils.get_language_priorities()
     current_lang = ogdch_request_utils.get_current_language()
+    log.warning(f"[FACET_DEBUG] Current language: {current_lang}")
 
     # fallback to default locale if locale not in suported langs
     if current_lang not in lang_set:
@@ -361,6 +513,25 @@ def ogdch_adjust_search_params(search_params):
         search_params["defType"] = "edismax"
         search_params["mm"] = "1"
 
+    # Add facet fields to search params
+    # CKAN only returns facets when facet.field is explicitly provided
+    if "facet.field" not in search_params:
+        facet_fields = [
+            "linked_data",
+            "private",
+            "groups",
+            f"keywords_{current_lang}",
+            "organization",
+            "political_level",
+            "res_license",
+            "res_format",
+        ]
+        search_params["facet.field"] = facet_fields
+        log.warning(f"[FACET_DEBUG] Added facet.field to search_params: {facet_fields}")
+    else:
+        log.warning(f"[FACET_DEBUG] facet.field already in search_params: {search_params['facet.field']}")
+
+    log.warning(f"[FACET_DEBUG] Final search_params: {search_params}")
     return search_params
 
 
