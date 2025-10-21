@@ -30,7 +30,8 @@ class ReindexException(Exception):
     pass
 
 
-def _prepare_suggest_context(search_data, pkg_dict):
+def _prepare_suggest_context(search_data, pkg_dict):  # noqa C901
+    # TODO: This function is too complex: simplify it
     def clean_suggestion(term):
         return term.replace("-", "")
 
@@ -40,7 +41,8 @@ def _prepare_suggest_context(search_data, pkg_dict):
     try:
         log.info(f"[SUGGEST] Processing suggest_groups")
         log.info(
-            f"[SUGGEST] pkg_dict['groups'] type: {type(pkg_dict['groups'])}, value: {pkg_dict['groups']}"
+            f"[SUGGEST] pkg_dict['groups'] type: {type(pkg_dict['groups'])}, "
+            f"value: {pkg_dict['groups']}"
         )
         search_data["suggest_groups"] = [
             clean_suggestion(t["name"]) for t in pkg_dict["groups"]
@@ -75,7 +77,8 @@ def _prepare_suggest_context(search_data, pkg_dict):
                 )
             else:
                 log.warning(
-                    f"[SUGGEST] keywords_{lang_code} is not a list, it's {type(keywords)}: {keywords}"
+                    f"[SUGGEST] keywords_{lang_code} is not a list, it's "
+                    f"{type(keywords)}: {keywords}"
                 )
         except Exception as e:
             log.error(f"[SUGGEST] Error processing keywords_{lang_code}: {e}")
@@ -119,7 +122,8 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
         )
         validated_dict = json.loads(search_data["validated_data_dict"])
         log.info(
-            f"[INDEX_PARSE] Successfully parsed validated_data_dict for dataset: {dataset_name}"
+            f"[INDEX_PARSE] Successfully parsed validated_data_dict for dataset: "
+            f"{dataset_name}"
         )
     except Exception as e:
         log.error(f"[INDEX_PARSE] Error parsing validated_data_dict: {e}")
@@ -133,7 +137,8 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
             for r in validated_dict["resources"]
         ]
         log.info(
-            f"[INDEX_RES] Successfully processed {len(validated_dict['resources'])} resources for dataset: {dataset_name}"
+            f"[INDEX_RES] Successfully processed {len(validated_dict['resources'])} "
+            f"resources for dataset: {dataset_name}"
         )
     except AttributeError as e:
         log.error(f"[INDEX_RES] AttributeError in res_name processing: {e}")
@@ -141,7 +146,8 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
         log.error(f"[INDEX_RES] Full traceback:\n{traceback.format_exc()}")
         for i, r in enumerate(validated_dict.get("resources", [])):
             log.error(
-                f"[INDEX_RES] Resource {i} title: {r.get('title', 'N/A')} (type: {type(r.get('title')).__name__})"
+                f"[INDEX_RES] Resource {i} title: {r.get('title', 'N/A')} "
+                f"(type: {type(r.get('title')).__name__})"
             )
         raise
     try:
@@ -173,13 +179,15 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
         log.error(f"[INDEX_RES_LANG] Full traceback:\n{traceback.format_exc()}")
         for i, r in enumerate(validated_dict.get("resources", [])):
             log.error(
-                f"[INDEX_RES_LANG] Resource {i} title type: {type(r.get('title')).__name__}, value: {r.get('title')}"
+                f"[INDEX_RES_LANG] Resource {i} title type: "
+                f"{type(r.get('title')).__name__}, value: {r.get('title')}"
             )
         raise
 
     try:
         log.info(
-            f"[INDEX_RES_DESC] Processing resource description fields for dataset: {dataset_name}"
+            f"[INDEX_RES_DESC] Processing resource description fields for dataset: "
+            f"{dataset_name}"
         )
         search_data["res_description_en"] = [
             ogdch_loc_utils.get_localized_value_from_dict(r["description"], "en")
@@ -198,7 +206,8 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
             for r in validated_dict["resources"]
         ]
         log.info(
-            f"[INDEX_RES_DESC] Resource description fields completed for dataset: {dataset_name}"
+            f"[INDEX_RES_DESC] Resource description fields completed for dataset: "
+            f"{dataset_name}"
         )
     except AttributeError as e:
         log.error(
@@ -208,7 +217,8 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
         log.error(f"[INDEX_RES_DESC] Full traceback:\n{traceback.format_exc()}")
         for i, r in enumerate(validated_dict.get("resources", [])):
             log.error(
-                f"[INDEX_RES_DESC] Resource {i} description type: {type(r.get('description')).__name__}, value: {r.get('description')}"
+                f"[INDEX_RES_DESC] Resource {i} description type: "
+                f"{type(r.get('description')).__name__}, value: {r.get('description')}"
             )
         raise
     try:
@@ -236,7 +246,8 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
         log.error(f"[INDEX_GROUPS] Full traceback:\n{traceback.format_exc()}")
         for i, g in enumerate(validated_dict.get("groups", [])):
             log.error(
-                f"[INDEX_GROUPS] Group {i} display_name type: {type(g.get('display_name')).__name__}, value: {g.get('display_name')}"
+                f"[INDEX_GROUPS] Group {i} display_name type: "
+                f"{type(g.get('display_name')).__name__}, value: {g.get('display_name')}"
             )
         raise
     search_data["res_description"] = [
@@ -295,7 +306,8 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
     try:
         see_alsos_data = validated_dict.get("see_alsos", [])
         log.info(
-            f"[INDEX_META] see_alsos type: {type(see_alsos_data).__name__}, value: {see_alsos_data}"
+            f"[INDEX_META] see_alsos type: {type(see_alsos_data).__name__}, "
+            f"value: {see_alsos_data}"
         )
         search_data["see_alsos"] = [d["dataset_identifier"] for d in see_alsos_data]
         log.info(f"[INDEX_META] see_alsos processed successfully")
@@ -317,7 +329,8 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
 
     try:
         log.info(
-            f"[INDEX_LANG] Processing language-specific fields for dataset: {dataset_name}"
+            f"[INDEX_LANG] Processing language-specific fields for dataset: "
+            f"{dataset_name}"
         )
         # index language-specific values (or fallback)
         for lang_code in ogdch_loc_utils.get_language_priorities():
@@ -370,7 +383,8 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
     # language codes as atomic update operations
     fluent_language_codes = ["de", "fr", "it", "en", "rm"]
     log.info(
-        f"[SOLR9_FIX] Starting fluent field processing for dataset: {search_data.get('name', 'unknown')}"
+        f"[SOLR9_FIX] Starting fluent field processing for dataset: "
+        f"{search_data.get('name', 'unknown')}"
     )
     for key in list(search_data.keys()):
         value = search_data[key]
@@ -591,7 +605,8 @@ def ogdch_adjust_search_params(search_params):
         log.warning(f"[FACET_DEBUG] Added facet.field to search_params: {facet_fields}")
     else:
         log.warning(
-            f"[FACET_DEBUG] facet.field already in search_params: {search_params['facet.field']}"
+            f"[FACET_DEBUG] facet.field already in search_params: "
+            f"{search_params['facet.field']}"
         )
 
     log.warning(f"[FACET_DEBUG] Final search_params: {search_params}")
