@@ -436,7 +436,9 @@ def get_localized_value_for_display(value):
         return ogdch_loc_utils.get_localized_value_from_dict(value, lang_code)
     try:
         value = json.loads(value)
-        return ogdch_loc_utils.get_localized_value_from_dict(value, lang_code)
+        # Ensure the localized value is a string. If `value` is a numeric or
+        # boolean string, json.loads() will convert it to an int, float or bool.
+        return str(ogdch_loc_utils.get_localized_value_from_dict(value, lang_code))
     except ValueError:
         return value
 
