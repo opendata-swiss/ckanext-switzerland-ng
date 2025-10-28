@@ -434,6 +434,11 @@ def get_localized_value_for_display(value):
     lang_code = lang()
     if isinstance(value, dict):
         return ogdch_loc_utils.get_localized_value_from_dict(value, lang_code)
+    if value in ["true", "false"]:
+        # Special case where loading a boolean string from JSON converts it into Python
+        # format, so the string "true" becomes bool True. Return the string as-is so
+        # its capitalisation doesn't change.
+        return value
     try:
         value = json.loads(value)
         # Ensure the localized value is a string. If `value` is a numeric or
