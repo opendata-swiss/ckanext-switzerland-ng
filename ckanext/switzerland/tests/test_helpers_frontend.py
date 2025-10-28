@@ -1,8 +1,10 @@
-import unittest
 from copy import deepcopy
 from unittest.mock import patch
 
+import pytest
+
 import ckanext.switzerland.helpers.frontend_helpers as ogdch_frontend_helpers
+import ckanext.switzerland.helpers.localize_utils as localize_utils
 
 organizations = [
     {
@@ -46,7 +48,7 @@ organizations = [
 organization_title = '{"fr": "Swisstopo FR", "de": "Swisstopo DE", "en": "Swisstopo EN", "it": "Swisstopo IT"}'
 
 
-class TestHelpers(unittest.TestCase):
+class TestHelpers(object):
 
     @patch("ckan.lib.i18n.get_lang", return_value="fr")
     def test_get_sorted_orgs_by_translated_title_fr(self, mock_get_lang):
@@ -57,15 +59,11 @@ class TestHelpers(unittest.TestCase):
 
         for org in result_orgs:
             if org["children"]:
-                self.assertEqual(
-                    0, self.find_position_of_org(org["children"], "AAAAA (FR)")
-                )
-                self.assertEqual(
-                    1, self.find_position_of_org(org["children"], "YYYYY (FR)")
-                )
+                assert (0, self.find_position_of_org(org["children"], "AAAAA (FR)"))
+                assert (1, self.find_position_of_org(org["children"], "YYYYY (FR)"))
 
-        self.assertEqual(0, self.find_position_of_org(result_orgs, "AAAAA (FR)"))
-        self.assertEqual(2, self.find_position_of_org(result_orgs, "YYYYY (FR)"))
+        assert (0, self.find_position_of_org(result_orgs, "AAAAA (FR)"))
+        assert (2, self.find_position_of_org(result_orgs, "YYYYY (FR)"))
 
     @patch("ckan.lib.i18n.get_lang", return_value="it")
     def test_get_sorted_orgs_by_translated_title_it(self, mock_get_lang):
@@ -76,15 +74,11 @@ class TestHelpers(unittest.TestCase):
 
         for org in result_orgs:
             if org["children"]:
-                self.assertEqual(
-                    0, self.find_position_of_org(org["children"], "BBBBB (IT)")
-                )
-                self.assertEqual(
-                    1, self.find_position_of_org(org["children"], "ZZZZZ (IT)")
-                )
+                assert (0, self.find_position_of_org(org["children"], "BBBBB (IT)"))
+                assert (1, self.find_position_of_org(org["children"], "ZZZZZ (IT)"))
 
-        self.assertEqual(2, self.find_position_of_org(result_orgs, "ZZZZZ (IT)"))
-        self.assertEqual(0, self.find_position_of_org(result_orgs, "AAAAA (IT)"))
+        assert (2, self.find_position_of_org(result_orgs, "ZZZZZ (IT)"))
+        assert (0, self.find_position_of_org(result_orgs, "AAAAA (IT)"))
 
     @patch("ckan.lib.i18n.get_lang", return_value="de")
     def test_get_sorted_orgs_by_translated_title_de(self, mock_get_lang):
@@ -95,15 +89,11 @@ class TestHelpers(unittest.TestCase):
 
         for org in result_orgs:
             if org["children"]:
-                self.assertEqual(
-                    0, self.find_position_of_org(org["children"], "BBBBB (DE)")
-                )
-                self.assertEqual(
-                    1, self.find_position_of_org(org["children"], "yyyyy (DE)")
-                )
+                assert (0, self.find_position_of_org(org["children"], "BBBBB (DE)"))
+                assert (1, self.find_position_of_org(org["children"], "yyyyy (DE)"))
 
-        self.assertEqual(0, self.find_position_of_org(result_orgs, "bbbbb (DE)"))
-        self.assertEqual(2, self.find_position_of_org(result_orgs, "ZZZZZ (DE)"))
+        assert (0, self.find_position_of_org(result_orgs, "bbbbb (DE)"))
+        assert (2, self.find_position_of_org(result_orgs, "ZZZZZ (DE)"))
 
     @patch("ckan.lib.i18n.get_lang", return_value="en")
     def test_get_sorted_orgs_by_translated_title_en(self, mock_get_lang):
@@ -114,17 +104,46 @@ class TestHelpers(unittest.TestCase):
 
         for org in result_orgs:
             if org["children"]:
-                self.assertEqual(
-                    0, self.find_position_of_org(org["children"], "ööööö (EN)")
-                )
-                self.assertEqual(
-                    1, self.find_position_of_org(org["children"], "zzzzz (EN)")
-                )
+                assert (0, self.find_position_of_org(org["children"], "ööööö (EN)"))
+                assert (1, self.find_position_of_org(org["children"], "zzzzz (EN)"))
 
-        self.assertEqual(0, self.find_position_of_org(result_orgs, "ààààà (EN)"))
-        self.assertEqual(1, self.find_position_of_org(result_orgs, "ÉÉÉÉÉ (EN)"))
-        self.assertEqual(2, self.find_position_of_org(result_orgs, "üüüüü (EN)"))
+        assert (0, self.find_position_of_org(result_orgs, "ààààà (EN)"))
+        assert (1, self.find_position_of_org(result_orgs, "ÉÉÉÉÉ (EN)"))
+        assert (2, self.find_position_of_org(result_orgs, "üüüüü (EN)"))
 
     def find_position_of_org(self, org_list, title):
         index = next((i for i, org in enumerate(org_list) if org["title"] == title), -1)
         return index
+
+    prepare_display_data = [
+        ("a", {"de": "a", "en": "a", "fr": "a", "it": "a"}),
+        ("1", {"de": "1", "en": "1", "fr": "1", "it": "1"}),
+        ("true", {"de": "true", "en": "true", "fr": "true", "it": "true"}),
+        (
+            {"de": "title_de", "en": "title_en", "fr": "title_fr", "it": "title_it"},
+            {"de": "title_de", "en": "title_en", "fr": "title_fr", "it": "title_it"},
+        ),
+        (
+            '{"de": "title_de", "en": "title_en", "fr": "title_fr", "it": "title_it"}',
+            {"de": "title_de", "en": "title_en", "fr": "title_fr", "it": "title_it"},
+        ),
+        (
+            {"de": "true", "en": "false", "fr": "101", "it": "0.25"},
+            {"de": "true", "en": "false", "fr": "101", "it": "0.25"},
+        ),
+        (
+            '{"de": "true", "en": "false", "fr": "101", "it": "0.25"}',
+            {"de": "true", "en": "false", "fr": "101", "it": "0.25"},
+        ),
+    ]
+
+    @pytest.mark.parametrize("value, expected", prepare_display_data)
+    def test_get_localized_value_for_display(self, value, expected):
+        for lang in localize_utils.LANGUAGES:
+            with patch(
+                "ckanext.switzerland.helpers.frontend_helpers.lang", return_value=lang
+            ):
+                localized_value = (
+                    ogdch_frontend_helpers.get_localized_value_for_display(value)
+                )
+                assert expected[lang] == localized_value
