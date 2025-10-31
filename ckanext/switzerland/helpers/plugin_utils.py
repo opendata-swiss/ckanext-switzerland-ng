@@ -108,12 +108,9 @@ def _is_dataset_package_type(pkg_dict):
 def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
     """prepares the data for indexing"""
     dataset_name = search_data.get("name", "unknown")
-    log.info(f"[INDEX_START] Starting indexing for dataset: {dataset_name}")
+    log.debug(f"[INDEX_START] Starting indexing for dataset: {dataset_name}")
 
     if not _is_dataset_package_type(search_data):
-        log.info(
-            f"[INDEX_START] Dataset {dataset_name} is not a dataset type, skipping"
-        )
         return search_data
 
     try:
