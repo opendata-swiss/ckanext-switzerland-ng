@@ -29,8 +29,7 @@ class ReindexException(Exception):
     pass
 
 
-def _prepare_suggest_context(search_data, pkg_dict):  # noqa C901
-    # TODO: This function is too complex: simplify it
+def _prepare_suggest_context(search_data, pkg_dict):
     def clean_suggestion(term):
         return term.replace("-", "")
 
@@ -265,31 +264,23 @@ def _prepare_publisher_for_search(publisher, dataset_name):
         return publisher
 
 
-# TODO: This function is too complex. Refactor it.
-def package_map_ckan_default_fields(pkg_dict):  # noqa
+def package_map_ckan_default_fields(pkg_dict):
     pkg_dict["display_name"] = pkg_dict["title"]
 
     if pkg_dict.get("maintainer") is None:
-        try:
-            pkg_dict["maintainer"] = pkg_dict["contact_points"][0]["name"]
-        except (KeyError, IndexError):
-            pass
+        if len(pkg_dict.get("contact_points", [])) > 0:
+            pkg_dict["maintainer"] = pkg_dict["contact_points"][0].get("name", "")
 
     if pkg_dict.get("maintainer_email") is None:
-        try:
-            pkg_dict["maintainer_email"] = pkg_dict["contact_points"][0]["email"]
-        except (KeyError, IndexError):
-            pass
+        if len(pkg_dict.get("contact_points", [])) > 0:
+            pkg_dict["maintainer"] = pkg_dict["contact_points"][0].get("email", "")
 
     if pkg_dict.get("author") is None:
-        try:
-            pkg_dict["author"] = pkg_dict["publisher"]["name"]
-        except (KeyError, TypeError):
-            pass
+        if "publisher" in pkg_dict:
+            pkg_dict["author"] = pkg_dict["publisher"].get("name", "")
 
-    if pkg_dict.get("resources") is not None:
-        for resource in pkg_dict["resources"]:
-            resource["name"] = resource["title"]
+    for resource in pkg_dict.get("resources", []):
+        resource["name"] = resource["title"]
 
     return pkg_dict
 
