@@ -63,9 +63,8 @@ def _is_dataset_package_type(pkg_dict):
         return False
 
 
-# TODO: This function is too complex. Refactor it.
-def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
-    """prepares the data for indexing"""
+def ogdch_prepare_search_data_for_index(search_data):
+    """Prepare the data for indexing."""
     dataset_name = search_data.get("name", "unknown")
     log.debug(f"Starting indexing for dataset: {dataset_name}")
 
@@ -74,82 +73,9 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
 
     validated_dict = json.loads(search_data["validated_data_dict"])
 
-    search_data["res_name"] = [
-        ogdch_loc_utils.lang_to_string(r, "title") for r in validated_dict["resources"]
-    ]
-    search_data["res_name_en"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["title"], "en")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_name_de"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["title"], "de")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_name_fr"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["title"], "fr")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_name_it"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["title"], "it")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_description_en"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["description"], "en")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_description_de"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["description"], "de")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_description_fr"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["description"], "fr")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_description_it"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["description"], "it")
-        for r in validated_dict["resources"]
-    ]
-    search_data["groups_en"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "en")
-        for g in validated_dict["groups"]
-    ]
-    search_data["groups_de"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "de")
-        for g in validated_dict["groups"]
-    ]
-    search_data["groups_fr"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "fr")
-        for g in validated_dict["groups"]
-    ]
-    search_data["groups_it"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], "it")
-        for g in validated_dict["groups"]
-    ]
-    search_data["res_description"] = [
-        ogdch_loc_utils.lang_to_string(r, "description")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_format"] = ogdch_format_utils.prepare_formats_for_index(
-        resources=validated_dict["resources"]
-    )
-    search_data["res_license"] = [
-        ogdch_term_utils.get_resource_terms_of_use(r)
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_latest_issued"] = ogdch_date_utils.get_latest_isodate(
-        [
-            (r["issued"])
-            for r in validated_dict["resources"]
-            if "issued" in list(r.keys())
-        ]
-    )
-    search_data["res_latest_modified"] = ogdch_date_utils.get_latest_isodate(
-        [
-            (r["modified"])
-            for r in validated_dict["resources"]
-            if "modified" in list(r.keys())
-        ]
-    )
+    _prepare_resource_fields_for_indexing(search_data, validated_dict)
+    _prepare_lang_specific_fields_for_indexing(search_data, validated_dict)
+
     search_data["linked_data"] = ogdch_format_utils.prepare_formats_for_index(
         resources=validated_dict["resources"], linked_data_only=True
     )
@@ -179,7 +105,47 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
     if search_data["metadata_modified"] is None:
         search_data["metadata_modified"] = ""
 
-    # index language-specific values (or fallback)
+    # flatten any remaining language dicts
+    _flatten_fluent_fields_for_indexing(search_data)
+
+    # SOLR can only handle UTC date fields that are isodate in UTC format
+    for date_field in DATE_FIELDS_INDEXED_BY_SOLR:
+        if date_field in search_data.keys():
+            search_data[date_field] = ogdch_date_utils.transform_date_for_solr(
+                search_data[date_field]
+            )
+
+    # clean terms for suggest context
+    search_data = _prepare_suggest_context(search_data, validated_dict)
+
+    return search_data
+
+
+def _flatten_fluent_fields_for_indexing(search_data):
+    # Fix for Solr 9.x compatibility: Remove any remaining fluent fields
+    # that have not been flattened to prevent Solr from interpreting
+    # language codes as atomic update operations
+    fluent_language_codes = ["de", "fr", "it", "en", "rm"]
+    for key in list(search_data.keys()):
+        value = search_data[key]
+        # Only process dict values, skip lists, strings, and other types
+        if isinstance(value, dict) and value:
+            dict_keys = list(value.keys())
+            # Check if this is a fluent field (all keys are language codes)
+            if all(k in fluent_language_codes for k in dict_keys):
+                log.info(
+                    f"Field '{key}' identified as fluent field, flattening it for "
+                    f"Solr indexing"
+                )
+                # Use the existing localize_by_language_order function
+                # which handles the priority correctly: de -> fr -> en -> it -> rm
+                flattened_value = ogdch_loc_utils.localize_by_language_order(
+                    value, default=""
+                )
+                search_data[key] = flattened_value
+
+
+def _prepare_lang_specific_fields_for_indexing(search_data, validated_dict):
     for lang_code in ogdch_loc_utils.get_language_priorities():
         search_data[f"title_{lang_code}"] = (
             ogdch_loc_utils.get_localized_value_from_dict(
@@ -211,40 +177,75 @@ def ogdch_prepare_search_data_for_index(search_data):  # noqa C901
                 validated_dict["organization"]["title"], lang_code
             )
         )
+        search_data[f"groups_{lang_code}"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(g["display_name"], lang_code)
+            for g in validated_dict["groups"]
+        ]
 
-    # Fix for Solr 9.x compatibility: Remove any remaining fluent fields
-    # that have not been flattened to prevent Solr from interpreting
-    # language codes as atomic update operations
-    fluent_language_codes = ["de", "fr", "it", "en", "rm"]
-    for key in list(search_data.keys()):
-        value = search_data[key]
-        # Only process dict values, skip lists, strings, and other types
-        if isinstance(value, dict) and value:
-            dict_keys = list(value.keys())
-            # Check if this is a fluent field (all keys are language codes)
-            if all(k in fluent_language_codes for k in dict_keys):
-                log.info(
-                    f"Field '{key}' identified as fluent field, flattening it for "
-                    f"Solr indexing"
-                )
-                # Use the existing localize_by_language_order function
-                # which handles the priority correctly: de -> fr -> en -> it -> rm
-                flattened_value = ogdch_loc_utils.localize_by_language_order(
-                    value, default=""
-                )
-                search_data[key] = flattened_value
 
-    # SOLR can only handle UTC date fields that are isodate in UTC format
-    for date_field in DATE_FIELDS_INDEXED_BY_SOLR:
-        if date_field in search_data.keys():
-            search_data[date_field] = ogdch_date_utils.transform_date_for_solr(
-                search_data[date_field]
-            )
+def _prepare_resource_fields_for_indexing(search_data, validated_dict):
+    search_data["res_name"] = [
+        ogdch_loc_utils.lang_to_string(r, "title") for r in validated_dict["resources"]
+    ]
+    search_data["res_name_en"] = [
+        ogdch_loc_utils.get_localized_value_from_dict(r["title"], "en")
+        for r in validated_dict["resources"]
+    ]
+    search_data["res_name_de"] = [
+        ogdch_loc_utils.get_localized_value_from_dict(r["title"], "de")
+        for r in validated_dict["resources"]
+    ]
+    search_data["res_name_fr"] = [
+        ogdch_loc_utils.get_localized_value_from_dict(r["title"], "fr")
+        for r in validated_dict["resources"]
+    ]
+    search_data["res_name_it"] = [
+        ogdch_loc_utils.get_localized_value_from_dict(r["title"], "it")
+        for r in validated_dict["resources"]
+    ]
 
-    # clean terms for suggest context
-    search_data = _prepare_suggest_context(search_data, validated_dict)
+    search_data["res_description"] = [
+        ogdch_loc_utils.lang_to_string(r, "description")
+        for r in validated_dict["resources"]
+    ]
+    search_data["res_description_en"] = [
+        ogdch_loc_utils.get_localized_value_from_dict(r["description"], "en")
+        for r in validated_dict["resources"]
+    ]
+    search_data["res_description_de"] = [
+        ogdch_loc_utils.get_localized_value_from_dict(r["description"], "de")
+        for r in validated_dict["resources"]
+    ]
+    search_data["res_description_fr"] = [
+        ogdch_loc_utils.get_localized_value_from_dict(r["description"], "fr")
+        for r in validated_dict["resources"]
+    ]
+    search_data["res_description_it"] = [
+        ogdch_loc_utils.get_localized_value_from_dict(r["description"], "it")
+        for r in validated_dict["resources"]
+    ]
 
-    return search_data
+    search_data["res_format"] = ogdch_format_utils.prepare_formats_for_index(
+        resources=validated_dict["resources"]
+    )
+    search_data["res_license"] = [
+        ogdch_term_utils.get_resource_terms_of_use(r)
+        for r in validated_dict["resources"]
+    ]
+    search_data["res_latest_issued"] = ogdch_date_utils.get_latest_isodate(
+        [
+            (r["issued"])
+            for r in validated_dict["resources"]
+            if "issued" in list(r.keys())
+        ]
+    )
+    search_data["res_latest_modified"] = ogdch_date_utils.get_latest_isodate(
+        [
+            (r["modified"])
+            for r in validated_dict["resources"]
+            if "modified" in list(r.keys())
+        ]
+    )
 
 
 def _prepare_publisher_for_search(publisher, dataset_name):
