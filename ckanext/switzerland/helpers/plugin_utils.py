@@ -35,55 +35,17 @@ def _prepare_suggest_context(search_data, pkg_dict):  # noqa C901
     def clean_suggestion(term):
         return term.replace("-", "")
 
-    dataset_name = search_data.get("name", "unknown")
-    log.info(f"[SUGGEST] Starting suggest context for dataset: {dataset_name}")
-
-    try:
-        log.info(f"[SUGGEST] Processing suggest_groups")
-        log.info(
-            f"[SUGGEST] pkg_dict['groups'] type: {type(pkg_dict['groups'])}, "
-            f"value: {pkg_dict['groups']}"
-        )
-        search_data["suggest_groups"] = [
-            clean_suggestion(t["name"]) for t in pkg_dict["groups"]
-        ]
-        log.info(f"[SUGGEST] suggest_groups completed")
-    except (AttributeError, TypeError, KeyError) as e:
-        log.error(f"[SUGGEST] Error in suggest_groups: {e}")
-        log.error(f"[SUGGEST] Full traceback:\n{traceback.format_exc()}")
-        for i, g in enumerate(pkg_dict.get("groups", [])):
-            log.error(f"[SUGGEST] Group {i} type: {type(g)}, value: {g}")
-        raise
-
-    try:
-        log.info(f"[SUGGEST] Processing suggest_organization")
-        search_data["suggest_organization"] = clean_suggestion(
-            pkg_dict["organization"]["name"]
-        )
-        log.info(f"[SUGGEST] suggest_organization completed")
-    except (AttributeError, TypeError, KeyError) as e:
-        log.error(f"[SUGGEST] Error in suggest_organization: {e}")
-        log.error(f"[SUGGEST] Full traceback:\n{traceback.format_exc()}")
-        raise
+    search_data["suggest_groups"] = [
+        clean_suggestion(t["name"]) for t in pkg_dict["groups"]
+    ]
+    search_data["suggest_organization"] = clean_suggestion(
+        pkg_dict["organization"]["name"]
+    )
 
     search_data["suggest_tags"] = []
     for lang_code in ["de", "fr", "it", "en"]:
-        try:
-            keywords = search_data.get(f"keywords_{lang_code}", [])
-            log.info(f"[SUGGEST] keywords_{lang_code} type: {type(keywords)}")
-            if isinstance(keywords, list):
-                search_data["suggest_tags"].extend(
-                    [clean_suggestion(t) for t in keywords]
-                )
-            else:
-                log.warning(
-                    f"[SUGGEST] keywords_{lang_code} is not a list, it's "
-                    f"{type(keywords)}: {keywords}"
-                )
-        except Exception as e:
-            log.error(f"[SUGGEST] Error processing keywords_{lang_code}: {e}")
-            log.error(f"[SUGGEST] Full traceback:\n{traceback.format_exc()}")
-            raise
+        keywords = search_data.get(f"keywords_{lang_code}", [])
+        search_data["suggest_tags"].extend([clean_suggestion(t) for t in keywords])
 
     search_data["suggest_res_license"] = [
         clean_suggestion(t) for t in search_data["res_license"]
@@ -92,7 +54,6 @@ def _prepare_suggest_context(search_data, pkg_dict):  # noqa C901
         clean_suggestion(t) for t in search_data["res_format"]
     ]
 
-    log.info(f"[SUGGEST] Completed suggest context for dataset: {dataset_name}")
     return search_data
 
 
