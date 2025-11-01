@@ -7,7 +7,7 @@ from ckan.lib.formatters import localised_nice_date
 from dateutil.parser import ParserError, parse
 
 DATE_PICKER_FORMAT = tk.config.get("ckanext.switzerland.date_picker_format", "%d.%m.%Y")
-ALLOWED_DATE_FORMATS = ["%d.%m.%y"]
+ALLOWED_DATE_FORMATS = ["%d.%m.%Y", "%d.%m.%y"]
 
 log = logging.getLogger(__name__)
 
