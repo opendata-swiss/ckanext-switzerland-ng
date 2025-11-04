@@ -38,4 +38,10 @@
     {% snippet "package/snippets/additional_info.html", pkg_dict=pkg %}
   {% endblock %}
 
+  {% block package_license %}
+    {# render the standard license module #}
+    {% snippet "package/snippets/license.html", pkg_dict=pkg, text_only=False %}
+  {% endblock %}
+
+
 {% endblock %}
