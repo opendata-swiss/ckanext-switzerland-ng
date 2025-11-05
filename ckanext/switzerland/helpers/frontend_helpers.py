@@ -44,7 +44,12 @@ def get_localized_org(org_id=None, include_datasets=False):
         return {}
     try:
         return tk.get_action("organization_show")(
-            {"for_view": True}, {"id": org_id, "include_datasets": include_datasets}
+            {"for_view": True},
+            {
+                "id": org_id,
+                "include_datasets": include_datasets,
+                "include_groups": False,
+            },
         )
     except (tk.ObjectNotFound, tk.ValidationError, tk.NotAuthorized, AttributeError):
         return {}
@@ -429,9 +434,16 @@ def get_localized_value_for_display(value):
     lang_code = lang()
     if isinstance(value, dict):
         return ogdch_loc_utils.get_localized_value_from_dict(value, lang_code)
+    if value in ["true", "false"]:
+        # Special case where loading a boolean string from JSON converts it into Python
+        # format, so the string "true" becomes bool True. Return the string as-is so
+        # its capitalisation doesn't change.
+        return value
     try:
         value = json.loads(value)
-        return ogdch_loc_utils.get_localized_value_from_dict(value, lang_code)
+        # Ensure the localized value is a string. If `value` is a numeric or
+        # boolean string, json.loads() will convert it to an int, float or bool.
+        return str(ogdch_loc_utils.get_localized_value_from_dict(value, lang_code))
     except ValueError:
         return value
 
