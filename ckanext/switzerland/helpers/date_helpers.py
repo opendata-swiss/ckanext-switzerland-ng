@@ -32,7 +32,8 @@ def display_if_date_picker_date(value):
     as an isoformat date.
     """
     try:
-        dt = datetime.strptime(value, DATE_PICKER_FORMAT)
+        value_str = str(value).strip()
+        dt = datetime.strptime(value_str, DATE_PICKER_FORMAT)
         if isinstance(dt, datetime):
             return dt.isoformat()
     except Exception:
@@ -65,9 +66,10 @@ def display_if_other_formats(value):
     """If the value is another recognised date format, return it as an
     isoformat date.
     """
+    value_str = str(value).strip()
     for date_format in ALLOWED_DATE_FORMATS:
         try:
-            dt = datetime.strptime(value, date_format)
+            dt = datetime.strptime(value_str, date_format)
             if isinstance(dt, datetime):
                 return dt.isoformat()
         except Exception:
