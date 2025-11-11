@@ -357,3 +357,17 @@ def ogdch_is_include_children_selected():
     parent organization.
     """
     return True
+
+
+@tk.chained_helper
+def strxfrm(next_helper, s):
+    """
+    Overrides ckan.lib.helpers.strxfrm, which expects a string, not a dict.
+
+    ckan.lib.helpers.strxfrm is (so far) only used for alphabetizing user lists and
+    group lists when dictizing.
+    """
+    if isinstance(s, dict):
+        s = ogdch_localize_utils.get_localized_value_from_json(s, i18n.get_lang())
+
+    return next_helper(s)

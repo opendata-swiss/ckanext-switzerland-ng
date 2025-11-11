@@ -200,12 +200,14 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             "ogdch_dataset_title_form_helper": ogdch_dataset_form_helpers.ogdch_dataset_title_form_helper,
             "ogdch_get_top_level_organisations": ogdch_backend_helpers.ogdch_get_top_level_organisations,
             "ogdch_user_datasets": ogdch_backend_helpers.ogdch_user_datasets,
-            # monkey patch template helpers to return translated names/titles
+            # override template helpers to return translated names/titles
             "resource_display_name": ogdch_backend_helpers.ogdch_resource_display_name,
             "dataset_display_name": ogdch_backend_helpers.dataset_display_name,
             "group_link": ogdch_backend_helpers.group_link,
             "resource_link": ogdch_backend_helpers.resource_link,
             "organization_link": ogdch_backend_helpers.organization_link,
+            "strxfrm": ogdch_backend_helpers.strxfrm,
+            # end template helper overrides
             "ogdch_localize_activity_item": ogdch_backend_helpers.ogdch_localize_activity_item,
             "ogdch_admin_capacity": ogdch_backend_helpers.ogdch_admin_capacity,
             "render_publisher": ogdch_frontend_helpers.render_publisher,
