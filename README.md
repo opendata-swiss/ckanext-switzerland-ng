@@ -44,9 +44,10 @@ To install ckanext-switzerland:
 
      pip install ckanext-switzerland
 
-3. Add ``switzerland`` to the ``ckan.plugins`` setting in your CKAN
+3. Add relevant plugins to the ``ckan.plugins`` setting in your CKAN
    config file (by default the config file is located at
-   ``/etc/ckan/default/production.ini``).
+   ``/etc/ckan/default/production.ini``). This package contains several
+   plugins. See the ``entry-points`` in ``setup.py`` for an up-to-date list.
 
 4. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu:
 
