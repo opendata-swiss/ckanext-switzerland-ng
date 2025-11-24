@@ -4,6 +4,5 @@ pysolr>=3.9.0
 python-dateutil>=2.9.0.post0
 pyyaml>=6.0.1
 requests[security]>=2.31.0
-urllib3[secure]>=1.26.18
 isodate>=0.6.1
 rdflib>=6.3.2  # or >=7.0.0 if compatible with your RDF plugin
