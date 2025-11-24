@@ -39,7 +39,7 @@ See `ckanext/switzerland/config_declaration.yaml`.
 
 ## Development Installation
 
-To install ckanext-switzerland-ng for development, activate your CKAN virtualenv and
+To install ckanext-switzerland for development, activate your CKAN virtualenv and
 do:
 
     git clone https://github.com/opendata-swiss/ckanext-switzerland-ng.git

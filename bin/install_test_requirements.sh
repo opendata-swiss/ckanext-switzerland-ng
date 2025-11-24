@@ -4,7 +4,7 @@ WORKDIR=/__w/ckanext-switzerland-ng/ckanext-switzerland-ng
 
 pip install --upgrade pip
 
-echo "Install ckanext-switzerland-ng"
+echo "Install ckanext-switzerland"
 pip install -e "$WORKDIR"/[e]
 
 echo "Install ckanext dependencies"

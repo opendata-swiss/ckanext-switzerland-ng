@@ -1,5 +1,5 @@
 [project]
-name = "ckanext-switzerland-ng"
+name = "ckanext-switzerland"
 version = "0.0.2"
 dynamic = ["dependencies", "optional-dependencies"]
 description = "Plugins for opendata.swiss"
