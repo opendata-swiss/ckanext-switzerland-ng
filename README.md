@@ -19,7 +19,9 @@ To install ckanext-switzerland:
 
 2. Install the ckanext-switzerland-ng Python package into your virtual environment:
 
-     pip install ckanext-switzerland-ng
+     git clone https://github.com/opendata-swiss/ckanext-switzerland-ng.git
+     cd ckanext-switzerland-ng
+     pip install -e .
 
 3. Add relevant plugins to the ``ckan.plugins`` setting in your CKAN
    config file (by default the config file is located at
