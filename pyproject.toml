@@ -39,6 +39,9 @@ build-backend = "setuptools.build_meta"
 dependencies = {file = ["requirements.txt"]}
 optional-dependencies = {dev = { file = ["dev-requirements.txt"] }}
 
+[tool.isort]
+profile = "black"
+
 [project.entry-points."ckan.plugins"]
 ogdch = "ckanext.switzerland.plugins:OgdchPlugin"
 ogdch_pkg = "ckanext.switzerland.plugins:OgdchPackagePlugin"
