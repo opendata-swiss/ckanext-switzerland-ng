@@ -1,4 +1,4 @@
-Unidecode>=1.3.8
+Unidecode>=1.0.22
 iribaker==0.2
 pysolr>=3.9.0
 python-dateutil>=2.9.0.post0
