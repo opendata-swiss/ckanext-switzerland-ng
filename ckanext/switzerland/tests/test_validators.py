@@ -282,7 +282,6 @@ class TestOgdchUniqueIdentifierValidator(object):
             validator(key, data, errors, {})
 
     def test_missing_identifier(self, org, dataset):
-        value = "identifier@test-org"
         key = ("identifier",)
         data = {
             ("owner_org",): "test-org",

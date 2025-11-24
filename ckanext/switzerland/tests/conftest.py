@@ -4,7 +4,7 @@ from copy import copy
 import ckan.model as model
 import ckan.plugins.toolkit as tk
 import pytest
-from ckan.tests import factories, helpers
+from ckan.tests import factories
 
 from ckanext.switzerland.plugins import HARVEST_USER, MIGRATION_USER
 
