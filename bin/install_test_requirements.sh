@@ -5,9 +5,7 @@ WORKDIR=/__w/ckanext-switzerland-ng/ckanext-switzerland-ng
 pip install --upgrade pip
 
 echo "Install ckanext-switzerland-ng"
-pip install -r "$WORKDIR"/requirements.txt
-pip install -r "$WORKDIR"/dev-requirements.txt
-pip install -e "$WORKDIR"/
+pip install -e "$WORKDIR"/[e]
 
 echo "Install ckanext dependencies"
 pip install -e git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming
