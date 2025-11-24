@@ -42,12 +42,13 @@ To install ckanext-switzerland:
 
 2. Install the ckanext-switzerland Python package into your virtual environment:
 
-     pip install ckanext-switzerland
+     pip install .
 
 3. Add relevant plugins to the ``ckan.plugins`` setting in your CKAN
    config file (by default the config file is located at
    ``/etc/ckan/default/production.ini``). This package contains several
-   plugins. See the ``entry-points`` in ``setup.py`` for an up-to-date list.
+   plugins. See ``project.entry-points."ckan.plugins"`` in ``pyproject.toml``
+  for an up-to-date list.
 
 4. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu:
 
@@ -64,9 +65,7 @@ do:
 
     git clone https://github.com/ogdch/ckanext-switzerland.git
     cd ckanext-switzerland
-    python setup.py develop
-    pip install -r dev-requirements.txt
-    pip install -r requirements.txt
+    pip install -e .[dev]
 
 ## Update Format-Mapping
 
