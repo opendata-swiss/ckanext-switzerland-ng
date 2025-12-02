@@ -1,5 +1,5 @@
 # This file lists the dependencies of this extension.
-# Install with a command like: pip install -r requirements.txt
+# Install with a command like: pip install -r dev-requirements.txt
 black>=25.1.0
 coverage[toml]>=7.5
 factory-boy>=3.2.1

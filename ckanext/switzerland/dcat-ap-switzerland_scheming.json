@@ -2,7 +2,7 @@
   "scheming_version": 1,
   "dataset_type": "dataset",
   "about": "An implementation of the DCAT-AP Switzerland Schema",
-  "about_url": "https://github.com/ogdch/ckanext-switzerland",
+  "about_url": "https://github.com/opendata-swiss/ckanext-switzerland-ng",
   "form_languages": ["en","de", "fr", "it"],
   "dataset_fields": [
     {

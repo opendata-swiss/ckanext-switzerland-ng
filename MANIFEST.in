@@ -1,3 +1,5 @@
 include README.rst
+include requirements.txt
+include dev-requirements.txt
 recursive-include ckanext/switzerland *.html *.json *.js *.less *.css *.yml
 recursive-include ckanext/switzerland/migration *.ini *.py *.mako
