@@ -226,8 +226,9 @@ def ogdch_dataset_by_identifier(context, data_dict):
     if not identifier:
         raise ValidationError({"identifier": ["Missing value"]})
 
-    data_dict["fq"] = f"identifier:{identifier}"
+    data_dict["fq"] = f'identifier:"{identifier}"'
     result = tk.get_action("package_search")(context, data_dict)
+
     try:
         return result["results"][0]
     except (KeyError, IndexError, TypeError):
