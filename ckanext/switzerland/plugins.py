@@ -82,7 +82,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             "ogdch_validate_list_of_urls": ogdch_validators.ogdch_validate_list_of_urls,
             "ogdch_validate_list_of_uris": ogdch_validators.ogdch_validate_list_of_uris,
             "ogdch_validate_duration_type": ogdch_validators.ogdch_validate_duration_type,
-            "ignore_missing": ogdch_validators.ignore_missing,
         }
 
     # IFacets
