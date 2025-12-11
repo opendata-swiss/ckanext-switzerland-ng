@@ -18,7 +18,7 @@
         <li id="{{org.name}}" class="organization">
           <div class="organization-row">
             {% set org = h.get_localized_org(org.name) %}
-            {% link_for org.title, 'organization.read', id=org.name %}
+            {% link_for org.title, named_route='organization.read', id=org.name %}
           </div>
         </li>
       {% endfor %}
