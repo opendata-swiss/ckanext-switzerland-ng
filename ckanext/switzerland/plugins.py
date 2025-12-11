@@ -434,22 +434,14 @@ class OgdchArchivePlugin(plugins.SingletonPlugin):
 
     def delete(self, entity):
         """
-        If a package is being deleted it is saved in the CKAN-trash with
-        the prefix "_archived-" so that the slug remains available.
-        This prevents future datasets with the same name will not have a
-        number appended.
+        If a dataset is deleted, first rename it with the prefix "_archived-" so that
+        the slug remains available for new datasets.
 
-        The method is a ckan interface that is called with a lot of different
-        instances: we need to make sure that the right cases are picked up:
-        datasets that are deleted, but only if they are not already archived.
-        In this cases a new name for archiving the dataset is derived.
+        This means that future datasets with the same name will not have a
+        number appended to the name. This is only carried out once: an active dataset
+        with the name '_archived-foobar' will NOT be renamed to
+        '_archived-_archived-foobar' on deletion.
         """
-        if not isinstance(entity, Package):
-            return
-
-        if getattr(entity, "state", None) != "deleted":
-            return
-
         if getattr(entity, "type", None) != "dataset":
             return
 
