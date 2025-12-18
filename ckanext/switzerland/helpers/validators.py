@@ -195,15 +195,7 @@ def ogdch_language(field, schema):
         for element in value:
             # they are either explicit in the choice list or
             # match the ISO 639-1 two-letter pattern
-            if (
-                (element in choice_values)
-                or (re.match("^[a-z]{2}$", element))
-                or (
-                    element.startswith(
-                        "http://publications.europa.eu/resource/authority/language/"
-                    )
-                )
-            ):
+            if (element in choice_values) or (re.match("^[a-z]{2}$", element)):
                 selected.add(element)
                 continue
             errors[key].append(_('invalid language "%s"') % element)
