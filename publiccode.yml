@@ -1,0 +1,50 @@
+publiccodeYmlVersion: 0.5.0
+name: ckanext-switzerland
+url: https://github.com/opendata-swiss/ckanext-switzerland-ng
+releaseDate: 2015-07-31
+logo: https://opendata.swiss/images/logo_horizontal.png
+platforms:
+  - web
+categories:
+  - data-collection
+organisation:
+  uri: https://opendata.swiss
+usedBy:
+  - Swiss Federal Statistical Office
+developmentStatus: stable
+softwareType: addon
+dependsOn:
+  open:
+    - name: CKAN
+      versionMin: "2.11"
+description:
+  en:
+    localisedName: ckanext-switzerland
+    shortDescription: CKAN extension implementing Swiss DCAT-AP profile and templates for opendata.swiss
+    longDescription: ckanext-switzerland is a plugin/extension for CKAN to support
+      the Swiss DCAT-AP profile (DCAT-AP Switzerland), including templates for
+      opendata.swiss.
+    features:
+      - implementing Swiss DCAT-AP profile
+      - custom templates
+legal:
+  license: AGPL-3.0-or-later
+maintenance:
+  type: contract
+  contractors:
+    - name: Liip AG
+      until: 2030-12-01
+      email: opendata@liip.ch
+      website: https://www.liip.ch/
+localisation:
+  localisationReady: true
+  availableLanguages:
+    - de
+    - en
+    - fr
+    - it
+intendedAudience:
+  scope:
+    - government
+    - local-authorities
+    - research
