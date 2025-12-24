@@ -347,7 +347,9 @@ def get_contact_point_for_dataset(id):
     context = {"user": user["name"]}
 
     try:
-        return tk.get_action("package_show")(context, {"id": id})["contact_points"]
+        return tk.get_action("package_show")(context, {"id": id}).get(
+            "contact_points", {"name": "", "email": ""}
+        )
     except tk.ObjectNotFound:
         return None
 
