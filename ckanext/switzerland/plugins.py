@@ -812,6 +812,9 @@ class OgdchMiddlewarePlugin(plugins.SingletonPlugin):
 
 
 class OgdchXloaderPlugin(xloaderPlugin):
+    # When the changes in https://github.com/ckan/ckanext-xloader/pull/265 are merged
+    # and released, we can update ckanext-xloader and remove this plugin.
+
     # IDomainObjectModification
 
     def notify(self, entity, operation):
