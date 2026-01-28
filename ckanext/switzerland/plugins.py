@@ -816,15 +816,22 @@ class OgdchXloaderPlugin(xloaderPlugin):
 
     def notify(self, entity, operation):
         # type: (Package|Resource, DomainObjectOperation) -> None
+        """Handle notification of an entity modification.
+
+        Overwritten from xloaderPlugin so that resource files are xloadered to the
+        Datastore when:
+        - the url or format has been updated
+        - the resource is newly added
+
+        xloaderPlugin doesn't handle the case of a new resource in this method because
+        it does this in after_resource_create. However, that is not called when a
+        resource is added because its dataset was harvested, so we need to handle new
+        resources here as well.
         """
-        Runs before_commit to database for Packages and Resources.
-        We only want to check for changed Resources for this.
-        We want to check if values have changed, namely the url and the format.
-        See: ckan/model/modification.py.DomainObjectModificationExtension
-        """
-        if operation != DomainObjectOperation.changed or not isinstance(
-            entity, Resource
-        ):
+        if operation not in [
+            DomainObjectOperation.changed,
+            DomainObjectOperation.new,
+        ] or not isinstance(entity, Resource):
             return
 
         context = {
@@ -863,12 +870,7 @@ class OgdchXloaderPlugin(xloaderPlugin):
     # IResourceController
 
     def after_resource_create(self, context, resource_dict):
-        if xloader_utils.requires_successful_validation_report():
-            log.debug(
-                "Deferring xloading resource %s because the "
-                "resource did not pass validation yet.",
-                resource_dict.get("id"),
-            )
-            return
-
-        self._submit_to_xloader(resource_dict)
+        """Overwritten from xloaderPlugin to not submit resources for xloading to the
+        Datastore at this stage. We don't need to do that here as well as in notify.
+        """
+        pass
