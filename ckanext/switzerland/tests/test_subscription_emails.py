@@ -36,15 +36,12 @@ def _test_all_four_languages(body, object_title_included=False):
 
 
 def _test_plain_text_footer(body_plain_text, dataset_id, subscription=False, code=""):
-    assert (
-        """Geschäftsstelle Open Government Data
+    assert """Geschäftsstelle Open Government Data
 Bundesamt für Statistik BFS
 Espace de l'Europe 10
 CH-2010 Neuchâtel
 www.bfs.admin.ch/ogd
-"""
-        in body_plain_text
-    )
+""" in body_plain_text
 
     footer_link_text = ""
     if subscription:
@@ -62,8 +59,7 @@ www.bfs.admin.ch/ogd
 
 
 def _test_html_footer(body_html, dataset_id, subscription=False, code=""):
-    assert (
-        """<p>
+    assert """<p>
     <a href="https://opendata.swiss">
         <img src="https://opendata.swiss/images/logo_horizontal.png" alt="opendata.swiss"
              width="420" style="max-width: 100%; height: auto;"/>
@@ -74,9 +70,7 @@ def _test_html_footer(body_html, dataset_id, subscription=False, code=""):
         <img src="https://opendata.swiss/images/x.svg" alt="X"
              style="color: #fff; background-color: #009688; border: 0;"/>
     </a>
-</p>"""
-        in body_html
-    )
+</p>""" in body_html
 
     footer_link_text = ""
     if subscription:
@@ -261,11 +255,8 @@ class TestSubscriptionEmails(object):
 
         # Email HTML body
         body_html = mock_mail_recipient.call_args[1]["body_html"]
-        assert (
-            """<p>
-    To manage subscriptions for"""
-            in body_html.strip()
-        )
+        assert """<p>
+    To manage subscriptions for""" in body_html.strip()
         assert "http://test.ckan.net" not in body_html
 
         _test_html_footer(
@@ -322,11 +313,8 @@ class TestSubscriptionEmails(object):
 
         # Email HTML body
         body_html = mock_mail_recipient.call_args[1]["body_html"]
-        assert (
-            """<p>
-    Sie haben Ihre E-Mail-Adresse erfolgreich bestätigt. """
-            in body_html.strip()
-        )
+        assert """<p>
+    Sie haben Ihre E-Mail-Adresse erfolgreich bestätigt. """ in body_html.strip()
         assert "http://test.ckan.net" not in body_html
 
         _test_html_footer(body_html, dataset["id"], subscription=True, code="testcode")
