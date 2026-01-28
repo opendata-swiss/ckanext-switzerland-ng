@@ -18,7 +18,6 @@ import ckanext.switzerland.helpers.plugin_utils as ogdch_plugin_utils
 import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
 import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 import ckanext.switzerland.helpers.validators as ogdch_validators
-import ckanext.xloader.interfaces as ix
 from ckanext.activity.model import Activity
 from ckanext.hierarchy.plugin import HierarchyDisplay
 from ckanext.showcase.plugin import ShowcasePlugin
@@ -344,7 +343,6 @@ class OgdchResourcePlugin(plugins.SingletonPlugin):
 
 class OgdchPackagePlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IPackageController, inherit=True)
-    plugins.implements(ix.IXloader, inherit=True)
 
     # IPackageController
 
@@ -413,18 +411,6 @@ class OgdchPackagePlugin(plugins.SingletonPlugin):
         """
         search_params = ogdch_plugin_utils.ogdch_adjust_search_params(search_params)
         return search_params
-
-    # IXloader
-
-    def after_upload(self, context, resource_dict, dataset_dict):
-        # create resource views after a successful upload to the DataStore
-        tk.get_action("resource_create_default_resource_views")(
-            context,
-            {
-                "resource": resource_dict,
-                "package": dataset_dict,
-            },
-        )
 
 
 class OgdchArchivePlugin(plugins.SingletonPlugin):
