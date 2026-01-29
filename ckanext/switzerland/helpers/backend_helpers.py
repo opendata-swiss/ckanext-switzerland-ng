@@ -1,8 +1,3 @@
-"""
-Helpers belong in this file if they are only
-used in backend templates
-"""
-
 import ast
 import logging
 import re

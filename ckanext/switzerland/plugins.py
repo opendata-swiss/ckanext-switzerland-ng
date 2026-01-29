@@ -6,6 +6,8 @@ import ckan.plugins as plugins
 import ckan.plugins.toolkit as tk
 from ckan.lib.plugins import DefaultTranslation
 from ckan.model import PACKAGE_NAME_MAX_LENGTH, Package, Session
+from ckan.model.domain_object import DomainObjectOperation
+from ckan.model.resource import Resource
 from ckan.plugins.toolkit import render
 
 import ckanext.switzerland.helpers.backend_helpers as ogdch_backend_helpers
@@ -18,7 +20,6 @@ import ckanext.switzerland.helpers.plugin_utils as ogdch_plugin_utils
 import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
 import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 import ckanext.switzerland.helpers.validators as ogdch_validators
-import ckanext.xloader.interfaces as ix
 from ckanext.activity.model import Activity
 from ckanext.hierarchy.plugin import HierarchyDisplay
 from ckanext.showcase.plugin import ShowcasePlugin
@@ -28,6 +29,12 @@ from ckanext.switzerland.blueprints.organization import org
 from ckanext.switzerland.blueprints.perma import perma
 from ckanext.switzerland.blueprints.user import user
 from ckanext.switzerland.middleware import RobotsHeaderMiddleware
+from ckanext.xloader import utils as xloader_utils
+from ckanext.xloader.plugin import (
+    _remove_unsupported_resource_from_datastore,
+    _should_remove_unsupported_resource_from_datastore,
+    xloaderPlugin,
+)
 
 HARVEST_USER = "harvest"
 MIGRATION_USER = "migration"
@@ -344,7 +351,6 @@ class OgdchResourcePlugin(plugins.SingletonPlugin):
 
 class OgdchPackagePlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IPackageController, inherit=True)
-    plugins.implements(ix.IXloader, inherit=True)
 
     # IPackageController
 
@@ -413,18 +419,6 @@ class OgdchPackagePlugin(plugins.SingletonPlugin):
         """
         search_params = ogdch_plugin_utils.ogdch_adjust_search_params(search_params)
         return search_params
-
-    # IXloader
-
-    def after_upload(self, context, resource_dict, dataset_dict):
-        # create resource views after a successful upload to the DataStore
-        tk.get_action("resource_create_default_resource_views")(
-            context,
-            {
-                "resource": resource_dict,
-                "package": dataset_dict,
-            },
-        )
 
 
 class OgdchArchivePlugin(plugins.SingletonPlugin):
@@ -815,3 +809,71 @@ class OgdchMiddlewarePlugin(plugins.SingletonPlugin):
 
     def make_error_log_middleware(self, app, config):
         return app
+
+
+class OgdchXloaderPlugin(xloaderPlugin):
+    # When the changes in https://github.com/ckan/ckanext-xloader/pull/265 are merged
+    # and released, we can update ckanext-xloader and remove this plugin.
+
+    # IDomainObjectModification
+
+    def notify(self, entity, operation):
+        # type: (Package|Resource, DomainObjectOperation) -> None
+        """Handle notification of an entity modification.
+
+        Overwritten from xloaderPlugin so that resource files are xloadered to the
+        Datastore when:
+        - the url or format has been updated
+        - the resource is newly added
+
+        xloaderPlugin doesn't handle the case of a new resource in this method because
+        it does this in after_resource_create. However, that is not called when a
+        resource is added because its dataset was harvested, so we need to handle new
+        resources here as well.
+        """
+        if operation not in [
+            DomainObjectOperation.changed,
+            DomainObjectOperation.new,
+        ] or not isinstance(entity, Resource):
+            return
+
+        context = {
+            "ignore_auth": True,
+        }
+        resource_dict = tk.get_action("resource_show")(
+            context,
+            {
+                "id": entity.id,
+            },
+        )
+
+        if _should_remove_unsupported_resource_from_datastore(resource_dict):
+            tk.enqueue_job(
+                fn=_remove_unsupported_resource_from_datastore, args=[entity.id]
+            )
+
+        if xloader_utils.requires_successful_validation_report():
+            # If the resource requires validation, stop here if validation
+            # has not been performed or did not succeed. The Validation
+            # extension will call resource_patch and this method should
+            # be called again. However, url_changed will not be in the entity
+            # once Validation does the patch.
+            log.debug(
+                "Deferring xloading resource %s because the "
+                "resource did not pass validation yet.",
+                resource_dict.get("id"),
+            )
+            return
+        elif not getattr(entity, "url_changed", False):
+            # do not submit to xloader if the url has not changed.
+            return
+
+        self._submit_to_xloader(resource_dict)
+
+    # IResourceController
+
+    def after_resource_create(self, context, resource_dict):
+        """Overwritten from xloaderPlugin to not submit resources for xloading to the
+        Datastore at this stage. We don't need to do that here as well as in notify.
+        """
+        pass
