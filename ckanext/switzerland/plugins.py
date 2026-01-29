@@ -717,19 +717,14 @@ class OgdchSubscribePlugin(SubscribePlugin):
             ogdch_plugin_utils.ogdch_transform_links(notification, ["object_link"])
 
             package_id = notification["activities"][0]["dataset_id"]
-            contact_points = ogdch_backend_helpers.get_contact_point_for_dataset(
-                package_id
+            notification[f"contact_point"] = (
+                ogdch_backend_helpers.get_contact_point_for_dataset(package_id)[0]
             )
 
             for lang in ogdch_localize_utils.LANGUAGES:
                 notification[f"object_title_{lang}"] = (
                     ogdch_localize_utils.get_localized_value_from_json(
                         notification.get("object_title"), lang
-                    )
-                )
-                notification[f"contact_point_{lang}"] = (
-                    ogdch_localize_utils.get_localized_value_from_json(
-                        contact_points, lang
                     )
                 )
 
