@@ -3,17 +3,10 @@ from unittest.mock import patch
 
 import ckan.tests.factories as ckan_factories
 import pytest
-from ckan import model
 from ckan import plugins as p
 from ckan.lib.helpers import url_for
-from ckan.tests import helpers
 
 from ckanext.subscribe import model as subscribe_model
-from ckanext.subscribe.email_verification import (
-    get_verification_email_vars,
-)
-from ckanext.subscribe.notification import dictize_notifications
-from ckanext.subscribe.notification_email import get_notification_email_vars
 from ckanext.subscribe.tests import factories
 from ckanext.switzerland.plugins import OgdchSubscribePlugin
 from ckanext.switzerland.tests.conftest import get_context

@@ -4,7 +4,6 @@ import ckan.plugins.toolkit as tk
 import ckan.tests.factories as factories
 import pytest
 from ckan.lib.helpers import url_for
-from ckan.plugins.toolkit import config
 
 from ckanext.switzerland.tests.conftest import get_context
 

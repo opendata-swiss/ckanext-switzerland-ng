@@ -24,7 +24,7 @@ class TestBlueprints(object):
         assert url == "/perma/non-existent-id@unknown"
 
         # expect a 404 response
-        response = app.get(url, status=404)
+        app.get(url, status=404)
 
     def test_org_list_links(self, app, org):
         # no locale, should default to EN

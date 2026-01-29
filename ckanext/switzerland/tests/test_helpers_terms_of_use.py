@@ -26,7 +26,6 @@ class TestHelpers(object):
         assert license_term_id == result
 
     def test_get_resource_terms_of_use_closed(self):
-        term_id = "NonCommercialNotAllowed-CommercialAllowed-ReferenceNotRequired"
         resource = {}
         result = ogdch_term_utils.get_resource_terms_of_use(resource)
         assert "ClosedData" == result
