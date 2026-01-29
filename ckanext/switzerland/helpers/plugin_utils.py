@@ -187,43 +187,21 @@ def _prepare_resource_fields_for_indexing(search_data, validated_dict):
     search_data["res_name"] = [
         ogdch_loc_utils.lang_to_string(r, "title") for r in validated_dict["resources"]
     ]
-    search_data["res_name_en"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["title"], "en")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_name_de"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["title"], "de")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_name_fr"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["title"], "fr")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_name_it"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["title"], "it")
-        for r in validated_dict["resources"]
-    ]
 
     search_data["res_description"] = [
         ogdch_loc_utils.lang_to_string(r, "description")
         for r in validated_dict["resources"]
     ]
-    search_data["res_description_en"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["description"], "en")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_description_de"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["description"], "de")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_description_fr"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["description"], "fr")
-        for r in validated_dict["resources"]
-    ]
-    search_data["res_description_it"] = [
-        ogdch_loc_utils.get_localized_value_from_dict(r["description"], "it")
-        for r in validated_dict["resources"]
-    ]
+
+    for lang_code in ogdch_loc_utils.get_language_priorities():
+        search_data[f"res_name_{lang_code}"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(r["title"], lang_code)
+            for r in validated_dict["resources"]
+        ]
+        search_data[f"res_description_{lang_code}"] = [
+            ogdch_loc_utils.get_localized_value_from_dict(r["description"], lang_code)
+            for r in validated_dict["resources"]
+        ]
 
     search_data["res_format"] = ogdch_format_utils.prepare_formats_for_index(
         resources=validated_dict["resources"]
