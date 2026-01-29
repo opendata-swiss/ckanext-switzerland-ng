@@ -392,10 +392,11 @@
     },
     {
       "field_name": "contact_points",
-      "validators": "harvest_list_of_dicts ogdch_validate_formfield_contact_points",
+      "validators": "harvest_list_of_dicts ogdch_validate_formfield_contact_points scheming_required",
       "output_validators": "multiple_text_output",
       "form_snippet": "contact_points.html",
       "display_snippet": "contact_points.html",
+      "required": true,
       "mark_required": true,
       "fieldgroup": {
         "en": "Contact point",
