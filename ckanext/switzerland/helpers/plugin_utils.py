@@ -91,9 +91,11 @@ def ogdch_prepare_search_data_for_index(search_data):
         ]
     search_data["identifier"] = validated_dict.get("identifier")
     if "publisher" in validated_dict:
-        _prepare_publisher_for_search(
+        publisher = _prepare_publisher_for_search(
             validated_dict["publisher"], validated_dict["name"]
         )
+        search_data["publisher"] = publisher.get("name", "")
+        search_data["publisher_url"] = publisher.get("url", "")
 
     see_alsos_data = validated_dict.get("see_alsos", [])
     search_data["see_alsos"] = [d["dataset_identifier"] for d in see_alsos_data]
@@ -235,10 +237,10 @@ def _prepare_publisher_for_search(publisher, dataset_name):
             publisher["url"] = publisher_as_dict.get("url", "")
     except TypeError:
         log.error(f"publisher got a TypeError for {dataset_name}")
-        return ""
+        return {}
     except AttributeError:
         log.error(f"publisher got an AttributeError for {dataset_name}")
-        return ""
+        return {}
     else:
         return publisher
 
