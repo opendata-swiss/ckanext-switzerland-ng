@@ -6,7 +6,7 @@
     {% if qualified_relation and qualified_relation.relation %}
       {% set related_dataset = h.get_dataset_by_permalink(qualified_relation.relation) %}
       {% if related_dataset %}
-        <li>{{ h.link_to(related_dataset.title, h.url_for('dataset_read', id=related_dataset.name)) }}</li>
+        <li>{{ h.link_to(related_dataset.title, h.url_for('dataset.read', id=related_dataset.name)) }}</li>
       {% else %}
         <li><a href="{{ qualified_relation.relation }}">{{ qualified_relation.relation }}</a></li>
       {% endif %}
@@ -16,7 +16,7 @@
     {% if see_also and see_also.dataset_identifier %}
       {% set related_dataset = h.get_dataset_by_identifier(see_also.dataset_identifier) %}
       {% if related_dataset %}
-        <li>{{ h.link_to(related_dataset.title, h.url_for('dataset_read', id=related_dataset.name)) }}</li>
+        <li>{{ h.link_to(related_dataset.title, h.url_for('dataset.read', id=related_dataset.name)) }}</li>
       {% else %}
         <li>{{ see_also.dataset_identifier }}</li>
       {% endif %}

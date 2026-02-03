@@ -14,7 +14,7 @@
     <p>
       {# localize organization description #}
       {{ h.scheming_language_text(organization['description'])  }}
-      {% link_for _('read more'), controller='organization', action='about', id=organization.name %}
+      {% link_for _('read more'), 'organization.about', id=organization.name %}
     </p>
   {% else %}
     <p class="empty">{{ _('There is no description for this organization') }}</p>

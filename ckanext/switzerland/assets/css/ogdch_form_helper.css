@@ -1,0 +1,39 @@
+/*------------------------------------------------------*/
+/* css for forms in the backend of opendata.switzerland */
+/*------------------------------------------------------*/
+
+/*------------------------------------------------------*/
+/* dataset form                                         */
+/*------------------------------------------------------*/
+
+/* hide empty rows for list form fields */
+.ogdch-hide-row {
+  display: none;
+}
+
+.ogdch-btn-add-row {
+  margin-top: 30px;
+  margin-bottom: 50px;
+  background: lightgray;
+}
+
+.info-block {
+    padding: 5px 0 5px 10px;
+}
+.info-block, .form-group .info-block {
+  position: relative;
+  display: block;
+  font-size: 1em;
+  color: #aaaaaa;
+  line-height: 1.3;
+  margin-top: 6px;
+}
+
+.ogdch-form-field-group {
+  margin-bottom: 50px;
+}
+
+.multiple-text-group {
+  list-style-type: none;
+  padding-left: 0;
+}

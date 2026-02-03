@@ -2,7 +2,7 @@
   "scheming_version": 1,
   "group_type": "group",
   "about": "Multilingual group schema",
-  "about_url": "https://github.com/ogdch/ckanext-switzerland",
+  "about_url": "https://github.com/opendata-swiss/ckanext-switzerland-ng",
   "form_languages": ["en", "de", "fr", "it"],
   "fields": [
     {

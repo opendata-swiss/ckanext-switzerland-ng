@@ -1,6 +1,12 @@
 {% ckan_extends %}
 
-{% block breadcrumb_content %}
-  <li>{{ h.nav_link(_('Categories'), controller='group', action='index') }}</li>
-  <li class="active">{% block breadcrumb_link %}{{ h.nav_link(_('Add a Category'), controller='group', action='new') }}{% endblock %}</li>
+{% block primary_content_inner %}
+  <h1 class="{% block page_heading_class %}page-heading{% endblock %}">
+    {% block page_heading %}
+      {{ h.humanize_entity_type('group', group_type, 'form label') or _('Category Form'), }}
+    {% endblock %}
+  </h1>
+  {% block form %}
+    {{ form | safe }}
+  {% endblock %}
 {% endblock %}

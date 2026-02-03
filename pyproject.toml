@@ -1,0 +1,55 @@
+[project]
+name = "ckanext-switzerland"
+version = "0.0.2"
+dynamic = ["dependencies", "optional-dependencies"]
+description = "Plugins for opendata.swiss"
+authors = [
+    {name = "Liip AG", email = "ogdch@liip.ch"}
+]
+maintainers = [
+    {name = "Liip AG", email = "ogdch@liip.ch"}
+]
+license = {text = "AGPL"}
+classifiers = [
+    "Intended Audience :: Developers",
+    "Development Status :: 5 - Production/Stable",
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+]
+keywords = [
+    "CKAN",
+    "schema",
+    "switzerland",
+    "multilingual",
+]
+
+[project.urls]
+Documentation = "https://github.com/opendata-swiss/ckanext-switzerland-ng"
+Repository = "https://github.com/opendata-swiss/ckanext-switzerland-ng"
+Issues = "https://github.com/opendata-swiss/ckanext-switzerland-ng/issues"
+
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+optional-dependencies = {dev = { file = ["dev-requirements.txt"] }}
+
+[tool.isort]
+profile = "black"
+
+[project.entry-points."ckan.plugins"]
+ogdch = "ckanext.switzerland.plugins:OgdchPlugin"
+ogdch_pkg = "ckanext.switzerland.plugins:OgdchPackagePlugin"
+ogdch_res = "ckanext.switzerland.plugins:OgdchResourcePlugin"
+ogdch_group = "ckanext.switzerland.plugins:OgdchGroupPlugin"
+ogdch_org = "ckanext.switzerland.plugins:OgdchOrganizationPlugin"
+ogdch_showcase = "ckanext.switzerland.plugins:OgdchShowcasePlugin"
+ogdch_archive = "ckanext.switzerland.plugins:OgdchArchivePlugin"
+ogdch_subscribe = "ckanext.switzerland.plugins:OgdchSubscribePlugin"
+ogdch_middleware = "ckanext.switzerland.plugins:OgdchMiddlewarePlugin"
+ogdch_xloader = "ckanext.switzerland.plugins:OgdchXloaderPlugin"

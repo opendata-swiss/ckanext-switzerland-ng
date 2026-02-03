@@ -1,18 +1,17 @@
-# coding=UTF-8
-
-import collections
 import logging
 import os
+from collections import OrderedDict
 
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as tk
-from ckan.common import OrderedDict
-from ckan.lib.base import render_jinja2
 from ckan.lib.plugins import DefaultTranslation
-from ckan.model import PACKAGE_NAME_MAX_LENGTH, Activity, Package, Session
+from ckan.model import PACKAGE_NAME_MAX_LENGTH, Package, Session
+from ckan.model.domain_object import DomainObjectOperation
+from ckan.model.resource import Resource
+from ckan.plugins.toolkit import render
 
 import ckanext.switzerland.helpers.backend_helpers as ogdch_backend_helpers
-import ckanext.switzerland.helpers.dataset_form_helpers as ogdch_dataset_form_helpers  # noqa
+import ckanext.switzerland.helpers.dataset_form_helpers as ogdch_dataset_form_helpers
 import ckanext.switzerland.helpers.date_helpers as ogdch_date_helpers
 import ckanext.switzerland.helpers.format_utils as ogdch_format_utils
 import ckanext.switzerland.helpers.frontend_helpers as ogdch_frontend_helpers
@@ -21,107 +20,124 @@ import ckanext.switzerland.helpers.plugin_utils as ogdch_plugin_utils
 import ckanext.switzerland.helpers.request_utils as ogdch_request_utils
 import ckanext.switzerland.helpers.terms_of_use_utils as ogdch_term_utils
 import ckanext.switzerland.helpers.validators as ogdch_validators
-import ckanext.xloader.interfaces as ix
+from ckanext.activity.model import Activity
+from ckanext.hierarchy.plugin import HierarchyDisplay
 from ckanext.showcase.plugin import ShowcasePlugin
 from ckanext.subscribe.plugin import SubscribePlugin
 from ckanext.switzerland import logic as ogdch_logic
+from ckanext.switzerland.blueprints.organization import org
+from ckanext.switzerland.blueprints.perma import perma
+from ckanext.switzerland.blueprints.user import user
 from ckanext.switzerland.middleware import RobotsHeaderMiddleware
+from ckanext.xloader import utils as xloader_utils
+from ckanext.xloader.plugin import (
+    _remove_unsupported_resource_from_datastore,
+    _should_remove_unsupported_resource_from_datastore,
+    xloaderPlugin,
+)
 
-HARVEST_USER = 'harvest'
-MIGRATION_USER = 'migration'
+HARVEST_USER = "harvest"
+MIGRATION_USER = "migration"
 
 log = logging.getLogger(__name__)
 
-__location__ = os.path.realpath(os.path.join(
-    os.getcwd(),
-    os.path.dirname(__file__))
-)
+__location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 
+@tk.blanket.config_declarations
 class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.IValidators)
     plugins.implements(plugins.IFacets)
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.ITemplateHelpers)
+    plugins.implements(plugins.IBlueprint)
     plugins.implements(plugins.ITranslation)
-    plugins.implements(plugins.IRoutes, inherit=True)
 
     # ITranslation
 
     def i18n_domain(self):
-        return 'ckanext-switzerland'
+        return "ckanext-switzerland"
 
     # IConfigurer
 
     def update_config(self, config_):
-        tk.add_template_directory(config_, 'templates')
-        tk.add_public_directory(config_, 'public')
-        tk.add_resource('fanstatic', 'switzerland')
+        tk.add_template_directory(config_, "templates")
+        tk.add_public_directory(config_, "public")
+        # Register WebAssets
+        tk.add_resource("assets", "switzerland")
 
     # IValidators
 
     def get_validators(self):
         return {
-            'multiple_text': ogdch_validators.multiple_text,
-            'multiple_text_output': ogdch_validators.multiple_text_output,
-            'multilingual_text_output': ogdch_validators.multilingual_text_output, # noqa
-            'harvest_list_of_dicts': ogdch_validators.harvest_list_of_dicts,
-            'ogdch_language': ogdch_validators.ogdch_language,
-            'ogdch_license_required': ogdch_validators.ogdch_license_required,
-            'ogdch_unique_identifier': ogdch_validators.ogdch_unique_identifier, # noqa
-            'ogdch_required_in_one_language': ogdch_validators.ogdch_required_in_one_language, # noqa
-            'ogdch_validate_formfield_publisher': ogdch_validators.ogdch_validate_formfield_publisher,  # noqa
-            'ogdch_validate_formfield_contact_points': ogdch_validators.ogdch_validate_formfield_contact_points,  # noqa
-            'ogdch_validate_formfield_relations': ogdch_validators.ogdch_validate_formfield_relations,  # noqa
-            'ogdch_validate_formfield_qualified_relations': ogdch_validators.ogdch_validate_formfield_qualified_relations,  # noqa
-            'ogdch_validate_temporals': ogdch_validators.ogdch_validate_temporals,  # noqa
-            'ogdch_fluent_tags': ogdch_validators.ogdch_fluent_tags,
-            'ogdch_temp_scheming_choices': ogdch_validators.ogdch_temp_scheming_choices,  # noqa
-            'ogdch_validate_list_of_urls': ogdch_validators.ogdch_validate_list_of_urls,  # noqa
-            'ogdch_validate_list_of_uris': ogdch_validators.ogdch_validate_list_of_uris,  # noqa
-            'ogdch_validate_duration_type': ogdch_validators.ogdch_validate_duration_type,  # noqa
+            "multiple_text": ogdch_validators.multiple_text,
+            "multiple_text_output": ogdch_validators.multiple_text_output,
+            "multilingual_text_output": ogdch_validators.multilingual_text_output,
+            "harvest_list_of_dicts": ogdch_validators.harvest_list_of_dicts,
+            "ogdch_language": ogdch_validators.ogdch_language,
+            "ogdch_license_required": ogdch_validators.ogdch_license_required,
+            "ogdch_unique_identifier": ogdch_validators.ogdch_unique_identifier,
+            "ogdch_required_in_one_language": ogdch_validators.ogdch_required_in_one_language,
+            "ogdch_validate_formfield_publisher": ogdch_validators.ogdch_validate_formfield_publisher,
+            "ogdch_validate_formfield_contact_points": ogdch_validators.ogdch_validate_formfield_contact_points,
+            "ogdch_validate_formfield_relations": ogdch_validators.ogdch_validate_formfield_relations,
+            "ogdch_validate_formfield_qualified_relations": ogdch_validators.ogdch_validate_formfield_qualified_relations,
+            "ogdch_validate_temporals": ogdch_validators.ogdch_validate_temporals,
+            "ogdch_fluent_tags": ogdch_validators.ogdch_fluent_tags,
+            "ogdch_temp_scheming_choices": ogdch_validators.ogdch_temp_scheming_choices,
+            "ogdch_validate_list_of_urls": ogdch_validators.ogdch_validate_list_of_urls,
+            "ogdch_validate_list_of_uris": ogdch_validators.ogdch_validate_list_of_uris,
+            "ogdch_validate_duration_type": ogdch_validators.ogdch_validate_duration_type,
         }
 
     # IFacets
 
     def dataset_facets(self, facets_dict, package_type):
-        lang_code = tk.request.environ['CKAN_LANG']
-        facets_dict = collections.OrderedDict()
-        facets_dict['linked_data'] = plugins.toolkit._('Linked Data')
-        facets_dict['private'] = plugins.toolkit._('Draft')
-        facets_dict['groups'] = plugins.toolkit._('Categories')
-        facets_dict['keywords_' + lang_code] = plugins.toolkit._('Keywords')
-        facets_dict['organization'] = plugins.toolkit._('Organizations')
-        facets_dict['political_level'] = plugins.toolkit._('Political levels')
-        facets_dict['res_license'] = plugins.toolkit._('Terms of use')
-        facets_dict['res_format'] = plugins.toolkit._('Formats')
+        if package_type != "dataset":
+            return facets_dict
+
+        lang_code = tk.request.environ["CKAN_LANG"]
+        facets_dict = OrderedDict()
+        facets_dict["linked_data"] = plugins.toolkit._("Linked Data")
+        facets_dict["private"] = plugins.toolkit._("Draft")
+        facets_dict["groups"] = plugins.toolkit._("Categories")
+        facets_dict[f"keywords_{lang_code}"] = plugins.toolkit._("Keywords")
+        facets_dict["organization"] = plugins.toolkit._("Organizations")
+        facets_dict["political_level"] = plugins.toolkit._("Political levels")
+        facets_dict["res_license"] = plugins.toolkit._("Terms of use")
+        facets_dict["res_format"] = plugins.toolkit._("Formats")
         return facets_dict
 
     def group_facets(self, facets_dict, group_type, package_type):
-        lang_code = tk.request.environ['CKAN_LANG']
+        if package_type != "dataset":
+            return facets_dict
+
+        lang_code = tk.request.environ["CKAN_LANG"]
         # the IFacets implementation of CKAN 2.4 is broken,
         # clear the dict instead and change the passed in argument
         facets_dict.clear()
-        facets_dict['private'] = plugins.toolkit._('Draft')
-        facets_dict['keywords_' + lang_code] = plugins.toolkit._('Keywords')
-        facets_dict['organization'] = plugins.toolkit._('Organizations')
-        facets_dict['political_level'] = plugins.toolkit._('Political levels')
-        facets_dict['res_license'] = plugins.toolkit._('Terms of use')
-        facets_dict['res_format'] = plugins.toolkit._('Formats')
+        facets_dict["private"] = plugins.toolkit._("Draft")
+        facets_dict[f"keywords_{lang_code}"] = plugins.toolkit._("Keywords")
+        facets_dict["organization"] = plugins.toolkit._("Organizations")
+        facets_dict["political_level"] = plugins.toolkit._("Political levels")
+        facets_dict["res_license"] = plugins.toolkit._("Terms of use")
+        facets_dict["res_format"] = plugins.toolkit._("Formats")
         return facets_dict
 
-    def organization_facets(self, facets_dict, organization_type,
-                            package_type):
-        lang_code = tk.request.environ['CKAN_LANG']
+    def organization_facets(self, facets_dict, organization_type, package_type):
+        if package_type != "dataset":
+            return facets_dict
+
+        lang_code = tk.request.environ["CKAN_LANG"]
         # the IFacets implementation of CKAN 2.4 is broken,
         # clear the dict instead and change the passed in argument
         facets_dict.clear()
-        facets_dict['private'] = plugins.toolkit._('Draft')
-        facets_dict['groups'] = plugins.toolkit._('Categories')
-        facets_dict['keywords_' + lang_code] = plugins.toolkit._('Keywords')
-        facets_dict['res_license'] = plugins.toolkit._('Terms of use')
-        facets_dict['res_format'] = plugins.toolkit._('Formats')
+        facets_dict["private"] = plugins.toolkit._("Draft")
+        facets_dict["groups"] = plugins.toolkit._("Categories")
+        facets_dict[f"keywords_{lang_code}"] = plugins.toolkit._("Keywords")
+        facets_dict["res_license"] = plugins.toolkit._("Terms of use")
+        facets_dict["res_format"] = plugins.toolkit._("Formats")
         return facets_dict
 
     # IActions
@@ -131,23 +147,23 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         Expose new API methods
         """
         return {
-            'ogdch_counts': ogdch_logic.ogdch_counts,
-            'ogdch_dataset_terms_of_use': ogdch_logic.ogdch_dataset_terms_of_use, # noqa
-            'ogdch_dataset_by_identifier': ogdch_logic.ogdch_dataset_by_identifier, # noqa
-            'ogdch_dataset_by_permalink': ogdch_logic.ogdch_dataset_by_permalink, # noqa
-            'ogdch_content_headers': ogdch_logic.ogdch_content_headers,
-            'ogdch_autosuggest': ogdch_logic.ogdch_autosuggest,
-            'ogdch_package_show': ogdch_logic.ogdch_package_show,
-            'ogdch_xml_upload': ogdch_logic.ogdch_xml_upload,
-            'ogdch_showcase_search': ogdch_logic.ogdch_showcase_search,
-            'ogdch_add_users_to_groups': ogdch_logic.ogdch_add_users_to_groups,
-            'user_create': ogdch_logic.ogdch_user_create,
-            'ogdch_harvest_monitor': ogdch_logic.ogdch_harvest_monitor,
-            'ogdch_showcase_submit': ogdch_logic.ogdch_showcase_submit,
-            'ogdch_subscribe_manage': ogdch_logic.ogdch_subscribe_manage,
-            'ogdch_subscribe_unsubscribe': ogdch_logic.ogdch_subscribe_unsubscribe,  # noqa
-            'ogdch_subscribe_unsubscribe_all': ogdch_logic.ogdch_subscribe_unsubscribe_all,  # noqa
-            'ogdch_force_reset_passwords': ogdch_logic.ogdch_force_reset_passwords,  # noqa
+            "ogdch_counts": ogdch_logic.ogdch_counts,
+            "ogdch_dataset_terms_of_use": ogdch_logic.ogdch_dataset_terms_of_use,
+            "ogdch_dataset_by_identifier": ogdch_logic.ogdch_dataset_by_identifier,
+            "ogdch_dataset_by_permalink": ogdch_logic.ogdch_dataset_by_permalink,
+            "ogdch_content_headers": ogdch_logic.ogdch_content_headers,
+            "ogdch_autosuggest": ogdch_logic.ogdch_autosuggest,
+            "ogdch_package_show": ogdch_logic.ogdch_package_show,
+            "ogdch_xml_upload": ogdch_logic.ogdch_xml_upload,
+            "ogdch_showcase_search": ogdch_logic.ogdch_showcase_search,
+            "ogdch_add_users_to_groups": ogdch_logic.ogdch_add_users_to_groups,
+            "user_create": ogdch_logic.ogdch_user_create,
+            "ogdch_harvest_monitor": ogdch_logic.ogdch_harvest_monitor,
+            "ogdch_showcase_submit": ogdch_logic.ogdch_showcase_submit,
+            "ogdch_subscribe_manage": ogdch_logic.ogdch_subscribe_manage,
+            "ogdch_subscribe_unsubscribe": ogdch_logic.ogdch_subscribe_unsubscribe,
+            "ogdch_subscribe_unsubscribe_all": ogdch_logic.ogdch_subscribe_unsubscribe_all,
+            "ogdch_force_reset_passwords": ogdch_logic.ogdch_force_reset_passwords,
         }
 
     # ITemplateHelpers
@@ -157,99 +173,62 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         Provide template helper functions
         """
         return {
-            'get_group_count': ogdch_frontend_helpers.get_group_count,
-            'get_localized_org': ogdch_frontend_helpers.get_localized_org,
-            'localize_json_facet_title': ogdch_frontend_helpers.localize_json_facet_title, # noqa
-            'localize_harvester_facet_title': ogdch_backend_helpers.localize_harvester_facet_title, # noqa
-            'localize_showcase_facet_title': ogdch_backend_helpers.localize_showcase_facet_title, # noqa
-            'get_frequency_name': ogdch_frontend_helpers.get_frequency_name,
-            'get_political_level': ogdch_frontend_helpers.get_political_level,
-            'get_dataset_terms_of_use': ogdch_term_utils.get_dataset_terms_of_use, # noqa
-            'get_dataset_by_identifier': ogdch_frontend_helpers.get_dataset_by_identifier, # noqa
-            'get_dataset_by_permalink': ogdch_frontend_helpers.get_dataset_by_permalink, # noqa
-            'get_readable_file_size': ogdch_frontend_helpers.get_readable_file_size, # noqa
-            'get_piwik_config': ogdch_frontend_helpers.get_piwik_config,
-            'ogdch_localised_number': ogdch_frontend_helpers.ogdch_localised_number, # noqa
-            'ogdch_render_tree': ogdch_frontend_helpers.ogdch_render_tree,
-            'ogdch_group_tree': ogdch_frontend_helpers.ogdch_group_tree,
-            'get_localized_newsletter_url': ogdch_frontend_helpers.get_localized_newsletter_url, # noqa
-            'get_localized_date': ogdch_date_helpers.get_localized_date,
-            'get_date_picker_format': ogdch_date_helpers.get_date_picker_format, # noqa
-            'ogdch_template_helper_get_active_class': ogdch_backend_helpers.ogdch_template_helper_get_active_class, # noqa
-            'ogdch_get_organization_field_list': ogdch_backend_helpers.ogdch_get_organization_field_list, # noqa
-            'ogdch_get_political_level_field_list': ogdch_backend_helpers.ogdch_get_political_level_field_list, # noqa
-            'get_localized_value_from_json': ogdch_localize_utils.get_localized_value_from_json, # noqa
-            'get_localized_value_for_display': ogdch_frontend_helpers.get_localized_value_for_display,  # noqa
-            'ogdch_get_accrual_periodicity_choices': ogdch_dataset_form_helpers.ogdch_get_accrual_periodicity_choices,  # noqa
-            'ogdch_get_license_choices': ogdch_dataset_form_helpers.ogdch_get_license_choices,  # noqa
-            'ogdch_publisher_form_helper': ogdch_dataset_form_helpers.ogdch_publisher_form_helper,  # noqa
-            'ogdch_contact_points_form_helper': ogdch_dataset_form_helpers.ogdch_contact_points_form_helper,  # noqa
-            'ogdch_relations_form_helper': ogdch_dataset_form_helpers.ogdch_relations_form_helper,  # noqa
-            'ogdch_qualified_relations_form_helper': ogdch_dataset_form_helpers.ogdch_qualified_relations_form_helper,  # noqa
-            'ogdch_date_form_helper': ogdch_dataset_form_helpers.ogdch_date_form_helper,  # noqa
-            'ogdch_temporals_form_helper': ogdch_dataset_form_helpers.ogdch_temporals_form_helper,  # noqa
-            'ogdch_dataset_title_form_helper': ogdch_dataset_form_helpers.ogdch_dataset_title_form_helper,  # noqa
-            'ogdch_get_top_level_organisations': ogdch_backend_helpers.ogdch_get_top_level_organisations,  # noqa
-            'ogdch_user_datasets': ogdch_backend_helpers.ogdch_user_datasets,
-            # monkey patch template helpers to return translated names/titles
-            'resource_display_name': ogdch_backend_helpers.ogdch_resource_display_name,  # noqa
-            'dataset_display_name': ogdch_backend_helpers.dataset_display_name,
-            'group_link': ogdch_backend_helpers.group_link,
-            'resource_link': ogdch_backend_helpers.resource_link,
-            'organization_link': ogdch_backend_helpers.organization_link,
-            'ogdch_localize_activity_item': ogdch_backend_helpers.ogdch_localize_activity_item,  # noqa
-            'ogdch_admin_capacity': ogdch_backend_helpers.ogdch_admin_capacity,  # noqa
-            'render_publisher': ogdch_frontend_helpers.render_publisher,
-            'ogdch_get_switch_connectome_url': ogdch_backend_helpers.ogdch_get_switch_connectome_url,  # noqa
-            'ogdch_get_env': ogdch_backend_helpers.ogdch_get_env,
-            'ogdch_multiple_text_form_helper': ogdch_dataset_form_helpers.ogdch_multiple_text_form_helper,  # noqa
+            "get_group_count": ogdch_frontend_helpers.get_group_count,
+            "get_localized_org": ogdch_frontend_helpers.get_localized_org,
+            "localize_json_facet_title": ogdch_frontend_helpers.localize_json_facet_title,
+            "localize_harvester_facet_title": ogdch_backend_helpers.localize_harvester_facet_title,
+            "localize_showcase_facet_title": ogdch_backend_helpers.localize_showcase_facet_title,
+            "get_frequency_name": ogdch_frontend_helpers.get_frequency_name,
+            "get_political_level": ogdch_frontend_helpers.get_political_level,
+            "get_dataset_terms_of_use": ogdch_term_utils.get_dataset_terms_of_use,
+            "get_dataset_by_identifier": ogdch_frontend_helpers.get_dataset_by_identifier,
+            "get_dataset_by_permalink": ogdch_frontend_helpers.get_dataset_by_permalink,
+            "get_readable_file_size": ogdch_frontend_helpers.get_readable_file_size,
+            "ogdch_localised_number": ogdch_frontend_helpers.ogdch_localised_number,
+            "ogdch_render_tree": ogdch_frontend_helpers.ogdch_render_tree,
+            "ogdch_group_tree": ogdch_frontend_helpers.ogdch_group_tree,
+            "get_localized_newsletter_url": ogdch_frontend_helpers.get_localized_newsletter_url,
+            "get_localized_date": ogdch_date_helpers.get_localized_date,
+            "get_date_picker_format": ogdch_date_helpers.get_date_picker_format,
+            "ogdch_template_helper_get_active_class": ogdch_backend_helpers.ogdch_template_helper_get_active_class,
+            "ogdch_get_organization_field_list": ogdch_backend_helpers.ogdch_get_organization_field_list,
+            "ogdch_get_political_level_field_list": ogdch_backend_helpers.ogdch_get_political_level_field_list,
+            "get_localized_value_from_json": ogdch_localize_utils.get_localized_value_from_json,
+            "get_localized_value_for_display": ogdch_frontend_helpers.get_localized_value_for_display,
+            "ogdch_get_accrual_periodicity_choices": ogdch_dataset_form_helpers.ogdch_get_accrual_periodicity_choices,
+            "ogdch_get_license_choices": ogdch_dataset_form_helpers.ogdch_get_license_choices,
+            "ogdch_publisher_form_helper": ogdch_dataset_form_helpers.ogdch_publisher_form_helper,
+            "ogdch_contact_points_form_helper": ogdch_dataset_form_helpers.ogdch_contact_points_form_helper,
+            "ogdch_relations_form_helper": ogdch_dataset_form_helpers.ogdch_relations_form_helper,
+            "ogdch_qualified_relations_form_helper": ogdch_dataset_form_helpers.ogdch_qualified_relations_form_helper,
+            "ogdch_date_form_helper": ogdch_dataset_form_helpers.ogdch_date_form_helper,
+            "ogdch_temporals_form_helper": ogdch_dataset_form_helpers.ogdch_temporals_form_helper,
+            "ogdch_dataset_title_form_helper": ogdch_dataset_form_helpers.ogdch_dataset_title_form_helper,
+            "ogdch_get_top_level_organisations": ogdch_backend_helpers.ogdch_get_top_level_organisations,
+            "ogdch_user_datasets": ogdch_backend_helpers.ogdch_user_datasets,
+            # override template helpers to return translated names/titles
+            "resource_display_name": ogdch_backend_helpers.ogdch_resource_display_name,
+            "dataset_display_name": ogdch_backend_helpers.dataset_display_name,
+            "group_link": ogdch_backend_helpers.group_link,
+            "resource_link": ogdch_backend_helpers.resource_link,
+            "organization_link": ogdch_backend_helpers.organization_link,
+            "strxfrm": ogdch_backend_helpers.strxfrm,
+            # end template helper overrides
+            "ogdch_localize_activity_item": ogdch_backend_helpers.ogdch_localize_activity_item,
+            "ogdch_admin_capacity": ogdch_backend_helpers.ogdch_admin_capacity,
+            "render_publisher": ogdch_frontend_helpers.render_publisher,
+            "ogdch_get_switch_connectome_url": ogdch_backend_helpers.ogdch_get_switch_connectome_url,
+            "ogdch_get_env": ogdch_backend_helpers.ogdch_get_env,
+            "ogdch_multiple_text_form_helper": ogdch_dataset_form_helpers.ogdch_multiple_text_form_helper,
         }
 
-    # IRouter
+    # IBlueprint
 
-    def before_map(self, map):
-        """adding custom routes to the ckan mapping"""
-
-        # create perma-link route
-        map.connect('perma_redirect', '/perma/{id}',
-                    controller='ckanext.switzerland.controllers.perma:OgdchPermaController',  # noqa
-                    action='read')
-
-        # group routes
-        map.connect('group_new', '/group/new',
-                    controller='group', action='new')
-        map.connect('group_read', '/group/{id}',
-                    controller='ckanext.switzerland.controllers.group:OgdchGroupController', # noqa
-                    action='read')
-        map.connect('group_edit', '/group/edit/{id}', controller='group', action='edit') # noqa
-
-        map.connect('group_index', '/group',
-                    controller='ckanext.switzerland.controllers.group:OgdchGroupController', # noqa
-                    action='index')
-
-        # organization routes
-        map.connect('organization_index', '/organization',
-                    controller='ckanext.switzerland.controllers.organization:OgdchOrganizationController', # noqa
-                    action='index')
-        map.connect('organization_list', '/user/organizations/{id}',
-                    controller='ckanext.switzerland.controllers.organization:OgdchOrganizationController',  # noqa
-                    action='list_for_user')
-        map.connect('organization_new', '/organization/new', controller='organization', action='new') # noqa
-        map.connect('organization_read', '/organization/{id}',
-                    controller='ckanext.switzerland.controllers.organization:OgdchOrganizationController', # noqa
-                    action='read')
-        map.connect('organization_edit', '/organization/edit/{id}',
-                    controller='organization', action='edit')
-        map.connect('organization_xml_upload',
-                    '/organization/xml_upload/{name}',
-                    controller='ckanext.switzerland.controllers.organization:OgdchOrganizationController', # noqa
-                    action='xml_upload')
-
-        return map
+    def get_blueprint(self):
+        return [org, perma, user]
 
 
 class OgdchGroupPlugin(plugins.SingletonPlugin):
-    plugins.implements(plugins.IConfigurer, inherit=True)
     plugins.implements(plugins.IGroupController, inherit=True)
 
     def before_view(self, grp_dict):
@@ -260,18 +239,16 @@ class OgdchGroupPlugin(plugins.SingletonPlugin):
         group_show). It is called in the course of our ogdch_package_show API,
         and in that case, the data is not localized.
         """
-        grp_dict = ogdch_localize_utils.parse_json_attributes(
-            ckan_dict=grp_dict
-        )
-        grp_dict['display_name'] = grp_dict['title']
+        grp_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=grp_dict)
+        grp_dict["display_name"] = grp_dict["title"]
 
         if ogdch_request_utils.request_is_api_request():
             return grp_dict
 
-        request_lang = ogdch_request_utils.get_request_language()
+        request_lang = ogdch_request_utils.get_current_language()
         grp_dict = ogdch_localize_utils.localize_ckan_sub_dict(
-            ckan_dict=grp_dict,
-            lang_code=request_lang)
+            ckan_dict=grp_dict, lang_code=request_lang
+        )
         return grp_dict
 
     def edit(self, grp_dict):
@@ -283,9 +260,17 @@ class OgdchGroupPlugin(plugins.SingletonPlugin):
         ogdch_logic.ogdch_add_users_to_groups(None, {})
 
 
-class OgdchOrganizationPlugin(plugins.SingletonPlugin):
-    plugins.implements(plugins.IConfigurer, inherit=True)
+class OgdchOrganizationPlugin(HierarchyDisplay):
+    """Implements IOrganizationController to localize organization dictionary in
+    before_view.
+
+    Inherits from HierarchyDisplay plugin to make sure that searches for datasets in an
+    organization always include datasets belonging to its child organizations as well.
+    """
+
     plugins.implements(plugins.IOrganizationController, inherit=True)
+
+    # IOrganizationController
 
     def before_view(self, org_dict):
         """
@@ -295,26 +280,54 @@ class OgdchOrganizationPlugin(plugins.SingletonPlugin):
         organization_show). It is called in the course of our
         ogdch_package_show API, and in that case, the data is not localized.
         """
-        org_dict = ogdch_localize_utils.parse_json_attributes(
-            ckan_dict=org_dict)
-        org_dict['display_name'] = org_dict['title']
+        org_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=org_dict)
+        org_dict["display_name"] = org_dict["title"]
 
         if ogdch_request_utils.request_is_api_request():
             return org_dict
 
-        request_lang = ogdch_request_utils.get_request_language()
+        request_lang = ogdch_request_utils.get_current_language()
         org_dict = ogdch_localize_utils.localize_ckan_sub_dict(
-            ckan_dict=org_dict,
-            lang_code=request_lang)
+            ckan_dict=org_dict, lang_code=request_lang
+        )
         return org_dict
+
+    # ITemplateHelpers (implemented in parent class HierarchyDisplay)
+
+    def get_helpers(self):
+        helpers = super().get_helpers()
+        helpers["is_include_children_selected"] = (
+            ogdch_backend_helpers.ogdch_is_include_children_selected
+        )
+
+        return helpers
+
+    # IPackageController (implemented in parent class HierarchyDisplay)
+
+    def before_dataset_search(self, search_params):
+        # Check if we're called from the organization controller, as detected
+        # by g being registered for this thread, and the existence of g.group_dict
+        try:
+            if not hasattr(tk.g, "group_dict"):
+                return search_params
+        except (TypeError, AttributeError, RuntimeError):
+            # it's non-organization controller or CLI call
+            return search_params
+
+        # Add special term to the query to tell parent method that we want to include
+        # child organizations in the search
+        query = search_params.get("q", "")
+        query += ' include_children: "True"'
+        search_params["q"] = query
+
+        return super().before_dataset_search(search_params)
 
 
 class OgdchResourcePlugin(plugins.SingletonPlugin):
-    plugins.implements(plugins.IConfigurer, inherit=True)
     plugins.implements(plugins.IResourceController, inherit=True)
 
     # IResourceController
-    def before_show(self, res_dict):
+    def before_resource_show(self, res_dict):
         """
         Transform res_dict before view.
 
@@ -322,32 +335,26 @@ class OgdchResourcePlugin(plugins.SingletonPlugin):
         resource_show). It is called in the course of our ogdch_package_show
         API, and in that case, the data is not localized.
         """
-        res_dict = ogdch_localize_utils.parse_json_attributes(
-            ckan_dict=res_dict
-        )
-        res_dict['display_name'] = res_dict['title']
-        res_dict = ogdch_format_utils.prepare_resource_format(
-            resource=res_dict)
+        res_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=res_dict)
+        res_dict["display_name"] = res_dict["title"]
+        res_dict = ogdch_format_utils.prepare_resource_format(resource=res_dict)
 
         if ogdch_request_utils.request_is_api_request():
             return res_dict
 
-        request_lang = ogdch_request_utils.get_request_language()
+        request_lang = ogdch_request_utils.get_current_language()
         res_dict = ogdch_localize_utils.localize_ckan_sub_dict(
-            ckan_dict=res_dict,
-            lang_code=request_lang)
+            ckan_dict=res_dict, lang_code=request_lang
+        )
         return res_dict
 
 
 class OgdchPackagePlugin(plugins.SingletonPlugin):
-    plugins.implements(plugins.IConfigurer, inherit=True)
     plugins.implements(plugins.IPackageController, inherit=True)
-    plugins.implements(plugins.IRoutes, inherit=True)
-    plugins.implements(ix.IXloader, inherit=True)
 
     # IPackageController
 
-    def before_view(self, pkg_dict):
+    def before_dataset_view(self, pkg_dict):
         """
         Transform pkg_dict before view.
 
@@ -355,42 +362,39 @@ class OgdchPackagePlugin(plugins.SingletonPlugin):
         package_show). It is called in the course of our ogdch_package_show
         API, and in that case, the data is not localized.
         """
-        pkg_dict = ogdch_localize_utils.parse_json_attributes(
-            ckan_dict=pkg_dict)
+        pkg_dict = ogdch_localize_utils.parse_json_attributes(ckan_dict=pkg_dict)
         pkg_dict = ogdch_plugin_utils.package_map_ckan_default_fields(pkg_dict)
-        pkg_dict['resources'] = [
-            ogdch_format_utils.prepare_resource_format(
-                resource=resource)
-            for resource in pkg_dict.get('resources')]
+        pkg_dict["resources"] = [
+            ogdch_format_utils.prepare_resource_format(resource=resource)
+            for resource in pkg_dict.get("resources")
+        ]
         ogdch_plugin_utils.ogdch_map_resource_docs_to_dataset(pkg_dict)
 
         if ogdch_request_utils.request_is_api_request():
             return pkg_dict
 
-        request_lang = ogdch_request_utils.get_request_language()
+        request_lang = ogdch_request_utils.get_current_language()
 
-        pkg_dict = ogdch_localize_utils.localize_ckan_sub_dict(
-            pkg_dict, request_lang
-        )
-        pkg_dict['resources'] = [
+        pkg_dict = ogdch_localize_utils.localize_ckan_sub_dict(pkg_dict, request_lang)
+        pkg_dict["resources"] = [
             ogdch_localize_utils.localize_ckan_sub_dict(
-                ckan_dict=resource,
-                lang_code=request_lang)
-            for resource in pkg_dict.get('resources')
+                ckan_dict=resource, lang_code=request_lang
+            )
+            for resource in pkg_dict.get("resources")
         ]
-        pkg_dict['groups'] = [
+        pkg_dict["groups"] = [
             ogdch_localize_utils.localize_ckan_sub_dict(
-                ckan_dict=grp,
-                lang_code=request_lang)
-            for grp in pkg_dict.get('groups')
+                ckan_dict=grp, lang_code=request_lang
+            )
+            for grp in pkg_dict.get("groups")
         ]
         if pkg_dict.get("organization"):
-            pkg_dict['organization'] = ogdch_localize_utils.localize_ckan_sub_dict( # noqa
-                ckan_dict=pkg_dict['organization'],
-                lang_code=request_lang)
+            pkg_dict["organization"] = ogdch_localize_utils.localize_ckan_sub_dict(
+                ckan_dict=pkg_dict["organization"], lang_code=request_lang
+            )
         return pkg_dict
 
-    def after_show(self, context, pkg_dict):
+    def after_dataset_show(self, context, pkg_dict):
         """
         before_view isn't called in API requests -> after_show is
         BUT (!) after_show is also called when packages get indexed
@@ -400,7 +404,7 @@ class OgdchPackagePlugin(plugins.SingletonPlugin):
         pkg_dict = ogdch_plugin_utils.ogdch_prepare_pkg_dict_for_api(pkg_dict)
         return pkg_dict
 
-    def before_index(self, search_data):
+    def before_dataset_index(self, search_data):
         """
         Search data before index
         """
@@ -409,66 +413,40 @@ class OgdchPackagePlugin(plugins.SingletonPlugin):
         )
         return search_data
 
-    def before_search(self, search_params):
+    def before_dataset_search(self, search_params):
         """
         Adjust search parameters
         """
-        search_params = ogdch_plugin_utils.ogdch_adjust_search_params(
-            search_params
-        )
+        search_params = ogdch_plugin_utils.ogdch_adjust_search_params(search_params)
         return search_params
-
-    # IXloader
-
-    def after_upload(self, context, resource_dict, dataset_dict):
-        # create resource views after a successful upload to the DataStore
-        tk.get_action('resource_create_default_resource_views')(
-            context,
-            {
-                'resource': resource_dict,
-                'package': dataset_dict,
-            }
-        )
 
 
 class OgdchArchivePlugin(plugins.SingletonPlugin):
-    plugins.implements(plugins.IMapper, inherit=True)
+    plugins.implements(plugins.IPackageController, inherit=True)
 
-    # IMapper
+    # IPackageController
 
-    def before_update(self, mapper, connection, instance):
+    def delete(self, entity):
         """
-        If a package is being deleted it is saved in the CKAN-trash with
-        the prefix "_archived-" so that the slug remains available.
-        This prevents future datasets with the same name will not have a
-        number appended.
+        If a dataset is deleted, first rename it with the prefix "_archived-" so that
+        the slug remains available for new datasets.
 
-        The method is a ckan interface that is called with a lot of different
-        instances: we need to make sure that the right cases are picked up:
-        datasets that are deleted, but only if they are not already archived.
-        In this cases a new name for archiving the dataset is derived.
+        This means that future datasets with the same name will not have a
+        number appended to the name. This is only carried out once: an active dataset
+        with the name '_archived-foobar' will NOT be renamed to
+        '_archived-_archived-foobar' on deletion.
         """
+        if getattr(entity, "type", None) != "dataset":
+            return
 
-        # check instance: should be deleted dataset
-        instance_is_dataset_setup_for_delete = (
-                instance.__class__ == Package and
-                getattr(instance, 'state', None) == 'deleted'
-                and getattr(instance, 'type', None) == 'dataset'
+        dataset_name = getattr(entity, "name", "")
+        if dataset_name.startswith("_archived-"):
+            return
+
+        entity.name = self._ensure_name_is_unique(f"_archived-{dataset_name}")
+        log.info(
+            f"Archived dataset name changed to '{entity.name}' (was '{dataset_name}')"
         )
-
-        # proceed further for deleted datasets:
-        if instance_is_dataset_setup_for_delete:
-            dataset_name = getattr(instance, 'name', '')
-            dataset_is_already_archived = dataset_name.startswith('_archived-')
-            if not dataset_is_already_archived:
-                # only call this expensive method in case of a newly
-                # deleted not yet archived dataset
-                instance.name = self._ensure_name_is_unique(
-                    "_archived-{0}".format(dataset_name)
-                )
-                log.info("new name '{}' retrieved for dataset '{}' that was "
-                         "set up for delete"
-                         .format(instance.name, dataset_name))
 
     @staticmethod
     def _ensure_name_is_unique(ideal_name):
@@ -488,11 +466,10 @@ class OgdchArchivePlugin(plugins.SingletonPlugin):
         APPEND_MAX_CHARS = len(str(MAX_NUMBER_APPENDED))
         # Find out which package names have been taken. Restrict it to names
         # derived from the ideal name plus and numbers added
-        like_q = u'%s%%' % \
-                 ideal_name[:PACKAGE_NAME_MAX_LENGTH-APPEND_MAX_CHARS]
-        name_results = Session.query(Package.name) \
-            .filter(Package.name.ilike(like_q)) \
-            .all()
+        like_q = f"{ideal_name[:PACKAGE_NAME_MAX_LENGTH - APPEND_MAX_CHARS]}%"
+        name_results = (
+            Session.query(Package.name).filter(Package.name.ilike(like_q)).all()
+        )
         taken = set([name_result[0] for name_result in name_results])
         if ideal_name not in taken:
             # great, the ideal name is available
@@ -501,9 +478,9 @@ class OgdchArchivePlugin(plugins.SingletonPlugin):
             # find the next available number
             counter = 1
             while counter <= MAX_NUMBER_APPENDED:
-                candidate_name = \
-                    ideal_name[:PACKAGE_NAME_MAX_LENGTH-len(str(counter))] + \
-                    str(counter)
+                candidate_name = ideal_name[
+                    : PACKAGE_NAME_MAX_LENGTH - len(str(counter))
+                ] + str(counter)
                 if candidate_name not in taken:
                     return candidate_name
                 counter = counter + 1
@@ -511,18 +488,10 @@ class OgdchArchivePlugin(plugins.SingletonPlugin):
 
 
 class OgdchShowcasePlugin(ShowcasePlugin):
-    plugins.implements(plugins.IConfigurable, inherit=True)
     plugins.implements(plugins.IDatasetForm, inherit=True)
     plugins.implements(plugins.ITemplateHelpers, inherit=True)
     plugins.implements(plugins.IFacets, inherit=True)
     plugins.implements(plugins.IActions, inherit=True)
-
-    # IConfigurable
-
-    def configure(self, config):
-        super(OgdchShowcasePlugin, self).configure(config)
-        # create vocabulary if necessary
-        ogdch_backend_helpers.create_showcase_types()
 
     # IDatasetForm
 
@@ -570,7 +539,7 @@ class OgdchShowcasePlugin(ShowcasePlugin):
                         tk.get_validator("ignore_missing"),
                         tk.get_validator("unicode_safe"),
                     ],
-                }
+                },
             }
         )
         return schema
@@ -631,7 +600,7 @@ class OgdchShowcasePlugin(ShowcasePlugin):
                         tk.get_validator("ignore_missing"),
                         tk.get_validator("unicode_safe"),
                     ],
-                }
+                },
             }
         )
         return schema
@@ -641,12 +610,11 @@ class OgdchShowcasePlugin(ShowcasePlugin):
     def get_helpers(self):
         helpers = super(OgdchShowcasePlugin, self).get_helpers()
         helpers["showcase_types"] = ogdch_backend_helpers.showcase_types
-        helpers["get_showcase_type_name"] = \
-            ogdch_backend_helpers.get_showcase_type_name
-        helpers["get_localized_group_list"] = \
+        helpers["get_showcase_type_name"] = ogdch_backend_helpers.get_showcase_type_name
+        helpers["get_localized_group_list"] = (
             ogdch_backend_helpers.get_localized_group_list
-        helpers["group_id_in_groups"] = \
-            ogdch_backend_helpers.group_id_in_groups
+        )
+        helpers["group_id_in_groups"] = ogdch_backend_helpers.group_id_in_groups
 
         return helpers
 
@@ -654,8 +622,7 @@ class OgdchShowcasePlugin(ShowcasePlugin):
     def get_actions(self):
         """overwrite showcase create logic"""
         action_functions = super(OgdchShowcasePlugin, self).get_actions()
-        action_functions['ckanext_showcase_create'] = \
-            ogdch_logic.ogdch_showcase_create
+        action_functions["ckanext_showcase_create"] = ogdch_logic.ogdch_showcase_create
         return action_functions
 
     # IFacets
@@ -664,144 +631,162 @@ class OgdchShowcasePlugin(ShowcasePlugin):
         if package_type != "showcase":
             return facets_dict
 
-        return OrderedDict({
-            "groups": tk._("Categories"),
-            "showcase_type": tk._("Type of content"),
-            "private": tk._("Draft")
-        })
+        return OrderedDict(
+            {
+                "groups": tk._("Categories"),
+                "showcase_type": tk._("Type of content"),
+                "private": tk._("Draft"),
+            }
+        )
 
 
 class OgdchSubscribePlugin(SubscribePlugin):
 
     # ISubscribe
-    def get_email_vars(self, code, subscription=None, email=None,
-                       email_vars=None):
+    def get_email_vars(self, code, subscription=None, email=None, email_vars=None):
         links = [
-            'unsubscribe_all_link',
-            'manage_link',
-            'object_link',
-            'unsubscribe_link',
+            "unsubscribe_all_link",
+            "manage_link",
+            "object_link",
+            "unsubscribe_link",
         ]
         email_vars = super(OgdchSubscribePlugin, self).get_email_vars(
-            code, subscription, email, email_vars)
+            code, subscription, email, email_vars
+        )
 
         ogdch_plugin_utils.ogdch_transform_links(email_vars, links)
 
         for lang in ogdch_localize_utils.LANGUAGES:
-            email_vars['object_title_{}'.format(lang)] = \
+            email_vars[f"object_title_{lang}"] = (
                 ogdch_localize_utils.get_localized_value_from_json(
-                email_vars.get('object_title'), lang)
+                    email_vars.get("object_title"), lang
+                )
+            )
 
-        email_vars = {k: unicode(v)
-                      for k, v in email_vars.items()}
+        email_vars = {k: str(v) for k, v in list(email_vars.items())}
 
         return email_vars
 
-    def get_footer_contents(self, email_vars, subscription=None,
-                            plain_text_footer=None, html_footer=None):
+    def get_footer_contents(
+        self, email_vars, subscription=None, plain_text_footer=None, html_footer=None
+    ):
         # Because we are sending emails in four languages, the footers are
         # included in the email templates, not generated separately.
-        return '', ''
+        return "", ""
 
-    def get_manage_email_contents(self, email_vars, subject=None,
-                                  plain_text_body=None, html_body=None):
-        subject = u'Manage {site_title} subscription'.format(**email_vars)
+    def get_manage_email_contents(
+        self, email_vars, subject=None, plain_text_body=None, html_body=None
+    ):
+        subject = "Manage {site_title} subscription".format(**email_vars)
 
-        html_body = render_jinja2(
-            '/emails/subscribe_manage.html', email_vars)
-        plain_text_body = render_jinja2(
-            '/emails/subscribe_manage_plain_text.txt', email_vars)
-
-        return subject, plain_text_body, html_body
-
-    def get_subscription_confirmation_email_contents(self, email_vars,
-                                                     subject=None,
-                                                     plain_text_body=None,
-                                                     html_body=None):
-        subject = u'Bestätigungsmail – Confirmation - E-mail di conferma - ' \
-                  u'Confirmation'.format(**email_vars)
-
-        html_body = render_jinja2(
-            '/emails/subscribe_confirmation.html', email_vars)
-        plain_text_body = render_jinja2(
-            '/emails/subscribe_confirmation_plain_text.txt', email_vars)
+        html_body = render("/emails/subscribe_manage.html", email_vars)
+        plain_text_body = render("/emails/subscribe_manage_plain_text.txt", email_vars)
 
         return subject, plain_text_body, html_body
 
-    def get_notification_email_contents(self, email_vars, type="notification",
-                                        subject=None, plain_text_body=None,
-                                        html_body=None):
+    def get_subscription_confirmation_email_contents(
+        self, email_vars, subject=None, plain_text_body=None, html_body=None
+    ):
+        subject = (
+            "Bestätigungsmail – Confirmation - E-mail di conferma - "
+            "Confirmation".format(**email_vars)
+        )
+
+        html_body = render("/emails/subscribe_confirmation.html", email_vars)
+        plain_text_body = render(
+            "/emails/subscribe_confirmation_plain_text.txt", email_vars
+        )
+
+        return subject, plain_text_body, html_body
+
+    def get_notification_email_contents(
+        self,
+        email_vars,
+        type="notification",
+        subject=None,
+        plain_text_body=None,
+        html_body=None,
+    ):
         # email_vars['notifications'] is a list of dicts of variables, one for
         # each notification in the email.
         # See ckanext.subscribe.notification_email.get_notification_email_vars
         # for the full structure. Our email text only includes links to the
         # datasets that have been updated, so we can ignore the activity
         # links.
-        for notification in email_vars.get('notifications'):
-            ogdch_plugin_utils.ogdch_transform_links(
-                notification, ['object_link'])
+        for notification in email_vars.get("notifications"):
+            ogdch_plugin_utils.ogdch_transform_links(notification, ["object_link"])
 
-            package_id = notification['activities'][0]['dataset_id']
-            contact_points = \
-                ogdch_backend_helpers.get_contact_point_for_dataset(package_id)
+            package_id = notification["activities"][0]["dataset_id"]
+            notification[f"contact_point"] = (
+                ogdch_backend_helpers.get_contact_point_for_dataset(package_id)[0]
+            )
 
             for lang in ogdch_localize_utils.LANGUAGES:
-                notification['object_title_{}'.format(lang)] = \
+                notification[f"object_title_{lang}"] = (
                     ogdch_localize_utils.get_localized_value_from_json(
-                        notification.get('object_title'), lang)
-                notification['contact_point_{}'.format(lang)] = \
-                    ogdch_localize_utils.get_localized_value_from_json(
-                        contact_points, lang)
+                        notification.get("object_title"), lang
+                    )
+                )
 
         if type == "deletion":
-            subject = u'Delete notification – ' \
-                      u'deleted dataset ' \
-                      u'{site_title}'.format(**email_vars)
+            subject = (
+                "Delete notification – "
+                "deleted dataset "
+                "{site_title}".format(**email_vars)
+            )
 
-            html_body = render_jinja2(
-                '/emails/subscribe_deletion.html', email_vars)
-            plain_text_body = render_jinja2(
-                '/emails/subscribe_deletion_plain_text.txt', email_vars)
+            html_body = render("/emails/subscribe_deletion.html", email_vars)
+            plain_text_body = render(
+                "/emails/subscribe_deletion_plain_text.txt", email_vars
+            )
         else:
-            subject = u'Update notification – ' \
-                      u'updated dataset ' \
-                      u'{site_title}'.format(**email_vars)
+            subject = (
+                "Update notification – "
+                "updated dataset "
+                "{site_title}".format(**email_vars)
+            )
 
-            html_body = render_jinja2(
-                '/emails/subscribe_notification.html', email_vars)
-            plain_text_body = render_jinja2(
-                '/emails/subscribe_notification_plain_text.txt', email_vars)
+            html_body = render("/emails/subscribe_notification.html", email_vars)
+            plain_text_body = render(
+                "/emails/subscribe_notification_plain_text.txt", email_vars
+            )
 
         return subject, plain_text_body, html_body
 
-    def get_verification_email_contents(self, email_vars, subject=None,
-                                        plain_text_body=None, html_body=None):
+    def get_verification_email_contents(
+        self, email_vars, subject=None, plain_text_body=None, html_body=None
+    ):
         # These two links are added to the email_vars dict in
         # ckanext-subscribe, separately from the other email_vars. We have to
         # make sure they're unicode strings and point to the frontend.
         ogdch_plugin_utils.ogdch_transform_links(
-            email_vars, ['verification_link', 'manage_link'])
+            email_vars, ["verification_link", "manage_link"]
+        )
 
-        subject = u'Bestätigungsmail – Confirmation - E-mail di conferma - ' \
-                  u'Confirmation'.format(**email_vars)
+        subject = (
+            "Bestätigungsmail – Confirmation - E-mail di conferma - "
+            "Confirmation".format(**email_vars)
+        )
 
-        html_body = render_jinja2(
-            '/emails/subscribe_verification.html', email_vars)
-        plain_text_body = render_jinja2(
-            '/emails/subscribe_verification_plain_text.txt', email_vars)
+        html_body = render("/emails/subscribe_verification.html", email_vars)
+        plain_text_body = render(
+            "/emails/subscribe_verification_plain_text.txt", email_vars
+        )
 
         return subject, plain_text_body, html_body
 
-    def get_activities(self, include_activity_from,
-                       objects_subscribed_to_keys):
+    def get_activities(self, include_activity_from, objects_subscribed_to_keys):
         no_notification_users = [HARVEST_USER, MIGRATION_USER]
-        query = Session \
-            .query(Activity) \
-            .filter(Activity.timestamp > include_activity_from) \
+        query = (
+            Session.query(Activity)
+            .filter(Activity.timestamp > include_activity_from)
             .filter(Activity.object_id.in_(objects_subscribed_to_keys))
+        )
         try:
             for username in no_notification_users:
-                user = tk.get_action('user_show')({}, {'id': username})
+                user = tk.get_action("user_show")(
+                    {"ignore_auth": True}, {"id": username}
+                )
                 query = query.filter(Activity.user_id != user["id"])
         except tk.ObjectNotFound:
             raise
@@ -819,3 +804,71 @@ class OgdchMiddlewarePlugin(plugins.SingletonPlugin):
 
     def make_error_log_middleware(self, app, config):
         return app
+
+
+class OgdchXloaderPlugin(xloaderPlugin):
+    # When the changes in https://github.com/ckan/ckanext-xloader/pull/265 are merged
+    # and released, we can update ckanext-xloader and remove this plugin.
+
+    # IDomainObjectModification
+
+    def notify(self, entity, operation):
+        # type: (Package|Resource, DomainObjectOperation) -> None
+        """Handle notification of an entity modification.
+
+        Overwritten from xloaderPlugin so that resource files are xloadered to the
+        Datastore when:
+        - the url or format has been updated
+        - the resource is newly added
+
+        xloaderPlugin doesn't handle the case of a new resource in this method because
+        it does this in after_resource_create. However, that is not called when a
+        resource is added because its dataset was harvested, so we need to handle new
+        resources here as well.
+        """
+        if operation not in [
+            DomainObjectOperation.changed,
+            DomainObjectOperation.new,
+        ] or not isinstance(entity, Resource):
+            return
+
+        context = {
+            "ignore_auth": True,
+        }
+        resource_dict = tk.get_action("resource_show")(
+            context,
+            {
+                "id": entity.id,
+            },
+        )
+
+        if _should_remove_unsupported_resource_from_datastore(resource_dict):
+            tk.enqueue_job(
+                fn=_remove_unsupported_resource_from_datastore, args=[entity.id]
+            )
+
+        if xloader_utils.requires_successful_validation_report():
+            # If the resource requires validation, stop here if validation
+            # has not been performed or did not succeed. The Validation
+            # extension will call resource_patch and this method should
+            # be called again. However, url_changed will not be in the entity
+            # once Validation does the patch.
+            log.debug(
+                "Deferring xloading resource %s because the "
+                "resource did not pass validation yet.",
+                resource_dict.get("id"),
+            )
+            return
+        elif not getattr(entity, "url_changed", False):
+            # do not submit to xloader if the url has not changed.
+            return
+
+        self._submit_to_xloader(resource_dict)
+
+    # IResourceController
+
+    def after_resource_create(self, context, resource_dict):
+        """Overwritten from xloaderPlugin to not submit resources for xloading to the
+        Datastore at this stage. We don't need to do that here as well as in notify.
+        """
+        pass

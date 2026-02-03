@@ -1,0 +1,11 @@
+{% ckan_extends %}
+
+{% set schema = h.scheming_get_group_schema(group_type) %}
+{% set display_name = h.scheming_language_text(group_dict.display_name) or h.scheming_language_text(group_dict.title) %}
+
+{% block subtitle %}{{ _('Edit') }} {{ g.template_title_delimiter }} {{ super() }}{% endblock %}
+
+{% block breadcrumb_content %}
+  {% snippet "snippets/organization_breadcrumb.html", organization=group_dict %}
+{% endblock %}
+

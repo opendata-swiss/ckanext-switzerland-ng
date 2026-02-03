@@ -1,0 +1,10 @@
+{% ckan_extends %}
+
+{% block subtitle %}{{ _('Add distributions to the dataset') }}{% endblock %}
+
+{% block breadcrumb_content %}
+  {{ super() }}
+  {% if pkg %}
+    <li class="active"><a href="#">{{ _('Add New Distribution') }}</a></li>
+  {% endif %}
+{% endblock %}

@@ -1,9 +1,8 @@
-Unidecode==1.0.22
-iribaker==0.1.2
-pysolr==3.6.0
-python-dateutil==2.8.1
-pyyaml==5.3.1
-requests[security]==2.25.1
-urllib3[secure]==1.26.5
-isodate==0.6.1
-rdflib==5.0.0
+Unidecode>=1.0.22
+iribaker==0.2
+pysolr>=3.9.0
+python-dateutil>=2.9.0.post0
+pyyaml>=6.0.1
+requests[security]>=2.31.0
+isodate>=0.6.1
+rdflib>=6.3.2  # or >=7.0.0 if compatible with your RDF plugin

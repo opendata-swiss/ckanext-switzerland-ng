@@ -1,4 +1,6 @@
-{%- set dataset_feed = h.url_for('feed.group', id=c.group_dict.name) -%}
-{%- set history_feed = h.url_for(controller='revision', action='list', format='atom', days=1) -%}
-<link rel="alternate" type="application/atom+xml" title="{{ g.site_title }} - {{ _('Datasets in category: {group}').format(group=c.group_dict.display_name) }}" href="{{ dataset_feed }}" />
-<link rel="alternate" type="application/atom+xml" title="{{ g.site_title }} - {{ _('Recent Revision History') }}" href="{{ history_feed }}" />
+{% set group = group_dict %}
+{% set type = group.type or 'group' %}
+{% set schema = h.scheming_get_group_schema(type) %}
+{% set display_name = h.scheming_language_text(group.display_name) or h.scheming_language_text(group.title) %}
+{%- set dataset_feed = h.url_for('feeds.group', id=group_dict.name) -%}
+<link rel="alternate" type="application/atom+xml" title="{{ g.site_title }} - {{ _('Datasets in category: {group}').format(group=display_name) }}" href="{{ dataset_feed }}" />

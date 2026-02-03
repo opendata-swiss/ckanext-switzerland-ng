@@ -4,13 +4,10 @@ Displays a single of dataset.
 package        - A package to display.
 item_class     - The class name to use on the list item.
 hide_resources - If true hides the resources (default: false).
-banner         - If true displays a popular banner (default: false).
-truncate       - The length to trucate the description to (default: 180)
-truncate_title - The length to truncate the title to (default: 80).
 
 Example:
 
-  {% snippet 'snippets/package_item.html', package=c.datasets[0] %}
+  {% snippet 'snippets/package_item.html', package=datasets[0] %}
 
 #}
 {% set truncate = truncate or 180 %}
@@ -23,33 +20,34 @@ Example:
     {% block content %}
       <div class="dataset-content">
         {% block heading %}
-          <h3 class="dataset-heading">
+          <h2 class="dataset-heading">
             {% block heading_private %}
               {% if package.private %}
-                <span class="label label-default">
+                <span class="dataset-private badge bg-secondary">
                   <i class="fa fa-lock"></i>
                   {{ _('Draft') }}
                 </span>
               {% endif %}
             {% endblock %}
             {% block heading_title %}
-              {{ h.link_to(h.truncate(title, truncate_title), h.url_for('dataset_read', id=package.name)) }}
+              <a href="{{ h.url_for('%s.read' % package.type, id=package.name) }}" title="{{ title }}">
+                {{title|truncate(80)}}
+              </a>
             {% endblock %}
             {% block heading_meta %}
               {% if package.get('state', '').startswith('draft') %}
-                <span class="label label-default">{{ _('Draft') }}</span>
+                <span class="badge bg-info">{{ _('Draft') }}</span>
               {% elif package.get('state', '').startswith('deleted') %}
-                <span class="label label-danger">{{ _('Deleted') }}</span>
+                <span class="badge bg-danger">{{ _('Deleted') }}</span>
               {% endif %}
-              {{ h.popular('recent views', package.tracking_summary.recent, min=10) if package.tracking_summary }}
             {% endblock %}
-          </h3>
+          </h2>
         {% endblock %}
         {% block groups %}
           {% if package.groups %}
             <p class="small">
             {% for group in package.groups %}
-              {{ h.get_localized_value_for_display(group['title']) }}{% if not loop.last %}, {% endif %}
+              {{ h.get_localized_value_for_display(group.title) }}{% if not loop.last %}, {% endif %}
             {% endfor %}
             </p>
           {% endif %}
@@ -58,19 +56,18 @@ Example:
           {% if description %}
             <p>{{ description }}</p>
           {% else %}
-            <p class="empty">{{ _('This dataset has no description') }}</p>
+            <p class="empty">{{ h.humanize_entity_type('package', package.type, 'no description') or _("There is no description for this dataset") }}</p>
           {% endif %}
         {% endblock %}
       </div>
       {% block resources %}
         {% if package.resources and not hide_resources %}
           {% block resources_outer %}
-            <ul class="dataset-resources list-inline">
+            <ul class="dataset-resources list-unstyled">
               {% block resources_inner %}
-                {% for format in h.dict_list_reduce(package.resources, 'format') %}
+                {% for resource in h.dict_list_reduce(package.resources, 'format') %}
                 <li>
-                  {% set format_truncated = h.truncate(format, 30) %}
-                  <small><span class="label label-default" title="{{ format }}">{{ format }}</span></small>
+                  <a href="{{ h.url_for(package.type ~ '.read', id=package.name) }}" class="badge badge-default" data-format="{{ resource.lower() }}">{{ resource }}</a>
                 </li>
                 {% endfor %}
               {% endblock %}

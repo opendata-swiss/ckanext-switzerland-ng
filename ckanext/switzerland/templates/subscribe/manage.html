@@ -20,7 +20,8 @@
         </td>
         <td>
           {% if not subscription.verified %}
-            <form method='post' action="{{ h.url_for(controller='ckanext.subscribe.controller:SubscribeController', action='signup') }}" id="subscribe-form" enctype="multipart/form-data" class="form-inline">
+            <form method='post' action="{{ h.url_for('subscribe.signup') }}" id="subscribe-form" enctype="multipart/form-data" class="form-inline">
+              {{ h.csrf_input() }}
               <!-- (Bootstrap 3) <div class="form-group input-group-sm"> -->
                 <input id="subscribe-email" type="hidden" name="email" value="{{ email }}" />
                 <input id="subscribe-{{ subscription.object_type }}" type="hidden" name="{{ subscription.object_type }}" value="{{ subscription.object_name }}" />
@@ -32,7 +33,8 @@
         <td>
           {% if subscription.verified %}
             {% import 'macros/form.html' as form %}
-            <form method='post' action="{{ h.url_for(controller='ckanext.subscribe.controller:SubscribeController', action='update') }}" id="frequency-form" enctype="multipart/form-data" class="form-inline">
+            <form method='post' action="{{ h.url_for('subscribe.update') }}" id="frequency-form" enctype="multipart/form-data" class="form-inline">
+              {{ h.csrf_input() }}
               <input id="subscribe-code" type="hidden" name="code" value="{{ code }}" />
               <input id="subscribe-id" type="hidden" name="id" value="{{ subscription.id }}" />
               {{ form.select('frequency', label=_('Emails are sent'), options=frequency_options, selected=subscription.frequency, error=None) }}
@@ -43,7 +45,8 @@
           {% endif %}
         </td>
         <td>
-            <form method='post' action="{{ h.url_for(controller='ckanext.subscribe.controller:SubscribeController', action='unsubscribe') }}" id="unsubscribe-form" enctype="multipart/form-data" class="form-inline">
+            <form method='post' action="{{ h.url_for('subscribe.unsubscribe') }}" id="unsubscribe-form" enctype="multipart/form-data" class="form-inline">
+              {{ h.csrf_input() }}
               <!-- (Bootstrap 3) <div class="form-group input-group-sm"> -->
                 <input id="unsubscribe-code" type="hidden" name="code" value="{{ code }}" />
                 <input id="unsubscribe-{{ subscription.object_type }}" type="hidden" name="{{ subscription.object_type }}" value="{{ subscription.object_name }}" />
@@ -55,7 +58,8 @@
     {% endfor %}
   </table>
 
-  <form method='post' action="{{ h.url_for(controller='ckanext.subscribe.controller:SubscribeController', action='unsubscribe_all') }}" id="unsubscribe-all" enctype="multipart/form-data" class="form-inline">
+  <form method='post' action="{{ h.url_for('subscribe.unsubscribe_all') }}" id="unsubscribe-all" enctype="multipart/form-data" class="form-inline">
+    {{ h.csrf_input() }}
     <!-- (Bootstrap 3) <div class="form-group input-group-sm"> -->
       <input id="unsubscribe-all-code" type="hidden" name="code" value="{{ code }}" />
     <!-- </div> -->

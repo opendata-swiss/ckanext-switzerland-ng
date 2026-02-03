@@ -6,29 +6,29 @@
      {% set admin_capacity = h.ogdch_admin_capacity() %}
      {% if admin_capacity %}
        <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'user') }}">
-         <a href="{{ h.url_for(controller='user', action='index') }}">{{ _('Users') }}
+         <a href="{{ h.url_for('user.index') }}">{{ _('Users') }}
          </a>
        </li>
      {% endif %}
-     {% if c.user %}
+     {% if current_user.is_authenticated %}
        <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'harvest-dashboard') }}">
-         {{ h.nav_link(_('Harvest Dashboard'), named_route='harvester_dashboard') }}
+         {{ h.nav_link(_('Harvest Dashboard'), named_route='harvester_dashboard.dashboard') }}
        </li>
        <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'harvest') }}">
-         {{ h.nav_link(_('Harvest Sources'), named_route='harvest_search') }}
+         {{ h.nav_link(_('Harvest Sources'), named_route='harvest.search') }}
        </li>
      {% endif %}
      <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'dataset') }}">
-         {{ h.nav_link(_('Datasets'), named_route='search') }}
+         {{ h.nav_link(_('Datasets'), named_route='dataset.search') }}
      </li>
      <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'organization') }}">
-         {{ h.nav_link(_('Organizations'), named_route='organizations_index') }}
+         {{ h.nav_link(_('Organizations'), named_route='organization.index') }}
      </li>
      <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'showcase') }}">
-       {{ h.nav_link(_('Showcases'), named_route='showcase_index') }}
+       {{ h.nav_link(_('Showcases'), named_route='showcase_blueprint.index') }}
      </li>
      <li class="{{ h.ogdch_template_helper_get_active_class(request.url, 'group') }}">
-         {{ h.nav_link(_('Categories'), named_route='group_index') }}
+         {{ h.nav_link(_('Categories'), named_route='group.index') }}
      </li>
   {% endblock %}
 </ul>

@@ -8,8 +8,8 @@
     {% endblock %}
 
     {% block package_basic_fields_url %}
-      {% set prefix = h.url_for('showcase_read', id='') %}
-      {% set domain = h.url_for('showcase_read', id='', qualified=true) %}
+      {% set prefix = h.url_for(showcase_read_route, id='') %}
+      {% set domain = h.url_for(showcase_read_route, id='', qualified=true) %}
       {% set domain = domain|replace("http://", "")|replace("https://", "") %}
       {% set attrs = {'data-module': 'slug-preview-slug', 'data-module-prefix': domain, 'data-module-placeholder': '<showcase>'} %}
 
@@ -17,7 +17,18 @@
     {% endblock %}
 
     {% block package_basic_fields_description %}
-      {{ form.markdown('notes', id='field-notes', label=_('Description'), placeholder=_('eg. Some useful notes about the data'), value=data.notes, error=errors.notes) }}
+      {% set editor = h.showcase_get_wysiwyg_editor() %}
+      {% if editor == 'ckeditor' %}
+        {% asset 'showcase/ckeditor' %}
+        {%
+          set ckeditor_attrs = {
+            'data-module': 'showcase-ckeditor',
+            'data-module-site_url': h.url_for('/', qualified=true)}
+        %}
+        {{ form.textarea('notes', id='editor', label=_('Description'), placeholder=_('eg. Some useful notes about the data'), value=data.notes, error=errors.notes, attrs=ckeditor_attrs)}}
+      {% else %}
+        {{ form.markdown('notes', id='field-notes', label=_('Description'), placeholder=_('eg. Some useful notes about the data'), value=data.notes, error=errors.notes) }}
+      {% endif %}
     {% endblock %}
 
     {% block package_basic_fields_tags %}

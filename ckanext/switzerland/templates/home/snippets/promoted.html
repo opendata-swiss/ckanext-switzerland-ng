@@ -1,7 +1,5 @@
-{% set intro = g.site_intro_text %}
-
-<div class="module-content box">
-  <header>
+<div class="module-promotion card box">
+  <div>
       <h1 class="page-heading">{{ _("opendata.swiss CKAN backend") }}</h1>
       <p>
         {% trans %}Welcome to the CKAN backend of opendata.swiss.
@@ -9,13 +7,13 @@
         You can also create and run data harvesters.
         {% endtrans %}
       </p>
-  </header>
+  </div>
 
   {% block home_image %}
     <section class="featured media-overlay hidden-xs">
       {% block home_image_content %}
         <a class="media-image" href="#">
-          <img class="img-responsive" src="/images/logo_horizontal.png" alt="opendata.swiss" width="420" height="220" />
+          <img class="img-fluid" src="{{ h.url_for_static('/images/logo_horizontal.png') }}" alt="opendata.swiss" />
         </a>
       {% endblock %}
     </section>

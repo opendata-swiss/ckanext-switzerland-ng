@@ -1,0 +1,21 @@
+switzerland-css:
+  output: switzerland/switzerland.css
+  contents:
+    - css/ogdch_file_upload.css
+    - css/ogdch_form_helper.css
+    - css/ogdch_organization_filter.css
+    - css/ogdch_stats_box.css
+    - vendor/bootstrap-datepicker/css/bootstrap-datepicker.css
+
+switzerland-js:
+  output: switzerland/switzerland.js
+  contents:
+    - js/ogdch_file_upload.js
+    - js/ogdch_form_helper_contact_points.js
+    - js/ogdch_info_box.js
+    - js/ogdch_form_helper_relations.js
+    - js/ogdch_form_helper_qualified_relations.js
+    - js/ogdch_form_helper_temporals.js
+    - js/ogdch_datepicker.js
+    - js/ogdch_organization_filter.js
+    - vendor/bootstrap-datepicker/js/bootstrap-datepicker.js

@@ -29,7 +29,7 @@
       {% endif %}
       {%- if field.form_snippet is not none -%}
         {%- snippet 'scheming/snippets/form_field.html',
-          field=field, data=data, errors=errors, licenses=c.licenses,
+          field=field, data=data, errors=errors, licenses=licenses,
           entity_type='dataset', object_type=dataset_type -%}
       {%- endif -%}
       {% if field.fieldgroup_help_text %}

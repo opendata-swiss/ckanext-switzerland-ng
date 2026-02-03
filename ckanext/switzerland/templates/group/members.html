@@ -1,23 +1,7 @@
 {% ckan_extends %}
 
-{% if group_type is not defined %}
-  {% set group_type = c.group_type %}
-{% endif %}
+{% set type = group_dict.type or 'group' %}
+{% set schema = h.scheming_get_group_schema(type) %}
+{% set display_name = h.scheming_language_text(group_dict[h.scheming_field_by_name(schema.fields, 'display_name').field_name]) %}
 
-{% set group = c.group_dict %}
-{% set schema = h.scheming_get_group_schema(group_type) %}
-{% set display_name = h.scheming_language_text(group[h.scheming_field_by_name(schema.fields, 'display_name').field_name]) %}
-
-{% block subtitle %}{{ _('Members') }} {{ g.template_title_delimiter }} {{ display_name }} {{ g.template_title_delimiter }} {{ _('Categories') }}{% endblock %}
-
-{% block breadcrumb_content %}
-  <li>{% link_for _('Categories'), controller='group', action='index' %}</li>
-  {% block breadcrumb_content_inner %}
-    <li>{% link_for display_name|truncate(35), controller='group', action='read', id=group.name %}</li>
-    <li class="active">{% link_for _('Manage'), controller='group', action='edit', id=group.name %}</li>
-  {% endblock %}
-{% endblock %}
-
-{% block secondary_content %}
-  {% snippet "group/snippets/info.html", group=group, show_nums=false, schema=schema, display_name=display_name %}
-{% endblock %}
+{% block subtitle %}{{ _('Members') }} {{ g.template_title_delimiter }} {{ display_name }} {{ g.template_title_delimiter }} {{ h.humanize_entity_type('group', group_type, 'page title') or _('Categories') }}{% endblock %}

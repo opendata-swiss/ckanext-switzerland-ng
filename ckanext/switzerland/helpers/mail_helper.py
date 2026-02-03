@@ -1,9 +1,9 @@
 # encoding: utf-8
 
 import logging
-from ckan.common import config
-from ckan.lib.base import render_jinja2
+
 import ckan.lib.mailer as mailer
+from ckan.plugins.toolkit import config, render
 
 log = logging.getLogger(__name__)
 
@@ -11,42 +11,37 @@ log = logging.getLogger(__name__)
 def get_registration_body(user):
     """set up text for user registration email"""
     extra_vars = {
-        'site_title': config.get('ckan.site_title'),
-        'site_url': config.get('ckan.site_url'),
-        'user_name': user.get('name'),
-        'display_name': user.get('display_name', user['name'])
-        }
+        "site_title": config.get("ckan.site_title"),
+        "site_url": config.get("ckan.site_url"),
+        "user_name": user.get("name"),
+        "display_name": user.get("display_name", user["name"]),
+    }
     # NOTE: This template is translated
-    return render_jinja2('emails/registration.txt', extra_vars)
+    return render("emails/registration.txt", extra_vars)
 
 
 def send_registration_email(user):
     """send new users an email at the time of registartion"""
     body = get_registration_body(user)
-    extra_vars = {
-        'site_title': config.get('ckan.site_title')
-    }
-    subject = render_jinja2('emails/registration_subject.txt', extra_vars)
+    extra_vars = {"site_title": config.get("ckan.site_title")}
+    subject = render("emails/registration_subject.txt", extra_vars)
 
     # Make sure we only use the first line
-    subject = subject.split('\n')[0]
+    subject = subject.split("\n")[0]
 
-    recipient_name = user.get('display_name', user['name'])
-    recipient_email = user.get('email')
+    recipient_name = user.get("display_name", user["name"])
+    recipient_email = user.get("email")
     mailer.mail_recipient(recipient_name, recipient_email, subject, body)
 
 
 def send_showcase_email(showcase):
     """send an email when a showcase is created"""
     extra_vars = {
-        'showcase_url': "{}/showcase/{}".format(
-            config.get('ckan.site_url'),
-            showcase.get('name')
-        )
+        "showcase_url": f"{config.get('ckan.site_url')}/showcase/{showcase.get('name')}"
     }
     mailer.mail_recipient(
-        config.get('ckanext.switzerland.showcase_admin_name'),
-        config.get('ckanext.switzerland.showcase_admin_email'),
-        render_jinja2('emails/showcase_subject.txt', extra_vars),
-        render_jinja2('emails/showcase.txt', extra_vars),
+        config.get("ckanext.switzerland.showcase_admin_name"),
+        config.get("ckanext.switzerland.showcase_admin_email"),
+        render("emails/showcase_subject.txt", extra_vars),
+        render("emails/showcase.txt", extra_vars),
     )

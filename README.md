@@ -5,13 +5,57 @@ CKAN extension for DCAT-AP Switzerland, templates and different plugins for [ope
 
 ## Requirements
 
-- CKAN 2.6+
+- CKAN 2.11+
 - ckanext-scheming
 - ckanext-fluent
 
+## Installation
+
+To install ckanext-switzerland:
+
+1. Activate your CKAN virtual environment, for example:
+
+     . /usr/lib/ckan/default/bin/activate
+
+2. Install the ckanext-switzerland-ng Python package into your virtual environment:
+
+     git clone https://github.com/opendata-swiss/ckanext-switzerland-ng.git
+     cd ckanext-switzerland-ng
+     pip install -e .
+
+3. Add relevant plugins to the ``ckan.plugins`` setting in your CKAN
+   config file (by default the config file is located at
+   ``/etc/ckan/default/production.ini``). This package contains several
+   plugins. See ``project.entry-points."ckan.plugins"`` in ``pyproject.toml``
+  for an up-to-date list.
+
+4. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu:
+
+     sudo service apache2 reload
+
+## Config Settings
+
+See `ckanext/switzerland/config_declaration.yaml`.
+
+## Development Installation
+
+To install ckanext-switzerland for development, activate your CKAN virtualenv and
+do:
+
+    git clone https://github.com/opendata-swiss/ckanext-switzerland-ng.git
+    cd ckanext-switzerland-ng
+    pip install -e .[dev]
+
+## Update Format-Mapping
+
+To update the Format-Mapping edit the [format-mapping.yaml](/ckanext/switzerland/helpers/format_mapping.yaml), following
+the [YAML-Syntax](http://docs.ansible.com/ansible/latest/YAMLSyntax.html). You can check if your changes are valid by
+pasting the contents of the required changes into a Syntax-Checker, e.g. [YAML Syntax-Checker](http://www.yamllint.com/).
+Submit a Pull-Request following our [Contribution-Guidelines](CONTRIBUTING.md).
+
 ## Update translations
 
-To generate an updated ckanext-switzerland.pot file inside the Docker 
+To generate an updated ckanext-switzerland.pot file inside the Docker
 container, use the following commands:
 
     docker-compose exec ckan bash
@@ -32,72 +76,10 @@ to be used:
 
     docker-compose restart ckan
 
-## Installation
-
-To install ckanext-switzerland:
-
-1. Activate your CKAN virtual environment, for example:
-
-     . /usr/lib/ckan/default/bin/activate
-
-2. Install the ckanext-switzerland Python package into your virtual environment:
-
-     pip install ckanext-switzerland
-
-3. Add ``switzerland`` to the ``ckan.plugins`` setting in your CKAN
-   config file (by default the config file is located at
-   ``/etc/ckan/default/production.ini``).
-
-4. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu:
-
-     sudo service apache2 reload
-
-## Config Settings
-
-This extension uses the following config options (.ini file)
-
-    # the URL of the WordPress AJAX interface
-    ckanext.switzerland.wp_ajax_url = https://opendata.swiss/cms/wp-admin/admin-ajax.php
-
-    # number of harvest jobs to keep per harvest source when cleaning up harvest objects   
-    ckanext.switzerland.number_harvest_jobs_per_source = 2
-
-    # piwik config
-    piwik.site_id = 1
-    piwik.url = piwik.opendata.swiss
-
-    # Name and Email Address for notifications about new showcases
-    ckanext.switzerland.showcase_admin_email =
-    ckanext.switzerland.showcase_admin_name =
-
-    # Environment, e.g. local, test, production
-    ckanext.switzerland.env = local
-
-    # URL of the CKAN website for the PRODUCTION environment
-    ckanext.switzerland.prod_env_url =
-
-    # URL to use for constructing the SWITCH connectome url for a dataset
-    ckanext.switzerland.switch_connectome_base_url =
-
-## Development Installation
-
-To install ckanext-switzerland for development, activate your CKAN virtualenv and
-do:
-
-    git clone https://github.com/ogdch/ckanext-switzerland.git
-    cd ckanext-switzerland
-    python setup.py develop
-    pip install -r dev-requirements.txt
-    pip install -r requirements.txt
-
-## Update Format-Mapping
-
-To update the Format-Mapping edit the [format-mapping.yaml](/ckanext/switzerland/helpers/format_mapping.yaml), following the [YAML-Syntax](http://docs.ansible.com/ansible/latest/YAMLSyntax.html). You can check if your changes are valid by pasting the contents of the required changes into a Syntax-Checker, e.g. [YAML Syntax-Checker](http://www.yamllint.com/).
-Submit a Pull-Request following our [Contribution-Guidelines](CONTRIBUTING.md).
-
 ## Add users as members to groups
 
-For opendata.swiss we use groups in the sense of categories. Therefore we need any user to be able to add their datasets to any group. For that they need to be a member of the group.
+For opendata.swiss we use groups in the sense of categories. Therefore we need any user to be able to add their datasets
+to any group. For that they need to be a member of the group.
 
 Users with the role `admin` are automatically added as `admin` to each group.
 

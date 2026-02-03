@@ -3,20 +3,23 @@ on: [push, pull_request]
 jobs:
   lint:
     runs-on: ubuntu-latest
-    container:
-      image: python:2.7.18-buster
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
       - name: Install requirements
-        run: pip install flake8 pycodestyle
+        run: pip install flake8 pycodestyle black isort
       - name: Check syntax
-        run: flake8 --statistics --show-source --exclude ckanext/switzerland/tests,setup.py ckanext
+        run: flake8 . --count --select=C901,E721,E901,E999,F401,F821,F822,F823,F841 --show-source --statistics --extend-exclude ckan
+      - name: Check codestyle
+        run: |
+          isort --diff --check ckanext/
+          black --diff --check ckanext/
 
   test:
     needs: lint
     strategy:
       matrix:
-        ckan-version: [2.8]
+        ckan-version: ["2.11"]
       fail-fast: false
 
     name: CKAN ${{ matrix.ckan-version }}
@@ -41,41 +44,41 @@ jobs:
       CKAN_REDIS_URL: redis://redis:6379/1
       CKAN_SITE_URL: http://test.ckan.net
       WORKDIR: /__w/ckanext-switzerland-ng/ckanext-switzerland-ng
-      SOLR_CONFIG_CKAN_DIR: /opt/solr/server/solr/ckan/conf
+      SOLR_CONFIG_DIR: /opt/solr/server/solr/configsets
+      SOLR_CONFIG_CKAN_DIR: /opt/solr/server/solr/configsets/ckan/conf
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Create solr container
       run: |
-        docker create --name test_solr --network ${{ job.container.network }} --network-alias solr \
+        /usr/bin/docker create --name test_solr --network ${{ job.container.network }} --network-alias solr \
           --workdir $WORKDIR --publish 8983:8983 \
-          -e SOLR_HEAP=1024m -e GITHUB_ACTIONS=true -e CI=true \
-          -v "${{ github.workspace }}/solr/schema.xml":"$SOLR_CONFIG_CKAN_DIR/schema.xml" \
-          -v "${{ github.workspace }}/solr/english_stop.txt":"$SOLR_CONFIG_CKAN_DIR/english_stop.txt" \
-          -v "${{ github.workspace }}/solr/fr_elision.txt":"$SOLR_CONFIG_CKAN_DIR/fr_elision.txt" \
-          -v "${{ github.workspace }}/solr/french_stop.txt":"$SOLR_CONFIG_CKAN_DIR/french_stop.txt" \
+          -e "SOLR_HEAP=1024m" -e "SOLR_SCHEMA_FILE=$SOLR_CONFIG_CKAN_DIR/managed-schema" \
+          -e GITHUB_ACTIONS=true -e CI=true -v "${{ github.workspace }}/solr/schema.xml":"$SOLR_CONFIG_CKAN_DIR/managed-schema" \
           -v "${{ github.workspace }}/solr/german_dictionary.txt":"$SOLR_CONFIG_CKAN_DIR/german_dictionary.txt" \
-          -v "${{ github.workspace }}/solr/german_stop.txt":"$SOLR_CONFIG_CKAN_DIR/german_stop.txt" \
-          -v "${{ github.workspace }}/solr/italian_stop.txt":"$SOLR_CONFIG_CKAN_DIR/italian_stop.txt" \
           -v "${{ github.workspace }}/solr/solrconfig.xml":"$SOLR_CONFIG_CKAN_DIR/solrconfig.xml" \
-          ckan/ckan-solr:${{ matrix.ckan-version }}
+          -v "${{ github.workspace }}/solr/lang/fr_elision.txt":"$SOLR_CONFIG_DIR/ckan/lang/fr_elision.txt" \
+          -v "${{ github.workspace }}/solr/lang/stopwords_de.txt":"$SOLR_CONFIG_DIR/ckan/lang/stopwords_de.txt" \
+          -v "${{ github.workspace }}/solr/lang/stopwords_en.txt":"$SOLR_CONFIG_DIR/ckan/lang/stopwords_en.txt" \
+          -v "${{ github.workspace }}/solr/lang/stopwords_fr.txt":"$SOLR_CONFIG_DIR/ckan/lang/stopwords_fr.txt" \
+          -v "${{ github.workspace }}/solr/lang/stopwords_it.txt":"$SOLR_CONFIG_DIR/ckan/lang/stopwords_it.txt" \
+          ckan/ckan-solr:${{ matrix.ckan-version }}-solr9
         docker start test_solr
     - name: Create ckan container
       run: |
-        docker create --name test_ckan --network ${{ job.container.network }} --network-alias ckan \
-          -e "HOME=/github/home" -e GITHUB_ACTIONS=true -e CI=true -e CKAN_SITE_URL=http://test.ckan.net \
+        /usr/bin/docker create --name test_ckan --network ${{ job.container.network }} --network-alias ckan \
+          -e "HOME=/github/home" -e GITHUB_ACTIONS=true -e CI=true -e CKAN_SITE_URL=http://test.ckan.net --user root \
           -v "/var/run/docker.sock":"/var/run/docker.sock" \
           -v "/home/runner/work":"/__w" -v "/home/runner/work/_temp":"/__w/_temp" \
           -v "/home/runner/work/_actions":"/__w/_actions" -v "/opt/hostedtoolcache":"/__t" \
           -v "/home/runner/work/_temp/_github_home":"/github/home" \
           -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" \
-          --entrypoint "tail" openknowledge/ckan-dev:${{ matrix.ckan-version }} "-f" "/dev/null"
+          --entrypoint "tail" ckan/ckan-dev:${{ matrix.ckan-version }} "-f" "/dev/null"
         docker start test_ckan
     - name: Install requirements and set up database
       run: |
         docker exec test_ckan $WORKDIR/bin/install_test_requirements.sh ${{ matrix.ckan-version }}
     - name: Run tests
       run: | 
-        docker exec test_ckan nosetests --ckan --with-pylons=$WORKDIR/test.ini \
-          --with-coverage --cover-package=ckanext.switzerland --cover-inclusive --cover-erase --cover-tests \
-          $WORKDIR/ckanext/switzerland
+        docker exec test_ckan pytest --ckan-ini=$WORKDIR/test.ini --cov=ckanext.switzerland \
+          --cov-config=$WORKDIR/.coveragerc --disable-warnings $WORKDIR/ckanext/switzerland/tests

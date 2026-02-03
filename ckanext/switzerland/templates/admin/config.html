@@ -7,9 +7,9 @@
     </h2>
     <div class="module-content">
       {% block admin_form_help %}
-        {% set about_url = h.url_for(controller='home', action='about') %}
-        {% set home_url = h.url_for(controller='home', action='index') %}
-        {% set docs_url = "http://docs.ckan.org/en/{0}/theming".format(g.ckan_doc_version) %}
+        {% set about_url = h.url_for('home.about') %}
+        {% set home_url = h.url_for('home.index') %}
+        {% set docs_url = "https://docs.ckan.org/en/{0}/theming".format(g.ckan_doc_version) %}
           <h3>{{ _('Frontpage news box') }}</h3>
           <p><strong>{{ _('Intro Text') }}:</strong>
             {{ _( 'If this text is set, it will appear as news on the Homepage, see') }}:
@@ -31,9 +31,7 @@
         <h3>{{ _('Standard CKAN settings') }}</h3>
         <p><strong>{{ _('Site Title') }}:</strong>
           {{ _('This is the title of this CKAN instance. It appears in various places throughout CKAN.') }}</p>
-        <p><strong>{{ _('Style') }}:</strong>
-          {{ _('Choose from a list of simple variations of the main colour scheme to get a very quick custom theme working.') }}
-        </p>
+        <p><strong>Custom Stylesheet:</strong> Define an alternative main CSS file.</p>
         <p><strong>{{ _('Site Tag Logo') }}:</strong>
         {{ _('This is the logo that appears in the header of all the CKAN instance templates.') }}</p>
         <p><strong>{{ _('About') }}:</strong>

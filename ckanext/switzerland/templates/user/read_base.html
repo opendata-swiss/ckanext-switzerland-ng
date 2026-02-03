@@ -1,9 +1,14 @@
 {% ckan_extends %}
 
 {% block content_primary_nav %}
-  {{ h.build_nav_icon('user.read', _('Datasets'), id=user.name) }}
-  {{ h.build_nav_icon('organization_list', _('Organizations'), id=user.name) }}
-  {% if c.user %}
-    {{ h.build_nav_icon('user.activity', _('Activity Stream'), id=user.name) }}
+  {{ h.build_nav_icon('user.read', h.humanize_entity_type('package', dataset_type, 'content tab') or _('Datasets'), id=user.name, icon='sitemap') }}
+  {{ h.build_nav_icon('ogdch_user.list_for_user', _('Organizations'), id=user.name, icon='building') }}
+  {{ h.build_nav_icon('activity.user_activity', _('Activity Stream'), id=user.name, icon='clock') }}
+  {% if h.check_access('api_token_list', {'user': user['name']}) %}
+    {{ h.build_nav_icon('user.api_tokens', _('API Tokens'), id=user.name, icon='key') }}
   {% endif %}
+{% endblock %}
+
+{% block secondary_content %}
+  {% snippet "user/snippets/info.html", user=user, is_myself=is_myself, is_sysadmin=is_sysadmin, dataset_type=dataset_type, org_type=org_type, group_type=group_type, am_following=am_following, about_formatted=about_formatted %}
 {% endblock %}

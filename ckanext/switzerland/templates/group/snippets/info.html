@@ -10,9 +10,11 @@
 {% endblock %}
 {% block description %}
   {% if group.description %}
-    <p>
+    <p class="description">
       {%- snippet 'scheming/snippets/display_field.html', field=h.scheming_field_by_name(schema.fields, 'description'), data=group, schema=schema -%}
-      {% link_for _('read more'), named_route='group_about', id=group.name %}
+    </p>
+    <p class="read-more">
+      {% link_for _('read more'), named_route='group.about', id=group.name %}
     </p>
   {% endif %}
 {% endblock %}

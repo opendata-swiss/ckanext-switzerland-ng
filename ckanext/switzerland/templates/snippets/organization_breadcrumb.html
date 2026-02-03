@@ -1,18 +1,19 @@
 {# breadcrumb for an organization from its name #}
 {% set display_name = h.get_localized_value_for_display(organization['title']) %}
+{% set group_type = organization['group_type'] or 'organization' %}
 
 <li>
-  {% link_for _('Organizations'), controller='organization', action='index' %}
+  {% link_for h.humanize_entity_type('organization', group_type, 'breadcrumb') or _('Organizations'), named_route=group_type ~ '.index' %}
 </li>
 {% set parent_list =  h.group_tree_parents(organization.name)  %}
 {% for parent_node in parent_list %}
   {% set parent_name = h.get_localized_value_for_display(parent_node['title']) %}
   <li>
       {% link_for parent_name|truncate(35),
-      controller='organization', action='read', id=parent_node.name, suppress_active_class=true %}
+      named_route=group_type ~ '.read', id=parent_node.name, suppress_active_class=true %}
   </li>
 {% endfor %}
 <li class="active">
     {% link_for display_name|truncate(35),
-    controller='organization', action='read', id=organization.name %}
+    named_route=group_type ~ '.read', id=organization.name %}
 </li>

@@ -1,0 +1,45 @@
+{% ckan_extends %}
+
+{% set intro = g.site_intro_text %}
+
+{% block primary_content %}
+<div role="main">
+  <div class="main hero">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col2">
+          {% block promoted %}
+          {% snippet 'home/snippets/promoted.html' %}
+          {% endblock %}
+        </div>
+        {% if intro %}
+          <div class="col-md-6 col1">
+            <div class="box stats">
+              <div class="inner" id="ogdch_info_box" data-module="ogdch_info_box">
+                <h3>{{ _('News') }}</h3>
+                {{ h.render_markdown(intro) }}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+        <div class="col-md-6 col1">
+          {% block stats %}
+            {% snippet 'home/snippets/stats.html' %}
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main module-feeds">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          {% block search %}
+          {% snippet 'home/snippets/search.html', search_facets=search_facets %}
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

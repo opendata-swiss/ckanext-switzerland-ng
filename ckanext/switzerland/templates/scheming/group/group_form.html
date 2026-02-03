@@ -1,7 +1,3 @@
-{% if group_type is not defined %}
-    {% set group_type = c.group_type %}
-{% endif %}
-
 {%- if not group_type -%}
     <p>
         group_type not passed to template. your version of CKAN
@@ -10,6 +6,15 @@
 {%- endif -%}
 
 <form class="dataset-form form-horizontal" method="post" data-module="basic-form" enctype="multipart/form-data">
+    {% block errors %}
+      {%- if errors -%}
+        {%- set schema = h.scheming_get_group_schema(group_type) -%}
+        {%- snippet 'scheming/snippets/errors.html',
+          errors=errors, fields=schema.fields,
+          entity_type='group', object_type=group_type -%}
+      {%- endif -%}
+    {% endblock %}
+    {{ h.csrf_input() if 'csrf_input' in h }}
     {%- set schema = h.scheming_get_group_schema(group_type) -%}
     {%- for field in schema['fields'] -%}
         {%- if field.form_snippet is not none -%}
@@ -24,7 +29,7 @@
         {% if action == 'edit' %}
           {% if h.check_access('group_delete', {'id': data.id}) and action=='edit'  %}
             {% set locale = h.dump_json({'content': _('Are you sure you want to delete this Category?')}) %}
-            <a class="btn btn-danger pull-left" href="{% url_for controller='group', action='delete', id=data.id %}" data-module="confirm-action" data-module-i18n="{{ locale }}">{% block delete_button_text %}{{ _('Delete') }}{% endblock %}</a>
+            <a class="btn btn-danger pull-left" href="{% url_for 'group.delete', id=data.id %}" data-module="confirm-action" data-module-i18n="{{ locale }}">{% block delete_button_text %}{{ _('Delete') }}{% endblock %}</a>
           {% endif %}
         {% endif %}
         {% endblock %}

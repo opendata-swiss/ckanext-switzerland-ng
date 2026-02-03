@@ -6,18 +6,11 @@
 {% endblock %}
 
 {% block styles %}
-{{ super() }}
-  {% resource 'switzerland/ogdch_file_upload.js' %}
-  {% resource 'switzerland/ogdch_file_upload.css' %}
-  {% resource 'switzerland/ogdch_form_helper.css' %}
-  {% resource 'switzerland/ogdch_form_helper_contact_points.js' %}
-  {% resource 'switzerland/ogdch_info_box.js' %}
-  {% resource 'switzerland/ogdch_form_helper_relations.js' %}
-  {% resource 'switzerland/ogdch_form_helper_qualified_relations.js' %}
-  {% resource 'switzerland/ogdch_form_helper_temporals.js' %}
-  {% resource 'switzerland/ogdch_datepicker.js' %}
-  {% resource 'switzerland/ogdch_organization_filter.css' %}
-  {% resource 'switzerland/ogdch_organization_filter.js' %}
-  {% resource 'switzerland/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js' %}
-  {% resource 'switzerland/vendor/bootstrap-datepicker/css/bootstrap-datepicker.css' %}
+  {{ super() }}
+  {% asset 'switzerland/switzerland-css' %}
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  {% asset 'switzerland/switzerland-js' %}
 {% endblock %}

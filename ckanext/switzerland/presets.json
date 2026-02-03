@@ -6,7 +6,7 @@
     {
       "preset_name": "title",
       "values": {
-        "validators": "if_empty_same_as(name) unicode",
+        "validators": "if_empty_same_as(name) unicode_safe",
         "form_snippet": "large_text.html",
         "form_attrs": {
           "data-module": "slug-preview-target"
@@ -69,14 +69,14 @@
     {
       "preset_name": "dataset_slug",
       "values": {
-        "validators": "not_empty unicode name_validator package_name_validator",
+        "validators": "not_empty unicode_safe name_validator package_name_validator",
         "form_snippet": "slug.html"
       }
     },
     {
       "preset_name": "group_slug",
       "values": {
-        "validators": "not_empty unicode name_validator group_name_validator",
+        "validators": "not_empty unicode_safe name_validator group_name_validator",
         "form_snippet": "organization_slug.html"
       }
     },
@@ -94,7 +94,7 @@
     {
       "preset_name": "dataset_organization",
       "values": {
-        "validators": "scheming_required owner_org_validator unicode",
+        "validators": "scheming_required owner_org_validator unicode_safe",
         "form_snippet": "organization.html"
       }
     },
@@ -107,7 +107,7 @@
     {
       "preset_name": "ogdch_resource_format_autocomplete",
       "values": {
-        "validators": "ignore_missing clean_format unicode",
+        "validators": "ignore_missing clean_format unicode_safe",
         "form_placeholder": "Kein Format",
         "form_attrs": {
           "data-module": "autocomplete",
@@ -168,7 +168,8 @@
         "output_validators": "fluent_tags_output",
         "form_attrs": {
           "data-module": "autocomplete",
-          "data-module-tags": ""
+          "data-module-tags": "",
+          "data-module-source": "/api/3/action/tag_autocomplete?q=?"
         }
       }
     }
