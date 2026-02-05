@@ -110,8 +110,6 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
         return facets_dict
 
     def group_facets(self, facets_dict, group_type, package_type):
-        if package_type != "dataset":
-            return facets_dict
 
         lang_code = tk.request.environ["CKAN_LANG"]
         # the IFacets implementation of CKAN 2.4 is broken,
