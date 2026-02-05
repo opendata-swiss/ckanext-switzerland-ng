@@ -1,9 +1,9 @@
 <section class="tags">
-  {% set tags = data[field.field_name] %}
+  {% set tags = h.get_localized_value_from_json(data[field.field_name], h.lang()) %}
   {% if tags %}
     {% block tag_list %}
       <ul class="tag-list">
-        {% for tag in data[field.field_name] %}
+        {% for tag in tags %}
           {% set tag_dict = {'keywords_' + h.lang(): tag} %}
           <li>
             <a class="{% block tag_list_item_class %}tag{% endblock %}" href="{{
