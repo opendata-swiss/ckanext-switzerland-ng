@@ -8,6 +8,16 @@
 {% block styles %}
   {{ super() }}
   {% asset 'switzerland/switzerland-css' %}
+
+{# Set background colors per environment #}
+  {% if h.ogdch_get_env() == 'production' %}
+    {% asset 'switzerland/switzerland-red-background-css' %}
+  {% elif h.ogdch_get_env() == 'abnahme' %}
+    {% asset 'switzerland/switzerland-teal-background-css' %}
+  {% elif h.ogdch_get_env() == 'test' %}
+    {% asset 'switzerland/switzerland-purple-background-css' %}
+  {% endif %}
+
 {% endblock %}
 
 {% block scripts %}
