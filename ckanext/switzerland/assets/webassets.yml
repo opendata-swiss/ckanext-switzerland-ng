@@ -7,6 +7,21 @@ switzerland-css:
     - css/ogdch_stats_box.css
     - vendor/bootstrap-datepicker/css/bootstrap-datepicker.css
 
+switzerland-red-background-css:
+  output: switzerland/switzerland-red-bg.css
+  contents:
+    - css/ogdch_red_background.css
+
+switzerland-purple-background-css:
+  output: switzerland/switzerland-purple-bg.css
+  contents:
+    - css/ogdch_purple_background.css
+
+switzerland-teal-background-css:
+  output: switzerland/switzerland-teal-bg.css
+  contents:
+    - css/ogdch_teal_background.css
+
 switzerland-js:
   output: switzerland/switzerland.js
   contents:
