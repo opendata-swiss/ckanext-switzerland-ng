@@ -52,7 +52,6 @@ from ckanext.switzerland.helpers.mail_helper import (
     send_registration_email,
     send_showcase_email,
 )
-from ckanext.switzerland.helpers.request_utils import get_content_headers
 from ckanext.switzerland.helpers.terms_of_use_utils import get_dataset_terms_of_use
 
 log = logging.getLogger(__name__)
@@ -185,14 +184,11 @@ def _map_related_datasets(context, result):
 @side_effect_free
 def ogdch_content_headers(context, data_dict):
     """
-    Returns some headers of a remote resource
+    This function used to return some headers of a remote resource.
+    As this function is no longer used, we return a 410 - Gone instead.
     """
-    url = get_or_bust(data_dict, "url")
-    response = get_content_headers(url)
     return {
-        "status_code": response.status_code,
-        "content-length": response.headers.get("content-length", ""),
-        "content-type": response.headers.get("content-type", ""),
+        "status_code": 410,
     }
 
 
