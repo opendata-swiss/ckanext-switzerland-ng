@@ -1,12 +1,6 @@
 """utils used for requests"""
 
 import ckan.plugins.toolkit as tk
-import requests
-
-
-def get_content_headers(url):
-    response = requests.head(url)
-    return response
 
 
 def get_current_language():
