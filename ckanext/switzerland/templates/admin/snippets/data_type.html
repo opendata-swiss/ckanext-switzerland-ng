@@ -4,14 +4,21 @@
       <button class="accordion-button p-2" type="button" data-bs-toggle="collapse" data-bs-target="#{{ ent_type }}"
         aria-expanded="true" aria-controls="{{ ent_type }}">
         {% block accordion_icon %}
-          {% if ent_type == "package" %} <i class='fa fa-sitemap p-2'></i>
-            {% elif ent_type == 'group' %} <i class='fa fa-users p-2'></i>
-            {% else %} <i class="fa fa-building p-2"></i>
+          {% if ent_type == 'activity' %}
+            <i class="fa fa-tasks p-2"></i>
+          {% elif ent_type == "package" %}
+            <i class='fa fa-sitemap p-2'></i>
+          {% elif ent_type == 'group' %}
+            <i class='fa fa-users p-2'></i>
+          {% else %}
+            <i class="fa fa-building p-2"></i>
           {% endif %}
         {% endblock accordion_icon %}
 
         {% block accordion_title %}
-          {% if ent_type == 'package' %}
+          {% if ent_type == 'activity' %}
+            {{ _('Deleted activities') }}
+          {% elif ent_type == 'package' %}
             {{ _('Deleted datasets') }}
           {% elif ent_type == 'organization' %}
             {{ _('Deleted organizations') }}
@@ -30,19 +37,59 @@
       data-bs-parent="#accordion-{{ ent_type }}">
       <ul class="{{ ent_type }}-list">
         {% block accordion_items %}
-          {% for entity in entities %}
-            {% set title = h.get_localized_value_for_display(entity.title or entity.name) %}
-            {% do items.append(title) %}
-          <li>
-            <a href="{{ h.url_for(entity.type + '.read', id=entity.name) }}" title="{{ title }}">
-              {{ title|truncate(80) }}
-            </a>
-          </li>
+          {% if ent_type == "activity" %}
+            {% for date_str, activities in entities|sort(attribute='date_str', reverse=True)|groupby('date_str') %}
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading-{{ loop.index }}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ loop.index }}" aria-expanded="false" aria-controls="collapse-{{ loop.index }}">
+                        {{ date_str }} ({{ activities|length }} activities)
+                    </button>
+                </h2>
+                <div id="collapse-{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ loop.index }}" data-bs-parent="#activitiesAccordion">
+                    <div class="accordion-body">
+                        <ul>
+                            {% for entity in activities %}
+                            {% set title = entity['title'] or entity['name'] %}
+                            {% do items.append(title) %}
+                                <li>
+                                    {{ title|truncate(80) }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <form method="POST" class="d-flex justify-content-end mt-2" action="{{ h.url_for('admin.trash') }}">
+                            {{ h.csrf_input() }}
+                            <input type="hidden" name="action" value="activity">
+                            <input type="hidden" name="date" value="{{ date_str }}">
+                            <button type="submit" class="btn btn-danger btn-sm purge-group"
+                                data-module="confirm-action"
+                                data-module-with-data="true"
+                                data-module-content="{{ _('Purge all activities from this date?') }}">
+                                {{ _('Purge this date') }}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <p>
+              {{ _(messages.empty[ent_type]) }}
+            </p>
+            {% endfor %}
           {% else %}
-          <p>
-            {{ _(messages.empty[ent_type]) }}
-          </p>
-          {% endfor %}
+            {% for entity in entities %}
+              {% set title = h.get_localized_value_for_display(entity.title or entity.name) %}
+              {% do items.append(title) %}
+            <li>
+              <a href="{{ h.url_for(entity.type + '.read', id=entity.name) }}" title="{{ title }}">
+                {{ title|truncate(80) }}
+              </a>
+            </li>
+            {% else %}
+            <p>
+              {{ _(messages.empty[ent_type]) }}
+            </p>
+            {% endfor %}
+          {% endif %}
         {% endblock accordion_items %}
       </ul>
 
