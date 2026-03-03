@@ -102,9 +102,7 @@ def trigger_notifications(app, sysadmin_headers):
     "ckanext.switzerland.frontend_url", "http://frontend-test.ckan.net"
 )
 @pytest.mark.ckan_config("ckanext.subscribe.apply_recaptcha", False)
-@pytest.mark.usefixtures(
-    "with_plugins", "clean_db_and_migrate_for_ogdch_subscribe", "clean_index"
-)
+@pytest.mark.usefixtures("with_plugins", "clean_db", "clean_index")
 class TestSubscriptionEmails(object):
     def test_get_email_vars_with_subscription(self, app, dataset):
         subscription = factories.Subscription(
