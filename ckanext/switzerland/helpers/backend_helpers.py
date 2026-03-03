@@ -1,7 +1,5 @@
 import ast
 import logging
-import re
-from html.parser import HTMLParser
 from urllib.parse import quote, urlparse
 
 import ckan.lib.i18n as i18n
