@@ -2,6 +2,7 @@ import logging
 from copy import copy
 
 import ckan.model as model
+import ckan.plugins as p
 import ckan.plugins.toolkit as tk
 import pytest
 from ckan.tests import factories
@@ -57,10 +58,12 @@ def get_context():
 
 
 @pytest.fixture
-def clean_db_and_migrate_for_ogdch_subscribe(reset_db, migrate_db_for):
+def clean_db(reset_db, migrate_db_for):
     reset_db()
-    migrate_db_for("ogdch_subscribe")
-    migrate_db_for("activity")
+    plugins = ["activity", "ogdch_subscribe"]
+    for plugin in plugins:
+        if p.get_plugin(plugin):
+            migrate_db_for(plugin)
 
 
 @pytest.fixture

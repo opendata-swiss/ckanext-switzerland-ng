@@ -3,7 +3,7 @@ import pytest
 
 @pytest.mark.ckan_config(
     "ckan.plugins",
-    "ogdch ogdch_pkg ogdch_org ogdch_showcase ogdch_subscribe ogdch_middleware ogdch_dcat scheming_datasets fluent",
+    "ogdch ogdch_pkg ogdch_org ogdch_showcase ogdch_subscribe ogdch_middleware ogdch_dcat scheming_datasets fluent activity",
 )
 @pytest.mark.ckan_config("ckanext.dcat.rdf.profiles", "swiss_dcat_ap")
 @pytest.mark.usefixtures("with_plugins", "clean_db", "clean_index")

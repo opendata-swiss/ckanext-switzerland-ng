@@ -1,7 +1,5 @@
 import ast
 import logging
-import re
-from html.parser import HTMLParser
 from urllib.parse import quote, urlparse
 
 import ckan.lib.i18n as i18n
@@ -287,21 +285,38 @@ def ogdch_user_datasets():
     return user_dict["datasets"]
 
 
-def ogdch_localize_activity_item(msg):
-    """localizing activity messages: this function gets an html message and
-    replaces the language dict in there with the localized value
+def ogdch_localize_activity_item(activity_dict):
+    """Localize the data of an activity for display.
+
+    The activity_dict looks like this. activity_dict["data"] always has the key
+    'actor' and might also contain a package, group, organization, etc.
+    {
+        'id': '66cab3a6-8020-4aa7-8df7-8b7ec2ffe16c',
+        'timestamp': '2025-10-20T16:06:37.225534',
+        'user_id': '97e808d8-2eb3-48e0-9663-d86b2f02f490',
+        'object_id': '276e28df-4634-409c-91cf-1cb1d65379e5',
+        'activity_type': 'changed package',
+        'data': {
+            'package': {
+                'name': 'preview-dataset',
+                'title': {'fr': 'Preview Datensatz (FR)', 'de': 'Preview Datensatz (DE)', 'en': 'Preview Datensatz (EN)', 'it': 'Preview Datensatz (IT)'},
+                'display_name': {'fr': 'Preview Datensatz (FR)', 'de': 'Preview Datensatz (DE)', 'en': 'Preview Datensatz (EN)', 'it': 'Preview Datensatz (IT)'},
+                'description': {'fr': '', 'de': '', 'en': '', 'it': ''},
+                ...
+            },
+            'actor': 'liip'
+        }
+    }
     """
-    parser = HTMLParser()
-    unescaped_msg = parser.unescape(msg)
+    for activity_type, activity_data in activity_dict["data"].items():
+        if isinstance(activity_data, dict):
+            activity_dict["data"][activity_type] = (
+                ogdch_localize_utils.localize_ckan_sub_dict(
+                    activity_data, lang_code=lang()
+                )
+            )
 
-    language_dict_result = re.search(REGEX_LANGUAGE_DICT, unescaped_msg)
-    if not language_dict_result:
-        return tk.literal(msg)
-
-    language_dict = language_dict_result.group(0)
-    localized_language_dict = get_localized_value_for_display(language_dict)
-    localized_msg = unescaped_msg.replace(language_dict, localized_language_dict)
-    return tk.literal(localized_msg)
+    return activity_dict
 
 
 def ogdch_admin_capacity():
