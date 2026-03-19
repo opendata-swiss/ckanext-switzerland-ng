@@ -5,18 +5,20 @@
 {% endmacro %}
 
 {% macro dataset(activity) %}
-  {% set dataset_type = activity.data.package.type or 'dataset' %}
+  {% set package_data = (activity.data or {}).get('package') or {} %}
+  {% set dataset_type = package_data.get('type') or 'dataset' %}
   <span class="dataset">
     <a href="{{ h.url_for(dataset_type ~ '.read', id=activity.object_id ) }}">
-      {{ activity.data.package.title if activity.data.package else _("unknown") }}
+      {{ package_data.get('title') or _("unknown") }}
     </a>
   </span>
 {% endmacro %}
 
 {% macro organization(activity) %}
-  {% set group_type = group_type or (activity.data.group.type if (activity.data.group and activity.data.group.type) else 'organization') %}
+  {% set group_data = (activity.data or {}).get('group') or {} %}
+  {% set group_type = group_type or group_data.get('type') or 'organization' %}
   <a href="{{ h.url_for(group_type ~ '.read', id=activity.object_id) }}">
-    {{ activity.data.group.title if activity.data.group else _('unknown') }}
+    {{ group_data.get('title') or _('unknown') }}
   </a>
 {% endmacro %}
 
@@ -27,9 +29,10 @@
 {% endmacro %}
 
 {% macro group(activity) %}
+{% set group_data = (activity.data or {}).get('group') or {} %}
 <span class="group">
   <a href="{{ h.url_for('group.read', id=activity.object_id) }}">
-    {{ activity.data.group.title if activity.data.group else _('unknown') }}
+    {{ group_data.get('title') or _('unknown') }}
   </a>
 </span>
 {% endmacro %}
