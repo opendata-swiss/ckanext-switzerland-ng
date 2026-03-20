@@ -1,0 +1,24 @@
+<li>
+  <p>
+    {% set dataset_type = dataset_type or pkg_dict.type or 'dataset' %}
+    {% set id_old = change.old_name or change.pkg_id or pkg_dict.id %}
+    {% set id_new = change.new_name or change.pkg_id or pkg_dict.id %}
+    {% set old_url = h.url_for(dataset_type ~ '.read', qualified=True, id=id_old, package_type=dataset_type) %}
+    {% set new_url = h.url_for(dataset_type ~ '.read', qualified=True, id=id_new, package_type=dataset_type) %}
+
+    {{ _('Moved')}}
+    <a href="{{ h.url_for(dataset_type ~ '.read', id=change.pkg_id or pkg_dict.id, package_type=dataset_type) }}">
+      {{change.title}}
+    </a>
+
+    {{ _('from') }}
+    <a href="{{old_url}}">
+      {{old_url}}
+    </a>
+
+    {{ _('to') }}
+    <a href="{{new_url}}">
+      {{new_url}}
+    </a>
+  </p>
+</li>
