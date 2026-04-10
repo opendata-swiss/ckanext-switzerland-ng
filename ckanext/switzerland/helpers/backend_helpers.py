@@ -8,6 +8,7 @@ from ckan import authz
 from ckan.lib.helpers import _link_to
 from ckan.lib.helpers import dataset_display_name as dataset_display_name_orig
 from ckan.lib.helpers import lang
+from ckan.lib.helpers import markdown_extract as markdown_extract_orig
 from ckan.lib.helpers import organization_link as organization_link_orig
 from ckan.lib.helpers import url_for
 from ckan.plugins.toolkit import _
@@ -207,8 +208,30 @@ def dataset_display_name(package_or_package_dict):
     monkey patched version of ckan.lib.helpers.dataset_display_name which
     extracts the correct translation of the dataset name
     """
+    pkg_dict = (
+        package_or_package_dict
+        if isinstance(package_or_package_dict, dict)
+        else package_or_package_dict.as_dict()
+    )
+    title = pkg_dict.get("title")
+    if isinstance(title, dict):
+        return get_localized_value_for_display(title) or pkg_dict.get("name", "")
     name = dataset_display_name_orig(package_or_package_dict)
     return get_localized_value_for_display(name)
+
+
+def markdown_extract(text, extract_length=150):
+    """
+    monkey patched version of ckan.lib.helpers.markdown_extract which extracts
+    the correct translation of the markdown text.
+    """
+    if text is None:
+        text = ""
+    elif isinstance(text, dict):
+        text = get_localized_value_for_display(text)
+        if isinstance(text, dict):
+            text = ""
+    return markdown_extract_orig(text, extract_length)
 
 
 def organization_link(organization):

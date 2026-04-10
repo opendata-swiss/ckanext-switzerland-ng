@@ -205,6 +205,7 @@ class OgdchPlugin(plugins.SingletonPlugin, DefaultTranslation):
             # override template helpers to return translated names/titles
             "resource_display_name": ogdch_backend_helpers.ogdch_resource_display_name,
             "dataset_display_name": ogdch_backend_helpers.dataset_display_name,
+            "markdown_extract": ogdch_backend_helpers.markdown_extract,
             "group_link": ogdch_backend_helpers.group_link,
             "resource_link": ogdch_backend_helpers.resource_link,
             "organization_link": ogdch_backend_helpers.organization_link,
