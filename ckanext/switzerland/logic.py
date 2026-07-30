@@ -623,7 +623,7 @@ def ogdch_showcase_create(context, data_dict):
 
 @side_effect_free
 def ogdch_showcase_list(context, data_dict):
-    """Return a list of all showcases in the site."""
+    """Return a list of all public showcases in the site."""
 
     tk.check_access("ckanext_showcase_list", context, data_dict)
 
