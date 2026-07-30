@@ -207,3 +207,51 @@ def extra_datasets(groups):
     )
 
     return extra_datasets
+
+
+public_showcase_data = {
+    "name": "animal-diseases",
+    "title": "Animal Diseases",
+    "url": "https://jupyter.zazuko.com/epidemics.html",
+    "author": "Maria Muster",
+    "author_email": "maria.muster@example.org",
+    "notes": "FSVO, Federal Food Safety and Veterinary Office,\r\ncollects data on the animal diseases in Switzerland.\r\nThis data is published as [Linked Data](https://en.wikipedia.org/wiki/Linked_data).\r\n\r\nIn this data story, we will show how to work with Linked\r\nData. Mainly, we will see how to work with data on\r\nanimal disease.\r\n\r\n__Used Datasets__:\r\n\r\n\r\n- API: https://s.zazuko.com/2RxKQF\r\n\r\n\r\n\r\n- Metadata: https://environment.ld.admin.ch/foen/animal-pest/dataset",
+    "owner_org": "test-org",
+    "private": False,
+    "state": "active",
+    "tags": [{"name": "animals"}],
+    "image_url": "https://zazuko.com/data-stories/cat.jpg",
+    "showcase_type": "data_visualization",
+    "groups": [{"name": "group1"}],
+    "author_twitter": "https://twitter.com@mariamuster",
+    "author_github": "https://github.com/mariamuster",
+}
+
+private_showcase_data = {
+    "name": "private-showcase",
+    "title": "My Private Draft Showcase",
+    "url": "https://example.org/cool-data-science",
+    "author": "Manfred Muster",
+    "author_email": "manfred.muster@example.org",
+    "notes": "Manfred is still working on this showcase!",
+    "owner_org": "test-org",
+    "private": True,
+    "state": "active",
+    "tags": [{"name": "animals"}],
+    "image_url": "https://example.org/cool-data-science/cat.jpg",
+    "showcase_type": "data_visualization",
+    "groups": [{"name": "group2"}],
+    "author_twitter": "https://twitter.com@manfredmuster",
+    "author_github": "https://github.com/manfredmuster",
+}
+
+
+@pytest.fixture
+def showcases():
+    results = []
+    for showcase in [public_showcase_data, private_showcase_data]:
+        results.append(
+            tk.get_action("ckanext_showcase_create")(get_context(), showcase)
+        )
+
+    return results
