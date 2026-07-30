@@ -7,6 +7,7 @@ import string
 import uuid
 from collections import OrderedDict
 
+import ckan.lib.dictization.model_dictize as model_dictize
 import ckan.lib.helpers as h
 import ckan.lib.plugins as lib_plugins
 import ckan.lib.uploader as uploader
@@ -598,8 +599,9 @@ def ogdch_user_create(context, data_dict):
 
 
 def ogdch_showcase_create(context, data_dict):
-    """Custom showcase creation so that a notification
-    can be sent when a showcase is created."""
+    """Custom showcase creation so that a notification can be sent when a showcase is
+    created.
+    """
     data_dict["type"] = "showcase"
 
     upload = uploader.get_uploader("showcase")
@@ -617,6 +619,29 @@ def ogdch_showcase_create(context, data_dict):
             f"exception: {e}"
         )
     return showcase
+
+
+@side_effect_free
+def ogdch_showcase_list(context, data_dict):
+    """Return a list of all public showcases in the site."""
+
+    tk.check_access("ckanext_showcase_list", context, data_dict)
+
+    model = context["model"]
+
+    q = (
+        model.Session.query(model.Package)
+        .filter(model.Package.type == "showcase")
+        .filter(model.Package.state == "active")
+    )
+
+    showcase_list = []
+    for pkg in q.all():
+        showcase = model_dictize.package_dictize(pkg, context)
+        if showcase["private"] is not True:
+            showcase_list.append(showcase)
+
+    return showcase_list
 
 
 def _get_email_from_subscribe_code(code):
