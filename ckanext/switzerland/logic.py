@@ -621,7 +621,7 @@ def ogdch_showcase_create(context, data_dict):
 
 
 @side_effect_free
-def showcase_list(context, data_dict):
+def ogdch_showcase_list(context, data_dict):
     """Return a list of all showcases in the site."""
 
     tk.check_access("ckanext_showcase_list", context, data_dict)
@@ -636,7 +636,9 @@ def showcase_list(context, data_dict):
 
     showcase_list = []
     for pkg in q.all():
-        showcase_list.append(model_dictize.package_dictize(pkg, context))
+        showcase = model_dictize.package_dictize(pkg, context)
+        if showcase["private"] is not True:
+            showcase_list.append(showcase)
 
     return showcase_list
 

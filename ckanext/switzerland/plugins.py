@@ -620,6 +620,7 @@ class OgdchShowcasePlugin(ShowcasePlugin):
         """overwrite showcase create logic"""
         action_functions = super(OgdchShowcasePlugin, self).get_actions()
         action_functions["ckanext_showcase_create"] = ogdch_logic.ogdch_showcase_create
+        action_functions["ckanext_showcase_list"] = ogdch_logic.ogdch_showcase_list
         return action_functions
 
     # IFacets
