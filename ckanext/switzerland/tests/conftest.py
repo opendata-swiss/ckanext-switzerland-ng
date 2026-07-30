@@ -60,7 +60,7 @@ def get_context():
 @pytest.fixture
 def clean_db(reset_db, migrate_db_for):
     reset_db()
-    plugins = ["activity", "ogdch_subscribe"]
+    plugins = ["activity", "ogdch_subscribe", "ogdch_showcase"]
     for plugin in plugins:
         if p.get_plugin(plugin):
             migrate_db_for(plugin)
