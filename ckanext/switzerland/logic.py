@@ -599,8 +599,9 @@ def ogdch_user_create(context, data_dict):
 
 
 def ogdch_showcase_create(context, data_dict):
-    """Custom showcase creation so that a notification
-    can be sent when a showcase is created."""
+    """Custom showcase creation so that a notification can be sent when a showcase is
+    created.
+    """
     data_dict["type"] = "showcase"
 
     upload = uploader.get_uploader("showcase")
