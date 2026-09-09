@@ -342,7 +342,7 @@ def ogdch_showcase_search(context, data_dict):
     user = tk.get_action("get_site_user")({"ignore_auth": True}, {})
     context.update({"user": user["name"], "for_view": True})
 
-    if data_dict["fq"]:
+    if data_dict.get("fq"):
         data_dict["fq"] += " dataset_type:showcase"
     else:
         data_dict.update({"fq": "dataset_type:showcase"})
